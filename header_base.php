@@ -320,8 +320,8 @@ $url = home_url( $wp->request );
                                     <ul>
                                         <li>
                                             <a href="zzpers">
-                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/zzper-icone.png" alt="">
+                                                <div class="blockImg" style="background: #ffffff;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-zzpers.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
@@ -331,8 +331,8 @@ $url = home_url( $wp->request );
                                         </li>
                                         <li>
                                             <a href="mkb">
-                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mkb-icon.png" alt="">
+                                                <div class="blockImg" style="background: #ffffff;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-mkb.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>MKB</b></p>
@@ -342,8 +342,8 @@ $url = home_url( $wp->request );
                                         </li>
                                         <li>
                                             <a href="/grootbedrijf">
-                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Grootbedrijf-icon.png" alt="">
+                                                <div class="blockImg" style="background: #ffffff;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Grootbedrijf.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
@@ -353,8 +353,8 @@ $url = home_url( $wp->request );
                                         </li>
                                         <li>
                                             <a href="pricing">
-                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/pricing-icon.png" alt="">
+                                                <div class="blockImg" style="background: #ffffff;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-pricing.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>Pricing</b></p>
@@ -387,6 +387,8 @@ $url = home_url( $wp->request );
                             </div>
                         </div>
                     </div>
+
+
                     <!-- modal dropdown Voor Voor opleiders  -->
                     <div class="modal  dropdown-menu-custom" id="voorOpleidersModal" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                         <div class="souselementHeader">
@@ -395,40 +397,40 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/verkopen">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Verkopen.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-verkopen.png" alt="">
                                             </div>
                                             <div>
                                                 <p class="titleSousElementHeader"><b>Verkopen</b></p>
-                                                <p class="subtitleSousElementHeader">je kennisproducten</p>
+                                                <p class="subtitleSousElementHeader">Van kennis online</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/creeren">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Creeër.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-maken.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="titleSousElementHeader"><b>Creëer</b></p>
-                                                <p class="subtitleSousElementHeader">nieuwe kennisproducten</p>
+                                                <p class="titleSousElementHeader"><b>Maken</b></p>
+                                                <p class="subtitleSousElementHeader">Van nieuwe kennisproducten</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/uitleggen">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Uitleggen.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Uitleggen.png" alt="">
                                             </div>
                                             <div>
                                                 <p class="titleSousElementHeader"><b>Uitleggen</b></p>
-                                                <p class="subtitleSousElementHeader">Van producten of diensten</p>
+                                                <p class="subtitleSousElementHeader">Van product of dienst</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/pricing">
-                                            <div class="blockImg" style="background: #033356;  padding: 6px;">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
+                                            <div class="blockImg" style="background: #FFFFFF;  padding: 6px;">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-pricing.png" alt="">
                                             </div>
                                             <div>
                                                 <p class="titleSousElementHeader"><b>Pricing</b></p>
@@ -441,40 +443,44 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/opleiders">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleiders.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-oplieders.png" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Opleiders</p>
+                                                <p class="subtitleSousElementHeader">Alle aangesloten bedrijven</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Experts.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Top-Experts%20.png" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Experts</p>
+                                                <p class="subtitleSousElementHeader">Een rating per topic</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Functionalities.jpg" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Alle-functionaliteiten.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Functionaliteiten</p>
+                                                <p class="subtitleSousElementHeader">Alle functionaliteiten</p>
+                                                <p class="subtitleSousElementHeader">Voor jou als experts</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/contact">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Contact.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Affiliate.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Contact</p>
+                                                <p class="subtitleSousElementHeader">Affiliate worden?</p>
+                                                <p class="subtitleSousElementHeader">Creëer nieuwe inkomsten</p>
                                             </div>
                                         </a>
                                     </li>
@@ -484,22 +490,52 @@ $url = home_url( $wp->request );
                     </div>
 
 
+
                     <!-- modal dropdown Opleidingen -->
                     <div class="modal  dropdown-menu-custom" id="OpleidingenModal" tabindex="-1" role="dialog" aria-labelledby="OpleidingenLabel" aria-hidden="true">
                         <div class="souselementHeader">
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="/community-overview">
+                                        <a href="/contact">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Onze-filosofie.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="titleSousElementHeader"><b>Communities</b></p>
+                                                <p class="subtitleSousElementHeader">Onze filosofie</p>
                                             </div>
                                         </a>
                                     </li>
-
+                                    <li>
+                                        <a href="/contact">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Leervormen.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader">Leervormen</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Communities.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader">Communities</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Waarom.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader">Waarom skills?</p>
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                                 <ul class="secondUlModal ">
                                     <li>
@@ -628,6 +664,60 @@ $url = home_url( $wp->request );
                     </div>
 
 
+                    <!-- modal dropdown Opleidingen -->
+                    <div class="modal  dropdown-menu-custom" id="OverOnsModal" tabindex="-1" role="dialog" aria-labelledby="OpleidingenLabel" aria-hidden="true">
+                        <div class="souselementHeader upskilling-block">
+                            <div class="blockdropdownnHeader">
+                                <ul>
+                                    <li>
+                                        <a href="/contact">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Onze-filosofie.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader">Onze filosofie</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Leervormen.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader">Leervormen</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Communities.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader">Communities</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/contact">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Waarom.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader">Waarom skills?</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="secondUlModal ">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/bg-UPSKILIING.png" alt="">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
 
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -642,12 +732,11 @@ $url = home_url( $wp->request );
                         </form>
 
                         <ul class="navbar-nav nav-right">
-                            <li class="nav-item active">
-                                <a class="nav-link" id="Over" href="/about/">Over ons</a>
+                            <li class="nav-item">
+                                <a class="nav-link nav-linModife dropdown-toggle" id="OverOns" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#OverOns"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Over ons</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upskilling</a>
-
                             </li>
                             <li class="nav-item" >
                                 <a class="nav-link" href="/inloggen/"><b>Inloggen</b></a>
