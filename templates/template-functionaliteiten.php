@@ -1,4 +1,4 @@
-<?php /** Template Name: functiegerichte */ ?>
+<?php /** Template Name: functionaliteiten */ ?>
 
 <body>
 <?php wp_head(); ?>
@@ -75,15 +75,170 @@
                                 <p class="title">360 Feedback vragen aan collega’s. </p>
                                 <p class="description">Wil je van anderen horen hoe zij kijken naar je vaardigheden? Vraag ze dan direct feedback. Zo weet je zeker dat je werkt aan je juiste skills</p>
                             </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Onze-slimme.png" alt="">
+                                </div>
+                                <p class="title">AI? Onze slimme algoritmes helpen je.</p>
+                                <p class="description">Wat past er nou het best bij jou als persoon. Wij hebben slimme software ontwikkeld die je helpt de juiste keuzes te maken en je content aanraadt.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/certificaten.png" alt="">
+                                </div>
+                                <p class="title">Diploma’s / certificaten op éen plek.</p>
+                                <p class="description">Je haalt veel meer diploma’s en certificaten dan je eigenlijk weet. Houd ze allemaal bij in je eigen certificatenbox.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Skills-paspoort.png" alt="">
+                                </div>
+                                <p class="title">Skills paspoort, jouw dynamische CV.</p>
+                                <p class="description">Alle skills die ontwikkelt, feedback die je krijgt of diploma’s die je haalt worden omgezet naar je skills paspoort. Zo heb je een dynamisch en realistisch CV.</p>
+                            </div>
                         </div>
+                        <a href="" class="btn btn-meer-lezen">Meer lezen over wat LiveLearn jou biedt ?</a>
                     </div>
                     <div id="Voor-organisaties" class="container tab-pane fade"><br>
-                        <h3>Menu 1</h3>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <div class="block-functionaliteiten d-flex flex-wrap">
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/geperso.png" alt="">
+                                </div>
+                                <p class="title">Een eigen organisatie dashboard</p>
+                                <p class="description">Personaliseer je leertrajecten met een eigen dashboard. Krijg inzichten in personeel, volg hun voortgang en ontgrendel hun volledige potentieel. </p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mobiele.png" alt="">
+                                </div>
+                                <p class="title">Beheer cursussen en trainingen</p>
+                                <p class="description">Beheer moeiteloos cursussen en trainingen. Volg voortgang, lever content en verrijk de leerervaring. Optimaliseer je leeromgeving.  </p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Leervormen.png" alt="">
+                                </div>
+                                <p class="title">Tien verschillende leervormen.</p>
+                                <p class="description">Ontdek 10 diverse leervormen. Kies, ontwikkel en groei wederop z’n eigen manier. Verrijkende leerervaringen gegarandeerd.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/meten-icon.png" alt="">
+                                </div>
+                                <p class="title">Sociale interactie en samenwerking</p>
+                                <p class="description">Versterk je leerproces met sociale interactie en samenwerking. Verbind, deel en groei samen met anderen. Optimaal leren in gemeenschap.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/bewaren.png" alt="">
+                                </div>
+                                <p class="title">Analyse en rapportage per team.</p>
+                                <p class="description">Krijg waardevolle inzichten met krachtige analyse en rapportage. Monitor voortgang, meet prestaties en optimaliseer je leerresultaten.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/vragen-icon.png" alt="">
+                                </div>
+                                <p class="title">Integratie met externe systemen</p>
+                                <p class="description">Naadloze integratie met bestaande systemen. Optimaliseer workflows, deel gegevens en versterk je leeromgeving zonder onnodig werk.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Onze-slimme.png" alt="">
+                                </div>
+                                <p class="title">AI? Onze slimme algoritmes helpen je.</p>
+                                <p class="description">Wat past er nou het best bij elk persoon. Wij hebben slimme software ontwikkeld die je helpt de juiste keuzes te maken en je content aanraadt.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/certificaten.png" alt="">
+                                </div>
+                                <p class="title">Diploma’s / certificaten op éen plek.</p>
+                                <p class="description">Je haalt veel meer diploma’s en certificaten dan je eigenlijk weet. Houd ze allemaal bij in je eigen certificatenbox.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Skills-paspoort.png" alt="">
+                                </div>
+                                <p class="title">Een mobiele app voor iedere collega</p>
+                                <p class="description">Bied elke medewerker een eigen mobiele app. Flexibel leren, waar en wanneer dan ook. Empowerment in de palm van je hand.</p>
+                            </div>
+                        </div>
+                        <a href="" class="btn btn-meer-lezen">Meld je aan als bedrijf</a>
                     </div>
                     <div id="Voor-opleiders-experts" class="container tab-pane fade"><br>
-                        <h3>Menu 2</h3>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                        <div class="block-functionaliteiten d-flex flex-wrap">
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/geperso.png" alt="">
+                                </div>
+                                <p class="title">Je gepersonaliseerde expert-dashboard
+                                </p>
+                                <p class="description">Jij bepaalt zelf wat je in je omgeving te zien krijgt. Kies je onderwerpen of experts en neem je omgeving ook gewoon mee naar nieuwe werkgevers.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mobiele.png" alt="">
+                                </div>
+                                <p class="title">Beheer cursussen en trainingen
+                                </p>
+                                <p class="description">Beheer moeiteloos cursussen en trainingen. Volg voortgang, lever content en verrijk de leerervaring. Optimaliseer je leeromgeving. </p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Leervormen.png" alt="">
+                                </div>
+                                <p class="title">Bied verschillende leervormen aan
+                                </p>
+                                <p class="description">We hebben 10 verschillende leervormen in het LiveLearn platform. Van het lezen van artikelen tot het volgen van een opleiding.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/meten-icon.png" alt="">
+                                </div>
+                                <p class="title">Ontwerp je eigen cursussen.</p>
+                                <p class="description">Tools om cursussen te maken en te structureren volgens jouw expertise. Dit omvat het creëren van lessen, modules, quizzen en interactieve activiteiten.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/bewaren.png" alt="">
+                                </div>
+                                <p class="title">Analyseer de prestatie van je deelnemers.
+                                </p>
+                                <p class="description">Krijg inzicht in de prestaties en voortgang van deelnemers aan jouw cursussen. Dit kan het volgen van voltooide modules, quizscores en andere prestatie-indicatoren omvatten.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/vragen-icon.png" alt="">
+                                </div>
+                                <p class="title">Opleidersexpertise en profielbeheer .</p>
+                                <p class="description">Mogelijkheid om een persoonlijk profiel te maken en jouw expertise te presenteren. Hierdoor kun je reputatie opbouwen en zichtbaar zijn voor potentiële deelnemers.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Onze-slimme.png" alt="">
+                                </div>
+                                <p class="title">AI? Onze slimme algoritmes helpen je.</p>
+                                <p class="description">Wat past er nou het best bij jouw doelgroep? Wij hebben slimme software ontwikkeld die je helpt de juiste keuzes te maken om je doelgroep te bereiken.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/certificaten.png" alt="">
+                                </div>
+                                <p class="title">Genereer nieuwe inkomsten</p>
+                                <p class="description">Verkopen je kennis om inkomsten te genereren. Wij hebben integraties met betalingsgateways, prijsstellingsopties en bieden rapportage van je verkoopprestaties.</p>
+                            </div>
+                            <div class="card-functionaliteiten">
+                                <div class="text-right">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Skills-paspoort.png" alt="">
+                                </div>
+                                <p class="title">Integratie met externe systemen
+                                </p>
+                                <p class="description">Naadloze integratie met bestaande systemen. Optimaliseer workflows, deel gegevens en versterk je afzetmarkt zonder onnodig werk.</p>
+                            </div>
+                        </div>
+                        <a href="" class="btn btn-meer-lezen">Meld je aan als expert / opleider</a>
                     </div>
                 </div>
             </div>

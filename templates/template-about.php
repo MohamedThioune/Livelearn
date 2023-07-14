@@ -132,6 +132,7 @@
                     <h2 class="subTitle-about">Ons verhaal</h2>
                     <p class="description-about">LiveLearn is opgericht in 2019 door Daniel van der Kolk met als doel om leren en ontwikkelen toegankelijk te maken voor iedereen. Dit omdat organisaties en vooral het midden-klein-bedrijf een uitdaging heeft om talent aan te trekken en vast te houden, maar ook omdat organisaties vaak moeite hebben om hun personeel voldoende op te leiden.</p>
                     <p class="description-about">Door het individu centraal te stellen en managers inzicht te geven in de ontwikkeling van hun team(s) wordt talent-ontwikkeling voor elke organisatie mogelijk.  LiveLearn hoort bij één van de meest innovatieve partners voor organisaties om hun personeel op te leiden.  </p>
+                    <a href="" class="btn btn-doe-jij">Doe jij mee?</a>
                 </div>
                 <div class="block-img-about">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/For-individuals.png" class="img-head-about" alt="">
@@ -142,6 +143,7 @@
             <h2 class="subTitle-about">Onze aanpak</h2>
             <p class="description-about">De LiveLearn methode is net anders dan de traditionele learning & development partijen. Bij LiveLearn combineren we persoonlijke begeleiding en technologie om onze partners de beste ervaring te bieden. Wij begrijpen ook dat het ontwikkelen van talent niet altijd op de eerste plaats staat binnen een organisatie. Daarom maken wij onze software zo eenvoudig mogelijk, zodat er geen tijd verloren gaat. </p>
             <p class="description-about">Wat doen wij dan als LiveLearn? Wij werken altijd datagedrevene en beredeneren ontwikkeling vanuit de individuele werknemer. Dit klinkt als een klein verschil, maar heeft op organisatie niveau enorme impact. Wij koppelen namelijk alle wensen en doelen van de individuele medewerker en bieden hen een persoonlijk, datagedreven, leeromgeving. Zo kunnen zij persoonlijk groeien. Alle data wordt geanonimiseerd en teruggekoppeld naar de manager, zodat deze vanuit real-time informatie beslissingen kan nemen. </p>
+            <a href="" class="btn btn-doe-jij">Lees onze gehele aanpak</a>
             <div class="group-icon-category">
                 <div class="element-category">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/icon-Leerdoelen.png" class="" alt="icon-Leerdoelen">
@@ -199,19 +201,19 @@
                     <p class="name">DANIEL</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Mamadou.png" class="" alt="">
-                    <p class="name">MAMADOU</p>
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/KHADIM.png" class="" alt="">
+                    <p class="name">KHADIM</p>
                 </div>
                 <div class="one-element">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Xander.png" class="" alt="">
                     <p class="name">XANDER</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/inco.png" class="" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/MOHAMED.png" class="" alt="">
                     <p class="name">MOHAMED</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/inco.png" class="" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Oumou.png" class="" alt="">
                     <p class="name">OUMOU</p>
                 </div>
                 <div class="one-element">

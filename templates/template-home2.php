@@ -307,7 +307,7 @@ $type_course = array(
             margin-right: 5px !important;
         }
         .zelf-block {
-            margin: 5px auto 0px !important;
+            margin: 15px auto 25px !important;
         }
         .talent-binnen-block {
             margin: 40px 0 70px;
@@ -1313,17 +1313,17 @@ $saved = get_user_meta($user_id, 'course');
             </div>
         </div>
     </div>
-    <div class="block-store-doawnload text-center">
+  <!--  <div class="block-store-doawnload text-center">
         <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
         <div class="group-btn-store d-flex flex-wrap justify-content-center">
             <a href="https://apps.apple.com/nl/app/livelearn/id1666976386">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
+                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/e-store.png"  alt="app store">
             </a>
             <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="googlePlay">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
+                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/playGoogle.png"  alt="google play">
             </a>
         </div>
-    </div>
+    </div>-->
 </div>
 <div class="onze-expert-block">
     <div class="container-fluid">
@@ -1731,7 +1731,6 @@ $saved = get_user_meta($user_id, 'course');
                 }?>
 
             </div>
-
 
         </div>
     </div>
