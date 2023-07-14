@@ -3,9 +3,22 @@
 
 $page = 'check_visibility.php';
 require($page); 
+require('module-subscribe.php'); 
 
-// $mail_notification_invitation = 'mail-notification-invitation.php';
-// require(__DIR__ . $mail_notification_invitation); 
+require __DIR__ . '/../vendor/autoload.php';
+use Automattic\WooCommerce\Client;
+
+ $woocommerce = new Client(
+   'https:www.livelearn.nl/',
+   'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+   'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+   [
+     'version' => 'wc/v3',
+   ]
+ );
+
+ $mail_notification_invitation = '/mail-notification-invitation.php';
+ require(__DIR__ . $mail_notification_invitation); 
 
 global $wpdb;
 
@@ -535,7 +548,7 @@ else if(isset($road_course_add)){
 else if(isset($review_post)){        
     $reviews = get_field('reviews', $course_id);
     $review = array();
-    $review['user'] = get_user_by('ID',$user_id);
+    $review['user'] = wp_get_current_user();
     $review['rating'] = $rating;
     $review['feedback'] = $feedback_content;
     if($review['user']){ 

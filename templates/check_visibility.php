@@ -48,11 +48,13 @@
         $occurence = 1;
 
         //Add by MaxBird - get name entity
-        if($type == 'course'){
+        if($type == 'course')
+        {
             $course = get_post($corse_id);
             $data_name = (!empty($course)) ? $course->post_name : null;
         }
-        else if($type == 'expert'){
+        else if($type == 'expert')
+        {
             $expert_infos = get_user_by('id', $corse_id);
             $data_name = ($expert_infos->last_name) ? $expert_infos->first_name : $expert_infos->display_name;
         }
@@ -79,6 +81,7 @@
             $occurence = intval($occurence_id) + 1;
             $data_modified=[
                 'occurence' => $occurence,
+                'updated_at'=> date("Y-m-d H:i:s")
             ];
             $where=[
                 //'data_id'=>$corse_id,
@@ -99,5 +102,3 @@
         $wpdb->insert($table_tracker_views, $data);
         return $wpdb->insert_id;
     }
-
-

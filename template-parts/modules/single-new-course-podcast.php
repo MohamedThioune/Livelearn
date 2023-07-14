@@ -1,63 +1,59 @@
-<?php /** Template Name: new course video */ ?>
-
+<?php /** Template Name: new course podcast */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
-
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
+<?php
+//$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
+//$url = "https://anchor.fm/s/878cadd4/podcast/rss";
+$url = "https://feeds.buzzsprout.com/2145970.rss";
+//$url = "https://aod.nrjaudio.fm/xml/169.xml";
+$xml = simplexml_load_file($url);
+?>
+
 <body>
-<div class="content-new-Courses video-content-course">
-    <div class="content-head">
-        <div class="container-fluid">
-            <div class="d-flex align-items-center justify-content-center">
-                <p class="reviews-text">333 Students</p>
+<div class="content-new-Courses video-content-course content-course-podcast">
+    <div class="container-fluid">
+        <div class="content-head-podcast">
+           <div class="block-img">
+               <img src="<?php echo get_stylesheet_directory_uri();?>/img/1.jpg" alt="">
+           </div>
+            <div class="block-detail-podcast">
+                <h1>Learn Figma: User Interface Design Essentials - UI/UX Design</h1>
+                <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. accusantium doloremque laudantiuExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.</p>
                 <div class="d-flex">
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                </div>
-                <p class="reviews-text">9.45 (9.8k+ reviews)</p>
-            </div>
-            <h1 class="title-course text-center">8 Most Common Cybersecurity Threats and how to protect from them</h1>
-            <div class="content-autors-detail">
-                <div class="blockImg">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" alt="">
-                </div>
-                <p class="name-autors">Daniel veer Klok</p>
-            </div>
-            <div class="block-review-calendar">
-                <div class="d-flex align-items-center">
-                    <i class='fa fa-calendar-alt'></i>
-                    <p class="date">10 /15 /2022</p>
-                </div>
-                <div class="d-flex align-items-center">
-                    <i class='fa fa-calendar-alt'></i>
-                    <p class="date">English</p>
-                </div>
-                <div class="d-flex align-items-center">
-                    <i class='fa fa-calendar-alt'></i>
-                    <p class="date">Opleiding</p>
+                    <div class="block-sub-detail">
+                        <p class="category-text-title">Categories</p>
+                        <p class="category-text">Podcast</p>
+                    </div>
+                    <div class="block-sub-detail">
+                        <p class="category-text-title">Review</p>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex">
+                                <i class="fa fa-star checked"></i>
+                                <i class="fa fa-star checked"></i>
+                                <i class="fa fa-star checked"></i>
+                                <i class="fa fa-star checked"></i>
+                                <i class="fa fa-star checked"></i>
+                            </div>
+                            <p class="category-text">9.45 (9.8k+ reviews)</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="body-content">
         <div class="container-fluid">
-            <div class="course-content-video-intro">
-                <iframe src="https://www.youtube.com/embed/zHAa-m16NGk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
             <div class="row">
                 <div class="col-lg-8">
                     <div id="tab-url1">
                         <ul class="nav">
-                            <li class="nav-one"><a href="#Overview" class="current">Overview</a></li>
-                            <li class="nav-two"><a href="#Course">Course Content</a></li>
-                            <li class="nav-three"><a href="#Instructor">Instructor</a></li>
+                            <li class="nav-one"><a href="#Overview" >Overview</a></li>
+                            <li class="nav-two"><a href="#Course" class="current">Podcast Content</a></li>
                             <li class="nav-four "><a href="#Reviews">Reviews</a></li>
                         </ul>
                         <div class="list-wrap">
@@ -115,85 +111,46 @@
                             </ul>
 
                             <ul id="Course">
-                                <div class="content-playlist-course">
-                                    <p class="title">The Ultimate Playlist to Enrich Your Knowledge (<span>06 Videos</span>) </p>
-                                    <p class="description">Immerse yourself in this unprecedented educational experience and be inspired by the knowledge shared in this playlist of video lessons.</p>
-                                    <div class="playlist-course-block">
-                                        <div class="element-playlist-course">
-                                            <div class="d-flex align-items-center group-element">
-                                                <img class="playlistImg" src="<?php echo get_stylesheet_directory_uri();?>/img/light_play.svg" alt="">
-                                                <p class="lecture-text"> Lecture <span>01</span></p>
-                                                <p class="text-playlist-element">Introduction</p>
+                                <div class="list-content-podcast">
+                                <?php
+                                //$counter = count($xml->channel[0]);
+                                $counter = 1;
+                                foreach($xml->channel[0] as $key => $pod) {
+                                    $description = (string) $pod->description;
+                                    $title = (string) $pod->title;
+                                    if($pod->enclosure) {
+                                    //var_dump($pod->enclosure->attributes()->url); //url,length,type
+                                    ?>
+                                    <div class="elemnt-list-podcast">
+                                        <p class="number-list"><?= $counter++ ?></p>
+                                        <div class="detail-block-podcast">
+                                            <p class="title-podcast"><?=$title?></p>
+                                            <div class="audio">
+                                                <div class="cp-audioquote">
+                                                    <div class="cp-audioquote__player">
+                                                        <!-- src -->
+                                                        <audio class="cp-audioquote__player__src" src="<?=$pod->enclosure->attributes()->url?>">
+                                                            <p><?= $description ?></p>
+                                                        </audio>
+                                                        <div class="cp-audioquote__player--playBtn"></div>
+                                                        <div class="cp-audioquote__player--display">
+                                                            <div class="cp-audioquote__player--progress">
+                                                                <span class="cp-audioquote__player--track"></span>
+                                                                <span class="cp-audioquote__player--playhead"></span>
+                                                            </div>
+                                                            <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <img class="status-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/view-course.svg" alt="">
                                         </div>
-                                        <div class="element-playlist-course">
-                                            <div class="d-flex align-items-center group-element">
-                                                <img class="playlistImg" src="<?php echo get_stylesheet_directory_uri();?>/img/light_play.svg" alt="">
-                                                <p class="lecture-text"> Lecture <span>02</span></p>
-                                                <p class="text-playlist-element">Web Design Beginner</p>
-                                            </div>
-                                            <img class="status-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/view-course.svg" alt="">
-                                        </div>
-                                        <div class="element-playlist-course">
-                                            <div class="d-flex align-items-center group-element">
-                                                <img class="playlistImg" src="<?php echo get_stylesheet_directory_uri();?>/img/light_play.svg" alt="">
-                                                <p class="lecture-text"> Lecture <span>03</span></p>
-                                                <p class="text-playlist-element">Startup Designing with HTML5 & CSS3</p>
-                                            </div>
-                                            <img class="status-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/blocked.svg" alt="">
-                                        </div>
-                                        <div class="element-playlist-course">
-                                            <div class="d-flex align-items-center group-element">
-                                                <img class="playlistImg" src="<?php echo get_stylesheet_directory_uri();?>/img/light_play.svg" alt="">
-                                                <p class="lecture-text"> Lecture <span>04</span></p>
-                                                <p class="text-playlist-element">How To Call Google Map iFrame</p>
-                                            </div>
-                                            <img class="status-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/blocked.svg" alt="">
-                                        </div>
-                                        <div class="element-playlist-course">
-                                            <div class="d-flex align-items-center group-element">
-                                                <img class="playlistImg" src="<?php echo get_stylesheet_directory_uri();?>/img/light_play.svg" alt="">
-                                                <p class="lecture-text"> Lecture <span>05</span></p>
-                                                <p class="text-playlist-element">Create Drop Down Navigation Using CSS3</p>
-                                            </div>
-                                            <img class="status-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/blocked.svg" alt="">
-                                        </div>
-                                        <div class="element-playlist-course">
-                                            <div class="d-flex align-items-center group-element">
-                                                <img class="playlistImg" src="<?php echo get_stylesheet_directory_uri();?>/img/light_play.svg" alt="">
-                                                <p class="lecture-text"> Lecture <span>06</span></p>
-                                                <p class="text-playlist-element">How to Create Sticky Navigation Using JS</p>
-                                            </div>
-                                            <img class="status-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/blocked.svg" alt="">
-                                        </div>
+<!--                                        <img class="blocked-img" src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/blocked.svg" alt="">-->
                                     </div>
+                                    <?php }
+                                } ?>
                                 </div>
                             </ul>
 
-                            <ul id="Instructor" class="hide">
-                                <div class="section-tabs">
-                                    <div class="d-flex">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" alt="">
-                                        </div>
-                                        <div class="second-block-profil">
-                                            <p class="name-autors">Laurence Simpson</p>
-                                            <p class="langue-text">President of Sales</p>
-                                            <div class="d-flex flex-wrap">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fa fa-star checked"></i>
-                                                    <p class="text-detail-reveiw text-detail-reveiw2"> 5.0 Instructor Rating</p>
-                                                </div>
-                                                <p class="text-detail-reveiw">23,987 Reviews</p>
-                                                <p class="text-detail-reveiw">692 Students</p>
-                                                <p class="text-detail-reveiw">15 Course</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="text-about-authors">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use lorem ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                </div>
-                            </ul>
                             <ul id="Reviews" class="hide">
                                 <div class="section-tabs" >
                                     <div class="d-flex justify-content-between flex-wrap block-review-course">
@@ -690,6 +647,7 @@
     </div>
 </div>
 
+
 <script>
     var sections = $('.section-tabs')
         , nav = $('.content-tabs-scroll')
@@ -766,6 +724,8 @@
         }
     })
 </script>
+
+
 <script>
     $('.similarCourseCarousel').owlCarousel({
         loop:true,
@@ -838,8 +798,89 @@
 
 </script>
 
+<!--for audio block-->
+<script>
+    $('.cp-audioquote').each(function(e){
 
+        const $this = $(this);
+        const $togglePlay = $this.find('.cp-audioquote__player--playBtn');
+        const player = $this.find('audio').get(0);
+        const progressBar = $this.find('.cp-audioquote__player--playhead');
+
+        $togglePlay.on('click', function(){
+            if(player.paused){
+                player.play();
+                $this.find('.cp-audioquote__player').addClass('is-playing');
+            } else {
+                player.pause();
+                $this.find('.cp-audioquote__player').removeClass('is-playing');
+            }
+        });
+
+        // when the audio finish, reset all
+        player.addEventListener("ended", function() {
+            $('.cp-audioquote__player').removeClass('is-playing');
+            // reset to zero the progress
+            progressBar.css('width', '0%');
+            // time at zero
+            player.currentTime = 0;
+        }, true);
+
+        // set total duration of the video
+        player.addEventListener('canplaythrough', function(){
+            // insert total duration into the page
+            const totalLength = calculateTotalValue(player.duration);
+            $this.find('.duration').html(totalLength);
+        }, false);
+
+
+        // calculate total length of the audio
+        function calculateTotalValue(length) {
+            const minutes = Math.floor(length / 60);
+            const seconds_int = length - minutes * 60;
+            if(seconds_int < 10){
+                seconds_int = "0"+seconds_int;
+            }
+            const seconds_str = seconds_int.toString();
+            const seconds = seconds_str.substr(0, 2);
+            const time = minutes + ':' + seconds;
+            return time;
+        }
+
+        // Update the progress bar
+        function updateProgressBar() {
+            // Work out how much of the media has played via the duration and currentTime parameters
+            const percentage = Math.floor((100 / player.duration) * player.currentTime);
+            // Update the progress bar's value
+            progressBar.css('width', percentage+'%');
+            // Update the progress bar's text
+            const currentTime = calculateCurrentValue(player.currentTime);
+            $this.find(".playhead").html(currentTime);
+        }
+
+        function calculateCurrentValue(currentTime) {
+            let current_hour = parseInt(currentTime / 3600) % 24,
+                current_minute = parseInt(currentTime / 60) % 60,
+                current_seconds_long = currentTime % 60,
+                current_seconds = current_seconds_long.toFixed(),
+                current_time = (current_minute < 10 ? "" + current_minute : current_minute) + ":" + (current_seconds < 10 ? "0" + current_seconds : current_seconds);
+            return current_time;
+        }
+
+        // Add a listener for the timeupdate event so we can update the progress bar
+        player.addEventListener('timeupdate', updateProgressBar, false);
+
+        $this.find('.cp-audioquote__player--track').on('click', function(e){
+            if (player.src) {
+                const percent = e.offsetX / this.offsetWidth;
+                player.currentTime = percent * player.duration;
+                // update progress bar
+                progressBar.css('width', Math.floor(percent / 100)+'%');
+            }
+        });
+
+    });
+</script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
-
 </body>

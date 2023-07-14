@@ -4,7 +4,7 @@
 
 extract($_POST);
 
-$user = get_users(array('include'=> get_current_user_id()))[0]->data;
+$user = get_user_by('ID', get_current_user_id());
 
 $row_activity_course = " ";
 $page = 'check_visibility.php';
@@ -19,14 +19,11 @@ $saved = get_user_meta($user->ID, 'course');
 
 $enrolled = array();
 $enrolled_courses = array();
-$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
-$mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
-$expenses = 0;
 
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
-    'post_status' => array('wc-processing'),
+    'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
     'order' => 'DESC',
     'limit' => -1,
@@ -37,8 +34,6 @@ foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         //Get woo orders from user
         $course_id = intval($item->get_product_id()) - 1;
-        $prijs = get_field('price', $course_id);
-        $expenses += $prijs; 
         if(!in_array($course_id, $enrolled))
             array_push($enrolled, $course_id);
     }
@@ -54,21 +49,9 @@ if(!empty($enrolled))
     );
 
     $enrolled_courses = get_posts($args);
-
-    //Make sure videos shared not null before to merge with enrolled
-    if(!empty($kennis_video))
-        if(isset($kennis_video[0]))
-            if($kennis_video[0])
-                $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
-
-    //Make sure videos put on mandatory is not null before to merge with enrolled
-    if(!empty($mandatory_video))
-        if(isset($mandatory_video[0]))
-            if($mandatory_video[0])
-                $enrolled_courses = array_merge($mandatory_video, $enrolled_courses);
-    
 }
 
+$offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
 
 if(isset($search_activity_course)){
     foreach($enrolled_courses as $course){

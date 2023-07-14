@@ -1,4 +1,4 @@
-PUT http://localhost/wp-json/custom/v1/user/view/experts
+POST http://localhost/wp-json/custom/v1/user/view/topics
 Authorization: Basic bW9oYW1lZC50QGlsbGltaXRpcy5jb206Q2FsbG1lMjAyMi4=
 Content-Type: application/json
 
