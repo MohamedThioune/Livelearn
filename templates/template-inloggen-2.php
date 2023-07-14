@@ -32,7 +32,7 @@
                         <a href="" class="btn btnStore">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
                         </a>
-                        <a href="" class="btn btnPlayGoogle">
+                        <a href="<?php echo get_site_url() ?> /wp-login.php?loginSocial=google" class="btn btnPlayGoogle">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
                         </a>
                     </div>

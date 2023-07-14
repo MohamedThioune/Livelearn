@@ -2,6 +2,7 @@
 
 
 $GLOBALS['user_id'] = get_current_user_id();
+
 class Expert
 {
  public  $id;
@@ -17,10 +18,6 @@ class Expert
     $this->profilImg =$profilImg;
     $this->company = get_field('company', 'user_' . (int)$expert->ID)[0] ?? null;
     $this->role = get_field('role', 'user_' . (int)$expert->ID) ?? '';
-    // if(!empty($company) ){
-    //     $company = $company[0];
-    //     $company_connected = $company->post_title;
-    // } 
     
   }
 
@@ -98,7 +95,7 @@ function allCourses ($data)
     
     $current_user_id = $GLOBALS['user_id'];
     $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-    $course_type = $_GET['course_type'];
+    $course_type = ucfirst(strtolower($_GET['course_type']));
     $outcome_courses = array();
     $tags = array();
     $experts = array();
@@ -111,8 +108,9 @@ function allCourses ($data)
       'meta_key'         => 'course_type',
       'meta_value' => $course_type);
     $courses = get_posts($args);
+    //print_r($courses);
     if (!$courses)
-      return ['error' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+      return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
       
     if (!isset ($data['page'])) 
       $page = 1;  
@@ -127,7 +125,7 @@ function allCourses ($data)
   $number_of_page = ceil($number_of_post / $results_per_page);
 
   if($number_of_page < $data['page'])
-    return ['error' => "Page doesn't exist ! ","codeStatus" => 400];  
+    return ["courses" => [],'message' => "Page doesn't exist ! ","codeStatus" => 400];  
   
   for($i=$start; $i < $end ;  $i++) 
   {
@@ -138,7 +136,7 @@ function allCourses ($data)
       if ($courses[$i]->visibility != []) 
         if ($author_company != $current_user_company)
           continue;
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $courses[$i]->experts = array();
           $experts = get_field('experts',$courses[$i]->ID);
           if(!empty($experts))
@@ -182,6 +180,99 @@ function allCourses ($data)
    return ['courses' => $outcome_courses, "codeStatus" => 200];
   }
 
+    
+    function allArticles ($data)
+    {
+        
+        $current_user_id = $GLOBALS['user_id'];
+        $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+        $course_type = ucfirst(strtolower($_GET['course_type']));
+        $outcome_courses = array();
+        $tags = array();
+        $experts = array();
+        $args = array(
+          'post_type' => array('post'),
+          'post_status' => 'publish',
+          'posts_per_page' => -1,
+          'ordevalue'       => $course_type,
+          'order' => 'DESC' ,
+          'meta_key'         => 'course_type',
+          'meta_value' => $course_type);
+        $courses = get_posts($args);
+        //print_r(count($courses));
+        if (!$courses)
+          return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+          
+        if (!isset ($data['page']))
+          $page = 1;
+        else
+          $page = $data['page'];
+        if(!empty($courses))
+          $number_of_post = count($courses);
+      $results_per_page = 20;
+      $start = ($page-1) * $results_per_page ;
+      $end = ( ($page) * $results_per_page ) > $number_of_post ? $number_of_post : ($page) * $results_per_page   ;
+
+      $number_of_page = ceil($number_of_post / $results_per_page);
+
+      if($number_of_page < $data['page'])
+        return ["courses" => [],'message' => "Page doesn't exist ! ","codeStatus" => 400];
+      
+      for($i=$start; $i < $end ;  $i++)
+      {
+          //$courses[$i]->links = $courses[$i]-> guid ?? null;
+          $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
+          $author = get_user_by( 'ID', $courses[$i] -> post_author  );
+          $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+          if ($courses[$i]->visibility != [])
+            if ($author_company != $current_user_company)
+              continue;
+              $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              $courses[$i]->experts = array();
+              $experts = get_field('experts',$courses[$i]->ID);
+              if(!empty($experts))
+                foreach ($experts as $key => $expert) {
+                  $expert = get_user_by( 'ID', $expert );
+                  $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                  array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+                  }
+            
+              $courses[$i]-> author = new Expert ($author , $author_img);
+              $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+              $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+              $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+              //Image - article
+              $image = get_field('preview', $courses[$i]->ID)['url'];
+              if(!$image){
+                  $image = get_the_post_thumbnail_url($courses[$i]->ID);
+                  if(!$image)
+                      $image = get_field('url_image_xml', $courses[$i]->ID);
+                          if(!$image)
+                              $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+              }
+              $courses[$i]->pathImage = $image;
+              $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+              $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
+              $courses[$i]->podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
+              $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
+              $tags = get_field('categories',$courses[$i]->ID) ?? [];
+              $courses[$i]->tags= array();
+              if($tags)
+                if (!empty($tags))
+                  foreach ($tags as $key => $category)
+                    if(isset($category['value'])){
+                      $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                      array_push($courses[$i]->tags,$tag);
+                    }
+                  
+              $new_course = new Course($courses[$i]);
+              array_push($outcome_courses, $new_course);
+        }
+       return ['courses' => $outcome_courses, "codeStatus" => 200];
+      }
+
+    
+    
 function allAuthors()
 {
   $authors_post = get_users(
@@ -214,7 +305,7 @@ function related_topics_subtopics(WP_REST_Request $request)
       $subtopics = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent' => (int)$id_topic,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        'hide_empty' => false, // change to 1 to hide categores not having a single post
     )) ?? false;
       if ($subtopics != false)
         $all_subtopics = array_merge($all_subtopics,$subtopics);
@@ -262,7 +353,8 @@ function related_topics_subtopics(WP_REST_Request $request)
   return $informations; 
 }
 
-function get_expert_courses ($data) {
+function get_expert_courses ($data) 
+{
   $current_user_id = $GLOBALS['user_id'];
   $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
   $expert_id = $data['id'] ?? null;
@@ -288,7 +380,7 @@ function get_expert_courses ($data) {
       $course_experts = get_field('experts',$course->ID) ?? [];
       if (in_array($expert_id,$course_experts) || $expert_id == $course->post_author){
         $author = get_user_by( 'ID', $course -> post_author  );
-        $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $course-> author = new Expert ($author , $author_img);
         $course->longDescription = get_field('long_description',$course->ID);
         $course->shortDescription = get_field('short_description',$course->ID);
@@ -384,7 +476,7 @@ function get_saved_course()
           }
         }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -446,14 +538,15 @@ function save_course($data)
   return ['error' => 'This id course doesn\'t exist' ];
 }
 
-function get_course_by_id($data){
+function get_course_by_id($data)
+{
   if (isset ($data['id']) && !empty ($data['id']))
   {
     $course_id = $data['id'];
     $course = get_post($course_id) ?? false;
     if ($course)
     {
-      $course->experts = array();
+          $course->experts = array();
           $experts = get_field('experts',$course->ID);
           if(!empty($experts))
             foreach ($experts as $key => $expert) 
@@ -462,8 +555,8 @@ function get_course_by_id($data){
               $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
-          $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author = get_user_by( 'ID', $course -> post_author);
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -527,7 +620,7 @@ function get_liked_courses()
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -626,7 +719,7 @@ function get_courses_of_subtopics($data)
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -673,7 +766,7 @@ function get_courses_of_subtopics($data)
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -744,7 +837,7 @@ function filter_course(WP_REST_Request $request)
         array_push($course->experts, new Expert($expert, $experts_img));
       }
     $author = get_user_by('ID', $course->post_author);
-    $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $author_img = get_field('profile_img', 'user_' . $author->ID) !=false ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $course->author = new Expert($author, $author_img);
     $course->longDescription = get_field('long_description', $course->ID);
     $course->shortDescription = get_field('short_description', $course->ID);
@@ -1171,7 +1264,7 @@ function getCommunities()
       foreach ($courses_community as $key => $course)
       {
             $author = get_user_by( 'ID', $course -> post_author);
-            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $course-> author = new Expert ($author , $author_img);
             $course->longDescription = get_field('long_description',$course->ID);
             $course->shortDescription = get_field('short_description',$course->ID);
@@ -1260,7 +1353,7 @@ function getCommunityById($data)
       foreach ($courses_community as $key => $course)
       {
             $author = get_user_by( 'ID', $course -> post_author);
-            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $course-> author = new Expert ($author , $author_img);
             $course->longDescription = get_field('long_description',$course->ID);
             $course->shortDescription = get_field('short_description',$course->ID);
@@ -1458,160 +1551,290 @@ function replyQuestion(WP_REST_Request $request)
   
   function update_view_course(WP_REST_Request $request)
   {
-      $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
-      if(empty($user_id))
-          ["error" => 'You\'ve to fill in the user id!' ];
 
-      $user = get_user_by('ID',$user_id) ?? null;
-      if(empty($user))
-          ["error" => 'This user id does not exist!' ];
+    $course_id = (isset($request['course_id'])) ? $request['course_id'] : 0;
+      if(!$course_id)
+         ["error" => 'You\'ve to fill in the course id!'];
+    save_view($course_id,'course', true);
+    
+      // $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
+      // if(empty($user_id))
+      //     ["error" => 'You\'ve to fill in the user id!' ];
+
+      // $user = get_user_by('ID',$user_id) ?? null;
+      // if(empty($user))
+      //     ["error" => 'This user id does not exist!' ];
       
-      $course_id = (isset($request['course_id'])) ? $request['course_id'] : 0;
-      if(!$user_id)
-        ["error" => 'You\'ve to fill in the course id!'];
+      // $course_id = (isset($request['course_id'])) ? $request['course_id'] : 0;
+      // if(!$user_id)
+      //   ["error" => 'You\'ve to fill in the course id!'];
 
-      $course = get_post($course_id) ?? null;
-      if(empty ($course))
-        ["error" => 'This course id does not exist!'];
+      // $course = get_post($course_id) ?? null;
+      // if(empty ($course))
+      //   ["error" => 'This course id does not exist!'];
 
-      $args = array(
-          'post_type' => 'view', 
-          'post_status' => 'publish',
-          'author' => $user_id,
-      );
+      // $args = array(
+      //     'post_type' => 'view', 
+      //     'post_status' => 'publish',
+      //     'author' => $user_id,
+      // );
 
-      $views_stat_user = get_posts($args);
+      // $views_stat_user = get_posts($args);
 
-      if(!empty($views_stat_user))
-          $stat_id = $views_stat_user[0]->ID;
-      else{
-          $data = array(
-              'post_type' => 'view',
-              'post_author' => $user_id,
-              'post_status' => 'publish',
-              'post_title' => $user->display_name . ' - View',
-              );
+      // if(!empty($views_stat_user))
+      //     $stat_id = $views_stat_user[0]->ID;
+      // else{
+      //     $data = array(
+      //         'post_type' => 'view',
+      //         'post_author' => $user_id,
+      //         'post_status' => 'publish',
+      //         'post_title' => $user->display_name . ' - View',
+      //         );
           
-          $stat_id = wp_insert_post($data);
-      }
+      //     $stat_id = wp_insert_post($data);
+      // }
 
-      $view = get_field('views', $stat_id);
+      // $view = get_field('views', $stat_id);
       
-      $one_view = array();
-      $one_view['course'] = $course;
-      $one_view['date'] = date('d/m/Y H:i:s');
+      // $one_view = array();
+      // $one_view['course'] = $course;
+      // $one_view['date'] = date('d/m/Y H:i:s');
 
-      if(!empty($view))
-          array_push($view, $one_view);
-      else 
-          $view = array($one_view); 
+      // if(!empty($view))
+      //     array_push($view, $one_view);
+      // else 
+      //     $view = array($one_view); 
       
-      update_field('views', $view, $stat_id);
+      // update_field('views', $view, $stat_id);
+
+
 
   }
 
   function update_view_topic(WP_REST_Request $request)
   {
-      $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
-      if(empty($user_id))
-        return ["error" => 'You\'ve to fill in the user id!' ];
+    insert_view_user(1,'expert', true);
+    // $topic_id = (isset($request['topic_id'])) ? $request['topic_id'] : null;
+    //   if(empty($topic_id))
+    //     return ["error" => 'You\'ve to fill in the topic id!' ];
+  
 
-      $user = get_user_by('ID',$user_id) ?? null;
-      if(empty($user))
-        ["error" => 'This user id does not exist' ];
+      // $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
+      // if(empty($user_id))
+      //   return ["error" => 'You\'ve to fill in the user id!' ];
+
+      // $user = get_user_by('ID',$user_id) ?? null;
+      // if(empty($user))
+      //   ["error" => 'This user id does not exist' ];
       
-      $topic_id = (isset($request['topic_id'])) ? $request['topic_id'] : null;
-      if(empty($topic_id))
-          return ["error" => 'You\'ve to fill in the topic id!' ];
+      // $topic_id = (isset($request['topic_id'])) ? $request['topic_id'] : null;
+      // if(empty($topic_id))
+      //     return ["error" => 'You\'ve to fill in the topic id!' ];
 
-      $args = array(
-          'post_type' => 'view', 
-          'post_status' => 'publish',
-          'author' => $user_id,
-      );
+      // $args = array(
+      //     'post_type' => 'view', 
+      //     'post_status' => 'publish',
+      //     'author' => $user_id,
+      // );
 
-      $views_stat_user = get_posts($args);
+      // $views_stat_user = get_posts($args);
 
-      if(!empty($views_stat_user))
-          $stat_id = $views_stat_user[0]->ID;
-      else
-      {
-          $data = array(
-              'post_type' => 'view',
-              'post_author' => $user_id,
-              'post_status' => 'publish',
-              'post_title' => $user->display_name . ' - View',
-              );
+      // if(!empty($views_stat_user))
+      //     $stat_id = $views_stat_user[0]->ID;
+      // else
+      // {
+      //     $data = array(
+      //         'post_type' => 'view',
+      //         'post_author' => $user_id,
+      //         'post_status' => 'publish',
+      //         'post_title' => $user->display_name . ' - View',
+      //         );
           
-          $stat_id = wp_insert_post($data);
-      }
+      //     $stat_id = wp_insert_post($data);
+      // }
 
-      $view = get_field('views_topic', $stat_id);
+      // $view = get_field('views_topic', $stat_id);
       
-      $one_view = array();
-      $one_view['view_id'] = $topic_id;
-      $one_view['view_name'] = (String)get_the_category_by_ID($topic_id);
-      $one_view['view_date'] = date('d/m/Y H:i:s');
+      // $one_view = array();
+      // $one_view['view_id'] = $topic_id;
+      // $one_view['view_name'] = (String)get_the_category_by_ID($topic_id);
+      // $one_view['view_date'] = date('d/m/Y H:i:s');
 
-      if(!empty($view))
-          array_push($view, $one_view);
-      else 
-          $view = array($one_view); 
+      // if(!empty($view))
+      //     array_push($view, $one_view);
+      // else 
+      //     $view = array($one_view); 
       
-      update_field('views_topic', $view, $stat_id);
+      // update_field('views_topic', $view, $stat_id);
 
   }
+
+  function insert_view_user($data_id, $type='course',?bool $isMobile) {
+    return 'Bonjour';
+    $user_visibility = wp_get_current_user();
+    global $wpdb;
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+    if(!$user_id)
+        return;
+    $occurence = 1;
+
+    //Add by MaxBird - get name entity
+    if($type == 'course')
+    {
+        $course = get_post($data_id);
+        $data_name = (!empty($course)) ? $course->post_name : null;
+    }
+    else if($type == 'expert')
+    {
+        $expert_infos = get_user_by('id', $data_id);
+        $data_name = ($expert_infos->last_name) ? $expert_infos->first_name : $expert_infos->display_name;
+    }
+    else if($type == 'topic')
+        $data_name = (String)get_the_category_by_ID($data_id);
+        
+    // if(!$data_name)
+    //     return;
+
+    //testing wheither data_id exist ?
+    $sql = $wpdb->prepare( "SELECT occurence FROM $table_tracker_views  WHERE data_id = $data_id");
+    $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
+    if ($occurence_id) {
+        $occurence = intval($occurence_id) + 1;
+        $data=[
+            'occurence' => $occurence
+        ];
+        $where=[
+            'data_id'=> $data_id,
+        ];
+        return $wpdb->update($table_tracker_views,$data,$where);
+    }
+    $data = [
+        'data_type'=> $type,
+        'data_id'=> $data_id,
+        'data_name'=> $data_name, //to change with @Mouhamed
+        'user_id'=> $user_id,
+        'platform'=> $isMobile ? 'mobile' : 'web',
+        'occurence'=> $occurence
+    ];
+    $wpdb->insert($table_tracker_views, $data);
+    return $wpdb->insert_id;
+}
 
   function update_view_experts(WP_REST_Request $request)
   {
-    $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
-    if(!$user_id)
-      return ["error" => 'You\'ve to fill in the user id!' ];
-
-    $user = get_user_by('ID',$user_id) ?? null;
-    if(empty($user))
-        return ["error" => 'This user id does not exist!' ];
-
-      $expert_id = (isset($request['expert_id'])) ? $request['expert_id'] : 0;
+    insert_view_user(1,'expert', true);
+    $expert_id = (isset($request['expert_id'])) ? $request['expert_id'] : 0;
       if(!$expert_id)
           return ["error" => 'You\'ve to fill in the expert id!' ];
       
-      $args = array(
-          'post_type' => 'view', 
-          'post_status' => 'publish',
-          'author' => $user_id,
-      );
+    // $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
+    // if(!$user_id)
+    //   return ["error" => 'You\'ve to fill in the user id!' ];
 
-      $views_stat_user = get_posts($args);
+    // $user = get_user_by('ID',$user_id) ?? null;
+    // if(empty($user))
+    //     return ["error" => 'This user id does not exist!' ];
 
-      if(!empty($views_stat_user))
-          $stat_id = $views_stat_user[0]->ID;
-      else
-      {
-          $data = array(
-              'post_type' => 'view',
-              'post_author' => $user_id,
-              'post_status' => 'publish',
-              'post_title' => $user->display_name . ' - View',
-              );
+    //   $expert_id = (isset($request['expert_id'])) ? $request['expert_id'] : 0;
+    //   if(!$expert_id)
+    //       return ["error" => 'You\'ve to fill in the expert id!' ];
+      
+    //   $args = array(
+    //       'post_type' => 'view', 
+    //       'post_status' => 'publish',
+    //       'author' => $user_id,
+    //   );
+
+    //   $views_stat_user = get_posts($args);
+
+    //   if(!empty($views_stat_user))
+    //       $stat_id = $views_stat_user[0]->ID;
+    //   else
+    //   {
+    //       $data = array(
+    //           'post_type' => 'view',
+    //           'post_author' => $user_id,
+    //           'post_status' => 'publish',
+    //           'post_title' => $user->display_name . ' - View',
+    //           );
           
-          $stat_id = wp_insert_post($data);
-      }
+    //       $stat_id = wp_insert_post($data);
+    //   }
 
-      $view = get_field('views_user', $stat_id);
+    //   $view = get_field('views_user', $stat_id);
       
-      $one_view = array();
-      $one_view['view_id'] = $expert_id;
-      $one_view['view_name'] = get_userdata($expert_id)->display_name;
-      $one_view['view_date'] = date('d/m/Y H:i:s');
+    //   $one_view = array();
+    //   $one_view['view_id'] = $expert_id;
+    //   $one_view['view_name'] = get_userdata($expert_id)->display_name;
+    //   $one_view['view_date'] = date('d/m/Y H:i:s');
 
-      if(!empty($view))
-          array_push($view, $one_view);
-      else 
-          $view = array($one_view); 
+    //   if(!empty($view))
+    //       array_push($view, $one_view);
+    //   else 
+    //       $view = array($one_view); 
       
-      update_field('views_user', $view, $stat_id);
+    //   update_field('views_user', $view, $stat_id);
 
   }
 
+  
+
+  function save_user_views(WP_REST_Request $request)
+  {
+    $data_id = (isset($request['data_id'])) ? $request['data_id'] : 0;
+    if(!$data_id)
+      return ["error" => 'You\'ve to fill in the id of the data !' ];
+    
+    $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
+    if (!$user_id)
+      return ["error" => 'You\'ve to fill in the user id!' ];
+
+    $data_type = (isset($request['data_type'])) ? $request['data_type'] : 0;
+    if (!$data_type)
+      return ["error" => 'You\'ve to fill in the type of the data!' ];
+    $user_visibility = get_user_by( 'ID', $user_id);
+    global $wpdb;
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $occurence = 1;
+
+    //Add by MaxBird - get name entity
+    if($data_type == 'course')
+    {
+        $course = get_post($data_id);
+        $data_name = (!empty($course)) ? $course->post_name : null;
+    }
+    else if($data_type == 'expert')
+    {
+        $expert_infos = get_user_by('id', $data_id);
+        $data_name = ($expert_infos->last_name) ? $expert_infos->first_name : $expert_infos->display_name;
+    }
+    else if($data_type == 'topic')
+        $data_name = (String)get_the_category_by_ID($data_id);
+        
+    //testing wheither data_id exist ?
+    $sql = $wpdb->prepare( "SELECT occurence FROM $table_tracker_views  WHERE data_id = $data_id");
+    $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
+    if ($occurence_id) {
+        $occurence = intval($occurence_id) + 1;
+        $data=[
+            'occurence' => $occurence
+        ];
+        $where=[
+            'data_id'=> $data_id,
+        ];
+        return $wpdb->update($table_tracker_views,$data,$where);
+    }
+    $data = [
+        'data_type'=> $data_type,
+        'data_id'=> $data_id,
+        'data_name'=> $data_name, //to change with @Mouhamed
+        'user_id'=> $user_id,
+        'platform'=> 'mobile',
+        'occurence'=> $occurence
+    ];
+    $wpdb->insert($table_tracker_views, $data);
+    return $wpdb->insert_id;
+  }
+  
 /** Views Endpoints */

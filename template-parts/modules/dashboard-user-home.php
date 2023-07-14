@@ -425,18 +425,32 @@ if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
 
-//Views
+
+/*         Views beginning      */
+
+/** 
+ * New way of getting Views from database
+ */ 
+
+// View table name
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+// Get id of courses viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'course' ");
+$all_user_views = $wpdb->get_results($sql_request);
+$id_courses_viewed = array_column($all_user_views,'data_id');
+
+/** 
+ *  Get courses viewed from db
+ */
 $user_post_view = get_posts( 
     array(
-        'post_type' => 'view',
+        'post_type' => array('course', 'post'),
         'post_status' => 'publish',
-        'author' => $user,
         'order' => 'DESC',
+        'include' => $id_courses_viewed,
         'posts_per_page' => -1
     )
 )[0];
-//SQL Request : "select * from tracker_views where user_id = %user_id"
-//$user_informations
 
 
 //Experts
@@ -446,18 +460,15 @@ $experts = get_user_meta($user, 'expert');
 $postAuthorSearch = $experts;
 $teachers = array();
 
-//SQL Request:
-// * Get authors from course already viewed
-//Get experts already viewed "select * from tracker_views where and data_type = 'expert' and user_id = %user_id ad" : Equivalent $view_my_experts
-//Views expert
-if (!empty($user_post_view))
-{
-    $view_my_experts = (get_field('views_user', $user_post_view->ID));
-    $id_view_experts = ($view_my_experts) ? array_column($view_my_experts, 'view_id') : array();
-    $id_view_experts = (!empty($id_view_experts)) ? array_unique($id_view_experts) : array();
-    $postAuthorSearch = (!empty($id_view_experts) && !empty($experts)) ? array_merge($experts, $id_view_experts) : $experts;
-}
+// Get id of experts viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'expert'");
+$all_expert_viewed = $wpdb->get_results($sql_request);
 
+//truncate $postAuthorSearch to avoid
+if (!empty($user_post_view) || !empty($postAuthorSearch))
+    $postAuthorSearch = (empty($all_expert_viewed)) ? $postAuthorSearch : array_merge(array_column($all_expert_viewed, 'data_id'), $postAuthorSearch);
+
+// Get the courses of experts viewed from db 
 $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
@@ -564,20 +575,13 @@ if (!empty($user_post_view))
 {
     $courses_id = array();
     $is_view = true;
-
-    //SQL Request:
-    //Get courses already viewed "select * from tracker_views where and data_type = 'course' and user_id = %user_id "
-    //Equivalent 'all_user-views'
-    $all_user_views = (get_field('views', $user_post_view->ID));
-
     $max_points = 10;
     $recommended_courses = array();
     $count_recommended_course = 0;
 
-    foreach($all_user_views as $key => $view) {
-        $view['course'] = get_post($view->data_id); 
-        //Get course viewed 
-        if(!$view['course'])
+    // browse the array os post type as courses obtain via database views
+    foreach($user_post_view as $key => $post_viewed) {
+        if(!$post_viewed)
             continue;
 
         foreach ($courses as $key => $course) {
@@ -585,8 +589,8 @@ if (!empty($user_post_view))
 
             //Read category viewed - get categories from course view
             $read_category_view = array();
-            $category_default = get_field('categories', $view['course']->ID);
-            $category_xml = get_field('category_xml', $view['course']->ID);
+            $category_default = get_field('categories', $post_viewed->ID);
+            $category_xml = get_field('category_xml', $post_viewed->ID);
             if(!empty($category_default))
                 foreach($category_default as $item)
                     if($item)
@@ -617,7 +621,7 @@ if (!empty($user_post_view))
                             array_push($read_category_course, $item['value']);
 
             //Price view
-            $view_prijs = get_field('price', $view['course']->ID);
+            $view_prijs = get_field('price', $post_viewed->ID);
 
             foreach($read_category_view as $value){
                 if($points == 6)
@@ -625,7 +629,7 @@ if (!empty($user_post_view))
                 if(in_array($value, $read_category_course))
                     $points += 3;
             }
-            if ($view['course']->post_author == $course->post_author)
+            if ($post_viewed->post_author == $course->post_author)
                 $points += 3;
             if ($view_prijs <= $course->price)
                 $points += 1;

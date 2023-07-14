@@ -523,9 +523,9 @@ add_action( 'init', 'custom_post_type', 0 );
 
 
 function add_custom_roles(){
-    add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
+    // add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
     add_role( 'manager', 'Manager', get_role( 'subscriber' )->capabilities );
-    add_role( 'hr', 'HR', get_role( 'subscriber' )->capabilities );
+    add_role( 'hr', 'HR', get_role( 'author' )->capabilities );
 }
 add_action('init', 'add_custom_roles');
 
@@ -690,13 +690,13 @@ add_filter( 'rest_authentication_errors', function( $result ) {
         return $result;
     }
 
-       if ( ! is_user_logged_in() ) {
-           return new WP_Error(
-               'rest_not_logged_in',
-               __( 'You are not currently logged in.' ),
-               array( 'status' => 401 )
-           );
-       }
+    //    if ( ! is_user_logged_in() ) {
+    //        return new WP_Error(
+    //            'rest_not_logged_in',
+    //            __( 'You are not currently logged in.' ),
+    //            array( 'status' => 401 )
+    //        );
+    //    }
     return $result;
 });
 
@@ -1556,6 +1556,13 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCourses',
   ));
 
+   register_rest_route('custom/v1', '/articles', array(
+     'methods' => 'GET',
+     'callback' => 'allArticles',
+   ));
+           
+           
+
   register_rest_route('custom/v1', '/authors', array(
     'methods' => 'GET',
     'callback' => 'allAuthors',
@@ -1687,19 +1694,13 @@ add_action( 'rest_api_init', function () {
   ));
 
   register_rest_route ('custom/v1', '/user/view/topics', array(
-    'methods' => 'PUT',
+    'methods' => 'GET',
     'callback' => 'update_view_topic',
   ));
 
-  register_rest_route ('custom/v1', '/user/view/experts', array(
-    'methods' => 'PUT',
-    'callback' => 'update_view_experts',
+  register_rest_route ('custom/v1', '/user/view/save', array(
+    'methods' => 'POST',
+    'callback' => 'save_user_views',
   ));
-
   
-
-  
-  
-  
-
 });

@@ -77,7 +77,6 @@ $table = $wpdb->prefix . 'databank';
               
               $youtube_videos .= ';' . $youtube_video;
           }
-
           $status = 'extern';
 
           //Data to create the course
@@ -91,13 +90,12 @@ $table = $wpdb->prefix . 'databank';
             'prijs' => 0, 
             'prijs_vat' => 0,
             'image_xml' => $image, 
-            'onderwerpen' => null, 
+            'onderwerpen' => null,
             'date_multiple' => null, 
             'course_id' => null,
             'author_id' => 0,
             'status' => $status
           );
-
           $wpdb->insert($table,$data);
           $post_id = $wpdb->insert_id;
 

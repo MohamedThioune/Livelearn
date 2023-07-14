@@ -5,16 +5,14 @@
 global $wpdb;
 
 $table = $wpdb->prefix . 'databank'; 
-// var_dump($_POST);die; //id,optie,class
 extract($_POST);
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
-
-if($optie == "✔️"){
+if($optie == "✔"){
         //Insert some other course type
-        $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
-        $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar'];
+        $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Podcast'];
+        $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar','podcast'=>'Podcast'];
 
     //Insert Artikel
     if (strval($course->type) == "Artikel"){
@@ -62,8 +60,32 @@ if($optie == "✔️"){
         update_field('course_type', 'video', $id_post);
         update_field('youtube_videos', $youtube_videos, $id_post);
     }
+    else if (strval($course->type) == 'Podcast'){
+        //Creation course
+        $args = array(
+            'post_type'   => 'course',
+            'post_author' => $course->author_id,
+            'post_status' => 'publish',
+            'post_title'  => $course->titel
+        );
+        $id_post = wp_insert_post($args, true);
+        //var_dump($course->podcasts);
+        $podcasts = explode('|', $course->podcasts);
+        $podcasts_playlists = [];
+        foreach ($podcasts as $item) {
+            $podcasts_playlist = [];
+            $podcast = explode('~', $item);
+            $podcasts_playlist['podcast_url'] = $podcast[0];
+            $podcasts_playlist['podcast_image'] = $course->image_xml;
+            $podcasts_playlist['podcast_title'] = $podcast[1];
+
+            $podcasts_playlists [] = $podcasts_playlist;
+        }
+        update_field('course_type', 'podcast', $id_post);
+        update_field('podcasts_index', $podcasts_playlists, $id_post);
+    }
     //Insert Others
-    else if(in_array(strval($course->type), $type)){
+    else if (in_array(strval($course->type), $type) ) {
         //Creation course
         $args = array(
             'post_type'   => 'course',
@@ -81,7 +103,6 @@ if($optie == "✔️"){
         }
         update_field('course_type', $typos[$course->type] , $id_post);
     }
-    
     if(is_wp_error($id_post)){
         $error = new WP_Error($id_post);
         echo $error->get_error_message($id_post);
@@ -149,3 +170,4 @@ return $updated;
 // }
 
 ?>
+
