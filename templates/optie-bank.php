@@ -78,6 +78,7 @@ if($optie == "✔"){
             $podcasts_playlist['podcast_url'] = $podcast[0];
             $podcasts_playlist['podcast_image'] = $course->image_xml;
             $podcasts_playlist['podcast_title'] = $podcast[1];
+            $podcasts_playlist['podcast_description'] = $podcast[2];
 
             $podcasts_playlists [] = $podcasts_playlist;
         }

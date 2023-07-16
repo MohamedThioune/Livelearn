@@ -22,7 +22,7 @@
                     acf_form(array(
                         'post_id'       => 'new_post',
                         'new_post' => array(
-                            'post_type'     => 'learnpath',
+                            'post_type'     => 'course',
                             'post_status'     => 'publish',
                         ),
                         'post_title'   => true,

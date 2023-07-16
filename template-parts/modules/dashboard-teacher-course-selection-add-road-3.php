@@ -209,6 +209,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                     }
                     ?>
                     <form id="step1">
+                        <!-- 
                         <div class="acf-field">
                             <input type="hidden" id="course_id" value="<?= $_GET['id'] ?>">
                             <label for="locate">Specifieke baan :</label><br>
@@ -311,6 +312,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                             </div>
                             <button type="button" name="step1" id="btn-ajax" class="btn btn-info">Apply</button>
                         </div>
+                        -->
 
                         <div class="addCourseStep">
                             <div class="blockBaangerichte">
@@ -423,9 +425,8 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                     <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
                                 </div>
                             </div>
-
                         </div>
-
+                        
                     </form>
 
                     <form action='/dashboard/teacher/course-selection/?func=add-road&id=<?php echo $_GET['id'] ?>&step=4' method='post'>
