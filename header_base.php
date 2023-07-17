@@ -672,40 +672,40 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/contact">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Onze-filosofie.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-what-is-livelearn.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Onze filosofie</p>
+                                                <p class="subtitleSousElementHeader">Wat is LiveLearn?</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/contact">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Leervormen.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-over-ons.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Leervormen</p>
+                                                <p class="subtitleSousElementHeader">Over ons</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/contact">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Communities.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-onze.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Communities</p>
+                                                <p class="subtitleSousElementHeader">Onze gebruikers</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/contact">
                                             <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Waarom.png" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-contact.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Waarom skills?</p>
+                                                <p class="subtitleSousElementHeader">Contact</p>
                                             </div>
                                         </a>
                                     </li>

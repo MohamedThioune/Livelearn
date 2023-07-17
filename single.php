@@ -140,13 +140,26 @@ foreach ($posts as $key => $course) {
                             echo $content;
                         ?>
                     </div>
+                    
                     <div class="sharing-block d-flex align-items-center">
+                        <?php
+                            $subject = $post->post_title;
+                            $permalink = get_permalink($post->ID);
+                            // $body_mail = '<h1>'. $subject .'</h1><br><p>' . $short_description . '</p><br>' . $permalink;
+
+                            $linkedin_share = "https://www.linkedin.com/sharing/share-offsite/?url=" . $permalink;
+                            // $linkedin_share = 'https://www.linkedin.com/shareArticle?url=' . $permalink . '&title=' . $subject . '&summary=' . $body_mail;
+                            $mail_share = 'mailto:' . $author->user_email . '?subject=' . $subject . '&body=' . $permalink;
+                        ?>
                         <p>Share :</p>
-                        <a href=""><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-                        <a href=""><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                        <a href=""><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                        <a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                    </div>
+                        <a href="<?= $linkedin_share ?>"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                        <!-- <a class="fb-share-button" data-href="<?= $permalink ?>" data-layout="button_count">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a> -->
+                        <!-- <a href=""><i class="fab fa-twitter" aria-hidden="true"></i></a> -->
+                        <a href="<?= $mail_share ?>"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                    </div> 
+                   
                     <div class="block-reaction">
                         <h2 class="title-reaction">What's your reaction ?</h2>
                         <div class="content-card-reaction">
@@ -254,16 +267,16 @@ foreach ($posts as $key => $course) {
                         <p class="title-category">Follow us on Social Media</p>
                     </div>
                     <div class="social-networks d-flex flex-wrap">
-                        <a href="">
+                        <a href="https://www.facebook.com/LiveLearnHQ">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-facebook.png" alt="">
                         </a>
-                        <a href="">
+                        <a href="https://www.linkedin.com/company/livelearnhq/mycompany/" target="_blank">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-instagram.png" alt="">
                         </a>
-                        <a href="">
+                        <!-- <a href="">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-twitter.png" alt="">
-                        </a>
-                        <a href="">
+                        </a> -->
+                        <a href="https://instagram.com/livelearn.app?igshid=MzRlODBiNWFlZA==" target="_blank">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-linkedin.png" alt="">
                         </a>
                     </div>
@@ -303,7 +316,7 @@ foreach ($posts as $key => $course) {
                 <div class="card-right-artikel">
                     <div class="head d-flex justify-content-between">
                         <p class="title-category">Recent posts</p>
-                        <a href="" class="btn-see-all">See All</a>
+                        <!-- <a href="" class="btn-see-all">See All</a> -->
                     </div>
                     <?php
                     foreach($recent_posts as $course):
@@ -330,7 +343,7 @@ foreach ($posts as $key => $course) {
                         $post_date = new DateTimeImmutable($course->post_date);
 
                         echo
-                        '<div class="posts-recent-block d-flex">
+                        '<a href="' . get_permalink($course->ID) . '" class="posts-recent-block d-flex">
                             <div class="img-recent-post">
                                 <img src="' . $thumbnail .'" alt="">
                             </div>
@@ -338,7 +351,7 @@ foreach ($posts as $key => $course) {
                                 <p class="date-recent-post">' . $post_date->format('F d, Y') .'</p>
                                 <p class="description-recent-post">' . $course->post_title . '</p>
                             </div>
-                        </div>';
+                        </a>';
 
                     endforeach;
                     ?>
@@ -392,7 +405,6 @@ foreach ($posts as $key => $course) {
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
 <script>
-
     // partners slides
     $('.logo_slide').slick({
         centerMode: false,
