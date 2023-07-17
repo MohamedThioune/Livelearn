@@ -11,12 +11,11 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
 require($page); 
 
 //view($post,$user_visibility);
-view($post);
 
 $course_type = get_field('course_type', $post->ID);
 
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar'];
+$online = ['E-learning', 'Video', 'Webinar','Podcast'];
 
 //Redirection - visibility 
 if(!visibility($post, $visibility_company))
@@ -32,7 +31,6 @@ $youtube_videos = get_field('youtube_videos', $post->ID);
 
 $podcasts = get_field('podcasts', $post->ID);
 $podcast_index = get_field('podcasts_index', $post->ID);
-
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $short_description = get_field('short_description', $post->ID);

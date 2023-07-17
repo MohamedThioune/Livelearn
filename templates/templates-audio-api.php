@@ -12,6 +12,7 @@ $table = $wpdb->prefix . 'databank';
 //key from my own account
 $apiKey = 'XV4FMX6HDE3SECBVMEF3';
 $apiSecret = '7Vr5rRxJyZ6^$TnhftLddbJKB6yNmXyYRcBx7T^Z';
+
 $time = time();
 $hash = sha1($apiKey.$apiSecret.$time);
 $headers = [
@@ -167,16 +168,12 @@ if ($audio_search){
         //var_dump($xml->channel[0]);
         foreach($xml->channel[0] as $key => $pod) {
             if($pod->enclosure->attributes()->url) {
-                //$description_podcast = (string)$pod->description;
+                $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
                 $mp3 = $pod->enclosure->attributes()->url;
-                $podcasts .= "$mp3~$title_podcast|";
+                $podcasts .= "$mp3~$title_podcast~$description_podcast|";
             }
         }
-        //var_dump($podcasts);die();
-        //echo "<br>nember caracters : ".strlen($podcasts);
-        //echo "<br>nember caracters : ".strlen(strip_tags($podcasts));
-
         //wich table will I do the request to show the list of podcast ?
         $data = array(
             'titel' => $title,
