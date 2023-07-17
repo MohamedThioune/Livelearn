@@ -8171,6 +8171,15 @@ tbody {
         .content-new-Courses .content-head {
             margin-top: 0px !important;
         }
+        .cardOverviewOrganisatie {
+            min-height: 500px;
+        }
+        .content-community-overview .section-app-store a img{
+            height: 65px;
+        }
+        .content-community-overview .section-app-store a img:last-child{
+            margin-top: 7px;
+        }
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
                 height: 190px !important;
