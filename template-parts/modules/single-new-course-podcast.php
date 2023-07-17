@@ -7,14 +7,6 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
 <?php
-//$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
-//$url = "https://anchor.fm/s/878cadd4/podcast/rss";
-$url = "https://feeds.buzzsprout.com/2145970.rss";
-//$url = "https://aod.nrjaudio.fm/xml/169.xml";
-$xml = simplexml_load_file($url);
-?>
-
-<?php
 extract($_GET);
 if(empty($podcast_index))
     if(isset($lesson))
@@ -22,12 +14,12 @@ if(empty($podcast_index))
             if($lesson != 0)
                 header('Location: ' . get_permalink($post->ID));
 
-//Long description             
+//Long description
 $long_description = ($long_description) ? : "No long description found for this course ";
 
 //Author
 $author = get_user_by('id', $post->post_author);
-$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
+$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
 $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 $author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
@@ -160,15 +152,13 @@ endif;
                                 </div>
                             </ul>
 
-                            <?php 
-                            if(!empty($podcasts)):
+                            <?php
+                            //if(!empty($podcasts)):
                             ?>
                             <ul id="Course">
                                 <div class="list-content-podcast">
                                 <?php
-                                //$counter = count($xml->channel[0]);
-                                $counter = 1;
-                                foreach($podcasts as $key => $podcast) {
+                                foreach ($podcast_index as $key => $podcast) {
                                     $style = "";
                                     if(isset($lesson))
                                         if($lesson == $key)
@@ -186,13 +176,13 @@ endif;
                                     <div class="elemnt-list-podcast">
                                         <p class="number-list"><?= $lecture_index ?></p>
                                         <div class="detail-block-podcast">
-                                            <p class="title-podcast"><?= $podcast['course_podcast_title'] ?></p>
+                                            <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
                                             <div class="audio">
                                                 <div class="cp-audioquote">
                                                     <div class="cp-audioquote__player">
                                                         <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="<?= $podcast['course_podcast_data'] ?>">
-                                                            <p><?= $podcast['course_podcast_intro'] ?></p>
+                                                        <audio class="cp-audioquote__player__src" src="<?= $podcast['podcast_url'] ?>">
+                                                            <p><?= $podcast['podcast_description'] ?></p>
                                                         </audio>
                                                         <div class="cp-audioquote__player--playBtn"></div>
                                                         <div class="cp-audioquote__player--display">
@@ -213,7 +203,7 @@ endif;
                                 </div>
                             </ul>
                             <?php
-                            endif;
+                            //endif;
                             ?>
 
                             <ul id="Reviews" class="hide">
@@ -224,16 +214,16 @@ endif;
                                             <div class="rating-bying-course">
                                                 <div class="rating-element2">
                                                     <div class="rating">
-                                                        <?php 
+                                                        <?php
                                                         foreach(range(5, 1) as $number):
                                                             if($average_star == $number ):
                                                                 echo '<input type="radio" id="star' . $number . '-note" class="stars" checked name="rating-note" value="' . $number . '" />
-                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';                      
+                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';
                                                                 continue;
                                                             endif;
 
                                                             echo '<input type="radio" id="star' . $number . '-note" class="stars" name="rating-note" value="' . $number . '" />
-                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';                      
+                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';
 
                                                         endforeach;
                                                         ?>
@@ -367,7 +357,7 @@ endif;
                                     if(!empty($reviews))
                                         foreach($reviews as $review):
                                             $user = $review['user'];
-                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
+                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
                                             $image_author = get_field('profile_img',  'user_' . $user->ID);
                                             $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
                                             $company = get_field('company',  'user_' . $user->ID);
@@ -394,7 +384,7 @@ endif;
                                         ?>
                                         <div class="comment-block">
                                             <h2>Write a Review</h2>
-                                            <form action="/dashboard/user" method="POST" id="review_vid"> 
+                                            <form action="/dashboard/user" method="POST" id="review_vid">
                                                 <input type="hidden" name="course_id" value="<?= $post->ID; ?>" >
                                             </form>
                                             <div class="rating-element2">
@@ -435,11 +425,11 @@ endif;
                             <?php
                             $saves_expert = get_user_meta($user_id, 'expert');
                             foreach($experts as $value):
-                                if(!$value) 
+                                if(!$value)
                                     continue;
 
                                 $expert = get_user_by('id', $value);
-                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name; 
+                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name;
                                 $image = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                                 $company = get_field('company',  'user_' . $expert->ID);
@@ -451,8 +441,8 @@ endif;
                                     </div>
                                     <p class="name-expert"><?= $expert_name ?></p>
                                     <p class="poste-expert"><?= $title ?></p>
-                                </a>    
-                               
+                                </a>
+
                             <?php
                             endforeach;
                             ?>
@@ -475,21 +465,21 @@ endif;
                                     <p class="name-element-detail">Instructor:</p>
                                     <p class="detail"><?= $author_name ?></p>
                                 </li>
-                                <!-- 
+                                <!--
                                 <li>
                                     <p class="name-element-detail">Duration:</p>
                                     <p class="detail">3 weeks</p>
-                                </li> 
+                                </li>
                                 -->
                                 <li>
                                     <p class="name-element-detail">Lessons:</p>
                                     <p class="detail"><?= $count_audios ?></p>
                                 </li>
-                                
+
                                 <li>
                                     <p class="name-element-detail">Enrolled</p>
                                     <p class="detail"><?= $enrolled_member ?></p>
-                                </li> 
+                                </li>
 
                                 <?php
                                 if($language)
@@ -498,7 +488,7 @@ endif;
                                         <p class="detail">English</p>
                                       </li>';
                                 ?>
-                               
+
                                 <li>
                                     <p class="name-element-detail">Certificate:</p>
                                     <p class="detail">No</p>
@@ -510,7 +500,7 @@ endif;
 
                                 <?php echo $startorbuy ?>
 
-                                <!-- 
+                                <!--
                                 <div class="sharing-element">
                                     <p>Share On:</p>
                                     <div class="d-flex flex-wrap">
@@ -530,7 +520,7 @@ endif;
                                             <i class="fa fa-instagram"></i>
                                         </a>
                                     </div>
-                                </div> 
+                                </div>
                                 -->
                             </ul>
                         </div>
@@ -574,8 +564,8 @@ endif;
 
                         //Course Type
                         $course_type = get_field('course_type', $course->ID);
-                        
-                        echo 
+
+                        echo
                         '<a href="' . get_permalink($course->ID) . '" class="new-card-course">
                             <div class="head">
                                 <img src="' . $thumbnail . '" alt="">
