@@ -202,19 +202,21 @@ $other_communities = array();
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
-                                    <?php
-                                    if(!$bool)
-                                        echo "<form action='' method='POST'>
+                                    <div class="d-flex justify-content-center flex-wrap align-items-center">
+                                        <?php
+                                        if(!$bool)
+                                            echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
-                                    else
-                                        echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
+                                        else
+                                            echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
                                         echo '<form action=""  method="POST">
                                                 <input type="hidden" name="community_id" value="' . $community->ID . '" >
                                                 <button type="submit" name="unfollow_community" class="btn btn-danger">Unsubscribe</button>
                                               </form>';
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         <?php
