@@ -1,6 +1,4 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-use Automattic\WooCommerce\Client;
 
 function woocommmerce_subscribe($information, $active){
     $global_product_id = 9873;

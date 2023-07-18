@@ -32,7 +32,7 @@
 
     /** Woocommerce API client for php - list subscriptions **/
     $endpoint = "subscriptions";
-    $subscriptions = $woocommerce->get($endpoint, $parameters = []);
+    //$subscriptions = $woocommerce->get($endpoint, $parameters = []);
 
     //Credit cards 
     $mollie = new \Mollie\Api\MollieApiClient();
@@ -66,7 +66,8 @@
                     break;                
                 } 
             
-    }   
+    }
+    
 
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
         header('Location: /dashboard/user');
@@ -78,8 +79,8 @@
     // if (!$access_granted && !in_array( 'administrator', $user->roles ))
     //     header('Location: /dashboard/company/profile-company');
 
-    if (!$access_granted)
-        header('Location: /dashboard/company/profile-company');
+    // if (!$access_granted)
+    //     header('Location: /dashboard/company/profile-company');
 
     //Pricing changes
     $price = $global_price * $team;
