@@ -16022,6 +16022,7 @@ background: #FFFFFF !important;
 .advert-course-Block .advert-one .blockImgAdvert img{
     width: 100%;
     height: 100%;
+    max-height: 190px;
     object-fit: contain;
 }
 .advert-course-Block .advert-second{
@@ -16228,6 +16229,7 @@ background: #FFFFFF !important;
 .content-data-analytics .analytics-block .second-content-analitycs img {
     width: 100%;
     height: 100%;
+    max-height: 190px;
     object-fit: contain;
 }
 .other-analytics .number-other-detail {
@@ -18731,10 +18733,10 @@ background: #FFFFFF !important;
     height: 368px;
     margin-top: 0;
     padding-top: 50px;
-}
+}/*
 .canhas .content-new-Courses .content-head{
     margin-top: 27px;
-}
+}*/
 .content-course-podcast {
     padding-top: 55px;
     background: #F5FAFD;
@@ -20407,7 +20409,69 @@ background: #FFFFFF !important;
     text-align: center;
     margin-bottom: 45px;
 }
+.content-template-form .description{
+    width: 50%;
+    margin: 15px auto 50px;
+}
+.content-template-form  .boxOne3-1 {
+    height: fit-content !important;
+    padding-top: 70px;
+    padding-bottom: 370px;
+    background: #e0eef3;
+}
+.content-template-form .content-community-overview h1 {
+    margin-top: 60px;
+}
 
+.content-template-form .form-block{
+    margin-top: -400px;
+}
+.content-template-form .form-block form{
+    width: 35%;
+    margin: 0 auto 195px;
+    background: #023356;
+    padding: 25px;
+    border-radius: 25px;
+    display: grid;
+}
+.content-template-form .form-block p {
+    color: #E0EFF4;
+    font-weight: 600;
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+.form-block form input, .form-block textarea {
+    color: #E0EFF4;
+    padding: 9px 15px;
+    margin-bottom: 17px;
+    border-radius: 8px;
+}
+.btn-ons {
+    background: #00A89D;
+    color: white;
+    margin-top: 18px;
+}
+.course-content-video-intro .blockImgCour {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0%;
+    left: 0%;
+    position: absolute;
+}
+.body-card-community .form {
+    position: relative;
+    margin-bottom: 0;
+}
+.customize-support .content-detail-assessment{
+    padding-top: 60px;
+}
+.content-detail-assessment .customTabs {
+    margin-top: 45px;
+}
+.content-detail-assessment .blockOneOver .title-assessment-test {
+    margin-bottom: 30px;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -24683,6 +24747,19 @@ background: #FFFFFF !important;
     .section-Onze-aanpak h2, .section-zoek h2 {
         font-size: 26px;
         margin-bottom: 27px;
+    }
+    .content-community-overview .boxOne3-1 {
+        height: fit-content !important;
+        padding-bottom: 28px;
+        padding-top: 10px;
+    }
+    .content-template-form .form-block form {
+        width: 95%;
+        margin: 0 auto 50px;
+        display: grid;
+    }
+    .bleu-block-contact-calendy .title-Direct-een {
+        width: 100%;
     }
 
 

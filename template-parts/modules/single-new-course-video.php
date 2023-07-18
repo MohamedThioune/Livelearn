@@ -44,40 +44,34 @@ if(!empty($courses))
 //Start or Buy
 $startorbuy = (!$bool_link) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href=""/dashboard/user/checkout-video/?post=" ' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
 
-//Similar course
-$similar_course = array();
-$args = array(
-    'post_type' => 'course',
-    'post_status' => 'publish',
-    'orderby' => 'date',
-    'post_author' => $post->post_author,
-    'order' => 'DESC',
-    'posts_per_page' => -1
-);
-$author_courses = get_posts($args);
-foreach ($author_courses as $key => $course) {
-    $type_course = get_field('course_type', $post->ID);
-    if($type_course == $course_type)
-        array_push($similar_course, $course);
-        
-    if(count($similar_course) == 6)
-        break;
-} 
+//Review pourcentage
+if(!empty($count_reviews)):
+    $star_review[1] = ($star_review[1] / $count_reviews) * 100;
+    $star_review[2] = ($star_review[2] / $count_reviews) * 100;
+    $star_review[3] = ($star_review[3] / $count_reviews) * 100;
+    $star_review[4] = ($star_review[4] / $count_reviews) * 100;
+    $star_review[5] = ($star_review[5] / $count_reviews) * 100;
+endif;
+
 ?>
 <body>
 <div class="content-new-Courses video-content-course">
     <div class="content-head">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-center">
-                <p class="reviews-text">0 Students</p>
+                <p class="reviews-text"><?= $enrolled_member ?> Students</p>
                 <div class="d-flex">
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
-                    <i class="fa fa-star checked"></i>
+                <?php
+                foreach(range(1,5) as $number):
+                    if($average_star >= $number ):
+                        echo '<i class="fa fa-star checked"></i>';
+                        continue;
+                    endif;
+                    echo '<i class="fa fa-star"></i>';
+                endforeach;
+                ?>
                 </div>
-                <p class="reviews-text">0 (0 reviews)</p>
+                <p class="reviews-text"><?= $average_star ?> (<?= $count_reviews ?> reviews)</p>
             </div>
             <h1 class="title-course text-center"><?= $post->post_title ?></h1>
             <div class="content-autors-detail">
@@ -89,7 +83,7 @@ foreach ($author_courses as $key => $course) {
             <div class="block-review-calendar">
                 <div class="d-flex align-items-center">
                     <i class='fa fa-calendar-alt'></i>
-                    <p class="date"><?= $post_date->format('d/m/Y');?></p>
+                    <p class="date"><?= $post_date->format('d/m/Y'); ?></p>
                 </div>
                 <?php
                 if($language):
@@ -231,7 +225,7 @@ foreach ($author_courses as $key => $course) {
                                                             <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
                                                             <a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['title'] . '</a>
                                                         </div>
-                                                        <img class="status-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/view-course.svg" alt="">
+                                                        <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
                                                     </div>';
                                             }                                                
                                         
@@ -252,11 +246,11 @@ foreach ($author_courses as $key => $course) {
                                             <div class="d-flex flex-wrap">
                                                 <div class="d-flex align-items-center">
                                                     <i class="fa fa-star checked"></i>
-                                                    <p class="text-detail-reveiw text-detail-reveiw2"> 0.0 Instructor Rating</p>
+                                                    <p class="text-detail-reveiw text-detail-reveiw2"> 5.0 Instructor Rating</p>
                                                 </div>
-                                                <p class="text-detail-reveiw">0 Reviews</p>
-                                                <p class="text-detail-reveiw">0 Students</p>
-                                                <p class="text-detail-reveiw"><?= count($author_courses) ?> Course</p>
+                                                <p class="text-detail-reveiw"><?= $count_reviews ?> Reviews</p>
+                                                <p class="text-detail-reveiw"><?= $enrolled_member ?> Students</p>
+                                                <p class="text-detail-reveiw"><?= count($author_courses) ?> Courses</p>
                                             </div>
                                         </div>
                                     </div>
@@ -264,25 +258,27 @@ foreach ($author_courses as $key => $course) {
                                 </div>
                             </ul>
 
-                            <!-- 
                             <ul id="Reviews" class="hide">
                                 <div class="section-tabs" >
                                     <div class="d-flex justify-content-between flex-wrap block-review-course">
                                         <div class="block-note-review">
-                                            <p class="note-text">4.8</p>
+                                            <p class="note-text"><?= $average_star_format ?></p>
                                             <div class="rating-bying-course">
                                                 <div class="rating-element2">
                                                     <div class="rating">
-                                                        <input type="radio" id="star5-note" class="stars disabled" disabled name="rating-note" value="5" />
-                                                        <label class="star" for="star5-note" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-note" class="stars" checked name="rating-note" value="4" />
-                                                        <label class="star" for="star4-note" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-note" class="stars" name="rating-note" value="3" />
-                                                        <label class="star" for="star3-note" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-note" class="stars" name="rating-note" value="2" />
-                                                        <label class="star" for="star2-note" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-note" name="rating-note" value="1" />
-                                                        <label class="star" for="star1-note" class="stars" title="Bad" aria-hidden="true"></label>
+                                                        <?php 
+                                                        foreach(range(5, 1) as $number):
+                                                            if($average_star == $number ):
+                                                                echo '<input type="radio" id="star' . $number . '-note" class="stars" checked name="rating-note" value="' . $number . '" />
+                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';                      
+                                                                continue;
+                                                            endif;
+
+                                                            echo '<input type="radio" id="star' . $number . '-note" class="stars" name="rating-note" value="' . $number . '" />
+                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';                      
+
+                                                        endforeach;
+                                                        ?>
                                                     </div>
                                                     <span class="rating-counter"></span>
                                                 </div>
@@ -291,50 +287,32 @@ foreach ($author_courses as $key => $course) {
                                         </div>
                                         <div class="barNote">
                                             <div class="skillbars">
-                                                <div class="progress" data-fill="95" >
+                                                <div class="progress" data-fill="<?= $star_review[5] ?>" >
                                                 </div>
                                                 <div class="bg-gris-Skills"></div>
                                             </div>
                                             <div class="skillbars">
-                                                <div class="progress" data-fill="85" >
+                                                <div class="progress" data-fill="<?= $star_review[4] ?>" >
                                                 </div>
                                                 <div class="bg-gris-Skills"></div>
                                             </div>
                                             <div class="skillbars">
-                                                <div class="progress" data-fill="60" >
+                                                <div class="progress" data-fill="<?= $star_review[3] ?>" >
                                                 </div>
                                                 <div class="bg-gris-Skills"></div>
                                             </div>
                                             <div class="skillbars">
-                                                <div class="progress" data-fill="50" >
+                                                <div class="progress" data-fill="<?= $star_review[2] ?>" >
                                                 </div>
                                                 <div class="bg-gris-Skills"></div>
                                             </div>
                                             <div class="skillbars">
-                                                <div class="progress" data-fill="35" >
+                                                <div class="progress" data-fill="<?= $star_review[1] ?>" >
                                                 </div>
                                                 <div class="bg-gris-Skills"></div>
                                             </div>
                                         </div>
                                         <div class="block-rating-note">
-                                            <div class="element-block-rating">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Awesome" class="stars disabled" disabled name="rating-Awesome" value="5" />
-                                                        <label class="star" for="star5-Awesome" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Awesome" class="stars" checked name="rating-Awesome" value="4" />
-                                                        <label class="star" for="star4-Awesome" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Awesome" class="stars" name="rating-Awesome" value="3" />
-                                                        <label class="star" for="star3-Awesome" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Awesome" class="stars" name="rating-Awesome" value="2" />
-                                                        <label class="star" for="star2-Awesome" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Awesome" name="rating-Awesome" value="1" />
-                                                        <label class="star" for="star1-Awesome" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                                <p class="note-global-rating">95 %</p>
-                                            </div>
                                             <div class="element-block-rating">
                                                 <div class="rating-element2">
                                                     <div class="rating">
@@ -351,7 +329,7 @@ foreach ($author_courses as $key => $course) {
                                                     </div>
                                                     <span class="rating-counter"></span>
                                                 </div>
-                                                <p class="note-global-rating">95 %</p>
+                                                <p class="note-global-rating"><?= $star_review[5] ?> %</p>
                                             </div>
                                             <div class="element-block-rating">
                                                 <div class="rating-element2">
@@ -369,7 +347,7 @@ foreach ($author_courses as $key => $course) {
                                                     </div>
                                                     <span class="rating-counter"></span>
                                                 </div>
-                                                <p class="note-global-rating">85 %</p>
+                                                <p class="note-global-rating"><?= $star_review[4] ?> %</p>
                                             </div>
                                             <div class="element-block-rating">
                                                 <div class="rating-element2">
@@ -387,7 +365,7 @@ foreach ($author_courses as $key => $course) {
                                                     </div>
                                                     <span class="rating-counter"></span>
                                                 </div>
-                                                <p class="note-global-rating">60 %</p>
+                                                <p class="note-global-rating"><?= $star_review[3] ?> %</p>
                                             </div>
                                             <div class="element-block-rating">
                                                 <div class="rating-element2">
@@ -405,7 +383,7 @@ foreach ($author_courses as $key => $course) {
                                                     </div>
                                                     <span class="rating-counter"></span>
                                                 </div>
-                                                <p class="note-global-rating">50 %</p>
+                                                <p class="note-global-rating"><?= $star_review[2] ?> %</p>
                                             </div>
                                             <div class="element-block-rating">
                                                 <div class="rating-element2">
@@ -423,232 +401,7 @@ foreach ($author_courses as $key => $course) {
                                                     </div>
                                                     <span class="rating-counter"></span>
                                                 </div>
-                                                <p class="note-global-rating">35 %</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-
-                                    if(!empty($reviews))
-                                        foreach($reviews as $review):
-                                            $user = $review['user'];
-                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
-                                            $image_author = get_field('profile_img',  'user_' . $user->ID);
-                                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                            $company = get_field('company',  'user_' . $user->ID);
-                                            $title = $company[0]->post_title;
-                                            $rating = $review['rating'];
-                                            echo '
-                                            <div class="user-comment-block">
-                                                <div class="d-flex">
-                                                    <div class="img-block">
-                                                        <img src="' . $image_author . '" alt="">
-                                                    </div>
-                                                    <div>
-                                                        <div class="d-flex align-items-center">
-                                                            <p class="name-autors-comment">' . $author_name . '</p> ' . //<p class="timing-comment">3 days ago </p>
-                                                        '</div>
-                                                        <p class="title-comment">' . $title . '</p>
-                                                    </div>
-                                                </div>
-                                                <p class="text-tabs">' . $review['feedback'] . '</p>
-                                            </div>';
-                                        endforeach;
-
-                                    if(!$my_review_bool):
-                                    ?>
-                                    <div class="comment-block">
-                                        <h2>Write a Review</h2>
-                                        <form action="/dashboard/user" method="POST" id="review_vid"> 
-                                            <input type="hidden" name="course_id" value="<?= $post->ID; ?>" >
-                                        </form>
-                                        <div class="rating-element2">
-                                            <div class="rating">
-                                                <input type="radio" id="star5-review" class="stars" name="rating" value="5" form="review_vid"/>
-                                                <label class="star" for="star5-review" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4-review" class="stars" name="rating" value="4" form="review_vid"/>
-                                                <label class="star" for="star4-review" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3-review" class="stars" name="rating" value="3" form="review_vid"/>
-                                                <label class="star" for="star3-review" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2-review" class="stars" name="rating" value="2" form="review_vid"/>
-                                                <label class="star" for="star2-review" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1-review" name="rating" value="1" form="review_vid"/>
-                                                <label class="star" for="star1-review" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                        <textarea name="feedback_content" id="feedback" rows="10" form="review_vid"></textarea>
-                                        <div class="position-relative">
-                                            <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
-                                            <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
-                                        </div>
-                                        </form>
-                                    </div>
-                                    <?php
-                                    endif;
-                                    ?>
-                                </div>
-                            </ul> -->
-
-                            <ul id="Reviews" class="hide">
-                                <div class="section-tabs" >
-                                    <div class="d-flex justify-content-between flex-wrap block-review-course">
-                                        <div class="block-note-review">
-                                            <p class="note-text">4.8</p>
-                                            <div class="rating-bying-course">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-note" class="stars disabled" disabled name="rating-note" value="5" />
-                                                        <label class="star" for="star5-note" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-note" class="stars" checked name="rating-note" value="4" />
-                                                        <label class="star" for="star4-note" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-note" class="stars" name="rating-note" value="3" />
-                                                        <label class="star" for="star3-note" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-note" class="stars" name="rating-note" value="2" />
-                                                        <label class="star" for="star2-note" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-note" name="rating-note" value="1" />
-                                                        <label class="star" for="star1-note" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                            </div>
-                                            <p class="note-description">Course Rating</p>
-                                        </div>
-                                        <div class="barNote">
-                                            <div class="skillbars">
-                                                <div class="progress" data-fill="95" >
-                                                </div>
-                                                <div class="bg-gris-Skills"></div>
-                                            </div>
-                                            <div class="skillbars">
-                                                <div class="progress" data-fill="85" >
-                                                </div>
-                                                <div class="bg-gris-Skills"></div>
-                                            </div>
-                                            <div class="skillbars">
-                                                <div class="progress" data-fill="60" >
-                                                </div>
-                                                <div class="bg-gris-Skills"></div>
-                                            </div>
-                                            <div class="skillbars">
-                                                <div class="progress" data-fill="50" >
-                                                </div>
-                                                <div class="bg-gris-Skills"></div>
-                                            </div>
-                                            <div class="skillbars">
-                                                <div class="progress" data-fill="35" >
-                                                </div>
-                                                <div class="bg-gris-Skills"></div>
-                                            </div>
-                                        </div>
-                                        <div class="block-rating-note">
-                                            <div class="element-block-rating">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Awesome" class="stars disabled" disabled name="rating-Awesome" value="5" />
-                                                        <label class="star" for="star5-Awesome" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Awesome" class="stars" checked name="rating-Awesome" value="4" />
-                                                        <label class="star" for="star4-Awesome" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Awesome" class="stars" name="rating-Awesome" value="3" />
-                                                        <label class="star" for="star3-Awesome" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Awesome" class="stars" name="rating-Awesome" value="2" />
-                                                        <label class="star" for="star2-Awesome" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Awesome" name="rating-Awesome" value="1" />
-                                                        <label class="star" for="star1-Awesome" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                                <p class="note-global-rating">95 %</p>
-                                            </div>
-                                            <div class="element-block-rating">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
-                                                        <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
-                                                        <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
-                                                        <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
-                                                        <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Great" name="rating-Great" value="1" />
-                                                        <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                                <p class="note-global-rating">95 %</p>
-                                            </div>
-                                            <div class="element-block-rating">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Very-good" class="stars disabled" disabled name="rating-Very-good" value="5" />
-                                                        <label class="star" for="star5-Very-good" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Very-good" class="stars" checked name="rating-Very-good" value="4" />
-                                                        <label class="star" for="star4-Very-good" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Very-good" class="stars" name="rating-Very-good" value="3" />
-                                                        <label class="star" for="star3-Very-good" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Very-good" class="stars" name="rating-Very-good" value="2" />
-                                                        <label class="star" for="star2-Very-good" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Very-good" name="rating-Very-good" value="1" />
-                                                        <label class="star" for="star1-Very-good" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                                <p class="note-global-rating">85 %</p>
-                                            </div>
-                                            <div class="element-block-rating">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Good" class="stars" name="rating-Good" value="5" />
-                                                        <label class="star" for="star5-Good" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Good" class="stars disabled" disabled  name="rating-Good" value="4" />
-                                                        <label class="star" for="star4-Good" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Good" class="stars" checked name="rating-Good" value="3" />
-                                                        <label class="star" for="star3-Good" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Good" class="stars" name="rating-Good" value="2" />
-                                                        <label class="star" for="star2-Good" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Good" name="rating-Good" value="1" />
-                                                        <label class="star" for="star1-Good" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                                <p class="note-global-rating">60 %</p>
-                                            </div>
-                                            <div class="element-block-rating">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-stars" class="stars" name="rating-stars" value="5" />
-                                                        <label class="star" for="star5-stars" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-stars" class="stars"  name="rating-stars" value="4" />
-                                                        <label class="star" for="star4-stars" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-stars" class="stars disabled" disabled name="rating-stars" value="3" />
-                                                        <label class="star" for="star3-stars" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-stars" class="stars-stars" checked name="rating" value="2" />
-                                                        <label class="star" for="star2-stars" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-stars" name="rating-stars" value="1" />
-                                                        <label class="star" for="star1-stars" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                                <p class="note-global-rating">50 %</p>
-                                            </div>
-                                            <div class="element-block-rating">
-                                                <div class="rating-element2">
-                                                    <div class="rating">
-                                                        <input type="radio" id="5bad" class="stars" name="rating-bad" value="5" />
-                                                        <label class="star" for="5bad" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="4bad" class="stars"  name="rating-bad" value="4" />
-                                                        <label class="star" for="4bad" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="3bad" class="stars" name="rating-bad" value="3" />
-                                                        <label class="star" for="3bad" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="2bad" class="stars disabled" disabled name="rating-bad" value="2" />
-                                                        <label class="star" for="2bad" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="1bad" name="rating-bad" checked value="1" />
-                                                        <label class="star" for="1bad" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                                <p class="note-global-rating">35 %</p>
+                                                <p class="note-global-rating"><?= $star_review[1] ?> %</p>
                                             </div>
                                         </div>
                                     </div>
@@ -718,6 +471,7 @@ foreach ($author_courses as $key => $course) {
 
                     </div>
                     <div>
+                        <br>
                         <h2>Expert</h2>
                         <div class="owl-carousel owl-theme owl-carousel-card-course">
                             <?php
@@ -733,7 +487,7 @@ foreach ($author_courses as $key => $course) {
                                 $company = get_field('company',  'user_' . $expert->ID);
                                 $title = $company[0]->post_title;
                                 ?>
-                                <a class="card-expert">
+                                <a href="/user-overview?id=<?= $expert->ID ?>" class="card-expert">
                                     <div class="head">
                                         <img src="<?= $image ?>" alt="">
                                     </div>
@@ -801,7 +555,7 @@ foreach ($author_courses as $key => $course) {
                                 </li>
                                 <li>
                                     <p class="name-element-detail">Enrolled</p>
-                                    <p class="detail">0</p>
+                                    <p class="detail"><?= $enrolled_member ?></p>
                                 </li>
                                 <?php
                                 if($language)
@@ -848,7 +602,7 @@ foreach ($author_courses as $key => $course) {
                 </div>
             </div>
             <?php
-            if(empty($similar_course)):
+            if(!empty($similar_course)):
             ?>
             <div class="similar-course-block">
                 <h2>Similar Course</h2>
@@ -891,7 +645,7 @@ foreach ($author_courses as $key => $course) {
                                 <img src="' . $thumbnail . '" alt="">
                             </div>
                             <div class="title-favorite d-flex justify-content-between align-items-center">
-                                <p class="title-course">' . $post->post_title . '</p>
+                                <p class="title-course">' . $course->post_title . '</p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
                                 <div class="blockOpein d-flex align-items-center">

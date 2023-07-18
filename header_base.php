@@ -319,7 +319,7 @@ $url = home_url( $wp->request );
                                 <div class="blockdropdownnHeader">
                                     <ul>
                                         <li>
-                                            <a href="zzpers">
+                                            <a href="/zzpers/">
                                                 <div class="blockImg" style="background: #ffffff;  padding: 6px;">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-zzpers.png" alt="">
                                                 </div>
@@ -330,7 +330,7 @@ $url = home_url( $wp->request );
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="mkb">
+                                            <a href="/sme">
                                                 <div class="blockImg" style="background: #ffffff;  padding: 6px;">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-mkb.png" alt="">
                                                 </div>
@@ -341,7 +341,7 @@ $url = home_url( $wp->request );
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/grootbedrijf">
+                                            <a href="/corporate/">
                                                 <div class="blockImg" style="background: #ffffff;  padding: 6px;">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Grootbedrijf.png" alt="">
                                                 </div>
@@ -352,13 +352,24 @@ $url = home_url( $wp->request );
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="pricing">
+                                            <a href="/pricing/">
                                                 <div class="blockImg" style="background: #ffffff;  padding: 6px;">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-pricing.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>Pricing</b></p>
                                                     <p class="subtitleSousElementHeader">Transparant en eenvoudig</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/HR-dienstverlening/">
+                                                <div class="blockImg" style="background: #ffffff;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-HR-dienstverlening.png" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="titleSousElementHeader"><b>HR- dienstverlening</b></p>
+                                                    <p class="subtitleSousElementHeader">Maatwerk oplossingen</p>
                                                 </div>
                                             </a>
                                         </li>
@@ -395,7 +406,7 @@ $url = home_url( $wp->request );
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="/verkopen">
+                                        <a href="/verkopen/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-verkopen.png" alt="">
                                             </div>
@@ -406,7 +417,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/creeren">
+                                        <a href="/creeren/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-maken.png" alt="">
                                             </div>
@@ -417,7 +428,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/uitleggen">
+                                        <a href="/ontwikkelen/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Uitleggen.png" alt="">
                                             </div>
@@ -428,7 +439,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/pricing">
+                                        <a href="/pricing/">
                                             <div class="blockImg" style="background: #FFFFFF;  padding: 6px;">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-pricing.png" alt="">
                                             </div>
@@ -441,7 +452,7 @@ $url = home_url( $wp->request );
                                 </ul>
                                 <ul class="secondUlModal ">
                                     <li>
-                                        <a href="/opleiders">
+                                        <a href="/opleiders/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-oplieders.png" alt="">
                                             </div>
@@ -463,7 +474,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search">
+                                        <a href="/functionaliteiten/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Alle-functionaliteiten.png" alt="">
                                             </div>
@@ -474,7 +485,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/affiliate/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Affiliate.png" alt="">
                                             </div>
@@ -497,7 +508,7 @@ $url = home_url( $wp->request );
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/filosofie/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Onze-filosofie.png" alt="">
                                             </div>
@@ -507,7 +518,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Leervormen.png" alt="">
                                             </div>
@@ -517,7 +528,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/community-overview/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Communities.png" alt="">
                                             </div>
@@ -527,7 +538,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/skills/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Waarom.png" alt="">
                                             </div>
@@ -670,7 +681,7 @@ $url = home_url( $wp->request );
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/filosofie/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-what-is-livelearn.png" alt="">
                                             </div>
@@ -680,7 +691,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/about/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-over-ons.png" alt="">
                                             </div>
@@ -690,7 +701,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/our-users/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-onze.png" alt="">
                                             </div>
@@ -700,7 +711,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/contact">
+                                        <a href="/contact/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/vector-contact.png" alt="">
                                             </div>

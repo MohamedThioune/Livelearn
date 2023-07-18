@@ -21,7 +21,7 @@
                              Verkoop via onze LiveLearn LXP biedt waardevolle voordelen. Met een geïntegreerd platform kan je jouw producten en diensten direct aanbieden aan leerders en organisaties, waardoor je een breder bereik en nieuwe klantsegmenten kunt bereiken.
                              Bovendien biedt het een naadloze gebruikerservaring en inzichten om je verkoopstrategieën te optimaliseren en succes te behalen.
                          </p>
-                         <a href="/voor-teacher-2-2/" class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
+                         <a href="/voor-opleiders/" class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
                              <strong>Meld je aan</strong>
                          </a>
 
