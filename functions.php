@@ -1702,5 +1702,10 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'save_user_views',
   ));
+
+  register_rest_route ('custom/v1', '/databank', array(
+     'methods' => 'GET',
+     'callback' => 'Artikel_From_Company'
+  ));
   
 });
