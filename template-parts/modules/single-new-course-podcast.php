@@ -112,7 +112,8 @@ endif;
                                             </p>
                                         </div>
                                     </div>
-                                    <!-- <div class="section-tabs" >
+                                    <!-- 
+                                    <div class="section-tabs" >
                                         <h2>What You'll Learn</h2>
                                         <ul class="d-flex flex-wrap list what-you-learn">
                                             <li>
@@ -148,7 +149,8 @@ endif;
                                                 <span class="text-tabs">Discover how to find trends</span>
                                             </li>
                                         </ul>
-                                    </div> -->
+                                    </div> 
+                                    -->
                                 </div>
                             </ul>
 
@@ -158,7 +160,7 @@ endif;
                             <ul id="Course">
                                 <div class="list-content-podcast">
                                 <?php
-                                foreach ($podcast_index as $key => $podcast) {
+                                foreach($podcast_index as $key => $podcast) {
                                     $style = "";
                                     if(isset($lesson))
                                         if($lesson == $key)
