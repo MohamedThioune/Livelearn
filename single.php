@@ -8,6 +8,8 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
+view($post,$user_visibility);
+
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -15,8 +17,8 @@ require($page);
 
 <?php
 global $post;
-
 global $wp;
+global $wpdb;
 
 if(!visibility($post, $visibility_company))
     header('location: /'); 
@@ -99,10 +101,40 @@ foreach ($posts as $key => $course) {
     if(count($recent_posts) == 5)
         break;
 } 
+
+//Views on this course 
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+$sql = $wpdb->prepare("SELECT SUM(occurence) as occurence FROM $table_tracker_views  WHERE user_id = $user_id AND data_type = 'course' AND data_id = $post->ID ");
+$post_views = $wpdb->get_results($sql);
+
+//Reaction on this course
+$reactions = get_field('reaction', $post->ID);
+$reaction = array('cool' => 0, 'lol' => 0, 'love' => 0, 'omg' => 0, 'wtf' => 0 );
+foreach($reactions as $value)
+    switch ($value['type_reaction']) {
+        case 'cool':
+            $reaction['cool'] += 1;
+            break;
+        case 'lol':
+            $reaction['lol'] += 1;
+            break;
+        case 'love':
+            $reaction['love'] += 1;
+            break;
+        case 'omg':
+            $reaction['omg'] += 1;
+            break;
+        case 'wtf':
+            $reaction['wtf'] += 1;
+            break;
+    };
+
 ?>
 
 <div class="bg-green-artiken">
     <div class="container-fluid">
+        <br><br>
+        <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"?>
         <div class="content-artikel d-flex justify-content-between flex-wrap">
             <div class="right-block-artikel">
                 <div class="img-fluid-artikel">
@@ -126,7 +158,7 @@ foreach ($posts as $key => $course) {
                         </div>
                         <div class="view-block infos-block d-flex align-items-center">
                             <i class="far fa-eye" aria-hidden="true"></i>
-                            <p class="text-element-artikel">0 views</p>
+                            <p class="text-element-artikel"><?= $post_views[0]->occurence; ?> views</p>
                         </div>
                         <button class="comments-block infos-block align-items-center text-element-artikel">
                             <i class="far fa-comment-alt"></i>
@@ -148,50 +180,53 @@ foreach ($posts as $key => $course) {
                             // $body_mail = '<h1>'. $subject .'</h1><br><p>' . $short_description . '</p><br>' . $permalink;
 
                             $linkedin_share = "https://www.linkedin.com/sharing/share-offsite/?url=" . $permalink;
-                            // $linkedin_share = 'https://www.linkedin.com/shareArticle?url=' . $permalink . '&title=' . $subject . '&summary=' . $body_mail;
-                            $mail_share = 'mailto:' . $author->user_email . '?subject=' . $subject . '&body=' . $permalink;
+                            $mail_share = 'mailto:?subject=' . $subject . '&body=' . $permalink;
                         ?>
                         <p>Share :</p>
-                        <a href="<?= $linkedin_share ?>"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                        <a target="_blank" href="<?= $linkedin_share ?>"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
                         <!-- <a class="fb-share-button" data-href="<?= $permalink ?>" data-layout="button_count">
                             <i class="fab fa-facebook" aria-hidden="true"></i>
                         </a> -->
                         <!-- <a href=""><i class="fab fa-twitter" aria-hidden="true"></i></a> -->
-                        <a href="<?= $mail_share ?>"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                        <a target="_blank" href="<?= $mail_share ?>"><i class="fa fa-envelope" aria-hidden="true"></i></a>
                     </div> 
                    
                     <div class="block-reaction">
                         <h2 class="title-reaction">What's your reaction ?</h2>
+
+                        <form action="/dashboard/user/" id="reaction-form" method="POST">
+                            <input type="hidden" name="id" value="<?= $post->ID ?>">
+                        </form>
                         <div class="content-card-reaction">
-                            <button class="btn btn-card-reaction">
+                            <button type="submit" name='reaction_post' value="cool" form="reaction-form" class="btn btn-card-reaction">
                                 <i class="far fa-grin fa-one"></i>
                                 <i class="fas fa-grin fa-two"></i>
                                 <p class="feels-text">cool</p>
-                                <p class="text-number-feels">5</p>
+                                <p class="text-number-feels"><?= $reaction['cool'] ?></p>
                             </button>
-                            <button class="btn btn-card-reaction">
+                            <button type="submit" name='reaction_post' value="lol" form="reaction-form" class="btn btn-card-reaction">
                                 <i class="far fa-grin-tongue fa-one"></i>
                                 <i class="fas fa-grin-tongue fa-two"></i>
                                 <p class="feels-text">lol</p>
-                                <p class="text-number-feels">5</p>
+                                <p class="text-number-feels"><?= $reaction['lol'] ?></p>
                             </button>
-                            <button class="btn btn-card-reaction">
+                            <button type="submit" name='reaction_post' value="love" form="reaction-form" class="btn btn-card-reaction">
                                 <i class="far fa-kiss-wink-heart fa-one"></i>
                                 <i class="fas fa-kiss-wink-heart fa-two"></i>
                                 <p class="feels-text">love</p>
-                                <p class="text-number-feels">5</p>
+                                <p class="text-number-feels"><?= $reaction['love'] ?></p>
                             </button>
-                            <button class="btn btn-card-reaction">
+                            <button type="submit" name='reaction_post' value="omg" form="reaction-form" class="btn btn-card-reaction">
                                 <i class="far fa-surprise fa-one"></i>
                                 <i class="fas fa-surprise fa-two"></i>
                                 <p class="feels-text">omg</p>
-                                <p class="text-number-feels">5</p>
+                                <p class="text-number-feels"><?= $reaction['omg'] ?></p>
                             </button>
-                            <button class="btn btn-card-reaction">
+                            <button type="submit" name='reaction_post' value="wtf" form="reaction-form" class="btn btn-card-reaction">
                                 <i class="far fa-tired fa-one"></i>
                                 <i class="fas fa-tired fa-two"></i>
                                 <p class="feels-text">wtf</p>
-                                <p class="text-number-feels">5</p>
+                                <p class="text-number-feels"><?= $reaction['wtf'] ?></p>
                             </button>
                         </div>
                     </div>
@@ -267,16 +302,16 @@ foreach ($posts as $key => $course) {
                         <p class="title-category">Follow us on Social Media</p>
                     </div>
                     <div class="social-networks d-flex flex-wrap">
-                        <a href="https://www.facebook.com/LiveLearnHQ">
+                        <a target="_blank" href="https://www.facebook.com/LiveLearnHQ">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-facebook.png" alt="">
                         </a>
-                        <a href="https://www.linkedin.com/company/livelearnhq/mycompany/" target="_blank">
+                        <a target="_blank" href="https://www.instagram.com/livelearn.app/" target="_blank">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-instagram.png" alt="">
                         </a>
                         <!-- <a href="">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-twitter.png" alt="">
                         </a> -->
-                        <a href="https://instagram.com/livelearn.app?igshid=MzRlODBiNWFlZA==" target="_blank">
+                        <a target="_blank" href="https://www.linkedin.com/company/livelearnhq/mycompany/ " target="_blank">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/flow-linkedin.png" alt="">
                         </a>
                     </div>
@@ -284,29 +319,48 @@ foreach ($posts as $key => $course) {
                 <div class="card-right-artikel">
                     <div class="head d-flex justify-content-between">
                         <p class="title-category">Some Categories</p>
-                        <a href="" class="btn-see-all">See All</a>
+                        <!-- <a href="" class="btn-see-all">See All</a> -->
                     </div>
                     <div>
-                        <div class="element-category d-flex justify-content-between flex-wrap">
-                            <p class="name-category">Business</p>
-                            <p class="number-artikel-category">(6)</p>
-                        </div>
-                        <div class="element-category d-flex justify-content-between flex-wrap">
-                            <p class="name-category">HR and L&D</p>
-                            <p class="number-artikel-category">(6)</p>
-                        </div>
-                        <div class="element-category d-flex justify-content-between flex-wrap">
-                            <p class="name-category">Video & Tips</p>
-                            <p class="number-artikel-category">(6)</p>
-                        </div>
-                        <div class="element-category d-flex justify-content-between flex-wrap">
-                            <p class="name-category">Learning Management</p>
-                            <p class="number-artikel-category">(6)</p>
-                        </div>
-                        <div class="element-category d-flex justify-content-between flex-wrap">
-                            <p class="name-category">Kindergarten</p>
-                            <p class="number-artikel-category">(6)</p>
-                        </div>
+                    <?php
+                        if ($posttags)
+                            foreach($posttags as $tag)
+                                echo '<div class="element-category d-flex justify-content-between flex-wrap">
+                                            <a href="/category-overview?category=' . $tag->ID . '" class="name-category">'. $tag->name . '</a>
+                                            ' 
+                                            . //<p class="number-artikel-category">(6)</p>
+                                            '
+                                      </div>';   
+                        else{
+                            $read_category = array();
+                            if(!empty($category_default))
+                                foreach($category_default as $item)
+                                    if($item)
+                                        if(!in_array($item,$read_category)){
+                                            array_push($read_category,$item);
+                                            echo '<div class="element-category d-flex justify-content-between flex-wrap">
+                                                        <a href="/category-overview?category=' . $tag->ID . '" class="name-category">'. $tag->name . '</a>
+                                                        ' 
+                                                        . //<p class="number-artikel-category">(6)</p>
+                                                        '
+                                                  </div>';
+                                            echo '<a href="/category-overview?category=' . $item['value'] . '" class="tag-artikel">'. (String)get_the_category_by_ID($item['value']) .  '</a>  ';
+                                        }
+
+                            else if(!empty($category_xml))
+                                foreach($category_xml as $item)
+                                    if($item)
+                                        if(!in_array($item,$read_category)){
+                                            array_push($read_category,$item);
+                                            echo '<div class="element-category d-flex justify-content-between flex-wrap">
+                                                        <a href="/category-overview?category=' . $tag->ID . '" class="name-category">'. $tag->name . '</a>
+                                                        ' 
+                                                        . //<p class="number-artikel-category">(6)</p>
+                                                        '
+                                                  </div>';                                        
+                                        }
+                        }
+                    ?>
                     </div>
 
                 </div>
@@ -359,6 +413,7 @@ foreach ($posts as $key => $course) {
                 <?php
                 endif;
                 ?>
+                <!-- 
                 <div class="card-right-artikel">
                     <div class="head d-flex justify-content-between">
                         <p class="title-category">Tags Topics</p>
@@ -388,7 +443,8 @@ foreach ($posts as $key => $course) {
                         }
                     ?>
                     </div>
-                </div>
+                </div> 
+                -->
             </div>
         </div>
     </div>
@@ -468,53 +524,11 @@ foreach ($posts as $key => $course) {
                     slidesToScroll: 1
                 }
             }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
         ]
     });
 
 
-    //
-
-
-
-    // var swiper = new Swiper('.swiper-container', {
-        // slidesPerView: 'auto',
-    //     spaceBetween: 30,
-    //     loopFillGroupWithBlank: false,
-    //     pagination: {
-    //         el: '.swiper-pagination',
-    //         clickable: true,
-    //     },
-    // });
 </script>
-<script>
-    // var swiper = new Swiper('.swipeContaine2', {
-    //     slidesPerView: 7,
-    //     spaceBetween: 20,
-    //     observer: true,
-    //     observeParents: true,
-    //     allowSlideNext: false,
-    //     freeMode: true,
-    //     resistanceRatio: 0,
-    //     watchSlidesVisibility: true,
-    //     watchSlidesProgress: true,
-    //     breakpoints: {
-    //         780: {
-    //             slidesPerView: 1,
-    //             spaceBetween: 40,
-    //         },
-    //         1230: {
-    //             slidesPerView: 7,
-    //             spaceBetween: 20,
-    //         }
-    //     },
-    //     pagination: {
-    //         el: '.swiper-pagination',
-    //         clickable: true,
-    //     },
-    // });
-</script>
+
 </body>
 </html>
