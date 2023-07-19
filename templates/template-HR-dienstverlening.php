@@ -248,7 +248,7 @@
                 <div class="Ons-verhaal-block">
                     <h2 class="subTitle-about">Wanneer vooral niet met ons te werken.</h2>
                     <p class="description-about">Als innovatie, digitalisering en goed werkgeverschap geen prioriteit voor je zijn, is het wellicht niet raadzaam om met ons samen te werken. Wij zijn toegewijd aan vooruitstrevende HR-oplossingen en het creëren van moderne, efficiënte werkomgevingen. Onze focus ligt op het helpen van organisaties die streven naar groei, concurrentievoordeel en het aantrekken van talent.</p>
-                    <a href="" class="btn btn-doe-jij">Jij wel? Neem dan contact op</a>
+                    <a href="/zzpers/" class="btn btn-doe-jij">Jij wel? Neem dan contact op</a>
                 </div>
                 <div class="block-img-about">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/individuals-women.png" class="img-head-about" alt="">

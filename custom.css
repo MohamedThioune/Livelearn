@@ -15865,6 +15865,7 @@ background: #FFFFFF !important;
 }
 .tab-block-functiegerichte .tab-content{
     display: block !important;
+    padding: 0 30px;
 }
 .tab-block-functiegerichte .tab-content .tab-pane{
     padding: 15px 0 !important;
@@ -15879,13 +15880,10 @@ background: #FFFFFF !important;
     border-bottom: 2px solid #00a89d;
     font-weight: 600;
 }
-.tab-block-functiegerichte .nav-tabs .nav-item a {
-    padding: 0px 0 8px !important;
-    color: #033356 !important;
-}
+
 .tab-block-functiegerichte .nav-tabs {
     width: 38%;
-    margin: 0 auto;
+    margin: 0 auto !important;
 }
 .tab-block-functiegerichte .nav-link:hover {
     border-color: transparent !important;
@@ -20209,6 +20207,7 @@ background: #FFFFFF !important;
 }
 .block-app-mobile {
     width: 346px;
+    height: 515px;
     margin: -35px auto -5px;
 }
 .block-app-mobile img {
@@ -20218,7 +20217,7 @@ background: #FFFFFF !important;
 }
 .section-app-store a{
     width: 165px;
-    margin-bottom: 75px;
+    margin-bottom: 50px;
 }
 .section-app-store a:last-child{
     padding: 0 !important;
@@ -20471,6 +20470,21 @@ background: #FFFFFF !important;
 }
 .content-detail-assessment .blockOneOver .title-assessment-test {
     margin-bottom: 30px;
+}
+.tab-block-functiegerichte .nav-item a{
+    font-size: 14px !important;
+    background: none !important;
+    padding: 0 8px 10px !important;
+    border-radius: 0 !important;
+}
+.tab-block-functiegerichte .nav-item .current {
+    border-bottom: 3px solid #00A89D !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    background: none !important;
+}
+.tab-block-functiegerichte .nav-tabs {
+    margin: 45px auto 40px !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -23811,8 +23825,18 @@ background: #FFFFFF !important;
         width: 100%;
         margin: 0 auto;
         flex-wrap: nowrap;
-        overflow: scroll;
+        overflow: scroll !important;
         white-space: nowrap;
+        border: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
+    .tab-block-functiegerichte .nav li {
+        min-width: 25% !important;
+        padding: 0 !important;
+    }
+    .tab-block-functiegerichte .tab-content {
+        padding: 0;
     }
     .content-inloggen {
         padding-bottom: 0 !important;

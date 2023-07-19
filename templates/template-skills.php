@@ -45,7 +45,7 @@
                             <h2 class="title-section"><span>Skills First:</span> Het Ontsluiten van Diverse Talenten en het Bevorderen van Inclusiviteit in de Werkwereld.</h2>                            <p class="description-section">Ontdek de kracht van data en rapportage van skills binnen je corporate organisatie. Identificeer sterke punten, detecteer hiaten en optimaliseer groeikansen.
                                 <br>
                                 Met inzichtelijke rapporten kun je strategische beslissingen nemen, gerichte trainingen implementeren en de juiste talenten aantrekken. Versterk je concurrentiepositie, bevorder talentontwikkeling en bouw een wendbare organisatie die klaar is voor de toekomst. Laat data het kompas zijn voor succes en leid je organisatie naar nieuwe hoogten.</p>
-                            <a href="" class="btn btn-download-onze-app">Meld je aan</a>
+                            <a href="/voor-jou/" class="btn btn-download-onze-app">Meld je aan</a>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     <div class="content-Ontdek">
                         <h2 class="title-section"><span>Skills for Life:</span> De Kracht van Continu Leren en Persoonlijke Groei</h2>
                         <p class="description-section">Een skills gedreven benadering bevordert ook een levenslang leerproces. Het moedigt individuen aan om continu te leren en hun vaardigheden voortdurend bij te schaven. Dit draagt niet alleen bij aan persoonlijke groei en ontwikkeling, maar ook aan de veerkracht en concurrentiekracht van een maatschappij als geheel.</p>
-                        <a href="" class="btn btn-download-onze-app">Samenwerken?</a>
+                        <a href="/affiliate/" class="btn btn-download-onze-app">Samenwerken?</a>
                     </div>
                 </div>
             </div>

@@ -19,7 +19,7 @@
                             <br>
                             Voeg tekst, afbeeldingen, video’s en interactieve elementen toe om boeiende leerervaringen te creëren. Met de flexibiliteit en kracht van onze auteur tool kunt u snel en efficiënt hoogwaardige kennisproducten ontwikkelen die uw publiek inspireren en informeren.
                         </p>
-                        <a data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal"  class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
+                        <a href="/voor-opleiders/"  class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
                             <strong>Meld je aan</strong>
                         </a>
 
@@ -92,7 +92,7 @@
                     Je kunt waardevolle content delen, zoals artikelen, podcasts of trainingen, en gedetailleerde inzichten verkrijgen in het gebruik en de effectiviteit ervan.
                     Verhoog je bereik, meet de impact en optimaliseer uw kennisproducten met behulp van onze LXP-analysetools.
                 </p>
-                <a href="" class="btn btn-meld">Meld je aan</a>
+                <a href="/voor-opleiders/" class="btn btn-meld">Meld je aan</a>
             </div>
         </section>
         <div class="Ontdek-section">
@@ -107,7 +107,7 @@
                                 <h2 class="title-section"><span>Skills First:</span> Het Ontsluiten van Diverse Talenten en het Bevorderen van Inclusiviteit in de Werkwereld.</h2>                            <p class="description-section">Ontdek de kracht van data en rapportage van skills binnen je corporate organisatie. Identificeer sterke punten, detecteer hiaten en optimaliseer groeikansen.
                                     <br>
                                     Met inzichtelijke rapporten kun je strategische beslissingen nemen, gerichte trainingen implementeren en de juiste talenten aantrekken. Versterk je concurrentiepositie, bevorder talentontwikkeling en bouw een wendbare organisatie die klaar is voor de toekomst. Laat data het kompas zijn voor succes en leid je organisatie naar nieuwe hoogten.</p>
-                                <a href="" class="btn btn-download-onze-app">Meld je aan</a>
+                                <a href="/voor-opleiders/" class="btn btn-download-onze-app">Meld je aan</a>
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                                     <br>
                                     Dit betekent dat u geen upfront kosten heeft en alleen betaalt voor de resultaten die we samen behalen. Het is een transparante en kosteneffectieve manier om uw producten of diensten te promoten en te verkopen, met een focus op succes en meetbare resultaten.
                                 </p>
-                                <a href="" class="btn btn-download-onze-app">Meld je aan</a>
+                                <a href="/voor-opleiders/" class="btn btn-download-onze-app">Meld je aan</a>
                             </div>
                         </div>
                         <div class="col-lg-6">
