@@ -10,7 +10,7 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
-//view($post,$user_visibility);
+view($post,$user_visibility);
 
 $course_type = get_field('course_type', $post->ID);
 
@@ -272,11 +272,11 @@ foreach($bunch_orders as $order){
 }
 
 $bool_link = 0;
-if($price !== 'Gratis')
+if(($price == 'Gratis'))
+    $bool_link = 1;
+else
     if($statut_bool)
         $bool_link = 1;
-else if(($price == 'Gratis'))
-    $bool_link = 1;
 
 //Similar course
 $similar_course = array();
@@ -289,14 +289,17 @@ $args = array(
     'posts_per_page' => -1
 );
 $author_courses = get_posts($args);
+$initial = 0;
 foreach ($author_courses as $key => $course) {
     if($course->ID == $post->ID)
         continue;
     $type_course = get_field('course_type', $course->ID);
-    if($type_course == $course_type)
+    if($type_course == $course_type){
         array_push($similar_course, $course);
+        $initial += 1;
+    }
         
-    if(count($similar_course) == 6)
+    if($initial == 6)
         break;
 } 
 

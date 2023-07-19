@@ -30,19 +30,19 @@ $post_date = new DateTimeImmutable($post->post_date);
 
 //Read video
 $read_video = "";
-if(!empty($courses))
-    if(isset($topic) && isset($lesson))
+if(isset($lesson))
+    if(!empty($courses))
         $read_video =  "<video class='blockImgCour' poster='' controls>
                             <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
                             <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
                             <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
                         </video>";
     else if(!empty($youtube_videos))
-        if(isset($lesson))
         $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+// else
 
 //Start or Buy
-$startorbuy = (!$bool_link) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href=""/dashboard/user/checkout-video/?post=" ' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post="' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
 
 //Review pourcentage
 if(!empty($count_reviews)):
@@ -194,7 +194,7 @@ endif;
 
                                                 $link = '#';
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                                if($bool_link || $lesson == 0){
+                                                if($bool_link || $key == 0){
                                                     $link = '?topic=0&lesson=' . $key;
                                                     $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
                                                 }
@@ -432,7 +432,7 @@ endif;
                                             </div>';
                                         endforeach;
 
-                                        if(!$my_review_bool):
+                                        if(!$my_review_bool && $user_id):
                                         ?>
                                         <div class="comment-block">
                                             <h2>Write a Review</h2>
@@ -577,22 +577,20 @@ endif;
                                     <?php echo $startorbuy; ?>
                                 </div>
                                 <div class="sharing-element">
+                                    <?php
+                                    $subject = $post->post_title;
+                                    $permalink = get_permalink($post->ID);
+
+                                    $linkedin_share = "https://www.linkedin.com/sharing/share-offsite/?url=" . $permalink;
+                                    $mail_share = 'mailto:?subject=' . $subject . '&body=' . $permalink;
+                                    ?>
                                     <p>Share On:</p>
                                     <div class="d-flex flex-wrap">
-                                        <a href="">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                        <a href="">
+                                        <a target="_blank" href="<?= $linkedin_share ?>">
                                             <i class="fa fa-linkedin"></i>
                                         </a>
-                                        <a href="">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                        <a href="">
-                                            <i class="fa fa-instagram"></i>
+                                        <a target="_blank" href="<?= $mail_share ?>">
+                                            <i class="fa fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
