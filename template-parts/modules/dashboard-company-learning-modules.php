@@ -384,13 +384,7 @@ $orders = wc_get_orders($order_args);
                         else if($course_type == 'Podcast')
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
 
-                        $link = "";    
-                        if($course_type == "Leerpad")
-                            $link = '/detail-product-road?id=' . $course->ID ;
-                        else if($course_type == "Assessment")
-                            $link = '/detail-assessment?assessment_id=' . $course->ID;
-                        else
-                            $link = get_permalink($course->ID);
+                        $link = get_permalink($course->ID);
 
                         if(!$course_type)
                             $course_type = 'Artikel';
