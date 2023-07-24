@@ -8180,6 +8180,12 @@ tbody {
         .content-community-overview .section-app-store a img:last-child{
             margin-top: 7px;
         }
+        .btnStore img, .btnPlayGoogle img {
+            height: 75px !important;
+        }
+        .btnStore img, .btnPlayGoogle img {
+            height: 63px;
+        }
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
                 height: 190px !important;
@@ -8193,6 +8199,9 @@ tbody {
             .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
                 height: 60px !important;
                 margin-top: -2px;
+            }
+            .social-networks a img {
+                height: 45px !important;
             }
         }
     }
@@ -9715,7 +9724,7 @@ ul#tabs-nav li.active a {
 
 .btnCardVolgende:hover {
     background: #043356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .bodyOntwikkeladvies .cardBlockValOpEnVerbind {
@@ -17549,9 +17558,10 @@ background: #FFFFFF !important;
     margin-left: -5px;
     margin-top: -4px;
 }
-.content-artikel {
+.customize-support .content-artikel {
     padding-top: 75px;
 }
+
 .content-artikel .info-detail-artikel .img-autors{
     width: 40px;
     height: 40px;
@@ -17586,6 +17596,7 @@ background: #FFFFFF !important;
 .content-artikel .right-block-artikel .img-fluid-artikel img{
     height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 .content-artikel .left-block-artikel{
     width: 28%;
@@ -17817,11 +17828,17 @@ background: #FFFFFF !important;
     border-radius: 5px;
     margin-right: 18px;
     overflow: hidden;
+    position: relative;
 }
 .card-right-artikel .posts-recent-block .img-recent-post img{
     width: 100%;
     height: 100%;
-    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    object-fit: cover;
 }
 .card-right-artikel .posts-recent-block .date-recent-post{
     font-weight: 400;
@@ -18007,7 +18024,6 @@ background: #FFFFFF !important;
 .owl-item .new-card-course {
     display: block;
     max-height: 380px;
-    min-height: 100%;
     border: 1px solid #e6e3e3 !important;
     border-radius: 13px;
 }
@@ -19318,7 +19334,7 @@ background: #FFFFFF !important;
 }
 .content-head-podcast .block-img{
     width: 25%;
-    height: auto;
+    height: 200px;
     margin-right: 40px;
     border-radius: 10px;
     overflow: hidden;
@@ -20486,6 +20502,12 @@ background: #FFFFFF !important;
 .tab-block-functiegerichte .nav-tabs {
     margin: 45px auto 40px !important;
 }
+.block-review-course .block-rating-note .element-block-rating {
+    margin-bottom: 20px;
+    height: 18px;
+}
+
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -23789,7 +23811,9 @@ background: #FFFFFF !important;
     }
 
     .talent-binnen-block {
-        margin: 100px 15px 90px;
+        margin: 90px 15px 90px;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
     }
     .first-block-binnen {
         width: 100%;
@@ -24603,11 +24627,14 @@ background: #FFFFFF !important;
         margin: 20px 15px 120px;
     }
     .theme-new-element .img-for-individual {
-        width: auto;
+        width: 100%;
         height: auto;
-        max-height: 260px;
         margin: 0 auto 33px;
         display: block;
+        object-fit: contain;
+    }
+    .theme-new-element section .content-Ontdek {
+        padding-right: 0;
     }
     .theme-new-element .content-Ontdek .title-section {
         color: #023356;
@@ -24638,7 +24665,7 @@ background: #FFFFFF !important;
         padding: 0 15px !important;
     }
     .second-block-binnen {
-        width: 90%;
+        width: 100%;
         height: 333px;
         margin: 0 auto 55px;
         max-height: unset;
@@ -24657,10 +24684,14 @@ background: #FFFFFF !important;
         font-size: 20px;
     }
     .section-revolutionnaire .img-for-individual-2 {
-        width: 93%;
+        width: 100%;
         height: auto;
         margin: 0 auto 42px;
         display: block;
+    }
+    .theme-skills .second-block-binnen {
+        width: 100%;
+        margin: 0px auto 0;
     }
     .Ontdek-section .section-revolutionnaire {
         margin: 75px 0 30px;
@@ -24785,7 +24816,13 @@ background: #FFFFFF !important;
     .bleu-block-contact-calendy .title-Direct-een {
         width: 100%;
     }
-
+    .customize-support .content-artikel {
+        padding-top: 40px;
+    }
+    .theme-skills .second-block-binnen {
+        width: 93%;
+        margin: -50px auto 30px;
+    }
 
 
 
@@ -24904,9 +24941,11 @@ background: #FFFFFF !important;
     .Ontdek-section .theme-new-element .img-for-individual {
         width: 100%;
         height: auto;
-        max-height: 398px;
         padding: 0 15px;
         margin-bottom: 40px;
+    }
+    .Ontdek-section {
+        padding: 0 15px;
     }
     .group-content .content-text .group-btn {
         display: flex;

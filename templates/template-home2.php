@@ -1035,7 +1035,7 @@ $saved = get_user_meta($user_id, 'course');
                                     </video>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="/registreren/" class="btn btn-registreren">Register for free</a>
+<!--                                    <a href="/registreren/" class="btn btn-registreren">Register for free</a>-->
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>

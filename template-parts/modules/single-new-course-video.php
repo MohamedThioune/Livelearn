@@ -29,16 +29,22 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Read video
-$read_video = "";
-if(isset($lesson))
-    if(!empty($courses))
-        $read_video =  "<video class='blockImgCour' poster='' controls>
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                        </video>";
-    else if(!empty($youtube_videos))
-        $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+$read_video = null;
+if(!isset($lesson))
+    $lesson = 0;
+
+if(!empty($courses))
+    $read_video =  "<video class='blockImgCour' poster='' controls>
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                    </video>";
+else if(!empty($youtube_videos))
+    $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+
+if(!$read_video)
+    $read_video = "<img src='" . $thumbnail . "' alt='preview image'>";
+
 // else
 
 //Start or Buy
@@ -80,7 +86,7 @@ endif;
                     <img src="<?= $author_image ?>" alt="">
                 </div>
                 <p class="name-autors"><?= $author_name; ?></p>
-            </div>
+            </a>
             <div class="block-review-calendar">
                 <div class="d-flex align-items-center">
                     <i class='fa fa-calendar-alt'></i>
