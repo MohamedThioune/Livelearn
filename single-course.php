@@ -10,13 +10,12 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
-//view($post,$user_visibility);
-view($post);
+view($post,$user_visibility);
 
 $course_type = get_field('course_type', $post->ID);
 
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar'];
+$online = ['E-learning', 'Video', 'Webinar','Podcast'];
 
 //Redirection - visibility 
 if(!visibility($post, $visibility_company))
@@ -32,7 +31,6 @@ $youtube_videos = get_field('youtube_videos', $post->ID);
 
 $podcasts = get_field('podcasts', $post->ID);
 $podcast_index = get_field('podcasts_index', $post->ID);
-
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $short_description = get_field('short_description', $post->ID);
@@ -274,11 +272,11 @@ foreach($bunch_orders as $order){
 }
 
 $bool_link = 0;
-if($price !== 'Gratis')
+if(($price == 'Gratis'))
+    $bool_link = 1;
+else
     if($statut_bool)
         $bool_link = 1;
-else if(($price == 'Gratis'))
-    $bool_link = 1;
 
 //Similar course
 $similar_course = array();
@@ -291,14 +289,17 @@ $args = array(
     'posts_per_page' => -1
 );
 $author_courses = get_posts($args);
+$initial = 0;
 foreach ($author_courses as $key => $course) {
     if($course->ID == $post->ID)
         continue;
     $type_course = get_field('course_type', $course->ID);
-    if($type_course == $course_type)
+    if($type_course == $course_type){
         array_push($similar_course, $course);
+        $initial += 1;
+    }
         
-    if(count($similar_course) == 6)
+    if($initial == 6)
         break;
 } 
 

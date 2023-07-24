@@ -2,8 +2,6 @@
     $users = get_users();
     
     $user_connected = wp_get_current_user();
- 
-
 ?>
 
 <div class="contentPageManager">
