@@ -30,12 +30,12 @@ $post_date = new DateTimeImmutable($post->post_date);
 $startorbuy = (!$bool_link) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href=""/dashboard/user/checkout-video/?post=" ' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
 
 //Review pourcentage
-if(!empty($count_reviews)):
-    $star_review[1] = ($star_review[1] / $count_reviews) * 100;
-    $star_review[2] = ($star_review[2] / $count_reviews) * 100;
-    $star_review[3] = ($star_review[3] / $count_reviews) * 100;
-    $star_review[4] = ($star_review[4] / $count_reviews) * 100;
-    $star_review[5] = ($star_review[5] / $count_reviews) * 100;
+if(!empty($counting_rate)):
+    $star_review[1] = ($star_review[1] / $counting_rate) * 100;
+    $star_review[2] = ($star_review[2] / $counting_rate) * 100;
+    $star_review[3] = ($star_review[3] / $counting_rate) * 100;
+    $star_review[4] = ($star_review[4] / $counting_rate) * 100;
+    $star_review[5] = ($star_review[5] / $counting_rate) * 100;
 endif;
 ?>
 
@@ -44,9 +44,9 @@ endif;
     <div class="content-head">
         <div class="container-fluid">
             <div class="content-autors-detail">
-                <div class="blockImg">
-                    <img src="<?= $thumbnail ?>" alt="">
-                </div>
+                <a href="/user-overview?id=<?= $post->post_author ?>" class="blockImg">
+                    <img src="<?= $author_image ?>" alt="">
+                </a>
                 <div class="block-name-langue">
                     <p class="name-autors"><?= $author_name ?></p>
                     <p class="langue-text"><?= $language ?></p>
@@ -60,7 +60,7 @@ endif;
                             echo '<i class="fa fa-star checked"></i>';
                             continue;
                         endif;
-                        echo '<i class="fa-regular fa-star"></i>';
+                        echo '<i class="fa fa-star"></i>';
                     endforeach;
                     ?>                        
                     <p class="reviews-text"><?= $count_reviews ?> Reviews</p>
@@ -138,11 +138,11 @@ endif;
                             <div class="section-tabs" id="Instructor">
                                 <h2>Instructor</h2>
                                 <div class="d-flex">
-                                    <div class="blockImg">
+                                    <a href="/user-overview?id=<?= $post->post_author ?>" class="blockImg">
                                         <img src="<?= $author_image ?>" alt="">
-                                    </div>
+                                    </a>
                                     <div>
-                                        <p class="name-autors"><?= $author_name ?></p>
+                                        <a href="/user-overview?id=<?= $post->post_author ?>" class="name-autors"><?= $author_name ?></a>
                                         <p class="langue-text"><?= $author_role ?></p>
                                         <div class="d-flex flex-wrap">
                                             <div class="d-flex align-items-center">
@@ -354,7 +354,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid"></textarea>
+                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                             <div class="position-relative">
                                                 <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
                                                 <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
@@ -474,15 +474,6 @@ endif;
                                         </a>';
                             endforeach;
                             ?>
-                            <div class="other-course">
-                                <div class="blockImgOtherCourse">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" alt="">
-                                </div>
-                                <div>
-                                    <p class="name-other-course">Developpement front and Design</p>
-                                    <p class="price-other-course">$415.99</p>
-                                </div>
-                            </div>
                            
                             <!-- <a href="" class="btn btn-see-all">See All</a> -->
                         </div>

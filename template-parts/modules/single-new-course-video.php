@@ -42,17 +42,16 @@ if(isset($lesson))
 // else
 
 //Start or Buy
-$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post="' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
 
 //Review pourcentage
-if(!empty($count_reviews)):
-    $star_review[1] = ($star_review[1] / $count_reviews) * 100;
-    $star_review[2] = ($star_review[2] / $count_reviews) * 100;
-    $star_review[3] = ($star_review[3] / $count_reviews) * 100;
-    $star_review[4] = ($star_review[4] / $count_reviews) * 100;
-    $star_review[5] = ($star_review[5] / $count_reviews) * 100;
+if(!empty($counting_rate)):
+    $star_review[1] = ($star_review[1] / $counting_rate) * 100;
+    $star_review[2] = ($star_review[2] / $counting_rate) * 100;
+    $star_review[3] = ($star_review[3] / $counting_rate) * 100;
+    $star_review[4] = ($star_review[4] / $counting_rate) * 100;
+    $star_review[5] = ($star_review[5] / $counting_rate) * 100;
 endif;
-
 ?>
 <body>
 <div class="content-new-Courses video-content-course">
@@ -67,14 +66,14 @@ endif;
                         echo '<i class="fa fa-star checked"></i>';
                         continue;
                     endif;
-                    echo '<i class="fa-regular fa-star"></i>';
+                    echo '<i class="fa fa-star"></i>';
                 endforeach;
                 ?>
                 </div>
                 <p class="reviews-text"><?= $average_star ?> (<?= $count_reviews ?> reviews)</p>
             </div>
             <h1 class="title-course text-center"><?= $post->post_title ?></h1>
-            <div class="content-autors-detail">
+            <a href="/user-overview?id=<?= $post->post_author ?>" class="content-autors-detail">
                 <div class="blockImg">
                     <img src="<?= $author_image ?>" alt="">
                 </div>
@@ -454,7 +453,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid"></textarea>
+                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                             <div class="position-relative">
                                                 <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
                                                 <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>

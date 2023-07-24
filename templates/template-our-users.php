@@ -171,7 +171,7 @@
                         <p class="title-card">Voor jou!</p>
                         <p class="description-card">Een altijd gratis leeromgeving om je oneindig door te laten groeien; word de expert in de markt.</p>
                         <div class="w-100">
-                            <a href="/inloggen-2/">Sign-up!</a>
+                            <a href="/voor-jou">Sign-up!</a>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                         <p class="title-card">Voor opleiders / experts</p>
                         <p class="description-card">Ben jij een expert, opleider of coach? Unlock je teacher omgeving en deel / verkoop direct je kennis.</p>
                         <div class="w-100">
-                            <a href="/voor-teacher-2-2/">Sign-up!</a>
+                            <a href="/voor-opleiders/">Sign-up!</a>
                         </div>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
                         <p class="title-card">Voor werkgevers</p>
                         <p class="description-card">Je bedrijf oneindig laten groeien, door je personeel te laten excelleren? LiveLearn is dé upskilling partner. </p>
                         <div class="w-100">
-                            <a href="/voor-organisatie-2/">Sign-up!</a>
+                            <a href="/voor-organisaties/">Sign-up!</a>
                         </div>
                     </div>
                 </div>

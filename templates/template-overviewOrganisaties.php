@@ -36,7 +36,7 @@
        <div class="headOverviewOrganisatie">
            <h1>Een Lerende organisatie voor klein én groot</h1>
            <p class="description">Wij hanteren geen opstartkosten, dus iedereen kan meteen van start. </p>
-           <a href="/voor-organisatie-2/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
+           <a href="/voor-organisaties/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
        </div>
         <div class="row">
             <div class="col-md-4">

@@ -131,12 +131,7 @@ $podcast_single = "Podcast";
                         else if($course_type == $podcast_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
                         
-
-                        $link = "";    
-                        if($course_type == "Assessment")
-                            $link = '/detail-assessment?assessment_id=' . $course->ID;
-                        else
-                            $link = get_permalink($course->ID);                        
+                        $link = get_permalink($course->ID);                        
                         ?>
                         <td scope="row"><?= $key; ?></td>
                         <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))){echo 'nee';}else{echo 'ja';}?></td>
