@@ -1,4 +1,4 @@
-<?php /** Template Name: new course */ ?>
+<?php /** Template Name: template course multi date */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -6,73 +6,36 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
-<?php
-extract($_GET);
-if(empty($podcast_index))
-    if(isset($lesson))
-        if(!$bool_link)
-            if($lesson != 0)
-                header('Location: ' . get_permalink($post->ID));
-
-//Long description             
-$long_description = ($long_description) ? : "No long description found for this course ";
-
-//Author
-$author = get_user_by('id', $post->post_author);
-$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
-$author_image = get_field('profile_img',  'user_' . $post->post_author);
-$author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-$author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
-$author_role =  get_field('role',  'user_' . $post->post_author);
-$post_date = new DateTimeImmutable($post->post_date);
-
-//Start or Buy
-$startorbuy = (!$bool_link) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href=""/dashboard/user/checkout-video/?post=" ' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-
-//Review pourcentage
-if(!empty($count_reviews)):
-    $star_review[1] = ($star_review[1] / $count_reviews) * 100;
-    $star_review[2] = ($star_review[2] / $count_reviews) * 100;
-    $star_review[3] = ($star_review[3] / $count_reviews) * 100;
-    $star_review[4] = ($star_review[4] / $count_reviews) * 100;
-    $star_review[5] = ($star_review[5] / $count_reviews) * 100;
-endif;
-?>
-
 <body>
 <div class="content-new-Courses">
     <div class="content-head">
         <div class="container-fluid">
             <div class="content-autors-detail">
                 <div class="blockImg">
-                    <img src="<?= $thumbnail ?>" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
                 </div>
                 <div class="block-name-langue">
-                    <p class="name-autors"><?= $author_name ?></p>
-                    <p class="langue-text"><?= $language ?></p>
+                    <p class="name-autors">Daniel</p>
+                    <p class="langue-text">English</p>
                 </div>
                 <hr>
                 <div class="block-review-calendar">
                     <div class="d-flex align-items-center element-content-head">
-                    <?php
-                    foreach(range(1,5) as $number):
-                        if($average_star >= $number ):
-                            echo '<i class="fa fa-star checked"></i>';
-                            continue;
-                        endif;
-                        echo '<i class="fa fa-star"></i>';
-                    endforeach;
-                    ?>                        
-                    <p class="reviews-text"><?= $count_reviews ?> Reviews</p>
+                        <i class="fa fa-star checked"></i>
+                        <i class="fa fa-star checked"></i>
+                        <i class="fa fa-star checked"></i>
+                        <i class="fa fa-star checked"></i>
+                        <i class="fa fa-star checked"></i>
+                        <p class="reviews-text">5 Reviews</p>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class='fa fa-calendar-alt'></i>
-                        <p class="date"><?= $post_date->format('d/m/Y'); ?></p>
+                        <p class="date">24/08/2023</p>
                     </div>
                 </div>
             </div>
-            <h1 class="title-course"><?= $post->post_title ?></h1>
-            <p class="category-course"><?= $course_type ?></p>
+            <h1 class="title-course">Test Course multiple strat date</h1>
+            <p class="category-course">Oplieiding</p>
         </div>
     </div>
     <div class="body-content">
@@ -82,7 +45,7 @@ endif;
                     <div class="content-tabs-scroll">
                         <ul>
                             <li><a class="tabs-scrool-link" href="#Overview">Overview</a></li>
-                            <li><a class="tabs-scrool-link" href="#Course-Content">Course Content</a></li>
+                            <li><a class="tabs-scrool-link" href="#Overview">Dates</a></li>
                             <li><a class="tabs-scrool-link" href="#Instructor">Instructor</a></li>
                             <li><a class="tabs-scrool-link" href="#Reviews">Reviews</a></li>
                         </ul>
@@ -91,94 +54,102 @@ endif;
                                 <div class="block-description">
                                     <h2>Description</h2>
                                     <p class="text-tabs">
-                                        <?= $long_description ?>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                                     </p>
-                                   
+
                                 </div>
                             </div>
-                            <!-- 
-                            <div class="section-tabs" id="Course-Content">
-                                <h2>What You'll Learn</h2>
-                                <ul class="d-flex flex-wrap list what-you-learn">
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Become an expert in statistics</span>
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Boost your resume with skills</span>
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Gather, organize, data</span>
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Use data for improved</span>
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Present information KPIs</span>
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Perform quantitative</span>
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Analyze current data</span>
-                                    </li>
-                                    <li>
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                        <span class="text-tabs">Discover how to find trends</span>
-                                    </li>
-                                </ul>
-                            </div> 
-                            -->
+
+                            <div class="section-tabs" id="date">
+                                <h2>Dates</h2>
+
+                                <div class="block2evens block2evensTabs">
+                                    <section>
+                                        <details>
+                                            <summary class="dateText1">
+
+                                                <div class="headTabsAccordion">
+                                                    <p class="Date__inner">21 Juli - 28 Juli</p>
+                                                    <p class="location">Dakar</p>
+                                                    <p class="prixEvens">111 €</p>
+                                                </div>
+
+                                            </summary>
+                                            <div class="detailSummary">
+                                                <div class="Course-info">
+                                                    <h3>Cursus</h3>
+                                                    <div class="blockDateEvens">
+                                                        <p class="dateEvens">21 Juli, 00:00, Dakar</p>
+                                                        <p class="dateEvens">21 Juli, 00:00, Dakar</p>
+                                                        <p class="dateEvens">21 Juli, 00:00, Dakar</p>
+                                                    </div>
+                                                </div>
+                                                <div class="Course-chechkout">
+                                                    <h3>Boek training</h3>
+                                                    <select class="Course-people" name="" id="">
+                                                        <option value="1"> 1 persoon </option>
+                                                        <option value="2"> 2 persoon </option>
+                                                        <option value="3"> 3 persoon </option>
+                                                    </select>
+
+                                                    <table class="tablePrice">
+                                                        <tbody>
+                                                        <tr>
+                                                            <th>1x reguliere trainingsprijs</th>
+                                                            <td><p class="prix">122 €</p></td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td colspan="2"><div class="price"><p>122 €</p></div></td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    <div class="contentBtnCardProduct">
+                                                        <button type="submit" name="add-to-cart" class="single_add_to_cart_button button alt">Reserveren</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </details>
+                                    </section>
+                                </div>
+
+                            </div>
+
                             <div class="section-tabs" id="Instructor">
                                 <h2>Instructor</h2>
                                 <div class="d-flex">
                                     <div class="blockImg">
-                                        <img src="<?= $author_image ?>" alt="">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
                                     </div>
                                     <div>
-                                        <p class="name-autors"><?= $author_name ?></p>
-                                        <p class="langue-text"><?= $author_role ?></p>
+                                        <p class="name-autors">Daniel</p>
+                                        <p class="langue-text">English</p>
                                         <div class="d-flex flex-wrap">
                                             <div class="d-flex align-items-center">
                                                 <i class="fa fa-star checked"></i>
                                                 <p class="text-detail-reveiw text-detail-reveiw2"> 5.0 Instructor Rating</p>
                                             </div>
-                                            <p class="text-detail-reveiw"><?= $count_reviews ?> Reviews</p>
-                                            <p class="text-detail-reveiw"><?= $enrolled_member ?> Students</p>
-                                            <p class="text-detail-reveiw"><?= count($author_courses) ?> Courses</p>
+                                            <p class="text-detail-reveiw">5 Reviews</p>
+                                            <p class="text-detail-reveiw">80 Students</p>
+                                            <p class="text-detail-reveiw">15 Courses</p>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-about-authors"><?= $author_bio ?></p>
+                                <p class="text-about-authors">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                             </div>
 
                             <div class="section-tabs" id="Reviews">
                                 <h2>Student's feedback</h2>
                                 <div class="d-flex justify-content-between flex-wrap block-review-course">
                                     <div class="block-note-review">
-                                        <p class="note-text"><?= $average_star_format ?></p>
+                                        <p class="note-text">4%</p>
                                         <div class="rating-bying-course">
                                             <div class="rating-element2">
                                                 <div class="rating">
-                                                    <?php 
-                                                    foreach(range(5, 1) as $number):
-                                                        if($average_star == $number ):
-                                                            echo '<input type="radio" id="star' . $number . '-note" class="stars" checked name="rating-note" value="' . $number . '" />
-                                                                    <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';                      
-                                                            continue;
-                                                        endif;
-
-                                                        echo '<input type="radio" id="star' . $number . '-note" class="stars" name="rating-note" value="' . $number . '" />
-                                                                <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';                      
-
-                                                    endforeach;
-                                                    ?>
+                                                  <input type="radio" id="star" class="stars" name="rating-note" value="4" />
+                                                                <label class="star" for="star" title="" aria-hidden="true"></label>
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
@@ -187,27 +158,27 @@ endif;
                                     </div>
                                     <div class="barNote">
                                         <div class="skillbars">
-                                            <div class="progress" data-fill="<?= $star_review[5] ?>" >
+                                            <div class="progress" data-fill="5" >
                                             </div>
                                             <div class="bg-gris-Skills"></div>
                                         </div>
                                         <div class="skillbars">
-                                            <div class="progress" data-fill="<?= $star_review[4] ?>" >
+                                            <div class="progress" data-fill="4" >
                                             </div>
                                             <div class="bg-gris-Skills"></div>
                                         </div>
                                         <div class="skillbars">
-                                            <div class="progress" data-fill="<?= $star_review[3] ?>" >
+                                            <div class="progress" data-fill="3" >
                                             </div>
                                             <div class="bg-gris-Skills"></div>
                                         </div>
                                         <div class="skillbars">
-                                            <div class="progress" data-fill="<?= $star_review[2] ?>" >
+                                            <div class="progress" data-fill="2" >
                                             </div>
                                             <div class="bg-gris-Skills"></div>
                                         </div>
                                         <div class="skillbars">
-                                            <div class="progress" data-fill="<?= $star_review[1] ?>" >
+                                            <div class="progress" data-fill="1" >
                                             </div>
                                             <div class="bg-gris-Skills"></div>
                                         </div>
@@ -229,7 +200,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <p class="note-global-rating"><?= $star_review[5] ?> %</p>
+                                            <p class="note-global-rating">5 %</p>
                                         </div>
                                         <div class="element-block-rating">
                                             <div class="rating-element2">
@@ -247,7 +218,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <p class="note-global-rating"><?= $star_review[4] ?> %</p>
+                                            <p class="note-global-rating">4 %</p>
                                         </div>
                                         <div class="element-block-rating">
                                             <div class="rating-element2">
@@ -265,7 +236,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <p class="note-global-rating"><?= $star_review[3] ?> %</p>
+                                            <p class="note-global-rating">3 %</p>
                                         </div>
                                         <div class="element-block-rating">
                                             <div class="rating-element2">
@@ -283,7 +254,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <p class="note-global-rating"><?= $star_review[2] ?> %</p>
+                                            <p class="note-global-rating">2 %</p>
                                         </div>
                                         <div class="element-block-rating">
                                             <div class="rating-element2">
@@ -301,69 +272,51 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <p class="note-global-rating"><?= $star_review[1] ?> %</p>
+                                            <p class="note-global-rating">1 %</p>
                                         </div>
                                     </div>
                                 </div>
-                                <?php
-                                    if(!empty($reviews))
-                                        foreach($reviews as $review):
-                                            $user = $review['user'];
-                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
-                                            $image_author = get_field('profile_img',  'user_' . $user->ID);
-                                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                            $company = get_field('company',  'user_' . $user->ID);
-                                            $title = $company[0]->post_title;
-                                            $rating = $review['rating'];
-                                            echo '
+
                                             <div class="user-comment-block">
                                                 <div class="d-flex">
                                                     <div class="img-block">
-                                                        <img src="' . $image_author . '" alt="">
+                                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
                                                     </div>
                                                     <div>
                                                         <div class="d-flex align-items-center">
-                                                            <p class="name-autors-comment">' . $author_name . '</p> ' . //<p class="timing-comment">3 days ago </p>
-                                                        '</div>
-                                                        <p class="title-comment">' . $title . '</p>
+                                                            <p class="name-autors-comment"><p class="timing-comment">3 days ago </p></div>
+                                                        <p class="title-comment">loren ipsum title</p>
                                                     </div>
                                                 </div>
-                                                <p class="text-tabs">' . $review['feedback'] . '</p>
-                                            </div>';
-                                        endforeach;
-
-                                        if(!$my_review_bool):
-                                        ?>
-                                        <div class="comment-block">
-                                            <h2>Write a Review</h2>
-                                            <form action="/dashboard/user" method="POST" id="review_vid"> 
-                                                <input type="hidden" name="course_id" value="<?= $post->ID; ?>" >
-                                            </form>
-                                            <div class="rating-element2">
-                                                <div class="rating">
-                                                    <input type="radio" id="star5-review" class="stars" name="rating" value="5" form="review_vid"/>
-                                                    <label class="star" for="star5-review" title="Awesome" aria-hidden="true"></label>
-                                                    <input type="radio" id="star4-review" class="stars" name="rating" value="4" form="review_vid"/>
-                                                    <label class="star" for="star4-review" title="Great" aria-hidden="true"></label>
-                                                    <input type="radio" id="star3-review" class="stars" name="rating" value="3" form="review_vid"/>
-                                                    <label class="star" for="star3-review" title="Very good" aria-hidden="true"></label>
-                                                    <input type="radio" id="star2-review" class="stars" name="rating" value="2" form="review_vid"/>
-                                                    <label class="star" for="star2-review" title="Good" aria-hidden="true"></label>
-                                                    <input type="radio" id="star1-review" name="rating" value="1" form="review_vid"/>
-                                                    <label class="star" for="star1-review" class="stars" title="Bad" aria-hidden="true"></label>
-                                                </div>
-                                                <span class="rating-counter"></span>
+                                                <p class="text-tabs">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                                             </div>
-                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid"></textarea>
-                                            <div class="position-relative">
-                                                <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
-                                                <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                    <div class="comment-block">
+                                        <h2>Write a Review</h2>
+                                        <form action="/dashboard/user" method="POST" id="review_vid">
+                                            <input type="hidden" name="course_id" value="" >
+                                        </form>
+                                        <div class="rating-element2">
+                                            <div class="rating">
+                                                <input type="radio" id="star5-review" class="stars" name="rating" value="5" form="review_vid"/>
+                                                <label class="star" for="star5-review" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4-review" class="stars" name="rating" value="4" form="review_vid"/>
+                                                <label class="star" for="star4-review" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3-review" class="stars" name="rating" value="3" form="review_vid"/>
+                                                <label class="star" for="star3-review" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2-review" class="stars" name="rating" value="2" form="review_vid"/>
+                                                <label class="star" for="star2-review" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1-review" name="rating" value="1" form="review_vid"/>
+                                                <label class="star" for="star1-review" class="stars" title="Bad" aria-hidden="true"></label>
                                             </div>
-                                            </form>
+                                            <span class="rating-counter"></span>
                                         </div>
-                                        <?php
-                                    endif;
-                                ?>
+                                        <textarea name="feedback_content" id="feedback" rows="10" form="review_vid"></textarea>
+                                        <div class="position-relative">
+                                            <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
+                                            <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                        </div>
+                                        </form>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -372,40 +325,36 @@ endif;
                     <div class="right-block-detail-course">
                         <div class="card-detail-course">
                             <div class="head">
-                                <img src="<?= $thumbnail ?>" alt="">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/backend.jpg" alt="">
                             </div>
                             <p class="title-course">Course Includes</p>
                             <ul>
                                 <li>
                                     <p class="name-element-detail">Price:</p>
-                                    <p class="detail priceCourse"> € <?= $price ?></p>
+                                    <p class="detail priceCourse">455 €</p>
                                 </li>
                                 <li>
                                     <p class="name-element-detail">Instructor:</p>
-                                    <p class="detail"><?= $author_name ?></p>
+                                    <p class="detail">Daniel</p>
                                 </li>
-                                <!-- 
+                                <!--
                                 <li>
                                     <p class="name-element-detail">Duration:</p>
                                     <p class="detail">3 weeks</p>
-                                </li> 
+                                </li>
                                 -->
                                 <li>
                                     <p class="name-element-detail">Lessons:</p>
-                                    <p class="detail"><?= $count_videos ?></p>
+                                    <p class="detail">Opleiders</p>
                                 </li>
                                 <li>
                                     <p class="name-element-detail">Enrolled</p>
-                                    <p class="detail"><?= $enrolled_member ?></p>
+                                    <p class="detail">15</p>
                                 </li>
-                                <?php
-                                if($language)
-                                    echo '
-                                        <li>
-                                            <p class="name-element-detail">Language:</p>
-                                            <p class="detail">'. $language . '</p>
-                                        </li>';
-                                ?>
+                                <li>
+                                    <p class="name-element-detail">Language:</p>
+                                    <p class="detail">English</p>
+                                </li>
                                 <li>
                                     <p class="name-element-detail">Certificate:</p>
                                     <p class="detail">No</p>
@@ -414,10 +363,7 @@ endif;
                                     <p class="name-element-detail">Access:</p>
                                     <p class="detail">Fulltime</p>
                                 </li>
-                                <div class="d-block">
-                                    <?php echo $startorbuy; ?>
-                                </div>
-                                <!-- 
+
                                 <div class="sharing-element">
                                     <p>Share On:</p>
                                     <div class="d-flex flex-wrap">
@@ -437,43 +383,56 @@ endif;
                                             <i class="fa fa-instagram"></i>
                                         </a>
                                     </div>
-                                </div> 
-                                -->
+                                </div>
                             </ul>
                         </div>
                         <div class="card-detail-course">
-                            <h2>Others <?= $course_type ?> Course</h2>
-                            <?php
-                            foreach($similar_course as $course):
-                                //Price
-                                $price_noformat = " ";
-                                $price_noformat = get_field('price', $course->ID);
-                                if($price_noformat != "0")
-                                    $price = '€' . number_format($price_noformat, 2, '.', ',');
-                                else
-                                    $price = 'Gratis';
-
-                                //Legend image
-                                $thumbnail = get_field('preview', $course->ID)['url'];
-                                if(!$thumbnail){
-                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
-                                    if(!$thumbnail)
-                                        $thumbnail = get_field('url_image_xml', $course->ID);
-                                    if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                                }
-
-                                echo   '<a href=' . get_permalink($course->ID) . ' class="other-course">
-                                            <div class="blockImgOtherCourse">
-                                                <img src="' . $thumbnail . '" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="name-other-course">' . $course->post_title . '</p>
-                                                <p class="price-other-course">' . $price . '</p>
-                                            </div>
-                                        </a>';
-                            endforeach;
-                            ?>
+                            <h2>Others Course</h2>
+                           <a href="" class="other-course">
+                                <div class="blockImgOtherCourse">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/women-phone.png" alt="">
+                                </div>
+                                <div>
+                                    <p class="name-other-course">Example course</p>
+                                    <p class="price-other-course">$415.99</p>
+                                </div>
+                            </a>
+                           <a href="" class="other-course">
+                                <div class="blockImgOtherCourse">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/women-phone.png" alt="">
+                                </div>
+                                <div>
+                                    <p class="name-other-course">Example course</p>
+                                    <p class="price-other-course">$415.99</p>
+                                </div>
+                            </a>
+                           <a href="" class="other-course">
+                                <div class="blockImgOtherCourse">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/women-phone.png" alt="">
+                                </div>
+                                <div>
+                                    <p class="name-other-course">Example course</p>
+                                    <p class="price-other-course">$415.99</p>
+                                </div>
+                            </a>
+                           <a href="" class="other-course">
+                                <div class="blockImgOtherCourse">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/women-phone.png" alt="">
+                                </div>
+                                <div>
+                                    <p class="name-other-course">Example course</p>
+                                    <p class="price-other-course">$415.99</p>
+                                </div>
+                            </a>
+                           <a href="" class="other-course">
+                                <div class="blockImgOtherCourse">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/women-phone.png" alt="">
+                                </div>
+                                <div>
+                                    <p class="name-other-course">Example course</p>
+                                    <p class="price-other-course">$415.99</p>
+                                </div>
+                            </a>
                             <div class="other-course">
                                 <div class="blockImgOtherCourse">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" alt="">
@@ -483,8 +442,8 @@ endif;
                                     <p class="price-other-course">$415.99</p>
                                 </div>
                             </div>
-                           
-                            <!-- <a href="" class="btn btn-see-all">See All</a> -->
+
+                            <a href="" class="btn btn-see-all">See All</a>
                         </div>
                         <div class="card-pub-course">
                             <h2>We Help You Learn While
