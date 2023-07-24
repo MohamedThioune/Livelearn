@@ -28,7 +28,7 @@ $artikel = $blogs[0];
         <p class="titlePricing">Altijd transparante prijzen</p>
         <p class="sousPricing">We hebben de prijzen zo eenvoudig mogelijk proberen te maken:
             Als individu betaal je niets, als opleider / expert alleen voor nieuwe klanten en als organisatie betaal je voor gebruik.</p>
-        <a href="/voor-organisaties/" class="btn btnCreeer">Creeer je omgeving gratis</a>
+        <a href="/voor-organisaties/" class="btn btnCreeer">Creëer je omgeving gratis</a>
         <div class="row">
             <div class="col-lg-4 col-md-6">
                 <a href="/Individu">

@@ -163,7 +163,7 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
-                            
+
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
