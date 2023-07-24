@@ -123,7 +123,7 @@ require($page);
                             <a href="/voor-organisaties/" class="btn btn-al-vanaf">
                                 Al vanaf €4,95
                             </a>
-                            <a href="/functiegerichte-2/" class="btn btn-Functionaliteiten">Contact met onze adviseurs </a>
+                            <a href="/template-form/" class="btn btn-Functionaliteiten">Contact met onze adviseurs </a>
 
                         </div>
                     </div>
@@ -172,7 +172,7 @@ require($page);
     </section>
     <section class="cardCoursZzpers">
         <div class="container-fluid">
-            <h3>Artikelen voor ZZP'ers</h3>
+            <h3>Artikelen voor MKB</h3>
 
             <div class="blockCardOpleidingen  ">
 

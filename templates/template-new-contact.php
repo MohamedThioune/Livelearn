@@ -125,7 +125,7 @@
                     </div>
                     <p class="title-card-contact">Krijg hulp</p>
                     <p class="description-card-contact">Praat direct met één van onze experts en vraag alles over LiveLearn.</p>
-                    <a href="" class="btn btn-info-contact">Informatie</a>
+                    <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;" class="btn btn-info-contact">Informatie</button>
                 </div>
 
                 <div class="card-contact content-Probeer">
@@ -134,7 +134,7 @@
                     </div>
                     <p class="title-card-contact">Probeer LiveLearn</p>
                     <p class="description-card-contact">LiveLearn is gratis, eerst kijken? Maak dan je account óf download de app. </p>
-                    <a href="" class="btn btn-info-contact">Start gratis</a>
+                    <a href="/voor-jou/" class="btn btn-info-contact">Start gratis</a>
                 </div>
 
                 <div class="card-contact content-contact">
@@ -143,7 +143,7 @@
                     </div>
                     <p class="title-card-contact">Contact Sales</p>
                     <p class="description-card-contact">Direct contact met onze verkoopafdeling. Wij helpen graag.</p>
-                    <a href="" class="btn btn-info-contact">Contact sales</a>
+                    <a href="/template-form/" class="btn btn-info-contact">Contact sales</a>
                 </div>
 
                 <div class="card-contact content-contact">
@@ -152,7 +152,7 @@
                     </div>
                     <p class="title-card-contact">Vragen ?</p>
                     <p class="description-card-contact">Bekijk de meeste voorkomende vragen over LiveLearn.</p>
-                    <a href="" class="btn btn-info-contact">FAQ</a>
+                    <a href="/faq/" class="btn btn-info-contact">FAQ</a>
                 </div>
 
                 <div class="card-contact content-contact">
@@ -161,7 +161,7 @@
                     </div>
                     <p class="title-card-contact">Pers en Media </p>
                     <p class="description-card-contact">In contact komen met ons PR team, hier staan alle gegevens.</p>
-                    <a href="" class="btn btn-info-contact">Contact pers</a>
+                    <a href="mailto:contact@livelearn.nl" class="btn btn-info-contact">Contact pers</a>
                 </div>
 
             </div>

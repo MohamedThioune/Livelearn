@@ -208,10 +208,10 @@
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/mobile-app.png" class="" alt="">
             </div>
             <div class="d-flex justify-content-center">
-                <a href="" class="btn btn-store">
+                <a href="https://apps.apple.com/sn/app/livelearn/id1666976386?l=fr" class="btn btn-store">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/btn-app-store.png" class="" alt="">
                 </a>
-                <a href="" class="btn btn-store">
+                <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="btn btn-store">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/btn-google-play.png" class="" alt="">
                 </a>
             </div>

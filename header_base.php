@@ -805,7 +805,7 @@ $url = home_url( $wp->request );
                                     <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/Group_301.png" alt="search">
                                 </div>
                             </div>
-                            <a href="" class="btn btn-Openen">Openen</a>
+                            <button onclick="redirect()" class="btn btn-Openen">Openen</button>
                         </div>
                     </div>
                 </div>
@@ -1104,4 +1104,14 @@ $url = home_url( $wp->request );
                     });
                 });
 
+            </script>
+            <script>
+                function redirect() {
+                    var userAgent = navigator.userAgent;
+                    if (userAgent.indexOf("iPhone") > -1) {
+                        window.location.href = "https://apps.apple.com/nl/app/livelearn/id1666976386/";
+                    } else {
+                        window.location.href = "https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr";
+                    }
+                }
             </script>

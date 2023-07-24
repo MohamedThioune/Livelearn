@@ -2071,7 +2071,16 @@
         }
     })
 </script>
-
+    <script>
+        $(document).ready(function(){
+            $("#hide").click(function(){
+                $(".sousProductTest").hide();
+            });
+            $("#show").click(function(){
+                $(".sousProductTest").show();
+            });
+        });
+    </script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
