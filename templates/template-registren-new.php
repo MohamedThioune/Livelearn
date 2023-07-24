@@ -1,4 +1,4 @@
-<?php /** Template Name: new-registren */ ?>
+<?php /** Template Name: Registeren-new */ ?>
 
 
 <?php wp_head(); ?>
@@ -50,8 +50,9 @@
                            </div>
                            <a class="back-to-home-text" href="/">Back To Home</a>
                        </div>
-                       <h2>Sign into Your Account</h2>
-                       <form >
+                       <h2>Sign Up</h2>
+                        <!-- 
+                        <form >
                            <div class="input-group-connection">
                                <div class="col-">
                                    <div class="form-group">
@@ -98,35 +99,46 @@
                                </div>
                            </div>
                            <button type="submit" class="btn btn-coneection">Submit</button>
-                       </form>
+                        </form> 
+                        -->
+                        <?php 
+                            $base_url = get_site_url();
+                            if($base_url == 'https://wp12.influid.nl')
+                                echo (do_shortcode('[user_registration_form id="59"]'));
+                            else
+                                echo (do_shortcode('[user_registration_form id="8477"]')); 
+                        ?>
                    </div>
                </div>
                <div class="block-social-connection">
                    <h3>Or Sign up with</h3>
                    <div class="group-btn-connection">
-                       <a href="" class="btn btn-connection">
-                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
-                           Sign Up using Google
-                       </a>
-                       <a href="" class="btn btn-connection">
-                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-facebook.png" alt="First-slide-looggin">
-                           Sign Up using Facebook
-                       </a>
+                        <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                            Sign Up using Google
+                        </a>
                    </div>
-                   <p class="new-user-text">You have a account ? <a href="">Login</a></p>
+                   <p class="new-user-text">You have a account ? <a href="/inloggen-2">Login</a></p>
                </div>
             </div>
         </div>
     </div>
 </div>
 
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $('.carousel').carousel({
-            interval: 3000
-        })
-    </script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $('.carousel').carousel({
+        interval: 3000
+    })
+</script>
+
+<script>
+    jQuery(document).ready(function(){
+        jQuery('#').attr('placeholder', 'Enter your email address');
+        jQuery('#').attr('placeholder', 'Enter your password');
+    });
+</script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
