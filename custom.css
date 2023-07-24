@@ -2396,20 +2396,31 @@ input:focus-visible {
 
 #loginform input {
     color: #023356;
-    font-size: 14px;
-    padding: 10px 21px !important;
+    font-size: 15px;
+    padding: 13px 21px !important;
     margin-bottom: 8px;
     background: #FFFFFF !important;
     border-radius: 8px;
-    border: unset;
+    border: 1px solid rgb(4 51 86 / 27%);
     width: 100%;
 }
 
 #loginform #wp-submit {
+    color: #023356 !important;
+    border: 1px solid #023356;
+}
+#loginform #wp-submit:hover {
     background: #023356 !important;
     color: white !important;
 }
-
+#loginform .nsl-container-buttons{
+    display: none;
+}
+#rememberme {
+    width: fit-content !important;
+    margin-right: 15px;
+    margin-bottom: 0;
+}
 .login-password label,
 .login-username label {
     /* display: none; */
@@ -18156,12 +18167,13 @@ background: #FFFFFF !important;
     padding: 50px 15px 30px;
 }
 .right-block-connection h2{
-    font-size: 25px;
+    font-size: 27px;
     line-height: 36px;
     font-weight: 500;
-    color: #000000;
-    margin-top: 20px;
+    color: #053356;
+    margin-top: 27px;
     margin-bottom: 25px;
+    text-align: center;
 }
 .logo-liverlearn-connection{
     width: 173px;
@@ -18184,10 +18196,13 @@ background: #FFFFFF !important;
     line-height: 24px;
     display: flex;
     align-items: center;
-    color: #2b2b2b;
-    font-weight: 300;
+    color: #685F78;
+    margin-bottom: 15px;
+    font-weight: 400;
 }
-
+#loginform p {
+    margin-bottom: 25px;
+}
 .content-new-inloggen form {
     border-radius: 5px;
     padding: 21px 10px !important;

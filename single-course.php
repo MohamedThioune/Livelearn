@@ -14,8 +14,8 @@ view($post,$user_visibility);
 
 $course_type = get_field('course_type', $post->ID);
 
-$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar','Podcast'];
+$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus', 'E-learning'];
+$online = ['Video', 'Webinar','Podcast'];
 
 //Redirection - visibility 
 if(!visibility($post, $visibility_company))
@@ -114,6 +114,8 @@ if($$tag == ' '){
             $category = (String)get_the_category_by_ID($category_id);
         }
 }
+$category_default = get_field('categories', $post->ID);
+$category_xml = get_field('category_xml', $post->ID);
 
 $user_id = get_current_user_id();
 
@@ -206,6 +208,7 @@ $star_review = [ 0, 0, 0, 0, 0];
 $average_star = 0;
 $average_star_nor = 0;
 $my_review_bool = false;
+$counting_rate = 0;
 foreach ($reviews as $review):
     if($review['user']->ID == $user_id)
         $my_review_bool = true;
@@ -228,10 +231,14 @@ foreach ($reviews as $review):
             $star_review[5] += 1;
             break;
     }
-    $average_star += $review['rating']; 
+
+    if($review['rating']){
+        $average_star += intval($review['rating']); 
+        $counting_rate += 1;
+    }
 endforeach;
-if ($count_reviews > 0 )
-    $average_star_nor = $average_star / $count_reviews;
+if ($counting_rate > 0 )
+    $average_star_nor = $average_star / $counting_rate;
 $average_star_format = number_format($average_star_nor, 1, '.', ',');
 $average_star = intval($average_star_nor);
 
@@ -311,6 +318,8 @@ else if($course_type == 'Podcast')
     include_once('template-parts/modules/single-new-course-podcast.php');
 else if($course_type == 'Leerpad')
     include_once('template-parts/modules/single-new-course-offline.php');
+else if($course_type == 'Assessment')
+    include_once('template-parts/modules/single-new-course-assessment.php');
 
 
 ?>  
