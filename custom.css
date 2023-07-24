@@ -2394,7 +2394,7 @@ input:focus-visible {
     font-size: 18px;
 }
 
-#loginform input {
+#loginform input, . {
     color: #023356;
     font-size: 15px;
     padding: 13px 21px !important;
@@ -2405,11 +2405,13 @@ input:focus-visible {
     width: 100%;
 }
 
-#loginform #wp-submit {
+#loginform #wp-submit, .ur-submit-button {
     color: #023356 !important;
+    font-size: 15px;
+    padding: 13px 21px !important;
     border: 1px solid #023356;
 }
-#loginform #wp-submit:hover {
+#loginform #wp-submit:hover, .ur-submit-button {
     background: #023356 !important;
     color: white !important;
 }
@@ -4104,12 +4106,11 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 #user-registration-form-59 form .ur-form-row input {
     color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    margin-bottom: 12px;
     background: #FFFFFF !important;
     border-radius: 8px;
-    border: unset;
+    font-size: 15px;
+    padding: 11px 21px !important;
+    border: 1px solid rgb(4 51 86 / 27%) !important;
 }
 
 #user-registration-form-59 form .ur-form-row input::placeholder {
@@ -4118,16 +4119,19 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .register .ur-submit-button {
     width: 100%;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    background: #023356 !important;
-    color: #FFFFFF !important;
+    color: #023356 !important;
+    border: 1px solid #023356 !important;
     text-align: center !important;
-    padding: 10px !important;
     margin-bottom: 5px;
     margin-top: 10px;
     margin-right: 0;
     margin-left: 0;
+    padding: 13px 21px !important;
+    background: none !important;
+}
+.register .ur-submit-button:hover {
+    background: #023356 !important;
+    color: #FFFFFF !important;
 }
 
 .acf-image-uploader .image-wrap {
