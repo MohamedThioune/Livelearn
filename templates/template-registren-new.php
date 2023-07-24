@@ -103,10 +103,10 @@
                         -->
                         <?php 
                             $base_url = get_site_url();
-                            if($base_url == 'https://wp12.influid.nl')
-                                echo (do_shortcode('[user_registration_form id="59"]'));
+                            if($base_url == 'https://livelearn.nl')
+                                echo (do_shortcode('[user_registration_form id="8477"]'));
                             else
-                                echo (do_shortcode('[user_registration_form id="8477"]')); 
+                                echo (do_shortcode('[user_registration_form id="59"]')); 
                         ?>
                    </div>
                </div>
