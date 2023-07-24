@@ -18,8 +18,8 @@
             <div class="tab-block-functiegerichte" id="tab-url1">
                 <ul class="nav nav-tabs">
                     <li class="nav-item nav-one"><a href="#Voor-individuen" class="current">Voor individuen</a></li>
-                    <li class="nav-item nav-two"><a href="#Voor-organisaties" class="load_content_type">Artikel</a></li>
-                    <li class="nav-item nav-three"><a href="#Voor-opleiders-experts" class="load_content_type">E-learning</a></li>
+                    <li class="nav-item nav-two"><a href="#Voor-organisaties" class="load_content_type">Voor organisaties</a></li>
+                    <li class="nav-item nav-three"><a href="#Voor-opleiders-experts" class="load_content_type">Voor opleiders / experts</a></li>
                 </ul>
 
                 <div class="list-wrap tab-content" style="display: block;">
@@ -51,7 +51,7 @@
                                     <div class="text-right">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/meten-icon.png" alt="">
                                     </div>
-                                    <p class="title">JTest meteen je skills met onze assessments</p>
+                                    <p class="title">Test meteen je skills met onze assessments</p>
                                     <p class="description">Leuk hè, al die content. Test ook meteen hoe goed je de materie nou echt beheerst met onze assessments. Dan weet je het precies.</p>
                                 </div>
                                 <div class="card-functionaliteiten">
@@ -65,7 +65,7 @@
                                     <div class="text-right">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/vragen-icon.png" alt="">
                                     </div>
-                                    <p class="title">360 Feedback vragen aan collega’s. </p>
+                                    <p class="title">360 Feedback vragen aan collega’s.</p>
                                     <p class="description">Wil je van anderen horen hoe zij kijken naar je vaardigheden? Vraag ze dan direct feedback. Zo weet je zeker dat je werkt aan je juiste skills</p>
                                 </div>
                                 <div class="card-functionaliteiten">
@@ -90,7 +90,7 @@
                                     <p class="description">Alle skills die ontwikkelt, feedback die je krijgt of diploma’s die je haalt worden omgezet naar je skills paspoort. Zo heb je een dynamisch en realistisch CV.</p>
                                 </div>
                             </div>
-                            <a href="" class="btn btn-meer-lezen">Meer lezen over wat LiveLearn jou biedt ?</a>
+                            <a href="/Individu/" class="btn btn-meer-lezen">Meer lezen over wat LiveLearn jou biedt?</a>
                         </div>
                     </ul>
 
@@ -161,7 +161,7 @@
                                     <p class="description">Bied elke medewerker een eigen mobiele app. Flexibel leren, waar en wanneer dan ook. Empowerment in de palm van je hand.</p>
                                 </div>
                             </div>
-                            <a href="" class="btn btn-meer-lezen">Meld je aan als bedrijf</a>
+                            <a href="/voor-organisaties/" class="btn btn-meer-lezen">Meld je aan als bedrijf</a>
                         </div>
                     </ul>
 
@@ -237,7 +237,7 @@
                                     <p class="description">Naadloze integratie met bestaande systemen. Optimaliseer workflows, deel gegevens en versterk je afzetmarkt zonder onnodig werk.</p>
                                 </div>
                             </div>
-                            <a href="" class="btn btn-meer-lezen">Meld je aan als expert / opleider</a>
+                            <a href="/voor-opleiders/" class="btn btn-meer-lezen">Meld je aan als expert / opleider</a>
                         </div>
                     </ul>
                 </div>

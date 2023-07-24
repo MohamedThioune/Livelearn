@@ -51,7 +51,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                             <ul>
                                 <li><a class="" href="/zzpers/"> Voor ZZP'ers</a></li>
                                 <li> <a class="" href="/mkb/">Voor het MKB </a></li>
-                                <li> <a class="" href="/mkb/">Voor Corporates </a></li>
+                                <li> <a class="" href="/corporate/">Voor Corporates </a></li>
                                 <li> <a class="" href="/pricing/">Pricing </a></li>
                                 <li> <a class="" href="voor-organisaties/">Maak een gratis omgeving</a></li>
                             </ul>
@@ -67,7 +67,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                             <ul>
                                 <li> <a class="" href="/verkopen/">Verkopen</a></li>
                                 <li> <a class="" href="/creeren/">Creëren</a></li>
-                                <li> <a class="" href="/uitleggen/">Uitleggen</a></li>
+                                <li> <a class="" href="/Uitleggen/">Uitleggen</a></li>
                                 <li> <a class="" href="/opleiders/">Alle opleiders </a></li>
                                 <li> <a class="" href="/voor-teachers/">Maak een gratis omgeving </a></li>
                             </ul>
@@ -205,7 +205,7 @@ if(!isset($_COOKIE["cookie_consent"])):
             <div class="element8">
                 <a class="" href="#">Algemene voorwaarden </a>
                 <a class="" href="#">Privacybeleid </a>
-                <a class="" href="#">contact</a>
+                <a class="" href="/contact/">contact</a>
             </div>
 
 
