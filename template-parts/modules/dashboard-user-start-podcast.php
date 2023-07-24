@@ -107,7 +107,7 @@ $pourcentage = intval($pourcentage);
         <div class="d-flex justify-content-between align-items-center">
             <div class="">
                 <div class="d-flex align-items-center">
-                    <a href="/dashboard/user/checkout-podcast/$post=<?= $post->post_name ?>""><i class="fa fa-angle-left"></i>Back</a>
+                    <a href="/dashboard/user/checkout-podcast/?post=<?= $post->post_name ?>"><i class="fa fa-angle-left"></i>Back</a>
                     <p class="title-course"><?php echo $post->post_title; ?></p>
                 </div>
                 <p class="text-number-element">List (<?= $count_podcasts ?>)</p>

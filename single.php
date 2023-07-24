@@ -285,7 +285,7 @@ foreach($reactions as $value)
                                     </form>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Comment</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" form="form-comment" name="feedback_content" rows="5" ></textarea>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" form="form-comment" name="feedback_content" rows="5" required></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
