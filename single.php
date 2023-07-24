@@ -316,6 +316,9 @@ foreach($reactions as $value)
                         </a>
                     </div>
                 </div>
+                <?php
+                if(!empty($posttags) || !empty($category_default) || !empty($category_default)):
+                ?>
                 <div class="card-right-artikel">
                     <div class="head d-flex justify-content-between">
                         <p class="title-category">Some Categories</p>
@@ -362,9 +365,9 @@ foreach($reactions as $value)
                         }
                     ?>
                     </div>
-
                 </div>
                 <?php
+                endif;
                 if(!empty($recent_posts)):
                 ?>
                 <div class="card-right-artikel">
