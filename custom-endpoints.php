@@ -1984,7 +1984,7 @@ function Artikel_From_Company(){
                 'duration' => NULL, 
                 'prijs' => 0, 
                 'prijs_vat' => 0,
-                'image_xml' => $images['guid']['rendered'], 
+                'image_xml' => $images['guid']['rendered'],  
                 'onderwerpen' => '', 
                 'date_multiple' =>  NULL, 
                 'course_id' => null,
