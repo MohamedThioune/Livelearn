@@ -255,8 +255,8 @@ endif;
                                                     <i class="fa fa-star checked"></i>
                                                     <p class="text-detail-reveiw text-detail-reveiw2"> 5.0 Instructor Rating</p>
                                                 </div>
-                                                <p class="text-detail-reveiw"><?= $count_reviews ?> Reviews</p>
-                                                <p class="text-detail-reveiw"><?= $enrolled_member ?> Students</p>
+                                                <p class="text-detail-reveiw"><?= $count_reviews_all ?> Reviews</p>
+                                                <p class="text-detail-reveiw"><?= $enrolled_all ?> Students</p>
                                                 <p class="text-detail-reveiw"><?= count($author_courses) ?> Courses</p>
                                             </div>
                                         </div>

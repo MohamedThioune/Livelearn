@@ -204,6 +204,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 //Reviews
 $reviews = get_field('reviews', $post->ID);
 $count_reviews = (!empty($reviews)) ? count($reviews) : 0;
+$count_reviews_all = 0;
 $star_review = [ 0, 0, 0, 0, 0];
 $average_star = 0;
 $average_star_nor = 0;
@@ -212,6 +213,9 @@ $counting_rate = 0;
 foreach ($reviews as $review):
     if($review['user']->ID == $user_id)
         $my_review_bool = true;
+
+    if($review['user']->ID == $post->post_author)
+        $count_reviews_all += 1; 
 
     //Star by number
     switch ($review['rating']) {
@@ -265,13 +269,19 @@ $args = array(
 $bunch_orders = wc_get_orders($args);
 
 $enrolled_member = 0;
+$enrolled_all = 0;
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
+        $course = get_post($course_id);
         if($course_id == $post->ID){
             $statut_bool = 1;
             $enrolled_member += 1;
         }
+        if(!empty($course))
+            if($course->post_author == $post->post_author)
+                $enrolled_all += 1;
+        
         //Get woo orders from user
         if(!in_array($course_id, $enrolled))
             array_push($enrolled, $course_id);
