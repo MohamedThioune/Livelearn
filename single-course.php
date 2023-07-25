@@ -204,7 +204,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 //Reviews
 $reviews = get_field('reviews', $post->ID);
 $count_reviews = (!empty($reviews)) ? count($reviews) : 0;
-$count_reviews_all = 0;
+// $count_reviews_all = 0;
 $star_review = [ 0, 0, 0, 0, 0];
 $average_star = 0;
 $average_star_nor = 0;
@@ -213,9 +213,6 @@ $counting_rate = 0;
 foreach ($reviews as $review):
     if($review['user']->ID == $user_id)
         $my_review_bool = true;
-
-    if($review['user']->ID == $post->post_author)
-        $count_reviews_all += 1; 
 
     //Star by number
     switch ($review['rating']) {

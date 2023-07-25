@@ -136,45 +136,49 @@ endif;
                                             </p>
                                         </div>
                                     </div>
-                                    <!-- 
+                                    <?php
+                                    if(!empty($posttags) || !empty($category_default) || !empty($category_default)):
+                                    ?>
                                     <div class="section-tabs" >
                                         <h2>What You'll Learn</h2>
                                         <ul class="d-flex flex-wrap list what-you-learn">
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Become an expert in statistics</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Boost your resume with skills</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Gather, organize, data</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Use data for improved</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Present information KPIs</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Perform quantitative</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Analyze current data</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Discover how to find trends</span>
-                                            </li>
+                                            <?php
+                                                if ($posttags)
+                                                    foreach($posttags as $tag)
+                                                        echo  '<li>
+                                                                    <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
+                                                                    <a href="/category-overview?category=' . $tag->ID . '" class="text-tabs">' . $tag->name . '</a>
+                                                               </li>';  
+                                                else{
+                                                    $read_category = array();
+                                                    if(!empty($category_default))
+                                                        foreach($category_default as $item)
+                                                            if($item)
+                                                                if(!in_array($item,$read_category)){
+                                                                    array_push($read_category,$item);
+                                                                    echo  '<li>
+                                                                                <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
+                                                                                <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
+                                                                           </li>';  
+                                                                }
+
+                                                    else if(!empty($category_xml))
+                                                        foreach($category_xml as $item)
+                                                            if($item)
+                                                                if(!in_array($item,$read_category)){
+                                                                    array_push($read_category,$item);
+                                                                    echo  '<li>
+                                                                                <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
+                                                                                <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
+                                                                           </li>';                                      
+                                                                }
+                                                }
+                                            ?>
                                         </ul>
                                     </div> 
-                                    -->
+                                    <?php
+                                    endif;
+                                    ?>
                                 </div>
                             </ul>
 
@@ -255,7 +259,7 @@ endif;
                                                     <i class="fa fa-star checked"></i>
                                                     <p class="text-detail-reveiw text-detail-reveiw2"> 5.0 Instructor Rating</p>
                                                 </div>
-                                                <p class="text-detail-reveiw"><?= $count_reviews_all ?> Reviews</p>
+                                                <!-- <p class="text-detail-reveiw"><?= $count_reviews ?> Reviews</p> -->
                                                 <p class="text-detail-reveiw"><?= $enrolled_all ?> Students</p>
                                                 <p class="text-detail-reveiw"><?= count($author_courses) ?> Courses</p>
                                             </div>
