@@ -32,15 +32,6 @@ if(!$posttags){
     $category_xml = get_field('category_xml', $post->ID);
 }
 
-$stackoverflow = get_field('stackoverflow',  'user_' . $post->post_author);
-$github = get_field('github',  'user_' . $post->post_author);
-$facebook = get_field('facebook',  'user_' . $post->post_author);
-$twitter = get_field('twitter',  'user_' . $post->post_author);
-$linkedin = get_field('linkedin',  'user_' . $post->post_author);
-$instagram = get_field('instagram',  'user_' . $post->post_author);
-$discord = get_field('discord',  'user_' . $post->post_author);
-$tik_tok = get_field('tik_tok',  'user_' . $post->post_author);
-
 $course_type = get_field('course_type', $post->ID);
 
 //Image - article
@@ -71,14 +62,10 @@ if($tag = ''){
         $tag = (String)get_the_category_by_ID($tagI);                                    
 }
 
-$content = get_field('article_itself',  $post->ID);
-
 $user_id = get_current_user_id();
-
+$content = get_field('article_itself',  $post->ID);
 $reviews = get_field('reviews', $post->ID);
-
 $number_comments = !empty($reviews) ? count($reviews) : '0';
-
 $price = get_field('price', $post->ID) ?: 'Gratis';
 
 //Similar course
@@ -104,7 +91,7 @@ foreach ($posts as $key => $course) {
 
 //Views on this course 
 $table_tracker_views = $wpdb->prefix . 'tracker_views';
-$sql = $wpdb->prepare("SELECT SUM(occurence) as occurence FROM $table_tracker_views  WHERE user_id = $user_id AND data_type = 'course' AND data_id = $post->ID ");
+$sql = $wpdb->prepare("SELECT SUM(occurence) as occurence FROM $table_tracker_views AND data_type = 'course' AND data_id = $post->ID ");
 $post_views = $wpdb->get_results($sql);
 
 //Reaction on this course
