@@ -35,7 +35,7 @@
                 <ul class="filters">
                     <li class="item active">All</li>
                     <li class="item">Done</li>
-                    <li class="item">Other assessment</li>
+                    <!-- <li class="item">Other assessment</li> -->
                 </ul>
                 <!-- <input type="search" class="form-control search" placeholder="search"> -->
             </div>
@@ -71,14 +71,10 @@
                     $timer = ceil($timer/60);
 
                     //Image
-                    $image = get_field('image_assessement', $assessment->ID)['url'];
-                    if(!$image){
-                        $image = get_the_post_thumbnail_url($assessment->ID);
+                    $image = get_field('image_assessement', $assessment->ID)['url'];                  
                         if(!$image)
-                            $image = get_field('url_image_xml', $assessment->ID);
-                                if(!$image)
-                                    $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
-                    }
+                            $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
+                    
 
                     //Tags !mportant 
                     $posttags = get_the_tags();
@@ -92,7 +88,7 @@
 
                         <div class="cardAssessement">
                             <div class="heead-img-block">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-1.png" alt="">
+                                <img src="<?= $image ?>" alt="">
                             </div>
                             <div class="body-card-assessment">
                                 <p class="title-assessment"> <?= $assessment_title ?></p>
@@ -109,7 +105,7 @@
                                 </div>
                             </div>
                             <div class="footerCardSkillsssessment">
-                                <a href= <?= "/detail-assessment/?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
+                                <a href= <?= get_permalink($assessment->ID) ?> class="btn btnDetailsAssessment">Details</a>
                                 <form action="/dashboard/user/answer-assessment" method="post">
                                     <input type="hidden" name="assessment_id" value= <?= $assessment->ID; ?> >
                                     <button class="btn btnGetStartAssessment" data-target="" data-toggle="" id="">Get Started</button>

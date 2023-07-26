@@ -14,15 +14,15 @@ view($post,$user_visibility);
 
 $course_type = get_field('course_type', $post->ID);
 
-$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus', 'E-learning'];
-$online = ['Video', 'Webinar','Podcast'];
+$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
+$online = ['Video', 'Webinar','Podcast', 'E-learning'];
 
 //Redirection - visibility 
 if(!visibility($post, $visibility_company))
     header('location: /');
 
 //Redirection - type
-if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel' && $course_type != 'Podcast' && $course_type != 'Leerpad')
+if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel' && $course_type != 'Leerpad')
     header('location: /');
 
 //Online
@@ -87,7 +87,12 @@ $dagdeel = count($dagdeel);
 */
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
-$price = get_field('price', $post->ID) ?: 'Gratis';
+$price_noformat = get_field('price', $post->ID) ?: 'Gratis';
+if($price_noformat != "Gratis")
+    $price = '€' . number_format($price_noformat, 2, '.', ',');
+else
+    $price = 'Gratis';
+
 $prijsvat = get_field('prijsvat', $post->ID);
 $btw = get_field('btw-klasse', $post->ID); 
 if(!$prijsvat) 
@@ -246,7 +251,6 @@ $average_star = intval($average_star_nor);
 
 $link_to = get_field('link_to', $post->ID);
 $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
-
 
 /* * Informations reservation * */
 //Orders - enrolled courses 

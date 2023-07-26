@@ -43,13 +43,12 @@ else if(!empty($youtube_videos))
     $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
 
 if(!$read_video)
-    $read_video = "<img src='" . $thumbnail . "' alt='preview image'>";
+    $read_video = "<img class='blockImgCour' src='" . $thumbnail . "' alt='preview image'>";
 
 // else
 
 //Start or Buy
 $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-
 $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 
 //Review pourcentage
@@ -205,16 +204,18 @@ endif;
 
                                                 $link = '#';
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                                $read_status_icon = '<img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/Instellingen.png" alt="">';
                                                 if($bool_link || $key == 0){
                                                     $link = '?topic=0&lesson=' . $key;
                                                     $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                                    $read_status_icon = '<img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">';
                                                 }
 
                                                 $lecture_index = $key + 1;
                                                 echo 
                                                     '<div class="element-playlist-course">
-                                                        <div class="d-flex align-items-center group-element">
-                                                            <img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">
+                                                        <div class="d-flex align-items-center group-element">'
+                                                            .  $read_status_icon . '
                                                             <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
                                                             <a href="' . $link . '" class class="text-playlist-element ' . $style . '">' . $video['course_lesson_title'] . '</a>
                                                         </div>
@@ -227,6 +228,9 @@ endif;
                                                 if(isset($lesson))
                                                     if($lesson == $key)
                                                         $style = "color:#F79403";
+
+                                                $link = '?topic=0&lesson=' . $key;
+                                                $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
 
                                                 $lecture_index = $key + 1;
                                                 echo 
@@ -248,11 +252,11 @@ endif;
                             <ul id="Instructor" class="hide">
                                 <div class="section-tabs">
                                     <div class="d-flex">
-                                        <div class="blockImg">
+                                        <a href="/user-overview?id=<?= $post->post_author ?>" class="blockImg">
                                             <img src="<?= $author_image ?>" alt="">
-                                        </div>
+                                        </a>
                                         <div class="second-block-profil">
-                                            <p class="name-autors"><?= $author_name ?></p>
+                                            <a href="/user-overview?id=<?= $post->post_author ?>" class="name-autors"><?= $author_name ?></a>
                                             <p class="langue-text"><?= $author_role ?></p>
                                             <div class="d-flex flex-wrap">
                                                 <div class="d-flex align-items-center">
@@ -472,9 +476,9 @@ endif;
                                             </div>
                                             </form>
                                         </div>
-                                        <?php
-                                        endif;
-                                        ?>
+                                    <?php
+                                    endif;
+                                    ?>
                                 </div>
                             </ul>
 
@@ -548,7 +552,7 @@ endif;
                             <ul>
                                 <li>
                                     <p class="name-element-detail">Price:</p>
-                                    <p class="detail priceCourse"> € <?= $price ?></p>
+                                    <p class="detail priceCourse"> <?= $price ?></p>
                                 </li>
                                 <li>
                                     <p class="name-element-detail">Instructor:</p>

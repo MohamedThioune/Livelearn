@@ -7,12 +7,6 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
 <?php
-extract($_GET);
-if(empty($podcast_index))
-    if(isset($lesson))
-        if(!$bool_link)
-            if($lesson != 0)
-                header('Location: ' . get_permalink($post->ID));
 
 //Long description             
 $long_description = ($long_description) ? : "No long description found for this course ";
