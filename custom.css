@@ -18819,7 +18819,7 @@ background: #FFFFFF !important;
     font-size: 14px;
     margin-right: 10px;
 }
-.content-new-Courses .content-head .fa-calendar-alt {
+.content-new-Courses .content-head i {
     color: #FFFFFF;
     font-size: 14px;
     margin-right: 10px;
@@ -19343,6 +19343,10 @@ background: #FFFFFF !important;
 }
 .video-content-course .owl-item .new-card-course, .event-content-course .new-card-course{
     min-height: unset;
+    height: 100% !important;
+}
+.video-content-course .owl-carousel.owl-drag .owl-item, .video-content-course .owl-carousel .owl-stage{
+    height: 100% !important;
 }
 .similar-course-block{
     margin-top: 25px;
@@ -20525,7 +20529,9 @@ background: #FFFFFF !important;
     margin-bottom: 20px;
     height: 18px;
 }
-
+.course-playlist-video{
+    margin-bottom: 40px;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
