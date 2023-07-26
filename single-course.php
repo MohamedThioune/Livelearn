@@ -311,7 +311,7 @@ foreach ($author_courses as $key => $course) {
 } 
 
 if(in_array($course_type, $offline))
-    include_once('template-parts/modules/single-new-course-offline.php');
+    include_once('template-parts/modules/single-new-course-multi-date.php');
 else if($course_type == 'Video')
     include_once('template-parts/modules/single-new-course-video.php');
 else if($course_type == 'Podcast')

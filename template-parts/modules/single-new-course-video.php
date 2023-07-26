@@ -29,20 +29,28 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Read video
-$read_video = "";
-if(isset($lesson))
-    if(!empty($courses))
-        $read_video =  "<video class='blockImgCour' poster='' controls>
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                        </video>";
-    else if(!empty($youtube_videos))
-        $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+$read_video = null;
+if(!isset($lesson))
+    $lesson = 0;
+
+if(!empty($courses))
+    $read_video =  "<video class='blockImgCour' poster='' controls>
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                    </video>";
+else if(!empty($youtube_videos))
+    $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+
+if(!$read_video)
+    $read_video = "<img src='" . $thumbnail . "' alt='preview image'>";
+
 // else
 
 //Start or Buy
 $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+
+$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -78,7 +86,7 @@ endif;
                     <img src="<?= $author_image ?>" alt="">
                 </div>
                 <p class="name-autors"><?= $author_name; ?></p>
-            </div>
+            </a>
             <div class="block-review-calendar">
                 <div class="d-flex align-items-center">
                     <i class='fa fa-calendar-alt'></i>
@@ -88,14 +96,14 @@ endif;
                 if($language):
                 ?>
                 <div class="d-flex align-items-center">
-                    <i class='fa fa-calendar-alt'></i>
+                    <i class='fa fa-language' aria-hidden="true"></i>
                     <p class="date"><?= $language ?></p>
                 </div>
                 <?php
                 endif;
                 ?>
                 <div class="d-flex align-items-center">
-                    <i class='fa fa-calendar-alt'></i>
+                    <i class='fas fa-book-open'></i>
                     <p class="date"><?= $course_type ?></p>
                 </div>
             </div>
@@ -171,7 +179,7 @@ endif;
                             </ul>
 
                             <ul id="Course">
-                                <div class="content-playlist-course">
+                                <div class="content-playlist-course course-playlist-video">
                                     <p class="title"><?= $post->post_title ?> (<span><?= $count_videos ?> Videos</span>) </p>
                                     <p class="description"><?= $short_description ?></p>
                                     <div class="playlist-course-block">
@@ -603,7 +611,7 @@ endif;
             ?>
             <div class="similar-course-block">
                 <h2>Similar Course</h2>
-                <div class="owl-carousel similarCourseCarousel owl-theme owl-carousel-card-course">
+                <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                     <?php
                     foreach($similar_course as $course):
                         //Location
@@ -736,6 +744,8 @@ endif;
         dots:false,
         responsiveClass:true,
         autoplayHoverPause:true,
+        autoHeight:true,
+        autoHeightClass: 'owl-height',
         responsive:{
             0:{
                 items:1.7,
@@ -763,6 +773,8 @@ endif;
         lazyLoad:true,
         responsiveClass:true,
         autoplayHoverPause:true,
+        autoHeight:true,
+        autoHeightClass: 'owl-height',
         responsive:{
             0:{
                 items:1.1,
