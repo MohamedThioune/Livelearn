@@ -12632,6 +12632,7 @@ select {
     background: #023356;
     font-size: 12px;
     z-index: 9;
+    width: fit-content;
 }
 
 .rangeslider-wrap {
@@ -16557,6 +16558,7 @@ background: #FFFFFF !important;
 .barNote .bg-gris-Skills {
     height: 18px;
     background: #D1D5DB;
+    width: 100%;
 }
 .element-block-rating{
     display: flex;
@@ -20532,6 +20534,14 @@ background: #FFFFFF !important;
 .course-playlist-video{
     margin-bottom: 40px;
 }
+
+.section-dynamic-reviews .rating:not(:checked) > label:hover, .section-dynamic-reviews .rating:not(:checked) > label:hover ~ label {
+    color: #90A0A3 !important;
+}
+.section-dynamic-reviews .rating > input:checked ~ label:hover{
+    color: #F79426 !important;
+}
+
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {

@@ -270,7 +270,7 @@ endif;
                             </ul>
 
                             <ul id="Reviews" class="hide">
-                                <div class="section-tabs" >
+                                <div class="section-tabs section-dynamic-reviews" >
                                     <div class="d-flex justify-content-between flex-wrap block-review-course">
                                         <div class="block-note-review">
                                             <p class="note-text"><?= $average_star_format ?></p>

@@ -71,7 +71,7 @@ endif;
                                         echo '<i class="fa fa-star checked"></i>';
                                         continue;
                                     endif;
-                                    echo '<i class="fa-regular fa-star"></i>';
+                                    echo '<i class="fa fa-star"></i>';
                                 endforeach;
                                 ?>
                             </div>
