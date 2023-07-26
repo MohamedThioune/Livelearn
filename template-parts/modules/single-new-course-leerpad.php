@@ -519,7 +519,7 @@
                                             <span class="rating-counter"></span>
                                         </div>
                                         <input type="text" placeholder="Title">
-                                        <textarea name="" id="" rows="10"></textarea>
+                                        <textarea name="" id="" rows="10" required>hello</textarea>
                                         <div class="position-relative">
                                             <button class="btn btn-send">Send</button>
                                         </div>

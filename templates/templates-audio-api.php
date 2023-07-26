@@ -192,6 +192,7 @@ if ($audio_search){
             'author_id' => $user_id,
             'status' => 'extern'
         );
+        $wpdb->select();
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
