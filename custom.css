@@ -2394,22 +2394,35 @@ input:focus-visible {
     font-size: 18px;
 }
 
-#loginform input {
+#loginform input, . {
     color: #023356;
-    font-size: 14px;
-    padding: 10px 21px !important;
+    font-size: 15px;
+    padding: 13px 21px !important;
     margin-bottom: 8px;
     background: #FFFFFF !important;
     border-radius: 8px;
-    border: unset;
+    border: 1px solid rgb(4 51 86 / 27%);
     width: 100%;
 }
 
-#loginform #wp-submit {
+#loginform #wp-submit, .ur-submit-button {
+    color: #023356 !important;
+    font-size: 15px;
+    padding: 13px 21px !important;
+    border: 1px solid #023356;
+}
+#loginform #wp-submit:hover, .ur-submit-button {
     background: #023356 !important;
     color: white !important;
 }
-
+#loginform .nsl-container-buttons{
+    display: none;
+}
+#rememberme {
+    width: fit-content !important;
+    margin-right: 15px;
+    margin-bottom: 0;
+}
 .login-password label,
 .login-username label {
     /* display: none; */
@@ -4093,12 +4106,11 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 #user-registration-form-59 form .ur-form-row input {
     color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    margin-bottom: 12px;
     background: #FFFFFF !important;
     border-radius: 8px;
-    border: unset;
+    font-size: 15px;
+    padding: 11px 21px !important;
+    border: 1px solid rgb(4 51 86 / 27%) !important;
 }
 
 #user-registration-form-59 form .ur-form-row input::placeholder {
@@ -4107,16 +4119,19 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .register .ur-submit-button {
     width: 100%;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    background: #023356 !important;
-    color: #FFFFFF !important;
+    color: #023356 !important;
+    border: 1px solid #023356 !important;
     text-align: center !important;
-    padding: 10px !important;
     margin-bottom: 5px;
     margin-top: 10px;
     margin-right: 0;
     margin-left: 0;
+    padding: 13px 21px !important;
+    background: none !important;
+}
+.register .ur-submit-button:hover {
+    background: #023356 !important;
+    color: #FFFFFF !important;
 }
 
 .acf-image-uploader .image-wrap {
@@ -12617,6 +12632,7 @@ select {
     background: #023356;
     font-size: 12px;
     z-index: 9;
+    width: fit-content;
 }
 
 .rangeslider-wrap {
@@ -16542,6 +16558,7 @@ background: #FFFFFF !important;
 .barNote .bg-gris-Skills {
     height: 18px;
     background: #D1D5DB;
+    width: 100%;
 }
 .element-block-rating{
     display: flex;
@@ -18156,12 +18173,13 @@ background: #FFFFFF !important;
     padding: 50px 15px 30px;
 }
 .right-block-connection h2{
-    font-size: 25px;
+    font-size: 27px;
     line-height: 36px;
     font-weight: 500;
-    color: #000000;
-    margin-top: 20px;
+    color: #053356;
+    margin-top: 27px;
     margin-bottom: 25px;
+    text-align: center;
 }
 .logo-liverlearn-connection{
     width: 173px;
@@ -18184,10 +18202,13 @@ background: #FFFFFF !important;
     line-height: 24px;
     display: flex;
     align-items: center;
-    color: #2b2b2b;
-    font-weight: 300;
+    color: #685F78;
+    margin-bottom: 15px;
+    font-weight: 400;
 }
-
+#loginform p {
+    margin-bottom: 25px;
+}
 .content-new-inloggen form {
     border-radius: 5px;
     padding: 21px 10px !important;
@@ -18800,7 +18821,7 @@ background: #FFFFFF !important;
     font-size: 14px;
     margin-right: 10px;
 }
-.content-new-Courses .content-head .fa-calendar-alt {
+.content-new-Courses .content-head i {
     color: #FFFFFF;
     font-size: 14px;
     margin-right: 10px;
@@ -19324,6 +19345,10 @@ background: #FFFFFF !important;
 }
 .video-content-course .owl-item .new-card-course, .event-content-course .new-card-course{
     min-height: unset;
+    height: 100% !important;
+}
+.video-content-course .owl-carousel.owl-drag .owl-item, .video-content-course .owl-carousel .owl-stage{
+    height: 100% !important;
 }
 .similar-course-block{
     margin-top: 25px;
@@ -20505,6 +20530,16 @@ background: #FFFFFF !important;
 .block-review-course .block-rating-note .element-block-rating {
     margin-bottom: 20px;
     height: 18px;
+}
+.course-playlist-video{
+    margin-bottom: 40px;
+}
+
+.section-dynamic-reviews .rating:not(:checked) > label:hover, .section-dynamic-reviews .rating:not(:checked) > label:hover ~ label {
+    color: #90A0A3 !important;
+}
+.section-dynamic-reviews .rating > input:checked ~ label:hover{
+    color: #F79426 !important;
 }
 
 

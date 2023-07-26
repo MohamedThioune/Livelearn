@@ -95,14 +95,14 @@ endif;
                 if($language):
                 ?>
                 <div class="d-flex align-items-center">
-                    <i class='fa fa-calendar-alt'></i>
+                    <i class='fa fa-language' aria-hidden="true"></i>
                     <p class="date"><?= $language ?></p>
                 </div>
                 <?php
                 endif;
                 ?>
                 <div class="d-flex align-items-center">
-                    <i class='fa fa-calendar-alt'></i>
+                    <i class='fas fa-book-open'></i>
                     <p class="date"><?= $course_type ?></p>
                 </div>
             </div>
@@ -182,7 +182,7 @@ endif;
                             </ul>
 
                             <ul id="Course">
-                                <div class="content-playlist-course">
+                                <div class="content-playlist-course course-playlist-video">
                                     <p class="title"><?= $post->post_title ?> (<span><?= $count_videos ?> Videos</span>) </p>
                                     <p class="description"><?= $short_description ?></p>
                                     <div class="playlist-course-block">
@@ -274,7 +274,7 @@ endif;
                             </ul>
 
                             <ul id="Reviews" class="hide">
-                                <div class="section-tabs" >
+                                <div class="section-tabs section-dynamic-reviews" >
                                     <div class="d-flex justify-content-between flex-wrap block-review-course">
                                         <div class="block-note-review">
                                             <p class="note-text"><?= $average_star_format ?></p>
@@ -619,7 +619,7 @@ endif;
             ?>
             <div class="similar-course-block">
                 <h2>Similar Course</h2>
-                <div class="owl-carousel similarCourseCarousel owl-theme owl-carousel-card-course">
+                <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                     <?php
                     foreach($similar_course as $course):
                         //Location
@@ -752,6 +752,8 @@ endif;
         dots:false,
         responsiveClass:true,
         autoplayHoverPause:true,
+        autoHeight:true,
+        autoHeightClass: 'owl-height',
         responsive:{
             0:{
                 items:1.7,
@@ -779,6 +781,8 @@ endif;
         lazyLoad:true,
         responsiveClass:true,
         autoplayHoverPause:true,
+        autoHeight:true,
+        autoHeightClass: 'owl-height',
         responsive:{
             0:{
                 items:1.1,
