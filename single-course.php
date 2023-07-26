@@ -305,7 +305,7 @@ if(in_array($course_type, $offline))
 else if($course_type == 'Video')
     include_once('template-parts/modules/single-new-course-video.php');
 else if($course_type == 'Podcast')
-    include_once('template-parts/modules/single-new-course-podcast.php');
+    include_once('template-parts/modules/single-course-podcast.php');
 else if($course_type == 'Leerpad')
     include_once('template-parts/modules/single-new-course-offline.php');
 
