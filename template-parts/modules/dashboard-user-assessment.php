@@ -77,7 +77,7 @@
                         if(!$image)
                             $image = get_field('url_image_xml', $assessment->ID);
                                 if(!$image)
-                                    $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
+                                    $image = get_stylesheet_directory_uri()."/img/assessment-1.png";
                     }
 
                     //Tags !mportant 
@@ -92,7 +92,7 @@
 
                         <div class="cardAssessement">
                             <div class="heead-img-block">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-1.png" alt="">
+                                <img src=<?= $image; ?> alt="">
                             </div>
                             <div class="body-card-assessment">
                                 <p class="title-assessment"> <?= $assessment_title ?></p>
