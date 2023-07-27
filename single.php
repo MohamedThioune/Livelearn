@@ -91,7 +91,7 @@ foreach ($posts as $key => $course) {
 
 //Views on this course 
 $table_tracker_views = $wpdb->prefix . 'tracker_views';
-$sql = $wpdb->prepare("SELECT SUM(occurence) as occurence FROM $table_tracker_views AND data_type = 'course' AND data_id = $post->ID ");
+$sql = $wpdb->prepare("SELECT SUM(occurence) as occurence FROM $table_tracker_views WHERE data_type = 'course' AND data_id = $post->ID ");
 $post_views = $wpdb->get_results($sql);
 
 //Reaction on this course
