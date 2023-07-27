@@ -172,7 +172,7 @@
                         <p class="title-card">HR Consultancy</p>
                         <p class="description-card">Strategisch HR-advies voor het ontwikkelen van een wendbare, talentgerichte organisatie.</p>
                         <div class="w-100">
-                            <a href="/inloggen-2/">Lees meer</a>
+                            <a href="/voor-jou">Lees meer</a>
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                         <p class="title-card">HR Interim</p>
                         <p class="description-card">Flexibele HR-expertise op maat om uw organisatie te ondersteunen en HR-doelen te realiseren.</p>
                         <div class="w-100">
-                            <a href="/voor-teacher-2-2/">Lees meer</a>
+                            <a href="/voor-opleiders/">Lees meer</a>
                         </div>
                     </div>
                 </div>
@@ -190,7 +190,7 @@
                         <p class="title-card">IT implementatie</p>
                         <p class="description-card">Verbeterde HR-processen, geautomatiseerd beheer, succesvolle implementatie van HR-software.</p>
                         <div class="w-100">
-                            <a href="/voor-organisatie-2/">Lees meer</a>
+                            <a href="/voor-organisaties/">Lees meer</a>
                         </div>
                     </div>
                 </div>
@@ -200,7 +200,7 @@
             <h2>Onze aanpak</h2>
             <p class="description">De LiveLearn methode is net anders dan andere HR partijen. Bij LiveLearn combineren we persoonlijke begeleiding en technologie om onze partners de beste ervaring te bieden. Wij begrijpen ook dat het ontwikkelen van talent niet altijd op de eerste plaats staat binnen een organisatie. Daarom maken wij onze services en software zo eenvoudig mogelijk, zodat er geen tijd verloren gaat. </p>
             <p class="description">Wat doen wij dan als LiveLearn? Wij werken altijd datagedreven en beredeneren HR vanuit de individuele werknemer. Dit klinkt als een klein verschil, maar heeft op organisatie niveau enorme impact. Wij koppelen namelijk alle wensen en doelen van de individuele medewerker en bieden hen een persoonlijk, datagedreven oplossing. Zo kunnen zij persoonlijk groeien en dus jij als organisatie.  Alle data wordt geanonimiseerd en teruggekoppeld naar de organisatie, zodat deze vanuit real-time informatie beslissingen kan nemen.</p>
-            <a href="" class="btn btn-Lees-meer-aanpak">Lees meer</a>
+            <a href="/about/" class="btn btn-Lees-meer-aanpak">Lees meer</a>
         </section>
         <div class="data-gedreven-block">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/vector-stratup.png" class="" alt="">
@@ -209,7 +209,7 @@
         <section class="section-three-card">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
-                    <a href="" class="card-theme-bleu">
+                    <a href="/zzpers/" class="card-theme-bleu">
                         <div class="head-img">
                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/vector-stratup.png" class="" alt="">
                         </div>
@@ -220,7 +220,7 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <a href="" class="card-theme-bleu">
+                    <a href="/sme" class="card-theme-bleu">
                         <div class="head-img">
                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/vector-midden.png" class="" alt="">
                         </div>
@@ -231,7 +231,7 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <a href="" class="card-theme-bleu">
+                    <a href="/corporate/" class="card-theme-bleu">
                         <div class="head-img">
                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/vector-Grootbedrijf.png" class="" alt="">
                         </div>
@@ -248,7 +248,7 @@
                 <div class="Ons-verhaal-block">
                     <h2 class="subTitle-about">Wanneer vooral niet met ons te werken.</h2>
                     <p class="description-about">Als innovatie, digitalisering en goed werkgeverschap geen prioriteit voor je zijn, is het wellicht niet raadzaam om met ons samen te werken. Wij zijn toegewijd aan vooruitstrevende HR-oplossingen en het creëren van moderne, efficiënte werkomgevingen. Onze focus ligt op het helpen van organisaties die streven naar groei, concurrentievoordeel en het aantrekken van talent.</p>
-                    <a href="" class="btn btn-doe-jij">Jij wel? Neem dan contact op</a>
+                    <a href="/zzpers/" class="btn btn-doe-jij">Jij wel? Neem dan contact op</a>
                 </div>
                 <div class="block-img-about">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/individuals-women.png" class="img-head-about" alt="">

@@ -162,13 +162,7 @@ if(!empty($enrolled))
                         else if($course_type == $podcast_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
 
-                        $link = "";    
-                        if($course_type == "Leerpad")
-                            $link = '/detail-product-road?id=' . $course->ID ;
-                        else if($course_type == "Assessment")
-                            $link = '/detail-assessment?assessment_id=' . $course->ID;
-                        else
-                            $link = get_permalink($course->ID);
+                        $link = get_permalink($course->ID);
                                             
                     ?>
                     <tr id="<?php echo $course->ID; ?>" data-attr="<?php echo $course->ID;?>">

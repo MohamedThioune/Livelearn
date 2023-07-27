@@ -24,8 +24,8 @@
                         <p class="description-content-individu">Wil je een extra inkomstenstroom genereren? Doe mee aan ons affiliate programma en verdien geld door klanten aan te brengen voor het LiveLearn-platform. Met een maandelijkse commissie op basis van het aantal aangemelde medewerkers en een bonusstructuur voor het behalen van mijlpalen, bieden we een lucratieve kans. </p>
                         <p class="description-content-individu secondDescription">Profiteer van de groeiende vraag naar ons platform en werk samen met ons om organisaties te helpen bij het transformeren van hun leerervaring. Meld je vandaag nog aan en begin met verdienen!</p>
                         <div class="group-btn">
-                            <a href="" class="btn btn-doawnload-app">Bereken jouw inkomsten</a>
-                            <a href="" class="btn btn-Het-is">Leer meer over LiveLearn</a>
+                            <a href="#FormSection" id="Go" class="btn js-anchor-link btn-doawnload-app">Bereken jouw inkomsten</a>
+                            <a href="/about/" class="btn btn-Het-is">Leer meer over LiveLearn</a>
                         </div>
                     </div>
                     <div class="content-img">
@@ -74,7 +74,7 @@
                 <p class="description">Ontketen de kracht van levenslang leren! Doe mee met ons affiliate programma en bouw mee aan een wereld waarin educatie voor iedereen toegankelijk is. </p>
                 <p class="description">Samen streven we ernaar om professionele ontwikkeling te stimuleren en vaardigheden naar nieuwe hoogten te tillen. Ons LiveLearn-platform biedt innovatieve leermogelijkheden en tools die succes en groei mogelijk maken. Door samen te werken, kunnen we een positieve impact creëren en de toekomst vormgeven.</p>
                 <p class="description">Word vandaag nog onze partner en versterk je inkomsten terwijl je anderen helpt hun potentieel te verwezenlijken. Sluit je aan bij ons affiliate programma en bouw mee aan een leven lang leren voor iedereen!</p>
-                <a href="" class="btn btn-wordt">Wordt Affiliate</a>
+                <a href="/template-form/" class="btn btn-wordt">Wordt Affiliate</a>
             </section>
         </div>
         <section class="section-Hoe-affiliate">
@@ -126,7 +126,7 @@
             <div class="content-detail-pricing">
                 <h2>Rekenmodel</h2>
                 <p class="description-ons">Ons rekenmodel is ontworpen voor eenvoud en nauwkeurigheid, met heldere tarieven en flexibiliteit om aan jouw behoeften te voldoen.</p>
-                <div class="row">
+                <div class="row" id="FormSection">
                     <div class="col-lg-6">
                         <div class="content-first-detail">
                             <p class="title">Bereken hoeveel je verdient met het aanleveren van een klant.</p>
@@ -154,7 +154,7 @@
                                 <li>+ Mogelijkheid langdurige samenwerkingen.</li>
                                 <li>+ Producttrainingen en persoonlijk advies.</li>
                             </ul>
-                            <a href="" class="btn btn-do-jij">Doe jij met ons mee?</a>
+                            <a href="/template-form/" class="btn btn-do-jij">Doe jij met ons mee?</a>
                         </div>
                     </div>
                 </div>
@@ -163,6 +163,21 @@
     </div>
 
 
+
+
+    <script>
+
+        $('.js-anchor-link').click(function(e){
+            e.preventDefault();
+            var target = $($(this).attr('href'));
+            if(target.length){
+                var scrollTo = target.offset().top;
+                $('body, html').animate({scrollTop: scrollTo+'px'}, 800);
+            }
+        });
+
+
+    </script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

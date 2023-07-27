@@ -7,6 +7,14 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
 <?php
+//$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
+//$url = "https://anchor.fm/s/878cadd4/podcast/rss";
+$url = "https://feeds.buzzsprout.com/2145970.rss";
+//$url = "https://aod.nrjaudio.fm/xml/169.xml";
+$xml = simplexml_load_file($url);
+?>
+
+<?php
 extract($_GET);
 if(empty($podcast_index))
     if(isset($lesson))
@@ -14,46 +22,29 @@ if(empty($podcast_index))
             if($lesson != 0)
                 header('Location: ' . get_permalink($post->ID));
 
-//Long description
+//Long description             
 $long_description = ($long_description) ? : "No long description found for this course ";
 
 //Author
 $author = get_user_by('id', $post->post_author);
-$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
+$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
 $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 $author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
 $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
-//Read audio
-// $read_audio = "";
-// if(!empty($podcasts))
-//     if(isset($topic) && isset($lesson))
-//         $read_audio =  '<audio controls id="myAudioID">
-//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
-//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
-//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
-//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
-//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
-//                             Your browser does not support the audio element.
-//                         </audio>';
-//     else if(!empty($podcast_index))
-//         if(isset($lesson))
-//         $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-
 //Start or Buy
-$startorbuy = (!$bool_link) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href=""/dashboard/user/checkout-video/?post=" ' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
 
 //Review pourcentage
-if(!empty($count_reviews)):
-    $star_review[1] = ($star_review[1] / $count_reviews) * 100;
-    $star_review[2] = ($star_review[2] / $count_reviews) * 100;
-    $star_review[3] = ($star_review[3] / $count_reviews) * 100;
-    $star_review[4] = ($star_review[4] / $count_reviews) * 100;
-    $star_review[5] = ($star_review[5] / $count_reviews) * 100;
+if(!empty($counting_rate)):
+    $star_review[1] = ($star_review[1] / $counting_rate) * 100;
+    $star_review[2] = ($star_review[2] / $counting_rate) * 100;
+    $star_review[3] = ($star_review[3] / $counting_rate) * 100;
+    $star_review[4] = ($star_review[4] / $counting_rate) * 100;
+    $star_review[5] = ($star_review[5] / $counting_rate) * 100;
 endif;
-
 ?>
 <body>
 <div class="content-new-Courses video-content-course content-course-podcast">
@@ -152,22 +143,24 @@ endif;
                                 </div>
                             </ul>
 
-                            <?php
-                            //if(!empty($podcasts)):
+                            <?php 
+                            if(!empty($podcasts)):
                             ?>
                             <ul id="Course">
                                 <div class="list-content-podcast">
                                 <?php
-                                foreach ($podcast_index as $key => $podcast) {
+                                $counter = 1;
+                                foreach($podcasts as $key => $podcast) {
                                     $style = "";
                                     if(isset($lesson))
                                         if($lesson == $key)
                                             $style = "color:#F79403";
 
                                     $link = '#';
+                                    $reading = "#";
                                     $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                    if($bool_link || $lesson == 0){
-                                        $link = '?topic=0&lesson=' . $key;
+                                    if($bool_link || $key == 0){
+                                        $reading = $podcast['course_podcast_data'];
                                         $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
                                     }
 
@@ -176,13 +169,13 @@ endif;
                                     <div class="elemnt-list-podcast">
                                         <p class="number-list"><?= $lecture_index ?></p>
                                         <div class="detail-block-podcast">
-                                            <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
+                                            <p class="title-podcast"><?= $podcast['course_podcast_title'] ?></p>
                                             <div class="audio">
                                                 <div class="cp-audioquote">
                                                     <div class="cp-audioquote__player">
                                                         <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="<?= $podcast['podcast_url'] ?>">
-                                                            <p><?= $podcast['podcast_description'] ?></p>
+                                                        <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                            <p><?= $podcast['course_podcast_intro'] ?></p>
                                                         </audio>
                                                         <div class="cp-audioquote__player--playBtn"></div>
                                                         <div class="cp-audioquote__player--display">
@@ -203,7 +196,59 @@ endif;
                                 </div>
                             </ul>
                             <?php
-                            //endif;
+                            elseif(!empty($podcast_index)):
+                            ?>
+                               <ul id="Course">
+                                <div class="list-content-podcast">
+                                <?php
+                                $counter = 1;
+                                foreach($podcast_index as $key => $podcast) {
+                                    $style = "";
+                                    if(isset($lesson))
+                                        if($lesson == $key)
+                                            $style = "color:#F79403";
+
+                                    $link = '#';
+                                    $reading = "#";
+                                    $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                    if($bool_link || $key == 0){
+                                        $reading = $podcast['podcast_url'];
+                                        $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                    }
+
+                                    $lecture_index = $key + 1;
+                                    ?>
+                                    <div class="elemnt-list-podcast">
+                                        <p class="number-list"><?= $lecture_index ?></p>
+                                        <div class="detail-block-podcast">
+                                            <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
+                                            <div class="audio">
+                                                <div class="cp-audioquote">
+                                                    <div class="cp-audioquote__player">
+                                                        <!-- src -->
+                                                        <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                            <p><?= $podcast['podcast_description'] ?></p>
+                                                        </audio>
+                                                        <div class="cp-audioquote__player--playBtn"></div>
+                                                        <div class="cp-audioquote__player--display">
+                                                            <div class="cp-audioquote__player--progress">
+                                                                <span class="cp-audioquote__player--track"></span>
+                                                                <span class="cp-audioquote__player--playhead"></span>
+                                                            </div>
+                                                            <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img class="status-icon" src="<?= $status_icon ?>" alt="">
+                                    </div>
+                                    <?php }
+                                ?>
+                                </div>
+                            </ul>
+                            <?php 
+                            endif;
                             ?>
 
                             <ul id="Reviews" class="hide">
@@ -214,16 +259,16 @@ endif;
                                             <div class="rating-bying-course">
                                                 <div class="rating-element2">
                                                     <div class="rating">
-                                                        <?php
+                                                        <?php 
                                                         foreach(range(5, 1) as $number):
                                                             if($average_star == $number ):
                                                                 echo '<input type="radio" id="star' . $number . '-note" class="stars" checked name="rating-note" value="' . $number . '" />
-                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';
+                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';                      
                                                                 continue;
                                                             endif;
 
                                                             echo '<input type="radio" id="star' . $number . '-note" class="stars" name="rating-note" value="' . $number . '" />
-                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';
+                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';                      
 
                                                         endforeach;
                                                         ?>
@@ -357,7 +402,7 @@ endif;
                                     if(!empty($reviews))
                                         foreach($reviews as $review):
                                             $user = $review['user'];
-                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
+                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
                                             $image_author = get_field('profile_img',  'user_' . $user->ID);
                                             $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
                                             $company = get_field('company',  'user_' . $user->ID);
@@ -380,11 +425,11 @@ endif;
                                             </div>';
                                         endforeach;
 
-                                        if(!$my_review_bool):
+                                        if(!$my_review_bool && $user_id):
                                         ?>
                                         <div class="comment-block">
                                             <h2>Write a Review</h2>
-                                            <form action="/dashboard/user" method="POST" id="review_vid">
+                                            <form action="/dashboard/user" method="POST" id="review_vid"> 
                                                 <input type="hidden" name="course_id" value="<?= $post->ID; ?>" >
                                             </form>
                                             <div class="rating-element2">
@@ -402,7 +447,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid"></textarea>
+                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                             <div class="position-relative">
                                                 <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
                                                 <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
@@ -425,11 +470,11 @@ endif;
                             <?php
                             $saves_expert = get_user_meta($user_id, 'expert');
                             foreach($experts as $value):
-                                if(!$value)
+                                if(!$value) 
                                     continue;
 
                                 $expert = get_user_by('id', $value);
-                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name;
+                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name; 
                                 $image = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                                 $company = get_field('company',  'user_' . $expert->ID);
@@ -441,8 +486,8 @@ endif;
                                     </div>
                                     <p class="name-expert"><?= $expert_name ?></p>
                                     <p class="poste-expert"><?= $title ?></p>
-                                </a>
-
+                                </a>    
+                               
                             <?php
                             endforeach;
                             ?>
@@ -465,21 +510,21 @@ endif;
                                     <p class="name-element-detail">Instructor:</p>
                                     <p class="detail"><?= $author_name ?></p>
                                 </li>
-                                <!--
+                                <!-- 
                                 <li>
                                     <p class="name-element-detail">Duration:</p>
                                     <p class="detail">3 weeks</p>
-                                </li>
+                                </li> 
                                 -->
                                 <li>
                                     <p class="name-element-detail">Lessons:</p>
                                     <p class="detail"><?= $count_audios ?></p>
                                 </li>
-
+                                
                                 <li>
                                     <p class="name-element-detail">Enrolled</p>
                                     <p class="detail"><?= $enrolled_member ?></p>
-                                </li>
+                                </li> 
 
                                 <?php
                                 if($language)
@@ -488,7 +533,7 @@ endif;
                                         <p class="detail">English</p>
                                       </li>';
                                 ?>
-
+                               
                                 <li>
                                     <p class="name-element-detail">Certificate:</p>
                                     <p class="detail">No</p>
@@ -500,28 +545,24 @@ endif;
 
                                 <?php echo $startorbuy ?>
 
-                                <!--
                                 <div class="sharing-element">
+                                    <?php
+                                    $subject = $post->post_title;
+                                    $permalink = get_permalink($post->ID);
+
+                                    $linkedin_share = "https://www.linkedin.com/sharing/share-offsite/?url=" . $permalink;
+                                    $mail_share = 'mailto:?subject=' . $subject . '&body=' . $permalink;
+                                    ?>
                                     <p>Share On:</p>
                                     <div class="d-flex flex-wrap">
-                                        <a href="">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                        <a href="">
+                                        <a target="_blank" href="<?= $linkedin_share ?>">
                                             <i class="fa fa-linkedin"></i>
                                         </a>
-                                        <a href="">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                        <a href="">
-                                            <i class="fa fa-instagram"></i>
+                                        <a target="_blank" href="<?= $mail_share ?>">
+                                            <i class="fa fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
-                                -->
                             </ul>
                         </div>
                     </div>
@@ -564,8 +605,8 @@ endif;
 
                         //Course Type
                         $course_type = get_field('course_type', $course->ID);
-
-                        echo
+                        
+                        echo 
                         '<a href="' . get_permalink($course->ID) . '" class="new-card-course">
                             <div class="head">
                                 <img src="' . $thumbnail . '" alt="">

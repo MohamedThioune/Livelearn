@@ -28,10 +28,10 @@ $artikel = $blogs[0];
         <p class="titlePricing">Altijd transparante prijzen</p>
         <p class="sousPricing">We hebben de prijzen zo eenvoudig mogelijk proberen te maken:
             Als individu betaal je niets, als opleider / expert alleen voor nieuwe klanten en als organisatie betaal je voor gebruik.</p>
-        <a href="" class="btn btnCreeer">Creeer je omgeving gratis</a>
+        <a href="/voor-organisaties/" class="btn btnCreeer">Creëer je omgeving gratis</a>
         <div class="row">
             <div class="col-lg-4 col-md-6">
-                <a href="/inloggen-2/">
+                <a href="/Individu">
                     <div class="cardPricing">
                         <p class="titleCardPPricing">Individuele leeromgeving</p>
                         <p class="sousTitlePricing">Altijd gratis</p>
@@ -62,7 +62,7 @@ $artikel = $blogs[0];
                 </a>    
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="/overview-organisations-5">
+                <a href="/overview-organisations-5/">
                     <div class="cardPricing" id="cardPricing2">
                         <p class="titleCardPPricing">Deel jouw kennis / vaardigheden</p>
                         <p class="sousTitlePricing">No cure no pay</p>
@@ -93,7 +93,7 @@ $artikel = $blogs[0];
                 </a>    
             </div>
             <div class="col-lg-4 col-md-6">
-                <a href="/overview-organisaties">
+                <a href="/overview-organisaties/">
                     <div class="cardPricing" id="cardPricing3">
                         <p class="titleCardPPricing">Upskill jouw team / organisatie</p>
                         <p class="sousTitlePricing">€4,95 p.m.</p>
@@ -160,7 +160,7 @@ $artikel = $blogs[0];
                             <li> + Mogelijkheid langdurige samenwerkingen.</li>
                             <li> + Producttrainingen en persoonlijke begeleiding.</li>
                         </ul>
-                        <a href="" class="btn btn-do-jij">Doe jij met ons mee?</a>
+                        <a href="/voor-organisaties/" class="btn btn-do-jij">Doe jij met ons mee?</a>
                     </div>
                 </div>
             </div>

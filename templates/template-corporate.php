@@ -22,10 +22,10 @@ require($page);
                         <p class="krijgText">
                             Boost de prestaties van je corporate organisatie met het LiveLearn LXP. Optimaliseer leren, deel kennis en versterk vaardigheden. Verhoog de productiviteit, bevorder innovatie en creëer een cultuur van continu leren. Geef je team de tools om te groeien en het concurrentievoordeel te behalen dat je nodig hebt..                         </p>
                         <div>
-                            <a href="/voor-teacher-2-2/" class="btn btn-al-vanaf">
+                            <a href="/voor-organisaties/" class="btn btn-al-vanaf">
                                 Al vanaf €4,95
                             </a>
-                            <a href="/functiegerichte-2/" class="btn btn-Functionaliteiten">Contact met onze adviseurs</a>
+                            <a href="/template-form/" class="btn btn-Functionaliteiten">Contact met onze adviseurs</a>
 
                         </div>
                     </div>
@@ -93,7 +93,7 @@ require($page);
                         <p class="text-description-jij">Een mobiele app</p>
                     </div>
                     <div class="d-flex align-items-center mt-4">
-                        <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
+                        <a href="/voor-organisaties/" class="btn btnStratAlVoor">Start al voor €4,95</a>
                     </div>
                 </div>
                 <div class="second-block-binnen">
@@ -129,7 +129,7 @@ require($page);
                             <p class="description-section">Ontdek de kracht van data en rapportage van skills binnen je corporate organisatie. Identificeer sterke punten, detecteer hiaten en optimaliseer groeikansen.
                                 <br>
                                 Met inzichtelijke rapporten kun je strategische beslissingen nemen, gerichte trainingen implementeren en de juiste talenten aantrekken. Versterk je concurrentiepositie, bevorder talentontwikkeling en bouw een wendbare organisatie die klaar is voor de toekomst. Laat data het kompas zijn voor succes en leid je organisatie naar nieuwe hoogten.</p>
-                            <a href="" class="btn btn-download-onze-app">Meld je aan</a>
+                            <a href="/voor-jou" class="btn btn-download-onze-app">Meld je aan</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -188,7 +188,7 @@ require($page);
                </div>
            </div>
            <div class="btn-Bekijk-functionaliteiten text-center">
-               <a href="/functiegerichte-2/" class="btn ">Bekijk al onze functionaliteiten</a>
+               <a href="/functionaliteiten/" class="btn ">Bekijk al onze functionaliteiten</a>
            </div>
        </div>
 

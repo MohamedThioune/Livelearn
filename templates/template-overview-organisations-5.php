@@ -37,7 +37,7 @@
        <div class="headOverviewOrganisatie">
            <h1>Deel jouw kennis in een paar klikken</h1>
            <p class="description">Wij hanteren geen opstartkosten, dus iedereen kan meteen van start. </p>
-           <a href="/voor-teacher-2-2/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creëer je omgeving gratis</a>
+           <a href="/voor-opleiders/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creëer je omgeving gratis</a>
        </div>
         <div class="row">
             <div class="col-md-4">
@@ -77,7 +77,7 @@
                         <h3 class="titleCardVoorOrganisatie">Uitleggen</h3>
                         <p class="descriptionCardVoorOrganisatie">
                             Bied jij producten of services waarbij uitleg van toegevoegde waarde is? Dan werken wij graag met je samen om te zorgen dat jouw (potentiële) klanten altijd op de hoogte zijn van jouw ontwikkelingen. Wij bieden workshops, productvideo’s of audio begeleiding.                        </p>
-                        <a href="/uitleggen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over&nbsp;<strong>uitleggen</strong> </a>
+                        <a href="/uitleggen/" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over&nbsp;<strong>uitleggen</strong> </a>
                     </div>
                 </div>
             </div>
