@@ -36,6 +36,7 @@
                         <div class="boxCardForm">
                             <p class="TitleForm">Jouw leeromgeving</p>
                             <div class="form-block">
+                                
                                 <?php
                                 wp_login_form([
                                     'redirect' => '/dashboard/user/',

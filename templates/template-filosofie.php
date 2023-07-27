@@ -162,10 +162,12 @@
     <div class="container-fluid">
 
         <section class="section-ontedek text-center">
-            <h2>Ontdek het geheim achter het <span>ideale team </span>! </h2>
-            <p class="description">Bij LiveLearn geloven we in een skills gedreven aanpak, waar afkomst er niet toe doet. We waarderen voortdurend het leren en ontwikkelen, omdat het helpt bij het samenstellen van het ideale team. </p>
-            <p class="description">We stimuleren individuele groei en bieden gelijke kansen voor iedereen om hun vaardigheden te ontwikkelen. Met onze tools en inzichten kun je de juiste talenten identificeren, competenties versterken en teamprestaties optimaliseren. Verander de manier waarop je naar talent kijkt en omarm een cultuur van continu leren voor ongekend succes!</p>
-            <a href="" class="btn btn-doe-jij">Doe jij mee?</a>
+            <h2>Zo stuwt onze mobiele app <span>jouw ontwikkeling</span> naar ongekende hoogten.</h2>
+            <p class="description">Met onze mobiele app ervaar je een revolutie in persoonlijk leren en ontwikkelen. Waar je ook bent, heb je direct toegang tot boeiende leermiddelen en uitdagende cursussen. </p>
+            <p class="description">Pas je leerervaring aan jouw behoeften aan en ontwikkel vaardigheden op jouw eigen tempo. Ontdek gepersonaliseerde leerroutes en ontvang aanbevelingen op basis van jouw interesses en prestaties. </p>
+            <p class="description">Met interactieve functies zoals quizzes en progressietracking blijf je gemotiveerd en zie je jouw groei in realtime. Leer onderweg met korte video’s, podcasts en artikelen die aansluiten bij jouw drukke levensstijl. Bereik nieuwe hoogten in je persoonlijke en professionele leven door te investeren in jezelf. </p>
+            <p class="description">Download nu onze app en ontdek de kracht van persoonlijk leren en ontwikkelen in je handpalm!</p>
+            <a href="/voor-jou/" class="btn btn-doe-jij">Download onze app</a>
         </section>
 
         <section class="section-category">
@@ -206,10 +208,10 @@
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/mobile-app.png" class="" alt="">
             </div>
             <div class="d-flex justify-content-center">
-                <a href="" class="btn btn-store">
+                <a href="https://apps.apple.com/sn/app/livelearn/id1666976386?l=fr" class="btn btn-store">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/btn-app-store.png" class="" alt="">
                 </a>
-                <a href="" class="btn btn-store">
+                <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="btn btn-store">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/btn-google-play.png" class="" alt="">
                 </a>
             </div>
@@ -219,7 +221,7 @@
             <h2>Ontdek het geheim achter het <span>ideale team </span>! </h2>
             <p class="description">Bij LiveLearn geloven we in een skills gedreven aanpak, waar afkomst er niet toe doet. We waarderen voortdurend het leren en ontwikkelen, omdat het helpt bij het samenstellen van het ideale team. </p>
             <p class="description">We stimuleren individuele groei en bieden gelijke kansen voor iedereen om hun vaardigheden te ontwikkelen. Met onze tools en inzichten kun je de juiste talenten identificeren, competenties versterken en teamprestaties optimaliseren. Verander de manier waarop je naar talent kijkt en omarm een cultuur van continu leren voor ongekend succes!</p>
-            <a href="" class="btn btn-doe-jij">Doe jij mee?</a>
+            <a href="/voor-jou/" class="btn btn-doe-jij">Doe jij mee?</a>
         </section>
 
         <section class="uiteindelijke-section">

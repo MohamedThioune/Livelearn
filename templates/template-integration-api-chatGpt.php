@@ -56,6 +56,8 @@ echo "<form method='post' action='/livelearn/chatgpt-api/'>
 <input type='submit' name='submit' value='submit'>
       </form>
 ";
+
+
 //$question = "I'm looking for a cpurse abput inf";
 
 // Exécutez la requête de recherche avec WP_Query.
@@ -99,3 +101,7 @@ if (isset($question)) {
     }
 }
     wp_reset_postdata(); // Réinitialisez les données des articles pour éviter d'interférer avec les autres requêtes ultérieures
+?>
+
+
+

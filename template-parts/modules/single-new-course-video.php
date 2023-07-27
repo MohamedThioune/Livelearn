@@ -29,30 +29,37 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Read video
-$read_video = "";
+$read_video = null;
+if(!isset($lesson))
+    $lesson = 0;
+
 if(!empty($courses))
-    if(isset($topic) && isset($lesson))
-        $read_video =  "<video class='blockImgCour' poster='' controls>
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                        </video>";
-    else if(!empty($youtube_videos))
-        if(isset($lesson))
-        $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    $read_video =  "<video class='blockImgCour' poster='' controls>
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                    </video>";
+else if(!empty($youtube_videos))
+    $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+
+if(!$read_video)
+    $read_video = "<img src='" . $thumbnail . "' alt='preview image'>";
+
+// else
 
 //Start or Buy
-$startorbuy = (!$bool_link) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href=""/dashboard/user/checkout-video/?post=" ' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+
+$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 
 //Review pourcentage
-if(!empty($count_reviews)):
-    $star_review[1] = ($star_review[1] / $count_reviews) * 100;
-    $star_review[2] = ($star_review[2] / $count_reviews) * 100;
-    $star_review[3] = ($star_review[3] / $count_reviews) * 100;
-    $star_review[4] = ($star_review[4] / $count_reviews) * 100;
-    $star_review[5] = ($star_review[5] / $count_reviews) * 100;
+if(!empty($counting_rate)):
+    $star_review[1] = ($star_review[1] / $counting_rate) * 100;
+    $star_review[2] = ($star_review[2] / $counting_rate) * 100;
+    $star_review[3] = ($star_review[3] / $counting_rate) * 100;
+    $star_review[4] = ($star_review[4] / $counting_rate) * 100;
+    $star_review[5] = ($star_review[5] / $counting_rate) * 100;
 endif;
-
 ?>
 <body>
 <div class="content-new-Courses video-content-course">
@@ -67,19 +74,19 @@ endif;
                         echo '<i class="fa fa-star checked"></i>';
                         continue;
                     endif;
-                    echo '<i class="fa-regular fa-star"></i>';
+                    echo '<i class="fa fa-star"></i>';
                 endforeach;
                 ?>
                 </div>
                 <p class="reviews-text"><?= $average_star ?> (<?= $count_reviews ?> reviews)</p>
             </div>
             <h1 class="title-course text-center"><?= $post->post_title ?></h1>
-            <div class="content-autors-detail">
+            <a href="/user-overview?id=<?= $post->post_author ?>" class="content-autors-detail">
                 <div class="blockImg">
                     <img src="<?= $author_image ?>" alt="">
                 </div>
                 <p class="name-autors"><?= $author_name; ?></p>
-            </div>
+            </a>
             <div class="block-review-calendar">
                 <div class="d-flex align-items-center">
                     <i class='fa fa-calendar-alt'></i>
@@ -129,45 +136,49 @@ endif;
                                             </p>
                                         </div>
                                     </div>
-                                    <!-- 
+                                    <?php
+                                    if(!empty($posttags) || !empty($category_default) || !empty($category_default)):
+                                    ?>
                                     <div class="section-tabs" >
                                         <h2>What You'll Learn</h2>
                                         <ul class="d-flex flex-wrap list what-you-learn">
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Become an expert in statistics</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Boost your resume with skills</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Gather, organize, data</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Use data for improved</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Present information KPIs</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Perform quantitative</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Analyze current data</span>
-                                            </li>
-                                            <li>
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/fa-check.svg" alt="">
-                                                <span class="text-tabs">Discover how to find trends</span>
-                                            </li>
+                                            <?php
+                                                if ($posttags)
+                                                    foreach($posttags as $tag)
+                                                        echo  '<li>
+                                                                    <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
+                                                                    <a href="/category-overview?category=' . $tag->ID . '" class="text-tabs">' . $tag->name . '</a>
+                                                               </li>';  
+                                                else{
+                                                    $read_category = array();
+                                                    if(!empty($category_default))
+                                                        foreach($category_default as $item)
+                                                            if($item)
+                                                                if(!in_array($item,$read_category)){
+                                                                    array_push($read_category,$item);
+                                                                    echo  '<li>
+                                                                                <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
+                                                                                <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
+                                                                           </li>';  
+                                                                }
+
+                                                    else if(!empty($category_xml))
+                                                        foreach($category_xml as $item)
+                                                            if($item)
+                                                                if(!in_array($item,$read_category)){
+                                                                    array_push($read_category,$item);
+                                                                    echo  '<li>
+                                                                                <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
+                                                                                <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
+                                                                           </li>';                                      
+                                                                }
+                                                }
+                                            ?>
                                         </ul>
                                     </div> 
-                                    -->
+                                    <?php
+                                    endif;
+                                    ?>
                                 </div>
                             </ul>
 
@@ -194,7 +205,7 @@ endif;
 
                                                 $link = '#';
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                                if($bool_link || $lesson == 0){
+                                                if($bool_link || $key == 0){
                                                     $link = '?topic=0&lesson=' . $key;
                                                     $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
                                                 }
@@ -248,8 +259,8 @@ endif;
                                                     <i class="fa fa-star checked"></i>
                                                     <p class="text-detail-reveiw text-detail-reveiw2"> 5.0 Instructor Rating</p>
                                                 </div>
-                                                <p class="text-detail-reveiw"><?= $count_reviews ?> Reviews</p>
-                                                <p class="text-detail-reveiw"><?= $enrolled_member ?> Students</p>
+                                                <!-- <p class="text-detail-reveiw"><?= $count_reviews ?> Reviews</p> -->
+                                                <p class="text-detail-reveiw"><?= $enrolled_all ?> Students</p>
                                                 <p class="text-detail-reveiw"><?= count($author_courses) ?> Courses</p>
                                             </div>
                                         </div>
@@ -432,7 +443,7 @@ endif;
                                             </div>';
                                         endforeach;
 
-                                        if(!$my_review_bool):
+                                        if(!$my_review_bool && $user_id):
                                         ?>
                                         <div class="comment-block">
                                             <h2>Write a Review</h2>
@@ -454,7 +465,7 @@ endif;
                                                 </div>
                                                 <span class="rating-counter"></span>
                                             </div>
-                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid"></textarea>
+                                            <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                             <div class="position-relative">
                                                 <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
                                                 <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
@@ -577,22 +588,20 @@ endif;
                                     <?php echo $startorbuy; ?>
                                 </div>
                                 <div class="sharing-element">
+                                    <?php
+                                    $subject = $post->post_title;
+                                    $permalink = get_permalink($post->ID);
+
+                                    $linkedin_share = "https://www.linkedin.com/sharing/share-offsite/?url=" . $permalink;
+                                    $mail_share = 'mailto:?subject=' . $subject . '&body=' . $permalink;
+                                    ?>
                                     <p>Share On:</p>
                                     <div class="d-flex flex-wrap">
-                                        <a href="">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                        <a href="">
+                                        <a target="_blank" href="<?= $linkedin_share ?>">
                                             <i class="fa fa-linkedin"></i>
                                         </a>
-                                        <a href="">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="">
-                                            <i class="fa fa-facebook-f"></i>
-                                        </a>
-                                        <a href="">
-                                            <i class="fa fa-instagram"></i>
+                                        <a target="_blank" href="<?= $mail_share ?>">
+                                            <i class="fa fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
