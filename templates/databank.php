@@ -27,9 +27,7 @@ else
 
 $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
-?>
 
-<?php 
     $urls=[
         'WorkPlace Academy'=>'https://workplaceacademy.nl/',
         'Ynno'=>'https://www.ynno.com/',
@@ -165,6 +163,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
                        </button>
 
+                       <button type="button" class="btn btn-danger mt-4" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
+                           playlist audios
+                       </button>
                    <div class="col-md-3">
                         
                         <select class="form form-control" id="select_field">
@@ -214,7 +215,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <th scope="col">Author</th>
                                 <th scope="col">Company</th>
                                 <th class="tdCenter textThBorder">
-                                    <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔️" />&nbsp;
+                                    <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔" />&nbsp;
                                     <input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌" />
                                 </th>
                             </tr>
@@ -278,7 +279,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
                                     <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
                                     <td class="tdCenter textThBorder">
-                                        <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;
+                                        <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔" />&nbsp;&nbsp;
                                         <input tittle="remove" type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp;
                                         <a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> 
                                     </td>
@@ -370,12 +371,52 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <!--<button type="button" class="btn btn-outline-success" id="get-audios">Get Audios</button>
-               --> </div>
+                   <!-- <button type="button" class="btn btn-outline-success" id="get-audios">Get Audios</button>
+              -->  </div>
             </div>
         </div>
     </div>
 <!--end modal audios -->
+
+    <!--begin modal audios playlist -->
+    <div class="modal fade" id="playlist-audios-indexpodcast" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="navbar-brand d-flex align-items-center">
+                        <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
+                        <span class="ml-2"><strong>Podcastindex Playlist</strong></span>
+                        <div id="spinner-search-audio-playlist" class="d-none">
+                            <div class="spinner-grow m-1" style="width: 1rem; height: 1rem;" role="alert">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <div class="spinner-grow m-1" style="width: 0.8rem; height: 0.8rem;" role="alert">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <div class="spinner-grow m-1" style="width: 0.6rem; height: 0.6rem;" role="alert">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">zoek : </label>
+                        <input type="search" placeholder="zoek" class="form-control" id="search_audio_playlist" name="search_audio" autocomplete="off">
+                    </div>
+                    <div id="content-back-audio-playlist"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-outline-success" id="get-audios">Get Audios</button>
+               -->  </div>
+            </div>
+        </div>
+    </div>
+    <!--end modal audios playlist -->
 </body>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
@@ -400,6 +441,83 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     });
     //# sourceURL=pen.js
 </script>
+<!--begin traitement playlist podcast -->
+<script type="text/javascript">
+    //playlist-audios-indexpodcast
+    $('#search_audio_playlist').on('input', function(e) {
+        const search_playlist = e.target.value;
+        const backAudioApiPlaylist = document.getElementById('content-back-audio-playlist');
+        console.log(search_playlist);
+        $.ajax({
+            url : "/audio-api/",
+            method : "POST",
+            data : {
+                audio_search_playlist : search_playlist
+            },
+            beforeSend:function(){
+                $('#spinner-search-audio-playlist').removeClass('d-none');
+                backAudioApiPlaylist.innerHTML = '';
+                console.log('searching podcast...')
+            },
+            success: function(success){
+                if (success==='') {
+                    console.log('no result for'+success)
+                    backAudioApiPlaylist.innerHTML = "<span class='text-center'>no result for '" + search + "'</span>";
+                } else {
+                    backAudioApiPlaylist.innerHTML=success;
+                }
+                console.log('success',success)
+            },error: function(error,status){
+                console.log('error',error);
+                console.log('status',status);
+                backAudioApiPlaylist.innerHTML = error;
+            },complete: function(complete){
+                $('#spinner-search-audio-playlist').addClass('d-none');
+                console.log('complete');
+            },
+        });
+    });
+</script>
+<!--end traitement playlist podcast -->
+
+<!--begin  function to save a playlist audion on databank-->
+<script type="text/javascript">
+    function savePodcastPlaylistInPlatform(e){
+        //console.log('value',e.target);
+        const data = e.target.dataset
+        console.log('elt',e.target)
+        const loaderSaving = document.getElementById("spinner-saving-podcast");
+        //console.log('information to save',data)
+        const spinner = e.target.nextElementSibling
+        $.ajax({
+            url : "/audio-api/",
+            method : "POST",
+            data : {
+                playlist_audio : data
+            },
+            beforeSend:function(){
+                console.log('saving podcast...');
+               // $('#spinner-saving-podcast').removeClass('d-none');
+                spinner.className = ""
+            },
+            success: function(success){
+                alert(success);
+                console.log('result',success)
+                //document.getElementById('content-back-audio-playlist').innerHTML = success;
+            },error: function(error,status){
+                console.log('error',error)
+                console.log('status',status)
+            },complete: function(complete){
+                spinner.className = "d-none"
+                //$('#spinner-saving-podcast').addClass('d-none');
+            },
+        });
+    }
+</script>
+<!--end  function to save a playlist audion on databank-->
+
+
+<!--begin traitement podcast audio-->
 <script type="text/javascript">
     $('#search_audio').on('input', function(e) {
         const search = e.target.value;
@@ -434,6 +552,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         });
     });
 </script>
+<!--end traitement podcast audio-->
 
 <script type="text/javascript">
     function uncheckAll() {
@@ -530,6 +649,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             ids.push(tags_id);//push the element in array
         else
             ids.splice(if_exist, 1) // remove it in array
+
         console.log(ids);
     });
 
@@ -590,6 +710,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false);
                     $('#select_field').attr('hidden',true);
+                    console.log('saving many courses on plateform')
                 },
                error: function(error) {
                 document.getElementById('content-back-topics').innerHTML = error;
@@ -640,6 +761,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false)
                     $('#select_field').attr('hidden',true)
+                    console.log('saving one course on plateform')
                 },
                error: function(error) {
                 console.log(error);
@@ -806,7 +928,7 @@ $(document).ready(function () {
 <script>
     $("#playlist-youtube").click((e)=>{
         $.ajax({
-            url:"/youtube-playlist/", 
+            url:"/youtube-playlist/",
             method:"POST",
             data:{
                 playlist_youtube:"youtube"

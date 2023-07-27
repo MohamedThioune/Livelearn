@@ -1,15 +1,13 @@
 <?php
     $users = get_users();
-  
+
     $members = array();
-    
+
     $post = get_post($_GET['id']);
     $author = array($post->post_author);
     $experts = $author;
     if(!empty($expert))
         $experts = array_merge($expert);
-        
-    $experts = array_merge($author, $expert);
 
     foreach($users as $user)
         if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
@@ -26,8 +24,9 @@
                         <div class="acf-field">
                             <label for="locate">Wijs andere experts uit uw team aan voor deze cursus :</label><br>
                             <div class="form-group formModifeChoose" >
+                                
                                 <div class="form-group formModifeChoose">
-
+                                    
                                     <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
                                         <?php 
                                             foreach($members as $member) {

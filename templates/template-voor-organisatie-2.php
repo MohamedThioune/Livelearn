@@ -25,9 +25,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-7">
-                    <div class="content-detail-voor-organisation">
-                        <h1>Word onderdeel van het grootste expert / opleidersnetwerk</h1>
-                        <p>Via LiveLearn deel je eenvoudig je kennis met de rest van de wereld. Zo bereik je nieuwe klanten en positioneer je je als de absolute expert in het vakgebied.</p>
+                    <div class="content-detail-voor-organisation position-relative">
+                        <h1>Creëer een constant lerende organisatie en trek talent aan</h1>
+                        <p>Stimuleer de in- en doorstroom van jouw (flexibele) werknemers, zodat zij jouw bedrijf naar het volgende niveau kunnen tillen.</p>
                         <a href="/overview-organisaties/" class="btn btnMeerInformation">Meer informatie ?</a>
                     </div>
                     <div class="img-block">
@@ -36,7 +36,8 @@
                 </div>
                 <div class="col-md-5">
                     <div class="blockForm2">
-                        <p><b>Activeer zakelijke Leeromgeving</b> <br>het is gratis </p>
+                        <p class="title-form-organisatie">Activeer zakelijke Leeromgeving</p>
+                        <p class="gratis-text">Gratis</p>
                         <?php
                         echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
                         ?>

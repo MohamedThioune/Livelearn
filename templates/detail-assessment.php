@@ -137,7 +137,7 @@ foreach ($reviews as $review)
     <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
 
-    <div class="">
+    <div class="content-detail-assessment">
         <div class="container-fluid">
             <div class="overElement">
                 <div class="blockOneOver">

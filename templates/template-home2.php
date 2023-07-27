@@ -307,7 +307,7 @@ $type_course = array(
             margin-right: 5px !important;
         }
         .zelf-block {
-            margin: 5px auto 0px !important;
+            margin: 15px auto 25px !important;
         }
         .talent-binnen-block {
             margin: 40px 0 70px;
@@ -1035,7 +1035,7 @@ $saved = get_user_meta($user_id, 'course');
                                     </video>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="/registreren/" class="btn btn-registreren">Register for free</a>
+<!--                                    <a href="/registreren/" class="btn btn-registreren">Register for free</a>-->
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -1057,7 +1057,7 @@ $saved = get_user_meta($user_id, 'course');
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
                     </button> -->
-                        <a href="/inloggen" class="btn btn-signup-email">
+                        <a href="/inloggen/" class="btn btn-signup-email">
                             <span style="color:white">Gratis inloggen via mail</span>
                         </a>
                     </div>
@@ -1290,7 +1290,7 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="title-card">Voor jou!</p>
                 <p class="description-card">Een altijd gratis leeromgeving om je oneindig door te laten groeien; word de expert in de markt.</p>
                 <div class="w-100">
-                    <a href="/inloggen-2/">Sign-up!</a>
+                    <a href="/voor-jou">Sign-up!</a>
                 </div>
             </div>
         </div>
@@ -1299,7 +1299,7 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="title-card">Voor opleiders / experts</p>
                 <p class="description-card">Ben jij een expert, opleider of coach? Unlock je teacher omgeving en deel / verkoop direct je kennis.</p>
                 <div class="w-100">
-                    <a href="/voor-teacher-2-2/">Sign-up!</a>
+                    <a href="/voor-opleiders/">Sign-up!</a>
                 </div>
             </div>
         </div>
@@ -1308,22 +1308,22 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="title-card">Voor werkgevers</p>
                 <p class="description-card">Je bedrijf oneindig laten groeien, door je personeel te laten excelleren? LiveLearn is dé upskilling partner. </p>
                 <div class="w-100">
-                    <a href="/voor-organisatie-2/">Sign-up!</a>
+                    <a href="/voor-organisaties/">Sign-up!</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="block-store-doawnload text-center">
+  <!--  <div class="block-store-doawnload text-center">
         <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
         <div class="group-btn-store d-flex flex-wrap justify-content-center">
             <a href="https://apps.apple.com/nl/app/livelearn/id1666976386">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
+                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/e-store.png"  alt="app store">
             </a>
             <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="googlePlay">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
+                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/playGoogle.png"  alt="google play">
             </a>
         </div>
-    </div>
+    </div>-->
 </div>
 <div class="onze-expert-block">
     <div class="container-fluid">
@@ -1354,7 +1354,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
              </div>
              -->
-            <a href="/voor-teacher-2-2/" class="zelf-block">
+            <a href="/voor-opleiders/" class="zelf-block">
                 <p class="mr-2">Zelf ook een expert? </p>
                 <div class="all-expert">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
@@ -1436,7 +1436,7 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="text-description-jij">Een mobiele app</p>
             </div>
             <div class="d-flex align-items-center mt-4">
-                <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
+                <a href="/voor-organisaties/" class="btn btnStratAlVoor">Start al voor €4,95</a>
                 <p class="GespecialiseerdText">Gespecialiseerd in het MKB</p>
             </div>
         </div>
@@ -1472,7 +1472,7 @@ $saved = get_user_meta($user_id, 'course');
     <div class="block9">
         <div class="container-fluid">
             <p class="titleblockOnze">De onderwerpen waarin wij jou kunnen helpen</p>
-            <a href="/onderwer" class="zelf-block">
+            <a href="/Onderwerpen" class="zelf-block">
                 <p>Bekijk alle onderwerp</p>
                 <div  class="all-expert">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
@@ -1550,22 +1550,22 @@ $saved = get_user_meta($user_id, 'course');
     <div class="blockCardBleu3">
         <div class="container-fluid">
             <div class="contentSix">
-                <a href="/opleiders" class="cardBoxSix">
+                <a href="/opleiders/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/alle-opleiders.png" alt="">
                     <p class="textAlloOP">Alle opleiders</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/onderwer" class="cardBoxSix">
+                <a href="/Onderwerpen/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-onderwerpen.png" alt="">
                     <p class="textAlloOP">Alle onderwerpen</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/product-search" class="cardBoxSix">
+                <a href="/product-search/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-opleidegen.png" alt="">
                     <p class="textAlloOP">Alle opleidingen</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/static-education-advice" class="cardBoxSix">
+                <a href="/skills/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
                     <p class="textAlloOP">Skills paspoort</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
@@ -1731,7 +1731,6 @@ $saved = get_user_meta($user_id, 'course');
                 }?>
 
             </div>
-
 
         </div>
     </div>

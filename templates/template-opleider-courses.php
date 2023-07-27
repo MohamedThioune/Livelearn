@@ -474,6 +474,7 @@
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                             ?>
+                                        
                                 <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4">
                                     <div class="cardKraam2">
                                         <div class="headCardKraam">
