@@ -1633,9 +1633,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'filter_course',
   ));
 
-
-  
-
   register_rest_route('custom/v1', '/sort/courses', array(
     'methods' => 'POST',
     'callback' => 'custom_filter_course',

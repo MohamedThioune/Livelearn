@@ -185,106 +185,100 @@ $url = home_url( $wp->request );
 
         ?>
 
-
-
-
         <div>
+        <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+        <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                style="position: absolute;height: auto !important; overflow-y:hidden !important;">
+            <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                                                                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
-            <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
-            <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                 style="position: absolute;height: auto !important; overflow-y:hidden !important;">
-                <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
-                                                                 box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+                <div class="modal-content">
 
-                    <div class="modal-content">
-
-                        <div class="modal-header border-bottom-0">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body  px-md-4 px-0">
-                            <div class="mb-4">
-                                <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
-                                </div>
-                                <h3 class="text-center my-2">Sign Up</h3>
-                                <div class="text-center">
-                                    <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                            data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign in</a></p>
-                                </div>
-                            </div>
-
-
-                            <?php
-                            echo (do_shortcode('[user_registration_form id="8477"]'));
-                            ?>
-
-                            <div class="text-center">
-                                <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                      data-toggle="modal" data-target="#SignInWithEmail">Log-in</a></p>
-                            </div>
-
-                        </div>
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
-                </div>
-            </div>
-            <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
-            <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-            <div class="modal modalEcosyteme fade <?php if(isset($_GET['popup'])){echo 'show';}?>" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                 style="position: absolute;overflow-y:hidden !important;height: auto;<?php if(isset($_GET['popup'])){echo 'display:block;';}?>">
-                <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
-                                                                 box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
-
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom-0">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body  px-md-5 px-4">
-                            <div class="mb-4">
-                                <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
-                                </div>
-                                <h3 class="text-center my-2">Sign In</h3>
-                                <div class="text-center">
-                                    <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                          data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
-                                </div>
-                            </div>
-                            <?php if(isset($_GET['login']) && $_GET['login'] == 'failed'){?>
-                            <div class="theme-error">
-                                Incorrecte gebruikersnaam en/of wachtwoord
-                            </div>
-                            <?php }?>
-
-                            <?php
-                            wp_login_form([
-                                'redirect' => $url,
-                                'remember' => false,
-                                'label_username' => 'Wat is je e-mailadres?',
-                                'placeholder_email' => 'E-mailadress',
-                                'label_password' => 'Wat is je wachtwoord?'
-                            ]);
-                            ?>
+                    <div class="modal-body  px-md-4 px-0">
+                        <div class="mb-4">
                             <div class="text-center">
-                                <a href="/dashboard/user/overview/lost-password/" class="watchword-text">Wachtwoord vergeten </a>
+                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                            </div>
+                            <h3 class="text-center my-2">Sign Up</h3>
+                            <div class="text-center">
+                                <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                        data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign in</a></p>
                             </div>
                         </div>
+
+
+                        <?php
+                        echo (do_shortcode('[user_registration_form id="8477"]'));
+                        ?>
+
+                        <div class="text-center">
+                            <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                    data-toggle="modal" data-target="#SignInWithEmail">Log-in</a></p>
+                        </div>
+
                     </div>
-
-
                 </div>
-            </div>
-            <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
+            </div>
         </div>
+        <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
 
+        <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+        <div class="modal modalEcosyteme fade <?php if(isset($_GET['popup'])){echo 'show';}?>" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                style="position: absolute;overflow-y:hidden !important;height: auto;<?php if(isset($_GET['popup'])){echo 'display:block;';}?>">
+            <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                                                                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body  px-md-5 px-4">
+                        <div class="mb-4">
+                            <div class="text-center">
+                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                            </div>
+                            <h3 class="text-center my-2">Sign In</h3>
+                            <div class="text-center">
+                                <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                        data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
+                            </div>
+                        </div>
+                        <?php if(isset($_GET['login']) && $_GET['login'] == 'failed'){?>
+                        <div class="theme-error">
+                            Incorrecte gebruikersnaam en/of wachtwoord
+                        </div>
+                        <?php }?>
+
+                        <?php
+                        wp_login_form([
+                            'redirect' => $url,
+                            'remember' => false,
+                            'label_username' => 'Wat is je e-mailadres?',
+                            'placeholder_email' => 'E-mailadress',
+                            'label_password' => 'Wat is je wachtwoord?'
+                        ]);
+                        ?>
+                        <div class="text-center">
+                            <a href="/dashboard/user/overview/lost-password/" class="watchword-text">Wachtwoord vergeten </a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+        </div>
 
         <div class="contentOne">
             <nav class="navbar navWeb navbar-expand-lg navbar-dark navModife">

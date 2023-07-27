@@ -21,33 +21,28 @@ function timeToSeconds(string $time): int
 
 $user_id = get_current_user_id();
 $course_type = get_field('course_type', $post->ID);
-/*
-* Image
-*/
-$thumbnail = get_field('preview', $post->ID)['url'];
-if(!$thumbnail){
-    $thumbnail = get_the_post_thumbnail_url($post->ID);
-    if(!$thumbnail)
-        $thumbnail = get_field('url_image_xml', $post->ID);
-            if(!$thumbnail)
-                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-}
 
-/*
-* Experts
-*/
+/* Image */
+$thumbnail = get_field('image_assessement', $post->ID)['url'];
+if(!$thumbnail)
+    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+
+/* Experts */
+$user_choose = $post->post_author;
 $expert = get_field('experts', $post->ID);
 $author = array($user_choose);
-
 if(isset($expert[0]))
     $experts = array_merge($expert, $author);
 else
     $experts = $author;
 
-//Long description             
-$long_description = ($long_description) ? : "No long description found for this course ";
+/* Description & How it works */
+$description = get_field('description_assessment', $post->ID);
+$description = ($description) ? : "No description found for this assessment ";
+$how_it_works = get_field('how_it_works', $post->ID);
+$how_it_works = ($how_it_works) ? : "No long description found for this assessment ";
 
-//Author
+/* Author */
 $author = get_user_by('id', $post->post_author);
 $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
@@ -56,15 +51,13 @@ $author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
 $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
-//Start or Buy
-// $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+/* Start or Buy */
 $startorbuy = '<form action="/dashboard/user/answer-assessment" method="post">
                 <input type="hidden" name="assessment_id" value=' . $post->ID . ' >
                 <button class="btn btn-stratNow" data-target="" data-toggle="" id="">Start Now</button>
                </form>';
 
-
-//Review pourcentage
+/* Review pourcentage */
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
     $star_review[2] = ($star_review[2] / $counting_rate) * 100;
@@ -73,7 +66,7 @@ if(!empty($counting_rate)):
     $star_review[5] = ($star_review[5] / $counting_rate) * 100;
 endif;
 
-//Questions
+/* Questions */
 $questions = get_field('question',$post->ID);
 $timer = 0;
 foreach ($questions as $question)
@@ -81,15 +74,17 @@ foreach ($questions as $question)
     $question_time=$question['timer'];
     $timer+= timeToSeconds($question_time);
 }
+
 /* Get minutes by given string seconds  */
 $timer = ceil($timer/60);
 
-//Level
+/* Level */
 $level = get_field('difficulty_assessment', $post->ID);
 
-//Category
+/* Category */
 $category_default = get_field('categories', $post->ID);
 $category_xml = get_field('category_xml', $post->ID);
+
 ?>
 <body>
 <div class="content-new-Courses video-content-course content-course-podcast">
@@ -100,7 +95,7 @@ $category_xml = get_field('category_xml', $post->ID);
            </div>
             <div class="block-detail-podcast">
                 <h1><?= $post->post_title ?></h1>
-                <p class="description"><?= $short_description ?></p>
+                <p class="description"><?= $description ?></p>
                 <div class="d-flex flex-wrap">
                     <div class="d-flex">
                         <a href="/user-overview?id=<?= $post->post_author ?>" class="block-img-created-assessment">
@@ -108,7 +103,7 @@ $category_xml = get_field('category_xml', $post->ID);
                         </a>
                         <div class="block-sub-detail">
                             <p class="category-text-title">Created by</p>
-                            <a href="/user-overview?id=<?= $expert->ID ?>" class="category-text"><?= $author_name ?></a>
+                            <a href="/user-overview?id=<<?= $post->post_author ?>" class="category-text"><?= $author_name ?></a>
                         </div>
                     </div>
                     <div class="block-sub-detail">
@@ -141,9 +136,9 @@ $category_xml = get_field('category_xml', $post->ID);
             <div class="row">
                 <div class="col-lg-8">
                     <h2 class="h2-assessment">About</h2>
-                    <p class="sub-title">Summary of the UX/UI design test</p>
+                    <p class="sub-title"><?= $description ?></p>
                     <p class="description-assessment">
-                       <?= $long_description ?></p>
+                       <?= $how_it_works ?></p>
                     <?php
                     if(!empty($category_default) || !empty($category_xml)):
                     ?>
@@ -201,7 +196,7 @@ $category_xml = get_field('category_xml', $post->ID);
                                 if($language)
                                 echo '<li>
                                         <p class="name-element-detail">Language:</p>
-                                        <p class="detail">English</p>
+                                        <p class="detail">' . $language .'</p>
                                       </li>';
                                 ?>
                                 <li>
@@ -242,7 +237,6 @@ $category_xml = get_field('category_xml', $post->ID);
                 <h2>Expert</h2>
                 <div class="owl-carousel owl-theme owl-carousel-card-course">
                     <?php
-                    $saves_expert = get_user_meta($user_id, 'expert');
                     foreach($experts as $value):
                         if(!$value) 
                             continue;
