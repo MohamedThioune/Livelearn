@@ -5,6 +5,10 @@ $current_user = wp_get_current_user();
 if(!in_array('administrator', $current_user->roles) && !in_array('hr', $current_user->roles)) 
     header('Location: /dashboard/company/');
 
+/** Mollie API client for php **/
+$mollie = new \Mollie\Api\MollieApiClient();
+$mollie->setApiKey($global_mollie_key);
+
 $company = get_field('company', 'user_' . $current_user->ID);
 if(!empty($company) ){
     $company = $company[0];
@@ -27,34 +31,12 @@ foreach($users as $user){
 $team = count($members);
 
 if ( !in_array( 'hr', $current_user->roles ) && !in_array( 'manager', $current_user->roles ) && !in_array( 'administrator', $current_user->roles ) && !in_array( 'author', $current_user->roles ) ) 
-    header('Location: /dashboard/user');
-
-/** Woocommerce API client for php - list subscriptions **/
-$endpoint = "subscriptions";
-$subscriptions = $woocommerce->get($endpoint, $parameters = []);
-
-if(!empty($subscriptions)){
-    $type = 'GET';
-    foreach($subscriptions as $row)
-        if($row->billing->company == $company_connected && $row->status == 'active'){
-            $access_granted = 1;
-            $abonnement = $row;
-            //Invoice orders
-            $endpoint_order_invoice = "subscriptions/" . $row->id . "/orders";
-            $abonnement->invoices = $woocommerce->get($endpoint_order_invoice, $parameters = []);
-            // var_dump($abonnement->invoices);
-
-            //Credit cards 
-            //$endpoint_order_credit = "";
-            //$abonnement['credit_cards'] = makeApiCall($endpoint_order_credit, 'GET'); 
-            break;
-        }  
-}                 
+    header('Location: /dashboard/user');              
 
 ?>
 
 <?php
-if (!$access_granted ){
+if (!$access_granted || empty($abonnement)){
 ?>
 <div class="contentProfil ">
 
@@ -134,7 +116,7 @@ if (!$access_granted ){
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" name="starter" id="starter" class="btn btn-sendSubscrip">Start</button>
+                <button type="button" id="starter" class="btn btn-sendSubscrip">Start</button>
                 <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
             </div>
         <!-- </form> -->
@@ -177,6 +159,7 @@ else
     
     var button = document.getElementById('starter');
     button.addEventListener('click', function(e) {
+        // alert("Intro");
         $(e.preventDefault());
         var pass = 0;
 
@@ -208,41 +191,7 @@ else
 
             if(method_payment == 'credit_card'){
                 $.ajax({
-                    url:"/credit-card-details",
-                    method:"post",
-                    data:{
-                        first_name : first_name,
-                        last_name : last_name,
-                        bedrjifsnaam : bedrjifsnaam,
-                        city : city,
-                        email : email,
-                        phone : phone,
-                        factuur_address : factuur_address,
-                        is_trial : is_trial,
-                        method_payment : method_payment,
-                    },
-                    dataType:"text",
-                    // beforeSend:function(){
-                    //     $('#loader').attr('hidden',false)
-                    // },
-                    success: function(data){
-                        console.log(data);
-                        // window.location.href = data;
-                        $('#output').html(data);
-                    },
-                    error: function (jqXHR, exception) {
-                        if (jqXHR.status == 500) {
-                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Internal error, please try later !</a></center>");
-                        } else {
-                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>");
-                        }
-                        // Your error handling logic here..
-                    }
-                });
-            }
-            else{
-                $.ajax({
-                    url:"/starter",
+                    url:"/starter-card",
                     method:"post",
                     data:{
                         first_name : first_name,
@@ -260,9 +209,41 @@ else
                         $('#loader').attr('hidden',false)
                     },
                     success: function(data){
-                        // $('#output').html(data);
-                        location.reload();
                         // console.log(data);
+                        window.location.href = data;
+                        //$('#output').html(data);
+                    },
+                    error: function (jqXHR, exception) {
+                        if (jqXHR.status == 500) {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Internal error, please try later !</a></center>");
+                        } else {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>");
+                        }                    
+                    }
+                });
+            }
+            else{
+                $.ajax({
+                    url:"/starter-sample",
+                    method:"post",
+                    data:{
+                        first_name : first_name,
+                        last_name : last_name,
+                        bedrjifsnaam : bedrjifsnaam,
+                        city : city,
+                        email : email,
+                        phone : phone,
+                        factuur_address : factuur_address,
+                        is_trial : is_trial,
+                        method_payment : method_payment,
+                    },
+                    dataType:"text",
+                    beforeSend:function(){
+                        $('#loader').attr('hidden',false)
+                    },
+                    success: function(data){
+                        // console.log(data);
+                        location.reload();
                     },
                     error: function (jqXHR, exception) {
                         if (jqXHR.status == 500) {
@@ -270,7 +251,6 @@ else
                         } else {
                             $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>");
                         }
-                        // Your error handling logic here..
                     }
                 });
             }

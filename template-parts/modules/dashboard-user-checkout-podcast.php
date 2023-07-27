@@ -261,7 +261,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                             </button>
 
 
-                                            <!-- Start Modal
+                                           Start Modal
                                             <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Title" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-checkout modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                                     <div class="modal-content">
@@ -353,7 +353,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- End Modal
+                                           End Modal
 
                                         </div> 
                                         -->

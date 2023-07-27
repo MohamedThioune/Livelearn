@@ -14,7 +14,7 @@ if(isset($_GET['man']))
 
 if($post):
 
-/* * Informations course * */
+/** Informations course **/
 
 // Coursetype
 $course_type = get_field('course_type', $post->ID);

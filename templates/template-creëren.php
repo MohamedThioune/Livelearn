@@ -5,157 +5,155 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 
-<body>
-     
-    <section>
-        <div class="container-fluid">
-            <div class="row d-flex justify-content-center my-md-5">
-                <div class="col-md-8 col-10  text-center">
-                    <h2 class="wordDeBestText2 fw-bold"  style="color: #023356; max-width: 100%;">
-                        <strong>Maak in een handomdraai een nieuwe training, workshop of schrijf een artikel</strong>
-                    </h2>
-                    <p class="krijgText">
-                        Via jouw eigen teacher dashboard creëren je in een paar klikken een nieuw kennisproduct dat
-                        je meteen met de wereld kan delen óf intern binnen jouw organisatie kan verspreiden
-                    </p>
-                    <a data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal"  class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
-                        <strong>Start met creêren</strong>  
-                    </a>
-
-                    <div class="my-3">
-                        <img class="img-fluid w-50" style=""
-                            src="<?php echo get_stylesheet_directory_uri();?>/img/photo_5897718936634506184_y.jpeg" alt=""> 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section>
-        <div class="container-fluid">
-            <div class="row d-flex justify-content-center py-md-5">
-                <div class="col-md-6 col-10 text-md-left text-center align-items-center d-flex">
-                    <div>
-                        <h2 class="wordDeBestText2 fw-bold"  style="color: #023356; max-width: 100%;">
-                            <strong>Een auteurs tool voor alle kennisproducten</strong>
+    <body>
+    <div class="block-sme mt-90 theme-skills theme-new-element creeren-theme">
+        <section>
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center my-md-5">
+                    <div class="col-md-8 col-10  text-center">
+                        <h2 class="wordDeBestText2 fw-bold" >
+                            <span>Maak Indrukwekkende Kennisproducten:</span> Vereenvoudigd Creëren met Onze Krachtige Auteurstool!
                         </h2>
                         <p class="krijgText">
-                            Jij kiest wat je wil aanbieden en in een paar klikken heb je je kennisproduct 
-                            live staan op je eigen omgeving op LiveLearn.
+                            Met onze gebruiksvriendelijke auteurstool kunt u eenvoudig kennisproducten creëren en delen. Of het nu gaat om e-books, cursussen, handleidingen of andere waardevolle content, onze tool biedt intuïtieve functies en sjablonen om uw ideeën tot leven te brengen.
+                            <br>
+                            Voeg tekst, afbeeldingen, video’s en interactieve elementen toe om boeiende leerervaringen te creëren. Met de flexibiliteit en kracht van onze auteur tool kunt u snel en efficiënt hoogwaardige kennisproducten ontwikkelen die uw publiek inspireren en informeren.
                         </p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-10  text-center">
-                    <div class="">
-                        <img class="img-fluid w-75" style="" src="<?php echo get_stylesheet_directory_uri();?>/img/Image-117.png" alt=""> 
+                        <a href="/voor-opleiders/"  class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
+                            <strong>Meld je aan</strong>
+                        </a>
+
+                        <div class="my-3">
+                            <img class="img-fluid w-50" style=""
+                                 src="<?php echo get_stylesheet_directory_uri();?>/img/photo_5897718936634506184_y.jpeg" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-
-    <section>
+        </section>
         <div class="container-fluid">
-            <div class="row d-flex justify-content-center pt-5">
-                <div class="col-md-12 col-10 text-md-left text-center">
-                    <h2 class="wordDeBestText2 fw-bold"  style="color: #023356; max-width: 100%;">
-                        <strong>Word de echte expert op jouw vakgebied</strong>
-                    </h2>
-                    <p class="krijgText">
-                        Alle activiteiten in en omtrent jouw kennisproducten worden gemonitord door onze algoritmes. 
-                        Dit zorgt niet alleen dat jij de juiste deelnemers bereikt maar ook dat wij jou kunnen inschalen 
-                        ten opzichte van andere experts en opleiders. 
-                        Je hoeft dus niet een groot bedrijf te zijn om toch gezien te worden als de experts in jouw vakgebied.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section>
-        <div class="container-fluid">
-            <div class="row d-flex justify-content-center py-5">
-                <div class="col-md-6 col-10 text-md-left text-center align-items-center d-flex">
-                    <div>
-                        <h4 style="color: #023356"><strong>Beheer je inschrijvingen</strong></h4>
-                        <p class="krijgText">
-                            Beheer al je inschrijvingen en financiën in je persoonlijke teacher dashboard. Je ziet hierdoor precies 
-                            wat er goed loopt en wat minder en waar je dus meer op zou kunnen inzetten met je overige marketingmix.
-                        </p>
-
-                        <h4 style="color: #023356"><strong>Direct contact met je community</strong></h4>
-                        <p class="krijgText">
-                            Je staat via het LiveLearn platform direct in contact met deelnemers en alumni.
-                            Zo kun je ook na het afgenomen kennisproduct gewoon de conversatie doorzetten.
-                        </p>
+            <div class="logo-parteners-hr">
+                <div class="d-flex align-items-center justify-content-center block-hr-strat">
+                    <hr class="hr-logo">
+                    <div class="block-start d-flex align-items-center justify-content-center">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Group_301.png" class="" alt="">
+                        <p class="mb-0">(8,1)</p>
                     </div>
+                    <hr class="hr-logo">
                 </div>
-                <div class="col-md-6 col-10 text-center my-auto">
-                    <div class="">
-                        <img class="img-fluid w-75" style=""
-                            src="<?php echo get_stylesheet_directory_uri();?>/img/Image-113.png" alt=""> 
+                <h2 class="title-zij">Zij gebruiken al LiveLearn</h2>
+                <div class="block-logo-parteners2 element-shadown-partener">
+                    <div class="logo-element">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/vanSpaendockLogo.png" alt="">
+                    </div>
+                    <div class="logo-element">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/orangeLogo.png" alt="">
+                    </div>
+                    <div class="logo-element">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/manpowerLogo.png" alt="">
+                    </div>
+                    <div class="logo-element">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/openclassroomLogo.png" alt="">
+                    </div>
+                    <div class="logo-element">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/zelfstanLogo.png" alt="">
+                    </div>
+                    <div class="logo-element">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/uwvLogo.png" alt="">
+                    </div>
+                    <div class="logo-element">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Deloitte.png" alt="">
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-        
-      
-    <section>
-        <div class="container-fluid">
-            <div class="row d-flex justify-content-center py-md-5 pb-5">
-                <div class="col-md-12 col-10 text-md-left text-center">
-                    <h2 class="wordDeBestText2"  style="color: #023356; max-width: 100%;">
-                        <strong>No Cure no Pay</strong> 
-                    </h2>
-                    <p class="krijgText">
-                        Wij rekenen geen kosten als jij er zelf niet beter van wordt. Daarom hanteren wij een no cure no pay methode 
-                        en betaal je alleen voor de transactie wanneer iemand een boeking maakt. Dit maakt aanbieden via LiveLearn een 
-                        win-win voor iedereen.
-                    </p>
-                    <a data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="btn btnMaakVerkopen rounded rounded-pill fw-bold text-white" style="background: #00A89D">
-                        <strong>Maak je omgeving</strong>  
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-        
-
-
-    <section class="py-5" style="background: #043356">
-        <div class="container-fluid py-md-5 pb-5">
-            <div class="row d-flex justify-content-center align-items-center mx-2">
-            
-                <div class="col-md-6 px-md-0 text-md-left text-center">
-                    <img class="im-fluid w-75"  src="<?php echo get_stylesheet_directory_uri();?>/img/Contact_team2.png" alt="team">     
-                </div>
-
-                <div class="col-md-6 px-md-0 text-md-left text-center">
-                    <h2 class="hero-title text-white">Direct contact met één van onze adviseurs?</h2>
-                    <div class="my-3 text-white">
-                        <p>
-                            We helpen je graag met jouw specifieke vragen omtrent talent management 
-                            en de toepasbaarheid hiervan binnen je organisatie.
-                        </p>
+        <section class="Ontdek-section skills-secttion-theme">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="content-Ontdek">
+                            <h2 class="title-section">De Kracht van Continu Leren: Innovatie in Kennisproducten voor een Evoluerende Wereld</h2>
+                            <p class="description-section">In een voortdurend evoluerende wereld is het creëren van nieuwe kennisproducten van essentieel belang. Nieuwe ontwikkelingen, technologieën en inzichten vereisen voortdurende innovatie en kennisdeling. Door voortdurend nieuwe kennisproducten te creëren, blijft u relevant, kunt u anticiperen op veranderingen en waardevolle informatie aanbieden aan uw publiek, wat resulteert in groei en concurrentievoordeel.</p>
+                        </div>
                     </div>
-                    <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
-                        <strong class="text-dark">Email </strong>
-                    </a>
-                    <a href="tel: +31627003962" class="btn btn-default text-white rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
-                        <strong >Bellen</strong>
-                    </a>
+                    <div class="col-lg-6">
+                        <div class="block-img-skills">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/careen1.png" class="" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+        <section class="section-publiceer">
+            <div class="container-fluid">
+                <p class="title">Publiceer en Analyseer Kennisproducten met het Livelearn LXP-platform</p>
+                <p class="description">
+                    Ons LXP stelt je in staat om je kennisproducten te publiceren en te analyseren op één geïntegreerd platform.
+                    Je kunt waardevolle content delen, zoals artikelen, podcasts of trainingen, en gedetailleerde inzichten verkrijgen in het gebruik en de effectiviteit ervan.
+                    Verhoog je bereik, meet de impact en optimaliseer uw kennisproducten met behulp van onze LXP-analysetools.
+                </p>
+                <a href="/voor-opleiders/" class="btn btn-meld">Meld je aan</a>
+            </div>
+        </section>
+        <div class="Ontdek-section">
+            <div class="container-fluid">
+                <section class="section-revolutionnaire">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <img class="img-for-individual-2" src="<?php echo get_stylesheet_directory_uri();?>/img/For-individuals-2.png" alt="">
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="content-Ontdek">
+                                <h2 class="title-section"><span>Skills First:</span> Het Ontsluiten van Diverse Talenten en het Bevorderen van Inclusiviteit in de Werkwereld.</h2>                            <p class="description-section">Ontdek de kracht van data en rapportage van skills binnen je corporate organisatie. Identificeer sterke punten, detecteer hiaten en optimaliseer groeikansen.
+                                    <br>
+                                    Met inzichtelijke rapporten kun je strategische beslissingen nemen, gerichte trainingen implementeren en de juiste talenten aantrekken. Versterk je concurrentiepositie, bevorder talentontwikkeling en bouw een wendbare organisatie die klaar is voor de toekomst. Laat data het kompas zijn voor succes en leid je organisatie naar nieuwe hoogten.</p>
+                                <a href="/voor-opleiders/" class="btn btn-download-onze-app">Meld je aan</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section-revolutionnaire">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="content-Ontdek">
+                                <h2 class="title-section">No-Cure-No-Pay: Betaal Alleen Bij Succesvolle Verkopen!</h2>
+                                <p class="description-section">Ons no-cure-no-pay principe biedt u gemoedsrust en een risicovrije benadering van verkopen via ons platform. U betaalt alleen een vergoeding op basis van prestaties, dat wil zeggen wanneer er daadwerkelijk een verkoop plaatsvindt.
+                                    <br>
+                                    Dit betekent dat u geen upfront kosten heeft en alleen betaalt voor de resultaten die we samen behalen. Het is een transparante en kosteneffectieve manier om uw producten of diensten te promoten en te verkopen, met een focus op succes en meetbare resultaten.
+                                </p>
+                                <a href="/voor-opleiders/" class="btn btn-download-onze-app">Meld je aan</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="second-block-binnen">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/imgStartVoor.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </section>
 
-    
 
-</body> 
+        <section>
+            <div class="block-contact-calendy bleu-block-contact-calendy  text-center">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-center">
+                        <div class="img-Direct-een">
+                            <img id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
+                        </div>
+                        <div class="img-Direct-een">
+                            <img id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
+                        </div>
+                    </div>
+                    <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> <spann>Toch liever een afspraak inplannen met ons team? Kies een datum en tijd die jou het best uitkomt.</spann></h3>
+                    <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

@@ -48,7 +48,7 @@ $todos = get_posts($args);
 
 $enrolled = array();
 $enrolled_courses = array();
-$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
+// $kennis_video = get_field('kennis_video', 'user_' . $user->ID);
 $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
 $expenses = 0;
 
@@ -479,7 +479,8 @@ foreach ($users as $element) {
                             <div class="cardFavoriteCourses text-left cardAlert">
                                 <div class="d-flex aligncenter justify-content-between">
                                     <h2>My Alerts</h2>
-                                    <input type="search" placeholder="search" class="inputSearchCourse" id="search_activity_notification">
+                                    <!-- <input type="search" placeholder="search" class="inputSearchCourse" id="search_activity_notification"> -->
+                                    <input id="search_activity_notification" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Search" aria-label="Search" >
                                 </div>
                                 <div class="contentCardListeCourse">
                                     <table class="table table-responsive table-responsive tableNotification">
@@ -1491,14 +1492,10 @@ foreach ($users as $element) {
 <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
-
-
 <script src="https://rawgit.com/andreruffert/rangeslider.js/develop/dist/rangeslider.min.js"></script>
 
-<script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
-
 <!--  script For edit skills-->
+<!--
 <script>
     const edit = document.querySelector(".edit")
 
@@ -1544,7 +1541,8 @@ foreach ($users as $element) {
     SkillBarInput2.addEventListener('change', function () {
         edit.noUiSlider.set([null, this.value]);
     });
-</script>
+</script> 
+-->
 
 <script>
     $('input[type="range"]').rangeslider({
@@ -1594,33 +1592,9 @@ foreach ($users as $element) {
 </script>
 
 <script>
-     $('#search_activity_course').keyup(function(){
-        var txt = $(this).val();
-
-        $.ajax({
-
-            url:"/fetch-activity-course",
-            method:"post",
-            data:{
-                search_activity_course : txt,
-            },
-            dataType:"text",
-            success: function(data){
-                console.log(data);
-                $('#autocomplete_activity_course').html(data);
-            }
-        });
-
-    });
-</script>
-
-
-<script>
     $('#search_activity_notification').keyup(function(){
         var txt = $(this).val();
-
         $.ajax({
-
             url:"/fetch-activity-notification",
             method:"post",
             data:{
@@ -1636,7 +1610,25 @@ foreach ($users as $element) {
     });
 </script>
 
+<script>
+     $('#search_activity_course').keyup(function(){
+        var txt = $(this).val();
 
+        $.ajax({
+            url:"/fetch-activity-course",
+            method:"post",
+            data:{
+                search_activity_course : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_activity_course').html(data);
+            }
+        });
+
+    });
+</script>
 
 </body>
 </html>

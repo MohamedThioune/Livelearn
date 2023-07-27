@@ -1,13 +1,14 @@
 <!-- Modal -->
-<?php
+ <?php
 echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
 ?> 
+<!-- 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="img-cookies-block">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
+                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/cookies.png" alt="">
             </div>
             <div class="modal-body">
                 <p class="title-cookie">Cookie consent</p>
@@ -21,8 +22,9 @@ if(!isset($_COOKIE["cookie_consent"])):
         </div>
     </div>
 </div>
-</div>
-<?php endif; ?>
+</div> 
+-->
+<?php endif; ?> 
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
@@ -49,7 +51,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                             <ul>
                                 <li><a class="" href="/zzpers/"> Voor ZZP'ers</a></li>
                                 <li> <a class="" href="/mkb/">Voor het MKB </a></li>
-                                <li> <a class="" href="/mkb/">Voor Corporates </a></li>
+                                <li> <a class="" href="/corporate/">Voor Corporates </a></li>
                                 <li> <a class="" href="/pricing/">Pricing </a></li>
                                 <li> <a class="" href="voor-organisaties/">Maak een gratis omgeving</a></li>
                             </ul>
@@ -65,7 +67,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                             <ul>
                                 <li> <a class="" href="/verkopen/">Verkopen</a></li>
                                 <li> <a class="" href="/creeren/">Creëren</a></li>
-                                <li> <a class="" href="/uitleggen/">Uitleggen</a></li>
+                                <li> <a class="" href="/Uitleggen/">Uitleggen</a></li>
                                 <li> <a class="" href="/opleiders/">Alle opleiders </a></li>
                                 <li> <a class="" href="/voor-teachers/">Maak een gratis omgeving </a></li>
                             </ul>
@@ -203,7 +205,7 @@ if(!isset($_COOKIE["cookie_consent"])):
             <div class="element8">
                 <a class="" href="#">Algemene voorwaarden </a>
                 <a class="" href="#">Privacybeleid </a>
-                <a class="" href="#">contact</a>
+                <a class="" href="/contact/">contact</a>
             </div>
 
 

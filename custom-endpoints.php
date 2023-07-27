@@ -18,10 +18,6 @@ class Expert
     $this->profilImg =$profilImg;
     $this->company = get_field('company', 'user_' . (int)$expert->ID)[0] ?? null;
     $this->role = get_field('role', 'user_' . (int)$expert->ID) ?? '';
-    // if(!empty($company) ){
-    //     $company = $company[0];
-    //     $company_connected = $company->post_title;
-    // } 
     
   }
 
@@ -99,7 +95,7 @@ function allCourses ($data)
     
     $current_user_id = $GLOBALS['user_id'];
     $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-    $course_type = $_GET['course_type'];
+    $course_type = ucfirst(strtolower($_GET['course_type']));
     $outcome_courses = array();
     $tags = array();
     $experts = array();
@@ -112,8 +108,9 @@ function allCourses ($data)
       'meta_key'         => 'course_type',
       'meta_value' => $course_type);
     $courses = get_posts($args);
+    //print_r($courses);
     if (!$courses)
-      return ['error' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+      return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
       
     if (!isset ($data['page'])) 
       $page = 1;  
@@ -128,7 +125,7 @@ function allCourses ($data)
   $number_of_page = ceil($number_of_post / $results_per_page);
 
   if($number_of_page < $data['page'])
-    return ['error' => "Page doesn't exist ! ","codeStatus" => 400];  
+    return ["courses" => [],'message' => "Page doesn't exist ! ","codeStatus" => 400];  
   
   for($i=$start; $i < $end ;  $i++) 
   {
@@ -139,7 +136,7 @@ function allCourses ($data)
       if ($courses[$i]->visibility != []) 
         if ($author_company != $current_user_company)
           continue;
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $courses[$i]->experts = array();
           $experts = get_field('experts',$courses[$i]->ID);
           if(!empty($experts))
@@ -183,6 +180,99 @@ function allCourses ($data)
    return ['courses' => $outcome_courses, "codeStatus" => 200];
   }
 
+    
+    function allArticles ($data)
+    {
+        
+        $current_user_id = $GLOBALS['user_id'];
+        $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+        $course_type = ucfirst(strtolower($_GET['course_type']));
+        $outcome_courses = array();
+        $tags = array();
+        $experts = array();
+        $args = array(
+          'post_type' => array('post'),
+          'post_status' => 'publish',
+          'posts_per_page' => -1,
+          'ordevalue'       => $course_type,
+          'order' => 'DESC' ,
+          'meta_key'         => 'course_type',
+          'meta_value' => $course_type);
+        $courses = get_posts($args);
+        //print_r(count($courses));
+        if (!$courses)
+          return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+          
+        if (!isset ($data['page']))
+          $page = 1;
+        else
+          $page = $data['page'];
+        if(!empty($courses))
+          $number_of_post = count($courses);
+      $results_per_page = 20;
+      $start = ($page-1) * $results_per_page ;
+      $end = ( ($page) * $results_per_page ) > $number_of_post ? $number_of_post : ($page) * $results_per_page   ;
+
+      $number_of_page = ceil($number_of_post / $results_per_page);
+
+      if($number_of_page < $data['page'])
+        return ["courses" => [],'message' => "Page doesn't exist ! ","codeStatus" => 400];
+      
+      for($i=$start; $i < $end ;  $i++)
+      {
+          //$courses[$i]->links = $courses[$i]-> guid ?? null;
+          $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
+          $author = get_user_by( 'ID', $courses[$i] -> post_author  );
+          $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+          if ($courses[$i]->visibility != [])
+            if ($author_company != $current_user_company)
+              continue;
+              $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              $courses[$i]->experts = array();
+              $experts = get_field('experts',$courses[$i]->ID);
+              if(!empty($experts))
+                foreach ($experts as $key => $expert) {
+                  $expert = get_user_by( 'ID', $expert );
+                  $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                  array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+                  }
+            
+              $courses[$i]-> author = new Expert ($author , $author_img);
+              $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+              $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+              $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+              //Image - article
+              $image = get_field('preview', $courses[$i]->ID)['url'];
+              if(!$image){
+                  $image = get_the_post_thumbnail_url($courses[$i]->ID);
+                  if(!$image)
+                      $image = get_field('url_image_xml', $courses[$i]->ID);
+                          if(!$image)
+                              $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+              }
+              $courses[$i]->pathImage = $image;
+              $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+              $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
+              $courses[$i]->podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
+              $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
+              $tags = get_field('categories',$courses[$i]->ID) ?? [];
+              $courses[$i]->tags= array();
+              if($tags)
+                if (!empty($tags))
+                  foreach ($tags as $key => $category)
+                    if(isset($category['value'])){
+                      $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                      array_push($courses[$i]->tags,$tag);
+                    }
+                  
+              $new_course = new Course($courses[$i]);
+              array_push($outcome_courses, $new_course);
+        }
+       return ['courses' => $outcome_courses, "codeStatus" => 200];
+      }
+
+    
+    
 function allAuthors()
 {
   $authors_post = get_users(
@@ -290,7 +380,7 @@ function get_expert_courses ($data)
       $course_experts = get_field('experts',$course->ID) ?? [];
       if (in_array($expert_id,$course_experts) || $expert_id == $course->post_author){
         $author = get_user_by( 'ID', $course -> post_author  );
-        $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $course-> author = new Expert ($author , $author_img);
         $course->longDescription = get_field('long_description',$course->ID);
         $course->shortDescription = get_field('short_description',$course->ID);
@@ -386,7 +476,7 @@ function get_saved_course()
           }
         }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -456,7 +546,7 @@ function get_course_by_id($data)
     $course = get_post($course_id) ?? false;
     if ($course)
     {
-      $course->experts = array();
+          $course->experts = array();
           $experts = get_field('experts',$course->ID);
           if(!empty($experts))
             foreach ($experts as $key => $expert) 
@@ -465,8 +555,8 @@ function get_course_by_id($data)
               $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
-          $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author = get_user_by( 'ID', $course -> post_author);
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -530,7 +620,7 @@ function get_liked_courses()
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -629,7 +719,7 @@ function get_courses_of_subtopics($data)
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -676,7 +766,7 @@ function get_courses_of_subtopics($data)
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -747,7 +837,7 @@ function filter_course(WP_REST_Request $request)
         array_push($course->experts, new Expert($expert, $experts_img));
       }
     $author = get_user_by('ID', $course->post_author);
-    $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $author_img = get_field('profile_img', 'user_' . $author->ID) !=false ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $course->author = new Expert($author, $author_img);
     $course->longDescription = get_field('long_description', $course->ID);
     $course->shortDescription = get_field('short_description', $course->ID);
@@ -1174,7 +1264,7 @@ function getCommunities()
       foreach ($courses_community as $key => $course)
       {
             $author = get_user_by( 'ID', $course -> post_author);
-            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $course-> author = new Expert ($author , $author_img);
             $course->longDescription = get_field('long_description',$course->ID);
             $course->shortDescription = get_field('short_description',$course->ID);
@@ -1263,7 +1353,7 @@ function getCommunityById($data)
       foreach ($courses_community as $key => $course)
       {
             $author = get_user_by( 'ID', $course -> post_author);
-            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $course-> author = new Expert ($author , $author_img);
             $course->longDescription = get_field('long_description',$course->ID);
             $course->shortDescription = get_field('short_description',$course->ID);
@@ -1750,7 +1840,6 @@ function replyQuestion(WP_REST_Request $request)
 /** Views Endpoints */
 
 /** Artikels Endpoints */
-
 function strip_html_tags($text) {
   $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
   $text = preg_replace("/\n{1,}/", "\n", $text); 

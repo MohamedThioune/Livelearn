@@ -11,12 +11,11 @@
             $my_review_bool = true;
             break;
         }
-
    
     $review = array();
-    $review['user'] = get_user_by('ID', $user_id);
+    $review['user'] = wp_get_current_user();
     $review['rating'] = $stars;
-    $review['feedback'] = $feedback_content;
+    $review['feedback'] = $feedback;
     if($review['user'] && !$my_review_bool ){ 
         if(!$reviews)
             $reviews = array();
@@ -32,7 +31,6 @@
             $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
             $rating = $review['rating']; 
             $stars = "";                  
-
             $row_review = '<div class="review-info-card">
                                 <div class="review-user-mini-profile">
                                     <div class="user-photo">
@@ -62,6 +60,6 @@
         }
     }
     
-    return 1;
-    
+    echo 1;
+    var_dump($reviews);    
 ?>

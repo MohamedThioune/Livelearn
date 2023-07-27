@@ -23,7 +23,7 @@ build-job: # This job runs in the build stage, which runs first.
   script:
     - apt-get update
     - apt-get -qq install git-ftp
-    - git ftp push --user $FTP_USERNAME --passwd $FTP_PASSWORD ftp://$SFTP_HOST/$SFTP_FOLDER
+    - git ftp catchup --user $FTP_USERNAME --passwd $FTP_PASSWORD ftp://$SFTP_HOST/$SFTP_FOLDER
     - echo "Compiling the code..."
     - echo "Compile complete."
 
