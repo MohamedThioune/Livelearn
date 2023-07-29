@@ -178,9 +178,34 @@ function allCourses ($data)
           array_push($outcome_courses, $new_course);
     }
    return ['courses' => $outcome_courses, "codeStatus" => 200];
-  }
+}
 
-    
+
+function get_course_image($data)
+{
+  if (!isset($data['course_id']) || empty($data['course_id']))
+    return ['error' => 'You have to fill the course id'];
+  $course_id = $data['course_id'];
+  $course = get_post($course_id) ?? false;
+    if (!$course)
+      return  ['error' => 'This course does not exist!'];
+  //Image - article
+              $image = get_field('preview', $course->ID)['url'];
+              if(!$image)
+              {
+                  $image = get_the_post_thumbnail_url($course->ID);
+                  if(!$image)
+                      $image = get_field('url_image_xml', $course->ID);
+                          if(!$image)
+                          {
+                              $course->courseType = get_field('course_type',$course->ID);
+                              $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+                          }
+            }
+          return ['pathImage' => $image ] ;
+            
+}
+
     function allArticles ($data)
     {
         
@@ -273,8 +298,12 @@ function allCourses ($data)
 
     
     
-function allAuthors()
-{
+
+
+
+      function allAuthors()
+
+      {
   $authors_post = get_users(
     array(
       'role__in' => ['author'],
@@ -1836,6 +1865,8 @@ function replyQuestion(WP_REST_Request $request)
     $wpdb->insert($table_tracker_views, $data);
     return $wpdb->insert_id;
   }
+
+
   
 /** Views Endpoints */
 

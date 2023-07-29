@@ -16,15 +16,25 @@ function timeToSeconds(string $time): int
 /* Get the assessment's ID by the url */
     $assessment_id=$_GET['assessment_id'];
     $assessment=get_post ($assessment_id);
+//Image
+$image = get_field('image_assessement', $assessment->ID)['url'];
+if(!$image){
+    $image = get_the_post_thumbnail_url($assessment->ID);
+    if(!$image)
+        $image = get_field('url_image_xml', $assessment->ID);
+            if(!$image)
+                $image = get_stylesheet_directory_uri()."/img/assessment-1.png";
     $assessment_array=array(
         'id'=> $assessment_id,
         'title'=> $assessment->post_title,
         'description_assessment'=> get_field('description_assessment',$assessment_id),
         'how_it_works' => get_field('how_it_works', $assessment_id),
         'difficulty_assessment' => get_field('difficulty_assessment', $assessment_id),
-        'image_assessment' => get_field('image_assessement', $assessment_id)['url'],
+        'image_assessment' => $image,
         'language_assessment' => get_field('language_assessment', $assessment_id),
     );
+    
+}
     $timer=0;
     foreach (get_field('question',$assessment_id) as $question)
     {
@@ -137,7 +147,7 @@ foreach ($reviews as $review)
     <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
 
-    <div class="content-detail-assessment">
+    <div class="">
         <div class="container-fluid">
             <div class="overElement">
                 <div class="blockOneOver">
@@ -152,7 +162,8 @@ foreach ($reviews as $review)
                     <p class="e-learningTitle"> <?= $assessment_array['title'] ?> </p>
                     <!-- Image -->
                     <div class="img-fluid-course">
-                        <img src=<?= $assessment_array['image_assessment'] ?> alt="">
+                        <img src=<?= $image; ?> alt="">
+                        
                     </div>
 
                     <!--------------------------------------- start Text description -------------------------------------- -->
@@ -202,7 +213,10 @@ foreach ($reviews as $review)
                                       if (get_current_user_id()!=0) 
                                       {
                                     ?>
-                                            <a href="/dashboard/user/assessment"  class="btn btnGetStartAssessment">Start</a>
+                                          <form action="/dashboard/user/answer-assessment" method="post">
+                                              <input type="hidden" name="assessment_id" value= <?= $assessment->ID; ?>>
+                                              <button class="btn btnGetStartAssessment" data-target="" data-toggle="" id="">Get Started</button>
+                                          </form>
                                     <?php
                                       }
                                         else
@@ -751,3 +765,4 @@ foreach ($reviews as $review)
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
