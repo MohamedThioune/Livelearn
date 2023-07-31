@@ -279,16 +279,17 @@ foreach($reactions as $value)
                     }
                     else
                         echo "<h3><strong>No reviews found</strong></h3>";
+                            ?>
 
-                    if($user_id != 0):
-                    ?>
+
                     <div class="footer-card-comment d-flex justify-content-between align-items-center">
                         <!-- <button class="btn btn-load-more">Load More </button> -->
-                        <button class="btn btnAddComment" data-toggle="modal" data-target="#ModalComment">Add Comment</button>
+                        <?php if($user_id == 0): ?>
+                            <button type="button" class="btn btnAddComment" data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Add Comment</button>
+                        <?php else: ?>
+                            <button class="btn btnAddComment" data-toggle="modal" data-target="#ModalComment">Add Comment</button>
+                        <?php endif; ?>
                     </div>
-                    <?php
-                    endif;
-                    ?>
 
                     <!-- Modal Comment -->
                     <div class="modal fade" id="ModalComment" tabindex="-1" role="dialog" aria-labelledby="ModalCommentLabel" aria-hidden="true">
@@ -311,11 +312,7 @@ foreach($reactions as $value)
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <?php if ($user_id==0) : ?>
-                                    <button type="button" data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class="btn SendComment">Comment</button>
-                                    <?php else : ?>
                                         <button type="submit" form="form-comment" name="review_post" class="btn SendComment">Comment</button>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
