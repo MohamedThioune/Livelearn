@@ -1431,8 +1431,9 @@ else if(isset($reaction_post)){
     $my_review_bool = false;
     foreach ($bunch_reactions as $reaction):
         if($reaction['user_reaction']->ID == $current_user->id){
+            if($reaction['type_reaction'] == $reaction_post)
+                $my_review_bool = true;
             continue;
-            $my_review_bool = true;
         }
 
         array_push($reactions, $reaction);
