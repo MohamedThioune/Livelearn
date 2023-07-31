@@ -471,7 +471,6 @@ endif;
                                             </div>
                                             <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                             <div class="position-relative">
-                                                <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
                                                 <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
                                             </div>
                                             </form>
