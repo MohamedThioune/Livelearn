@@ -21,7 +21,7 @@ require($page);
                         <h1 class="zzpersTitle">Voor Corporate organisaties</h1>
                         <p class="krijgText">
                             Boost de prestaties van je corporate organisatie met het LiveLearn LXP. Optimaliseer leren, deel kennis en versterk vaardigheden. Verhoog de productiviteit, bevorder innovatie en creëer een cultuur van continu leren. Geef je team de tools om te groeien en het concurrentievoordeel te behalen dat je nodig hebt..                         </p>
-                        <div>
+                        <div class="group-btn-corporate">
                             <a href="/voor-organisaties/" class="btn btn-al-vanaf">
                                 Al vanaf €4,95
                             </a>
