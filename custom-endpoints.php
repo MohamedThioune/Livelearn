@@ -2065,7 +2065,7 @@ function Artikel_From_Company(){
             if (!isset($images['data']['status']) && $images['data']['status']!=404 && $images['data']['status']!=401) {
               $status = 'extern';
               $data = array(
-                'titel' => $article['title']['rendered'],
+                'titel' => $article['title']['rendered'], 
                 'type' => 'Artikel',
                 'videos' => NULL, 
                 'short_description' => $article['excerpt']['rendered'],
