@@ -184,38 +184,73 @@ foreach($reactions as $value)
                         <form action="/dashboard/user/" id="reaction-form" method="POST">
                             <input type="hidden" name="id" value="<?= $post->ID ?>">
                         </form>
-                        <div class="content-card-reaction">
-                            <button type="submit" name='reaction_post' value="cool" form="reaction-form" class="btn btn-card-reaction">
-                                <i class="far fa-grin fa-one"></i>
-                                <i class="fas fa-grin fa-two"></i>
-                                <p class="feels-text">cool</p>
-                                <p class="text-number-feels"><?= $reaction['cool'] ?></p>
-                            </button>
-                            <button type="submit" name='reaction_post' value="lol" form="reaction-form" class="btn btn-card-reaction">
-                                <i class="far fa-grin-tongue fa-one"></i>
-                                <i class="fas fa-grin-tongue fa-two"></i>
-                                <p class="feels-text">lol</p>
-                                <p class="text-number-feels"><?= $reaction['lol'] ?></p>
-                            </button>
-                            <button type="submit" name='reaction_post' value="love" form="reaction-form" class="btn btn-card-reaction">
-                                <i class="far fa-kiss-wink-heart fa-one"></i>
-                                <i class="fas fa-kiss-wink-heart fa-two"></i>
-                                <p class="feels-text">love</p>
-                                <p class="text-number-feels"><?= $reaction['love'] ?></p>
-                            </button>
-                            <button type="submit" name='reaction_post' value="omg" form="reaction-form" class="btn btn-card-reaction">
-                                <i class="far fa-surprise fa-one"></i>
-                                <i class="fas fa-surprise fa-two"></i>
-                                <p class="feels-text">omg</p>
-                                <p class="text-number-feels"><?= $reaction['omg'] ?></p>
-                            </button>
-                            <button type="submit" name='reaction_post' value="wtf" form="reaction-form" class="btn btn-card-reaction">
-                                <i class="far fa-tired fa-one"></i>
-                                <i class="fas fa-tired fa-two"></i>
-                                <p class="feels-text">wtf</p>
-                                <p class="text-number-feels"><?= $reaction['wtf'] ?></p>
-                            </button>
-                        </div>
+                        <?php if ($user_id==0): ?>
+                            <div class="content-card-reaction">
+                                <button type="button" value="cool" data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'  class="btn btn-card-reaction">
+                                    <i class="far fa-grin fa-one"></i>
+                                    <i class="fas fa-grin fa-two"></i>
+                                    <p class="feels-text">cool</p>
+                                    <p class="text-number-feels"><?= $reaction['cool'] ?></p>
+                                </button>
+                                <button type="button" value="lol"  data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class="btn btn-card-reaction">
+                                    <i class="far fa-grin-tongue fa-one"></i>
+                                    <i class="fas fa-grin-tongue fa-two"></i>
+                                    <p class="feels-text">lol</p>
+                                    <p class="text-number-feels"><?= $reaction['lol'] ?></p>
+                                </button>
+                                <button type="button" value="love" data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'  class="btn btn-card-reaction">
+                                    <i class="far fa-kiss-wink-heart fa-one"></i>
+                                    <i class="fas fa-kiss-wink-heart fa-two"></i>
+                                    <p class="feels-text">love</p>
+                                    <p class="text-number-feels"><?= $reaction['love'] ?></p>
+                                </button>
+                                <button type="button" value="omg"  data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class="btn btn-card-reaction">
+                                    <i class="far fa-surprise fa-one"></i>
+                                    <i class="fas fa-surprise fa-two"></i>
+                                    <p class="feels-text">omg</p>
+                                    <p class="text-number-feels"><?= $reaction['omg'] ?></p>
+                                </button>
+                                <button type="button" value="wtf"  data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class="btn btn-card-reaction">
+                                    <i class="far fa-tired fa-one"></i>
+                                    <i class="fas fa-tired fa-two"></i>
+                                    <p class="feels-text">wtf</p>
+                                    <p class="text-number-feels"><?= $reaction['wtf'] ?></p>
+                                </button>
+                            </div>
+                        <?php else : ?>
+                            <div class="content-card-reaction">
+                                <button type="submit" name='reaction_post' value="cool" form="reaction-form" class="btn btn-card-reaction">
+                                    <i class="far fa-grin fa-one"></i>
+                                    <i class="fas fa-grin fa-two"></i>
+                                    <p class="feels-text">cool</p>
+                                    <p class="text-number-feels"><?= $reaction['cool'] ?></p>
+                                </button>
+                                <button type="submit" name='reaction_post' value="lol" form="reaction-form" class="btn btn-card-reaction">
+                                    <i class="far fa-grin-tongue fa-one"></i>
+                                    <i class="fas fa-grin-tongue fa-two"></i>
+                                    <p class="feels-text">lol</p>
+                                    <p class="text-number-feels"><?= $reaction['lol'] ?></p>
+                                </button>
+                                <button type="submit" name='reaction_post' value="love" form="reaction-form" class="btn btn-card-reaction">
+                                    <i class="far fa-kiss-wink-heart fa-one"></i>
+                                    <i class="fas fa-kiss-wink-heart fa-two"></i>
+                                    <p class="feels-text">love</p>
+                                    <p class="text-number-feels"><?= $reaction['love'] ?></p>
+                                </button>
+                                <button type="submit" name='reaction_post' value="omg" form="reaction-form" class="btn btn-card-reaction">
+                                    <i class="far fa-surprise fa-one"></i>
+                                    <i class="fas fa-surprise fa-two"></i>
+                                    <p class="feels-text">omg</p>
+                                    <p class="text-number-feels"><?= $reaction['omg'] ?></p>
+                                </button>
+                                <button type="submit" name='reaction_post' value="wtf" form="reaction-form" class="btn btn-card-reaction">
+                                    <i class="far fa-tired fa-one"></i>
+                                    <i class="fas fa-tired fa-two"></i>
+                                    <p class="feels-text">wtf</p>
+                                    <p class="text-number-feels"><?= $reaction['wtf'] ?></p>
+                                </button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="sub-card-content-artikel comment-card-block">
@@ -276,7 +311,11 @@ foreach($reactions as $value)
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" form="form-comment" name="review_post" class="btn SendComment">Comment</button>
+                                    <?php if ($user_id==0) : ?>
+                                    <button type="button" data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class="btn SendComment">Comment</button>
+                                    <?php else : ?>
+                                        <button type="submit" form="form-comment" name="review_post" class="btn SendComment">Comment</button>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
