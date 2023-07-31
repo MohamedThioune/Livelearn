@@ -52,10 +52,15 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 /* Start or Buy */
-$startorbuy = '<form action="/dashboard/user/answer-assessment" method="post">
-                <input type="hidden" name="assessment_id" value=' . $post->ID . ' >
-                <button class="btn btn-stratNow" data-target="" data-toggle="" id="">Start Now</button>
-               </form>';
+if ($user_id==0)
+    $btnStart ="<button type='button' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Start Now</button>";
+else
+    $btnStart = '<button class="btn btn-stratNow" data-target="" data-toggle="" id="">Start Now</button>';
+
+$startorbuy = "<form action='/dashboard/user/answer-assessment' method='post'>
+                <input type='hidden' name='assessment_id' value=' ". $post->ID ."' >
+                $btnStart
+               </form>";
 
 /* Review pourcentage */
 if(!empty($counting_rate)):
