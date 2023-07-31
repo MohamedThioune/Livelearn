@@ -2394,7 +2394,7 @@ input:focus-visible {
     font-size: 18px;
 }
 
-#loginform input, . {
+#loginform input{
     color: #023356;
     font-size: 15px;
     padding: 13px 21px !important;
@@ -8201,6 +8201,9 @@ tbody {
         .btnStore img, .btnPlayGoogle img {
             height: 63px;
         }
+        .doawnloadBlockHome .btnStore .doawnloadBlockHome .btnPlayGoogle{
+            height: 53px !important;
+        }
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
                 height: 190px !important;
@@ -8209,7 +8212,10 @@ tbody {
                 max-height: 480px !important;
             }
             .btnStore img, .btnPlayGoogle img {
-                max-height: 46px !important;
+                height: 46px !important;
+            }
+            .btnStore, .btnPlayGoogle{
+                height: 46px !important;
             }
             .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
                 height: 60px !important;
@@ -8218,6 +8224,19 @@ tbody {
             .social-networks a img {
                 height: 45px !important;
             }
+            .section-app-store a img {
+                height: 60px !important;
+            }
+            .section-app-store:last-child a img {
+                margin-top: 6px;
+            }
+            .section-app-store a {
+                height: 61px !important;
+            }
+            .doawnloadBlockHome.btnStore img, .doawnloadBlockHome.btnPlayGoogle img {
+                height: 61px !important;
+            }
+
         }
     }
 }
@@ -18208,6 +18227,7 @@ background: #FFFFFF !important;
 }
 #loginform p {
     margin-bottom: 25px;
+    display: grid;
 }
 .content-new-inloggen form {
     border-radius: 5px;
@@ -24850,13 +24870,38 @@ background: #FFFFFF !important;
     }
     .bleu-block-contact-calendy .title-Direct-een {
         width: 100%;
+        padding: 0 15px;
     }
     .customize-support .content-artikel {
         padding-top: 40px;
     }
     .theme-skills .second-block-binnen {
-        width: 93%;
+        width: 100%;
         margin: -50px auto 30px;
+    }
+    .content-baaangerichte .swipeContaine2{
+        margin-left: 13px !important;
+    }
+    .tabUserOverview {
+        padding-left: 15px !important;
+    }
+    .block-sme .content-text-sme {
+        padding-top: 0px;
+    }
+    .group-btn-corporate{
+        display: block;
+    }
+    .group-btn-corporate .btn-Functionaliteiten{
+        margin-top: 10px;
+    }
+    .theme-skills .col-lg-6 .content-Ontdek {
+        padding: 0 !important;
+    }
+    .theme-skills .section-revolutionnaire .second-block-binnen {
+        margin: 0px auto 30px !important;
+    }
+    .section-app-store a {
+        height: 61px !important;
     }
 
 
