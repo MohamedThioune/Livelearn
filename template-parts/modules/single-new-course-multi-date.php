@@ -752,7 +752,11 @@ endif;
                                         <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                         <div class="position-relative">
                                             <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
-                                            <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                            <?php if ($user_id==0): ?>
+                                                <button type="button" class='btn btn-send' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Send</button>
+                                            <?php else: ?>
+                                                <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                            <?php endif; ?>
                                         </div>
                                         </form>
                                     </div>
