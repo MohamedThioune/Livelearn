@@ -1664,6 +1664,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_course_image',
   ));
 
+  register_rest_route ('custom/v1', '/course/reserve', array(
+    'methods' => 'POST',
+    'callback' => 'reserve_course',
+  ));
+
   register_rest_route ('custom/v1', '/databank', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
