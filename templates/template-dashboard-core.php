@@ -1439,7 +1439,6 @@ else if(isset($reaction_post)){
         array_push($reactions, $reaction);
     endforeach;
    
-    // var_dump($reactions);
     $reaction = array();
     $reaction['user_reaction'] = $current_user;
     $reaction['type_reaction'] = $reaction_post;
