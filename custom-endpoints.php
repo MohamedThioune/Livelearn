@@ -1780,7 +1780,7 @@ function replyQuestion(WP_REST_Request $request)
         'occurence'=> $occurence
     ];
     $wpdb->insert($table_tracker_views, $data);
-    return $wpdb->insert_id;
+    return $wpdb->insert_id; 
 }
 
   function update_view_experts(WP_REST_Request $request)
