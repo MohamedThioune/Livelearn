@@ -426,11 +426,13 @@ if(!empty($topics_internal))
         array_push($topics, $value);
 
 
-/*         Views beginning      */
+/** 
+* Views beginning      
+*/
 
 /** 
  * New way of getting Views from database
- */ 
+*/ 
 
 // View table name
 $table_tracker_views = $wpdb->prefix . 'tracker_views';

@@ -242,7 +242,7 @@
                             <?php
                             if($user_id == 0)
                                 echo "
-                                <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='' style='border:none; background:white'> 
+                                <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='button' class='' style='border:none; background:white'> 
                                     <i class='fas fa-bell' style='font-size: 25px;'></i><br>
                                     <span class='textIconeLearning mt-1'>Bewaar</spanz>
                                 </button>
@@ -791,7 +791,6 @@
                                             }
                                         }
                                     }
-                                    
                                 ?>
                             </div>
 
@@ -1032,7 +1031,7 @@
                                                 <?php
                                                 if($user_id == 0)
                                                     echo "                                
-                                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
+                                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='button' class='btn btnFollowExpert'> 
                                                             Follow                                            
                                                         </button>";
                                                 ?>
@@ -1121,7 +1120,7 @@
                                             <?php
                                                 if($user_id == 0)
                                                     echo "                                
-                                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
+                                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='button' class='btn btnFollowExpert'> 
                                                             Follow                                            
                                                         </button>";
                                             ?>

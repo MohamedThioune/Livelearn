@@ -457,13 +457,14 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             beforeSend:function(){
                 $('#spinner-search-audio-playlist').removeClass('d-none');
                 backAudioApiPlaylist.innerHTML = '';
-                console.log('sending...')
+                console.log('searching podcast...')
             },
             success: function(success){
-                if (!success) {
+                if (success==='') {
+                    console.log('no result for'+success)
                     backAudioApiPlaylist.innerHTML = "<span class='text-center'>no result for '" + search + "'</span>";
                 } else {
-                    backAudioApiPlaylist.innerHTML = success;
+                    backAudioApiPlaylist.innerHTML=success;
                 }
                 console.log('success',success)
             },error: function(error,status){
@@ -479,7 +480,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 </script>
 <!--end traitement playlist podcast -->
 
-<!--begin  -->
+<!--begin  function to save a playlist audion on databank-->
 <script type="text/javascript">
     function savePodcastPlaylistInPlatform(e){
         //console.log('value',e.target);
@@ -513,7 +514,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         });
     }
 </script>
-<!--end  -->
+<!--end  function to save a playlist audion on databank-->
 
 
 <!--begin traitement podcast audio-->
@@ -709,6 +710,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false);
                     $('#select_field').attr('hidden',true);
+                    console.log('saving many courses on plateform')
                 },
                error: function(error) {
                 document.getElementById('content-back-topics').innerHTML = error;
@@ -748,7 +750,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/optie-bank',
+                url: '/livelearn/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
@@ -759,6 +761,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false)
                     $('#select_field').attr('hidden',true)
+                    console.log('saving one course on plateform')
                 },
                error: function(error) {
                 console.log(error);

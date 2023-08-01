@@ -83,7 +83,7 @@ $podcast_single = "Podcast";
                         /*
                         *  Date and Location
                         */ 
-                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $day = "No date";
                         $month = ' ';
                         $location = ' ';
                     
@@ -91,17 +91,20 @@ $podcast_single = "Podcast";
                         if($data){
                             $date = $data[0]['data'][0]['start_date'];
                             $day = explode(' ', $date)[0];
+                            $day = '<strong>' . $day . '</strong>';
                         }
                         else{
                             $dates = get_field('dates', $course->ID);
-                            if($dates)
+                            if($dates){
                                 $day = explode(' ', $dates[0]['date'])[0];
-                            else{
+                                $day = '<strong>' . $day . '</strong>';
+                            }else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
                                     $data = explode('-', $data[0]['value']);
                                     $date = $data[0];
                                     $day = explode(' ', $date)[0];
+                                    $day = '<strong>' . $day . '</strong>';
                                 }
                             }
                         }
@@ -128,14 +131,7 @@ $podcast_single = "Podcast";
                         else if($course_type == $podcast_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
                         
-
-                        $link = "";    
-                        if($course_type == "Leerpad")
-                            $link = '/detail-product-road?id=' . $course->ID ;
-                        else if($course_type == "Assessment")
-                            $link = '/detail-assessment?assessment_id=' . $course->ID;
-                        else
-                            $link = get_permalink($course->ID);                        
+                        $link = get_permalink($course->ID);                        
                         ?>
                         <td scope="row"><?= $key; ?></td>
                         <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))){echo 'nee';}else{echo 'ja';}?></td>

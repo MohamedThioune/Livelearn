@@ -1,4 +1,4 @@
-<?php /** Template Name: new-inloggen */ ?>
+<?php /** Template Name: Inloggen-new */ ?>
 
 
 <?php wp_head(); ?>
@@ -45,13 +45,14 @@
                <div class="block-connection">
                    <div class="container-fluid">
                        <div class="d-flex justify-content-between align-items-center">
-                           <div class="logo-liverlearn-connection">
+                           <a href="/" class="logo-liverlearn-connection">
                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/logolivelearnconnection.png" alt="First-slide-looggin">
-                           </div>
+                            </a>
                            <a class="back-to-home-text" href="/">Back To Home</a>
                        </div>
                        <h2>Sign into Your Account</h2>
-                       <form>
+                        <!-- 
+                        <form>
                            <div class="form-group">
                                <label for="exampleInputEmail1">Email address</label>
                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
@@ -66,35 +67,55 @@
                                <label class="form-check-label" for="exampleCheck1">Remember me</label>
                            </div>
                            <button type="submit" class="btn btn-coneection">Sign In</button>
-                       </form>
+                        </form> 
+                        -->
+                        <?php 
+                        if(isset($_GET['login'])) 
+                            if($_GET['login'] == 'failed') 
+                                echo "<span class='alert alert-error' style='color:red'>Failed to login, informations are incorrect</span>"
+                        ?>
+
+                        <?php
+                            wp_login_form([
+                                'redirect' => '/dashboard/user/',
+                                'remember' => true,
+                                'label_username' => 'Email address',
+                                'placeholder_email' => 'Enter your email address',
+                                'label_password' => 'Password',
+                                'placeholder_password' => 'Enter your password',
+                            ]);
+                        ?>
                    </div>
                </div>
                <div class="block-social-connection">
                    <h3>Or sign in with</h3>
                    <div class="group-btn-connection">
-                       <a href="" class="btn btn-connection">
-                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
-                           Sign In using Google
-                       </a>
-                       <a href="" class="btn btn-connection">
-                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-facebook.png" alt="First-slide-looggin">
-                           Sign In using Facebook
-                       </a>
+                        <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                            Sign In using Google
+                        </a>
                    </div>
-                   <p class="new-user-text">New User ? <a href="">Create an Account</a></p>
+                   <p class="new-user-text">New User ? <a href="/registreren">Create an Account</a></p>
                </div>
             </div>
         </div>
     </div>
 </div>
 
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $('.carousel').carousel({
-            interval: 3000
-        })
-    </script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $('.carousel').carousel({
+        interval: 3000
+    })
+</script>
+
+<script>
+    jQuery(document).ready(function(){
+        jQuery('#user_login').attr('placeholder', 'Enter your email address');
+        jQuery('#user_pass').attr('placeholder', 'Enter your password');
+    });
+</script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

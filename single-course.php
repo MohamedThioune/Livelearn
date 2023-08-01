@@ -10,27 +10,27 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
-//view($post,$user_visibility);
-view($post);
+view($post,$user_visibility);
 
 $course_type = get_field('course_type', $post->ID);
 
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar'];
+$online = ['Video', 'Webinar','Podcast', 'E-learning'];
 
 //Redirection - visibility 
 if(!visibility($post, $visibility_company))
     header('location: /');
 
 //Redirection - type
-if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel' && $course_type != 'Podcast')
+if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel' && $course_type != 'Leerpad')
     header('location: /');
 
 //Online
 $courses = get_field('data_virtual', $post->ID);
 $youtube_videos = get_field('youtube_videos', $post->ID);
-$podcasts = get_field('podcasts', $post->ID);
 
+$podcasts = get_field('podcasts', $post->ID);
+$podcast_index = get_field('podcasts_index', $post->ID);
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $short_description = get_field('short_description', $post->ID);
@@ -41,7 +41,13 @@ $count_videos = 0;
 if(!empty($courses))
     $count_videos = count($courses);
 else if(!empty($youtube_videos))
-$count_videos = count($youtube_videos);
+    $count_videos = count($youtube_videos);
+
+$count_audios = 0;
+if(!empty($podcasts))
+    $count_audios = count($podcasts);
+else if(!empty($podcast_index))
+    $count_audios = count($podcast_index);
 
 $dagdeel = array();
 $data = get_field('data_locaties', $post->ID);
@@ -81,7 +87,12 @@ $dagdeel = count($dagdeel);
 */
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
-$price = get_field('price', $post->ID) ?: 'Gratis';
+$price_noformat = get_field('price', $post->ID) ?: 'Gratis';
+if($price_noformat != "Gratis")
+    $price = '€' . number_format($price_noformat, 2, '.', ',');
+else
+    $price = 'Gratis';
+
 $prijsvat = get_field('prijsvat', $post->ID);
 $btw = get_field('btw-klasse', $post->ID); 
 if(!$prijsvat) 
@@ -108,6 +119,8 @@ if($$tag == ' '){
             $category = (String)get_the_category_by_ID($category_id);
         }
 }
+$category_default = get_field('categories', $post->ID);
+$category_xml = get_field('category_xml', $post->ID);
 
 $user_id = get_current_user_id();
 
@@ -192,19 +205,52 @@ if(!$thumbnail){
 */ 
 $duration_day = get_field('duration_day', $post->ID);
 $attachments_xml = get_field('attachment_xml', $post->ID);
+
+//Reviews
 $reviews = get_field('reviews', $post->ID);
-
+$count_reviews = (!empty($reviews)) ? count($reviews) : 0;
+// $count_reviews_all = 0;
+$star_review = [ 0, 0, 0, 0, 0];
+$average_star = 0;
+$average_star_nor = 0;
 $my_review_bool = false;
-
-foreach ($reviews as $review)
-    if($review['user']->ID == $user_id){
+$counting_rate = 0;
+foreach ($reviews as $review):
+    if($review['user']->ID == $user_id)
         $my_review_bool = true;
-        break;
+
+    //Star by number
+    switch ($review['rating']) {
+        case 1:
+            $star_review[1] += 1;
+            break;
+        case 2:
+            $star_review[2] += 1;
+            break;
+        case 3:
+            $star_review[3] += 1;
+            break;
+        case 4:
+            $star_review[4] += 1;
+            break;
+        case 5:
+            $star_review[5] += 1;
+            break;
     }
+
+    if($review['rating']){
+        $average_star += intval($review['rating']); 
+        $counting_rate += 1;
+    }
+endforeach;
+if ($counting_rate > 0 )
+    $average_star_nor = $average_star / $counting_rate;
+$average_star_format = number_format($average_star_nor, 1, '.', ',');
+$average_star = intval($average_star_nor);
+
 
 $link_to = get_field('link_to', $post->ID);
 $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
-
 
 /* * Informations reservation * */
 //Orders - enrolled courses 
@@ -223,11 +269,20 @@ $args = array(
 );
 $bunch_orders = wc_get_orders($args);
 
+$enrolled_member = 0;
+$enrolled_all = 0;
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
-        if($course_id == $post->ID)
+        $course = get_post($course_id);
+        if($course_id == $post->ID){
             $statut_bool = 1;
+            $enrolled_member += 1;
+        }
+        if(!empty($course))
+            if($course->post_author == $post->post_author)
+                $enrolled_all += 1;
+        
         //Get woo orders from user
         if(!in_array($course_id, $enrolled))
             array_push($enrolled, $course_id);
@@ -235,20 +290,48 @@ foreach($bunch_orders as $order){
 }
 
 $bool_link = 0;
-if($price !== 'Gratis')
+if(($price == 'Gratis'))
+    $bool_link = 1;
+else
     if($statut_bool)
         $bool_link = 1;
-else if(($price == 'Gratis'))
-    $bool_link = 1;
 
-// include_once('template-parts/modules/single-new-course-video.php');
+//Similar course
+$similar_course = array();
+$args = array(
+    'post_type' => array('course','post'),
+    'post_status' => 'publish',
+    'orderby' => 'date',
+    'author' => $post->post_author,
+    'order' => 'DESC',
+    'posts_per_page' => -1
+);
+$author_courses = get_posts($args);
+$initial = 0;
+foreach ($author_courses as $key => $course) {
+    if($course->ID == $post->ID)
+        continue;
+    $type_course = get_field('course_type', $course->ID);
+    if($type_course == $course_type){
+        array_push($similar_course, $course);
+        $initial += 1;
+    }
+        
+    if($initial == 6)
+        break;
+} 
 
 if(in_array($course_type, $offline))
-    include_once('template-parts/modules/single-course-offline.php');
-else if(in_array($course_type, $online))
+    include_once('template-parts/modules/single-new-course-multi-date.php');
+else if($course_type == 'Video')
     include_once('template-parts/modules/single-new-course-video.php');
 else if($course_type == 'Podcast')
-    include_once('template-parts/modules/single-course-podcast.php');
+    include_once('template-parts/modules/single-new-course-podcast.php');
+else if($course_type == 'Leerpad')
+    include_once('template-parts/modules/single-new-course-offline.php');
+else if($course_type == 'Assessment')
+    include_once('template-parts/modules/single-new-course-assessment.php');
+
 
 ?>  
  

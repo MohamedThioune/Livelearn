@@ -4,6 +4,7 @@ custom.css
 main-user.js
 main.css
 main.js
+composer.lock
 
 /vendor/
 /.idea/
