@@ -572,7 +572,8 @@ $see_experts = get_users(
                                 continue;
 
                             $image_author = get_field('profile_img',  'user_' . $expert->ID);
-                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            var_dump($expert->ID);
+                            $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                             ?>
                             <form id="multiple_form" method="POST" action="">

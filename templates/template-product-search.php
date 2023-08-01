@@ -566,7 +566,7 @@
                                 $teacher_data = get_user_by('id', $profe);
                             
                                 $user_id = get_current_user_id();
-                                if($teacher != $user_id)
+                                if($teacher_data->ID != $user_id)
                                     $name = ($teacher_data->last_name) ? $teacher_data->first_name : $teacher_data->display_name;
                                 else
                                     $name = "Ikzelf";
