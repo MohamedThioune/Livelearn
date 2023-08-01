@@ -2394,22 +2394,35 @@ input:focus-visible {
     font-size: 18px;
 }
 
-#loginform input {
+#loginform input{
     color: #023356;
-    font-size: 14px;
-    padding: 10px 21px !important;
+    font-size: 15px;
+    padding: 13px 21px !important;
     margin-bottom: 8px;
     background: #FFFFFF !important;
     border-radius: 8px;
-    border: unset;
+    border: 1px solid rgb(4 51 86 / 27%);
     width: 100%;
 }
 
-#loginform #wp-submit {
+#loginform #wp-submit, .ur-submit-button {
+    color: #023356 !important;
+    font-size: 15px;
+    padding: 13px 21px !important;
+    border: 1px solid #023356;
+}
+#loginform #wp-submit:hover, .ur-submit-button {
     background: #023356 !important;
     color: white !important;
 }
-
+#loginform .nsl-container-buttons{
+    display: none;
+}
+#rememberme {
+    width: fit-content !important;
+    margin-right: 15px;
+    margin-bottom: 0;
+}
 .login-password label,
 .login-username label {
     /* display: none; */
@@ -4093,12 +4106,11 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 #user-registration-form-59 form .ur-form-row input {
     color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    margin-bottom: 12px;
     background: #FFFFFF !important;
     border-radius: 8px;
-    border: unset;
+    font-size: 15px;
+    padding: 11px 21px !important;
+    border: 1px solid rgb(4 51 86 / 27%) !important;
 }
 
 #user-registration-form-59 form .ur-form-row input::placeholder {
@@ -4107,16 +4119,19 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .register .ur-submit-button {
     width: 100%;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    background: #023356 !important;
-    color: #FFFFFF !important;
+    color: #023356 !important;
+    border: 1px solid #023356 !important;
     text-align: center !important;
-    padding: 10px !important;
     margin-bottom: 5px;
     margin-top: 10px;
     margin-right: 0;
     margin-left: 0;
+    padding: 13px 21px !important;
+    background: none !important;
+}
+.register .ur-submit-button:hover {
+    background: #023356 !important;
+    color: #FFFFFF !important;
 }
 
 .acf-image-uploader .image-wrap {
@@ -4545,12 +4560,12 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .sousPricing {
-    margin: 0 auto 50px;
+    margin: 0 auto 35px;
     font-size: 20px;
     width: 65%;
     text-align: center;
-    line-height: 23px;
-    color: #030303;
+    line-height: 29px;
+    color: #3d3b3b;
 }
 
 .cardPricing {
@@ -8171,6 +8186,24 @@ tbody {
         .content-new-Courses .content-head {
             margin-top: 0px !important;
         }
+        .cardOverviewOrganisatie {
+            min-height: 500px;
+        }
+        .content-community-overview .section-app-store a img{
+            height: 65px;
+        }
+        .content-community-overview .section-app-store a img:last-child{
+            margin-top: 7px;
+        }
+        .btnStore img, .btnPlayGoogle img {
+            height: 75px !important;
+        }
+        .btnStore img, .btnPlayGoogle img {
+            height: 63px;
+        }
+        .doawnloadBlockHome .btnStore .doawnloadBlockHome .btnPlayGoogle{
+            height: 53px !important;
+        }
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
                 height: 190px !important;
@@ -8179,12 +8212,31 @@ tbody {
                 max-height: 480px !important;
             }
             .btnStore img, .btnPlayGoogle img {
-                max-height: 46px !important;
+                height: 46px !important;
+            }
+            .btnStore, .btnPlayGoogle{
+                height: 46px !important;
             }
             .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
                 height: 60px !important;
                 margin-top: -2px;
             }
+            .social-networks a img {
+                height: 45px !important;
+            }
+            .section-app-store a img {
+                height: 60px !important;
+            }
+            .section-app-store:last-child a img {
+                margin-top: 6px;
+            }
+            .section-app-store a {
+                height: 61px !important;
+            }
+            .doawnloadBlockHome.btnStore img, .doawnloadBlockHome.btnPlayGoogle img {
+                height: 61px !important;
+            }
+
         }
     }
 }
@@ -9386,7 +9438,7 @@ ul#tabs-nav li.active a {
 
 .headOverviewOrganisatie .btnbtnCreeerJe {
     padding: 10px 15px 12px;
-    background: #47a99e;
+    background: #00A89D;
     color: white !important;
     font-weight: 600;
     border-radius: 25px;
@@ -9706,7 +9758,7 @@ ul#tabs-nav li.active a {
 
 .btnCardVolgende:hover {
     background: #043356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .bodyOntwikkeladvies .cardBlockValOpEnVerbind {
@@ -12599,6 +12651,7 @@ select {
     background: #023356;
     font-size: 12px;
     z-index: 9;
+    width: fit-content;
 }
 
 .rangeslider-wrap {
@@ -13401,15 +13454,17 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .second-block-binnen img{
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 .block-logo-parteners2 .logo-element{
     width: 12%;
     margin: 0 14px 15px;
     height: 70px;
-    box-shadow: 0px 0px 2px #9c9fa2 !important;
+    box-shadow: 0px 0px 2px #ffffff !important;
     text-align: center;
     padding-top: 4px;
+    background: white;
+    border-color: white;
 }
 .block-logo-parteners2 .logo-element:hover{
     box-shadow: 0px 0px 4px #9c9fa2 !important;
@@ -15854,6 +15909,7 @@ background: #FFFFFF !important;
 }
 .tab-block-functiegerichte .tab-content{
     display: block !important;
+    padding: 0 30px;
 }
 .tab-block-functiegerichte .tab-content .tab-pane{
     padding: 15px 0 !important;
@@ -15868,13 +15924,10 @@ background: #FFFFFF !important;
     border-bottom: 2px solid #00a89d;
     font-weight: 600;
 }
-.tab-block-functiegerichte .nav-tabs .nav-item a {
-    padding: 0px 0 8px !important;
-    color: #033356 !important;
-}
+
 .tab-block-functiegerichte .nav-tabs {
     width: 38%;
-    margin: 0 auto;
+    margin: 0 auto !important;
 }
 .tab-block-functiegerichte .nav-link:hover {
     border-color: transparent !important;
@@ -16011,6 +16064,7 @@ background: #FFFFFF !important;
 .advert-course-Block .advert-one .blockImgAdvert img{
     width: 100%;
     height: 100%;
+    max-height: 190px;
     object-fit: contain;
 }
 .advert-course-Block .advert-second{
@@ -16217,6 +16271,7 @@ background: #FFFFFF !important;
 .content-data-analytics .analytics-block .second-content-analitycs img {
     width: 100%;
     height: 100%;
+    max-height: 190px;
     object-fit: contain;
 }
 .other-analytics .number-other-detail {
@@ -16522,6 +16577,7 @@ background: #FFFFFF !important;
 .barNote .bg-gris-Skills {
     height: 18px;
     background: #D1D5DB;
+    width: 100%;
 }
 .element-block-rating{
     display: flex;
@@ -17538,9 +17594,10 @@ background: #FFFFFF !important;
     margin-left: -5px;
     margin-top: -4px;
 }
-.content-artikel {
+.customize-support .content-artikel {
     padding-top: 75px;
 }
+
 .content-artikel .info-detail-artikel .img-autors{
     width: 40px;
     height: 40px;
@@ -17575,6 +17632,7 @@ background: #FFFFFF !important;
 .content-artikel .right-block-artikel .img-fluid-artikel img{
     height: 100%;
     width: 100%;
+    object-fit: cover;
 }
 .content-artikel .left-block-artikel{
     width: 28%;
@@ -17806,11 +17864,17 @@ background: #FFFFFF !important;
     border-radius: 5px;
     margin-right: 18px;
     overflow: hidden;
+    position: relative;
 }
 .card-right-artikel .posts-recent-block .img-recent-post img{
     width: 100%;
     height: 100%;
-    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    object-fit: cover;
 }
 .card-right-artikel .posts-recent-block .date-recent-post{
     font-weight: 400;
@@ -17996,7 +18060,6 @@ background: #FFFFFF !important;
 .owl-item .new-card-course {
     display: block;
     max-height: 380px;
-    min-height: 100%;
     border: 1px solid #e6e3e3 !important;
     border-radius: 13px;
 }
@@ -18129,12 +18192,13 @@ background: #FFFFFF !important;
     padding: 50px 15px 30px;
 }
 .right-block-connection h2{
-    font-size: 25px;
+    font-size: 27px;
     line-height: 36px;
     font-weight: 500;
-    color: #000000;
-    margin-top: 20px;
+    color: #053356;
+    margin-top: 27px;
     margin-bottom: 25px;
+    text-align: center;
 }
 .logo-liverlearn-connection{
     width: 173px;
@@ -18157,10 +18221,14 @@ background: #FFFFFF !important;
     line-height: 24px;
     display: flex;
     align-items: center;
-    color: #2b2b2b;
-    font-weight: 300;
+    color: #685F78;
+    margin-bottom: 15px;
+    font-weight: 400;
 }
-
+#loginform p {
+    margin-bottom: 25px;
+    display: grid;
+}
 .content-new-inloggen form {
     border-radius: 5px;
     padding: 21px 10px !important;
@@ -18720,10 +18788,10 @@ background: #FFFFFF !important;
     height: 368px;
     margin-top: 0;
     padding-top: 50px;
-}
+}/*
 .canhas .content-new-Courses .content-head{
     margin-top: 27px;
-}
+}*/
 .content-course-podcast {
     padding-top: 55px;
     background: #F5FAFD;
@@ -18773,7 +18841,7 @@ background: #FFFFFF !important;
     font-size: 14px;
     margin-right: 10px;
 }
-.content-new-Courses .content-head .fa-calendar-alt {
+.content-new-Courses .content-head i {
     color: #FFFFFF;
     font-size: 14px;
     margin-right: 10px;
@@ -19297,6 +19365,10 @@ background: #FFFFFF !important;
 }
 .video-content-course .owl-item .new-card-course, .event-content-course .new-card-course{
     min-height: unset;
+    height: 100% !important;
+}
+.video-content-course .owl-carousel.owl-drag .owl-item, .video-content-course .owl-carousel .owl-stage{
+    height: 100% !important;
 }
 .similar-course-block{
     margin-top: 25px;
@@ -19307,7 +19379,7 @@ background: #FFFFFF !important;
 }
 .content-head-podcast .block-img{
     width: 25%;
-    height: auto;
+    height: 200px;
     margin-right: 40px;
     border-radius: 10px;
     overflow: hidden;
@@ -19671,6 +19743,823 @@ background: #FFFFFF !important;
     font-weight: 600;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+}
+.content-individu {
+    background: white;
+}
+.content-individu .content-head{
+    padding-top: 75px;
+    background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsl(0deg 0% 100%) 100%);
+    padding-bottom: 121px;
+}
+.content-individu .content-head .group-content{
+    display: flex;
+    justify-content: space-between;
+}
+.content-individu .content-head .group-content .content-text{
+    width: 55%;
+}
+.content-individu .content-head .group-content .content-img{
+    width: 40%;
+    margin: 0 auto;
+    max-height: 311px;
+}
+.content-individu .content-head .group-content .content-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.group-content .content-text .title-content-individu {
+    color: #023356;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+.group-content .description-content-individu {
+    color: #023356;
+    font-size: 19px;
+    line-height: 31px;
+    margin-bottom: 31px;
+}
+.group-content .btn-doawnload-app {
+    background: #00A89D;
+    color: white !important;
+    padding: 13px 30px;
+    border-radius: 25px;
+    margin-right: 20px;
+}
+.group-content .btn-Het-is {
+    background: #053356;
+    color: white !important;
+    padding: 13px 25px;
+    border-radius: 25px;
+    margin-right: 20px;
+}
+.content-individu .block-hr-strat hr, .hr-logo {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid #023356;
+    z-index: 99;
+    position: relative;
+    width: 43%;
+}
+.title-zij {
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 25px;
+    color: #023356;
+    font-weight: 600;
+}
+.block-logo-parteners2 .logo-element {
+    box-shadow: 1px 1px 4px #ffffff !important;
+    background: white;
+    border-radius: 14px;
+}
+.theme-new-element section .content-Ontdek{
+    padding-left: 30px;
+    width: 100%;
+}
+.theme-new-element .content-Ontdek  .title-section {
+    color: #023356;
+    font-size: 33px;
+    line-height: 41px;
+    padding-right: 15px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+.theme-new-element .content-Ontdek  .title-section span{
+    color: #00A89D;
+}
+.theme-new-element section .content-Ontdek  .description-section{
+    color: #3B5C74;
+    font-size: 16px;
+    padding-right: 10px;
+    line-height: 30px;
+    margin-bottom: 35px;
+}
+.theme-new-element .btn-download-onze-app {
+    border: 1px solid  #00A89D;
+    color: #00A89D !important;
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin-bottom: 33px;
+}
+.theme-new-element .btn-download-onze-app:hover {
+    background: #00A89D;
+    color: white !important;
+}
+.theme-new-element .img-for-individual {
+    width: 100%;
+    height: auto;
+    max-height: 406px;
+}
+.img-for-individual-2 {
+    width: 67%;
+    height: auto;
+    margin: 0 0 auto 90px;
+}
+.content-individu .block-logo-parteners2 {
+    margin-bottom: 10px;
+}
+.section-revolutionnaire {
+    margin: 75px 0 130px;
+}
+.sub-title-onze{
+    color: #023356;
+    text-align: center;
+    font-size: 18px;
+    margin: 17px 0 50px;
+}
+.btn-Bekijk{
+    background: #E0EFF4;
+    font-weight: 700;
+    padding: 11px 30px;
+    margin: 80px auto 50px;
+    width: fit-content;
+    display: block;
+}
+.block-sme .content-img-sme{
+    width: 100%;
+    max-height: 327px;
+    margin-top: 20px;
+}
+.block-sme .content-img-sme img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.block-sme .content-text-sme{
+    width: 100%;
+    padding-top: 50px;
+}
+.block-sme .block-rating-logo, .block-sme .block-logo-parteners2 {
+    margin-bottom: 0;
+}
+.block-sme .zzpersSection {
+    background: linear-gradient(180deg, rgba(224,239,244,1) 75%, rgba(255,255,255,1) 100%);
+    padding-bottom: 80px;
+}
+.corporate-theme .talent-binnen-block {
+    margin: 100px 0 120px;
+}
+.corporate-theme .head-section-theme{
+    background: #E0EFF4;
+    text-align: center;
+    padding: 70px;
+    margin-bottom: 80px;
+}
+.corporate-theme .head-section-theme h1{
+    color: #023356;
+    font-size: 35px;
+    margin-bottom: 0;
+}
+.corporate-theme .img-theme-skills{
+    width: 95px;
+    height: 95px;
+    margin: 0 auto 23px;
+}
+.corporate-theme .img-theme-skills img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.theme-new-element section .content-Ontdek {
+    padding-left: 0;
+    width: 100%;
+    padding-right: 55px;
+}
+.theme-new-element .block-img-skills {
+    max-height: 360px;
+    width: 85%;
+    margin: 0 auto;
+}
+.theme-new-element .block-img-skills img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.skills-secttion-theme {
+    margin-bottom: 90px;
+}
+.theme-skills section .content-Ontdek {
+    padding-left: 0;
+    padding-right: 0px;
+}
+.theme-skills .second-block-binnen {
+    width: 80%;
+    max-height: 480px;
+    background: #dfeff4;
+    border-radius: 20px;
+    margin: -50px auto 0;
+}
+.mt-90 {
+    margin-top: 90px;
+}
+.section-publiceer{
+    background: #E0EFF4;
+    padding: 60px;
+}
+.section-publiceer .title{
+    color: #023356;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 28px;
+}
+.section-publiceer .description{
+    color: #023356;
+    font-size: 20px;
+    text-align: center;
+    padding: 0 100px;
+    margin-bottom: 40px;
+}
+.wordDeBestText2 span{
+    color: #14A89D;
+}
+.block-logo-parteners2 {
+    text-align: center;
+    margin-bottom: 100px;
+}
+.element-shadown-partener .logo-element {
+    box-shadow: 0px 0px 4px #9c9fa2 !important;
+}
+.element-shadown-partener{
+    margin-bottom: 90px !important;
+}
+.btn-meld {
+    color: white !important;
+    background: #00a89d;
+    padding: 11px;
+    min-width: 167px;
+    border-radius: 10px;
+    margin: 0 auto 40px;
+    display: block;
+    width: fit-content;
+}
+.OverviewOrganisatie5 {
+    margin-top: 80px;
+}
+.creeren-theme .wordDeBestText2 {
+    max-width: 670px;
+    margin-bottom: 33px;
+}
+.btnCreeer{
+    background: #00A89D;
+    color: #fff!important;
+    width: fit-content;
+    margin: 0 auto 60px;
+    display: block;
+    padding: 12px 20px;
+    border-radius: 30px;
+}
+.contentPricing{
+    padding-top: 30px;
+    background: #F5FAFD;
+    padding-bottom: 50px;
+}
+.content-Ontwikkel-je{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #E0EFF4;
+    padding: 14px;
+    border-radius: 16px;
+    margin: 36px 0 80px;
+}
+.content-Ontwikkel-je img{
+    width: 27px;
+    height: 27px;
+    margin-right: 15px;
+}
+.content-Ontwikkel-je p{
+    margin-bottom: 0;
+    color: #023356;
+    font-size: 15px;
+    font-weight: 500;
+}
+.content-detail-pricing h2 {
+    text-align: center;
+    color: #023356;
+    font-size: 35px;
+    font-weight: 500;
+    margin-bottom: 26px;
+}
+.content-detail-pricing .description-ons {
+    text-align: center;
+    color: #023356;
+    font-size: 20px;
+    margin-bottom: 55px;
+    padding: 0px 109px;
+}
+.content-detail-pricing .content-first-detail{
+    background: #FFFFFF;
+    padding: 35px 50px;
+}
+.content-detail-pricing .content-first-detail .title{
+    color: #023356;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 30px;
+    margin-bottom: 22px;
+}
+.content-detail-pricing .content-first-detail .description{
+    color: #023356;
+    font-size: 16px;
+    margin-bottom: 22px;
+}
+.content-detail-pricing .content-first-detail .content-Medewerkers{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+    box-shadow: 2px 1px 5px #8f8f8f !important;
+    padding: 14px 15px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+.content-detail-pricing .content-first-detail .content-Medewerkers .number{
+    margin-bottom: 0;
+    color: #023356;
+    font-size: 22px;
+    font-weight: 500;
+    margin-right: 15px;
+}
+.content-detail-pricing .content-first-detail .content-Medewerkers .text{
+    margin-bottom: 0;
+    color: #023356;
+}
+.content-second-detail {
+    width: 100%;
+    background: #023356;
+    color: white;
+    padding: 35px 50px;
+    height: 100%;
+}
+.content-detail-pricing .content-second-detail .title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 30px;
+    margin-bottom: 12px;
+}
+.content-detail-pricing .content-second-detail .sub-block{
+    width: 45%;
+}
+.content-detail-pricing .content-second-detail .sub-block:last-child{
+    text-align: right;
+}
+.content-detail-pricing .col-lg-6 {
+    padding: 0 !important;
+}
+#text-maand {
+    width: fit-content;
+    margin-left: auto;
+    padding-right: 25px;
+}
+.content-detail-pricing ul {
+    border-top: 3px solid white;
+    padding-top: 19px;
+    margin-top: 7px;
+}
+.content-detail-pricing ul li{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.btn-do-jij{
+    background: #00A89D;
+    color: #FFFFFF !important;
+    margin: 25px auto 0;
+    display: block;
+    width: fit-content;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 23px;
+    border-radius: 30px;
+}
+.content-detail-pricing .row{
+    box-shadow: 2px 1px 5px #dbdbdb !important;
+    margin-bottom: 60px;
+}
+#OverOnsModal {
+    width: 55%;
+    margin: 0 auto;
+    z-index: 999;
+    height: auto;
+    left: 270px;
+    top: 60px;
+}
+.upskilling-block .blockdropdownnHeader ul:first-child {
+    width: 30%;
+}
+.upskilling-block .blockdropdownnHeader .secondUlModal img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.btn-meer-lezen{
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF !important;
+    margin: 60px auto 30px;
+    display: block;
+    width: fit-content;
+    font-weight: 500;
+    padding: 11px 30px;
+    border-radius: 20px;
+}
+.secondDescription{
+    margin-top: -10px;
+}
+.content-affliation .content-head .group-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.section-revolutionair{
+    text-align: center;
+    width: 65%;
+    margin: -45px auto 90px;
+}
+.section-revolutionair h2{
+    color: #023356;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+.section-revolutionair h2 span{
+    color: #14A89D;
+    margin-bottom: 30px;
+}
+.section-revolutionair .description{
+    color: #023356;
+    font-size: 17px;
+    margin-bottom: 18px;
+}
+.section-revolutionair .btn-wordt{
+    color: #00A89D !important;
+    padding: 10px 30px;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 25px;
+    margin-top: 20px;
+    border: 1px solid #00A89D;
+}
+.section-revolutionair .btn-wordt:hover{
+    background: #00A89D;
+    color: white !important;
+}
+.section-Hoe-affiliate {
+    background: #E0EFF4;
+    padding: 75px 0;
+    margin-bottom: 70px;
+}
+.section-Hoe-affiliate h2{
+    text-align: center;
+    color: #023356;
+    font-weight: 600;
+    font-size: 30px;
+    margin: 0 auto 20px;
+    width: 45%;
+    line-height: 39px;
+}
+.section-Hoe-affiliate .description-text{
+    color: #023356;
+    text-align: center;
+    font-size: 18px;
+    width: 55%;
+    margin: 0 auto 45px;
+}
+.section-Hoe-affiliate .description-2{
+    color: #023356;
+    font-size: 13px;
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+.content-affliation .content-detail-pricing {
+    margin-bottom: 100px;
+}
+.btn-doe-jij {
+    background: #00A89D;
+    color: white !important;
+    margin-top: 25px;
+    padding: 10px 25px;
+    min-width: 140px;
+    border-radius: 8px;
+    margin-bottom: 35px;
+    font-weight: 500;
+}
+.section-ontedek h2{
+    font-size: 36px;
+    color: #023356;
+    font-weight: 600;
+    width: 50%;
+    margin: 0 auto 29px;
+    line-height: 45px;
+}
+.section-ontedek h2 span{
+    color: #14A89D;
+}
+.section-ontedek .description{
+    color: #023356;
+    font-size: 20px;
+    width: 70%;
+    margin: 0 auto 20px;
+}
+.section-ontedek {
+    padding: 25px 0 50px;
+}
+.block-app-mobile {
+    width: 346px;
+    height: 515px;
+    margin: -35px auto -5px;
+}
+.block-app-mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.section-app-store a{
+    width: 165px;
+    margin-bottom: 50px;
+}
+.section-app-store a:last-child{
+    padding: 0 !important;
+}
+.section-app-store a img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.section-card-voor {
+    margin-bottom: 110px;
+}
+
+.block-dienstverlening{
+    background: #E0EFF4;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 35px 45px;
+    margin-top: 75px;
+    border-radius: 20px;
+}
+.block-dienstverlening .title{
+    color: #043356;
+    font-size: 22px;
+    line-height: 25px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+.block-dienstverlening .description{
+    color: #043356;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+.block-dienstverlening .first-block{
+    width: 80%;
+    padding-right: 30px;
+}
+.block-dienstverlening .second-block{
+    width: 20%;
+    text-align: right;
+}
+.lees-mer-img {
+    height: 100px;
+    width: 100px;
+    margin-left: auto;
+    margin-top: -12px;
+}
+.btn-Lees-meer {
+    width: 90%;
+    margin-left: auto;
+    background: #023356;
+    color: white !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-top: -6px;
+}
+
+.BaangerichteBlock .description{
+    text-align: center;
+    color: #023356;
+    font-size: 19px;
+    margin: 15px auto 30px;
+}
+.BaangerichteBlock a{
+    text-align: center;
+    background: #023356;
+    font-size: 16px;
+    color: #FFFFFF !important;
+    font-weight: 500;
+    border-radius: 8px;
+}
+#v-pills-tabContent{
+    display: block !important;
+}
+.content-faq .nav-link {
+    background: none !important;
+    color: #023356 !important;
+    border: none !important;
+}
+.content-faq .nav-pills .nav-link.active {
+    background: none !important;
+    color: #00A89D !important;
+    font-weight: 600;
+    font-size: 18px !important;
+    padding-bottom: 5px;
+}
+.content-faq .accordion-header button {
+    border: none;
+    background: none;
+    color: #023356;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.content-faq .accordion-body {
+    color: #023356;
+    font-size: 14px;
+    padding-bottom: 25px;
+}
+.content-faq .accordion-item {
+    border-bottom: 1.5px solid #707070;
+    margin-bottom: 22px;
+}
+.content-faq .accordion{
+    margin-left: 50px;
+}
+.content-faq .nav{
+    min-width: 16%;
+}
+.section-Onze-aanpak h2, .section-zoek h2{
+    font-size: 33px;
+    color: #023356;
+    font-weight: 600;
+    margin-bottom: 27px;
+}
+.section-Onze-aanpak .description {
+    color: #023356;
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+.btn-Lees-meer-aanpak{
+    border: 1px solid #00A89D;
+    min-width: 140px;
+    color: #00A89D !important;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 25px;
+}
+.btn-Lees-meer-aanpak:hover{
+    background: #00A89D;
+    color: white !important;
+}
+.section-Onze-aanpak{
+    margin-bottom: 80px;
+}
+.card-theme-bleu{
+    background: #E0EFF4;
+    padding: 25px 20px;
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    height: 100%;
+}
+.card-theme-bleu .head-img{
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 30px;
+    display: block;
+    background: #FFFFFF;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.card-theme-bleu .head-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.card-theme-bleu .title{
+    color: #023356;
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+.card-theme-bleu .description{
+    color: #023356;
+    font-size: 16px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+.section-three-card{
+    margin-bottom: 100px;
+}
+.section-zoek .owl-item .new-card-course {
+    display: block;
+    max-height: 380px;
+    min-height: auto;
+    border: 1px solid #e6e3e3 !important;
+    border-radius: 13px;
+}
+.section-zoek {
+    margin-bottom: 60px;
+}
+.content-hr .uiteindelijke-section {
+    text-align: center;
+    margin-bottom: 45px;
+}
+.content-template-form .description{
+    width: 50%;
+    margin: 15px auto 50px;
+}
+.content-template-form  .boxOne3-1 {
+    height: fit-content !important;
+    padding-top: 70px;
+    padding-bottom: 370px;
+    background: #e0eef3;
+}
+.content-template-form .content-community-overview h1 {
+    margin-top: 60px;
+}
+
+.content-template-form .form-block{
+    margin-top: -400px;
+}
+.content-template-form .form-block form{
+    width: 35%;
+    margin: 0 auto 195px;
+    background: #023356;
+    padding: 25px;
+    border-radius: 25px;
+    display: grid;
+}
+.content-template-form .form-block p {
+    color: #E0EFF4;
+    font-weight: 600;
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+.form-block form input, .form-block textarea {
+    color: #E0EFF4;
+    padding: 9px 15px;
+    margin-bottom: 17px;
+    border-radius: 8px;
+}
+.btn-ons {
+    background: #00A89D;
+    color: white;
+    margin-top: 18px;
+}
+.course-content-video-intro .blockImgCour {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0%;
+    left: 0%;
+    position: absolute;
+}
+.body-card-community .form {
+    position: relative;
+    margin-bottom: 0;
+}
+.customize-support .content-detail-assessment{
+    padding-top: 60px;
+}
+.content-detail-assessment .customTabs {
+    margin-top: 45px;
+}
+.content-detail-assessment .blockOneOver .title-assessment-test {
+    margin-bottom: 30px;
+}
+.tab-block-functiegerichte .nav-item a{
+    font-size: 14px !important;
+    background: none !important;
+    padding: 0 8px 10px !important;
+    border-radius: 0 !important;
+}
+.tab-block-functiegerichte .nav-item .current {
+    border-bottom: 3px solid #00A89D !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    background: none !important;
+}
+.tab-block-functiegerichte .nav-tabs {
+    margin: 45px auto 40px !important;
+}
+.block-review-course .block-rating-note .element-block-rating {
+    margin-bottom: 20px;
+    height: 18px;
+}
+.course-playlist-video{
+    margin-bottom: 40px;
+}
+
+.section-dynamic-reviews .rating:not(:checked) > label:hover, .section-dynamic-reviews .rating:not(:checked) > label:hover ~ label {
+    color: #90A0A3 !important;
+}
+.section-dynamic-reviews .rating > input:checked ~ label:hover{
+    color: #F79426 !important;
 }
 
 
@@ -22977,7 +23866,9 @@ background: #FFFFFF !important;
     }
 
     .talent-binnen-block {
-        margin: 100px 15px 90px;
+        margin: 90px 15px 90px;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
     }
     .first-block-binnen {
         width: 100%;
@@ -23013,8 +23904,18 @@ background: #FFFFFF !important;
         width: 100%;
         margin: 0 auto;
         flex-wrap: nowrap;
-        overflow: scroll;
+        overflow: scroll !important;
         white-space: nowrap;
+        border: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
+    .tab-block-functiegerichte .nav li {
+        min-width: 25% !important;
+        padding: 0 !important;
+    }
+    .tab-block-functiegerichte .tab-content {
+        padding: 0;
     }
     .content-inloggen {
         padding-bottom: 0 !important;
@@ -23719,9 +24620,289 @@ background: #FFFFFF !important;
     .main-accordion .list-heading h2 {
         font-size: 19px;
     }
+    .content-individu .content-head .group-content {
+        flex-wrap: wrap;
+        padding: 0 15px;
+    }
+    .content-individu .content-head .group-content .content-text {
+        width: 100%;
+    }
+    .content-individu .content-head .group-content .content-img {
+        width: 60%;
+        margin: 20px auto 0;
+        max-height: 311px;
+    }
+    .group-content .btn-doawnload-app, .group-content .btn-Het-is {
+        padding: 13px 15px;
+        margin-right: 15px;
+        font-size: 14px;
+    }
+    .content-individu .content-head {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .group-content .content-text .title-content-individu {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    .group-content .description-content-individu {
+        font-size: 16px;
+        line-height: 27px;
+        margin-bottom: 31px;
+    }
+    .content-individu section {
+        padding: 0 15px;
+    }
+    .content-individu .img-for-individual {
+        margin-bottom: 35px;
+    }
+    .content-individu section .content-Ontdek {
+        padding-left: 0px;
+    }
+    .content-individu .content-Ontdek .title-section {
+        font-size: 23px;
+        line-height: 35px;
+        padding-right: 0px;
+        margin-bottom: 25px;
+    }
+    .img-for-individual-2 {
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+    .btn-Bekijk {
+        margin: 50px auto 0px;
+        width: fit-content;
+        display: block;
+    }
+    .block-sme .zzpersSection {
+        padding-bottom: 20px;
+    }
+    .corporate-theme .talent-binnen-block {
+        margin: 20px 15px 120px;
+    }
+    .theme-new-element .img-for-individual {
+        width: 100%;
+        height: auto;
+        margin: 0 auto 33px;
+        display: block;
+        object-fit: contain;
+    }
+    .theme-new-element section .content-Ontdek {
+        padding-right: 0;
+    }
+    .theme-new-element .content-Ontdek .title-section {
+        color: #023356;
+        font-size: 27px;
+        line-height: 35px;
+        padding-right: 0px;
+        font-weight: 500;
+        margin-bottom: 23px;
+    }
+    .corporate-theme .img-for-individual-2 {
+        width: 90%;
+        margin: 0 auto 40px;
+        display: block;
+    }
+    .corporate-theme .head-section-theme {
+        padding: 45px;
+        margin-bottom: 60px;
+    }
+    .skills-secttion-theme {
+        margin-bottom: 75px;
+        padding: 0 15px;
+    }
+    .theme-new-element .block-img-skills {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .theme-skills .content-Ontdek{
+        padding: 0 15px !important;
+    }
+    .second-block-binnen {
+        width: 100%;
+        height: 333px;
+        margin: 0 auto 55px;
+        max-height: unset;
+    }
+    .mt-90 {
+        margin-top: 40px;
+    }
+    .section-publiceer {
+        padding: 40px 15px;
+    }
+    .section-publiceer .description {
+        font-size: 17px;
+        padding: 0;
+    }
+    .section-publiceer .title {
+        font-size: 20px;
+    }
+    .section-revolutionnaire .img-for-individual-2 {
+        width: 100%;
+        height: auto;
+        margin: 0 auto 42px;
+        display: block;
+    }
+    .theme-skills .second-block-binnen {
+        width: 100%;
+        margin: 0px auto 0;
+    }
+    .Ontdek-section .section-revolutionnaire {
+        margin: 75px 0 30px;
+    }
+    .theme-new-element .col-10 {
+        padding: 0 !important;
+    }
+    .content-detail-pricing .description-ons {
+        font-size: 18px;
+        margin-bottom: 45px;
+        padding: 0px;
+    }
+    .content-detail-pricing .row {
+        padding: 0 15px;
+    }
+    .content-detail-pricing .content-first-detail {
+        padding: 30px 25px;
+        height: fit-content;
+        margin-bottom: 33px;
+    }
+    .content-second-detail {
+        padding: 30px 25px;
+        height: fit-content;
+    }
+    .content-detail-pricing .content-first-detail .title {
+        color: #023356;
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 20px;
+    }
+    .content-detail-pricing .content-second-detail .sub-block {
+        width: 50%;
+    }
+    .content-detail-pricing .content-second-detail .title {
+        font-size: 21px;
+    }
+    .section-revolutionair .description {
+        color: #023356;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
 
-
-
+    .section-Hoe-affiliate h2 {
+        text-align: center;
+        font-size: 23px;
+        width: 100%;
+        line-height: 34px;
+        margin-bottom: 20px;
+        padding-top: 43px;
+    }
+    .section-Hoe-affiliate .description-text {
+        color: #023356;
+        text-align: center;
+        font-size: 18px;
+        width: 100%;
+        margin: 0 auto 45px;
+    }
+    .section-ontedek {
+        padding: 0px 15px 30px;
+    }
+    .section-ontedek h2 {
+        font-size: 28px;
+        margin: 0 auto 20px;
+        line-height: 37px;
+        width: 100%;
+    }
+    .section-ontedek .description {
+        color: #023356;
+        font-size: 16px;
+        width: 100%;
+        margin: 0 auto 20px;
+    }
+    .block-app-mobile {
+        width: 100%;
+        margin: -35px auto -5px;
+    }
+    .block-dienstverlening {
+        flex-wrap: wrap;
+        padding: 35px 30px;
+    }
+    .block-dienstverlening .first-block {
+        width: 100%;
+        padding-right: 0px;
+    }
+    .block-dienstverlening .second-block {
+        width: 60%;
+        text-align: right;
+        margin-left: auto;
+    }
+    .section-card-voor {
+        margin-bottom: 65px;
+    }
+    .section-Onze-aanpak {
+        margin-bottom: 80px;
+        padding: 0 15px;
+    }
+    .section-three-card {
+        margin-bottom: 50px;
+        padding: 0 15px;
+    }
+    .card-theme-bleu {
+        height: fit-content;
+        margin-bottom: 45px;
+    }
+    .section-zoek {
+        padding-left: 15px;
+    }
+    .section-Onze-aanpak h2, .section-zoek h2 {
+        font-size: 26px;
+        margin-bottom: 27px;
+    }
+    .content-community-overview .boxOne3-1 {
+        height: fit-content !important;
+        padding-bottom: 28px;
+        padding-top: 10px;
+    }
+    .content-template-form .form-block form {
+        width: 95%;
+        margin: 0 auto 50px;
+        display: grid;
+    }
+    .bleu-block-contact-calendy .title-Direct-een {
+        width: 100%;
+        padding: 0 15px;
+    }
+    .customize-support .content-artikel {
+        padding-top: 40px;
+    }
+    .theme-skills .second-block-binnen {
+        width: 100%;
+        margin: -50px auto 30px;
+    }
+    .content-baaangerichte .swipeContaine2{
+        margin-left: 13px !important;
+    }
+    .tabUserOverview {
+        padding-left: 15px !important;
+    }
+    .block-sme .content-text-sme {
+        padding-top: 0px;
+    }
+    .group-btn-corporate{
+        display: block;
+    }
+    .group-btn-corporate .btn-Functionaliteiten{
+        margin-top: 10px;
+    }
+    .theme-skills .col-lg-6 .content-Ontdek {
+        padding: 0 !important;
+    }
+    .theme-skills .section-revolutionnaire .second-block-binnen {
+        margin: 0px auto 30px !important;
+    }
+    .section-app-store a {
+        height: 61px !important;
+    }
 
 
 
@@ -23831,7 +25012,38 @@ background: #FFFFFF !important;
         margin-bottom: 20px;
         padding-left: 4px;
     }
-
+    .block-sme .content-img-sme {
+        width: 100%;
+        height: 230px;
+        margin-top: 10px;
+        margin-bottom: 25px;
+    }
+    .Ontdek-section .theme-new-element .img-for-individual {
+        width: 100%;
+        height: auto;
+        padding: 0 15px;
+        margin-bottom: 40px;
+    }
+    .Ontdek-section {
+        padding: 0 15px;
+    }
+    .group-content .content-text .group-btn {
+        display: flex;
+    }
+    .section-revolutionair {
+        width: 100%;
+        margin: -30px auto 90px;
+    }
+    .section-revolutionair h2 {
+        color: #023356;
+        font-size: 27px;
+        margin-bottom: 24px;
+        line-height: 30px;
+    }
+    .card-theme-bleu {
+        height: fit-content;
+        margin-bottom: 33px;
+    }
 
 
 }
@@ -24466,6 +25678,37 @@ background: #FFFFFF !important;
         width: 100%;
         margin-top: 23px;
     }
+    .group-btn {
+        display: flex;
+    }
+    .img-for-individual-2 {
+        width: 67%;
+        height: auto;
+        margin: 0 auto 55px;
+        display: block;
+    }
+    .skills-for-life .second-block-binnen {
+        width: 80%;
+        max-height: 480px;
+        margin: -50px auto 33px;
+        background: #dfeff4;
+        border-radius: 20px;
+    }
+    .section-publiceer .description {
+        padding: 0;
+        margin-bottom: 40px;
+    }
+    .section-ontedek h2 {
+        width: 65%;
+    }
+    .section-ontedek .description {
+        width: 100%;
+    }
+    .logo-users {
+        margin-bottom: 60px;
+    }
+
+
 
 }
 

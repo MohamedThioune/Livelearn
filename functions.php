@@ -1633,9 +1633,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'filter_course',
   ));
 
-
-  
-
   register_rest_route('custom/v1', '/sort/courses', array(
     'methods' => 'POST',
     'callback' => 'custom_filter_course',
@@ -1701,6 +1698,11 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/user/view/save', array(
     'methods' => 'POST',
     'callback' => 'save_user_views',
+  ));
+
+  register_rest_route ('custom/v1', '/databank', array(
+     'methods' => 'GET',
+     'callback' => 'Artikel_From_Company'
   ));
   
 });

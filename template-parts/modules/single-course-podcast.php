@@ -2,8 +2,7 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php extract($_GET); ?>
-
-<?php 
+<?php
     if(!isset($lesson))
         $lesson = 0;
 ?>
@@ -217,7 +216,7 @@
                                 ?>
                         </div>
                     </div>
-                    <?php 
+                    <?php
                         if(!empty($podcasts)){
                         echo '<div class="codeless-player-audio  codeless-element">';
 
@@ -230,16 +229,16 @@
                                 <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
                                 Your browser does not support the audio element.
                             </audio>';
-                
+
                         echo '</div>';
                         }
-                        
+
                     ?>
                 </div>
                 </div>
             </div>
-        <?php 
-        } 
+        <?php
+        }
         ?>
         <div class="container-fluid">
             <div class="overElement product-podcat1">
@@ -264,7 +263,7 @@
                     <p class="e-learningTitle"><?= $post->post_title ?></p>
                     <!-- Image -->
                     <div class="img-fluid-course img-podacast imgPadcastCourse">
-                        <?php echo "<img src='" . $thumbnail . "' alt='preview image'>"; ?>                
+                        <?php echo "<img src='" . $thumbnail . "' alt='preview image'>"; ?>
                     </div>
                     <div class="sound-wave">
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" preserveAspectRatio="none" viewBox="0 0 1440 560">
@@ -395,8 +394,11 @@
                                             <label for="">Feedback</label>
                                             <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                         </div>
-                                        <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
-                                    </div>
+                                        <?php if ($user_id == 0) : ?>
+                                            <button type="button" class='btn btn-sendRating' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Send</button>
+                                        <?php else :?>
+                                            <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                        <?php endif; ?>
                                     <?php
                                     }
                                     else
@@ -764,13 +766,13 @@
                 }
             });
         }
-    </script>   
+    </script>
 
     <script>
         $(document).ready(function() {
             var audio = document.querySelector('audio');
 
-            audio.onplay = function() { 
+            audio.onplay = function() {
                 audio.play(0);
                 $(".img-podacast").addClass("hide");
                 $(".sound-wave").show();
@@ -780,7 +782,7 @@
                 $(".img-podacast").removeClass("hide");
                 $(".sound-wave").hide();
             });
-                
+
 
         } )
     </script>

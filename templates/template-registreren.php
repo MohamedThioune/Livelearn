@@ -54,7 +54,6 @@
 
                     wp_mail($email, $subject, $body, $headers, array( '' )) ; 
                     header("location:registreren?message=".$success."&success");
-         
                 }
 
               
@@ -98,14 +97,13 @@
                     </div>
                     <div class="col-lg-6  col-md-7">
                         <div class="boxCardForm">
-                        <!-- <form action="/registreren" method="POST">
-                                <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
-                                <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
-                                 -->
-                                <center><p class="TitleForm">Registreren </p></center>
-
-                                <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
+                            <!-- 
+                            <form action="/registreren" method="POST">
+                            <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
+                            <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
                             </form>
+                            -->
+                            <center><p class="TitleForm">Registreren </p></center>
                         </div>
                     </div>
                 </div>

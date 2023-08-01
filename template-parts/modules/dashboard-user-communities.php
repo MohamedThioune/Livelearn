@@ -163,16 +163,7 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
-                            
-                            $access_community = "";
-                            if($bool){
-                                array_push($your_communities, $community);
-                                $access_community = '<a href="/dashboard/user/community-detail/?mu=' . $community->ID . '" class="name-community">' . $community->post_title . '</a>';
-                            }
-                            else{
-                                array_push($other_communities, $community);
-                                $access_community = '<a href="#" class="name-community" data-toggle="tooltip" data-placement="top" title="Je moet eerst tot deze gemeenschap behoren">' . $community->post_title . '</a>';
-                            }
+
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -203,17 +194,11 @@ $other_communities = array();
                                         </div>
                                     </div>
                                     <?php
-                                    if(!$bool)
-                                        echo "<form action='' method='POST'>
-                                                    <input type='hidden' name='community_id' value='" . $community->ID . "' >
-                                                    <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
-                                              </form>";
-                                    else
-                                        echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
-                                        echo '<form action=""  method="POST">
-                                                <input type="hidden" name="community_id" value="' . $community->ID . '" >
-                                                <button type="submit" name="unfollow_community" class="btn btn-danger">Unsubscribe</button>
-                                              </form>';
+                                    echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
+                                    echo '<form action=""  method="POST">
+                                            <input type="hidden" name="community_id" value="' . $community->ID . '" >
+                                            <button type="submit" name="unfollow_community" class="btn btn-danger">Unsubscribe</button>
+                                            </form>';
                                     ?>
                                 </div>
                             </div>
@@ -284,7 +269,7 @@ $other_communities = array();
                                         echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
-                                              </form>";
+w                                              </form>";
                                     ?>
                                 </div>
                             </div>
