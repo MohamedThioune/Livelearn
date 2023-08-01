@@ -18,10 +18,6 @@ class Expert
     $this->profilImg =$profilImg;
     $this->company = get_field('company', 'user_' . (int)$expert->ID)[0] ?? null;
     $this->role = get_field('role', 'user_' . (int)$expert->ID) ?? '';
-    // if(!empty($company) ){
-    //     $company = $company[0];
-    //     $company_connected = $company->post_title;
-    // } 
     
   }
 
@@ -99,7 +95,7 @@ function allCourses ($data)
     
     $current_user_id = $GLOBALS['user_id'];
     $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-    $course_type = $_GET['course_type'];
+    $course_type = ucfirst(strtolower($_GET['course_type']));
     $outcome_courses = array();
     $tags = array();
     $experts = array();
@@ -112,8 +108,9 @@ function allCourses ($data)
       'meta_key'         => 'course_type',
       'meta_value' => $course_type);
     $courses = get_posts($args);
+    //print_r($courses);
     if (!$courses)
-      return ['error' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+      return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
       
     if (!isset ($data['page'])) 
       $page = 1;  
@@ -128,7 +125,7 @@ function allCourses ($data)
   $number_of_page = ceil($number_of_post / $results_per_page);
 
   if($number_of_page < $data['page'])
-    return ['error' => "Page doesn't exist ! ","codeStatus" => 400];  
+    return ["courses" => [],'message' => "Page doesn't exist ! ","codeStatus" => 400];  
   
   for($i=$start; $i < $end ;  $i++) 
   {
@@ -139,7 +136,7 @@ function allCourses ($data)
       if ($courses[$i]->visibility != []) 
         if ($author_company != $current_user_company)
           continue;
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $courses[$i]->experts = array();
           $experts = get_field('experts',$courses[$i]->ID);
           if(!empty($experts))
@@ -181,10 +178,132 @@ function allCourses ($data)
           array_push($outcome_courses, $new_course);
     }
    return ['courses' => $outcome_courses, "codeStatus" => 200];
-  }
+}
 
-function allAuthors()
+
+function get_course_image($data)
 {
+  if (!isset($data['course_id']) || empty($data['course_id']))
+    return ['error' => 'You have to fill the course id'];
+  $course_id = $data['course_id'];
+  $course = get_post($course_id) ?? false;
+    if (!$course)
+      return  ['error' => 'This course does not exist!'];
+  //Image - article
+              $image = get_field('preview', $course->ID)['url'];
+              if(!$image)
+              {
+                  $image = get_the_post_thumbnail_url($course->ID);
+                  if(!$image)
+                      $image = get_field('url_image_xml', $course->ID);
+                          if(!$image)
+                          {
+                              $course->courseType = get_field('course_type',$course->ID);
+                              $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+                          }
+            }
+          return ['pathImage' => $image ] ;
+            
+}
+
+    function allArticles ($data)
+    {
+        
+        $current_user_id = $GLOBALS['user_id'];
+        $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+        $course_type = ucfirst(strtolower($_GET['course_type']));
+        $outcome_courses = array();
+        $tags = array();
+        $experts = array();
+        $args = array(
+          'post_type' => array('post'),
+          'post_status' => 'publish',
+          'posts_per_page' => -1,
+          'ordevalue'       => $course_type,
+          'order' => 'DESC' ,
+          'meta_key'         => 'course_type',
+          'meta_value' => $course_type);
+        $courses = get_posts($args);
+        //print_r(count($courses));
+        if (!$courses)
+          return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+          
+        if (!isset ($data['page']))
+          $page = 1;
+        else
+          $page = $data['page'];
+        if(!empty($courses))
+          $number_of_post = count($courses);
+      $results_per_page = 20;
+      $start = ($page-1) * $results_per_page ;
+      $end = ( ($page) * $results_per_page ) > $number_of_post ? $number_of_post : ($page) * $results_per_page   ;
+
+      $number_of_page = ceil($number_of_post / $results_per_page);
+
+      if($number_of_page < $data['page'])
+        return ["courses" => [],'message' => "Page doesn't exist ! ","codeStatus" => 400];
+      
+      for($i=$start; $i < $end ;  $i++)
+      {
+          //$courses[$i]->links = $courses[$i]-> guid ?? null;
+          $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
+          $author = get_user_by( 'ID', $courses[$i] -> post_author  );
+          $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+          if ($courses[$i]->visibility != [])
+            if ($author_company != $current_user_company)
+              continue;
+              $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              $courses[$i]->experts = array();
+              $experts = get_field('experts',$courses[$i]->ID);
+              if(!empty($experts))
+                foreach ($experts as $key => $expert) {
+                  $expert = get_user_by( 'ID', $expert );
+                  $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                  array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+                  }
+            
+              $courses[$i]-> author = new Expert ($author , $author_img);
+              $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+              $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+              $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+              //Image - article
+              $image = get_field('preview', $courses[$i]->ID)['url'];
+              if(!$image){
+                  $image = get_the_post_thumbnail_url($courses[$i]->ID);
+                  if(!$image)
+                      $image = get_field('url_image_xml', $courses[$i]->ID);
+                          if(!$image)
+                              $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+              }
+              $courses[$i]->pathImage = $image;
+              $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+              $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
+              $courses[$i]->podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
+              $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
+              $tags = get_field('categories',$courses[$i]->ID) ?? [];
+              $courses[$i]->tags= array();
+              if($tags)
+                if (!empty($tags))
+                  foreach ($tags as $key => $category)
+                    if(isset($category['value'])){
+                      $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                      array_push($courses[$i]->tags,$tag);
+                    }
+                  
+              $new_course = new Course($courses[$i]);
+              array_push($outcome_courses, $new_course);
+        }
+       return ['courses' => $outcome_courses, "codeStatus" => 200];
+      }
+
+    
+    
+
+
+
+      function allAuthors()
+
+      {
   $authors_post = get_users(
     array(
       'role__in' => ['author'],
@@ -290,7 +409,7 @@ function get_expert_courses ($data)
       $course_experts = get_field('experts',$course->ID) ?? [];
       if (in_array($expert_id,$course_experts) || $expert_id == $course->post_author){
         $author = get_user_by( 'ID', $course -> post_author  );
-        $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $course-> author = new Expert ($author , $author_img);
         $course->longDescription = get_field('long_description',$course->ID);
         $course->shortDescription = get_field('short_description',$course->ID);
@@ -386,7 +505,7 @@ function get_saved_course()
           }
         }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -456,7 +575,7 @@ function get_course_by_id($data)
     $course = get_post($course_id) ?? false;
     if ($course)
     {
-      $course->experts = array();
+          $course->experts = array();
           $experts = get_field('experts',$course->ID);
           if(!empty($experts))
             foreach ($experts as $key => $expert) 
@@ -465,8 +584,8 @@ function get_course_by_id($data)
               $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
-          $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author = get_user_by( 'ID', $course -> post_author);
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -530,7 +649,7 @@ function get_liked_courses()
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -629,7 +748,7 @@ function get_courses_of_subtopics($data)
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -676,7 +795,7 @@ function get_courses_of_subtopics($data)
               array_push($course->experts, new Expert ($expert,$experts_img));
             }
           $author = get_user_by( 'ID', $course -> post_author  );
-          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
@@ -747,7 +866,7 @@ function filter_course(WP_REST_Request $request)
         array_push($course->experts, new Expert($expert, $experts_img));
       }
     $author = get_user_by('ID', $course->post_author);
-    $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $author_img = get_field('profile_img', 'user_' . $author->ID) !=false ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $course->author = new Expert($author, $author_img);
     $course->longDescription = get_field('long_description', $course->ID);
     $course->shortDescription = get_field('short_description', $course->ID);
@@ -837,6 +956,39 @@ function filter_course(WP_REST_Request $request)
         }
     }
     return $filtered_courses;
+  }
+
+  function reserve_course(WP_REST_Request $request)
+  {
+    /** 
+     * {
+     *    "user_id":3,
+     *    "date_reservation":"2023-07-31",
+     *    "product_id" $course_id,
+     * }
+    */
+
+    if (!isset($request['user_id']) || empty($request['user_id']))
+      return ['error' => "You have to fill in the id of current user !"];
+    $user_id = $request['user_id'];
+    
+    if (!isset($request['date_reservation']) || empty($request['date_reservation']))
+      return ['error' => "You have to fill in the reservation date !"];
+    $date_reservation = $request['date_reservation'];
+    
+    if (!isset($request['product_id']) || empty($request['product_id']))
+      return ['error' => "You have to fill in the id of the product !"];
+    $product_id = $request['product_id'];
+
+    global $wpdb;
+    $table_reserveren = $wpdb->prefix . 'reserveren';
+    $data = [
+        'product_id'=> $product_id,
+        'user_id'=> $user_id,
+        'date_reserveren'=> $date_reservation
+    ];
+    $wpdb->insert($table_reserveren, $data);
+    return $wpdb->insert_id;
   }
 
 
@@ -1174,7 +1326,7 @@ function getCommunities()
       foreach ($courses_community as $key => $course)
       {
             $author = get_user_by( 'ID', $course -> post_author);
-            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $course-> author = new Expert ($author , $author_img);
             $course->longDescription = get_field('long_description',$course->ID);
             $course->shortDescription = get_field('short_description',$course->ID);
@@ -1263,7 +1415,7 @@ function getCommunityById($data)
       foreach ($courses_community as $key => $course)
       {
             $author = get_user_by( 'ID', $course -> post_author);
-            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $course-> author = new Expert ($author , $author_img);
             $course->longDescription = get_field('long_description',$course->ID);
             $course->shortDescription = get_field('short_description',$course->ID);
@@ -1746,11 +1898,12 @@ function replyQuestion(WP_REST_Request $request)
     $wpdb->insert($table_tracker_views, $data);
     return $wpdb->insert_id;
   }
+
+
   
 /** Views Endpoints */
 
 /** Artikels Endpoints */
-
 function strip_html_tags($text) {
   $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
   $text = preg_replace("/\n{1,}/", "\n", $text); 
@@ -1778,119 +1931,128 @@ function strip_html_tags($text) {
 //   return $randstring;
 // }
 
+// require 'vendor/autoload.php';
+
+//   use Google\Cloud\Scheduler\V1\HttpTarget;
+//   use Google\Cloud\Scheduler\V1\CloudSchedulerClient;
+//   use Google\Cloud\Scheduler\V1\Job;
+//   use Google\Cloud\Scheduler\V1\Job\State;
+
+
 function Artikel_From_Company(){
   global $wpdb;
   $company = null;
   $table = $wpdb->prefix.'databank';
   // $data = array();
 
+  
   $list_company=[
     'WorkPlace Academy'=>'https://workplaceacademy.nl/',
     'Ynno'=>'https://www.ynno.com/',
     'DeZZP'=>'https://www.dezzp.nl/',
-    'Aestate'=>'https://www.aestate.nl/',
-    'Alba Concepts'=>'https://albaconcepts.nl/',
-    'AM'=>'https://www.am.nl/',
-    'Limoonworks'=>'https://limoonworks.nl/',
-    'DWA'=>'https://www.dwa.nl/',
-    'Van Spaendonck'=>'https://www.vanspaendonck.nl/',
-    'PTG-advies'=>'https://ptg-advies.nl/',
-    'Rever'=>'https://rever.nl/',
-    'Reworc'=>'https://www.reworc.com/',
-    'Sweco'=>'https://www.sweco.nl/',
-    'Co-pilot'=>'https://www.copilot.nl/',
-    'Agile Scrum Group'=>'https://agilescrumgroup.nl/',
-    'Horizon'=>'https://horizontraining.nl/',
-    'Kenneth Smit'=>'https://www.kennethsmit.com/',
-    // 'Autoblog'=>'https://www.autoblog.nl/',
-    'Crypto university'=>'https://www.cryptouniversity.nl/',
-    'WineLife'=>'https://www.winelife.nl/',
-    'Perswijn'=>'https://perswijn.nl/',
-    'Koken met Kennis'=>'https://www.kokenmetkennis.nl/',
-    'Minkowski'=>'https://minkowski.org/',
-    'KIT publishers'=>'https://kitpublishers.nl/',
-    'BeByBeta'=>'https://www.betastoelen.nl/',
-    'Zooi'=>'https://zooi.nl/',
-    'Growth Factory'=>'https://www.growthfactory.nl/',
-    'Influid'=>'https://influid.nl/',
-    'MediaTest'=>'https://mediatest.nl/',
-    'MeMo2'=>'https://memo2.nl/',
-    'Impact Investor'=>'https://impact-investor.com/',
-    'Equalture'=>'https://www.equalture.com/',
-    'Zorgmasters'=>'https://zorgmasters.nl/',
-    'AdSysco'=>'https://adsysco.nl/',
-    'Transport en Logistiek Nederland'=>'https://www.tln.nl/',
-    'Financieel Fit'=>'https://www.financieelfit.nl/',
-    'Business Insider'=>'https://www.businessinsider.nl/',
-    'Frankwatching'=>'https://www.frankwatching.com/',
-    'MarTech'=>'https://martech.org/',
-    'Search Engine Journal'=>'https://www.searchenginejournal.com/',
-    'Search Engine Land'=>'https://searchengineland.com/',
-    'TechCrunch'=>'https://techcrunch.com/',
-    'The Bruno Effect'=>'https://magazine.thebrunoeffect.com/',
-    'Crypto Insiders'=>'https://www.crypto-insiders.nl/',
-    'HappyHealth'=> 'https://happyhealthy.nl/',
-    'Focus'=>'https://focusmagazine.nl/',
-    'Chip Foto Magazine'=> 'https://www.chipfotomagazine.nl/',
-    'Vogue'=> 'https://www.vogue.nl/',
-    'TrendyStyle'=>'https://www.trendystyle.net/',
-    'WWD'=> 'https://wwd.com/',
-    'Purse Blog'=> 'https://www.purseblog.com/',
-    'Coursera'=> 'https://blog.coursera.org/',
-    'Udemy'=> 'https://blog.udemy.com/',
-    'CheckPoint'=> 'https://blog.checkpoint.com/',
-    'De laatste meter'=> 'https://www.delaatstemeter.nl/',
-    'ManagementSite'=> 'https://www.managementpro.nl/',
-    '1 Minute Manager'=> 'https://www.1minutemanager.nl/',
-    'De Strafschop'=> 'https://www.strafschop.nl/',
-    'JongeBazen'=> 'https://www.jongebazen.nl/',
-    'Expeditie Duurzaam'=> 'https://www.expeditieduurzaam.nl/',
-    'Pure Luxe'=>'https://pureluxe.nl/',
-    'WatchTime'=>'https://www.watchtime.com/',
-    'Monochrome'=>'https://monochrome-watches.com/',
-    'Literair Nederland'=>'https://www.literairnederland.nl/',
-    'Tzum'=>'https://www.tzum.info/',
-    'Developer'=>'https://www.developer-tech.com/',
-    'SD Times'=>'https://sdtimes.com/',
-    'GoDaddy'=>'https://www.godaddy.com/garage/',
-    'Bouw Wereld'=>'https://www.bouwwereld.nl/',
-    'Vastgoed actueel'=>'https://vastgoedactueel.nl/',
-    'The Real Deal'=>'https://therealdeal.com/',
-    'HousingWire'=>'https://www.housingwire.com/',
-    'AfterSales'=>'https://aftersalesmagazine.nl/',
-    'CRS Consulting'=>'https://crsconsultants.nl/',
-    'Commercial Construction & Renovation'=>'https://www.ccr-mag.com/',
-    'Training Magazine'=>'https://www.trainingmag.com/',
-    'MedCity News'=>'https://www.medcitynews.com/',
-    'Cocktail Enthusiast'=>'https://www.cocktailenthusiast.com/',
-    'Mr. Online'=>'https://www.mronline.nl/',
-    'Cash'=>'https://www.cash.nl/',
-    'Kookles thuis'=>'https://www.kooklesthuis.com/',
-    'Mediabistro'=>'https://www.mediabistro.com/',
-    'ProBlogger'=>'https://problogger.com/',
-    'Media Shift'=>'https://www.mediashift.org/',
-    'Warehouse Totaal'=>'https://www.warehousetotaal.nl/',
-    'CS digital'=>'https://csdm.online/',
-    'Analytics Insight'=>'https://www.analyticsinsight.net/',
-    'Wissenraet'=>'https://www.vanspaendonck-wispa.nl/',
-    '9to5Mac'=>'https://9to5mac.com/',
-    'Invest International'=>'https://investinternational.nl/',
-    'Racefiets Blog'=>'https://racefietsblog.nl/',
-    'Darts actueel'=>'https://www.dartsactueel.nl/',
-    'Hockey.nl'=>'https://hockey.nl/',
-    'Hockeykrant'=>'https://hockeykrant.nl/',
-    'Tata Nexarc'=>'https://blog.tatanexarc.com/',
-    'Incodocs'=>'https://incodocs.com/blog/',
-    'Recruitement Tech'=>'https://www.recruitmenttech.nl/',
-    'Healthcare Weekly'=>'https://healthcareweekly.com/',
-    'Wellness Mama'=>'https://wellnessmama.com/',
-    'Logistics Business'=>'https://www.logisticsbusiness.com/',
-    '20Cube'=>'https://www.20cube.com/',
-    'Outside'=>'https://velo.outsideonline.com/',
-    'Trainer Road'=>'https://www.trainerroad.com/blog/',
-    'AllOver Media'=>'https://allovermedia.com/',
-    'The Partially Examined Life'=>'https://partiallyexaminedlife.com/',
-    'The Future Organization'=>'https://thefutureorganization.com/'
+    // 'Aestate'=>'https://www.aestate.nl/',
+    // 'Alba Concepts'=>'https://albaconcepts.nl/',
+    // 'AM'=>'https://www.am.nl/',
+    // 'Limoonworks'=>'https://limoonworks.nl/',
+    // 'DWA'=>'https://www.dwa.nl/',
+    // 'Van Spaendonck'=>'https://www.vanspaendonck.nl/',
+    // 'PTG-advies'=>'https://ptg-advies.nl/',
+    // 'Rever'=>'https://rever.nl/',
+    // 'Reworc'=>'https://www.reworc.com/',
+    // 'Sweco'=>'https://www.sweco.nl/',
+    // 'Co-pilot'=>'https://www.copilot.nl/',
+    // 'Agile Scrum Group'=>'https://agilescrumgroup.nl/',
+    // 'Horizon'=>'https://horizontraining.nl/',
+    // 'Kenneth Smit'=>'https://www.kennethsmit.com/',
+    // // 'Autoblog'=>'https://www.autoblog.nl/',
+    // 'Crypto university'=>'https://www.cryptouniversity.nl/',
+    // 'WineLife'=>'https://www.winelife.nl/',
+    // 'Perswijn'=>'https://perswijn.nl/',
+    // 'Koken met Kennis'=>'https://www.kokenmetkennis.nl/',
+    // 'Minkowski'=>'https://minkowski.org/',
+    // 'KIT publishers'=>'https://kitpublishers.nl/',
+    // 'BeByBeta'=>'https://www.betastoelen.nl/',
+    // 'Zooi'=>'https://zooi.nl/',
+    // 'Growth Factory'=>'https://www.growthfactory.nl/',
+    // 'Influid'=>'https://influid.nl/',
+    // 'MediaTest'=>'https://mediatest.nl/',
+    // 'MeMo2'=>'https://memo2.nl/',
+    // 'Impact Investor'=>'https://impact-investor.com/',
+    // 'Equalture'=>'https://www.equalture.com/',
+    // 'Zorgmasters'=>'https://zorgmasters.nl/',
+    // 'AdSysco'=>'https://adsysco.nl/',
+    // 'Transport en Logistiek Nederland'=>'https://www.tln.nl/',
+    // 'Financieel Fit'=>'https://www.financieelfit.nl/',
+    // 'Business Insider'=>'https://www.businessinsider.nl/',
+    // 'Frankwatching'=>'https://www.frankwatching.com/',
+    // 'MarTech'=>'https://martech.org/',
+    // 'Search Engine Journal'=>'https://www.searchenginejournal.com/',
+    // 'Search Engine Land'=>'https://searchengineland.com/',
+    // 'TechCrunch'=>'https://techcrunch.com/',
+    // 'The Bruno Effect'=>'https://magazine.thebrunoeffect.com/',
+    // 'Crypto Insiders'=>'https://www.crypto-insiders.nl/',
+    // 'HappyHealth'=> 'https://happyhealthy.nl/',
+    // 'Focus'=>'https://focusmagazine.nl/',
+    // 'Chip Foto Magazine'=> 'https://www.chipfotomagazine.nl/',
+    // 'Vogue'=> 'https://www.vogue.nl/',
+    // 'TrendyStyle'=>'https://www.trendystyle.net/',
+    // 'WWD'=> 'https://wwd.com/',
+    // 'Purse Blog'=> 'https://www.purseblog.com/',
+    // 'Coursera'=> 'https://blog.coursera.org/',
+    // 'Udemy'=> 'https://blog.udemy.com/',
+    // 'CheckPoint'=> 'https://blog.checkpoint.com/',
+    // 'De laatste meter'=> 'https://www.delaatstemeter.nl/',
+    // 'ManagementSite'=> 'https://www.managementpro.nl/',
+    // '1 Minute Manager'=> 'https://www.1minutemanager.nl/',
+    // 'De Strafschop'=> 'https://www.strafschop.nl/',
+    // 'JongeBazen'=> 'https://www.jongebazen.nl/',
+    // 'Expeditie Duurzaam'=> 'https://www.expeditieduurzaam.nl/',
+    // 'Pure Luxe'=>'https://pureluxe.nl/',
+    // 'WatchTime'=>'https://www.watchtime.com/',
+    // 'Monochrome'=>'https://monochrome-watches.com/',
+    // 'Literair Nederland'=>'https://www.literairnederland.nl/',
+    // 'Tzum'=>'https://www.tzum.info/',
+    // 'Developer'=>'https://www.developer-tech.com/',
+    // 'SD Times'=>'https://sdtimes.com/',
+    // 'GoDaddy'=>'https://www.godaddy.com/garage/',
+    // 'Bouw Wereld'=>'https://www.bouwwereld.nl/',
+    // 'Vastgoed actueel'=>'https://vastgoedactueel.nl/',
+    // 'The Real Deal'=>'https://therealdeal.com/',
+    // 'HousingWire'=>'https://www.housingwire.com/',
+    // 'AfterSales'=>'https://aftersalesmagazine.nl/',
+    // 'CRS Consulting'=>'https://crsconsultants.nl/',
+    // 'Commercial Construction & Renovation'=>'https://www.ccr-mag.com/',
+    // 'Training Magazine'=>'https://www.trainingmag.com/',
+    // 'MedCity News'=>'https://www.medcitynews.com/',
+    // 'Cocktail Enthusiast'=>'https://www.cocktailenthusiast.com/',
+    // 'Mr. Online'=>'https://www.mronline.nl/',
+    // 'Cash'=>'https://www.cash.nl/',
+    // 'Kookles thuis'=>'https://www.kooklesthuis.com/',
+    // 'Mediabistro'=>'https://www.mediabistro.com/',
+    // 'ProBlogger'=>'https://problogger.com/',
+    // 'Media Shift'=>'https://www.mediashift.org/',
+    // 'Warehouse Totaal'=>'https://www.warehousetotaal.nl/',
+    // 'CS digital'=>'https://csdm.online/',
+    // 'Analytics Insight'=>'https://www.analyticsinsight.net/',
+    // 'Wissenraet'=>'https://www.vanspaendonck-wispa.nl/',
+    // '9to5Mac'=>'https://9to5mac.com/',
+    // 'Invest International'=>'https://investinternational.nl/',
+    // 'Racefiets Blog'=>'https://racefietsblog.nl/',
+    // 'Darts actueel'=>'https://www.dartsactueel.nl/',
+    // 'Hockey.nl'=>'https://hockey.nl/',
+    // 'Hockeykrant'=>'https://hockeykrant.nl/',
+    // 'Tata Nexarc'=>'https://blog.tatanexarc.com/',
+    // 'Incodocs'=>'https://incodocs.com/blog/',
+    // 'Recruitement Tech'=>'https://www.recruitmenttech.nl/',
+    // 'Healthcare Weekly'=>'https://healthcareweekly.com/',
+    // 'Wellness Mama'=>'https://wellnessmama.com/',
+    // 'Logistics Business'=>'https://www.logisticsbusiness.com/',
+    // '20Cube'=>'https://www.20cube.com/',
+    // 'Outside'=>'https://velo.outsideonline.com/',
+    // 'Trainer Road'=>'https://www.trainerroad.com/blog/',
+    // 'AllOver Media'=>'https://allovermedia.com/',
+    // 'The Partially Examined Life'=>'https://partiallyexaminedlife.com/',
+    // 'The Future Organization'=>'https://thefutureorganization.com/'
   ];
   
   $users = get_users();
