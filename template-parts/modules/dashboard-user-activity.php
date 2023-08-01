@@ -1,6 +1,5 @@
 <html lang="en">
 <?php
-
 /*
 * * Information user
 */
