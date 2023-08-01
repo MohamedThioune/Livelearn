@@ -1890,7 +1890,7 @@ function Artikel_From_Company(){
     'Alba Concepts'=>'https://albaconcepts.nl/',
     'AM'=>'https://www.am.nl/',
     'Limoonworks'=>'https://limoonworks.nl/',
-    'DWA'=>'https://www.dwa.nl/',
+    // 'DWA'=>'https://www.dwa.nl/',
     'Van Spaendonck'=>'https://www.vanspaendonck.nl/',
     'PTG-advies'=>'https://ptg-advies.nl/',
     'Rever'=>'https://rever.nl/',
