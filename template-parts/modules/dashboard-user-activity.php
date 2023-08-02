@@ -44,7 +44,6 @@ $todos = get_posts($args);
 /*
 * * Courses dedicated of these user "Boughts + Mandatories"
 */
-
 $enrolled = array();
 $enrolled_courses = array();
 // $kennis_video = get_field('kennis_video', 'user_' . $user->ID);
