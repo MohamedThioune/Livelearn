@@ -20648,7 +20648,17 @@ background: #FFFFFF !important;
     margin-top: 45px;
     margin-bottom: 17px;
 }
-
+.owl-carousel .cardAssessement {
+    width: 100%;
+    margin-right: 0;
+}
+.owl-carousel-expert {
+    height: fit-content !important;
+    margin-bottom: 55px;
+}
+.video-content-course .owl-carousel-assessment .owl-drag .owl-item, .video-content-course .owl-carousel-assessment  .owl-stage{
+    height: fit-content !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
