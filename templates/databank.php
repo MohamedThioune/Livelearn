@@ -597,7 +597,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/artikels",
+                url: "/livelearn/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
@@ -605,10 +605,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 },error:function() {
                     console.log('error');
                 },
-                complete:function(){
+                complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    location.reload();
+                    // location.reload();
                 }
             });
         });
