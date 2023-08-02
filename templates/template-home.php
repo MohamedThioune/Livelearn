@@ -1313,17 +1313,7 @@ $saved = get_user_meta($user_id, 'course');
             </div>
         </div>
     </div>
-    <div class="block-store-doawnload text-center">
-        <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
-        <div class="group-btn-store d-flex flex-wrap justify-content-center">
-            <a href="https://apps.apple.com/nl/app/livelearn/id1666976386">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="googlePlay">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
-            </a>
-        </div>
-    </div>
+
 </div>
 <div class="onze-expert-block">
     <div class="container-fluid">
@@ -1742,10 +1732,10 @@ $saved = get_user_meta($user_id, 'course');
                 je kan de app hier gratis downloaden:</h3>
             <div class="d-flex justify-content-center">
                 <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="btn btnStore">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/btn-app-store.png" alt="">
                 </a>
                 <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" class="btn btnPlayGoogle">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/btn-google-play.png" alt="">
                 </a>
             </div>
             <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">

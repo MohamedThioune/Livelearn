@@ -86,7 +86,6 @@ $podcast_single = "Podcast";
                         $day = "No date";
                         $month = ' ';
                         $location = ' ';
-                    
                         $data = get_field('data_locaties', $course->ID);
                         if($data){
                             $date = $data[0]['data'][0]['start_date'];
@@ -99,12 +98,16 @@ $podcast_single = "Podcast";
                                 $day = explode(' ', $dates[0]['date'])[0];
                                 $day = '<strong>' . $day . '</strong>';
                             }else{
-                                $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
                                     $data = explode('-', $data[0]['value']);
                                     $date = $data[0];
                                     $day = explode(' ', $date)[0];
                                     $day = '<strong>' . $day . '</strong>';
+                                } else {
+                                    // get the date from database
+                                    $timestamp = strtotime($course->post_date);
+                                    $date_formatee = date('d/m/Y', $timestamp);
+                                    $day = '<strong>' . $date_formatee . '</strong>';
                                 }
                             }
                         }

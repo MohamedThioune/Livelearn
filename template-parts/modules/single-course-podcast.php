@@ -394,8 +394,11 @@
                                             <label for="">Feedback</label>
                                             <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                         </div>
-                                        <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
-                                    </div>
+                                        <?php if ($user_id == 0) : ?>
+                                            <button type="button" class='btn btn-sendRating' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Send</button>
+                                        <?php else :?>
+                                            <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                        <?php endif; ?>
                                     <?php
                                     }
                                     else
