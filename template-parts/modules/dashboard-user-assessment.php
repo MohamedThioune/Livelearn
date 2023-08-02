@@ -15,11 +15,15 @@
         'order' => 'ASC', 
     );
     $assessments = get_posts($args);
-    $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
-    foreach ($assessments as $key => $assessment) {
-        if (in_array($assessment,$assessments_validated))
-            unset($assessments[$key]);
-    }
+
+    // $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
+    $assessments_validated = get_user_meta('assessment_validated', 'user_' . get_current_user_id() );
+
+    if(!empty($assessments_validated))
+        foreach ($assessments as $key => $assessment) {
+            if (in_array($assessment,$assessments_validated))
+                unset($assessments[$key]);
+        }
 ?>
 
 

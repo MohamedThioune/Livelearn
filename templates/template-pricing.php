@@ -151,7 +151,7 @@ $artikel = $blogs[0];
                             </div>
                             <div class="sub-block">
                                 <span id="autocomplete-pricing">
-                                    <p class="title output">€1.800,00</p>
+                                    <p class="title output">€1.782,00</p>
                                 </span>
                                 <p class="description" id="text-maand">Per maand</p>
                             </div>
