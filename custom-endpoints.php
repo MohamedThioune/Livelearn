@@ -1840,32 +1840,17 @@ function replyQuestion(WP_REST_Request $request)
 /** Views Endpoints */
 
 /** Artikels Endpoints */
-function strip_html_tags($text) {
-  $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-  $text = preg_replace("/\n{1,}/", "\n", $text); 
-  $text = str_replace("\n","<br>",$text);
-  $text = str_replace("&lt;","<",$text);
-  $text = str_replace("&gt;",">",$text);
-  $text = str_replace("&#8216;","'",$text);
-  $text = str_replace("&#8217;","'",$text); 
-  $text = str_replace("&#8220;","\"",$text);
-  $text = str_replace("&#8221;","\"",$text); 
-  $text = str_replace("&#8230;","...",$text);
-  $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
-  $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
-  return preg_replace($pattern, '', $text);
-}
 
-// function RandomString(){
-//   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//   $randstring = '';
-//   $rand='';
-//   for ($i = 0; $i < 10; $i++) {
-//       $rand = $characters[rand(0, strlen($characters))];
-//       $randstring .= $rand;  
-//   }
-//   return $randstring;
-// }
+function RandomString(){
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $randstring = '';
+  $rand='';
+  for ($i = 0; $i < 10; $i++) {
+      $rand = $characters[rand(0, strlen($characters))];
+      $randstring .= $rand;  
+  }
+  return $randstring;
+}
 
 // require 'vendor/autoload.php';
 
@@ -2069,7 +2054,7 @@ function Artikel_From_Company(){
                 'type' => 'Artikel',
                 'videos' => NULL, 
                 'short_description' => $article['excerpt']['rendered'],
-                'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                'long_description' => htmlspecialchars(strip_tags($article['content']['rendered'])),
                 'duration' => NULL, 
                 'prijs' => 0, 
                 'prijs_vat' => 0,
@@ -2089,7 +2074,7 @@ function Artikel_From_Company(){
                 'type' => 'Artikel',
                 'videos' => NULL, 
                 'short_description' => $article['excerpt']['rendered'],
-                'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                'long_description' => htmlspecialchars(strip_tags($article['content']['rendered'])),
                 'duration' => NULL, 
                 'prijs' => 0, 
                 'prijs_vat' => 0,
@@ -2113,7 +2098,7 @@ function Artikel_From_Company(){
               'type' => 'Artikel',
               'videos' => NULL, 
               'short_description' => $article['excerpt']['rendered'],
-              'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+              'long_description' => htmlspecialchars(strip_tags($article['content']['rendered'])),
               'duration' => NULL,
               'prijs' => 0,
               'prijs_vat' => 0,
