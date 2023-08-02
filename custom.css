@@ -8066,6 +8066,10 @@ tbody {
         .cardKraam2 {
             border: 0px solid lightgrey !important;
         }
+        .content-new-inloggen .carousel {
+            max-height: 100% !important;
+            height: -webkit-fill-available !important;
+        }
         .content-home2 form .searchInputHome, .content-home2 .newFormSarchBar .js-bs-select-dropdown, .content-home2 .newFormSarchBar .group-input-dropdown {
             height: fit-content !important;
         }
@@ -8203,6 +8207,17 @@ tbody {
         }
         .doawnloadBlockHome .btnStore .doawnloadBlockHome .btnPlayGoogle{
             height: 53px !important;
+        }
+        .content-new-inloggen .flex-wrap{
+            flex: 0 0 auto;
+            flex-direction: vertical;
+            -webkit-box-direction: normal;
+            align-items: stretch;
+            flex-direction: row;
+        }
+        .content-new-inloggen .carousel {
+            max-height: 100%;
+            height: -webkit-fill-available !important;
         }
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
@@ -13502,10 +13517,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 243px;
 }
 .btnStore{
-    width: 140px;
+    width: 164px;
+    height: 62px;
 }
 .btnPlayGoogle{
-    width: 187px;
+    width: 183px;
+    height: 62px;
 }
 .btnStore img, .btnPlayGoogle img{
     width: 100%;
@@ -14318,6 +14335,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .card-community-overview .head-card .eye-block {
     width: 25px;
     margin-right: 20px;
+    height: 25px;
 }
 .card-community-overview .head-card .eye-block img{
     width: 100%;
@@ -14795,10 +14813,17 @@ background: #FFFFFF !important;
     border-radius: 10px;
     width: 18%;
 }
+.block-img-team{
+    width: 187px;
+    height: 187px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+}
 .team-section .team-block .one-element img{
     width: 100%;
-    height: auto;
-    margin-bottom: 15px;
+    height: 100%;
+    object-fit: cover;
 }
 .team-section .team-block .one-element .name {
     color: white;
@@ -15926,8 +15951,8 @@ background: #FFFFFF !important;
 }
 
 .tab-block-functiegerichte .nav-tabs {
-    width: 38%;
-    margin: 0 auto !important;
+    width: 45%;
+    flex-wrap: nowrap;
 }
 .tab-block-functiegerichte .nav-link:hover {
     border-color: transparent !important;
@@ -17851,6 +17876,7 @@ background: #FFFFFF !important;
 }
 .social-networks a{
     width: 35px;
+    height: 35px;
     margin-right: 15px;
 }
 .social-networks a img{
@@ -18156,20 +18182,24 @@ background: #FFFFFF !important;
     object-fit: cover;
 }
 .content-new-inloggen .carousel {
-    background: linear-gradient(152.57deg, #47A99E 0%, #043356 100%);
+    background: linear-gradient(109deg, #47A99E 0%, #043356 100%);
     text-align: center;
+    max-height: 100%;
+    height: -webkit-fill-available !important;
 }
 .content-img-connection{
     width: 430px;
     height: 430px;
-    margin: 90px auto 0;
+    margin: 15px auto 0;
 }
 .content-img-connection img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
+.block-reverse .carousel-indicators {
+    bottom: 100px !important;
+}
 .content-new-inloggen .carousel h1 {
     color: white;
     font-weight: 500;
@@ -18916,6 +18946,18 @@ background: #FFFFFF !important;
     align-items: center;
     color: #808292;
 }
+.content-section-tabs .section-tabs .block-description p, .event-content-course .block-description p{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    color: #808292;
+    margin-bottom: 30px;
+}
+.content-section-tabs .description-text {
+    margin-bottom: 0px !important;
+}
 .event-content-course .block-description{
     margin-bottom: 35px;
 }
@@ -19246,10 +19288,10 @@ background: #FFFFFF !important;
     margin: 0 15px;
 }
 .course-content-video-intro {
-    width: 100%;
-    margin: -222px 0px 70px;
+    width: 80%;
+    margin: -222px auto 70px;
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: 36.25%;
 }
 .course-content-video-intro iframe {
     width: 100%;
@@ -19402,7 +19444,7 @@ background: #FFFFFF !important;
     color: #77838F;
     font-size: 16px;
     line-height: 25.6px;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
 }
 .content-head-podcast .block-detail-podcast .block-sub-detail{
     margin-right: 25px;
@@ -19595,16 +19637,18 @@ background: #FFFFFF !important;
 .block-img-created-assessment{
     width: 70px;
     height: 70px;
-    border-radius: 100%;
-    border: 1px solid #E7E7EC;
-    padding: 5px;
+    border: 1px solid #a5a5a5;
     margin-top: -10px;
     margin-right: 15px;
+    border-radius: 100%;
+    overflow: hidden;
+    padding: 2px;
 }
 .block-img-created-assessment img{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 100%;
 }
 .content-head-podcast .block-detail-podcast {
     margin-top: 55px;
@@ -20561,7 +20605,49 @@ background: #FFFFFF !important;
 .section-dynamic-reviews .rating > input:checked ~ label:hover{
     color: #F79426 !important;
 }
-
+.content-new-artikel{
+    padding: 50px;
+}
+.block-other-btn{
+    margin-top: -55px;
+}
+.block-registren .container-fluid {
+    padding: 0 5px !important;
+}
+.block-registren form .ur-form-row .ur-form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.block-registren .ur-form-row .ur-form-grid .ur-field-item {
+    margin-bottom: 20px;
+    width: 47%;
+}
+#playBtnGoogle{
+    width: 185px;
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 0px;
+    margin-top: 0px;
+    height: 101px;
+}
+.content-detail-voor-organisation .btnBedrijven {
+    background: #DEEDF2;
+    height: fit-content;
+    padding: 9px 30px;
+    border-radius: 35px;
+    margin-left: 28px;
+}
+.content-detail-voor-organisation .btnLeesMeer {
+    border: none !important;
+    margin-bottom: 30px;
+    background-color: #02a89d !important;
+    padding: 9px 30px !important;
+}
+.groupBtnInloggenVoor{
+    margin-top: 45px;
+    margin-bottom: 17px;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -23829,6 +23915,7 @@ background: #FFFFFF !important;
         padding: 9px 25px !important;
         min-width: 134px;
         font-size: 14px;
+        margin-bottom: 20px;
     }
     .btn-Functionaliteiten {
         padding: 9px 20px !important;
@@ -23890,7 +23977,7 @@ background: #FFFFFF !important;
         font-size: 27px;
     }
     .block-functionaliteiten {
-        padding: 0px 15px;
+        padding: 0px;
     }
     .card-functionaliteiten {
         width: 100%;
@@ -24567,11 +24654,16 @@ background: #FFFFFF !important;
         margin-bottom: 20px !important;
         margin-left: 0 !important;
     }
+    .video-content-course .owl-nav, .event-content-course .owl-nav {
+        top: -74px;
+    }
     .content-detail-profil-autors {
         width: 72%;
     }
     .course-content-video-intro {
         margin: 0px 0px 70px;
+        width: 100%;
+        padding-bottom: 56.25%;
     }
     .video-content-course .right-block-detail-course {
         margin-top: 55px;
@@ -24636,6 +24728,7 @@ background: #FFFFFF !important;
         padding: 13px 15px;
         margin-right: 15px;
         font-size: 14px;
+        margin-bottom: 15px;
     }
     .content-individu .content-head {
         padding-top: 40px;
@@ -24903,6 +24996,34 @@ background: #FFFFFF !important;
     .section-app-store a {
         height: 61px !important;
     }
+    .content-home2 form input::-ms-input-placeholder{
+        font-size: 10px !important;
+    }
+    .searchInputHome::-webkit-input-placeholder,
+    .searchInputHome::-moz-placeholder,
+    .searchInputHome:-ms-input-placeholder,
+    .searchInputHome:-moz-placeholder {
+        font-size: 10px !important;
+    }
+    .content-new-artikel{
+        padding: 0;
+    }
+    .content-new-inloggen .block-reverse {
+        flex-direction: column-reverse;
+    }
+    .block-registren .ur-form-row .ur-form-grid .ur-field-item {
+        width: 100%;
+    }
+    .section-revolutionnaire .row{
+        flex-direction: column-reverse;
+    }
+    .groupBtnInloggenVoor{
+        flex-wrap: wrap;
+    }
+    .content-detail-voor-organisation .btnBedrijven {
+        margin-left: 0;
+    }
+
 
 
 
@@ -25029,6 +25150,7 @@ background: #FFFFFF !important;
     }
     .group-content .content-text .group-btn {
         display: flex;
+        flex-wrap: wrap;
     }
     .section-revolutionair {
         width: 100%;

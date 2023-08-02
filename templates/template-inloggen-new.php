@@ -15,27 +15,43 @@
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
 <div class="content-new-inloggen">
-    <div class="d-flex flex-wrap">
+    <div class="d-flex block-reverse flex-wrap">
         <div class="block-first-connect">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="content-img-connection">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/new-inloggen.png" alt="First-slide-looggin">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/login1.png" alt="First-slide-looggin">
                         </div>
-                        <h1>Welcome to Livelearn</h1>
-                        <p class="description-connection">Hét leer- en upskilling platform van- én voor de toekomst · Als bedrijf beheer je in 1 minuut al je talent binnen de organisatie · Direct een afspraak inplannen?</p>
+                        <h1>Welkom bij LiveLearn</h1>
+                        <p class="description-connection">Begin nu en maak gebruik van ons Learning Experience Platform (LXP) om je vaardigheden te versterken met dynamische en boeiende leerervaringen. Ontgrendel je volledige potentieel en blijf vooroplopen in het voortdurend veranderende zakelijke landschap van vandaag.</p>
                     </div>
                     <div class="carousel-item">
                         <div class="content-img-connection">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/new-inloggen.png" alt="First-slide-looggin">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/login2.png" alt="First-slide-looggin">
                         </div>
-                        <h1>Welcome to Livelearn</h1>
-                        <p class="description-connection">Hét leer- en upskilling platform van- én voor de toekomst · Als bedrijf beheer je in 1 minuut al je talent binnen de organisatie · Direct een afspraak inplannen?</p>
+                        <h1>Ontdek interesses</h1>
+                        <p class="description-connection">Omarm de reis van het verkennen van nieuwe interesses, zowel zakelijk als persoonlijk, omdat dit deuren opent naar eindeloze mogelijkheden voor groei en vervulling.</p>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="content-img-connection">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/login3.png" alt="First-slide-looggin">
+                        </div>
+                        <h1>Volg experts en docenten </h1>
+                        <p class="description-connection">Versterk jezelf door experts en docenten te selecteren om van te leren, waarbij je direct toegang krijgt tot hun waardevolle inhoud in je feed.</p>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="content-img-connection">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/login4.png" alt="First-slide-looggin">
+                        </div>
+                        <h1>Gepersonaliseerd leren</h1>
+                        <p class="description-connection">LiveLearn biedt de ultieme gepersonaliseerde leeromgeving, waarbij inhoud en middelen worden afgestemd op de unieke behoeften en leerstijl van elke individuele deelnemer, wat zorgt voor maximale kennisbehoud en vaardigheidsontwikkeling.</p>
                     </div>
                 </div>
             </div>
@@ -85,6 +101,10 @@
                                 'placeholder_password' => 'Enter your password',
                             ]);
                         ?>
+                      <div class="block-other-btn">
+                          <a href="<?= wp_lostpassword_url(''); ?>" class="redirectionText">Wachtwoord vergeten ?&nbsp; | &nbsp;</a>
+                          <a href="/registreren" class="redirectionText pull-right">Maak je account </a>
+                      </div>
                    </div>
                </div>
                <div class="block-social-connection">

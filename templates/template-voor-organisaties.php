@@ -13,7 +13,7 @@
                     <div class="">
                         <h1 class="CreeerText2">Creëer een constant lerende organisatie en trek talent aan</h1>
                         <p class="StimuleerText2">Stimuleer de in- en doorstroom van jouw (flexibele) werknemers, zodat zij jouw bedrijf naar het volgende niveau kunnen tillen.</p>
-                        <a href="/voor-organisaties/" class="meerInformatieBtn" >Meer informatie</a>
+                        <a href="/voor-organisatie/" class="meerInformatieBtn" >Meer informatie</a>
                     </div>
                     <div class="imgComponent2 mb-md-0 mb-4">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">

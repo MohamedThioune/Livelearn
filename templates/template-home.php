@@ -992,7 +992,7 @@ $saved = get_user_meta($user_id, 'course');
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/first-group-parteners-logo.png" class="logo-parteners-right" alt="">
 
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
-                <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
+                <p class="altijdText2">Wil jij jezelf blijven ontwikkelen? LiveLearn is hét platform voor jouw persoonlijke upskilling én voor organisaties die hun talent willen laten groeien.</p>
                 <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
