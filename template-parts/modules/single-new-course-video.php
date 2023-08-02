@@ -132,7 +132,7 @@ endif;
                                 <div class="d-block">
                                     <div class="section-tabs section-tabs-learn" >
                                         <div class="block-description">
-                                            <h2>Description</h2>
+                                            <h2 class="description-text">Description</h2>
                                             <p class="text-tabs">
                                                 <?= $long_description; ?>
                                             </p>
