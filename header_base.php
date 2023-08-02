@@ -211,11 +211,14 @@ $url = home_url( $wp->request );
                                                         data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign in</a></p>
                             </div>
                         </div>
-
-
-                        <?php
-                        echo (do_shortcode('[user_registration_form id="8477"]'));
-                        ?>
+                    
+                        <?php 
+                            $base_url = get_site_url();
+                            if($base_url == 'https://livelearn.nl')
+                                echo (do_shortcode('[user_registration_form id="8477"]'));
+                            else
+                                echo (do_shortcode('[user_registration_form id="59"]')); 
+                        ?>                   
 
                         <div class="text-center">
                             <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"

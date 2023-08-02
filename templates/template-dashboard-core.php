@@ -1428,10 +1428,13 @@ else if(isset($reaction_post)){
     $reactions = array();
     $bunch_reactions = get_field('reaction', $id); 
     $current_user = wp_get_current_user();
-    // $my_review_bool = false;
+    $my_review_bool = false;
     foreach ($bunch_reactions as $reaction):
-        if($reaction['user_reaction']->ID == $current_user->id)
+        if($reaction['user_reaction']->ID == $current_user->id){
+            if($reaction['type_reaction'] == $reaction_post)
+                $my_review_bool = true;
             continue;
+        }
 
         array_push($reactions, $reaction);
     endforeach;
@@ -1439,10 +1442,10 @@ else if(isset($reaction_post)){
     $reaction = array();
     $reaction['user_reaction'] = $current_user;
     $reaction['type_reaction'] = $reaction_post;
-    if($reaction['user_reaction']){ 
-        array_push($reactions, $reaction);
+    if($reaction['user_reaction']){
+        if(!$my_review_bool) 
+            array_push($reactions, $reaction);
         update_field('reaction', $reactions, $id);
-        // var_dump($reaction);
     }
     $path = get_permalink($id) . "/?message=Reaction successfully saved !";
     header("Location: " . $path);
