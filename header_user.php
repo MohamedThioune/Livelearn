@@ -363,7 +363,8 @@ $see_experts = get_users(
 
                         </li>
 
-                      <!--  <div class="second-element-mobile" id="burgerAndbelief">
+                        <!--
+                        <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
                             </button>
