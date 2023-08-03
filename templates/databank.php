@@ -601,14 +601,14 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // location.reload();
+                    location.reload();
                 },error:function() {
                     console.log('error');
                 },
-                complete:function(){
+                complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    location.reload();
+                    // location.reload();
                 }
             });
         });
@@ -750,7 +750,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/livelearn/optie-bank',
+                url: '/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
