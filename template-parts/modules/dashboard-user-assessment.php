@@ -17,7 +17,7 @@
     $assessments = get_posts($args);
 
     // $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
-    $assessments_validated = get_user_meta('assessment_validated', 'user_' . get_current_user_id() );
+    $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
 
     if(!empty($assessments_validated))
         foreach ($assessments as $key => $assessment) {
