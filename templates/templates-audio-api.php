@@ -110,6 +110,13 @@ if ($audio_search){
             $type = $feed['type'];
             $dead = $feed['dead'];
             $categories = $feed['categories'];
+            $category_to_insert="";
+            if ($categories){
+                foreach ($categories as $cat){
+                    $category_to_insert.=$cat.",";
+                }
+                $category_to_insert = substr($category_to_insert, 0, -1);
+            }
 
             echo "
             <div class='card mb-3'>
@@ -127,7 +134,7 @@ if ($audio_search){
                                 echo "<button class = 'btn btn-info m-1' disabled >$category</button>";
                          echo"
                         <br>
-                          <button class='mt-4 play btn btn-outline-success' data-categories='". json_encode($categories) ."' data-language='".$language."' data-author ='".$author."' data-title='".$title."' data-image='".$image."' data-description='".$description."' data-url='".$url."' data-id='".$id."' onclick='savePodcastPlaylistInPlatform(event)'>
+                          <button class='mt-4 play btn btn-outline-success' data-categories='". $category_to_insert. "' data-language='".$language."' data-author ='".$author."' data-title='".$title."' data-image='".$image."' data-description='".$description."' data-url='".$url."' data-id='".$id."' onclick='savePodcastPlaylistInPlatform(event)'>
                             SAVE
                         </button>
                             <div class='d-none'>
@@ -166,7 +173,6 @@ if ($audio_search){
     $user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
     $message = "";
     extract($playlist_audio);
-    //var_dump($categories);
     $cat = json_decode($categories[0],true);
 
     $sql = $wpdb->prepare( "SELECT course_id FROM $table  WHERE course_id = $id");
@@ -190,17 +196,18 @@ if ($audio_search){
         //var_dump($podcasts);die;
         //wich table will I do the request to show the list of podcast ?
         $data = array(
+            //'titel' => htmlentities($title,ENT_NOQUOTES),
             'titel' => $title,
             'type' => 'Podcast',
             'podcasts' => substr($podcasts,0,-1), //remove the last char | before saving
-            //'podcasts' => strip_tags($podcasts),
             'short_description' => $description,
             'long_description' => $description,
             'duration' => null,
             'prijs' => 0,
             'prijs_vat' => 0,
             'image_xml' => $image,
-            'onderwerpen' => null, //tableau $categories
+            //'onderwerpen' => $categories, //tableau $categories //tableau $categories
+            'onderwerpen' => null, //tableau $categories //tableau $categories
             'date_multiple' => null,
             'course_id' => $id,
             'author_id' => $user_id,
