@@ -20875,6 +20875,14 @@ background: #FFFFFF !important;
     }
     .table-responsive {
         display: block !important;
+        min-width: 702px;
+        width: auto;
+    }
+    .card-course-activity {
+        overflow: scroll;
+    }
+    .card-course-activity .table .name-element {
+        width: 80%;
     }
     .elementInputCours .importBlock2 {
         width: 100%;
@@ -21766,13 +21774,17 @@ background: #FFFFFF !important;
     }
     .headListeCourse {
         align-items: center;
+        flex-wrap: wrap;
     }
     .JouwOpleid {
         font-size: 15px;
+        margin-bottom: 15px;
     }
     .btnNewCourse {
         font-size: 14px;
         padding: 4px 19px;
+        width: 100%;
+        text-align: center;
     }
     .cardCours {
         width: 47%;
@@ -22277,7 +22289,8 @@ background: #FFFFFF !important;
     }
     .inputSearchCourse {
         height: 40px;
-        width: 95%;
+        width: 100%;
+        margin-bottom: 20px;
     }
     .cardFavoriteCourses .coursElement {
         width: 100%;
@@ -23115,7 +23128,7 @@ background: #FFFFFF !important;
         font-size: 14px;
     }
     .content-card-skills .card-skills {
-        margin: 0 7px 20px;
+        margin: 0 13px 20px 0px;
         width: 45%;
     }
     .contentBlockSetting .group-input-settings {
@@ -24076,7 +24089,7 @@ background: #FFFFFF !important;
     }
     .skills-activity-block .content-card-skills .card-skills {
         min-height: 178px !important;
-        width: 45% !important;
+        width: 46% !important;
         overflow: hidden;
     }
     .card-communities-activity {
@@ -24226,7 +24239,7 @@ background: #FFFFFF !important;
         font-size: 15px;
     }
     #tab-url1 {
-        padding: 0;
+        padding: 0 15px;
     }
     #tab-url1 .cardFavoriteCourses {
         margin-left: 0px;
