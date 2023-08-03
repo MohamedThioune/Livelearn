@@ -5,35 +5,30 @@
 
   extract($_POST);
 
-  function RandomString(){
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randstring = '';
-    $rand='';
-    for ($i = 0; $i < 10; $i++) {
-        $rand = $characters[rand(0, strlen($characters))];
-        $randstring .= $rand;  
-    }
-    return $randstring;
-  } 
+  // function RandomString($length = 20) {
+  //   $randomBytes = random_bytes($length);
+  //   $randomString = bin2hex($randomBytes);
+  //   return $randomString;
+  // }
 
   $company = null;
 
 
-  function strip_html_tags($text) {
-    $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-    $text = preg_replace("/\n{1,}/", "\n", $text); 
-    $text = str_replace("\n","<br>",$text);
-    $text = str_replace("&lt;","<",$text);
-    $text = str_replace("&gt;",">",$text);
-    $text = str_replace("&#8216;","'",$text);
-    $text = str_replace("&#8217;","'",$text); 
-    $text = str_replace("&#8220;","\"",$text);
-    $text = str_replace("&#8221;","\"",$text); 
-    $text = str_replace("&#8230;","...",$text);
-    $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
-    $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
-    return preg_replace($pattern, '', $text);
-  }
+  // function strip_html_tags($text) {
+  //   $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
+  //   $text = preg_replace("/\n{1,}/", "\n", $text); 
+  //   $text = str_replace("\n","<br>",$text);
+  //   $text = str_replace("&lt;","<",$text);
+  //   $text = str_replace("&gt;",">",$text);
+  //   $text = str_replace("&#8216;","`",$text);
+  //   $text = str_replace("&#8217;","`",$text); 
+  //   $text = str_replace("&#8220;","\"",$text);
+  //   $text = str_replace("&#8221;","\"",$text); 
+  //   $text = str_replace("&#8230;","...",$text);
+  //   $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
+  //   $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+  //   return preg_replace($pattern, '', $text);
+  // }
 
   $table = $wpdb->prefix.'databank';
   
@@ -42,9 +37,9 @@
       'post_type' => 'company', 
       'posts_per_page' => -1,
   );
+  // var_dump($selectedValues);
   $companies = get_posts($args);
   if(isset($selectedValues)) {
-    // var_dump($selectedValues);
     foreach($selectedValues as $option) {
       $website = $option['value'];
       $key = $option['text'];
@@ -69,10 +64,9 @@
 
       if(!$author_id)
       {
-        $login = RandomString();
-        $password = RandomString();
-        $random = RandomString();
-        $email = "author_" . $random . "@" . $key . ".nl";
+        $login = 'user'.random_int(0,100000);
+        $password = "pass".random_int(0,100000);
+        $email = "author_" . $key . "@" . 'livelearn' . ".nl";
         $first_name = explode(' ', $key)[0];
         $last_name = isset(explode(' ', $key)[1])?explode(' ', $key)[1]:'';
 
@@ -118,7 +112,7 @@
                       'type' => 'Artikel',
                       'videos' => NULL, 
                       'short_description' => $article['excerpt']['rendered'],
-                      'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                      'long_description' => htmlspecialchars(strip_tags($article['content']['rendered'])),
                       'duration' => NULL, 
                       'prijs' => 0, 
                       'prijs_vat' => 0,
@@ -138,7 +132,7 @@
                       'type' => 'Artikel',
                       'videos' => NULL, 
                       'short_description' => $article['excerpt']['rendered'],
-                      'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                      'long_description' => htmlspecialchars(strip_tags($article['content']['rendered'])),
                       'duration' => NULL, 
                       'prijs' => 0, 
                       'prijs_vat' => 0,
@@ -162,7 +156,7 @@
                     'type' => 'Artikel',
                     'videos' => NULL, 
                     'short_description' => $article['excerpt']['rendered'],
-                    'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                    'long_description' => htmlspecialchars(strip_tags($article['content']['rendered'])),
                     'duration' => NULL,
                     'prijs' => 0,
                     'prijs_vat' => 0,
@@ -183,7 +177,7 @@
                 $wpdb->insert($table,$data);
                 // echo $key."  ".$wpdb->last_error."<br>";
                 $id_post = $wpdb->insert_id;
-                
+                // var_dump($data);
               }catch(Exception $e) {
                 echo $e->getMessage();
               }
