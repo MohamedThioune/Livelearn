@@ -498,7 +498,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             },
             success: function(success){
                 alert(success);
-                console.log('result',success)
+                //console.log('result',success)
                 //document.getElementById('content-back-audio-playlist').innerHTML = success;
             },error: function(error,status){
                 console.log('error',error)
