@@ -27,12 +27,17 @@
                     <div class="content-detail-voor-organisation">
                         <h1>Blijf je leven lang ontwikkelen</h1>
                         <p>Een leeromgeving die speciaal voor jou gemaakt is. Jij bepaalt de content die je te zien krijgt, de experts en opleiders die je volgt en de onderwerpen die je interessant vindt. Wij zorgen dat jij je ontwikkelt!</p>
+                        <div class="groupBtnInloggenVoor d-flex">
+                            <a href="" class="btn btnLeesMeer">Lees meer</a>
+                            <a href="" class="btn btnBedrijven">LiveLearn voor bedrijven</a>
+                        </div>
                     </div>
+                    <p class="text-download">Of download onze gratis app:</p>
                     <div class="d-flex ">
                         <a href="" class="btn btnStore">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
                         </a>
-                        <a href="<?php echo get_site_url() ?> /wp-login.php?loginSocial=google" class="btn btnPlayGoogle">
+                        <a href="<?php echo get_site_url() ?> /wp-login.php?loginSocial=google" id="playBtnGoogle" class="btn btnPlayGoogle">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
                         </a>
                     </div>
