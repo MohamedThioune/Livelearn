@@ -597,11 +597,11 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/artikels",
+                url: "/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // location.reload();
+                    location.reload();
                 },error:function() {
                     console.log('error');
                 },
@@ -750,7 +750,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/livelearn/optie-bank',
+                url: '/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
