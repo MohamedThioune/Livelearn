@@ -338,6 +338,8 @@ foreach ($users as $element) {
                                 ?>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="card-course-activity">
                             <table class="table table-responsive">
                                 <thead>
                                 <tr>
@@ -363,7 +365,7 @@ foreach ($users as $element) {
 
                                     //Course Type
                                     $course_type = get_field('course_type', $course->ID);
-                                    
+
                                     //Checkout URL
                                     if(in_array($course_type, $offline))
                                         $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name . "&man=";
@@ -412,9 +414,9 @@ foreach ($users as $element) {
                                     //Clock duration
                                     $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
 
-                                    //Get read by user 
+                                    //Get read by user
                                     $args = array(
-                                        'post_type' => 'progression', 
+                                        'post_type' => 'progression',
                                         'title' => $course->post_name,
                                         'post_status' => 'publish',
                                         'author' => $user->ID,

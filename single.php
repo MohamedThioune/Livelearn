@@ -118,9 +118,8 @@ foreach($reactions as $value)
 
 ?>
 
-<div class="bg-green-artiken">
+<div class="bg-green-artiken content-new-artikel">
     <div class="container-fluid">
-        <br><br>
         <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"?>
         <div class="content-artikel d-flex justify-content-between flex-wrap">
             <div class="right-block-artikel">
