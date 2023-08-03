@@ -597,7 +597,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/artikels",
+                url: "/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
