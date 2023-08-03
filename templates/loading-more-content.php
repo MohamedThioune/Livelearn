@@ -1,5 +1,5 @@
 <?php /** Template Name: Loading more content */ ?>
-
+//loading-more-content
 <?php
 $like = get_stylesheet_directory_uri()."/img/love.png";
 $dislike = get_stylesheet_directory_uri()."/img/heart-like.png";

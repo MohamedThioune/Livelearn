@@ -6,12 +6,12 @@ global $wpdb;
 $table = $wpdb->prefix . 'databank';
 
 //good keys from daniel account
-//$apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
-//$apiSecret = 'teMYqdrBgamSWpVnd7q4WABSBBZz3j$^uVSWwHuH';
+$apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
+$apiSecret = 'teMYqdrBgamSWpVnd7q4WABSBBZz3j$^uVSWwHuH';
 
-//key from my own account
-$apiKey = 'XV4FMX6HDE3SECBVMEF3';
-$apiSecret = '7Vr5rRxJyZ6^$TnhftLddbJKB6yNmXyYRcBx7T^Z';
+//key from my own account khadim1.niass@ucad.edu.sn
+//$apiKey = 'XV4FMX6HDE3SECBVMEF3';
+//$apiSecret = '7Vr5rRxJyZ6^$TnhftLddbJKB6yNmXyYRcBx7T^Z';
 
 $time = time();
 $hash = sha1($apiKey.$apiSecret.$time);
@@ -79,9 +79,16 @@ if ($audio_search){
     if ($data['status'] === "true") {
         extract($data);
         // $feeds = $data['feeds'];
-        $count = 0;
-        $result = [];
+        //var_dump($data);
+        /*if (!$feeds){
+            echo "<h3>$description for '$query'</h3>";
+            return;
+        }*/
+        /**
+         * start display resutl of search
+         */
         foreach($feeds as $key => $feed){
+            //extract($feed);
             $id = $feed['id'];
             $title = $feed['title'];
             $url = $feed['url'];
@@ -103,6 +110,7 @@ if ($audio_search){
             $type = $feed['type'];
             $dead = $feed['dead'];
             $categories = $feed['categories'];
+
             echo "
             <div class='card mb-3'>
                   <div class='row g-0'>
@@ -149,6 +157,9 @@ if ($audio_search){
             </div>
         ";
         }
+        /**
+         * end display resutl of search
+         */
     }
 }elseif ($playlist_audio){
     $user_connected = wp_get_current_user();
@@ -162,6 +173,8 @@ if ($audio_search){
     $isCourseInPlateform = $wpdb->get_results( $sql)[0]->course_id;
     if ($isCourseInPlateform) {
         $message = "$title is already saved in platform ❌❌❌";
+        echo $message;
+        return;
     }else{
         $xml = simplexml_load_file($url);
         $podcasts="";
@@ -174,6 +187,7 @@ if ($audio_search){
                 $podcasts .= "$mp3~$title_podcast~$description_podcast|";
             }
         }
+        //var_dump($podcasts);die;
         //wich table will I do the request to show the list of podcast ?
         $data = array(
             'titel' => $title,
@@ -192,7 +206,7 @@ if ($audio_search){
             'author_id' => $user_id,
             'status' => 'extern'
         );
-        $wpdb->select();
+        //var_dump($data);die();
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
