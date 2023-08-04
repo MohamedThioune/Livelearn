@@ -10,6 +10,8 @@ if(!$image)
 $company = get_field('company',  'user_' . $current_user->ID);
 if(!empty($company))
     $company_name = $company[0]->post_title;
+else
+    header('Location: /dashboard/company/statistic');
 $company_connected = $company[0]->post_title;
 
 $date_format = date_create($current_user->user_registered);
@@ -38,10 +40,10 @@ foreach ($users as $user ) {
             array_push($members,$user);
 
             // Assessment
-            $validated = get_user_meta('assessment_validated', 'user_' . $user->ID);
+            $validated = get_user_meta($user->ID, 'assessment_validated');
             foreach($validated as $assessment)
                 if(!in_array($assessment, $assessment_validated))
-                    array_push($assessment, $assessment_validated);
+                    array_push($assessment_validated, $assessment);
             
             //Followed topic
           
@@ -176,8 +178,9 @@ $assessment_validated = (!empty($assessment_validated)) ? count($assessment_vali
 $assessment_not_started = 100;
 $assessment_completed = 0;
 if($count_assessments > 0){
-    $assessment_not_started = intval(($count_assessments - $assessment_validated) / $count_assessments) * 100;
-    $assessment_completed = intval($assessment_validated / $count_assessments) * 100;
+    $not_started_assessment = $count_assessments - $assessment_validated;
+    $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
+    $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
 }
 
 //Topic views 
@@ -206,6 +209,15 @@ foreach($course_finished as $course){
 }
 $read_category = array_count_values($read_category);
 
+//Show link by scope 
+$status_content_link .= "";
+if(isset($company_name))
+    $status_content_link .= '<li class="nav-one"><a class="current" href="/dashboard/company/statistic-company">Company</a></li>';
+
+$is_manager = get_field('manager', 'user_' . $current_user->ID);
+if(in_array('administrator', $current_user->roles) || in_array('hr', $current_user->roles) || in_array('manager', $current_user->roles) || $is_manager )
+    $status_content_link .= '<li class="nav-two"><a href="/dashboard/company/statistic-team"> Team </a></li>' ;
+
 ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
@@ -222,9 +234,10 @@ $read_category = array_count_values($read_category);
         </div>
         <div class="tab-element">
             <ul class="nav">
-                <li class="nav-one"><a href="" class="current">Company</a></li>
-                <li class="nav-two"><a href="">Team</a></li>
-                <li class="nav-three"><a href="">Individual</a></li>
+                <?php
+                    echo $status_content_link ;
+                ?>
+                <li class="nav-three"><a href="/dashboard/company/statistic/" >Individual</a></li>
             </ul>
         </div>
     </div>
@@ -347,7 +360,7 @@ $read_category = array_count_values($read_category);
             ?>
             <div class="subTopics-usage-block d-flex flex-wrap justify-content-between">
                 <div class="subTopics-card">
-                    <p class="title">Most Subtopics view by your company</p>
+                    <p class="title">Most Topics view by your company</p>
                     <p class="number-subTopcis"><?= $count_topic_views ?></p>
                     <p class="sub-title-topics">SubTopics</p>
                     <?php
@@ -358,7 +371,7 @@ $read_category = array_count_values($read_category);
                     $image_topic = get_field('image', 'category_'. $value);
                     $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';
                     ?>
-                    <div class="element-SubTopics d-flex justify-content-between">
+                    <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
                         <div class="d-flex">
                             <div class="imgTopics">
                                 <img src="<?= $image_topic ?>" alt="">
@@ -366,7 +379,7 @@ $read_category = array_count_values($read_category);
                             <p class="text-subTopics"><?= $name_topic ?></p>
                         </div>
                         <p class="number"><?= $occurence ?></p>
-                    </div>
+                    </a>
                     <?php
                     endforeach
                     ?>
