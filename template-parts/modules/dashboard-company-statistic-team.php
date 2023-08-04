@@ -1,5 +1,7 @@
 <?php
 
+
+
 /* Information user */
 $current_user = wp_get_current_user();
 $full_name_user = ($current_user->first_name) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name;
@@ -10,7 +12,13 @@ if(!$image)
 $company = get_field('company',  'user_' . $current_user->ID);
 if(!empty($company))
     $company_name = $company[0]->post_title;
+else 
+    header('Location: /dashboard/user');
+
 $company_connected = $company[0]->post_title;
+
+if(!in_array('administrator', $current_user->roles) && !in_array('hr', $current_user->roles) && !in_array('manager', $current_user->roles) && !$is_manager )
+    header('Location: /dashboard/company/statistic');
 
 $date_format = date_create($current_user->user_registered);
 $year_date_registered = date_format($date_format, "Y");
@@ -43,20 +51,29 @@ foreach ($numbers as $value ) {
             $validated = get_user_meta($user->ID, 'assessment_validated');
             foreach($validated as $assessment)
                 if(!in_array($assessment, $assessment_validated))
-                    array_push($assessment, $assessment_validated);
+                    array_push($assessment_validated, $assessment);
             
             //Followed topic
         
             //Stats engagement
 
-            //mandatories video
-            $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
-            $count_mandatories_video = (!empty($mandatory_video)) ? $count_mandatories_video + 1 : $count_mandatories_video;
-
         }
 }
 $count_members = count($members);
 
+/* Mandatories */
+$args = array(
+    'post_type' => 'mandatory', 
+    'post_status' => 'publish',
+    'author__in' => $numbers,
+    'posts_per_page'         => -1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+);
+$mandatories = get_posts($args);
+$count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
 
 /* Members course */
 $args = array(
@@ -170,8 +187,9 @@ $assessment_validated = (!empty($assessment_validated)) ? count($assessment_vali
 $assessment_not_started = 100;
 $assessment_completed = 0;
 if($count_assessments > 0){
-    $assessment_not_started = intval(($count_assessments - $assessment_validated) / $count_assessments) * 100;
-    $assessment_completed = intval($assessment_validated / $count_assessments) * 100;
+    $not_started_assessment = $count_assessments - $assessment_validated;
+    $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
+    $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
 }
 
 //Topic views 
@@ -179,6 +197,14 @@ $table_tracker_views = $wpdb->prefix . 'tracker_views';
 $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
 $topic_views = $wpdb->get_results($sql);
 
+//Show link by scope 
+$status_content_link .= "";
+if(isset($company_name))
+    $status_content_link .= '<li class="nav-one"><a href="/dashboard/company/statistic-company">Company</a></li>';
+
+$is_manager = get_field('manager', 'user_' . $current_user->ID);
+if(in_array('administrator', $current_user->roles) || in_array('hr', $current_user->roles) || in_array('manager', $current_user->roles) || $is_manager )
+    $status_content_link .= '<li class="nav-two"><a class="current" href="/dashboard/company/statistic-team"> Team </a></li>' ;
 ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
@@ -195,9 +221,10 @@ $topic_views = $wpdb->get_results($sql);
         </div>
         <div class="tab-element">
             <ul class="nav">
-                <li class="nav-one"><a href="" >Company</a></li>
-                <li class="nav-two"><a href="" class="current">Team</a></li>
-                <li class="nav-three"><a href="">Individual</a></li>
+                <?php
+                    echo $status_content_link ;
+                ?>
+                <li class="nav-three"><a href="/dashboard/company/statistic/" >Individual</a></li>
             </ul>
         </div>
     </div>
@@ -298,7 +325,7 @@ $topic_views = $wpdb->get_results($sql);
             ?>
             <div class="subTopics-usage-block d-flex flex-wrap justify-content-between">
                 <div class="subTopics-card">
-                    <p class="title">Most Subtopics view by your company</p>
+                    <p class="title">Most Topics view by your team</p>
                     <p class="number-subTopcis"><?= $count_topic_views ?></p>
                     <p class="sub-title-topics">SubTopics</p>
                     <?php
@@ -309,7 +336,7 @@ $topic_views = $wpdb->get_results($sql);
                     $image_topic = get_field('image', 'category_'. $value);
                     $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';
                     ?>
-                    <div class="element-SubTopics d-flex justify-content-between">
+                    <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
                         <div class="d-flex">
                             <div class="imgTopics">
                                 <img src="<?= $image_topic ?>" alt="">
@@ -317,7 +344,7 @@ $topic_views = $wpdb->get_results($sql);
                             <p class="text-subTopics"><?= $name_topic ?></p>
                         </div>
                         <p class="number"><?= $occurence ?></p>
-                    </div>
+                    </a>
                     <?php
                     endforeach
                     ?>
@@ -334,7 +361,7 @@ $topic_views = $wpdb->get_results($sql);
             if(!empty($members)):
             ?>
             <div class="card-course card-user-team">
-                <h2>Members</h2>
+                <h2>Team Managed</h2>
                 <table class="table table-responsive">
                     <thead>
                     <tr>
@@ -343,7 +370,7 @@ $topic_views = $wpdb->get_results($sql);
                         <th scope="col">Department</th>
                         <th scope="col">Status</th>
                         <th scope="col">Persoonsgebonden Budget</th>
-                        <th scope="col">Actions</th>
+                        <!-- <th scope="col">Actions</th> -->
                     </tr>
                     </thead>
                     <tbody>
@@ -360,9 +387,13 @@ $topic_views = $wpdb->get_results($sql);
                         $is_login = get_field('is_first_login', 'user_' . $user->ID);
 
                         $status = ($is_login) ? 'actif' : 'actif inactif';
-                        $status_text = ($is_login) ? 'Actif' : 'Inactif';
+                        $status_text = ($is_login) ? 'Active' : 'Inactive';
 
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $current_user->ID;
+                        
+                        $amount_budget_format = get_field('amount_budget', 'user_' . $user->ID) ? : 0;
+                        $amount_budget = number_format($amount_budget_format, 2, '.', ',');
+
                         ?>
                         <tr>
                             <td class="d-flex align-items-center"> 
@@ -374,7 +405,7 @@ $topic_views = $wpdb->get_results($sql);
                                 <!-- <div class="userImg">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-1.png" alt="">
                                 </div> -->
-                                <span class="name-element"><?= $full_name_user ?></span>
+                                <a href="<?= $link ?>" class="name-element"><?= $full_name_user ?></a>
                             </td>
                             <td>
                                 <p class="name-element"><?= $department ?></p>
@@ -384,9 +415,9 @@ $topic_views = $wpdb->get_results($sql);
                                 <p class="name-element"><?= $status_text ?></p>
                             </td>
                             <td>
-                                <p class="name-element">€0.0</p>
+                                <p class="name-element">€<?= $amount_budget ?></p>
                             </td>
-                            <td class="textTh">
+                            <!-- <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
                                         <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
@@ -397,7 +428,7 @@ $topic_views = $wpdb->get_results($sql);
                                         <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i>Remove</li>
                                     </ul>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         <?php
                         endforeach;

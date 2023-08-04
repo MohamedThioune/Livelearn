@@ -339,6 +339,7 @@ foreach ($users as $element) {
                                 </tbody>
                             </table>
                         </div>
+                        <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br><br><br>
                         <div class="card-course-activity">
                             <table class="table table-responsive">
                                 <thead>
@@ -347,8 +348,6 @@ foreach ($users as $element) {
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
-                                <br><?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br>
-
                                 </thead>
                                 <tbody>
                                 <?php
