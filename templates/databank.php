@@ -671,7 +671,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('#loader').attr('hidden',false);
                     $('#select_field').attr('hidden',true);
                 },error:function(error){
-                    console.log("error:", error);
+                    console.log("error:");
                     document.getElementById('content-back-topics').innerHTML = error;
                 },success:function(success){
                     $('#loader').attr('hidden',true);
@@ -679,7 +679,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     console.log(success);
                     location.reload(); 
                 },complete:function(complete){
-                    console.log("complete:",complete);
+                    // console.log("complete:",complete);
                     $('#loader').attr('hidden',true);
                     $('#select_field').attr('hidden',true);
                 }
