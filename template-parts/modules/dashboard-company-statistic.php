@@ -17,7 +17,7 @@ $date_format = date_create($current_user->user_registered);
 $year_date_registered = date_format($date_format, "Y");
 
 $users = get_users();
-$numbers = array();
+$numbers = array(); 
 $members = array();
 $numbers_count = array();
 
