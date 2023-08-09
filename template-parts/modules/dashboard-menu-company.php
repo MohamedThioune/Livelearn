@@ -32,7 +32,7 @@
 
     /** Woocommerce API client for php - list subscriptions **/
     $endpoint = "subscriptions";
-    $subscriptions = $woocommerce->get($endpoint, $parameters = []);
+    // $subscriptions = $woocommerce->get($endpoint, $parameters = []);
 
     //Credit cards 
     $mollie = new \Mollie\Api\MollieApiClient();
