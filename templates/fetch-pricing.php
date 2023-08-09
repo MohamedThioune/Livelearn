@@ -3,8 +3,8 @@
 <?php
 extract($_POST);
 
-$global_price = 5;
-$pricing = $medewerkers * 5;
+$global_price = 4.95;
+$pricing = $medewerkers * $global_price;
 $pricing = '€' . number_format($pricing, 2, '.', ',');
 
 echo '<p class="title output">' . $pricing .'</p>';

@@ -14,10 +14,7 @@ $woocommerce = new Client(
 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
 [
-    'wp_api' => true, // Enable the WP REST API integration
     'version' => 'wc/v3', // WooCommerce WP REST API version
-    'timeout'=> 4000,
-    'verify_ssl'=> false,
 ]
 );
 
