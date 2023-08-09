@@ -8,7 +8,8 @@
 
 require __DIR__ . '/vendor/autoload.php';
 use Goutte\WooCommerce\Client;
-use Automattic\WooCommerce\Client;
+
+//use Automattic\WooCommerce\Client;
 
 $woocommerce = new Client(
     'http://livelearn.nl',

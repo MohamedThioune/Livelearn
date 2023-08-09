@@ -126,7 +126,7 @@ $artikel = $blogs[0];
         </div>
         <div class="content-Ontwikkel-je">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group3.png" class="" alt="">
-            <p>Ontwikkel je mederwerker(s) al voor €59,40 per jaar!</p>
+            <p>Ontwikkel je medewerker(s) al voor €59,40 per jaar!</p>
         </div>
         <div class="content-detail-pricing">
             <h2>Wat kost dat dan?</h2>
@@ -134,7 +134,7 @@ $artikel = $blogs[0];
             <div class="row">
                 <div class="col-lg-6">
                    <div class="content-first-detail">
-                       <p class="title">Bereken hoeveel LiveLearn jou organisatie kost.</p>
+                       <p class="title">Bereken hoeveel LiveLearn jouw organisatie kost.</p>
                        <p class="description">Hoeveel medewerkers heeft de organisatie in dienst?</p>
                        <div class="content-Medewerkers">
                            <input type="number" id="medewerkers" name='' class="number" placeholder='' value="360" style="width: 125px;">
@@ -151,7 +151,7 @@ $artikel = $blogs[0];
                             </div>
                             <div class="sub-block">
                                 <span id="autocomplete-pricing">
-                                    <p class="title output">€1.800,00</p>
+                                    <p class="title output">€1.782,00</p>
                                 </span>
                                 <p class="description" id="text-maand">Per maand</p>
                             </div>

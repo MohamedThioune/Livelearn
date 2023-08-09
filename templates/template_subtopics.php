@@ -1,20 +1,21 @@
 <?php /** Template Name: Subtopics */ ?>
 <?php
-    function strip_html_tags($text) {
-        $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-        $text = preg_replace("/\n{1,}/", "\n", $text); 
-        $text = str_replace("\n"," ",$text);
-        $text = str_replace("/"," ",$text);
-        $text = str_replace("&amp;"," ",$text);
-        $text = str_replace("&lt;"," ",$text);
-        $text = str_replace("&gt;"," ",$text);
-        $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
-        $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
-        return preg_replace($pattern, '', $text);
-    }
+    // function strip_html_tags($text) {
+    //     $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
+    //     $text = preg_replace("/\n{1,}/", "\n", $text); 
+    //     $text = str_replace("\n"," ",$text);
+    //     $text = str_replace("/"," ",$text);
+    //     $text = str_replace("&amp;"," ",$text);
+    //     $text = str_replace("&lt;"," ",$text);
+    //     $text = str_replace("&gt;"," ",$text);
+    //     $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
+    //     $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+    //     return preg_replace($pattern, '', $text);
+    // }
     global $wpdb;
     $ids = array_values($_POST);
     $table = $wpdb->prefix . 'databank';
+    // var_dump($ids);
     foreach ($ids as $key => $id) {
         $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$id);
         $artikels = $wpdb->get_results($sql)[0];
@@ -29,15 +30,7 @@
         $long_desc = strip_tags($artikels->long_description);
         $long_description = explode(' ',$long_desc);    
         $keywords = array_merge($title, $description, $long_description);
-        // foreach ($keywords as $key => $word) {
-        //     if (strpos($word, ' ') || strpos($word, '/')|| strpos($word, '\\')) {
-        //         unset($keywords[$key]);
-        //         $new_words = explode(' ', $word);
-        //         foreach ($new_words as $new_word) {
-        //             $keywords[] = $new_word;
-        //         }
-        //     }
-        // }
+        // var_dump($keywords);
         $tags = array();
         $onderwerpen = "";
         $categories = array(); 
@@ -68,16 +61,14 @@
                 'parent'  => $categories[0],
                 'hide_empty' => 0, // change to 1 to hide categores not having a single post
             ) 
-        );
-            
+        );  
         
         $skills = get_categories( array(
                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                 'parent'  => $categories[3],
                 'hide_empty' => 0, // change to 1 to hide categores not having a single post
             )
-            );
-
+        );
             
         $interesses = get_categories( array(
                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -115,6 +106,7 @@
                 $words_not_goods[]=$cat->cat_name;
             }
         }
+
         $occurrence = array_count_values(array_map('strtolower', $keywords));
         //    foreach($keywords as $wo){
         //     var_dump($wo);
@@ -127,9 +119,9 @@
                 continue;
             }
             foreach($categorys as $i=>$category){
-                // if ($i >20) {
-                    //     break;
-                    // }
+                if ($i >50) {
+                        break;
+                    }
                 $cat_slug = $category->slug;
                 $cat_name = $category->cat_name; 
                 if($occurrence[strtolower($category->cat_name)] >= 1)
@@ -138,6 +130,7 @@
                             array_push($tags, $category->cat_ID);
             }
         }
+        // var_dump($tags);
         if(empty($tags)){
             $occurrence = array_count_values(array_map('strtolower', $keywords));
             arsort($occurrence);

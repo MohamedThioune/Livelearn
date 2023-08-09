@@ -159,12 +159,13 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/playlist_icon.png" alt="load playlist"></button>
-                       <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
+                       <!--<button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
-                       </button>
+                       </button>-->
 
-                       <button type="button" class="btn btn-danger mt-4" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
+                       <button type="button" title="podcast playlist" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
                            playlist audios
+                           <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="40" height="40">
                        </button>
                    <div class="col-md-3">
                         
@@ -460,12 +461,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 console.log('searching podcast...')
             },
             success: function(success){
-                if (success==='') {
-                    console.log('no result for'+success)
-                    backAudioApiPlaylist.innerHTML = "<span class='text-center'>no result for '" + search + "'</span>";
-                } else {
-                    backAudioApiPlaylist.innerHTML=success;
-                }
+                backAudioApiPlaylist.innerHTML=success;
                 console.log('success',success)
             },error: function(error,status){
                 console.log('error',error);
@@ -473,7 +469,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 backAudioApiPlaylist.innerHTML = error;
             },complete: function(complete){
                 $('#spinner-search-audio-playlist').addClass('d-none');
-                console.log('complete');
+                console.log(complete);
             },
         });
     });
@@ -502,14 +498,13 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             },
             success: function(success){
                 alert(success);
-                console.log('result',success)
+                //console.log('result',success)
                 //document.getElementById('content-back-audio-playlist').innerHTML = success;
             },error: function(error,status){
                 console.log('error',error)
                 console.log('status',status)
             },complete: function(complete){
                 spinner.className = "d-none"
-                //$('#spinner-saving-podcast').addClass('d-none');
             },
         });
     }
@@ -517,7 +512,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 <!--end  function to save a playlist audion on databank-->
 
 
-<!--begin traitement podcast audio-->
+<!--begin traitement podcast audio remove now !!! -->
 <script type="text/javascript">
     $('#search_audio').on('input', function(e) {
         const search = e.target.value;
@@ -552,7 +547,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         });
     });
 </script>
-<!--end traitement podcast audio-->
+<!--end traitement podcast audio remove now !!! -->
 
 <script type="text/javascript">
     function uncheckAll() {
@@ -560,7 +555,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         let checkboxes = document.querySelectorAll('input[type=checkbox]');
         for (let i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
-            //console.log('::::::::::::::::::::'.checkboxes[i]);
         }
     }
 
@@ -601,14 +595,14 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // location.reload();
+                    location.reload();
                 },error:function() {
                     console.log('error');
                 },
-                complete:function(){
+                complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    location.reload();
+                    // location.reload();
                 }
             });
         });
@@ -671,7 +665,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('#loader').attr('hidden',false);
                     $('#select_field').attr('hidden',true);
                 },error:function(error){
-                    console.log("error:", error);
+                    console.log("error:");
                     document.getElementById('content-back-topics').innerHTML = error;
                 },success:function(success){
                     $('#loader').attr('hidden',true);
@@ -679,7 +673,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     console.log(success);
                     location.reload(); 
                 },complete:function(complete){
-                    console.log("complete:",complete);
+                    // console.log("complete:",complete);
                     $('#loader').attr('hidden',true);
                     $('#select_field').attr('hidden',true);
                 }
@@ -750,7 +744,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/livelearn/optie-bank',
+                url: '/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,

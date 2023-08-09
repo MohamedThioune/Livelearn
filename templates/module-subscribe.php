@@ -94,7 +94,7 @@ function woocommmerce_subscribe($information, $active){
 
 function mollie_card_subscribe($information, $active){
     $base_url = get_site_url();
-    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+    $global_mollie_key = "live_cntSF2RxdDCUK7wudptq2sVqRWHE3c";
     $global_price = 5;
     $mollie = new \Mollie\Api\MollieApiClient();
     $mollie->setApiKey($global_mollie_key);
@@ -151,7 +151,7 @@ function mollie_card_subscribe($information, $active){
 
 function makeApiCallMollie($endpoint, $params, $type) {
     // credentials
-    $api_key = "Bearer test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+    $api_key = "Bearer live_cntSF2RxdDCUK7wudptq2sVqRWHE3c";
 
     // initialize curl
     $ch = curl_init();
