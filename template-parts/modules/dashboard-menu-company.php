@@ -2,7 +2,7 @@
     global $wp;
     $global_product_id = 9873;
     $global_price = 5;
-    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+    $global_mollie_key = "live_cntSF2RxdDCUK7wudptq2sVqRWHE3c";
 
     $url = $wp->request;
     
@@ -32,7 +32,7 @@
 
     /** Woocommerce API client for php - list subscriptions **/
     $endpoint = "subscriptions";
-    //$subscriptions = $woocommerce->get($endpoint, $parameters = []);
+    $subscriptions = $woocommerce->get($endpoint, $parameters = []);
 
     //Credit cards 
     $mollie = new \Mollie\Api\MollieApiClient();
@@ -88,8 +88,6 @@
     $total = $price + $tax_price;
     
     $quantity = (isset($abonnement->line_items[0]->quantity)) ? $abonnement->line_items[0]->quantity : $abonnement->metadata->quantity;
-    var_dump($quantity);
-    var_dump($team);
     if($team != $quantity && !empty($abonnement) && $instrument == 'invoice'){
         /** Woocommerce API client for php - update subscription **/
         $endpoint_put = "subscriptions/" . $abonnement->id;
