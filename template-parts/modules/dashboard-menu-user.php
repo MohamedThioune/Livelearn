@@ -88,11 +88,12 @@ style="overflow-x: hidden !important;">
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="/dashboard/user/assessment/" class="d-flex">
+            <a href="#" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
                 <?php
-                if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
+                // if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
                 ?>
+                <span class="comming-soon">Coming Soon</span>
             </a>
         </li>
         <li class="elementTextDashboard">
