@@ -1876,132 +1876,150 @@ function strip_html_tags($text) {
 //   use Google\Cloud\Scheduler\V1\Job\State;
 
 
-function Artikel_From_Company(){
+function Artikel_From_Company($data){
   global $wpdb;
   $company = null;
+  $list = array();
   $table = $wpdb->prefix.'databank';
-  // $data = array();
+  $datas = array();
 
   
   $list_company=[
-    'WorkPlace Academy'=>'https://workplaceacademy.nl/',
-    'Ynno'=>'https://www.ynno.com/',
-    'DeZZP'=>'https://www.dezzp.nl/',
-    'Aestate'=>'https://www.aestate.nl/',
-    'Alba Concepts'=>'https://albaconcepts.nl/',
-    'AM'=>'https://www.am.nl/',
-    'Limoonworks'=>'https://limoonworks.nl/',
-    // 'DWA'=>'https://www.dwa.nl/',
-    'Van Spaendonck'=>'https://www.vanspaendonck.nl/',
-    'PTG-advies'=>'https://ptg-advies.nl/',
-    'Rever'=>'https://rever.nl/',
-    'Reworc'=>'https://www.reworc.com/',
-    'Sweco'=>'https://www.sweco.nl/',
-    'Co-pilot'=>'https://www.copilot.nl/',
-    'Agile Scrum Group'=>'https://agilescrumgroup.nl/',
-    'Horizon'=>'https://horizontraining.nl/',
-    'Kenneth Smit'=>'https://www.kennethsmit.com/',
-    // 'Autoblog'=>'https://www.autoblog.nl/',
-    'Crypto university'=>'https://www.cryptouniversity.nl/',
-    'WineLife'=>'https://www.winelife.nl/',
-    'Perswijn'=>'https://perswijn.nl/',
-    'Koken met Kennis'=>'https://www.kokenmetkennis.nl/',
-    'Minkowski'=>'https://minkowski.org/',
-    'KIT publishers'=>'https://kitpublishers.nl/',
-    'BeByBeta'=>'https://www.betastoelen.nl/',
-    'Zooi'=>'https://zooi.nl/',
-    'Growth Factory'=>'https://www.growthfactory.nl/',
-    'Influid'=>'https://influid.nl/',
-    'MediaTest'=>'https://mediatest.nl/',
-    'MeMo2'=>'https://memo2.nl/',
-    'Impact Investor'=>'https://impact-investor.com/',
-    'Equalture'=>'https://www.equalture.com/',
-    'Zorgmasters'=>'https://zorgmasters.nl/',
-    'AdSysco'=>'https://adsysco.nl/',
-    'Transport en Logistiek Nederland'=>'https://www.tln.nl/',
-    'Financieel Fit'=>'https://www.financieelfit.nl/',
-    'Business Insider'=>'https://www.businessinsider.nl/',
-    'Frankwatching'=>'https://www.frankwatching.com/',
-    'MarTech'=>'https://martech.org/',
-    'Search Engine Journal'=>'https://www.searchenginejournal.com/',
-    'Search Engine Land'=>'https://searchengineland.com/',
-    'TechCrunch'=>'https://techcrunch.com/',
-    'The Bruno Effect'=>'https://magazine.thebrunoeffect.com/',
-    'Crypto Insiders'=>'https://www.crypto-insiders.nl/',
-    'HappyHealth'=> 'https://happyhealthy.nl/',
-    'Focus'=>'https://focusmagazine.nl/',
-    'Chip Foto Magazine'=> 'https://www.chipfotomagazine.nl/',
-    'Vogue'=> 'https://www.vogue.nl/',
-    'TrendyStyle'=>'https://www.trendystyle.net/',
-    'WWD'=> 'https://wwd.com/',
-    'Purse Blog'=> 'https://www.purseblog.com/',
-    'Coursera'=> 'https://blog.coursera.org/',
-    'Udemy'=> 'https://blog.udemy.com/',
-    'CheckPoint'=> 'https://blog.checkpoint.com/',
-    'De laatste meter'=> 'https://www.delaatstemeter.nl/',
-    'ManagementSite'=> 'https://www.managementpro.nl/',
-    '1 Minute Manager'=> 'https://www.1minutemanager.nl/',
-    'De Strafschop'=> 'https://www.strafschop.nl/',
-    'JongeBazen'=> 'https://www.jongebazen.nl/',
-    'Expeditie Duurzaam'=> 'https://www.expeditieduurzaam.nl/',
-    'Pure Luxe'=>'https://pureluxe.nl/',
-    'WatchTime'=>'https://www.watchtime.com/',
-    'Monochrome'=>'https://monochrome-watches.com/',
-    'Literair Nederland'=>'https://www.literairnederland.nl/',
-    'Tzum'=>'https://www.tzum.info/',
-    'Developer'=>'https://www.developer-tech.com/',
-    'SD Times'=>'https://sdtimes.com/',
-    'GoDaddy'=>'https://www.godaddy.com/garage/',
-    'Bouw Wereld'=>'https://www.bouwwereld.nl/',
-    'Vastgoed actueel'=>'https://vastgoedactueel.nl/',
-    'The Real Deal'=>'https://therealdeal.com/',
-    'HousingWire'=>'https://www.housingwire.com/',
-    'AfterSales'=>'https://aftersalesmagazine.nl/',
-    'CRS Consulting'=>'https://crsconsultants.nl/',
-    'Commercial Construction & Renovation'=>'https://www.ccr-mag.com/',
-    'Training Magazine'=>'https://www.trainingmag.com/',
-    'MedCity News'=>'https://www.medcitynews.com/',
-    'Cocktail Enthusiast'=>'https://www.cocktailenthusiast.com/',
-    'Mr. Online'=>'https://www.mronline.nl/',
-    'Cash'=>'https://www.cash.nl/',
-    'Kookles thuis'=>'https://www.kooklesthuis.com/',
-    'Mediabistro'=>'https://www.mediabistro.com/',
-    'ProBlogger'=>'https://problogger.com/',
-    'Media Shift'=>'https://www.mediashift.org/',
-    'Warehouse Totaal'=>'https://www.warehousetotaal.nl/',
-    'CS digital'=>'https://csdm.online/',
-    'Analytics Insight'=>'https://www.analyticsinsight.net/',
-    'Wissenraet'=>'https://www.vanspaendonck-wispa.nl/',
-    '9to5Mac'=>'https://9to5mac.com/',
-    'Invest International'=>'https://investinternational.nl/',
-    'Racefiets Blog'=>'https://racefietsblog.nl/',
-    'Darts actueel'=>'https://www.dartsactueel.nl/',
-    'Hockey.nl'=>'https://hockey.nl/',
-    'Hockeykrant'=>'https://hockeykrant.nl/',
-    'Tata Nexarc'=>'https://blog.tatanexarc.com/',
-    'Incodocs'=>'https://incodocs.com/blog/',
-    'Recruitement Tech'=>'https://www.recruitmenttech.nl/',
-    'Healthcare Weekly'=>'https://healthcareweekly.com/',
-    'Wellness Mama'=>'https://wellnessmama.com/',
-    'Logistics Business'=>'https://www.logisticsbusiness.com/',
-    '20Cube'=>'https://www.20cube.com/',
-    'Outside'=>'https://velo.outsideonline.com/',
-    'Trainer Road'=>'https://www.trainerroad.com/blog/',
-    'AllOver Media'=>'https://allovermedia.com/',
-    'The Partially Examined Life'=>'https://partiallyexaminedlife.com/',
-    'The Future Organization'=>'https://thefutureorganization.com/'
+    [
+      'WorkPlace Academy'=>'https://workplaceacademy.nl/',
+      'Ynno'=>'https://www.ynno.com/',
+      'DeZZP'=>'https://www.dezzp.nl/',
+      'Aestate'=>'https://www.aestate.nl/',
+      'Alba Concepts'=>'https://albaconcepts.nl/',
+      'AM'=>'https://www.am.nl/',
+      'Limoonworks'=>'https://limoonworks.nl/',
+      'DWA'=>'https://www.dwa.nl/',
+      'Van Spaendonck'=>'https://www.vanspaendonck.nl/',
+      'PTG-advies'=>'https://ptg-advies.nl/',
+      'Rever'=>'https://rever.nl/',
+      'Reworc'=>'https://www.reworc.com/',
+      'Sweco'=>'https://www.sweco.nl/',
+      'Co-pilot'=>'https://www.copilot.nl/',
+      'Agile Scrum Group'=>'https://agilescrumgroup.nl/'
+    ],
+    [
+      'Horizon'=>'https://horizontraining.nl/',
+      'Kenneth Smit'=>'https://www.kennethsmit.com/',
+      'Autoblog'=>'https://www.autoblog.nl/',
+      'Crypto university'=>'https://www.cryptouniversity.nl/',
+      'WineLife'=>'https://www.winelife.nl/',
+      'Perswijn'=>'https://perswijn.nl/',
+      'Koken met Kennis'=>'https://www.kokenmetkennis.nl/',
+      'Minkowski'=>'https://minkowski.org/',
+      'KIT publishers'=>'https://kitpublishers.nl/',
+      'BeByBeta'=>'https://www.betastoelen.nl/',
+      'Zooi'=>'https://zooi.nl/',
+      'Growth Factory'=>'https://www.growthfactory.nl/',
+      'Influid'=>'https://influid.nl/',
+      'MediaTest'=>'https://mediatest.nl/',
+      'MeMo2'=>'https://memo2.nl/'
+    ],
+    [
+      'Impact Investor'=>'https://impact-investor.com/',
+      'Equalture'=>'https://www.equalture.com/',
+      'Zorgmasters'=>'https://zorgmasters.nl/',
+      'AdSysco'=>'https://adsysco.nl/',
+      'Transport en Logistiek Nederland'=>'https://www.tln.nl/',
+      'Financieel Fit'=>'https://www.financieelfit.nl/',
+      'Business Insider'=>'https://www.businessinsider.nl/',
+      'Frankwatching'=>'https://www.frankwatching.com/',
+      'MarTech'=>'https://martech.org/',
+      'Search Engine Journal'=>'https://www.searchenginejournal.com/',
+      'Search Engine Land'=>'https://searchengineland.com/',
+      'TechCrunch'=>'https://techcrunch.com/',
+      'The Bruno Effect'=>'https://magazine.thebrunoeffect.com/',
+      'Crypto Insiders'=>'https://www.crypto-insiders.nl/',
+      'HappyHealth'=> 'https://happyhealthy.nl/'
+    ],
+    [
+      'Focus'=>'https://focusmagazine.nl/',
+      'Chip Foto Magazine'=> 'https://www.chipfotomagazine.nl/',
+      'Vogue'=> 'https://www.vogue.nl/',
+      'TrendyStyle'=>'https://www.trendystyle.net/',
+      'WWD'=> 'https://wwd.com/',
+      'Purse Blog'=> 'https://www.purseblog.com/',
+      'Coursera'=> 'https://blog.coursera.org/',
+      'Udemy'=> 'https://blog.udemy.com/',
+      'CheckPoint'=> 'https://blog.checkpoint.com/',
+      'De laatste meter'=> 'https://www.delaatstemeter.nl/',
+      'ManagementSite'=> 'https://www.managementpro.nl/',
+      '1 Minute Manager'=> 'https://www.1minutemanager.nl/',
+      'De Strafschop'=> 'https://www.strafschop.nl/',
+      'JongeBazen'=> 'https://www.jongebazen.nl/',
+      'Expeditie Duurzaam'=> 'https://www.expeditieduurzaam.nl/'
+    ],
+    [
+      'Pure Luxe'=>'https://pureluxe.nl/',
+      'WatchTime'=>'https://www.watchtime.com/',
+      'Monochrome'=>'https://monochrome-watches.com/',
+      'Literair Nederland'=>'https://www.literairnederland.nl/',
+      'Tzum'=>'https://www.tzum.info/',
+      'Developer'=>'https://www.developer-tech.com/',
+      'SD Times'=>'https://sdtimes.com/',
+      'GoDaddy'=>'https://www.godaddy.com/garage/',
+      'Bouw Wereld'=>'https://www.bouwwereld.nl/',
+      'Vastgoed actueel'=>'https://vastgoedactueel.nl/',
+      'The Real Deal'=>'https://therealdeal.com/',
+      'HousingWire'=>'https://www.housingwire.com/',
+      'AfterSales'=>'https://aftersalesmagazine.nl/',
+      'CRS Consulting'=>'https://crsconsultants.nl/',
+      'Commercial Construction & Renovation'=>'https://www.ccr-mag.com/'
+    ],
+    [
+      'Training Magazine'=>'https://www.trainingmag.com/',
+      'MedCity News'=>'https://www.medcitynews.com/',
+      'Cocktail Enthusiast'=>'https://www.cocktailenthusiast.com/',
+      'Mr. Online'=>'https://www.mronline.nl/',
+      'Cash'=>'https://www.cash.nl/',
+      'Kookles thuis'=>'https://www.kooklesthuis.com/',
+      'Mediabistro'=>'https://www.mediabistro.com/',
+      'ProBlogger'=>'https://problogger.com/',
+      'Media Shift'=>'https://www.mediashift.org/',
+      'Warehouse Totaal'=>'https://www.warehousetotaal.nl/',
+      'CS digital'=>'https://csdm.online/',
+      'Analytics Insight'=>'https://www.analyticsinsight.net/',
+      'Wissenraet'=>'https://www.vanspaendonck-wispa.nl/',
+      '9to5Mac'=>'https://9to5mac.com/',
+      'Invest International'=>'https://investinternational.nl/'
+    ],
+    [
+      'Racefiets Blog'=>'https://racefietsblog.nl/',
+      'Darts actueel'=>'https://www.dartsactueel.nl/',
+      'Hockey.nl'=>'https://hockey.nl/',
+      'Hockeykrant'=>'https://hockeykrant.nl/',
+      'Tata Nexarc'=>'https://blog.tatanexarc.com/',
+      'Incodocs'=>'https://incodocs.com/blog/',
+      'Recruitement Tech'=>'https://www.recruitmenttech.nl/',
+      'Healthcare Weekly'=>'https://healthcareweekly.com/',
+      'Wellness Mama'=>'https://wellnessmama.com/',
+      'Logistics Business'=>'https://www.logisticsbusiness.com/',
+      '20Cube'=>'https://www.20cube.com/',
+      'Outside'=>'https://velo.outsideonline.com/',
+      'Trainer Road'=>'https://www.trainerroad.com/blog/',
+      'AllOver Media'=>'https://allovermedia.com/',
+      'The Partially Examined Life'=>'https://partiallyexaminedlife.com/'
+    ],
+    [
+      'The Future Organization'=>'https://thefutureorganization.com/'
+    ]
   ];
   
   $users = get_users();
-
-  $data = array();
 
   $args = array(
       'post_type' => 'company', 
       'posts_per_page' => -1,
   );
+  $groups=$data['id'];
+  $list=$list_company[$groups];
+  // var_dump($list);
   $companies = get_posts($args);
-  foreach ($list_company as $key => $website) {
+  foreach ($list as $key => $website) {
     $author_id=null;
       foreach($companies as $companie){       
         if(strtolower($companie->post_title) == strtolower($key)){
@@ -2066,7 +2084,7 @@ function Artikel_From_Company(){
                 {
                   if (!isset($images['data']['status']) && $images['data']['status']!=404 && $images['data']['status']!=401) {
                     $status = 'extern';
-                    $data = array(
+                    $datas = array(
                       'titel' => $article['title']['rendered'],
                       'type' => 'Artikel',
                       'videos' => NULL, 
@@ -2086,7 +2104,7 @@ function Artikel_From_Company(){
                     );
                   }else {
                     $status = 'extern';
-                    $data = array(
+                    $datas = array(
                       'titel' => $article['title']['rendered'],
                       'type' => 'Artikel',
                       'videos' => NULL, 
@@ -2110,7 +2128,7 @@ function Artikel_From_Company(){
                 if(!isset($result_title[0]) )
                 {
                   $status = 'extern';
-                  $data = array(
+                  $datas = array(
                     'titel' => $article['title']['rendered'],
                     'type' => 'Artikel',
                     'videos' => NULL, 
@@ -2133,10 +2151,10 @@ function Artikel_From_Company(){
               // echo "Selected option: $text (value=$value)<br>";
               try
               {
-                $wpdb->insert($table,$data);
+                $wpdb->insert($table,$datas);
                 // echo $key."  ".$wpdb->last_error."<br>";
                 $id_post = $wpdb->insert_id;
-                // var_dump($data);
+                // var_dump($datas);
               }catch(Exception $e) {
                 echo $e->getMessage();
               }
