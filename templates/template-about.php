@@ -106,14 +106,6 @@
     .content-community-overview .boxOne3-1 {
         height: 270px;
     }
-
-
-
-
-
-    }
-
-
 </style>
 
 <div class="content-community-overview">
