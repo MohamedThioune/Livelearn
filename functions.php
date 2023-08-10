@@ -1643,7 +1643,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'community_share',
   ));
 
-  register_rest_route ('custom/v1', '/assessments/', array(
+  register_rest_route ('custom/v1', '/assessments', array(
     'methods' => 'GET',
     'callback' => 'getAssessments',
   ));
@@ -1700,7 +1700,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'save_user_views',
   ));
 
-  register_rest_route ('custom/v1', '/databank', array(
+  register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
   ));
