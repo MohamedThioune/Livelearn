@@ -2,7 +2,6 @@
 <?php // /audio-api ?>
 <?php
 global $wpdb;
-
 $table = $wpdb->prefix . 'databank';
 
 //good keys from daniel account
@@ -184,13 +183,15 @@ if ($audio_search){
     }else{
         $xml = simplexml_load_file($url);
         $podcasts="";
-        //var_dump($xml->channel[0]);
         foreach($xml->channel[0] as $key => $pod) {
             if($pod->enclosure->attributes()->url) {
                 $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
                 $mp3 = $pod->enclosure->attributes()->url;
-                $podcasts .= "$mp3~$title_podcast~$description_podcast|";
+                $date =(string)$pod->pubDate;
+                $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
+
+                $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio|";
             }
         }
         //var_dump($podcasts);die;
