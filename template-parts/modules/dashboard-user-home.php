@@ -19,7 +19,7 @@ $user = get_current_user_id();
 $courses = array();
 $course_id = array();
 $random_id = array();
-$count = array('Opleidingen' => 0, 'Workshop' => 0, 'E-learning' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0);
+$count = array('Opleidingen' => 0, 'Workshop' => 0, 'Podcast' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0);
 
 $categories = array();
 
@@ -481,6 +481,7 @@ $args = array(
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
+
 foreach ($global_courses as $key => $course) {
     //Control visibility
     $bool = true;
@@ -512,7 +513,7 @@ foreach ($global_courses as $key => $course) {
 
     if(empty($data))
         null;
-    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
+    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel" && $course_type != "Podcast")
         if($data){
             $date_now = strtotime(date('Y-m-d'));
             $data = strtotime(str_replace('/', '.', $data));
@@ -567,7 +568,7 @@ foreach ($global_courses as $key => $course) {
                     break;
                 }
             }
-        }
+        } 
 }
 
 // $user_informations
@@ -579,7 +580,6 @@ if (!empty($user_post_view))
     $is_view = true;
     $max_points = 10;
     $recommended_courses = array();
-    $count_recommended_course = 0;
 
     // browse the array os post type as courses obtain via database views
     foreach($user_post_view as $key => $post_viewed) {
@@ -647,9 +647,6 @@ if (!empty($user_post_view))
                     if(!in_array($course->post_author, $teachers))
                         array_push($teachers, $course->post_author);
                 }
-            $count_recommended_course = count($recommended_courses);
-            if($count_recommended_course == 8)
-                break;
         }
     }
 }
@@ -675,7 +672,7 @@ if (empty($recommended_courses)){
 }
 //Activitien
 shuffle($recommended_courses);
-
+$recommended_courses = array_slice($recommended_courses, 0, 12, true);
 /*
 * *
 */
@@ -747,7 +744,7 @@ if(isset($_GET['message']))
             <ul class="nav">
                 <li class="nav-one"><a href="#All" class="current">All</a></li>
                 <li class="nav-two"><a href="#Artikel" class="load_content_type">Artikel</a></li>
-                <li class="nav-three"><a href="#E-learning" class="load_content_type">E-learning</a></li>
+                <li class="nav-three"><a href="#Podcast" class="load_content_type">Podcast</a></li>
                 <li class="nav-four "><a href="#Opleidingen" class="load_content_type">Opleidingen</a></li>
                 <li class="nav-five "><a href="#Video" class="load_content_type">Video</a></li>
                 <li class="nav-seven "><a href="#Trends">Trends</a></li>
@@ -906,6 +903,9 @@ if(isset($_GET['message']))
 
                 <ul id="Artikel" class="hide">
                     <div class="block-new-card-course" id="autocomplete_recommendation_Artikel">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1047,19 +1047,19 @@ if(isset($_GET['message']))
                         if(!$find)
                             echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
-                <ul id="E-learning" class="hide" id="autocomplete_recommendation_E-learning">
-                    <div class="block-new-card-course">
+                <ul id="Podcast" class="hide" >
+                    <div class="block-new-card-course" id="autocomplete_recommendation_Podcast">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Podcast" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
-                        if(isset($count['E-learning']))
-                            if($count['E-learning'] > 0)
+                        if(isset($count['Podcast']))
+                            if($count['Podcast'] > 0)
                                 foreach($recommended_courses as $course){
                                     //Date and Location
                                     $location = 'Online';
@@ -1086,7 +1086,7 @@ if(isset($_GET['message']))
 
                                     //Course Type
                                     $course_type = get_field('course_type', $course->ID);
-                                    if($course_type != 'E-learning')
+                                    if($course_type != 'Podcast')
                                         continue;
 
                                     /*
@@ -1196,14 +1196,14 @@ if(isset($_GET['message']))
                         if(!$find)
                             echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_E-learning" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
-                <ul id="Opleidingen" class="hide"  id="autocomplete_recommendation_Opleidingen" >
-                    <div class="block-new-card-course">
+                <ul id="Opleidingen" class="hide">
+                    <div class="block-new-card-course" id="autocomplete_recommendation_Opleidingen">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1345,14 +1345,14 @@ if(isset($_GET['message']))
                         if(!$find)
                             echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
-                <ul id="Video" class="hide" id="autocomplete_recommendation_Video">
-                    <div class="block-new-card-course">
+                <ul id="Video" class="hide">
+                    <div class="block-new-card-course" id="autocomplete_recommendation_Video">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1494,9 +1494,6 @@ if(isset($_GET['message']))
                         if(!$find)
                             echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
