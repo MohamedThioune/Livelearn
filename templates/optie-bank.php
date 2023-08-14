@@ -71,14 +71,16 @@ if($optie == "✔"){
         $id_post = wp_insert_post($args, true);
         //var_dump($course->podcasts);
         $podcasts = explode('|', $course->podcasts);
+        $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
         foreach ($podcasts as $item) {
             $podcasts_playlist = [];
             $podcast = explode('~', $item);
             $podcasts_playlist['podcast_url'] = $podcast[0];
-            $podcasts_playlist['podcast_image'] = $course->image_xml;
             $podcasts_playlist['podcast_title'] = $podcast[1];
             $podcasts_playlist['podcast_description'] = $podcast[2];
+            $podcasts_playlist['podcast_date'] = $podcast[3];
+            $podcasts_playlist['podcast_image'] = $podcast[4];
 
             $podcasts_playlists [] = $podcasts_playlist;
         }
