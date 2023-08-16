@@ -722,7 +722,6 @@ remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_pr
 
 function recommended_course($data)
 {
-  global $wpdb;
   //The user
   $user = $data['id'];
   
@@ -811,181 +810,198 @@ function recommended_course($data)
   if(!empty($topics_internal))
       foreach($topics_internal as $value)
           array_push($topics, $value);
+  
+  //Experts
+  $postAuthorSearch = array();
+  $experts = get_user_meta($user, 'expert');
+  $postAuthorSearch = $experts;
 
-/** 
-* Views beginning      
-*/
-
-/** 
- * New way of getting Views from database
-*/ 
-
-// View table name
-$table_tracker_views = $wpdb->prefix . 'tracker_views';
-// Get id of courses viewed from db
-$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'course' ");
-$all_user_views = $wpdb->get_results($sql_request);
-$id_courses_viewed = array_column($all_user_views,'data_id');
-
-
-/** 
- *  Get courses viewed from db
- */
-$user_post_view = get_posts( 
-    array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'order' => 'DESC',
-        'include' => $id_courses_viewed,
-        'posts_per_page' => -1
-    )
-);
-
-//Experts
-$postAuthorSearch = array();
-$experts = array();
-$experts = get_user_meta($user, 'expert');
-$postAuthorSearch = $experts;
-$teachers = array();
-
-// Get id of experts viewed from db
-$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'expert'");
-$all_expert_viewed = $wpdb->get_results($sql_request);
-
-//truncate $postAuthorSearch to avoid
-if (!empty($user_post_view) || !empty($postAuthorSearch))
-    $postAuthorSearch = (empty($all_expert_viewed)) ? $postAuthorSearch : array_merge(array_column($all_expert_viewed, 'data_id'), $postAuthorSearch);
-
-// Get the courses of experts viewed from db 
-$args = array(
+  //Views expert
+  if (!empty($user_post_view))
+  {
+    $view_my_experts = (get_field('views_user', $user_post_view->ID));
+    $id_view_experts = array_column($view_my_experts, 'view_id');
+    $id_view_experts = array_unique($id_view_experts);
+    $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
+  }
+  $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
     'posts_per_page' => 200
-);
-$global_courses = get_posts($args);
-shuffle($global_courses);
+  );
+  $global_courses = get_posts($args);
+  shuffle($global_courses);
+  foreach ($global_courses as $key => $course) {    
+      /*
+      *  Date and Location
+      */
+      $data = array();
+      $day = '-';
+      $month = '';
+      $location = 'Online';
 
-foreach ($global_courses as $key => $course) {
-    //Control visibility
-    $course->visibility = get_field('visibility',$course->ID) ?? [];
-    $author = get_user_by( 'ID', $course -> post_author  );
-    $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
-    if ($course->visibility != []) 
-        if ($author_company != $current_user_company)
-          continue;
-    // Date and Location
-    $data = array();
+      $datas = get_field('data_locaties', $course->ID);
 
-    $datas = get_field('data_locaties', $course->ID);
+      if($datas){
+          $data = $datas[0]['data'][0]['start_date'];
+          if($data != ""){
+              $day = explode('/', explode(' ', $data)[0])[0];
+              $mon = explode('/', explode(' ', $data)[0])[1];
+              $month = $calendar[$mon];
+          }
+          $location = $datas[0]['data'][0]['location'];
+      }else{
+          $datum = get_field('data_locaties_xml', $course->ID);
 
-    if($datas)
-        $data = $datas[0]['data'][0]['start_date'];
-    else{
-        $datum = get_field('data_locaties_xml', $course->ID);
+          if($datum)
+              if(isset($datum[0]['value']))
+                  $element = $datum[0]['value'];
 
-        if($datum)
-            if(isset($datum[0]['value']))
-                $element = $datum[0]['value'];
-        if(!isset($element))
-            continue;
-        $datas = explode('-', $element);
-        $data = $datas[0];
-    }
+          if(!isset($element))
+              continue;
 
-    //Course Type
-    $course_type = get_field('course_type', $course->ID);
+          $datas = explode('-', $element);
 
-    if(empty($data))
+          $data = $datas[0];
+          $day = explode('/', explode(' ', $data)[0])[0];
+          $month = explode('/', explode(' ', $data)[0])[1];
+          $month = $calendar[$month];
+          $location = $datas[2];
+      }
+
+      //Course Type
+      $course_type = get_field('course_type', $course->ID);
+
+      if(empty($data))
         null;
-    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
+      else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
         if($data){
-            $date_now = strtotime(date('Y-m-d'));
-            $data = strtotime(str_replace('/', '.', $data));
-            if($data < $date_now)
-                continue;
+          $date_now = strtotime(date('Y-m-d'));
+          $data = strtotime(str_replace('/', '.', $data));
+          if($data < $date_now)
+            continue;
         }
+      /*
+      * End
+      */
 
-    //Preferences categories
-    $category_default = get_field('categories', $course->ID);
-    $category_xml = get_field('category_xml', $course->ID);
-    $read_category = array();
-    if(!empty($category_default))
-        foreach($category_default as $item)
-            if($item)
-                if(!in_array($item['value'],$read_category))
-                    array_push($read_category,$item['value']);
+      /** Thumbnails **/
+      $course->image = get_field('preview', $course->ID)['url'];
+      if(!$course->image){
+          $course->image = get_the_post_thumbnail_url($course->ID);
+          if(!$course->image)
+              $course->image = get_field('url_image_xml', $course->ID);
+                  if(!$course->image)
+                      $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+      }
+      
+      //Image author
+      $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+      $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-    else if(!empty($category_xml))
-        foreach($category_xml as $item)
-            if($item)
-                if(!in_array($item['value'],$read_category))
-                    array_push($read_category,$item['value']);
+      //Preferences categories
+      $category_default = get_field('categories', $course->ID);
+      $category_xml = get_field('category_xml', $course->ID);
+      $read_category = array();
+      if(!empty($category_default))
+          foreach($category_default as $item)
+              if($item)
+                  if(!in_array($item['value'],$read_category))
+                      array_push($read_category,$item['value']);
 
-    foreach($topics as $topic_value){
-        if($read_category)
-            if(in_array($topic_value, $read_category) ){
-                if(!in_array($course->ID, $course_id)){
-                    array_push($course_id, $course->ID);
-                    array_push($courses, $course);
-                    break;
-                }
-        }
-    }
+      else if(!empty($category_xml))
+          foreach($category_xml as $item)
+              if($item)
+                  if(!in_array($item['value'],$read_category))
+                      array_push($read_category,$item['value']);
 
-    
+      foreach($topics as $topic_value){
+          if($read_category)
+              if(in_array($topic_value, $read_category) ){
+                  if(!in_array($course->ID, $course_id)){
+                      array_push($course_id, $course->ID);
+                      array_push($courses, $course);
+                      break;
+                  }
+          }
+      }
 
-    //Preference author
-    if($experts)
-        if(in_array($course->post_author, $experts)){
-            if(!in_array($course->ID, $course_id)){
-                array_push($course_id, $course->ID);
-                array_push($courses, $course);
-            }
-        }
+      //Preference author
+      if($experts)
+          if(in_array($course->post_author, $experts)){
+              if(!in_array($course->ID, $course_id)){
+                  array_push($course_id, $course->ID);
+                  array_push($courses, $course);
+              }
+          }
 
-    //Preference expert
-    $experties = get_field('experts', $course->ID);
-    if($experties && $experts)
-        foreach($experties as $topic_expert){
-            if(in_array($topic_expert, $experts)){
-                if(!in_array($course->ID, $course_id)){
-                    array_push($course_id, $course->ID);
-                    array_push($courses, $course);
-                    break;
-                }
-            }
-        }
-}
+      //Preference expert
+      $experties = get_field('experts', $course->ID);
+      if($experties && $experts)
+          foreach($experties as $topic_expert){
+              if(in_array($topic_expert, $experts)){
+                  if(!in_array($course->ID, $course_id)){
+                      array_push($course_id, $course->ID);
+                      array_push($courses, $course);
 
+                      break;
+                  }
+              }
+          }
 
+  }
+  
+  //Empty courses belong to news user(No topics & Experts followed)
+  if(empty($courses)){
+    $courses = array_slice($global_courses, 0, 200);
+    shuffle($courses);
+  }
 
-// $user_informations
-// Views credential
-$is_view = false;
-if (!empty($user_post_view))
-{
-    
+  //Views credentials
+  $is_view = false;
+
+  if (!empty($user_post_view))
+  {
     $courses_id = array();
     $is_view = true;
+
+    $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
-    $count_recommended_course = 0;
 
-    // browse the array os post type as courses obtain via database views
-    foreach($user_post_view as $key => $post_viewed) {
-        if(!$post_viewed)
+    
+    foreach($all_user_views as $key => $view) {
+        if(!$view['course'])
             continue;
 
         foreach ($courses as $key => $course) {
             $points = 0;
+            $course->image = "";
+            $course->author_image = "";
 
-            //Read category viewed - get categories from course view
+            /*
+            * Thumbnails
+            */
+            $course->image = get_field('preview', $course->ID)['url'];
+            if(!$course->image){
+                $course->image = get_the_post_thumbnail_url($course->ID);
+                if(!$course->image)
+                    $course->image = get_field('url_image_xml', $course->ID);
+                        if(!$course->image)
+                            $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+            }
+            
+            //Image author
+            $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+            $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+            //Read category viewed
             $read_category_view = array();
-            $category_default = get_field('categories', $post_viewed->ID);
-            $category_xml = get_field('category_xml', $post_viewed->ID);
+            $category_default = get_field('categories', $view['course']->ID);
+            $category_xml = get_field('category_xml', $view['course']->ID);
             if(!empty($category_default))
                 foreach($category_default as $item)
                     if($item)
@@ -999,10 +1015,10 @@ if (!empty($user_post_view))
                             array_push($read_category_view, $item['value']);
 
 
-            //Read category course - get categories from course
+            //Read category course
             $read_category_course = array();
-            $category_default = get_field('categories', $course->ID);
-            $category_xml = get_field('category_xml', $course->ID);
+            $category_default = get_field('categories', $view['course']->ID);
+            $category_xml = get_field('category_xml', $view['course']->ID);
             if(!empty($category_default))
                 foreach($category_default as $item)
                     if($item)
@@ -1016,7 +1032,7 @@ if (!empty($user_post_view))
                             array_push($read_category_course, $item['value']);
 
             //Price view
-            $view_prijs = get_field('price', $post_viewed->ID);
+            $view_prijs = get_field('price', $view['course']->ID);
 
             foreach($read_category_view as $value){
                 if($points == 6)
@@ -1024,57 +1040,82 @@ if (!empty($user_post_view))
                 if(in_array($value, $read_category_course))
                     $points += 3;
             }
-            if ($post_viewed->post_author == $course->post_author)
+            if ($view['course']->post_author == $course->post_author) 
                 $points += 3;
             if ($view_prijs <= $course->price)
                 $points += 1;
-
+            
             $percent = abs(($points/$max_points) * 100);
             if ($percent >= 50)
                 if(!in_array($course->ID, $random_id)){
-                    if(get_field('course_type', $course->ID))
-                        $count[get_field('course_type', $course->ID)]++;
                     array_push($random_id, $course->ID);
                     array_push($recommended_courses, $course);
-
-                    if(!in_array($course->post_author, $teachers))
-                        array_push($teachers, $course->post_author);
                 }
-            $count_recommended_course = count($recommended_courses);
-            if($count_recommended_course == 15)
-                break;
         }
     }
-}
+  }
 
-
-//Must be the end
-
-arsort($count);
-$count_trend = array_slice($count, 5, 4, true);
-$count = array_slice($count, 0, 4, true);
-
-$count_trend_keys = array_keys($count_trend);
-
-$keys = array_keys($count);
-shuffle($keys);
-$count = array_merge(array_flip($keys), $count);
-
-$bool = false;
-
-if (empty($recommended_courses)){
-    $courses_id = array();
+  if(empty($recommended_courses))
     $recommended_courses = $courses;
-    $bool = true;
-}
+  else
+    $recommended_courses = array_slice($recommended_courses, 0, 50); 
 
+  $course_id = array();
+  $random_id = array(); 
+  if (!empty($recommended_courses)) {
+    $current_user_id = $user;
+    $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+    //Fix fadel
+    //$outcomes_recommended_courses = $recommended_courses;
+    $outcomes_recommended_courses = array();
+    foreach ($recommended_courses as $key => $course) {
+        $course->visibility = get_field('visibility', $course->ID) ?? [];
+        $author = get_user_by('ID', $course->post_author);
+        $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+        if ($course->visibility != [])
+            if ($author_company != $current_user_company)
+                continue;
 
-shuffle($recommended_courses);
+        $author_img = get_field('profile_img',  'user_' . $author->ID);
+        $author_img = $author_img ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course->experts = array();
+        $experts = get_field('experts', $course->ID);
+        if (!empty($experts))
+            foreach ($experts as $key => $expert) {
+                $expert = get_user_by('ID', $expert);
+                $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                array_push($course->experts, new Expert($expert, $experts_img));
+            }
+        $course->author = new Expert($author, $author_img);
+        $course->longDescription = get_field('long_description', $course->ID);
+        $course->shortDescription = get_field('short_description', $course->ID);
+        $course->courseType = get_field('course_type', $course->ID);
+        $course->pathImage = get_field('url_image_xml', $course->ID);
+        $course->price = get_field('price', $course->ID) ?? 0;
+        $course->youtubeVideos = get_field('youtube_videos', $course->ID) ? get_field('youtube_videos', $course->ID) : [];
+        $course->podcasts = get_field('podcasts', $course->ID) ? get_field('podcasts', $course->ID) : [];
 
-if(!empty($recommended_courses))
-    return $recommended_courses;
-return ["error" => "Nothing to show, don't ask me why 😅 !"];
+        $course->connectedProduct = get_field('connected_product', $course->ID);
+        $tags = get_field('categories', $course->ID) ?? [];
+        $course->tags = array();
+        if ($tags)
+            if (!empty($tags))
+            foreach ($tags as $key => $category)
+                if (isset($category['value'])) {
+                $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                array_push($course->tags, $tag);
+                }
 
+        $new_course = new Course($course);
+        if(!in_array($course->ID, $random_id)) {
+            array_push($random_id, $course->ID);
+            array_push($outcomes_recommended_courses, $new_course);
+        }
+    }
+    return $outcomes_recommended_courses;
+  }
+  else 
+      return ["error" => "Nothing to show, don't ask me why 😅 !"];
 }
 
 function seperate_tags(){
@@ -1662,17 +1703,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'save_user_views',
   ));
 
-  register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
-    'methods' => 'GET',
-    'callback' => 'get_course_image',
-  ));
-
-  register_rest_route ('custom/v1', '/course/reserve', array(
-    'methods' => 'POST',
-    'callback' => 'reserve_course',
-  ));
-
-  register_rest_route ('custom/v1', '/databank', array(
+  register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
   ));
