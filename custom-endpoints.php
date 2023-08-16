@@ -5,9 +5,9 @@ $GLOBALS['user_id'] = get_current_user_id();
 
 class Expert
 {
- public  $id;
- public   $name;
- public  $profilImg;
+ public $id;
+ public $name;
+ public $profilImg;
  public $company;
 
   public $role;
