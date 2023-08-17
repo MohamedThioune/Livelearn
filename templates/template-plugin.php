@@ -146,7 +146,7 @@
                       'status' => $status
                     );
                   }
-                }
+                }else
               }else{
                 if(!isset($result_title[0]) )
                 {
