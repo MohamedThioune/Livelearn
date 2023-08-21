@@ -64,12 +64,12 @@
                             continue;
                 ?>
                     <div class="text-center ">
-                        <a href="../sub-topic?subtopic=<?php echo $value->cat_ID ?>">
+                        <span>
                             <button class="btn rounded rounded-pill text-secondary h6 mx-4" 
                             style="background: #E0EFF4 !important; min-width: 250px;">
                                 <strong><?php echo $cat->name; ?></strong> 
                             </button>
-                        </a>
+                        </span>
                     </div>
                 <?php } ?>       
             </div>

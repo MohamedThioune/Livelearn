@@ -14,7 +14,6 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
-
 <div class="content-voor-2">
     <div class="block-logo">
         <a href="/">

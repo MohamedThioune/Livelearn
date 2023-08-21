@@ -535,7 +535,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/skills/">
+                                        <a href="/waarom-skills/">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/head-Waarom.png" alt="">
                                             </div>

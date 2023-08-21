@@ -49,7 +49,7 @@
 
 if($community){
 
-    $company = get_field('company_author', $community->ID)[0];
+    $company = get_field('company_author', $community->ID);
     $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/group-friends-gathering-together.jpg';
     $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
@@ -493,7 +493,7 @@ if($community){
                                                 break;
                                             $i++;
 
-                                            $company = get_field('company_author', $value->ID)[0];
+                                            $company = get_field('company_author', $value->ID);
                                             $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/logo_livelearn_white.png';
                                             $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
