@@ -1838,6 +1838,3 @@ function replyQuestion(WP_REST_Request $request)
   }
   
 /** Views Endpoints */
-
-
-}
