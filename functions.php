@@ -306,7 +306,6 @@ function custom_post_type() {
     register_post_type( 'assign', $assign_args );
 
     //Views
-
     $view = array(
         'name'                => _x( 'Views', 'Views', 'view' ),
         'singular_name'       => _x( 'View', 'View', 'view' ),
@@ -349,7 +348,6 @@ function custom_post_type() {
     register_post_type( 'view', $view_args );
 
     //Companies
-
     $company = array(
         'name'                => _x( 'Companies', 'Companies', 'company' ),
         'singular_name'       => _x( 'Companies', 'Company', 'company' ),
@@ -520,6 +518,49 @@ function custom_post_type() {
     );
     
     register_post_type( 'mandatory', $mandatory_args );
+
+    //Badge
+    $badge = array(
+        'name'                => _x( 'Badges', 'Badges', 'badge' ),
+        'singular_name'       => _x( 'Badges', 'Badge', 'badge' ),
+        'menu_name'           => __( 'Badges', 'badge' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All badges', 'badge' ),
+        'view_item'           => __( 'View badge', 'view_badge' ),
+        'add_new_item'        => __( 'New badge', 'add_new_badge' ),
+        'add_new'             => __( 'New badge', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $badge_args = array(
+        'label'               => __( 'badge', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $badge,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'badge'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+    register_post_type( 'badge', $badge_args );
 
 }
 add_action( 'init', 'custom_post_type', 0 );
