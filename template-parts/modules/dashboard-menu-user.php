@@ -94,7 +94,7 @@ style="overflow-x: hidden !important;">
                 <?php
                 // if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
                 ?>
-                <span class="comming-soon">Coming Soon</span>
+                <small class="comming-soon">&nbsp;Coming Soon</small>
             </a>
         </li>
         <li class="elementTextDashboard">

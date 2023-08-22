@@ -49,7 +49,7 @@
 
 if($community){
 
-    $company = get_field('company_author', $community->ID)[0];
+    $company = get_field('company_author', $community->ID);
     $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/group-friends-gathering-together.jpg';
     $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
@@ -210,7 +210,7 @@ if($community){
                                                     <form action=""  method="POST">
                                                         <input type='hidden'  name='id' value='<?= $key ?>' >
                                                         <input type='hidden' name='community_id' value='<?= $community->ID ?>' >
-                                                        <input type="text" name="txtreply" placeholder="Share your opinion on this question">
+                                                        <input type="text" name="txtreply" placeholder="Share your opinion on this question" required>
                                                         <button type="submit"  name="reply_question_community" class="btn btn-send">Send</button>
                                                     </form>
                                                 </div>
@@ -239,7 +239,7 @@ if($community){
                                                 <div class="modal-body text-left">
                                                     <form action="" method="POST" id="question_community">
                                                         <input type='hidden' form="question_community" name='community_id' value='<?= $community->ID ?>' >
-                                                        <textarea form="question_community" name="text_question" id="editor" placeholder="Write your question..."></textarea>
+                                                        <textarea form="question_community" name="text_question" id="editor" placeholder="Write your question..." required></textarea>
                                                     </form>
                                                 </div>
                                                 <button type="submit" form="question_community" name="question_community" class="btn btn-send">Send</button>
@@ -493,7 +493,7 @@ if($community){
                                                 break;
                                             $i++;
 
-                                            $company = get_field('company_author', $value->ID)[0];
+                                            $company = get_field('company_author', $value->ID);
                                             $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/logo_livelearn_white.png';
                                             $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
@@ -628,7 +628,7 @@ if($community){
                                         <form action="" id="reply_form<?= $key; ?>" method="POST">
                                             <input type='hidden' form="reply_form<?= $key; ?>" name='id' value='<?= $key ?>' >
                                             <input type='hidden' form="reply_form<?= $key; ?>" name='community_id' value='<?= $community->ID ?>' >
-                                            <input type="text" form="reply_form<?= $key; ?>" name="txtreply" placeholder="Share your opinion on this question">
+                                            <input type="text" form="reply_form<?= $key; ?>" name="txtreply" placeholder="Share your opinion on this question" required>
                                             <button type="submit" form="reply_form<?= $key; ?>" name="reply_question_community" class="btn btn-send">Send</button>
                                         </form>
                                     </div>

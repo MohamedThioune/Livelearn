@@ -1009,6 +1009,30 @@ else if(isset($details_user_departement)){
 }
 
 else if(isset($follow_community)){
+    //Private community
+    if(isset($password)){
+        $password_community = get_field('password_community', $community_id);
+        if($password != $password_community){
+            $path = "/dashboard/user/communities/?message=This community is private, please check the correct password !";
+            header("Location: ". $path);
+            return 0;
+        }
+    }
+
+    //Intern community
+    $user_id = get_current_user_id();
+    $company = get_field('company_author', $community_id);
+    $company_user = get_field('company',  'user_' . $user_id);
+    $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+    $visibility_community = get_field('visibility_community', $community_id); 
+    if($visibility_community){
+        if($company->post_title != $company_title_user){
+            $path = "/dashboard/user/communities/?message=This community is intern !";
+            header("Location: ". $path);
+            return 0;  
+        }  
+    }
+    
     $user = wp_get_current_user();
     $followers = get_field('follower_community', $community_id);
     if(!$followers)
