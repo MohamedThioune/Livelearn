@@ -477,7 +477,7 @@ $args = array(
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 300
+    'posts_per_page' => 500
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
