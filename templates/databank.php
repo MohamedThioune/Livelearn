@@ -134,7 +134,16 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'Trainer Road'=>'https://www.trainerroad.com/blog/',
         'AllOver Media'=>'https://allovermedia.com/',
         'The Partially Examined Life'=>'https://partiallyexaminedlife.com/',
-        'The Future Organization'=>'https://thefutureorganization.com/'
+        'The Future Organization'=>'https://thefutureorganization.com/',
+        'Arts en Auto'=>'https://www.artsenauto.nl/',
+        'Discutafel'=>'https://discutafel.nl/',
+        'SBVO'=>'https://sbvo.nl/',
+        'Your EDM'=>'https://www.youredm.com/',
+        'Metal Injection'=>'https://metalinjection.net/',
+        'Classical Music'=>'https://www.classical-music.com/',
+        'Slipped Disc'=>'https://slippedisc.com/',
+        'The Violin Channel'=>'https://www.theviolinchannel.com/',
+        'Carey Nieuwhof'=>'https://careynieuwhof.com/'
     ];
 ?>
 
