@@ -13,7 +13,7 @@ if(isset($_GET['id']))
     $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
-$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d", array($pagination, $offset));
+$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d ", array($pagination, $offset));
 $courses = $wpdb->get_results( $sql );
 
 $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank");
@@ -134,7 +134,16 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'Trainer Road'=>'https://www.trainerroad.com/blog/',
         'AllOver Media'=>'https://allovermedia.com/',
         'The Partially Examined Life'=>'https://partiallyexaminedlife.com/',
-        'The Future Organization'=>'https://thefutureorganization.com/'
+        'The Future Organization'=>'https://thefutureorganization.com/',
+        'Arts en Auto'=>'https://www.artsenauto.nl/',
+        'Discutafel'=>'https://discutafel.nl/',
+        'SBVO'=>'https://sbvo.nl/',
+        'Your EDM'=>'https://www.youredm.com/',
+        'Metal Injection'=>'https://metalinjection.net/',
+        'Classical Music'=>'https://www.classical-music.com/',
+        'Slipped Disc'=>'https://slippedisc.com/',
+        'The Violin Channel'=>'https://www.theviolinchannel.com/',
+        'Carey Nieuwhof'=>'https://careynieuwhof.com/'
     ];
 ?>
 
@@ -591,7 +600,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/artikels",
+                url: "/livelearn/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);

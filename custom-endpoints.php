@@ -1867,14 +1867,7 @@ function replyQuestion(WP_REST_Request $request)
     return $wpdb->insert_id;
   }
 
-
-  
-/** Views Endpoints */
-
 /** Artikels Endpoints */
-
-
-
 function strip_html_tags($text) {
   $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
   $text = preg_replace("/\n{1,}/", "\n", $text); 
@@ -1890,14 +1883,6 @@ function strip_html_tags($text) {
   $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
   return preg_replace($pattern, '', $text);
 }
-
-// require 'vendor/autoload.php';
-
-//   use Google\Cloud\Scheduler\V1\HttpTarget;
-//   use Google\Cloud\Scheduler\V1\CloudSchedulerClient;
-//   use Google\Cloud\Scheduler\V1\Job;
-//   use Google\Cloud\Scheduler\V1\Job\State;
-
 
 function Artikel_From_Company($data){
   global $wpdb;
