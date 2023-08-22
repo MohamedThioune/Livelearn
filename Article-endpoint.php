@@ -164,6 +164,15 @@ function Artikel_From_Company($data)
         ],
         [
             'The Future Organization' => 'https://thefutureorganization.com/',
+            'Arts en Auto'=>'https://www.artsenauto.nl/',
+            'Discutafel'=>'https://discutafel.nl/',
+            'SBVO'=>'https://sbvo.nl/',
+            'Your EDM'=>'https://www.youredm.com/',
+            'Metal Injection'=>'https://metalinjection.net/',
+            'Classical Music'=>'https://www.classical-music.com/',
+            'Slipped Disc'=>'https://slippedisc.com/',
+            'The Violin Channel'=>'https://www.theviolinchannel.com/',
+            'Carey Nieuwhof'=>'https://careynieuwhof.com/'
         ],
     ];
 
