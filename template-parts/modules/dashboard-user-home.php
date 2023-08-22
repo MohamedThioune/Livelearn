@@ -480,9 +480,7 @@ $args = array(
     'posts_per_page' => 200
 );
 $global_courses = get_posts($args);
-var_dump($postAuthorSearch);
 shuffle($global_courses);
-var_dump($global_courses);
 foreach ($global_courses as $key => $course) {
     //Control visibility
     $bool = true;
