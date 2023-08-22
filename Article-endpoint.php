@@ -238,6 +238,8 @@ function Artikel_From_Company($data)
                     $images = json_decode(file_get_contents($span2), true);
                     $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
                     $result_image = $wpdb->get_results($sql_image);
+                    if(isset($result_title[0]))
+                            continue;
                     if (!isset($result_image[0]) && !isset($result_title[0])) {
                         if (!isset($images) && !isset($images['data']['status']) && $images['data']['status'] != 404 && $images['data']['status'] != 401) {
                             $status = 'extern';
