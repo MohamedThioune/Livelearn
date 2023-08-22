@@ -1705,5 +1705,10 @@ add_action( 'rest_api_init', function () {
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
   ));
+
+  register_rest_route ('custom/v1', '/xml', array(
+    'methods' => 'GET',
+    'callback' => 'xmlParse'
+ ));
   
 });
