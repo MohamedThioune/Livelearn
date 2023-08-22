@@ -675,7 +675,7 @@ if (empty($recommended_courses)){
 }
 //Activitien
 shuffle($recommended_courses);
-$recommended_courses = array_slice($recommended_courses, 0, 12, true);
+// $recommended_courses = array_slice($recommended_courses, 0, 12, true);
 
 /*
 * *
