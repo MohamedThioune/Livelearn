@@ -366,8 +366,6 @@ if($recommended_courses)
         $author_image = get_field('profile_img',  'user_' . $author_object->ID);
         $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
-        $find = true;
-
         $video_content = "";
         if($youtube_videos && $course_type == 'Video')
             $video_content = '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
@@ -413,6 +411,8 @@ if($recommended_courses)
                 </div>
             </a>
         ';
+
+        $find = true;
     }
 else
     if(!$find)
