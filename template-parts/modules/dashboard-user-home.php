@@ -671,6 +671,7 @@ $bool = false;
 if (empty($recommended_courses)){
     $courses_id = array();
     $recommended_courses = $courses;
+    var_dump($recommended_courses);
     $bool = true;
 }
 //Activitien
