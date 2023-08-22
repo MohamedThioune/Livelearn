@@ -894,7 +894,7 @@ if(isset($_GET['message']))
                                     </div>
                                 </a>
                                 <?php
-                                if($key == 12)
+                                if($key == 11)
                                     break;
                             }
                             else
