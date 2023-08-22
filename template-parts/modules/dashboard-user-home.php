@@ -19,7 +19,7 @@ $user = get_current_user_id();
 $courses = array();
 $course_id = array();
 $random_id = array();
-$count = array('Opleidingen' => 0, 'Workshop' => 0, 'Podcast' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0);
+$count = array('Opleidingen' => 0, 'Workshop' => 0, 'E-learning' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0);
 
 $categories = array();
 
@@ -274,7 +274,7 @@ endforeach;
 
 
 $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
-if (!$is_first_login && get_current_user_id() != 0 )
+if (!$is_first_login && get_current_user_id() !=0 )
 {
 ?>
 <!-- Modal First Connection -->
@@ -481,7 +481,6 @@ $args = array(
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
-
 foreach ($global_courses as $key => $course) {
     //Control visibility
     $bool = true;
@@ -513,7 +512,7 @@ foreach ($global_courses as $key => $course) {
 
     if(empty($data))
         null;
-    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel" && $course_type != "Podcast")
+    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
         if($data){
             $date_now = strtotime(date('Y-m-d'));
             $data = strtotime(str_replace('/', '.', $data));
@@ -568,18 +567,18 @@ foreach ($global_courses as $key => $course) {
                     break;
                 }
             }
-        } 
+        }
 }
 
 // $user_informations
 // Views credential
 $is_view = false;
+$recommended_courses = array();
 if (!empty($user_post_view))
 {
     $courses_id = array();
     $is_view = true;
     $max_points = 10;
-    $recommended_courses = array();
 
     // browse the array os post type as courses obtain via database views
     foreach($user_post_view as $key => $post_viewed) {
@@ -647,6 +646,10 @@ if (!empty($user_post_view))
                     if(!in_array($course->post_author, $teachers))
                         array_push($teachers, $course->post_author);
                 }
+
+            // $count_recommended_course = count($recommended_courses);
+            // if($count_recommended_course == 8)
+            //     break;
         }
     }
 }
@@ -673,6 +676,7 @@ if (empty($recommended_courses)){
 //Activitien
 shuffle($recommended_courses);
 $recommended_courses = array_slice($recommended_courses, 0, 12, true);
+
 /*
 * *
 */
@@ -757,7 +761,7 @@ if(isset($_GET['message']))
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                         if(!empty($recommended_courses))
-                            foreach($recommended_courses as $course){
+                            foreach($recommended_courses as $key => $course){
                                 //Date and Location
                                 $location = 'Online';
                             
@@ -890,6 +894,8 @@ if(isset($_GET['message']))
                                     </div>
                                 </a>
                                 <?php
+                                if($key == 12)
+                                    break;
                             }
                             else
                                 echo $void_content;
@@ -1043,9 +1049,6 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
                     </div>
                 </ul>
@@ -1192,9 +1195,6 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
                     </div>
                 </ul>
@@ -1341,9 +1341,6 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
                     </div>
                 </ul>
@@ -1490,9 +1487,6 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
                     </div>
                 </ul>
@@ -1774,7 +1768,7 @@ if(isset($_GET['message']))
                     break;
                 $i++;
 
-                $company = get_field('company_author', $value->ID)[0];
+                $company = get_field('company_author', $value->ID);
                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                 $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
