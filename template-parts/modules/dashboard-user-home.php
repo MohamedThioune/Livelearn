@@ -274,7 +274,7 @@ endforeach;
 
 
 $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
-if (!$is_first_login && get_current_user_id() !=0 )
+if (!$is_first_login && get_current_user_id() != 0 )
 {
 ?>
 <!-- Modal First Connection -->
@@ -477,7 +477,7 @@ $args = array(
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 200
+    'posts_per_page' => 300
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
