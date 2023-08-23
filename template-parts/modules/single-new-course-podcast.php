@@ -226,12 +226,15 @@ endif;
                                         $reading = $podcast['podcast_url'];
                                         $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
                                     }
-
+                                    $imagPodcast = $podcast['podcast_date'];
+                                    $date_podcast = !empty($imagPodcast) ? date("d-m-Y H:i:s", strtotime($imagPodcast)) : "";
+                                    $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
                                     $lecture_index = $key + 1;
                                     ?>
                                     <div class="elemnt-list-podcast">
                                         <p class="number-list"><?= $lecture_index ?></p>
-                                        <div class="detail-block-podcast">
+                                        <div class="detail-block-podcast"><br>
+                                            <img src="<?= $image_podcast ?>" height="50" width="50">
                                             <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
                                             <div class="audio">
                                                 <div class="cp-audioquote">
@@ -249,6 +252,12 @@ endif;
                                                             <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="">
+                                                    <p><?= $podcast['podcast_description']; ?></p>
+                                                </div>
+                                                <div class="mt-3 date">
+                                                    <p><?= $date_podcast ?></p>
                                                 </div>
                                             </div>
                                         </div>
