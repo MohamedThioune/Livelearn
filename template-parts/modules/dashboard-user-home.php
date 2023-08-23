@@ -477,7 +477,7 @@ $args = array(
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 500
+    'posts_per_page' => 400
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
@@ -675,7 +675,7 @@ if (empty($recommended_courses)){
 }
 //Activitien
 shuffle($recommended_courses);
-// $recommended_courses = array_slice($recommended_courses, 0, 12, true);
+$recommended_courses = array_slice($recommended_courses, 0, 12, true);
 
 /*
 * *
@@ -894,8 +894,8 @@ if(isset($_GET['message']))
                                     </div>
                                 </a>
                                 <?php
-                                if($key == 11)
-                                    break;
+                                // if($key == 11)
+                                //     break;
                             }
                             else
                                 echo $void_content;

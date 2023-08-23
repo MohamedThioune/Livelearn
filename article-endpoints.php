@@ -27,6 +27,7 @@ function strip_html_tags($text)
     $text = str_replace("&#8230;", "...", $text);
     $text = str_replace(['h1', 'h3', 'h4', 'h5', 'h6'], 'h2', $text);
     $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+    
     return preg_replace($pattern, '', $text);
 }
 

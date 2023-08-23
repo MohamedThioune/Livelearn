@@ -253,7 +253,10 @@ endif;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="mt-3">
+                                                <div class="">
+                                                    <p><?= $podcast['podcast_description']; ?></p>
+                                                </div>
+                                                <div class="mt-3 date">
                                                     <p><?= $date_podcast ?></p>
                                                 </div>
                                             </div>
