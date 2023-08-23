@@ -1,17 +1,17 @@
 <?php
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
-function RandomString()
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randstring = '';
-    $rand = '';
-    for ($i = 0; $i < 10; $i++) {
-        $rand = $characters[rand(0, strlen($characters))];
-        $randstring .= $rand;
-    }
-    return $randstring;
-}
+// function RandomString()
+// {
+//     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+//     $randstring = '';
+//     $rand = '';
+//     for ($i = 0; $i < 10; $i++) {
+//         $rand = $characters[rand(0, strlen($characters))];
+//         $randstring .= $rand;
+//     }
+//     return $randstring;
+// }
 
 function strip_html_tags($text)
 {
