@@ -128,7 +128,7 @@ $communities = get_posts($args);
            <div class="row">
             <?php
             foreach($communities as $community){
-                $company = get_field('company_author', $community->ID)[0];
+                $company = get_field('company_author', $community->ID);
                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                 $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
