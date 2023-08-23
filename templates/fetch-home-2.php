@@ -184,7 +184,6 @@ if(isset($topic_search)){
         * 
         */ 
     }
-    //$teachers = $expert_from_database;
     //var_dump($teachers);die;
     $num = 0;
     $bool = false;
@@ -200,6 +199,7 @@ if(isset($topic_search)){
     //$purchantage = array_unique($purchantage);
     rsort($purchantage);
     rsort($numberGray);
+    //$teachers = $expert_from_database;
     for($j=0; $j< count($most_active_members); $j++) {
         $user = $most_active_members[$j];
         if($num==12)
