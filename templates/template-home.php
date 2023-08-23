@@ -1957,7 +1957,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-categorien').html(complete_categorieen);
 
             $.ajax({
-                url:"/livelearn/fetch-ajax-home2",
+                url:"/fetch-ajax-home2",
                 method:"post",
                 data:{
                     topic_search: topic_search,
