@@ -6,10 +6,27 @@
 
 $page = 'check_visibility.php';
 require($page);
+global $wpdb;
 
 $user_connected_id = get_current_user_id();
 $user_connected_head = wp_get_current_user();
-
+// View table name
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+// Get id of courses viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
+$all_user_views = $wpdb->get_results($sql_request);
+$id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
+$expert_from_database = array();
+/**
+ * get experts doing the course by database
+ */
+foreach ($id_courses_viewed as $id_course) {
+    $course = get_post($id_course);
+    $expert_id = $course->post_author;
+    //if ($expert_id)
+    $expert_from_database[] = $expert_id;
+}
+$expert_from_database = array_unique($expert_from_database);
 // if($user_connected_id))
 //     header('Location: /dashboard/user/');
 
@@ -79,20 +96,28 @@ $keys = array_column($numbers_count, 'digit');
 array_multisort($keys, SORT_DESC, $numbers_count);
 
 $most_active_members = array();
-$i = 0;
+//$i = 0;
 if(!empty($numbers_count))
     foreach ($numbers_count as $element) {
-        $i++;
-        if($i >= 13)
-            break;
+        //$i++;
+        //if($i >= 13)
+        //    break;
         $value = get_user_by('ID', $element['id']);
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
         $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         array_push($most_active_members, $value);
     }
-
+$purchantage = array();
+$numberGray = array();
+for ($i = 0; $i< count($most_active_members)*3; $i++){
+    $purchantage[]= number_format(rand(20,99), 2, '.', ',');
+    $numberGray [] = rand(0,100000);
+}
+$numberGray = array_unique($numberGray);
+$purchantage = array_unique($purchantage);
+rsort($purchantage);
+rsort($numberGray);
 //Alles coursetype
-
 $type_course = array(
     "Alles",
     "Opleidingen",
@@ -1330,6 +1355,7 @@ $saved = get_user_meta($user_id, 'course');
                         ?>
                     </select>
                 </div>
+                    <div id="loader" class="spinner-border spinner-border-sm text-primary d-none" role="status"></div>
             </div>
             <!--
              <div class="dropdown show">
@@ -1354,8 +1380,12 @@ $saved = get_user_meta($user_id, 'course');
         <div class="row" id="autocomplete_categorieen">
             <?php
             $num = 1;
+            // = $expert_from_database;
             if(!empty($most_active_members)){
-                foreach($most_active_members as $user) {
+                for($j=0; $j< count($most_active_members); $j++) {
+                    $user = $most_active_members[$j];
+                    if($num==13)
+                        break;
                     $image_user = get_field('profile_img',  'user_' . $user->ID);
                     $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
@@ -1390,12 +1420,12 @@ $saved = get_user_meta($user_id, 'course');
                                     </div>
                                     <div class="iconeTextListCollection">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
-                                        <p class="number-brain"><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
+                                        <p class="number-brain"><?=number_format($numberGray[$j+2], 2, '.', ',')?></p>
                                     </div>
                                 </div>
 
                             </div>
-                            <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
+                            <p class="pourcentageCollection"><?= $purchantage[$j+2] ?>%</p>
                         </div>
                     </a>
                 <?php }
@@ -1933,9 +1963,16 @@ $saved = get_user_meta($user_id, 'course');
                     topic_search: topic_search,
                 },
                 dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',topic_search)
+                },
                 success: function(data){
-                    console.log(data);
+                    console.log('elt : ',data);
                     $('#autocomplete_categorieen').html(data);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
                 }
             });
         });
