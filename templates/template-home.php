@@ -1380,8 +1380,8 @@ $saved = get_user_meta($user_id, 'course');
         <div class="row" id="autocomplete_categorieen">
             <?php
             $num = 1;
-            // = $expert_from_database;
             if(!empty($most_active_members)){
+                //$teachers = $expert_from_database;
                 for($j=0; $j< count($most_active_members); $j++) {
                     $user = $most_active_members[$j];
                     if($num==13)
@@ -1957,7 +1957,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-categorien').html(complete_categorieen);
 
             $.ajax({
-                url:"/fetch-ajax-home2",
+                url:"/livelearn/fetch-ajax-home2",
                 method:"post",
                 data:{
                     topic_search: topic_search,
