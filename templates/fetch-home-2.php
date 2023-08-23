@@ -18,6 +18,25 @@ $topic_views = array();
 $topic_followed = array();
 $stats_by_user = array();
 
+// View table name
+$current_user = get_current_user_id();
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+// Get id of courses viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $current_user ");
+$all_user_views = $wpdb->get_results($sql_request);
+$id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
+$expert_from_database = array();
+/**
+ * get experts doing the course by database
+ */
+foreach ($id_courses_viewed as $id_course) {
+    $course = get_post($id_course);
+    $expert_id = $course->post_author;
+    //if ($expert_id)
+        $expert_from_database[] = $expert_id;
+}
+$expert_from_database = array_unique($expert_from_database);
+
 foreach ($users as $user) {
     $topic_by_user = array();
     $course_by_user = array();
@@ -70,12 +89,12 @@ $keys = array_column($numbers_count, 'digit');
 array_multisort($keys, SORT_DESC, $numbers_count);
 
 $most_active_members = array();
-$i = 0;
+//$i = 0;
 if(!empty($numbers_count))
     foreach ($numbers_count as $element) {
-        $i++;
-        if($i >= 13)
-            break;
+    //    $i++;
+    //    if($i >= 13)
+    //        break;
         $value = get_user_by('ID', $element['id']);        
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
         $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -94,7 +113,7 @@ if(isset($topic_search)){
     }
 
     $args = array(
-        'post_type' => array('post', 'course'),
+        'post_type' =>'post',// array('post', 'course'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
@@ -165,12 +184,26 @@ if(isset($topic_search)){
         * 
         */ 
     }
-
+    //$teachers = $expert_from_database;
+    //var_dump($teachers);die;
     $num = 0;
     $bool = false;
     $data = array();
     $block = '';
-    foreach($most_active_members as $user) {
+    $purchantage = array();
+    $numberGray = array();
+    for ($i = 0; $i< count($most_active_members)*3; $i++){
+     $purchantage[] = rand(20,99);
+     $numberGray [] = rand(0,100000);
+    }
+    $numberGray = array_unique($numberGray);
+    //$purchantage = array_unique($purchantage);
+    rsort($purchantage);
+    rsort($numberGray);
+    for($j=0; $j< count($most_active_members); $j++) {
+        $user = $most_active_members[$j];
+        if($num==12)
+            break;
         if(!in_array($user->ID, $teachers))
             continue;
         
@@ -181,11 +214,12 @@ if(isset($topic_search)){
         $company = get_field('company',  'user_' . $user->ID);
         $company_title = $company[0]->post_title;
         $company_logo = get_field('company_logo', $company[0]->ID);
-
+        if (!$company_logo || !$company_title)
+            continue;
         $display_name = "";
-        if(isset($user->first_name) && isset($user->last_name)) 
-            $display_name = $user->first_name . ' ' . $user->last_name; 
-        else 
+        if(isset($user->first_name) && isset($user->last_name))
+            $display_name = $user->first_name . ' ' . $user->last_name;
+        else
             $display_name =  $user->display_name;
 
         $block .= '
@@ -205,12 +239,12 @@ if(isset($topic_search)){
                             </div>
                             <div class="iconeTextListCollection">
                                 <img src="' . get_stylesheet_directory_uri() . '/img/awesome-brain.png" alt="">
-                                <p>' . number_format(rand(0,100000), 2, '.', ',') . '</p>
+                                <p>' . number_format($numberGray[$j], 2, '.', ',') . '</p>
                             </div>
                         </div>
 
                     </div>
-                    <p class="pourcentageCollection">' . number_format(rand(0,100), 2, '.', ','). '%</p>
+                    <p class="pourcentageCollection">' . number_format($purchantage[$j], 2, '.', ','). '%</p>
                 </div>
             </a>';
     }
