@@ -106,7 +106,7 @@
                 $result_image = $wpdb->get_results($sql_image);
                 if(!isset($result_image[0]) && !isset($result_title[0]))
                 {
-                  if (!isset($images['data']['status']) && $images['data']['status']!=404 && $images['data']['status']!=401) {
+                  if (!isset($images['data']['status']) && $images['data']['status']==200) {
                     $status = 'extern';
                     $data = array(
                       'titel' => $article['title']['rendered'],
