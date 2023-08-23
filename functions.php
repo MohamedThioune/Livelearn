@@ -4,7 +4,7 @@ add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 $GLOBALS['id_user'] = get_current_user_id();
 
 include "custom-endpoints.php";
-include "Article-endpoint.php";
+include "article-endpoints.php";
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
