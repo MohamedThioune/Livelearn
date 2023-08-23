@@ -20659,6 +20659,46 @@ background: #FFFFFF !important;
 .video-content-course .owl-carousel-assessment .owl-drag .owl-item, .video-content-course .owl-carousel-assessment  .owl-stage{
     height: fit-content !important;
 }
+.btnInvite {
+    color: #033356;
+    border: 1px solid #033356;
+    padding: 9px 20px;
+    margin: 5px 0 20px;
+    font-weight: 400;
+    font-size: 14px;
+}
+.btnInvite:hover {
+    background-color: #033356;
+    color: #FFFFFF !important;
+}
+#modalAdding .modal-dialog {
+    max-width: 560px !important;
+}
+.GroupPeople{
+    flex-wrap: wrap;
+}
+.GroupPeople .oneExpert {
+    min-width: 31%;
+    width: fit-content;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+.GroupPeople .oneExpert .name {
+    color: #023356;
+    font-weight: 600;
+    font-size: 15px;
+}
+.GroupPeople .oneExpert .email{
+    margin-bottom: 0;
+    color: #141414;
+}
+.checkAllElement{
+    margin-top: -10px;
+    height: 18px;
+    width: 18px;
+    margin-left: -22px;
+}
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
