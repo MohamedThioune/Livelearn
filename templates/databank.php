@@ -610,6 +610,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
+                    // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 },error:function() {
                     console.log('error');
