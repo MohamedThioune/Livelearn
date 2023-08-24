@@ -113,7 +113,7 @@ if(isset($topic_search)){
     }
 
     $args = array(
-        'post_type' =>'post',// array('post', 'course'),
+        'post_type' => array('post', 'course'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
