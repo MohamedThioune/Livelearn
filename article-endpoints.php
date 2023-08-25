@@ -251,7 +251,7 @@ function Artikel_From_Company($data)
                     if(isset($result_title[0]))
                             continue;
                     if (!isset($result_image[0]) && !isset($result_title[0])) {
-                        if (!isset($images) && !isset($images['data']['status']) && $images['data']['status'] != 404 && $images['data']['status'] != 401) {
+                        if (!isset($images['data']['status'])) {
                             $status = 'extern';
                             $datas = array(
                                 'titel' => $article['title']['rendered'],
