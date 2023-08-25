@@ -5,7 +5,7 @@
   
     "require": {
         "fabpot/goutte": "^4.0",
-        "automattic/woocommerce": "^3.1",
-        "mollie/mollie-api-php": "^2.0"
+        "mollie/mollie-api-php": "^2.0",
+        "automattic/woocommerce": "^3.1"
     }
 }

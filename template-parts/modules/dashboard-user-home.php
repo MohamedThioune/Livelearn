@@ -477,7 +477,7 @@ $args = array(
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 400
+    'posts_per_page' => 500
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
@@ -670,7 +670,7 @@ $bool = false;
 
 if (empty($recommended_courses)){
     $courses_id = array();
-    $recommended_courses = $courses;
+    $recommended_courses = (empty($courses)) ? $courses : $global_courses;
     $bool = true;
 }
 //Activitien
