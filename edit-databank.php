@@ -18,7 +18,6 @@ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $i
 
 $course = $wpdb->get_results( $sql )[0];
 
-
 /*
 * * Tags *
 */ 
