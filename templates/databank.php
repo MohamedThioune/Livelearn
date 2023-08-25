@@ -13,12 +13,12 @@ if(isset($_GET['id']))
     $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
-$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d ", array($pagination, $offset));
-$courses = $wpdb->get_results( $sql );
+    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d ", array($pagination, $offset));
+    $courses = $wpdb->get_results( $sql );
 
-$sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank");
-$count = $wpdb->get_results( $sql_count );
-$count = $count[0]->{'COUNT(*)'};
+    $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank");
+    $count = $wpdb->get_results( $sql_count );
+    $count = $count[0]->{'COUNT(*)'};
 
 if( $count % $pagination == 0)
     $pagination_number = $count/$pagination;
@@ -606,7 +606,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/artikels",
+                url: "/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
