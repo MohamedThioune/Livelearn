@@ -13,12 +13,12 @@ if(isset($_GET['id']))
     $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
-$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d ", array($pagination, $offset));
-$courses = $wpdb->get_results( $sql );
+    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d ", array($pagination, $offset));
+    $courses = $wpdb->get_results( $sql );
 
-$sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank");
-$count = $wpdb->get_results( $sql_count );
-$count = $count[0]->{'COUNT(*)'};
+    $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank");
+    $count = $wpdb->get_results( $sql_count );
+    $count = $count[0]->{'COUNT(*)'};
 
 if( $count % $pagination == 0)
     $pagination_number = $count/$pagination;
@@ -604,6 +604,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
+                    // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 },error:function() {
                     console.log('error');
