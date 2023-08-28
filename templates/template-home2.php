@@ -1,6 +1,5 @@
 <?php /** Template Name: Home 2 */ ?>
 
-<?php wp_head(); ?>
 <?php get_header(); ?>
 <?php
 
