@@ -1124,7 +1124,7 @@ function recommended_course($data)
 
   $recommended_courses = array_slice($recommended_courses, 0, 50, true); 
 
-
+ 
   $course_id = array();
   $random_id = array(); 
   if (!empty($recommended_courses)) {
