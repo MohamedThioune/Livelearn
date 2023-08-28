@@ -872,10 +872,26 @@ function recommended_course($data)
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 200
+    'posts_per_page' => 300
   );
   $global_courses = get_posts($args);
   shuffle($global_courses);
+
+  $more_global_courses = array();
+  if(empty($global_courses)){
+        $args = array(
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'posts_per_page' => 300
+        );
+        $more_global_courses = get_posts($args);
+        shuffle($more_global_courses);
+
+        $global_courses = $more_global_courses;
+  }
+
   foreach ($global_courses as $key => $course) {    
       /*
       *  Date and Location
@@ -1093,14 +1109,21 @@ function recommended_course($data)
                     array_push($random_id, $course->ID);
                     array_push($recommended_courses, $course);
                 }
+
+            $count_recommended_course = count($recommended_courses);
+            if($count_recommended_course == 50)
+                break;
         }
     }
   }
 
-  if(empty($recommended_courses))
-    $recommended_courses = $courses;
-  else
-    $recommended_courses = array_slice($recommended_courses, 0, 50); 
+  if(empty($recommended_courses)){
+    $recommended_courses = (empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
+  }
+
+  $recommended_courses = array_slice($recommended_courses, 0, 50, true); 
+
 
   $course_id = array();
   $random_id = array(); 
@@ -1585,6 +1608,7 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'seperate_tags',
   ) );
+
 
   register_rest_route( 'custom/v1', '/follow', array(
     'methods' => 'POST',
