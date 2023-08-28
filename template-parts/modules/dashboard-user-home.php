@@ -663,9 +663,9 @@ if (!empty($user_post_view))
                         array_push($teachers, $course->post_author);
                 }
 
-            // $count_recommended_course = count($recommended_courses);
-            // if($count_recommended_course == 8)
-            //     break;
+            $count_recommended_course = count($recommended_courses);
+            if($count_recommended_course == 12)
+                break;
         }
     }
 }
