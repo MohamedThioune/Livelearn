@@ -670,12 +670,12 @@ $bool = false;
 
 if (empty($recommended_courses)){
     $courses_id = array();
-    $recommended_courses = $courses;
+    $recommended_courses = (empty($courses)) ? $courses : $global_courses;
     $bool = true;
 }
 //Activitien
 shuffle($recommended_courses);
-// $recommended_courses = array_slice($recommended_courses, 0, 12, true);
+$recommended_courses = array_slice($recommended_courses, 0, 12, true);
 
 /*
 * *
@@ -894,8 +894,8 @@ if(isset($_GET['message']))
                                     </div>
                                 </a>
                                 <?php
-                                if($key == 11)
-                                    break;
+                                // if($key == 11)
+                                //     break;
                             }
                             else
                                 echo $void_content;

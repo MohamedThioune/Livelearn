@@ -1135,8 +1135,31 @@ function recommended_course($data)
         $course->pathImage = get_field('url_image_xml', $course->ID);
         $course->price = get_field('price', $course->ID) ?? 0;
         $course->youtubeVideos = get_field('youtube_videos', $course->ID) ? get_field('youtube_videos', $course->ID) : [];
-        $course->podcasts = get_field('podcasts', $course->ID) ? get_field('podcasts', $course->ID) : [];
-
+        
+        if (strtolower($course->courseType) == 'podcast')
+          {
+             $podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+             if (!empty($podcasts))
+                $course->podcasts = $podcasts;
+              else {
+                $podcasts = get_field('podcasts_index',$course->ID) ? get_field('podcasts_index',$course->ID) : [];
+                if (!empty($podcasts))
+                {
+                  $course->podcasts = array();
+                  foreach ($podcasts as $key => $podcast) 
+                  { 
+                    $item= array(
+                      "course_podcast_title"=>$podcast['podcast_title'], 
+                      "course_podcast_intro"=>$podcast['podcast_description'],
+                      "course_podcast_url" => $podcast['podcast_url'],
+                      "course_podcast_image" => $podcast['podcast_image'],
+                    );
+                    array_push ($course->podcasts,($item));
+                  }
+                }
+            }
+          }
+        $course->podcasts = $course->podcasts ?? [];
         $course->connectedProduct = get_field('connected_product', $course->ID);
         $tags = get_field('categories', $course->ID) ?? [];
         $course->tags = array();
@@ -1147,7 +1170,24 @@ function recommended_course($data)
                 $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
                 array_push($course->tags, $tag);
                 }
+            /**
+               * Handle Image exception
+            */
+              $handle = curl_init($course->pathImage);
+              curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
 
+              /* Get the HTML or whatever is linked in $url. */
+              $response = curl_exec($handle);
+
+              /* Check for 404 (file not found). */
+              $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+              if($httpCode != 200) {
+                  /* Handle 404 here. */
+                  $course->pathImage = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+                }
+              curl_close($handle);
+
+        
         $new_course = new Course($course);
         if(!in_array($course->ID, $random_id)) {
             array_push($random_id, $course->ID);
@@ -1616,6 +1656,11 @@ add_action( 'rest_api_init', function () {
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
+  ));
+
+  register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
+    'methods' => 'GET',
+    'callback' => 'get_course_image',
   ));
 
   register_rest_route( 'custom/v1', '/follow_multiple', array(
