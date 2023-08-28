@@ -483,7 +483,7 @@ $global_courses = get_posts($args);
 shuffle($global_courses);
 
 $more_global_courses = array();
-if(!empty($global_courses)){
+if(empty($global_courses)){
     $args = array(
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
