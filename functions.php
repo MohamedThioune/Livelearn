@@ -866,6 +866,7 @@ function recommended_course($data)
     $id_view_experts = array_unique($id_view_experts);
     $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
   }
+
   $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
@@ -876,6 +877,18 @@ function recommended_course($data)
   );
   $global_courses = get_posts($args);
   shuffle($global_courses);
+
+  if(!empty($global_courses)){
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => 200
+    );
+    $global_courses = get_posts($args);
+  }
+
   foreach ($global_courses as $key => $course) {    
       /*
       *  Date and Location
@@ -1579,12 +1592,35 @@ function following(){
         return $infos;
 }
 
+function crontab_podcast( ) {
+    $args = array(
+        'post_type' => 'course',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'ordevalue' => 'podcast',
+        'order' => 'DESC' ,
+        'meta_key'   => 'course_type',
+        'meta_value' => "podcast"
+    );
+    $podcasts = get_posts($args);
+
+    foreach ($podcasts as $key => $course) {
+        # podcast index ? 
+        $podcast_index = get_field('', $course->ID);
+        if(!$podcast_index)
+            continue;
+
+        //Reach podcasts and add new lesson
+    }
+}
+
 //Callbacks 
 add_action( 'rest_api_init', function () {
   register_rest_route( 'custom/v1', '/tags', array(
     'methods' => 'GET',
     'callback' => 'seperate_tags',
   ) );
+
 
   register_rest_route( 'custom/v1', '/follow', array(
     'methods' => 'POST',

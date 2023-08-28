@@ -481,6 +481,22 @@ $args = array(
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
+
+$more_global_courses = array();
+if(!empty($global_courses)){
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => 300
+    );
+    $more_global_courses = get_posts($args);
+    shuffle($more_global_courses);
+
+    $global_courses = $more_global_courses;
+}
+
 foreach ($global_courses as $key => $course) {
     //Control visibility
     $bool = true;
@@ -671,6 +687,7 @@ $bool = false;
 if (empty($recommended_courses)){
     $courses_id = array();
     $recommended_courses = (empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
     $bool = true;
 }
 //Activitien
