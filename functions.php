@@ -876,6 +876,22 @@ function recommended_course($data)
   );
   $global_courses = get_posts($args);
   shuffle($global_courses);
+
+  $more_global_courses = array();
+  if(empty($global_courses)){
+        $args = array(
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'posts_per_page' => 300
+        );
+        $more_global_courses = get_posts($args);
+        shuffle($more_global_courses);
+
+        $global_courses = $more_global_courses;
+  }
+
   foreach ($global_courses as $key => $course) {    
       /*
       *  Date and Location
@@ -1097,10 +1113,13 @@ function recommended_course($data)
     }
   }
 
-  if(empty($recommended_courses))
-    $recommended_courses = $courses;
+  if(empty($recommended_courses)){
+    $recommended_courses = (empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
+  }
   else
     $recommended_courses = array_slice($recommended_courses, 0, 50); 
+
 
   $course_id = array();
   $random_id = array(); 
