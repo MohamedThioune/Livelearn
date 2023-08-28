@@ -1109,6 +1109,10 @@ function recommended_course($data)
                     array_push($random_id, $course->ID);
                     array_push($recommended_courses, $course);
                 }
+
+            $count_recommended_course = count($recommended_courses);
+            if($count_recommended_course == 50)
+                break;
         }
     }
   }
