@@ -690,6 +690,7 @@ if (empty($recommended_courses)){
     $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
     $bool = true;
 }
+
 //Activitien
 shuffle($recommended_courses);
 $recommended_courses = array_slice($recommended_courses, 0, 12, true);
