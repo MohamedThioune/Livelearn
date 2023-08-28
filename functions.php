@@ -872,7 +872,7 @@ function recommended_course($data)
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 200
+    'posts_per_page' => 300
   );
   $global_courses = get_posts($args);
   shuffle($global_courses);
