@@ -14260,6 +14260,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-community-overview .boxOne3-1 {
     height: 250px;
 }
+.content-community-overview .boxSlim {
+    height: 330px !important;
+}
 .block-card-community {
     padding: 45px 0;
 }
@@ -14721,6 +14724,17 @@ background: #FFFFFF !important;
     height: 68px;
     margin-top: -38px;
     margin-bottom: 20px;
+}
+.BaangerichteBlock .img-head-about2{
+    width: 45px;
+    height: 45px;
+    margin-top: -25px;
+    margin-bottom: 20px;
+}
+.BaangerichteBlock .description-Slim{
+    font-size: 18px;
+    color: #023356;
+    line-height: 32px;
 }
 .content-community-overview .frist-block-about{
     display: flex;
@@ -20698,6 +20712,69 @@ background: #FFFFFF !important;
     width: 18px;
     margin-left: -22px;
 }
+.slim-img{
+    position: absolute;
+    bottom: -97px;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: 0 auto;
+}
+.first-section-slim .description-about{
+    width: 880px;
+    margin: 0 auto 50px;
+}
+.first-section-slim .form-slim{
+    margin-top: 0 !important;
+}
+.content-slim .title-section {
+    color: #023356;
+    font-size: 33px;
+    line-height: 41px;
+    padding-right: 15px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+.content-slim .description-section{
+    color: #023356;
+    font-size: 16px;
+    padding-right: 10px;
+    line-height: 30px;
+    margin-bottom: 35px;
+}
+.content-img-row-slim {
+    width: auto;
+    height: 255px;
+    margin: 0px auto;
+}
+.content-img-row-slim img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.section-block-row ul li{
+    color: #023356;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+.section-block-row .row {
+    margin-bottom: 55px;
+    align-items: center;
+}
+#welke-img {
+    height: 335px;
+}
+.btn-Aan-slag{
+    background: #00aa9e;
+    color: #FFFFFF !important;
+    border-radius: 8px;
+    padding: 9px 30px !important;
+    font-size: 14px;
+    margin-top: 15px;
+}
+.section-block-row .description-section {
+    padding-right: 0;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -21975,6 +22052,9 @@ background: #FFFFFF !important;
         margin: 25px auto 13px;
         font-size: 28px;
         line-height: 36px;
+    }
+    .boxSlim .wordDeBestText2 {
+        margin: 10px auto 13px;
     }
     .blockLogoMobileLivelearn {
         margin-left: -15px !important;
@@ -25019,6 +25099,9 @@ background: #FFFFFF !important;
         padding-bottom: 28px;
         padding-top: 10px;
     }
+    .content-community-overview .boxSlim {
+        min-height: 338px;
+    }
     .content-template-form .form-block form {
         width: 95%;
         margin: 0 auto 50px;
@@ -25086,12 +25169,32 @@ background: #FFFFFF !important;
     .content-detail-voor-organisation .btnBedrijven {
         margin-left: 0;
     }
+    .first-section-slim .description-about {
+        width: auto;
+        margin: 0 auto 50px;
+        padding: 0 10px;
+    }
+    .section-block-row {
+        padding: 0 15px;
+    }
+    .content-img-row-slim {
+        margin: 0px auto 30px;
+    }
+    .content-slim .title-section {
+        font-size: 26px;
+        line-height: 32px;
+        padding-right: 0px;
+    }
+    #welke-img {
+        height: 270px;
+    }
 
 
 
 
 
 }
+
 
 .radius-custom {
     border-radius: 10px !important;
@@ -25891,6 +25994,9 @@ background: #FFFFFF !important;
     }
     .logo-users {
         margin-bottom: 60px;
+    }
+    .content-template-form .form-block form {
+        width: 80%;
     }
 
 
