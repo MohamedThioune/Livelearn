@@ -829,7 +829,7 @@ foreach ($users as $element) {
                                     break;
                                 $i++;
 
-                                $company = get_field('company_author', $value->ID)[0];
+                                $company = get_field('company_author', $value->ID);
                                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                                 $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
@@ -1297,7 +1297,7 @@ foreach ($users as $element) {
                             if(!$value)
                                 continue;
 
-                            $company = get_field('company_author', $value->ID)[0];
+                            $company = get_field('company_author', $value->ID);
                             $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                             $community_image = get_field('image_community', $value->ID) ?: $company_image;
 

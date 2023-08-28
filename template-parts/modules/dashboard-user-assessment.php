@@ -1,4 +1,7 @@
 <?php
+    //Deactivated assessment
+    header('Location: /dashboard/user');
+
     /* Get  seconds by given string time  */
     function timeToSeconds(string $time): int
     {

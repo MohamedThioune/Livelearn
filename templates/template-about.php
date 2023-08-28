@@ -7,6 +7,7 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
 <style>
     .headerdashboard,.navModife {
         background: #deeef3;
@@ -106,16 +107,8 @@
     .content-community-overview .boxOne3-1 {
         height: 270px;
     }
-
-
-
-
-
-    }
-
-
 </style>
-
+ 
 <div class="content-community-overview">
     <section class="boxOne3-1">
         <div class="container">
