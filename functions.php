@@ -1029,7 +1029,6 @@ function recommended_course($data)
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
-
     
     foreach($all_user_views as $key => $view) {
         if(!$view['course'])
@@ -1111,7 +1110,7 @@ function recommended_course($data)
                 }
 
             $count_recommended_course = count($recommended_courses);
-            if($count_recommended_course == 50)
+            if($count_recommended_course == 25)
                 break;
         }
     }
@@ -1122,8 +1121,7 @@ function recommended_course($data)
     $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
   }
 
-  $recommended_courses = array_slice($recommended_courses, 0, 50, true); 
-
+  $recommended_courses = array_slice($recommended_courses, 0, 25, true); 
  
   $course_id = array();
   $random_id = array(); 
