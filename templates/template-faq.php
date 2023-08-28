@@ -3,12 +3,12 @@
 <?php
 /** Mollie API client for php **/
 
-$mollie = new \Mollie\Api\MollieApiClient();
-$mollie->setApiKey("test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3");
+// $mollie = new \Mollie\Api\MollieApiClient();
+// $mollie->setApiKey("test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3");
 
-$payments = $mollie->payments->page(); 
+// $payments = $mollie->payments->page(); 
 
-var_dump($payments[0]->id);
+// var_dump($payments[0]->id);
 ?>
 
 <?php
@@ -36,23 +36,23 @@ var_dump($payments[0]->id);
 
 <?php
 //Woocommerce php 
-require __DIR__ . '/../vendor/autoload.php';
-use Automattic\WooCommerce\Client;
+// require __DIR__ . '/../vendor/autoload.php';
+// use Automattic\WooCommerce\Client;
 
-require('module-subscribe.php'); 
+// require('module-subscribe.php'); 
 
-$woocommerce = new Client(
-'https:www.livelearn.nl/',
-'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-[
-    'version' => 'wc/v3', // WooCommerce WP REST API version
-]
-);
-$endpoint = "subscriptions";
-$subscriptions = $woocommerce->get($endpoint, $parameters = []);
+// $woocommerce = new Client(
+// 'https:www.livelearn.nl/',
+// 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+// 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+// [
+//     'version' => 'wc/v3', // WooCommerce WP REST API version
+// ]
+// );
+// $endpoint = "subscriptions";
+// $subscriptions = $woocommerce->get($endpoint, $parameters = []);
 
-var_dump($subscriptions);
+// var_dump($subscriptions);
 ?>
 
 <body>
