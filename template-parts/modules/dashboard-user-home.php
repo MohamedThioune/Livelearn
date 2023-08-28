@@ -1512,6 +1512,8 @@ if(isset($_GET['message']))
                 <ul id="Trends" class="hide">
                     <div class="block-new-card-course">
                         <?php
+                        $courses = (!empty($courses)) ? $courses : $global_courses;
+                        $courses = (!empty($courses)) ? $courses : $more_global_courses;
                         if(!empty($courses))
                             foreach($courses as $course){
                                 //Date and Location
