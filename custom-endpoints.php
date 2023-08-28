@@ -1399,7 +1399,8 @@ function filter_course(WP_REST_Request $request)
       
       $company_community = get_field('company_author', $community->ID);
       foreach($company_community as $value)
-        if( $value->post_name == $company->post_name ){
+        if( $value->post_name == $company->post_name )
+        {
           $bool = true;
           break;
         }
@@ -1576,7 +1577,15 @@ function getCommunities()
   );
   $communities = get_posts($args);
   foreach ($communities as $key => $community) {
-    $community-> author_company = get_field('company_author',$community->ID) ? get_field('company_author',$community->ID) : null;
+    //Check if the community is private or public
+    $community->visibility_community = get_field('visibility_company',$community->ID);
+    if ($community->visibility_community)
+      continue;
+    $community-> author_company = array();
+    $author_company = get_field('company_author',$community->ID) ? get_field('company_author',$community->ID) : null;
+    if(is_object($author_company))
+      array_push($community->author_company,$author_company);
+
     $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
     $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
     $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
@@ -1706,7 +1715,16 @@ function getCommunityById($data)
   if ($community == null)
     return ["error" => "This community does not exist !"];
     $community = get_post($id_community) ?? null;
-    $community-> author_company = get_field('company_author',$community->ID) ? get_field('company_author',$community->ID) : null;
+
+    //Check if the community is private or public
+    $community->visibility_community = get_field('visibility_company',$community->ID);
+    if ($community->visibility_community)
+      return ['message'=> 'You don\'t have access to this community because it\'s private'];
+    $community-> author_company = array();
+    $author_company = get_field('company_author',$community->ID) ? get_field('company_author',$community->ID) : null;
+    if(is_object($author_company))
+      array_push($community->author_company,$author_company);
+    
     $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
     $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
     $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
