@@ -1121,9 +1121,10 @@ function recommended_course($data)
     $recommended_courses = (empty($courses)) ? $courses : $global_courses;
     $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
   }
-  else
-    $recommended_courses = array_slice($recommended_courses, 0, 50); 
 
+  $recommended_courses = array_slice($recommended_courses, 0, 50, true); 
+
+  return $recommended_courses;
 
   $course_id = array();
   $random_id = array(); 
