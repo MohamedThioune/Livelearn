@@ -218,10 +218,10 @@ function makeApiCallWoocommerce($url, $type, $data = null) {
     // close curl
     curl_close( $ch );
 
-    $datum = (Object)$response;
+    $datum = (Object)json_decode( $response, true );
 
     // return data
-    return json_decode( $datum, true );
+    return $datum;
 
 
 }
