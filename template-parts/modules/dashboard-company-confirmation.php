@@ -1,5 +1,4 @@
 <?php
-    var_dump($abonnement->billing);
     if(isset($abonnement->invoices))
         if($abonnement->invoices):
             $last_order = array_reverse($abonnement->invoices)[0];
@@ -13,7 +12,7 @@
         $abonnement_date_created = explode('T',$abonnement_date_created);
         $abonnement_date_next_payment = $abonnement->next_payment_date_gmt;
         $abonnement_date_next_payment = explode('T',$abonnement_date_next_payment)[0];
-        $abonnement->total = $global_price * $abonnement->line_items[0]->quantity;
+        $abonnement->total = $global_price * $abonnement->line_items[0]['quantity'];
     }else if(isset($abonnement->createdAt)){
         $abonnement_date_created = $abonnement->createdAt;
         $abonnement_date_created = explode('T',$abonnement_date_created);
@@ -99,17 +98,17 @@
             <tbody>
                 <?php 
                 foreach($abonnement->invoices as $order):
-                $order_date_created = $order->date_created;
+                $order_date_created = $order['date_created'];
                 $order_date_created = explode('T', $order_date_created);
 
                 // $payment_method_title = ($order->payment_method_title || $order->payment_method_title != "" ) ? $order->payment_method_title  : "N/D";
 
-                $situation = ($order->needs_payment) ? '<span class="hold">On hold</span>' : '<span class="done">Done</span>';
+                $situation = ($order['needs_payment']) ? '<span class="hold">On hold</span>' : '<span class="done">Done</span>';
                 ?> 
                 <tr>
                     <td><?= $order_date_created[0] ?></td>
                     <td><?= "Invoice" ?></td>
-                    <td><?= $order->total ?> €</td>
+                    <td><?= $order['total'] ?> €</td>
                     <td><?= $situation ?></td>
                     <!-- 
                     <td>
