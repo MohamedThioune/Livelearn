@@ -44,7 +44,7 @@
             var_dump($row['billing']['company']);
             if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
                 $access_granted = 1;
-                $abonnement = $row;
+                $abonnement = (Object)$row;
                 //Invoice orders
                 $endpoint_order_invoice = "subscriptions/" . $row['id'] . "/orders";
                 $abonnement->invoices = $woocommerce->get($endpoint_order_invoice, $parameters = []);
