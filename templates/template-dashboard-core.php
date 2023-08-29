@@ -4,19 +4,19 @@
 $page = 'check_visibility.php';
 require($page); 
 
-// require __DIR__ . '/../vendor/autoload.php';
-// use Automattic\WooCommerce\Client;
+require __DIR__ . '/../vendor/autoload.php';
+use Automattic\WooCommerce\Client;
 
-// require('module-subscribe.php'); 
+require('module-subscribe.php'); 
 
-// $woocommerce = new Client(
-// 'https:www.livelearn.nl/',
-// 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-// 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-// [
-//     'version' => 'wc/v3', // WooCommerce WP REST API version
-// ]
-// );
+$woocommerce = new Client(
+'https:www.livelearn.nl/',
+'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+[
+    'version' => 'wc/v3', // WooCommerce WP REST API version
+]
+);
 
 $mail_notification_invitation = '/mail-notification-invitation.php';
 require(__DIR__ . $mail_notification_invitation); 
