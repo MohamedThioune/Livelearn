@@ -129,7 +129,7 @@
             // var_dump($data_put);
             $endpoint_pay = "https://api.mollie.com/v2/customers/" . $customer_id . "/subscriptions" . "/" . $abonnement->id ;
             $abonnement = (Object)makeApiCallMollie($endpoint_pay, $data_put, "POST")[0];
-            var_dump((Object)$abonnement);
+            //var_dump((Object)$abonnement);
         }
     }
 

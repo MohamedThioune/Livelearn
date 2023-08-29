@@ -3,10 +3,10 @@
         if($abonnement->invoices):
             $last_order = array_reverse($abonnement->invoices)[0];
             $last_order = (Object)$last_order;
-            var_dump($last_order);
+            //var_dump($last_order);
             $last_order_date_created = explode('T', $last_order->date_created)[0];
         endif;
-        
+
     if(isset($abonnement->date_created)){
         $abonnement_date_created = $abonnement->date_created;
         $abonnement_date_created = explode('T',$abonnement_date_created);
