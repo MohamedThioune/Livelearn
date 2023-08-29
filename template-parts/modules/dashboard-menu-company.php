@@ -44,9 +44,6 @@
             if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
                 $access_granted = 1;
                 $abonnement = (Object)$row;
-                //Invoice orders
-                $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $row['id'] . "/orders";
-                $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');
                 break;                
             } 
         }
@@ -134,6 +131,13 @@
             $abonnement = (Object)makeApiCallMollie($endpoint_pay, $data_put, "POST");
         }
     }
+
+    if($abonnement){
+        //Invoice orders
+        $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id . "/orders";
+        $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');
+    }
+
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
