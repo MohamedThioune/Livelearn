@@ -46,8 +46,9 @@
                 $access_granted = 1;
                 $abonnement = (Object)$row;
                 //Invoice orders
-                $endpoint_order_invoice = "subscriptions/" . $row['id'] . "/orders";
-                $abonnement->invoices = $woocommerce->get($endpoint_order_invoice, $parameters = []);
+                $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $row['id'] . "/orders";
+                $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');
+                var_dump($abonnement->invoices);
                 break;                
             } 
         }
