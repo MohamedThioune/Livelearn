@@ -34,7 +34,7 @@
     $endpoint = "subscriptions";
     $subscriptions = makeApiCallWoocommerce('https://livelearn.nl/wp-json/wc/v3/subscriptions', 'GET');
 
-    var_dump($subscriptions);
+    // var_dump($subscriptions[0]->billing->company);
 
     //Credit cards 
     $mollie = new \Mollie\Api\MollieApiClient();
@@ -78,11 +78,11 @@
         if($option_menu[2] == 'profile-company')
             $access_granted = 1;
 
-    // if (!$access_granted && !in_array( 'administrator', $user->roles ))
-    //     header('Location: /dashboard/company/profile-company');
+    if (!$access_granted && !in_array( 'administrator', $user->roles ))
+        header('Location: /dashboard/company/profile-company');
 
-    // if (!$access_granted)
-    //     header('Location: /dashboard/company/profile-company');
+    if (!$access_granted)
+        header('Location: /dashboard/company/profile-company');
 
     //Pricing changes
     $price = $global_price * $team;
