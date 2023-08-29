@@ -32,7 +32,9 @@
 
     /** Woocommerce API client for php - list subscriptions **/
     $endpoint = "subscriptions";
-    // $subscriptions = $woocommerce->get($endpoint, $parameters = []);
+    $subscriptions = makeApiCallWoocommerce('https://livelearn.nl/wp-json/wc/v3/subscriptions', 'GET');
+
+    dd($subscriptions);
 
     //Credit cards 
     $mollie = new \Mollie\Api\MollieApiClient();

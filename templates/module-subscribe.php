@@ -182,3 +182,46 @@ function makeApiCallMollie($endpoint, $params, $type) {
     // return data
     return json_decode( $response, true );
 }
+
+function makeApiCallWoocommerce($url, $type, $data = null) {
+    // credentials
+    $params = array( // login url params required to direct user to facebook and promt them with a login dialog
+        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+    );
+    //create endpoint with params
+    $endpoint = $url . '?' . http_build_query( $params );
+
+    // initialize curl
+    $ch = curl_init();
+
+    $output_type = ( $type == 'GET' ) ? false : true; 
+    
+    // set other curl options
+    curl_setopt($ch, CURLOPT_URL, $endpoint);
+    curl_setopt($ch, CURLOPT_POST, $output_type);
+    if($output_type)
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+    // get response
+    $response = curl_exec( $ch );
+    if ($response === false) {
+        $response = curl_error($ch);
+        $error = true;
+        echo stripslashes($response);
+        return false;
+    }
+
+    // close curl
+    curl_close( $ch );
+
+    $datum = (Object)$response;
+
+    // return data
+    return json_decode( $datum, true );
+
+
+}
