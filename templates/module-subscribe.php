@@ -225,3 +225,88 @@ function makeApiCallWoocommerce($url, $type, $data = null) {
 
 
 }
+
+function woocommmerce_subscribe_api($information, $active){
+    $global_product_id = 9873;
+    $global_price = 5;
+
+    /** Requirement information */
+    $user_id = get_current_user_id();
+    $company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
+    $users = get_users();
+    $members = array();
+    foreach($users as $user){
+        $company_value = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_value)){
+            $company_value_title = $company_value[0]->post_title;
+            if($company_value_title == $company_title)
+                array_push($members, $user);
+        }
+    }
+    $team = count($members);
+
+    if($information['is_trial']){
+        $date_now = date('Y-m-d H:i:s');
+        $date_now_timestamp = strtotime($date_now);
+        $trial_end_date = date("Y-m-d H:i:s", strtotime("+ 14 days" , $date_now_timestamp));
+        $next_payment_date = date("Y-m-d H:i:s", strtotime("+1 month" , strtotime($trial_end_date)));
+    }else{
+        $date_now = date('Y-m-d H:i:s');
+        $trial_end_date = $date_now;
+        $date_now_timestamp = strtotime($date_now);
+        $next_payment_date = date("Y-m-d H:i:s", strtotime("+1 month" , $date_now_timestamp));
+    }
+
+    if($active)
+       $active = 'active';
+    else
+        $active = 'on-hold'; 
+
+    /*
+    ** Create subscription
+    */ 
+    $data = [
+        'customer_id'       => $user_id,
+        'status'            => $active,
+        'billing_period'    => 'month',
+        'billing_interval'  =>  1,
+        'start_date'        => $date_now,
+        'trial_end_date'    => $trial_end_date,
+        'next_payment_date' => $next_payment_date,
+        'payment_method'    => 'mollie',
+        'prices_include_tax'=> true,
+        'billing' => [
+            'first_name' => $information['first_name'],
+            'last_name'  => $information['last_name'],
+            'company'    => $company_title,
+            'address_1'  => $information['factuur_address'],
+            'address_2'  => '',
+            'city'     => '', 
+            'state'    => 'DR-NL',
+            'postcode' => '1011',
+            'country'  => 'NL',
+            'email'    => $information['email'],
+            'phone'    => $information['phone'],
+        ],
+        'shipping' => [],
+        'line_items' => [
+            [
+                'product_id' => $global_product_id,
+                'quantity'   => $team,
+            ],
+        ],
+        'shipping_lines' => [],
+        'meta_data' => [],
+    ];
+    // $subscription = $woocommerce->post('subscriptions', $data);
+    $endpoint = "https://livelearn.nl/wp-json/wc/v3/subscriptions/";
+    $subscription = makeApiCallWoocommerce($endpoint, 'POST', $data);
+    $subscription = (Object)$subscription;
+
+    if($subscription)
+        return $subscription;
+
+    echo "<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>";
+    http_response_code(500);
+    return 0;
+}

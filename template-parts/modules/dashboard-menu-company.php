@@ -66,7 +66,6 @@
             
     }
     
-
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
         header('Location: /dashboard/user');
 
@@ -85,14 +84,14 @@
     $tax_price = $price * (20/100);
     $total = $price + $tax_price;
     
-    $quantity = (isset($abonnement->line_items[0]->quantity)) ? $abonnement->line_items[0]->quantity : $abonnement->metadata->quantity;
+    $quantity = (isset($abonnement->line_items[0]['quantity'])) ? $abonnement->line_items[0]['quantity'] : $abonnement->metadata->quantity;
     if($team != $quantity && !empty($abonnement) && $instrument == 'invoice'){
         /** Woocommerce API client for php - update subscription **/
         $endpoint_put = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id;
         $data_put = [
             "line_items" => [
                 [
-                    "id" => $abonnement->line_items[0]->id,
+                    "id" => $abonnement->line_items[0]['id'],
                     "product_id" => $global_product_id,
                     "quantity"   => $team,
                     "tax_class" => "",
@@ -128,7 +127,7 @@
             ];
             // var_dump($data_put);
             $endpoint_pay = "https://api.mollie.com/v2/customers/" . $customer_id . "/subscriptions" . "/" . $abonnement->id ;
-            $abonnement = makeApiCallMollie($endpoint_pay, $data_put, "POST")[0];
+            $abonnement = (Object)makeApiCallMollie($endpoint_pay, $data_put, "POST")[0];
         }
     }
 
