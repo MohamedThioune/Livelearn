@@ -138,7 +138,7 @@
                         <button class="btn btn-ons">Contacteer ons</button>
                     </form> -->
                     <?php
-                    echo do_shortcode("[gravityform id='12' title='false' description='false' ajax='true']");
+                    echo do_shortcode("[gravityform id='18' title='false' description='false' ajax='true']");
                     ?>
                 </div>
             </div>
