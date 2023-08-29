@@ -34,7 +34,7 @@
     $endpoint = "subscriptions";
     $subscriptions = makeApiCallWoocommerce('https://livelearn.nl/wp-json/wc/v3/subscriptions', 'GET');
 
-    var_dump($subscriptions[0]->billing->company);
+    var_dump($subscriptions[0]['billing']['company']);
 
     //Credit cards 
     $mollie = new \Mollie\Api\MollieApiClient();
@@ -43,12 +43,12 @@
     if(!empty($subscriptions)){
         $instrument = 'invoice';
         foreach($subscriptions as $row)
-            if($row->billing->company == $company_connected && $row->status == 'active'){
+            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
                 $access_granted = 1;
                 $abonnement = $row;
                 //Invoice orders
-                $endpoint_order_invoice = "subscriptions/" . $row->id . "/orders";
-                $abonnement->invoices = $woocommerce->get($endpoint_order_invoice, $parameters = []);
+                $endpoint_order_invoice = "subscriptions/" . $row['id'] . "/orders";
+                $abonnement['invoices'] = $woocommerce->get($endpoint_order_invoice, $parameters = []);
                 break;                
             } 
     }
