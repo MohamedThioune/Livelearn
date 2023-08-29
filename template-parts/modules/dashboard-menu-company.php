@@ -41,14 +41,12 @@
     if(!empty($subscriptions)){
         $instrument = 'invoice';
         foreach($subscriptions as $row){
-            var_dump($row['billing']['company']);
             if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
                 $access_granted = 1;
                 $abonnement = (Object)$row;
                 //Invoice orders
                 $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $row['id'] . "/orders";
                 $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');
-                var_dump($abonnement->invoices);
                 break;                
             } 
         }
@@ -93,7 +91,7 @@
     $quantity = (isset($abonnement->line_items[0]->quantity)) ? $abonnement->line_items[0]->quantity : $abonnement->metadata->quantity;
     if($team != $quantity && !empty($abonnement) && $instrument == 'invoice'){
         /** Woocommerce API client for php - update subscription **/
-        $endpoint_put = "subscriptions/" . $abonnement->id;
+        $endpoint_put = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id;
         $data_put = [
             "line_items" => [
                 [
@@ -110,7 +108,9 @@
                 ],
             ],
         ];
-        $abonnement = $woocommerce->put($endpoint_put, $data_put);
+        $abonnement = makeApiCallWoocommerce($endpoint_put, 'PUT', $data_put);
+        $abonnement = (Object) $abonnement;
+        // $abonnement = $woocommerce->put($endpoint_put, $data_put);
     }
     else if($team != $quantity && !empty($abonnement) && $instrument == 'card'){
         $customer_id = get_field('mollie_customer_id', 'user_' . $user->ID);
