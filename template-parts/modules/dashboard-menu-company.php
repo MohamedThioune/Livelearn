@@ -109,7 +109,7 @@
             ],
         ];
         $abonnement = makeApiCallWoocommerce($endpoint_put, 'PUT', $data_put);
-        $abonnement = (Object) $abonnement;
+        $abonnement = (Object)$abonnement;
         // $abonnement = $woocommerce->put($endpoint_put, $data_put);
     }
     else if($team != $quantity && !empty($abonnement) && $instrument == 'card'){

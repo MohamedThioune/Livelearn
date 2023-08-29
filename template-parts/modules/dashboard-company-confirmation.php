@@ -1,4 +1,5 @@
 <?php
+    var_dump($abonnement->invoices);
     if(isset($abonnement->invoices))
         if($abonnement->invoices):
             $last_order = array_reverse($abonnement->invoices)[0];
