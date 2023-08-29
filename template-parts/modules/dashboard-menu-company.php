@@ -48,7 +48,7 @@
                 $abonnement = $row;
                 //Invoice orders
                 $endpoint_order_invoice = "subscriptions/" . $row['id'] . "/orders";
-                $abonnement['invoices'] = $woocommerce->get($endpoint_order_invoice, $parameters = []);
+                $abonnement->invoices = $woocommerce->get($endpoint_order_invoice, $parameters = []);
                 break;                
             } 
     }
