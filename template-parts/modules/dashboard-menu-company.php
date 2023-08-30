@@ -76,8 +76,8 @@
     if (!$access_granted && !in_array( 'administrator', $user->roles ))
         header('Location: /dashboard/company/profile-company');
 
-    if (!$access_granted)
-        header('Location: /dashboard/company/profile-company');
+    // if (!$access_granted)
+    //     header('Location: /dashboard/company/profile-company');
 
     //Pricing changes
     $price = $global_price * $team;
