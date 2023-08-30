@@ -73,8 +73,9 @@
         if($option_menu[2] == 'profile-company')
             $access_granted = 1;
 
-    if (!$access_granted && !in_array( 'administrator', $user->roles ))
-        header('Location: /dashboard/company/profile-company');
+    if (in_array( 'administrator', $user->roles ))
+        $access_granted = 1;
+        // header('Location: /dashboard/company/profile-company');
 
     // if (!$access_granted)
     //     header('Location: /dashboard/company/profile-company');
