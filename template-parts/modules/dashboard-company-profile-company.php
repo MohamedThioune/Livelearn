@@ -32,7 +32,6 @@ $team = count($members);
 
 if ( !in_array( 'administrator', $current_user->roles ) && !in_array( 'hr', $current_user->roles ) ) 
     header('Location: /dashboard/user');              
-
 ?>
 
 <?php
