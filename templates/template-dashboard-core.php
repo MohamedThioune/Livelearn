@@ -3,11 +3,10 @@
 
 $page = 'check_visibility.php';
 require($page); 
+require('module-subscribe.php'); 
 
 // require __DIR__ . '/../vendor/autoload.php';
 // use Automattic\WooCommerce\Client;
-
-// require('module-subscribe.php'); 
 
 // $woocommerce = new Client(
 // 'https:www.livelearn.nl/',

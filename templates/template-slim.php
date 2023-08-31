@@ -126,6 +126,7 @@
                 streeft de overheid ernaar om leren en ontwikkelen binnen het mkb als vanzelfsprekend te beschouwen.</p>
             <div class="container-fluid">
                 <div class="form-block form-slim">
+                    <!-- 
                     <form action="">
                         <p class="text-center">Meld je vrijblijvend aan</p>
                         <input type="text" placeholder="Voornaam*" class="input-template-form">
@@ -135,7 +136,10 @@
                         <input type="number" placeholder="Telefoonnummer*" class="input-template-form">
                         <textarea name="" id="" placeholder="Waarmee kunnen we je helpen?" rows="10"></textarea>
                         <button class="btn btn-ons">Contacteer ons</button>
-                    </form>
+                    </form> -->
+                    <?php
+                        echo do_shortcode("[gravityform id='18' title='false' description='false' ajax='true']");
+                    ?>
                 </div>
             </div>
         </section>
