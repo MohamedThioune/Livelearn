@@ -15047,6 +15047,7 @@ background: #FFFFFF !important;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    position: relative;
 }
 .block-new-card-course .new-card-course{
     width: 48.5%;
@@ -21159,6 +21160,55 @@ background: #FFFFFF !important;
     font-size: 14px;
     line-height: 25px;
     color: #5f606a;
+}
+.new-modal-to-do .modal-dialog {
+    max-width: 665px !important;
+    margin-top: 120px;
+}
+.content-block-bg {
+    background: #EBEBEB;
+    padding: 15px;
+    border-radius: 15px;
+}
+.block-one-add-element {
+    text-align: center;
+    background: white;
+    min-height: 200px;
+    padding: 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    display: grid;
+    place-items: center;
+}
+.block-one-add-element .title{
+    color: #35444E;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.block-one-add-element .description{
+    color: #35444E;
+    font-size: 16px;
+    margin-bottom: 0px;
+    line-height: 23px;
+}
+.loader-course{
+    display: none;
+}
+.loader-block {
+    margin: 0 auto;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50px;
+}
+.loader-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 /*responsive mobile*/
