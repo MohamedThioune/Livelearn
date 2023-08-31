@@ -1,8 +1,4 @@
 {
-    "config": {
-        "platform-check": false
-    },
-  
     "require": {
         "fabpot/goutte": "^4.0",
         "mollie/mollie-api-php": "^2.0",

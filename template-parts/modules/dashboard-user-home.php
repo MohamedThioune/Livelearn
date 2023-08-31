@@ -686,8 +686,8 @@ $bool = false;
 
 if (empty($recommended_courses)){
     $courses_id = array();
-    $recommended_courses = (empty($courses)) ? $courses : $global_courses;
-    $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
+    $recommended_courses = (!empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $more_global_courses;
     $bool = true;
 }
 

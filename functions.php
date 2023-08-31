@@ -872,7 +872,7 @@ function recommended_course($data)
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 300
+    'posts_per_page' => 400
   );
   $global_courses = get_posts($args);
   shuffle($global_courses);
@@ -1029,7 +1029,6 @@ function recommended_course($data)
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
-
     
     foreach($all_user_views as $key => $view) {
         if(!$view['course'])
@@ -1109,22 +1108,23 @@ function recommended_course($data)
                     array_push($random_id, $course->ID);
                     array_push($recommended_courses, $course);
                 }
-
-            $count_recommended_course = count($recommended_courses);
-            if($count_recommended_course == 50)
-                break;
+            
+            if(!empty($recommended_courses)){
+                $count_recommended_course = count($recommended_courses);
+                if($count_recommended_course == 25)
+                    break;
+            }
         }
     }
   }
 
   if(empty($recommended_courses)){
-    $recommended_courses = (empty($courses)) ? $courses : $global_courses;
-    $recommended_courses = (empty($recommended_courses)) ? $more_global_courses : $recommended_courses;
+    $recommended_courses = (!empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $more_global_courses;
   }
 
-  $recommended_courses = array_slice($recommended_courses, 0, 50, true); 
-
-
+  $recommended_courses = array_slice($recommended_courses, 0, 25, true); 
+ 
   $course_id = array();
   $random_id = array(); 
   if (!empty($recommended_courses)) {
