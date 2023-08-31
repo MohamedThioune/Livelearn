@@ -1,6 +1,8 @@
 <?php /** Template Name: new course podcast */ ?>
+
 <?php wp_head(); ?>
 <?php get_header(); ?>
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
