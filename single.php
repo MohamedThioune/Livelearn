@@ -8,7 +8,7 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
-view($post,$user_visibility);
+view($post);
 
 ?>
 
