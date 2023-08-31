@@ -19525,7 +19525,7 @@ background: #FFFFFF !important;
     background: #fff;
     border: none;
     width: 6px;
-    height: 32.5px;
+    height: 16px;
     left: 0;
 }
 .elemnt-list-podcast .is-playing .cp-audioquote__player--playBtn:after {
@@ -19533,7 +19533,7 @@ background: #FFFFFF !important;
     background: #fff;
     border: none;
     width: 6px;
-    height: 32.5px;
+    height: 16px;
     left: 0;
     margin-left: 6px;
 }
@@ -19606,19 +19606,29 @@ background: #FFFFFF !important;
     margin-right: 20px;
 }
 .list-content-podcast .elemnt-list-podcast .title-podcast{
-    color: #353535;
+    color: #033356;
     font-size: 20px;
     line-height: 28.8px;
-    margin-bottom: 30px;
     padding-left: 4px;
+    margin-left: 13px;
+    font-weight: 500;
 }
 .list-content-podcast .elemnt-list-podcast .detail-block-podcast{
-    width: 90%;
-    margin-right: 20px;
+    width: 100%;
+}
+.list-content-podcast .elemnt-list-podcast .detail-block-podcast .audio {
+    margin: 23px 0 15px;
 }
 .list-content-podcast .elemnt-list-podcast .blocked-img{
     width: 36px;
     height: 36px;
+}
+.date-added-playlist {
+    margin-bottom: 0;
+    color: #46a99e;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 45px;
 }
 .content-new-Courses .body-content .sub-title{
     color: #151515;
@@ -21123,6 +21133,32 @@ background: #FFFFFF !important;
     width: auto;
     margin: 0 auto 45px;
     display: block;
+}
+.form-slim form input, .form-slim textarea {
+    color: #033356 !important;
+}
+.form-slim .gform_footer .gform_button {
+    background: #00A89D !important;
+    color: white !important;
+    width: 100%;
+    font-weight: 600;
+}
+.detail-block-podcast .playlist-img {
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+.detail-block-podcast .playlist-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.description-one-element-playlist {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 25px;
+    color: #5f606a;
 }
 
 /*responsive mobile*/
@@ -25524,7 +25560,7 @@ background: #FFFFFF !important;
         padding: 0 10px;
     }
     .section-block-row {
-        padding: 0 15px;
+        padding: 40px 15px;
     }
     .content-img-row-slim {
         margin: 0px auto 30px;
@@ -25569,6 +25605,9 @@ background: #FFFFFF !important;
     }
     .body-content-to-do .table-responsive {
         width: max-content;
+    }
+    .flex-direction-modife {
+        flex-direction: column-reverse;
     }
 
 
@@ -25616,6 +25655,7 @@ background: #FFFFFF !important;
 .content-voor-teacher-2 .firstSection{
     background: linear-gradient(180deg, hsla(176, 100%, 33%, 1) 60%, hsla(205, 95%, 17%, 1) 100%);
 }
+
 
 
 @media all and (max-width: 640px) {

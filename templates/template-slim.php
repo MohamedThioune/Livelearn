@@ -144,7 +144,7 @@
             </div>
         </section>
         <section class="section-block-row">
-            <div class="row">
+            <div class="row flex-direction-modife">
                 <div class="col-md-6">
                     <h2 class="title-section">Investeer in medewerker
                         ontwikkeling in 2023</h2>
@@ -168,7 +168,7 @@
                     <p class="description-section">De subsidiemogelijkheden zijn toegankelijk voor alle mkb-ondernemers. Bovendien mogen ondernemingen in de landbouw, horeca en recreatiesector, zelfs als ze grootbedrijven zijn, ook een aanvraag indienen. Daarnaast kunnen samenwerkingsverbanden ook aanvragen indienen. In zo’n samenwerkingsverband kunnen niet alleen twee mkb-bedrijven participeren, maar ook werkgevers- en werknemersverenigingen, onderwijsinstellingen en een O&O-fonds (een stichting die wordt beheerd door sociale partners).</p>
                 </div>
             </div>
-            <div class="row">
+            <div class="row flex-direction-modife">
                 <div class="col-md-6">
                     <h2 class="title-section">Welke activiteiten komen in aanmerking voor subsidie?</h2>
                     <p class="description-section">De activiteiten die in aanmerking komen voor de SLIM-subsidie in 2023 dienen te passen bij tenminste één van de volgende beschrijvingen:</p>
@@ -198,7 +198,7 @@
                     <p class="description-section">Het subsidiepercentage kan oplopen tot maximaal 80% van de subsidiabele kosten. Voor individuele bedrijven bedraagt de maximale subsidie € 24.999. Voor samenwerkingsverbanden kan dit oplopen tot maximaal € 500.000.</p>
                 </div>
             </div>
-            <div class="row">
+            <div class="row flex-direction-modife">
                 <div class="col-md-6">
                     <h2 class="title-section">Looptijd en deadlines voor de SLIM-subsidie</h2>
                     <p class="description-section">De SLIM-subsidie kent jaarlijks drie openstellingsperiodes. Als mkb-ondernemer kunt u een aanvraag indienen van 1 maart tot en met 30 maart, en van 1 september tot en met 28 september. Voor samenwerkingsverbanden en grootbedrijven is de regeling geopend van 1 juni tot en met 27 juli. Subsidieaanvragen worden behandeld in volgorde van binnenkomst. Bij overschrijding
