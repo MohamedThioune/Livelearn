@@ -25,7 +25,7 @@ if(empty($podcast_index))
                 header('Location: ' . get_permalink($post->ID));
 
 //Long description             
-$long_description = ($long_description) ? : "No long description found for this course ";
+$long_description = ($long_description) ? : "No long description found for this course "; 
 
 //Author
 $author = get_user_by('id', $post->post_author);
