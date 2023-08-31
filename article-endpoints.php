@@ -51,25 +51,25 @@ function Artikel_From_Company($data)
             'Aestate' => 'https://www.aestate.nl/',
             'Alba Concepts' => 'https://albaconcepts.nl/',
             'AM' => 'https://www.am.nl/',
-            // 'Limoonworks'=>'https://limoonworks.nl/',
             'DWA' => 'https://www.dwa.nl/',
             'Van Spaendonck' => 'https://www.vanspaendonck.nl/',
             'PTG-advies' => 'https://ptg-advies.nl/',
-            'Rever' => 'https://rever.nl/',
+            'Rever' => 'https://rever.nl/'
+        ],
+        [
             'Reworc' => 'https://www.reworc.com/',
             'Sweco' => 'https://www.sweco.nl/',
             'Co-pilot' => 'https://www.copilot.nl/',
             'Agile Scrum Group' => 'https://agilescrumgroup.nl/',
-        ],
-        [
             'Horizon' => 'https://horizontraining.nl/',
             'Kenneth Smit' => 'https://www.kennethsmit.com/',
             'Autoblog' => 'https://www.autoblog.nl/',
             'Crypto university' => 'https://www.cryptouniversity.nl/',
             'WineLife' => 'https://www.winelife.nl/',
-            'Perswijn' => 'https://perswijn.nl/',
+            'Perswijn' => 'https://perswijn.nl/'
+        ],
+        [
             'Koken met Kennis' => 'https://www.kokenmetkennis.nl/',
-            // 'Minkowski'=>'https://minkowski.org/',
             'KIT publishers' => 'https://kitpublishers.nl/',
             'BeByBeta' => 'https://www.betastoelen.nl/',
             'Zooi' => 'https://zooi.nl/',
@@ -77,25 +77,23 @@ function Artikel_From_Company($data)
             'Influid' => 'https://influid.nl/',
             'MediaTest' => 'https://mediatest.nl/',
             'MeMo2' => 'https://memo2.nl/',
+            'Impact Investor' => 'https://impact-investor.com/',
+            'Equalture' => 'https://www.equalture.com/'
         ],
         [
-            'Impact Investor' => 'https://impact-investor.com/',
-            'Equalture' => 'https://www.equalture.com/',
             'Zorgmasters' => 'https://zorgmasters.nl/',
             'AdSysco' => 'https://adsysco.nl/',
             'Transport en Logistiek Nederland' => 'https://www.tln.nl/',
             'Financieel Fit' => 'https://www.financieelfit.nl/',
             'Business Insider' => 'https://www.businessinsider.nl/',
             'Frankwatching' => 'https://www.frankwatching.com/',
-            // 'MarTech'=>'https://martech.org/',
             'Search Engine Journal' => 'https://www.searchenginejournal.com/',
-            // 'Search Engine Land'=>'https://searchengineland.com/',
             'TechCrunch' => 'https://techcrunch.com/',
             'The Bruno Effect' => 'https://magazine.thebrunoeffect.com/',
-            'Crypto Insiders' => 'https://www.crypto-insiders.nl/',
-            'HappyHealth' => 'https://happyhealthy.nl/',
+            'Crypto Insiders' => 'https://www.crypto-insiders.nl/'
         ],
         [
+            'HappyHealth' => 'https://happyhealthy.nl/',
             'Focus' => 'https://focusmagazine.nl/',
             'Chip Foto Magazine' => 'https://www.chipfotomagazine.nl/',
             'Vogue' => 'https://www.vogue.nl/',
@@ -104,19 +102,21 @@ function Artikel_From_Company($data)
             'Purse Blog' => 'https://www.purseblog.com/',
             'Coursera' => 'https://blog.coursera.org/',
             'Udemy' => 'https://blog.udemy.com/',
-            'CheckPoint' => 'https://blog.checkpoint.com/',
+            'CheckPoint' => 'https://blog.checkpoint.com/'
+        ],
+        [
             'De laatste meter' => 'https://www.delaatstemeter.nl/',
             'ManagementSite' => 'https://www.managementpro.nl/',
             '1 Minute Manager' => 'https://www.1minutemanager.nl/',
             'De Strafschop' => 'https://www.strafschop.nl/',
             'JongeBazen' => 'https://www.jongebazen.nl/',
             'Expeditie Duurzaam' => 'https://www.expeditieduurzaam.nl/',
-        ],
-        [
             'Pure Luxe' => 'https://pureluxe.nl/',
             'WatchTime' => 'https://www.watchtime.com/',
             'Monochrome' => 'https://monochrome-watches.com/',
-            'Literair Nederland' => 'https://www.literairnederland.nl/',
+            'Literair Nederland' => 'https://www.literairnederland.nl/'
+        ],
+        [
             'Tzum' => 'https://www.tzum.info/',
             'Developer' => 'https://www.developer-tech.com/',
             'SD Times' => 'https://sdtimes.com/',
@@ -126,10 +126,10 @@ function Artikel_From_Company($data)
             'The Real Deal' => 'https://therealdeal.com/',
             'HousingWire' => 'https://www.housingwire.com/',
             'AfterSales' => 'https://aftersalesmagazine.nl/',
-            'CRS Consulting' => 'https://crsconsultants.nl/',
-            'Commercial Construction & Renovation' => 'https://www.ccr-mag.com/',
+            'CRS Consulting' => 'https://crsconsultants.nl/'
         ],
         [
+            'Commercial Construction & Renovation' => 'https://www.ccr-mag.com/',
             'Training Magazine' => 'https://www.trainingmag.com/',
             'MedCity News' => 'https://www.medcitynews.com/',
             'Cocktail Enthusiast' => 'https://www.cocktailenthusiast.com/',
@@ -138,19 +138,21 @@ function Artikel_From_Company($data)
             'Kookles thuis' => 'https://www.kooklesthuis.com/',
             'Mediabistro' => 'https://www.mediabistro.com/',
             'ProBlogger' => 'https://problogger.com/',
-            'Media Shift' => 'https://www.mediashift.org/',
+            'Media Shift' => 'https://www.mediashift.org/'
+        ],
+        [
             'Warehouse Totaal' => 'https://www.warehousetotaal.nl/',
             'CS digital' => 'https://csdm.online/',
             'Analytics Insight' => 'https://www.analyticsinsight.net/',
             'Wissenraet' => 'https://www.vanspaendonck-wispa.nl/',
             '9to5Mac' => 'https://9to5mac.com/',
             'Invest International' => 'https://investinternational.nl/',
-        ],
-        [
             'Racefiets Blog' => 'https://racefietsblog.nl/',
             'Darts actueel' => 'https://www.dartsactueel.nl/',
             'Hockey.nl' => 'https://hockey.nl/',
-            'Hockeykrant' => 'https://hockeykrant.nl/',
+            'Hockeykrant' => 'https://hockeykrant.nl/'
+        ],
+        [
             'Tata Nexarc' => 'https://blog.tatanexarc.com/',
             'Incodocs' => 'https://incodocs.com/blog/',
             'Recruitement Tech' => 'https://www.recruitmenttech.nl/',
@@ -160,10 +162,10 @@ function Artikel_From_Company($data)
             '20Cube' => 'https://www.20cube.com/',
             'Outside' => 'https://velo.outsideonline.com/',
             'Trainer Road' => 'https://www.trainerroad.com/blog/',
-            'AllOver Media' => 'https://allovermedia.com/',
-            'The Partially Examined Life' => 'https://partiallyexaminedlife.com/',
+            'AllOver Media' => 'https://allovermedia.com/'
         ],
         [
+            'The Partially Examined Life' => 'https://partiallyexaminedlife.com/',
             'The Future Organization' => 'https://thefutureorganization.com/',
             'Arts en Auto'=>'https://www.artsenauto.nl/',
             'Discutafel'=>'https://discutafel.nl/',
@@ -172,9 +174,9 @@ function Artikel_From_Company($data)
             'Metal Injection'=>'https://metalinjection.net/',
             'Classical Music'=>'https://www.classical-music.com/',
             'Slipped Disc'=>'https://slippedisc.com/',
-            'The Violin Channel'=>'https://www.theviolinchannel.com/',
-            'Carey Nieuwhof'=>'https://careynieuwhof.com/'
+            'The Violin Channel'=>'https://www.theviolinchannel.com/'
         ],
+        ['Carey Nieuwhof'=>'https://careynieuwhof.com/']
     ];
 
     $args = array(
