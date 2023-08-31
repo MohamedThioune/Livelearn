@@ -757,12 +757,18 @@ if(isset($_GET['message']))
             </div>
         </div> 
         -->
-        <div class="btn-group-layouts">
-            <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
-            <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
+        <div class="d-flex w-100 flex-wrap">
+            <a href="" class="explore-more-btn">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/more-icon.png" alt="">
+                <span>Explore new topics!</span>
+            </a>
+            <div class="btn-group-layouts">
+                <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
+                <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
+            </div>
         </div>
 
-        <div id="tab-url1">
+        <div id="tab-url1" class="group-tab-element">
             <ul class="nav">
                 <li class="nav-one"><a href="#All" class="current">All</a></li>
                 <li class="nav-two"><a href="#Artikel" class="load_content_type">Artikel</a></li>
@@ -775,6 +781,9 @@ if(isset($_GET['message']))
             <div class="list-wrap">
                 <ul id="All">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation">
+                        <div class="loader-block" id="GifLoad">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/loader-course.gif" alt="">
+                        </div>
                         <?php
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
@@ -862,7 +871,8 @@ if(isset($_GET['message']))
 
                                 $find = true;
                                 ?>
-                                <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+
+                                <a href="<?= get_permalink($course->ID); ?>" class="loader-course new-card-course">
                                     <div class="head">
                                         <?php
                                         if($youtube_videos && $course_type == 'Video')
@@ -919,7 +929,7 @@ if(isset($_GET['message']))
                                 echo $void_content;
                             ?>
                             <center>
-                                <button class="btn btnNext loading_more">Load all</button><br>
+                                <button class="btn btnNext loading_more loader-course">Load all</button><br>
                                 <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                             </center>
                         </div>
@@ -1016,7 +1026,7 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course  loader-course">
                                         <div class="head">
                                             <?php
                                             if($youtube_videos && $course_type == 'Video')
@@ -1162,7 +1172,7 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course  loader-course">
                                         <div class="head">
                                             <?php
                                             if($youtube_videos && $course_type == 'Video')
@@ -1308,7 +1318,7 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course loader-course">
                                         <div class="head">
                                             <?php
                                             if($youtube_videos && $course_type == 'Video')
@@ -1454,7 +1464,7 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course loader-course">
                                         <div class="head">
                                             <?php
                                             if($youtube_videos && $course_type == 'Video')
@@ -1594,7 +1604,7 @@ if(isset($_GET['message']))
 
                                 $find = true;
                                 ?>
-                                <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                <a href="<?= get_permalink($course->ID); ?>" class="new-card-course loader-course">
                                     <div class="head">
                                         <?php
                                         if($youtube_videos && $course_type == 'Video')
@@ -1769,7 +1779,12 @@ if(isset($_GET['message']))
             }
 
             if(!$i)
-                echo "<p class='dePaterneText theme-card-description'> <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> </p>";
+                echo "<div class='upcoming-group'>
+                      <div class='element-upcoming-block'>
+                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-shedule.png'>
+                          <p>Zoek je eerste event</p>
+                      </div>
+                  </div>";
             ?>
             <!-- <a href="/" class="btn btn-more-events">More Events</a> -->
         </div>
@@ -1828,7 +1843,12 @@ if(isset($_GET['message']))
             }
 
             if(!empty($communities))
-                echo '<a href="/dashboard/user/communities" class="btn btn-more-events">More</a>';
+                echo "<div class='upcoming-group'>
+                      <div class='element-upcoming-block'>
+                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
+                          <p>Join je eerste community</p>
+                      </div>
+                  </div>";
             ?>
         </div>
         <div class="user-expert-block">
@@ -1982,5 +2002,18 @@ $(".load_content_type").click((e)=>
         }
     })
 </script>
+<script>
+    window.addEventListener('load', function() {
+        document.querySelectorAll('.loader-course').forEach(function(element) {
+            element.style.display = 'block';
+        });
+    });
+    window.addEventListener('load', function() {
+        var okBlock = document.getElementById('GifLoad');
+        if (okBlock) {
+            okBlock.style.display = 'none';
+        }
+    });
 
+</script>
 
