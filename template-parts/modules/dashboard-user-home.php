@@ -757,12 +757,18 @@ if(isset($_GET['message']))
             </div>
         </div> 
         -->
-        <div class="btn-group-layouts">
-            <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
-            <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
+        <div class="d-flex w-100 flex-wrap">
+            <a href="" class="explore-more-btn">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/more-icon.png" alt="">
+                <span>Explore new topics!</span>
+            </a>
+            <div class="btn-group-layouts">
+                <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
+                <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
+            </div>
         </div>
 
-        <div id="tab-url1">
+        <div id="tab-url1" class="group-tab-element">
             <ul class="nav">
                 <li class="nav-one"><a href="#All" class="current">All</a></li>
                 <li class="nav-two"><a href="#Artikel" class="load_content_type">Artikel</a></li>
@@ -1769,7 +1775,12 @@ if(isset($_GET['message']))
             }
 
             if(!$i)
-                echo "<p class='dePaterneText theme-card-description'> <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> </p>";
+                echo "<div class='upcoming-group'>
+                      <div class='element-upcoming-block'>
+                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-shedule.png'>
+                          <p>Zoek je eerste event</p>
+                      </div>
+                  </div>";
             ?>
             <!-- <a href="/" class="btn btn-more-events">More Events</a> -->
         </div>
@@ -1828,7 +1839,12 @@ if(isset($_GET['message']))
             }
 
             if(!empty($communities))
-                echo '<a href="/dashboard/user/communities" class="btn btn-more-events">More</a>';
+                echo "<div class='upcoming-group'>
+                      <div class='element-upcoming-block'>
+                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
+                          <p>Join je eerste community</p>
+                      </div>
+                  </div>";
             ?>
         </div>
         <div class="user-expert-block">
