@@ -758,7 +758,7 @@ if(isset($_GET['message']))
         </div> 
         -->
         <div class="d-flex w-100 flex-wrap">
-            <a href="" class="explore-more-btn">
+            <a href="/onderwerpen/" class="explore-more-btn">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/more-icon.png" alt="">
                 <span>Explore new topics!</span>
             </a>
@@ -1842,7 +1842,7 @@ if(isset($_GET['message']))
             <?php
             }
 
-            if(!empty($communities))
+            if(empty($communities))
                 echo "<div class='upcoming-group'>
                       <div class='element-upcoming-block'>
                           <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
