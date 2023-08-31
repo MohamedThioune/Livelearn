@@ -34,10 +34,10 @@
                     </div>
                     <p class="text-download">Of download onze gratis app:</p>
                     <div class="d-flex ">
-                        <a href="" class="btn btnStore">
+                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="btn btnStore">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
                         </a>
-                        <a href="<?php echo get_site_url() ?> /wp-login.php?loginSocial=google" id="playBtnGoogle" class="btn btnPlayGoogle">
+                        <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="playBtnGoogle" class="btn btnPlayGoogle">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
                         </a>
                     </div>

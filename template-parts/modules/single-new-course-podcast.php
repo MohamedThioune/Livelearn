@@ -207,6 +207,46 @@ endif;
                                 ?>
                                 </div>
                             </ul>
+
+
+                                <ul id="Course">
+                                    <div class="list-content-podcast">
+
+                                            <div class="elemnt-list-podcast">
+                                                <p class="number-list">1</p>
+                                                <div class="detail-block-podcast"><br>
+                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/slim-img.png" height="50" width="50" class="slim-img" alt="">
+                                                    <p class="title-podcast">Test</p>
+                                                    <div class="audio">
+                                                        <div class="cp-audioquote">
+                                                            <div class="cp-audioquote__player">
+                                                                <!-- src -->
+                                                                <audio class="cp-audioquote__player__src" src="<?php echo get_stylesheet_directory_uri(); ?>/sounds/firstSounds.mp3">
+                                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                                                </audio>
+                                                                <div class="cp-audioquote__player--playBtn"></div>
+                                                                <div class="cp-audioquote__player--display">
+                                                                    <div class="cp-audioquote__player--progress">
+                                                                        <span class="cp-audioquote__player--track"></span>
+                                                                        <span class="cp-audioquote__player--playhead"></span>
+                                                                    </div>
+                                                                    <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="">
+                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                                        </div>
+                                                        <div class="mt-3 date">
+                                                            <p>10/15/22</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <img class="status-icon" src="<?php echo get_stylesheet_directory_uri(); ?>/img/view-course.svg" alt="">
+                                            </div>
+
+                                    </div>
+                                </ul>
                             <?php
                             elseif(!empty($podcast_index)):
                             ?>

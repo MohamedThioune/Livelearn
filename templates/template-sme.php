@@ -294,7 +294,7 @@ require($page);
                             Met ons LXP-platform kun je jezelf blijven ontwikkelen en stappen zetten richting een glansrijke carrière. Krijg toegang tot exclusieve content, interactieve uitdagingen en certificeringen die je geloofwaardigheid en groeimogelijkheden vergroten. <br>
                             Verhoog je inzetbaarheid, verbeter je prestaties en grijp nieuwe kansen die voorbij komen. Bereid je voor op succes en word de professional waar anderen naar opkijken. Investeer in jezelf en laat ons je begeleiden op jouw weg naar een glansrijke carrière. Download onze LiveLearn-app vandaag nog en laat je ontwikkeling nooit stagneren!</p>
 
-                        <a href="" class="btn btn-download-onze-app">Download onze app</a>
+                        <button onclick="redirect()" class="btn btn-download-onze-app">Download onze app</button>
                     </div>
                 </div>
             </div>
@@ -467,6 +467,18 @@ require($page);
     });
 
 </script>
+
+<script>
+    function redirect() {
+        var userAgent = navigator.userAgent;
+        if (userAgent.indexOf("iPhone") > -1) {
+            window.location.href = "https://apps.apple.com/nl/app/livelearn/id1666976386/";
+        } else {
+            window.location.href = "https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr";
+        }
+    }
+</script>
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 
