@@ -1,20 +1,19 @@
 <?php /** Template Name: Loading more content */ ?>
-//loading-more-content
 <?php
+//loading-more-recommendation
 $like = get_stylesheet_directory_uri()."/img/love.png";
 $dislike = get_stylesheet_directory_uri()."/img/heart-like.png";
 
 $page = 'check_visibility.php';
-require($page); 
+require($page);
 extract($_POST);
-
 //The user
 $user = get_current_user_id();
 
 $courses = array();
 $course_id = array();
 $random_id = array();
-$count = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0);
+$count = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0,'Podcast'=>0);
 
 $categories = array();
 
@@ -42,17 +41,76 @@ if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
 
-//Experts
-$experts = get_user_meta($user, 'expert');
+/** 
+* Views beginning      
+*/
 
+/** 
+ * New way of getting Views from database
+*/ 
+
+// View table name
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+// Get id of courses viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'course' ");
+$all_user_views = $wpdb->get_results($sql_request);
+$id_courses_viewed = array_column($all_user_views,'data_id');
+
+/** 
+ *  Get courses viewed from db
+ */
+$user_post_view = get_posts( 
+    array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'order' => 'DESC',
+        'include' => $id_courses_viewed,
+        'posts_per_page' => -1
+    )
+)[0];
+
+
+//Experts
+$postAuthorSearch = array();
+$experts = array();
+$experts = get_user_meta($user, 'expert');
+$postAuthorSearch = $experts;
+$teachers = array();
+
+// Get id of experts viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'expert'");
+$all_expert_viewed = $wpdb->get_results($sql_request);
+
+//truncate $postAuthorSearch to avoid
+if (!empty($user_post_view) || !empty($postAuthorSearch))
+    $postAuthorSearch = (empty($all_expert_viewed)) ? $postAuthorSearch : array_merge(array_column($all_expert_viewed, 'data_id'), $postAuthorSearch);
+
+// Get the courses of experts viewed from db 
 $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
+    'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 200
+    'posts_per_page' => 300
 );
 $global_courses = get_posts($args);
+shuffle($global_courses);
+
+$more_global_courses = array();
+if(empty($global_courses)){
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => 300
+    );
+    $more_global_courses = get_posts($args);
+    shuffle($more_global_courses);
+
+    $global_courses = $more_global_courses;
+}
 
 foreach ($global_courses as $key => $course) {
     //Control visibility
@@ -85,7 +143,7 @@ foreach ($global_courses as $key => $course) {
 
     if(empty($data))
         null;
-    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
+    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel" && $course_type != "Podcast")
         if($data){
             $date_now = strtotime(date('Y-m-d'));
             $data = strtotime(str_replace('/', '.', $data));
@@ -144,29 +202,19 @@ foreach ($global_courses as $key => $course) {
         }
 }
 
-//Views
-$user_post_view = get_posts(
-    array(
-        'post_type' => 'view',
-        'post_status' => 'publish',
-        'author' => $user,
-        'order' => 'DESC'
-    )
-)[0];
+// $user_informations
+// Views credential
 $is_view = false;
-
 if (!empty($user_post_view))
 {
     $courses_id = array();
     $is_view = true;
-
-    $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
-    $count_recommended_course = 0;
 
-    foreach($all_user_views as $key => $view) {
-        if(!$view['course'])
+    // browse the array os post type as courses obtain via database views
+    foreach($user_post_view as $key => $post_viewed) {
+        if(!$post_viewed)
             continue;
 
         foreach ($courses as $key => $course) {
@@ -235,21 +283,10 @@ if (!empty($user_post_view))
     }
 }
 
-arsort($count);
-$count_trend = array_slice($count, 5, 4, true);
-$count = array_slice($count, 0, 4, true);
-
-$count_trend_keys = array_keys($count_trend);
-
-$keys = array_keys($count);
-shuffle($keys);
-$count = array_merge(array_flip($keys), $count);
-
-$bool = false;
-
 if (empty($recommended_courses)){
     $courses_id = array();
-    $recommended_courses = $courses;
+    $recommended_courses = (!empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $more_global_courses;
     $bool = true;
 }
 
@@ -260,146 +297,141 @@ shuffle($recommended_courses);
 */
 
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
-$row_all_recommendation = "";
-
 $find = false;
-if(!empty($recommended_courses))
-foreach($recommended_courses as $course){
-    //Date and Location
-    $location = 'Online';
-                        
-    $data = get_field('data_locaties', $course->ID);
-    if($data){
-        $date = $data[0]['data'][0]['start_date'];
-        $location = $data[0]['data'][0]['location'];
-    }
-    else{
-        $dates = get_field('dates', $course->ID);
-        if($dates)
-            $day = explode(' ', $dates[0]['date'])[0];
+if($recommended_courses)
+    foreach($recommended_courses as $course){
+        //Date and Location
+        $location = 'Online';
+                            
+        $data = get_field('data_locaties', $course->ID);
+        if($data){
+            $date = $data[0]['data'][0]['start_date'];
+            $location = $data[0]['data'][0]['location'];
+        }
         else{
-            $data = get_field('data_locaties_xml', $course->ID);
-            if(isset($data[0]['value'])){
-                $data = explode('-', $data[0]['value']);
-                $date = $data[0];
-                $day = explode(' ', $date)[0];
-                $location = $data[2];
+            $dates = get_field('dates', $course->ID);
+            if($dates)
+                $day = explode(' ', $dates[0]['date'])[0];
+            else{
+                $data = get_field('data_locaties_xml', $course->ID);
+                if(isset($data[0]['value'])){
+                    $data = explode('-', $data[0]['value']);
+                    $date = $data[0];
+                    $day = explode(' ', $date)[0];
+                    $location = $data[2];
+                }
             }
         }
-    }
-    
-    //Course Type
-    $course_type = get_field('course_type', $course->ID);
+        
+        //Course Type
+        $course_type = get_field('course_type', $course->ID);
+        if(isset($content_type)) 
+            if ($content_type != $course_type)
+                continue;
 
-    if(isset($content_type))
-        if($content_type != $course_type)
-            continue;
-
-    $find = true;
-    /*
-    * Categories
-    */
-    $category = ' ';
-    $category_id = 0;
-    $category_str = 0;
-    if($category == ' '){
-        $one_category = get_field('categories',  $course->ID);
-        if(isset($one_category[0]['value']))
-            $category_str = intval(explode(',', $one_category[0]['value'])[0]);
-        else{
-            $one_category = get_field('category_xml',  $course->ID);
+        /*
+        * Categories
+        */
+        $category = ' ';
+        $category_id = 0;
+        $category_str = 0;
+        if($category == ' '){
+            $one_category = get_field('categories',  $course->ID);
             if(isset($one_category[0]['value']))
-                $category_id = intval($one_category[0]['value']);
+                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+            else{
+                $one_category = get_field('category_xml',  $course->ID);
+                if(isset($one_category[0]['value']))
+                    $category_id = intval($one_category[0]['value']);
+            }
+
+            if($category_str != 0)
+                $category = (String)get_the_category_by_ID($category_str);
+            else if($category_id != 0)
+                $category = (String)get_the_category_by_ID($category_id);
         }
 
-        if($category_str != 0)
-            $category = (String)get_the_category_by_ID($category_str);
-        else if($category_id != 0)
-            $category = (String)get_the_category_by_ID($category_id);
-    }
+        //Price
+        $p = " ";
+        $p = get_field('price', $course->ID);
+        if($p != "0")
+            $price = '$' . number_format($p, 2, '.', ',');
+        else
+            $price = 'Gratis';
 
-    //Price
-    $p = " ";
-    $p = get_field('price', $course->ID);
-    if($p != "0")
-        $price = '$' . number_format($p, 2, '.', ',');
-    else
-        $price = 'Gratis';
+        //Legend image
+        $thumbnail = get_field('preview', $course->ID)['url'];
+        if(!$thumbnail){
+            $thumbnail = get_the_post_thumbnail_url($course->ID);
+            if(!$thumbnail)
+                $thumbnail = get_field('url_image_xml', $course->ID);
+            if(!$thumbnail)
+                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        }
 
-    //Legend image
-    $thumbnail = get_field('preview', $course->ID)['url'];
-    if(!$thumbnail){
-        $thumbnail = get_the_post_thumbnail_url($course->ID);
-        if(!$thumbnail)
-            $thumbnail = get_field('url_image_xml', $course->ID);
-        if(!$thumbnail)
-            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-    }
+        //Author
+        $author = get_user_by('ID', $course->post_author);      
+        $author_name = $author->display_name ?: $author->first_name;
 
-    //Author
-    $author = get_user_by('ID', $course->post_author);      
-    $author_name = $author->display_name ?: $author->first_name;
+        //Clock duration
+        $duration_day = get_field('duration_day', $post->ID) ? : '-';
 
-    //Clock duration
-    $duration_day = get_field('duration_day', $post->ID) ? : '-';
+        //Other case : youtube
+        $youtube_videos = get_field('youtube_videos', $course->ID);
 
-    //Other case : youtube
-    $youtube_videos = get_field('youtube_videos', $course->ID);
+        $author_image = get_field('profile_img',  'user_' . $author_object->ID);
+        $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
-    $author_image = get_field('profile_img',  'user_' . $author_object->ID);
-    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-
-    $find = true;
-
-    $video_content = "";
-    if($youtube_videos && $course_type == 'Video')
-        $video_content = '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-    else
-        $video_content = '<img src="' . $thumbnail .'" alt="">';
-    $save_content = "";
-    if (in_array($course->ID, $saved))
-        $save_content = '<img class="btn_favourite" id="' . $user . '_' . $course->ID . '_course" src="' . $dislike . '" alt="">';
-    else
-        $save_content = '<img class="btn_favourite" id="' . $user . '_' . $course->ID . '_course" src="' . $like . '" alt="">';                
-    
-    $row_all_recommendation .= '
-        <a href="' . get_permalink($course->ID) . '" class="new-card-course">
-            <div class="head">
-                ' . $video_content. '
-            </div>
-            <div class="details-card-course">
-                <div class="title-favorite d-flex justify-content-between align-items-center">
-                    <p class="title-course">' . $course->post_title . '</p>
-                    <button>
-                        ' . $save_content . '
-                    </button>
+        $video_content = "";
+        if($youtube_videos && $course_type == 'Video')
+            $video_content = '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        else
+            $video_content = '<img src="' . $thumbnail .'" alt="">';
+        $save_content = "";
+        if (in_array($course->ID, $saved))
+            $save_content = '<img class="btn_favourite" id="' . $user . '_' . $course->ID . '_course" src="' . $dislike . '" alt="">';
+        else
+            $save_content = '<img class="btn_favourite" id="' . $user . '_' . $course->ID . '_course" src="' . $like . '" alt="">';                
+        
+        $row_all_recommendation .= '
+            <a href="' . get_permalink($course->ID) . '" class="new-card-course">
+                <div class="head">
+                    ' . $video_content. '
                 </div>
-                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                    <div class="blockOpein d-flex align-items-center">
-                        <i class="fas fa-graduation-cap"></i>
-                        <p class="lieuAm">' . get_field('course_type', $course->ID) . '</p>
+                <div class="details-card-course">
+                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                        <p class="title-course">' . $course->post_title . '</p>
+                        <button>
+                            ' . $save_content . '
+                        </button>
                     </div>
-                    <div class="blockOpein">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p class="lieuAm">' . $location . '</p>
-                    </div>
-                </div>
-                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <div class="blockImgUser">
-                            <img src="' . $author_image . '" class="" alt="">
+                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                        <div class="blockOpein d-flex align-items-center">
+                            <i class="fas fa-graduation-cap"></i>
+                            <p class="lieuAm">' . get_field('course_type', $course->ID) . '</p>
                         </div>
-                        <p class="autor">' . $author_name . '</p>
+                        <div class="blockOpein">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p class="lieuAm">' . $location . '</p>
+                        </div>
                     </div>
-                    <p class="price">' . $price . '</p>
+                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="blockImgUser">
+                                <img src="' . $author_image . '" class="" alt="">
+                            </div>
+                            <p class="autor">' . $author_name . '</p>
+                        </div>
+                        <p class="price">' . $price . '</p>
+                    </div>
                 </div>
-            </div>
-        </a>
-    ';
-}
+            </a>
+        ';
+
+        $find = true;
+    }
 else
     if(!$find)
         $row_all_recommendation .= $void_content;
-
 echo $row_all_recommendation;
    

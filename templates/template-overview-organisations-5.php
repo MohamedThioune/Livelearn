@@ -77,7 +77,7 @@
                         <h3 class="titleCardVoorOrganisatie">Uitleggen</h3>
                         <p class="descriptionCardVoorOrganisatie">
                             Bied jij producten of services waarbij uitleg van toegevoegde waarde is? Dan werken wij graag met je samen om te zorgen dat jouw (potentiële) klanten altijd op de hoogte zijn van jouw ontwikkelingen. Wij bieden workshops, productvideo’s of audio begeleiding.                        </p>
-                        <a href="/uitleggen/" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over&nbsp;<strong>uitleggen</strong> </a>
+                        <a href="/voor-opleiders/" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over&nbsp;<strong>uitleggen</strong> </a>
                     </div>
                 </div>
             </div>

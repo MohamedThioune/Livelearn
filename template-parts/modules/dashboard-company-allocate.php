@@ -71,5 +71,107 @@ $users = get_users();
             <button type="submit" name="manager_employee" class="btn btn-info">Activeer</button>
         </div>
     </form>
+    <div class="table-allocate w-100">
+        <div class="cardPeople">
+            <div class="headListeCourse">
+                <p class="JouwOpleid">Selecteer de mensen die u wilt managen :</p>
+                <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
+            </div>
+            <div class="contentCardAlloccate contentCardGrant">
+                <table class="table table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Afbeelding</th>
+                        <th scope="col">Naam</th>
+                        <th scope="col"><input class='form-check-input checkAllElement' type='checkbox' value="" id=''></th>
+                    </tr>
+                    </thead>
+                    <tbody id="autocomplete_company_people">
+                        <tr id="" >
+                            <td scope="row">1</td>
+                            <td class="textTh thModife">
+                                <div class="ImgUser">
+                                    <a href="" >
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/placeholder_user.png" class="" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="textTh text-center">Mohamed Thioune</td>
+                            <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
+                        </tr>
+                        <tr id="" >
+                            <td scope="row">2</td>
+                            <td class="textTh thModife">
+                                <div class="ImgUser">
+                                    <a href="" >
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/placeholder_user.png" class="" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="textTh text-center">Mohamed Thioune</td>
+                            <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
+                        </tr>
+                        <tr id="" >
+                            <td scope="row">3</td>
+                            <td class="textTh thModife">
+                                <div class="ImgUser">
+                                    <a href="" >
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/placeholder_user.png" class="" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="textTh text-center">Mohamed Thioune</td>
+                            <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
+                        </tr>
+                        <tr id="" >
+                            <td scope="row">4</td>
+                            <td class="textTh thModife">
+                                <div class="ImgUser">
+                                    <a href="" >
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/placeholder_user.png" class="" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="textTh text-center">Mohamed Thioune</td>
+                            <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Modal -->
+                <div class="modal fade modal-Budget" id="modalGrant" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center">Give your team a personal learning budget</h5>
+                            </div>
+                            <h6 class="manager-name">To: Daniel </h6>
+                            <div class="modal-body">
+                                <form action="">
+
+                                    <div class="form-group block-check-grant">
+                                        <label>
+                                            <input type="checkbox" name="Manager" value="Manager"><span class="checbox-element-label">Manager</span>
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="Teacher" value="Teacher"><span class="checbox-element-label">Teacher</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Leerbudget</label>
+                                        <input type="number" class="form-control" placeholder="Amount €">
+                                    </div>
+                                    <button type="button" class="btn btn-add-budget">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 

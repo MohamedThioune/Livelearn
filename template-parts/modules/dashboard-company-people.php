@@ -179,7 +179,7 @@
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
                         <button class="btn  salary-administration  btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             Salary administration
+                            Salary administration
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#nmbrsModal">Nmbrs</button>
@@ -278,14 +278,14 @@
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                        <img  style="width:20px"
+                                        <img style="width:20px"
                                               src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
                                         <?php
                                         if($you)
-                                            echo '<li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit' . $key . '" href="#">Edit</a></li>';
+                                            echo '<li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit' . $keyP . '" href="#">Edit</a></li>';
 
                                         if(in_array('administrator', $data_user->roles))
                                             if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles)){
@@ -304,7 +304,7 @@
                             </td>
                         </tr>
                         <!-- Modal optie edit missign information  -->
-                        <div class="modal fade modal-Budget" id="modalEdit<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal fade modal-Budget" id="modalEdit<?= $keyP ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">

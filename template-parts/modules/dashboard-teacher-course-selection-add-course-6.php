@@ -52,6 +52,52 @@
                             </div>
                             <button type="submit" name="expert_add" class="btn btn-info">Finish</button> 
                         </div>
+
+                        <div class="acf-field">
+                            <label for="locate">Benoem andere externe experts voor deze cursus:</label><br>
+                            <div class="form-group formModifeChoose" >
+                                <div class="form-group formModifeChoose">
+                                    <select name="" id="autocomplete2" class="multipleSelect2" multiple="true">
+                                        <option value="">name 1</option>
+                                        <option value="">name 2</option>
+                                        <option value="">name 3</option>
+                                        <option value="">name 4</option>
+                                        <option value="">name 5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="acf-field">
+                            <label for="locate">Nodig iemand uit voor je cursus</label><br>
+                            <!-- Button trigger modal to add external expert with in  -->
+                            <button type="button" class="btn btnInvite"  data-toggle="modal" data-target="#modalAdding">
+                                Launch static backdrop modal
+                            </button>
+                            <div class="GroupPeople d-flex" >
+                                <div class="oneExpert">
+                                    <p class="name">Mouhamed Thioune</p>
+                                    <p class="email">Mouhamed@livelearn.nl</p>
+                                </div>
+                                <div class="oneExpert">
+                                    <p class="name">Mouhamed Thioune</p>
+                                    <p class="email">Mouhamed@livelearn.nl</p>
+                                </div>
+                                <div class="oneExpert">
+                                    <p class="name">Mouhamed Thioune</p>
+                                    <p class="email">Mouhamed@livelearn.nl</p>
+                                </div>
+                                <div class="oneExpert">
+                                    <p class="name">Mouhamed Thioune</p>
+                                    <p class="email">Mouhamed@livelearn.nl</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
                     </form>
 
                 </div>
@@ -108,6 +154,34 @@
             </div>
         </div>
     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalAdding" tabindex="-1" aria-labelledby="modalAddingLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add an expert by invitation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Complet Name</label>
+                        <input type="text" class="form-control" id="">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <button type="submit" class="btn btnInvite">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 

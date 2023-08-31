@@ -2,7 +2,7 @@
     global $wp;
     $global_product_id = 9873;
     $global_price = 5;
-    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+    $global_mollie_key = "live_cntSF2RxdDCUK7wudptq2sVqRWHE3c";
 
     $url = $wp->request;
     
@@ -32,7 +32,7 @@
 
     /** Woocommerce API client for php - list subscriptions **/
     $endpoint = "subscriptions";
-    //$subscriptions = $woocommerce->get($endpoint, $parameters = []);
+    $subscriptions = makeApiCallWoocommerce('https://livelearn.nl/wp-json/wc/v3/subscriptions', 'GET');
 
     //Credit cards 
     $mollie = new \Mollie\Api\MollieApiClient();
@@ -40,15 +40,13 @@
 
     if(!empty($subscriptions)){
         $instrument = 'invoice';
-        foreach($subscriptions as $row)
-            if($row->billing->company == $company_connected && $row->status == 'active'){
+        foreach($subscriptions as $row){
+            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
                 $access_granted = 1;
-                $abonnement = $row;
-                //Invoice orders
-                $endpoint_order_invoice = "subscriptions/" . $row->id . "/orders";
-                $abonnement->invoices = $woocommerce->get($endpoint_order_invoice, $parameters = []);
+                $abonnement = (Object)$row;
                 break;                
             } 
+        }
     }
 
     if(!$access_granted){
@@ -68,7 +66,6 @@
             
     }
     
-
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
         header('Location: /dashboard/user');
 
@@ -76,8 +73,9 @@
         if($option_menu[2] == 'profile-company')
             $access_granted = 1;
 
-    // if (!$access_granted && !in_array( 'administrator', $user->roles ))
-    //     header('Location: /dashboard/company/profile-company');
+    if (in_array( 'administrator', $user->roles ))
+        $access_granted = 1;
+        // header('Location: /dashboard/company/profile-company');
 
     // if (!$access_granted)
     //     header('Location: /dashboard/company/profile-company');
@@ -87,16 +85,14 @@
     $tax_price = $price * (20/100);
     $total = $price + $tax_price;
     
-    $quantity = (isset($abonnement->line_items[0]->quantity)) ? $abonnement->line_items[0]->quantity : $abonnement->metadata->quantity;
-    var_dump($quantity);
-    var_dump($team);
+    $quantity = (isset($abonnement->line_items[0]['quantity'])) ? $abonnement->line_items[0]['quantity'] : $abonnement->metadata->quantity;
     if($team != $quantity && !empty($abonnement) && $instrument == 'invoice'){
         /** Woocommerce API client for php - update subscription **/
-        $endpoint_put = "subscriptions/" . $abonnement->id;
+        $endpoint_put = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id;
         $data_put = [
             "line_items" => [
                 [
-                    "id" => $abonnement->line_items[0]->id,
+                    "id" => $abonnement->line_items[0]['id'],
                     "product_id" => $global_product_id,
                     "quantity"   => $team,
                     "tax_class" => "",
@@ -109,7 +105,9 @@
                 ],
             ],
         ];
-        $abonnement = $woocommerce->put($endpoint_put, $data_put);
+        $abonnement = makeApiCallWoocommerce($endpoint_put, 'PUT', $data_put);
+        $abonnement = (Object)$abonnement;
+        // $abonnement = $woocommerce->put($endpoint_put, $data_put);
     }
     else if($team != $quantity && !empty($abonnement) && $instrument == 'card'){
         $customer_id = get_field('mollie_customer_id', 'user_' . $user->ID);
@@ -130,9 +128,16 @@
             ];
             // var_dump($data_put);
             $endpoint_pay = "https://api.mollie.com/v2/customers/" . $customer_id . "/subscriptions" . "/" . $abonnement->id ;
-            $abonnement = (Object)makeApiCallMollie($endpoint_pay, $data_put, "POST");
+            $abonnement = (Object)makeApiCallMollie($endpoint_pay, $data_put, "POST")[0];
         }
     }
+
+    if($abonnement){
+        //Invoice orders
+        $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id . "/orders";
+        $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');
+    }
+
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">

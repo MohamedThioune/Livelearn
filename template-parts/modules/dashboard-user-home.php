@@ -274,7 +274,7 @@ endforeach;
 
 
 $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
-if (!$is_first_login && get_current_user_id() !=0 )
+if (!$is_first_login && get_current_user_id() != 0 )
 {
 ?>
 <!-- Modal First Connection -->
@@ -477,10 +477,26 @@ $args = array(
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 200
+    'posts_per_page' => 500
 );
 $global_courses = get_posts($args);
 shuffle($global_courses);
+
+$more_global_courses = array();
+if(empty($global_courses)){
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => 300
+    );
+    $more_global_courses = get_posts($args);
+    shuffle($more_global_courses);
+
+    $global_courses = $more_global_courses;
+}
+
 foreach ($global_courses as $key => $course) {
     //Control visibility
     $bool = true;
@@ -573,13 +589,12 @@ foreach ($global_courses as $key => $course) {
 // $user_informations
 // Views credential
 $is_view = false;
+$recommended_courses = array();
 if (!empty($user_post_view))
 {
     $courses_id = array();
     $is_view = true;
     $max_points = 10;
-    $recommended_courses = array();
-    $count_recommended_course = 0;
 
     // browse the array os post type as courses obtain via database views
     foreach($user_post_view as $key => $post_viewed) {
@@ -647,8 +662,9 @@ if (!empty($user_post_view))
                     if(!in_array($course->post_author, $teachers))
                         array_push($teachers, $course->post_author);
                 }
+
             $count_recommended_course = count($recommended_courses);
-            if($count_recommended_course == 8)
+            if($count_recommended_course == 12)
                 break;
         }
     }
@@ -670,11 +686,14 @@ $bool = false;
 
 if (empty($recommended_courses)){
     $courses_id = array();
-    $recommended_courses = $courses;
+    $recommended_courses = (!empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $more_global_courses;
     $bool = true;
 }
+
 //Activitien
 shuffle($recommended_courses);
+$recommended_courses = array_slice($recommended_courses, 0, 12, true);
 
 /*
 * *
@@ -738,16 +757,22 @@ if(isset($_GET['message']))
             </div>
         </div> 
         -->
-        <div class="btn-group-layouts">
-            <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
-            <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
+        <div class="d-flex w-100 flex-wrap">
+            <a href="" class="explore-more-btn">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/more-icon.png" alt="">
+                <span>Explore new topics!</span>
+            </a>
+            <div class="btn-group-layouts">
+                <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
+                <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
+            </div>
         </div>
 
-        <div id="tab-url1">
+        <div id="tab-url1" class="group-tab-element">
             <ul class="nav">
                 <li class="nav-one"><a href="#All" class="current">All</a></li>
                 <li class="nav-two"><a href="#Artikel" class="load_content_type">Artikel</a></li>
-                <li class="nav-three"><a href="#E-learning" class="load_content_type">E-learning</a></li>
+                <li class="nav-three"><a href="#Podcast" class="load_content_type">Podcast</a></li>
                 <li class="nav-four "><a href="#Opleidingen" class="load_content_type">Opleidingen</a></li>
                 <li class="nav-five "><a href="#Video" class="load_content_type">Video</a></li>
                 <li class="nav-seven "><a href="#Trends">Trends</a></li>
@@ -760,7 +785,7 @@ if(isset($_GET['message']))
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                         if(!empty($recommended_courses))
-                            foreach($recommended_courses as $course){
+                            foreach($recommended_courses as $key => $course){
                                 //Date and Location
                                 $location = 'Online';
                             
@@ -893,6 +918,8 @@ if(isset($_GET['message']))
                                     </div>
                                 </a>
                                 <?php
+                                // if($key == 11)
+                                //     break;
                             }
                             else
                                 echo $void_content;
@@ -906,6 +933,9 @@ if(isset($_GET['message']))
 
                 <ul id="Artikel" class="hide">
                     <div class="block-new-card-course" id="autocomplete_recommendation_Artikel">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1043,23 +1073,20 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
-                <ul id="E-learning" class="hide" id="autocomplete_recommendation_E-learning">
-                    <div class="block-new-card-course">
+                <ul id="Podcast" class="hide" >
+                    <div class="block-new-card-course" id="autocomplete_recommendation_Podcast">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Podcast" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
-                        if(isset($count['E-learning']))
-                            if($count['E-learning'] > 0)
+                        if(isset($count['Podcast']))
+                            if($count['Podcast'] > 0)
                                 foreach($recommended_courses as $course){
                                     //Date and Location
                                     $location = 'Online';
@@ -1086,7 +1113,7 @@ if(isset($_GET['message']))
 
                                     //Course Type
                                     $course_type = get_field('course_type', $course->ID);
-                                    if($course_type != 'E-learning')
+                                    if($course_type != 'Podcast')
                                         continue;
 
                                     /*
@@ -1192,18 +1219,15 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_E-learning" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
-                <ul id="Opleidingen" class="hide"  id="autocomplete_recommendation_Opleidingen" >
-                    <div class="block-new-card-course">
+                <ul id="Opleidingen" class="hide">
+                    <div class="block-new-card-course" id="autocomplete_recommendation_Opleidingen">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1341,18 +1365,15 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
-                <ul id="Video" class="hide" id="autocomplete_recommendation_Video">
-                    <div class="block-new-card-course">
+                <ul id="Video" class="hide">
+                    <div class="block-new-card-course" id="autocomplete_recommendation_Video">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1490,19 +1511,15 @@ if(isset($_GET['message']))
                                     </a>
                                     <?php
                                 }
-
-                        if(!$find)
-                            echo $void_content;
                         ?>
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
                     </div>
                 </ul>
 
                 <ul id="Trends" class="hide">
                     <div class="block-new-card-course">
                         <?php
+                        $courses = (!empty($courses)) ? $courses : $global_courses;
+                        $courses = (!empty($courses)) ? $courses : $more_global_courses;
                         if(!empty($courses))
                             foreach($courses as $course){
                                 //Date and Location
@@ -1758,7 +1775,12 @@ if(isset($_GET['message']))
             }
 
             if(!$i)
-                echo "<p class='dePaterneText theme-card-description'> <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> </p>";
+                echo "<div class='upcoming-group'>
+                      <div class='element-upcoming-block'>
+                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-shedule.png'>
+                          <p>Zoek je eerste event</p>
+                      </div>
+                  </div>";
             ?>
             <!-- <a href="/" class="btn btn-more-events">More Events</a> -->
         </div>
@@ -1777,7 +1799,7 @@ if(isset($_GET['message']))
                     break;
                 $i++;
 
-                $company = get_field('company_author', $value->ID)[0];
+                $company = get_field('company_author', $value->ID);
                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                 $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
@@ -1817,7 +1839,12 @@ if(isset($_GET['message']))
             }
 
             if(!empty($communities))
-                echo '<a href="/dashboard/user/communities" class="btn btn-more-events">More</a>';
+                echo "<div class='upcoming-group'>
+                      <div class='element-upcoming-block'>
+                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
+                          <p>Join je eerste community</p>
+                      </div>
+                  </div>";
             ?>
         </div>
         <div class="user-expert-block">
