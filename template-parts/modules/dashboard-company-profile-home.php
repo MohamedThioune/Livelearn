@@ -262,7 +262,7 @@
 
                     <!-- Modal Add to do -->
 
-                    <div class="modal fade" id="to-do-Modal" tabindex="-1" role="dialog" aria-labelledby="to-do-ModalModalLabel" aria-hidden="true">
+                    <div class="modal fade new-modal-to-do" id="to-do-Modal" tabindex="-1" role="dialog" aria-labelledby="to-do-ModalModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -272,10 +272,47 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-Submit" form="mandatory-form" name="mandatory_course">Submit</button>
+                                    <div class="content-block-bg">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="block-one-add-element">
+                                                   <div>
+                                                       <p class="title">Doe een</p>
+                                                       <p class="description">Een opleiding, cursus,
+                                                           podcast, event o.i.d.</p>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="block-one-add-element">
+                                                    <div>
+                                                        <p class="title">Schrijf een</p>
+                                                        <p class="description">Een persoonlijk
+                                                            ontwikkel plan</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="block-one-add-element">
+                                                    <div>
+                                                        <p class="title">Leer een onderwerp</p>
+                                                        <p class="description">Zet de uren vast!</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="block-one-add-element">
+                                                   <div>
+                                                       <p class="title">Geef feedback</p>
+                                                       <p class="description">Aan je collega’s</p>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="content-Persoonlijk">
+                                        <div></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
