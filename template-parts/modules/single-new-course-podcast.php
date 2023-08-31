@@ -157,60 +157,27 @@ endif;
                             <?php 
                             if(!empty($podcasts)):
                             ?>
-                            <ul id="Course">
-                                <div class="list-content-podcast">
-                                <?php
-                                foreach($podcasts as $key => $podcast) {
-                                    $style = "";
-                                    if(isset($lesson))
-                                        if($lesson == $key)
-                                            $style = "color:#F79403";
-
-                                    $link = '#';
-                                    $reading = "#";
-                                    $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                    $read_status_icon = '';
-                                    if($bool_link || $key == 0){
-                                        $reading = $podcast['course_podcast_data'];
-                                        $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
-                                        $read_status_icon = '<div class="cp-audioquote__player--playBtn"></div>';
-                                    }
-
-                                    $lecture_index = $key + 1;
-                                    ?>
-                                    <div class="elemnt-list-podcast">
-                                        <p class="number-list"><?= $lecture_index ?></p>
-                                        <div class="detail-block-podcast">
-                                            <p class="title-podcast"><?= $podcast['course_podcast_title'] ?></p>
-                                            <div class="audio">
-                                                <div class="cp-audioquote">
-                                                    <div class="cp-audioquote__player">
-                                                        <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
-                                                            <p><?= $podcast['course_podcast_intro'] ?></p>
-                                                        </audio>
-                                                        <?= $read_status_icon ?>
-                                                        <div class="cp-audioquote__player--display">
-                                                            <div class="cp-audioquote__player--progress">
-                                                                <span class="cp-audioquote__player--track"></span>
-                                                                <span class="cp-audioquote__player--playhead"></span>
-                                                            </div>
-                                                            <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img class="status-icon" src="<?= $status_icon ?>" alt="">
-                                    </div>
-                                    <?php }
-                                ?>
-                                </div>
-                            </ul>
-
-
                                 <ul id="Course">
                                     <div class="list-content-podcast">
+                                        <?php
+                                        foreach($podcasts as $key => $podcast) {
+                                            $style = "";
+                                            if(isset($lesson))
+                                                if($lesson == $key)
+                                                    $style = "color:#F79403";
+
+                                            $link = '#';
+                                            $reading = "#";
+                                            $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                            $read_status_icon = '';
+                                            if($bool_link || $key == 0){
+                                                $reading = $podcast['course_podcast_data'];
+                                                $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                                $read_status_icon = '<div class="cp-audioquote__player--playBtn"></div>';
+                                            }
+
+                                            $lecture_index = $key + 1;
+                                            ?>
                                         <div class="elemnt-list-podcast">
                                             <div class="detail-block-podcast">
                                                 <div class="d-flex align-items-center justify-content-between">
@@ -218,7 +185,7 @@ endif;
                                                         <div class="playlist-img">
                                                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" alt="">
                                                         </div>
-                                                        <p class="title-podcast">Test</p>
+                                                        <p class="title-podcast"><?= $podcast['course_podcast_title'] ?></p>
                                                     </div>
                                                     <p class="date-added-playlist">10/15/22</p>
                                                 </div>
@@ -226,8 +193,8 @@ endif;
                                                     <div class="cp-audioquote">
                                                         <div class="cp-audioquote__player">
                                                             <!-- src -->
-                                                            <audio class="cp-audioquote__player__src" src="<?php echo get_stylesheet_directory_uri(); ?>/sounds/firstSounds.mp3">
-                                                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                                            <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                                <p><?= $podcast['course_podcast_intro'] ?></p>
                                                             </audio>
                                                             <div class="cp-audioquote__player--playBtn"></div>
                                                             <div class="cp-audioquote__player--display">
@@ -240,72 +207,73 @@ endif;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <p class="description-one-element-playlist">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                                             </div>
+                                            <img class="status-icon" src="<?= $status_icon ?>" alt="">
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 </ul>
-
                             <?php
                             elseif(!empty($podcast_index)):
                             ?>
                                <ul id="Course">
-                                <div class="list-content-podcast">
-                                <?php
-                                foreach($podcast_index as $key => $podcast) {
-                                    $style = "";
-                                    if(isset($lesson))
-                                        if($lesson == $key)
-                                            $style = "color:#F79403";
+                                   <div class="list-content-podcast">
+                                       <?php
+                                       foreach($podcast_index as $key => $podcast) {
+                                       $style = "";
+                                       if(isset($lesson))
+                                           if($lesson == $key)
+                                               $style = "color:#F79403";
+                                       $link = '#';
+                                       $reading = "#";
+                                       $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                       if($bool_link || $key == 0){
+                                           $reading = $podcast['podcast_url'];
+                                           $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                       }
+                                       $date_podcast = $podcast['podcast_date'];
+                                       //$date_podcast = !empty($date_podcast) ? date("d-m-Y H:i:s", strtotime($date_podcast)) : "";
+                                       $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
+                                       $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
+                                       $lecture_index = $key + 1;
+                                       $description_podcast = $podcast['podcast_description'] ? : $short_description ;
 
-                                    $link = '#';
-                                    $reading = "#";
-                                    $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                    if($bool_link || $key == 0){
-                                        $reading = $podcast['podcast_url'];
-                                        $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
-                                    }
-                                    $imagPodcast = $podcast['podcast_date'];
-                                    $date_podcast = !empty($imagPodcast) ? date("d-m-Y H:i:s", strtotime($imagPodcast)) : "";
-                                    $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
-                                    $lecture_index = $key + 1;
-                                    ?>
-                                    <div class="elemnt-list-podcast">
-                                        <p class="number-list"><?= $lecture_index ?></p>
-                                        <div class="detail-block-podcast"><br>
-                                            <img src="<?= $image_podcast ?>" height="50" width="50">
-                                            <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
-                                            <div class="audio">
-                                                <div class="cp-audioquote">
-                                                    <div class="cp-audioquote__player">
-                                                        <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
-                                                            <p><?= $podcast['podcast_description'] ?></p>
-                                                        </audio>
-                                                        <div class="cp-audioquote__player--playBtn"></div>
-                                                        <div class="cp-audioquote__player--display">
-                                                            <div class="cp-audioquote__player--progress">
-                                                                <span class="cp-audioquote__player--track"></span>
-                                                                <span class="cp-audioquote__player--playhead"></span>
-                                                            </div>
-                                                            <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="">
-                                                    <p><?= $podcast['podcast_description']; ?></p>
-                                                </div>
-                                                <div class="mt-3 date">
-                                                    <p><?= $date_podcast ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img class="status-icon" src="<?= $status_icon ?>" alt="">
-                                    </div>
-                                    <?php }
-                                ?>
-                                </div>
-                            </ul>
+                                           ?>
+                                       <div class="elemnt-list-podcast">
+                                           <div class="detail-block-podcast">
+                                               <div class="d-flex align-items-center justify-content-between">
+                                                   <div class="d-flex">
+                                                       <div class="playlist-img">
+                                                           <img src="<?= $image_podcast ?>" alt="<?= $podcast['podcast_title'] ?>">
+                                                       </div>
+                                                       <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
+                                                   </div>
+                                                   <p class="date-added-playlist"><?=$date_podcast?></p>
+                                               </div>
+                                               <div class="audio">
+                                                   <div class="cp-audioquote">
+                                                       <div class="cp-audioquote__player">
+                                                           <!-- src -->
+                                                           <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                               <p><?= $podcast['podcast_description'] ?></p>
+                                                           </audio>
+                                                           <div class="cp-audioquote__player--playBtn"></div>
+                                                           <div class="cp-audioquote__player--display">
+                                                               <div class="cp-audioquote__player--progress">
+                                                                   <span class="cp-audioquote__player--track"></span>
+                                                                   <span class="cp-audioquote__player--playhead"></span>
+                                                               </div>
+                                                               <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                               <p class="description-one-element-playlist"><?= substr($description_podcast,0,100).' ...'  ?></p>
+                                           </div>
+                                       </div>
+                                       <?php } ?>
+                                   </div>
+                               </ul>
                             <?php 
                             endif;
                             ?>
