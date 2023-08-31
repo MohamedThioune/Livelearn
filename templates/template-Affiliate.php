@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="sub-block">
                                     <span id="autocomplete-pricing">
-                                        <p class="title output">€1.800,00</p>
+                                        <p class="title output">€2.872,40</p>
                                     </span>                                    
                                     <p class="description" id="text-maand">Totale bedrag dat jij ontvangt .</p>
                                 </div>
@@ -193,7 +193,7 @@ $('#medewerkers').keyup(function(){
 
     if(number){
         $.ajax({
-            url:"/fetch-pricing",
+            url:"/fetch-affiliate",
             method:"post",
             data:{
                 medewerkers: number

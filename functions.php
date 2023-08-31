@@ -1,7 +1,11 @@
 <?php
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
+
 $GLOBALS['id_user'] = get_current_user_id();
+
 include "custom-endpoints.php";
+include "article-endpoints.php";
+
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_directory_uri().'/style-main.css' );
@@ -303,7 +307,6 @@ function custom_post_type() {
     register_post_type( 'assign', $assign_args );
 
     //Views
-
     $view = array(
         'name'                => _x( 'Views', 'Views', 'view' ),
         'singular_name'       => _x( 'View', 'View', 'view' ),
@@ -346,7 +349,6 @@ function custom_post_type() {
     register_post_type( 'view', $view_args );
 
     //Companies
-
     $company = array(
         'name'                => _x( 'Companies', 'Companies', 'company' ),
         'singular_name'       => _x( 'Companies', 'Company', 'company' ),
@@ -517,6 +519,49 @@ function custom_post_type() {
     );
     
     register_post_type( 'mandatory', $mandatory_args );
+
+    //Badge
+    $badge = array(
+        'name'                => _x( 'Badges', 'Badges', 'badge' ),
+        'singular_name'       => _x( 'Badges', 'Badge', 'badge' ),
+        'menu_name'           => __( 'Badges', 'badge' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All badges', 'badge' ),
+        'view_item'           => __( 'View badge', 'view_badge' ),
+        'add_new_item'        => __( 'New badge', 'add_new_badge' ),
+        'add_new'             => __( 'New badge', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $badge_args = array(
+        'label'               => __( 'badge', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $badge,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'badge'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+    register_post_type( 'badge', $badge_args );
 
 }
 add_action( 'init', 'custom_post_type', 0 );
@@ -827,10 +872,26 @@ function recommended_course($data)
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 200
+    'posts_per_page' => 400
   );
   $global_courses = get_posts($args);
   shuffle($global_courses);
+
+  $more_global_courses = array();
+  if(empty($global_courses)){
+        $args = array(
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'posts_per_page' => 300
+        );
+        $more_global_courses = get_posts($args);
+        shuffle($more_global_courses);
+
+        $global_courses = $more_global_courses;
+  }
+
   foreach ($global_courses as $key => $course) {    
       /*
       *  Date and Location
@@ -968,7 +1029,6 @@ function recommended_course($data)
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
-
     
     foreach($all_user_views as $key => $view) {
         if(!$view['course'])
@@ -1048,15 +1108,23 @@ function recommended_course($data)
                     array_push($random_id, $course->ID);
                     array_push($recommended_courses, $course);
                 }
+            
+            if(!empty($recommended_courses)){
+                $count_recommended_course = count($recommended_courses);
+                if($count_recommended_course == 25)
+                    break;
+            }
         }
     }
   }
 
-  if(empty($recommended_courses))
-    $recommended_courses = $courses;
-  else
-    $recommended_courses = array_slice($recommended_courses, 0, 50); 
+  if(empty($recommended_courses)){
+    $recommended_courses = (!empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $more_global_courses;
+  }
 
+  $recommended_courses = array_slice($recommended_courses, 0, 25, true); 
+ 
   $course_id = array();
   $random_id = array(); 
   if (!empty($recommended_courses)) {
@@ -1090,8 +1158,31 @@ function recommended_course($data)
         $course->pathImage = get_field('url_image_xml', $course->ID);
         $course->price = get_field('price', $course->ID) ?? 0;
         $course->youtubeVideos = get_field('youtube_videos', $course->ID) ? get_field('youtube_videos', $course->ID) : [];
-        $course->podcasts = get_field('podcasts', $course->ID) ? get_field('podcasts', $course->ID) : [];
-
+        
+        if (strtolower($course->courseType) == 'podcast')
+          {
+             $podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+             if (!empty($podcasts))
+                $course->podcasts = $podcasts;
+              else {
+                $podcasts = get_field('podcasts_index',$course->ID) ? get_field('podcasts_index',$course->ID) : [];
+                if (!empty($podcasts))
+                {
+                  $course->podcasts = array();
+                  foreach ($podcasts as $key => $podcast) 
+                  { 
+                    $item= array(
+                      "course_podcast_title"=>$podcast['podcast_title'], 
+                      "course_podcast_intro"=>$podcast['podcast_description'],
+                      "course_podcast_url" => $podcast['podcast_url'],
+                      "course_podcast_image" => $podcast['podcast_image'],
+                    );
+                    array_push ($course->podcasts,($item));
+                  }
+                }
+            }
+          }
+        $course->podcasts = $course->podcasts ?? [];
         $course->connectedProduct = get_field('connected_product', $course->ID);
         $tags = get_field('categories', $course->ID) ?? [];
         $course->tags = array();
@@ -1102,7 +1193,24 @@ function recommended_course($data)
                 $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
                 array_push($course->tags, $tag);
                 }
+            /**
+               * Handle Image exception
+            */
+              $handle = curl_init($course->pathImage);
+              curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
 
+              /* Get the HTML or whatever is linked in $url. */
+              $response = curl_exec($handle);
+
+              /* Check for 404 (file not found). */
+              $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+              if($httpCode != 200) {
+                  /* Handle 404 here. */
+                  $course->pathImage = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+                }
+              curl_close($handle);
+
+        
         $new_course = new Course($course);
         if(!in_array($course->ID, $random_id)) {
             array_push($random_id, $course->ID);
@@ -1501,6 +1609,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'seperate_tags',
   ) );
 
+
   register_rest_route( 'custom/v1', '/follow', array(
     'methods' => 'POST',
     'callback' => 'follow_meta',
@@ -1573,6 +1682,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'related_topics_subtopics',
   ));
 
+  register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
+    'methods' => 'GET',
+    'callback' => 'get_course_image',
+  ));
+
   register_rest_route( 'custom/v1', '/follow_multiple', array(
     'methods' => 'POST',
     'callback' => 'follow_multiple_meta',
@@ -1643,7 +1757,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'community_share',
   ));
 
-  register_rest_route ('custom/v1', '/assessments/', array(
+  register_rest_route ('custom/v1', '/assessments', array(
     'methods' => 'GET',
     'callback' => 'getAssessments',
   ));
@@ -1700,9 +1814,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'save_user_views',
   ));
 
-  register_rest_route ('custom/v1', '/databank', array(
+  register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
   ));
+
+  register_rest_route ('custom/v1', '/xml', array(
+    'methods' => 'GET',
+    'callback' => 'xmlParse'
+ ));
   
 });

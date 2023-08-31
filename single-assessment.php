@@ -240,7 +240,7 @@ $category_xml = get_field('category_xml', $post->ID);
             </div>
             <div class="assessment-expert-block">
                 <h2>Expert</h2>
-                <div class="owl-carousel owl-theme owl-carousel-card-course">
+                <div class="owl-carousel owl-carousel-expert owl-theme owl-carousel-card-course">
                     <?php
                     foreach($experts as $value):
                         if(!$value) 
@@ -266,6 +266,131 @@ $category_xml = get_field('category_xml', $post->ID);
                     ?>
                 </div>
             </div>
+            <div class="assessment-expert-block">
+                <h2>Similar Course Assessment</h2>
+                <div class="owl-carousel owl-carousel-assessment owl-theme owl-carousel-card-course">
+                    <div class="contentCardAssessment">
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-2.png" alt="First-slide-looggin">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment">Backend assessments</p>
+                                <p class="level">Medium</p>
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clock"></i>
+                                        <p class="text-element-detail"> <?= $timer ?> minutes</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clone"></i>
+                                        <p class="text-element-detail">Multiple Choice Quiz</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href="" class="btn btnDetailsAssessment">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contentCardAssessment">
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-2.png" alt="First-slide-looggin">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment">Backend assessments</p>
+                                <p class="level">Medium</p>
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clock"></i>
+                                        <p class="text-element-detail"> <?= $timer ?> minutes</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clone"></i>
+                                        <p class="text-element-detail">Multiple Choice Quiz</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href="" class="btn btnDetailsAssessment">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contentCardAssessment">
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-2.png" alt="First-slide-looggin">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment">Backend assessments</p>
+                                <p class="level">Medium</p>
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clock"></i>
+                                        <p class="text-element-detail"> <?= $timer ?> minutes</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clone"></i>
+                                        <p class="text-element-detail">Multiple Choice Quiz</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href="" class="btn btnDetailsAssessment">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contentCardAssessment">
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-2.png" alt="First-slide-looggin">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment">Backend assessments</p>
+                                <p class="level">Medium</p>
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clock"></i>
+                                        <p class="text-element-detail"> <?= $timer ?> minutes</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clone"></i>
+                                        <p class="text-element-detail">Multiple Choice Quiz</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href="" class="btn btnDetailsAssessment">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contentCardAssessment">
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-2.png" alt="First-slide-looggin">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment">Backend assessments</p>
+                                <p class="level">Medium</p>
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clock"></i>
+                                        <p class="text-element-detail"> <?= $timer ?> minutes</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clone"></i>
+                                        <p class="text-element-detail">Multiple Choice Quiz</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href="" class="btn btnDetailsAssessment">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -284,7 +409,7 @@ $category_xml = get_field('category_xml', $post->ID);
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
 
 <script>
-    $('.owl-carousel').owlCarousel({
+    $('.owl-carousel-expert').owlCarousel({
         loop:true,
         margin:13,
         items:4.5,
@@ -303,6 +428,32 @@ $category_xml = get_field('category_xml', $post->ID);
             },
             1000:{
                 items:4.5,
+                nav:true,
+                loop:false
+            }
+        }
+    })
+</script>
+<script>
+    $('.owl-carousel-assessment').owlCarousel({
+        loop:true,
+        margin:13,
+        items:3.5,
+        lazyLoad:true,
+        dots:false,
+        responsiveClass:true,
+        autoplayHoverPause:true,
+        responsive:{
+            0:{
+                items:1.2,
+                nav:true
+            },
+            600:{
+                items:2.2,
+                nav:false
+            },
+            1000:{
+                items:3.5,
                 nav:true,
                 loop:false
             }

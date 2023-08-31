@@ -118,9 +118,8 @@ foreach($reactions as $value)
 
 ?>
 
-<div class="bg-green-artiken">
+<div class="bg-green-artiken content-new-artikel">
     <div class="container-fluid">
-        <br><br>
         <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"?>
         <div class="content-artikel d-flex justify-content-between flex-wrap">
             <div class="right-block-artikel">
@@ -170,7 +169,7 @@ foreach($reactions as $value)
                             $mail_share = 'mailto:?subject=' . $subject . '&body=' . $permalink;
                         ?>
                         <p>Share :</p>
-                        <a target="_blank" href="<?= $linkedin_share ?>"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                        <a target="_blank" href="<?= $linkedin_share ?>"><i class="fab fa-linkedin"></i></a>
                         <!-- <a class="fb-share-button" data-href="<?= $permalink ?>" data-layout="button_count">
                             <i class="fab fa-facebook" aria-hidden="true"></i>
                         </a> -->

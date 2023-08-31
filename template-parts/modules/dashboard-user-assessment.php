@@ -1,4 +1,7 @@
 <?php
+    //Deactivated assessment
+    header('Location: /dashboard/user');
+
     /* Get  seconds by given string time  */
     function timeToSeconds(string $time): int
     {
@@ -15,11 +18,15 @@
         'order' => 'ASC', 
     );
     $assessments = get_posts($args);
+
+    // $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
     $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
-    foreach ($assessments as $key => $assessment) {
-        if (in_array($assessment,$assessments_validated))
-            unset($assessments[$key]);
-    }
+
+    if(!empty($assessments_validated))
+        foreach ($assessments as $key => $assessment) {
+            if (in_array($assessment,$assessments_validated))
+                unset($assessments[$key]);
+        }
 ?>
 
 

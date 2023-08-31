@@ -164,7 +164,7 @@
             <p class="description">Dit betekent dat je kunt profiteren van gepersonaliseerde leerpaden, interactieve cursussen, samenwerkingsmogelijkheden en geavanceerde analysetools, allemaal zonder kosten voor jou als individuele gebruiker. We streven ernaar om een win-winsituatie te creëren waarbij organisaties kunnen investeren in de groei en ontwikkeling van hun medewerkers, terwijl individuele gebruikers profiteren van een hoogwaardig LXP zonder financiële lasten.</p>
             <p class="description">Onze focus ligt op het creëren van een dynamische leeromgeving die iedereen in staat stelt om hun vaardigheden en kennis te vergroten, ongeacht hun financiële mogelijkheden. We geloven dat leren een fundamenteel recht is en we zijn er trots op dat we via ons unieke businessmodel toegang kunnen bieden tot ons LXP zonder kosten voor individuele gebruikers.</p>
             <p class="description">Dus sluit je aan bij ons LXP en ontdek de onbegrensde mogelijkheden van leren en groeien. Dankzij onze samenwerking met organisaties kunnen we jou een waardevolle en gratis leerervaring bieden. Bereid je voor op een reis van voortdurende ontwikkeling en prestaties, terwijl wij je ondersteunen op elk leerpad dat je kiest.</p>
-            <a href="" class="btn btn-doe-jij">Creëer een account</a>
+            <a href="/voor-jou/" class="btn btn-doe-jij">Creëer een account</a>
         </section>
 
         <section class="section-card-voor">
@@ -174,7 +174,7 @@
                         <p class="title-card">Voor jou!</p>
                         <p class="description-card">Een altijd gratis leeromgeving om je oneindig door te laten groeien; word de expert in de markt.</p>
                         <div class="w-100">
-                            <a href="/voor-jou">Sign-up!</a>
+                            <a href="/voor-jou/">Sign-up!</a>
                         </div>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="" class="btn btn-Bekijk">Bekijk al onze functionaliteiten</a>
+                <a href="/functionaliteiten/" class="btn btn-Bekijk">Bekijk al onze functionaliteiten</a>
             </div>
 
         </section>

@@ -45,11 +45,15 @@ $other_communities = array();
                         <div class="group-card-communities d-flex flex-wrap" id="autocomplete">
                         <?php
                         foreach($communities as $community){
-                            $company = get_field('company_author', $community->ID)[0];
+                            $company = get_field('company_author', $community->ID);
                             $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                             $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
                             $level = get_field('range', $community->ID);
+                            $private  = get_field('password_community', $community->ID);
+
+                            $type_groups = "";
+                            $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
 
                             //Since year
                             $date = $community->post_date;
@@ -82,7 +86,21 @@ $other_communities = array();
                             else{
                                 array_push($other_communities, $community);
                                 $access_community = '<a href="#" class="name-community" data-toggle="tooltip" data-placement="top" title="Je moet eerst tot deze gemeenschap behoren">' . $community->post_title . '</a>';
-                            }                        
+                            } 
+
+                            //Private community
+                            $private_field = ($private) ? "<input type='text' class='form-control search' name='password' placeholder='Please fill community password !' required>" : ''; 
+                            $type_groups = ($private_field == '') ? 'Public Groups' : 'Private Groups';
+
+                            //Intern community
+                            $company_user = get_field('company',  'user_' . $user_id);
+                            $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+                            $visibility_community = get_field('visibility_community', $community->ID); 
+                            if($visibility_community){
+                                $type_groups = ($type_groups == 'Private Groups') ? 'Private|Intern Groups' : 'Intern Groups';
+                                if($company->post_title != $company_title_user)
+                                    $button_join = "<button type='button' class='btn btn-join-group' name='follow_community' data-toggle='tooltip' data-placement='top' title='Intern community, only for member of the " . $company->post_title . " company' disabled>Join group</button>";
+                            }
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -95,7 +113,7 @@ $other_communities = array();
                                         </div>
                                         <div class="text-left" style="padding-top: 15px;">
                                             <?= $access_community ?>
-                                            <p class="statut-community">Private Groups</p>
+                                            <p class="statut-community"><?= $type_groups ?></p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center group-detail">
@@ -115,16 +133,17 @@ $other_communities = array();
                                     <div class="d-flex justify-content-center flex-wrap align-items-center">
                                         <?php
                                         if(!$bool)
-                                            echo "<form action=''  method='POST'>
+                                            echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
-                                                    <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
-                                              </form>";
+                                                    " . $private_field . " " 
+                                                      . $button_join . "
+                                                  </form>";
                                         else{
                                             echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
                                             echo '<form action="" class="mb-0" method="POST">
                                                     <input type="hidden" name="community_id" value="' . $community->ID . '" >
                                                     <button type="submit" name="unfollow_community" class="btn btn-danger">Unsubscribe</button>
-                                              </form>';
+                                                  </form>';
                                         }
                                         ?>
                                     </div>
@@ -140,11 +159,15 @@ $other_communities = array();
                         <?php
 
                         foreach($your_communities as $community){
-                            $company = get_field('company_author', $community->ID)[0];
+                            $company = get_field('company_author', $community->ID);
                             $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                             $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
                             $level = get_field('range', $community->ID);
+                            $private  = get_field('password_community', $community->ID);
+
+                            $type_groups = "";
+                            $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
 
                             //Since year
                             $date = "";
@@ -164,6 +187,20 @@ $other_communities = array();
                             if(!empty($followers))
                                 $max_follower = count($followers);
 
+                            //Access community
+                            $access_community = '<a href="/dashboard/user/community-detail/?mu=' . $community->ID . '" class="name-community">' . $community->post_title . '</a>';
+
+                            //Private community
+                            $private_field = ($private) ? "<input type='text' class='form-control search' name='password' placeholder='Please fill community password !' required>" : ''; 
+                            $type_groups = ($private_field == '') ? 'Public Groups' : 'Private Groups';
+
+                            //Intern community
+                            $company_user = get_field('company',  'user_' . $user_id);
+                            $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+                            $visibility_community = get_field('visibility_community', $community->ID); 
+                            if($visibility_community)
+                                $type_groups = ($type_groups == 'Private Groups') ? 'Private|Intern Groups' : 'Intern Groups';
+                            
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -176,7 +213,7 @@ $other_communities = array();
                                         </div>
                                         <div>
                                             <?= $access_community ?>
-                                            <p class="statut-community">Private Groups</p>
+                                            <p class="statut-community"><?= $type_groups ?></p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center group-detail">
@@ -212,20 +249,23 @@ $other_communities = array();
                         <?php
 
                         foreach($other_communities as $community){
-                            $company = get_field('company_author', $community->ID)[0];
+                            $company = get_field('company_author', $community->ID);
                             $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                             $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
                             $level = get_field('range', $community->ID);
+                            $private = get_field('password_community', $community->ID);
+
+                            $type_groups = "";
+                            $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
 
                             //Since year
-                            $date = "";
                             $date = $community->post_date;
                             $days = explode(' ', $date)[0];
                             $year = explode('-', $days)[0];
 
                             //Courses comin through custom field 
-                            $courses = get_field('course_community', $community->ID);
+                            $courses = get_field('course_community', $community->ID); 
                             $max_course = 0;
                             if(!empty($courses))
                                 $max_course = count($courses);
@@ -235,7 +275,29 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
+                            $bool = false;
+                            foreach ($followers as $key => $value)
+                                if($value->ID == $user_id){
+                                    $bool = true;
+                                    break;
+                                }
+                            
+                            //Access community
+                            $access_community = '<a href="#" class="name-community" data-toggle="tooltip" data-placement="top" title="Je moet eerst tot deze gemeenschap behoren">' . $community->post_title . '</a>';
 
+                            //Private community
+                            $private_field = ($private) ? "<input type='text' class='form-control search' name='password' placeholder='Please fill community password !' required>" : ''; 
+                            $type_groups = ($private_field == '') ? 'Public Groups' : 'Private Groups';
+
+                            //Intern community
+                            $company_user = get_field('company',  'user_' . $user_id);
+                            $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+                            $visibility_community = get_field('visibility_community', $community->ID); 
+                            if($visibility_community){
+                                $type_groups = ($type_groups == 'Private Groups') ? 'Private|Intern Groups' : 'Intern Groups';
+                                if($company->post_title != $company_title_user)
+                                    $button_join = "<button type='button' class='btn btn-join-group' name='follow_community' data-toggle='tooltip' data-placement='top' title='Intern community, only for member of the " . $company->post_title . " company' disabled>Join group</button>";
+                            }
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -246,9 +308,9 @@ $other_communities = array();
                                         <div class="imgCommunity">
                                             <img class="" src="<?= $community_image; ?>" alt="">
                                         </div>
-                                        <div>
+                                        <div class="text-left" style="padding-top: 15px;">
                                             <?= $access_community ?>
-                                            <p class="statut-community">Private Groups</p>
+                                            <p class="statut-community"><?= $type_groups ?></p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center group-detail">
@@ -261,16 +323,20 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element"><?= $year ?></p>
+                                            <p class="number-element"><?= $year; ?> </p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
-                                    <?php
-                                        echo "<form action='' method='POST'>
+                                    <div class="d-flex justify-content-center flex-wrap align-items-center">
+                                        <?php
+                                        if(!$bool)
+                                            echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
-                                                    <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
-w                                              </form>";
+                                                    " . $private_field . " " 
+                                                      . $button_join . "
+                                                  </form>";
                                     ?>
+                                    </div>
                                 </div>
                             </div>
                         <?php
