@@ -1357,19 +1357,21 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
                     <div id="loader" class="spinner-border spinner-border-sm text-primary d-none" role="status"></div>
             </div>
-            <!--
-             <div class="dropdown show">
-                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Over de <b>laatste 7 dagen</b>
+            <!-- period -->
+            <div class="dropdown show">
+                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Over de <b id="complete-period">All time</b>
                 </a>
-                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Last 7 days</a>
-                    <a class="dropdown-item" href="#">Last 1 month</a>
-                    <a class="dropdown-item" href="#">Last 1 year</a>
-                    <a class="dropdown-item" href="#">All time</a>
+                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
+                    <select class="form-select selectSearchHome" id="period" multiple>
+                        <option value="all">All time</option>
+                        <option value="lastweek">Last 7 days</option>
+                        <option value="lastmonth">Last 1 month</option>
+                        <option value="lastyear">Last 1 year</option>
+                    </select>
                 </div>
-             </div>
-             -->
+            </div>
+            <!-- period -->
             <a href="/voor-opleiders/" class="zelf-block">
                 <p class="mr-2">Zelf ook een expert? </p>
                 <div class="all-expert">
@@ -1969,6 +1971,34 @@ $saved = get_user_meta($user_id, 'course');
                 },
                 success: function(data){
                     console.log('elt : ',data);
+                    $('#autocomplete_categorieen').html(data);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
+                }
+            });
+        });
+    </script>
+    <script>
+        $('#period').change(function(){
+            var selectedOptions = $(this).find("option:selected")[0];
+            var period = selectedOptions.value;
+            var complete_period = selectedOptions.text;
+            $('#complete-period').html(complete_period);
+
+            $.ajax({
+                url:"/fetch-ajax-home2",
+                method:"post",
+                data:{
+                    period: period,
+                },
+                dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',period)
+                },
+                success: function(data){
+                    console.log('elt');
                     $('#autocomplete_categorieen').html(data);
                 },
                 complete:function (complete) {
