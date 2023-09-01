@@ -46,12 +46,12 @@ if(!$read_video)
     $read_video = "<img class='blockImgCour' src='" . $thumbnail . "' alt='preview image'>";
 
 //Start or Buy
-if ($user_id == 0)
-    $startorbuy ='<button class="btn btn-buy-now" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal">Start Now</button>';
-else {
+// if ($user_id == 0)
+//     $startorbuy ='<button class="btn btn-buy-now" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal">Start Now</button>';
+// else {
     $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
     $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-}
+// }
 
 //Review pourcentage
 if(!empty($counting_rate)):
