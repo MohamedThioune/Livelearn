@@ -31,19 +31,11 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 // get responses
 $response = curl_exec($ch);
 $data_response = json_decode( $response, true );
-if (!isset($data_response['id'])) {
-    //$response = curl_error($ch);
-    //$error = true;
-    //$message = "Something went wrong !";
-    //echo stripslashes($response);
-    //http_response_code(401);
+if (!isset($data_response['id'])) 
     echo "<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>";
-}
-else{
-    //$message = "Subscription applied succesfully !";
-    //$abonnement_id = $data_response['id']; 
+else
     echo "<center><br><a class='btn btndoawnloadCv' href=''>Abonnementen succesvol gedaan !</a></center>";   
-}
+
 
 // close curl
 curl_close( $ch );

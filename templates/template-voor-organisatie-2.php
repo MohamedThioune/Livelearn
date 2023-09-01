@@ -14,7 +14,6 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
-
 <div class="content-voor-2">
     <div class="block-logo">
         <a href="/">
@@ -28,7 +27,7 @@
                     <div class="content-detail-voor-organisation position-relative">
                         <h1>Creëer een constant lerende organisatie en trek talent aan</h1>
                         <p>Stimuleer de in- en doorstroom van jouw (flexibele) werknemers, zodat zij jouw bedrijf naar het volgende niveau kunnen tillen.</p>
-                        <a href="/overview-organisaties/" class="btn btnMeerInformation">Meer informatie ?</a>
+                        <a href="/voor-organisatie/" class="meerInformatieBtn" >Meer informatie</a>
                     </div>
                     <div class="img-block">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/voor-oraganisatie-2.png" class="" alt="">

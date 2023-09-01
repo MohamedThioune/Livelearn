@@ -132,7 +132,7 @@
                             <p class="title">Bereken hoeveel je verdient met het aanleveren van een klant.</p>
                             <p class="description">Hoeveel medewerkers heeft de organisatie in dienst?</p>
                             <div class="content-Medewerkers">
-                                <p class="number">367</p>
+                                <input type="number" id="medewerkers" name='' class="number" placeholder='' value="360" style="width: 125px;">
                                 <p class="text">Medewerkers</p>
                             </div>
                         </div>
@@ -145,7 +145,9 @@
                                     <p class="description">Altijd direct uitbetaald en binnen 14 dagen op je rekening.</p>
                                 </div>
                                 <div class="sub-block">
-                                    <p class="title">€3.842,49</p>
+                                    <span id="autocomplete-pricing">
+                                        <p class="title output">€2.872,40</p>
+                                    </span>                                    
                                     <p class="description" id="text-maand">Totale bedrag dat jij ontvangt .</p>
                                 </div>
                             </div>
@@ -181,3 +183,29 @@
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+$('#medewerkers').keyup(function(){
+    var number = $(this).val();
+
+    if(number){
+        $.ajax({
+            url:"/fetch-affiliate",
+            method:"post",
+            data:{
+                medewerkers: number
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete-pricing').html(data);
+            }
+        });
+    }
+    else
+        $('#autocomplete-pricing').html("<p class='title output'>€0,00</p>");
+});
+</script>

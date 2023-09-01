@@ -21,9 +21,13 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
-$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-
+if ($user_id==0) {
+    $startorbuy ="<button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-buy-now'>Buy Now</button>";
+    $startorbuy ="<button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-stratNow'>Start Now</button>";
+} else {
+    $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+    $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
+}
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -84,7 +88,7 @@ endif;
                         <div class="content-section-tabs">
                             <div class="section-tabs" id="Overview">
                                 <div class="block-description">
-                                    <h2>Description</h2>
+                                    <h2 class="description-text">Description</h2>
                                     <p class="text-tabs">
                                         <?= $long_description ?>
                                     </p>
@@ -191,7 +195,7 @@ endif;
                                                                 ?>
                                                             </p>
                                                             <p class="location"><?php echo $location_start  ?></p>
-                                                            <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                            <p class="prixEvens"> <?php echo $price; ?></p>
 
                                                         </div>
 
@@ -226,12 +230,12 @@ endif;
                                                                     <tbody>
                                                                     <tr>
                                                                         <th>1x reguliere trainingsprijs</th>
-                                                                        <td><p class="prix">€ <?php echo $price; ?></p></td>
+                                                                        <td><p class="prix"><?php echo $price; ?></p></td>
                                                                     </tr>
                                                                     </tbody>
                                                                     <tfoot>
                                                                     <tr>
-                                                                        <td colspan="2"><div class="price"><p>€ <?php echo $price; ?></p></div></td>
+                                                                        <td colspan="2"><div class="price"><p> <?php echo $price; ?></p></div></td>
                                                                     </tr>
                                                                     </tfoot>
                                                                 </table>
@@ -265,8 +269,8 @@ endif;
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
                                                                     <?php
-                                                                    // if($user_id == 0)
-                                                                    //     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                    if($user_id == 0)
+                                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                     do_action( 'woocommerce_after_add_to_cart_form' );
                                                                     endif;
                                                                     ?>
@@ -323,7 +327,7 @@ endif;
                                                                     ?>
                                                                 </p>
                                                                 <p class="location"><?php echo $location_start  ?></p>
-                                                                <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                                <p class="prixEvens"> <?php echo $price; ?></p>
                                                             </div>
 
                                                         </summary>
@@ -361,12 +365,12 @@ endif;
                                                                     <tbody>
                                                                         <tr>
                                                                             <th>1x reguliere trainingsprijs</th>
-                                                                            <td><p class="prix">€ <?php echo $price; ?></p></td>
+                                                                            <td><p class="prix"> <?php echo $price; ?></p></td>
                                                                         </tr>
                                                                     </tbody>
                                                                     <tfoot>
                                                                         <tr>
-                                                                            <td colspan="2"><div class="price"><p>€ <?php echo $price; ?></p></div></td>
+                                                                            <td colspan="2"><div class="price"><p> <?php echo $price; ?></p></div></td>
                                                                         </tr>
                                                                     </tfoot>
                                                                 </table>
@@ -445,7 +449,7 @@ endif;
                                                                     <?= $agenda_start; ?>
                                                                 </p>
                                                                 <p class="location"></p>
-                                                                <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                                <p class="prixEvens"><?php echo $price; ?></p>
                                                             </div>
 
                                                         </summary>
@@ -467,12 +471,12 @@ endif;
                                                                     <tbody>
                                                                         <tr>
                                                                             <th>1x reguliere trainingsprijs</th>
-                                                                            <td><p class="prix">€ <?php echo $price; ?></p></td>
+                                                                            <td><p class="prix"> <?php echo $price; ?></p></td>
                                                                         </tr>
                                                                     </tbody>
                                                                     <tfoot>
                                                                         <tr>
-                                                                            <td colspan="2"><div class="price"><p>€ <?php echo $price; ?></p></div></td>
+                                                                            <td colspan="2"><div class="price"><p><?php echo $price; ?></p></div></td>
                                                                         </tr>
                                                                     </tfoot>
                                                                 </table>
@@ -507,8 +511,8 @@ endif;
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
                                                                     <?php
-                                                                    // if($user_id == 0)
-                                                                    //     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                    if($user_id == 0)
+                                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                     do_action( 'woocommerce_after_add_to_cart_form' ); 
                                                                     endif;
                                                                     ?>
@@ -751,8 +755,11 @@ endif;
                                         </div>
                                         <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                         <div class="position-relative">
-                                            <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
-                                            <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                            <?php if ($user_id==0) : ?>
+                                                <button type="button" class='btn btn-send' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Send</button>
+                                            <?php else : ?>
+                                                <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                            <?php endif; ?>
                                         </div>
                                         </form>
                                     </div>

@@ -7,6 +7,7 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
 <style>
     .headerdashboard,.navModife {
         background: #deeef3;
@@ -106,16 +107,8 @@
     .content-community-overview .boxOne3-1 {
         height: 270px;
     }
-
-
-
-
-
-    }
-
-
 </style>
-
+ 
 <div class="content-community-overview">
     <section class="boxOne3-1">
         <div class="container">
@@ -132,7 +125,7 @@
                     <h2 class="subTitle-about">Ons verhaal</h2>
                     <p class="description-about">LiveLearn is opgericht in 2019 door Daniel van der Kolk met als doel om leren en ontwikkelen toegankelijk te maken voor iedereen. Dit omdat organisaties en vooral het midden-klein-bedrijf een uitdaging heeft om talent aan te trekken en vast te houden, maar ook omdat organisaties vaak moeite hebben om hun personeel voldoende op te leiden.</p>
                     <p class="description-about">Door het individu centraal te stellen en managers inzicht te geven in de ontwikkeling van hun team(s) wordt talent-ontwikkeling voor elke organisatie mogelijk.  LiveLearn hoort bij één van de meest innovatieve partners voor organisaties om hun personeel op te leiden.  </p>
-                    <a href="" class="btn btn-doe-jij">Doe jij mee?</a>
+                    <a href="/voor-jou/" class="btn btn-doe-jij">Doe jij mee?</a>
                 </div>
                 <div class="block-img-about">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/For-individuals.png" class="img-head-about" alt="">
@@ -143,7 +136,7 @@
             <h2 class="subTitle-about">Onze aanpak</h2>
             <p class="description-about">De LiveLearn methode is net anders dan de traditionele learning & development partijen. Bij LiveLearn combineren we persoonlijke begeleiding en technologie om onze partners de beste ervaring te bieden. Wij begrijpen ook dat het ontwikkelen van talent niet altijd op de eerste plaats staat binnen een organisatie. Daarom maken wij onze software zo eenvoudig mogelijk, zodat er geen tijd verloren gaat. </p>
             <p class="description-about">Wat doen wij dan als LiveLearn? Wij werken altijd datagedrevene en beredeneren ontwikkeling vanuit de individuele werknemer. Dit klinkt als een klein verschil, maar heeft op organisatie niveau enorme impact. Wij koppelen namelijk alle wensen en doelen van de individuele medewerker en bieden hen een persoonlijk, datagedreven, leeromgeving. Zo kunnen zij persoonlijk groeien. Alle data wordt geanonimiseerd en teruggekoppeld naar de manager, zodat deze vanuit real-time informatie beslissingen kan nemen. </p>
-            <a href="" class="btn btn-doe-jij">Lees onze gehele aanpak</a>
+            <a href="/gratis/" class="btn btn-doe-jij">Lees onze gehele aanpak</a>
             <div class="group-icon-category">
                 <div class="element-category">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/icon-Leerdoelen.png" class="" alt="icon-Leerdoelen">
@@ -185,43 +178,63 @@
             <h2>The LiveLearn Team</h2>
             <div class="team-block">
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Fadel.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Fadel.png" class="" alt="">
+                    </div>
                     <p class="name">FADEL</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice.png" class="" alt="">
+                    </div>
                     <p class="name">MAURICE</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Seydou.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Seydou.png" class="" alt="">
+                    </div>
                     <p class="name">SEYDOU</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Daniel-van-der.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Daniel-van-der.png" class="" alt="">
+                    </div>
                     <p class="name">DANIEL</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/KHADIM.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/khadim.jpg" class="" alt="">
+                    </div>
                     <p class="name">KHADIM</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Xander.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Xander.png" class="" alt="">
+                    </div>
                     <p class="name">XANDER</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/MOHAMED.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/MOHAMED.png" class="" alt="">
+                    </div>
                     <p class="name">MOHAMED</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Oumou.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Oumou.png" class="" alt="">
+                    </div>
                     <p class="name">OUMOU</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ibrahima.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ibrahima.png" class="" alt="">
+                    </div>
                     <p class="name">IBRAHIMA</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/You-next.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/You-next.png" class="" alt="">
+                    </div>
                     <p class="name">YOU?</p>
                 </div>
             </div>

@@ -29,10 +29,7 @@
     return $randstring;
   }
 
-  $table = $wpdb->prefix . 'databank';
-  
-  //Get all users
-  $users = get_users(); 
+    
 
   $website_urls = ['2xplain-b.v-20221018.0222.xml', 'agile-scrum-group-20221021.1902.xml', 'anker-kompas-20221021.1902.xml', 'aeres-tech-20221018.0223.xml', 'academie-voor-arbeidsmarktcommunicatie-b.v-20221018.0223.xml'];
 
@@ -95,21 +92,6 @@
     
       $attachment_xml = array();
       $data_locaties_xml = array();
-
-      /*
-      ** Check the existing value with metadata
-      $meta_key = "course";
-      $meta_value = strval($datum->programClassification->programId);
-
-      $meta_data = get_user_meta(1, $meta_key);
-
-      $meta_xmls = array();
-      foreach($meta_data as $value){
-        $meta_xml = explode('~',$value)[0];
-        array_push($meta_xmls, $meta_xml);
-      }
-      **
-      */
 
       /*
       ** -- Main fields --
@@ -405,49 +387,6 @@
       
           $change  = false;
           $message = 'field on change detected and applied<br><br>';
-
-        /*
-          if($prijs != intval($post['prijs'])){
-            update_field('price', intval($post['prijs']), $meta_course);
-            echo '****** Prijs - ' . $message; 
-            $change = true;
-          }
-          if($prijsvat != intval($post['prijsvat'])){
-            update_field('prijsvat', intval($post['prijsvat']), $meta_course);
-            echo '****** Prijs VAT ' . $message; 
-            $change = true;
-          }
-          if($url_image != strval($post['url_image'])){
-            update_field('url_image_xml', strval($post['url_image']), $meta_course);
-            echo '****** Image : url - ' . $message;
-            $change = true; 
-          }
-          if($short_description != strval($post['short_description'])){
-            update_field('short_description', strval($post['short_description']), $meta_course); 
-            echo '****** Excerpt - ' . $message;
-            $change = true;
-          }
-          if($long_description != strval($post['long_description'])){
-            update_field('long_description', strval($post['long_description']), $meta_course); 
-            echo '****** Long description - ' . $message;
-            $change = true;
-          }
-          if($agenda != intval($post['agenda'])){
-            update_field('agenda', strval($post['agenda']), $meta_course); 
-            echo '****** Agenda - ' . $message;
-            $change = true;
-          }
-          if($degree != intval($post['degree'])){
-            update_field('degree', strval($post['degree']), $meta_course); 
-            echo '****** Degree - ' . $message;
-            $change = true;
-          }
-          if($duration_day != intval($post['duration_day'])){
-            update_field('duration_day', intval($post['duration_day']), $meta_course); 
-            echo '****** Program Duration Day - ' . $message;
-            $change = true;
-          }
-        */
   
           if($post['type'] != $course->type){
             $data = [ 'type' => $post['type']]; // NULL value.

@@ -24,8 +24,8 @@
                         <p class="description-content-individu">Ontgrendel je potentieel en neem de controle over je groei met onze LiveLearn-app! Ontdek boeiende cursussen, leer in je eigen tempo en versterk je vaardigheden. Vergroot je kennis,
                             bereik professionele mijlpalen en word de beste versie van jezelf. Download de app en start je leerreis vandaag nog!</p>
                         <div class="group-btn">
-                            <a href="" class="btn btn-doawnload-app">Download de app</a>
-                            <a href="" class="btn btn-Het-is">Het is écht altijd gratis!</a>
+                            <button onclick="redirect()" class="btn btn-doawnload-app">Download de app</button>
+                            <a href="/gratis/" class="btn btn-Het-is">Het is écht altijd gratis!</a>
                         </div>
                     </div>
                     <div class="content-img">
@@ -83,7 +83,7 @@
                                 Met ons LXP-platform kun je jezelf blijven ontwikkelen en stappen zetten richting een glansrijke carrière. Krijg toegang tot exclusieve content, interactieve uitdagingen en certificeringen die je geloofwaardigheid en groeimogelijkheden vergroten. <br>
                                 Verhoog je inzetbaarheid, verbeter je prestaties en grijp nieuwe kansen die voorbij komen. Bereid je voor op succes en word de professional waar anderen naar opkijken. Investeer in jezelf en laat ons je begeleiden op jouw weg naar een glansrijke carrière. Download onze LiveLearn-app vandaag nog en laat je ontwikkeling nooit stagneren!</p>
 
-                            <a href="" class="btn btn-download-onze-app">Download onze app</a>
+                            <button onclick="redirect()" class="btn btn-download-onze-app">Download onze app</button>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                         <div class="content-Ontdek">
                             <h2 class="title-section">Revolutionair leren op <span>jouw voorwaarden!</span> Ontdek de ideale leer-mix!</h2>
                             <p class="description-section">Leer op jouw voorwaarden met ons gevarieerde aanbod: boeiende artikelen, inspirerende podcasts, visuele video’s en beoordelingen. Pas je leerervaring aan, ontdek wat het beste bij je past en bereik optimale groei op jouw eigen unieke manier.</p>
-                            <a href="" class="btn btn-download-onze-app">Meld je aan</a>
+                            <a href="/registreren/" class="btn btn-download-onze-app">Meld je aan</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -137,13 +137,22 @@
                         </div>
                     </div>
                 </div>
-                <a href="" class="btn btn-Bekijk">Bekijk al onze functionaliteiten</a>
+                <a href="/functionaliteiten/?tab=Voor-individuen" class="btn btn-Bekijk">Bekijk al onze functionaliteiten</a>
             </section>
 
         </div>
     </div>
 
-
+    <script>
+        function redirect() {
+            var userAgent = navigator.userAgent;
+            if (userAgent.indexOf("iPhone") > -1) {
+                window.location.href = "https://apps.apple.com/nl/app/livelearn/id1666976386/";
+            } else {
+                window.location.href = "https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr";
+            }
+        }
+    </script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

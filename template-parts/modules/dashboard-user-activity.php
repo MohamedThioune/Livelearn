@@ -1,6 +1,5 @@
 <html lang="en">
 <?php
-
 /*
 * * Information user
 */
@@ -45,7 +44,6 @@ $todos = get_posts($args);
 /*
 * * Courses dedicated of these user "Boughts + Mandatories"
 */
-
 $enrolled = array();
 $enrolled_courses = array();
 // $kennis_video = get_field('kennis_video', 'user_' . $user->ID);
@@ -340,6 +338,9 @@ foreach ($users as $element) {
                                 ?>
                                 </tbody>
                             </table>
+                        </div>
+                        <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br><br><br>
+                        <div class="card-course-activity">
                             <table class="table table-responsive">
                                 <thead>
                                 <tr>
@@ -347,8 +348,6 @@ foreach ($users as $element) {
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
-                                <br><?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br>
-
                                 </thead>
                                 <tbody>
                                 <?php
@@ -365,7 +364,7 @@ foreach ($users as $element) {
 
                                     //Course Type
                                     $course_type = get_field('course_type', $course->ID);
-                                    
+
                                     //Checkout URL
                                     if(in_array($course_type, $offline))
                                         $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name . "&man=";
@@ -414,9 +413,9 @@ foreach ($users as $element) {
                                     //Clock duration
                                     $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
 
-                                    //Get read by user 
+                                    //Get read by user
                                     $args = array(
-                                        'post_type' => 'progression', 
+                                        'post_type' => 'progression',
                                         'title' => $course->post_name,
                                         'post_status' => 'publish',
                                         'author' => $user->ID,
@@ -830,7 +829,7 @@ foreach ($users as $element) {
                                     break;
                                 $i++;
 
-                                $company = get_field('company_author', $value->ID)[0];
+                                $company = get_field('company_author', $value->ID);
                                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                                 $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
@@ -1298,7 +1297,7 @@ foreach ($users as $element) {
                             if(!$value)
                                 continue;
 
-                            $company = get_field('company_author', $value->ID)[0];
+                            $company = get_field('company_author', $value->ID);
                             $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                             $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
@@ -1452,7 +1451,6 @@ foreach ($users as $element) {
 
     </div>
 
-    </div>
 </div>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>

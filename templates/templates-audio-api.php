@@ -2,16 +2,15 @@
 <?php // /audio-api ?>
 <?php
 global $wpdb;
-
 $table = $wpdb->prefix . 'databank';
 
 //good keys from daniel account
-//$apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
-//$apiSecret = 'teMYqdrBgamSWpVnd7q4WABSBBZz3j$^uVSWwHuH';
+$apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
+$apiSecret = 'teMYqdrBgamSWpVnd7q4WABSBBZz3j$^uVSWwHuH';
 
-//key from my own account
-$apiKey = 'XV4FMX6HDE3SECBVMEF3';
-$apiSecret = '7Vr5rRxJyZ6^$TnhftLddbJKB6yNmXyYRcBx7T^Z';
+//key from my own account khadim1.niass@ucad.edu.sn
+//$apiKey = 'XV4FMX6HDE3SECBVMEF3';
+//$apiSecret = '7Vr5rRxJyZ6^$TnhftLddbJKB6yNmXyYRcBx7T^Z';
 
 $time = time();
 $hash = sha1($apiKey.$apiSecret.$time);
@@ -79,9 +78,16 @@ if ($audio_search){
     if ($data['status'] === "true") {
         extract($data);
         // $feeds = $data['feeds'];
-        $count = 0;
-        $result = [];
+        //var_dump($data);
+        /*if (!$feeds){
+            echo "<h3>$description for '$query'</h3>";
+            return;
+        }*/
+        /**
+         * start display resutl of search
+         */
         foreach($feeds as $key => $feed){
+            //extract($feed);
             $id = $feed['id'];
             $title = $feed['title'];
             $url = $feed['url'];
@@ -103,6 +109,14 @@ if ($audio_search){
             $type = $feed['type'];
             $dead = $feed['dead'];
             $categories = $feed['categories'];
+            $category_to_insert="";
+            if ($categories){
+                foreach ($categories as $cat){
+                    $category_to_insert.=$cat.",";
+                }
+                $category_to_insert = substr($category_to_insert, 0, -1);
+            }
+
             echo "
             <div class='card mb-3'>
                   <div class='row g-0'>
@@ -119,7 +133,7 @@ if ($audio_search){
                                 echo "<button class = 'btn btn-info m-1' disabled >$category</button>";
                          echo"
                         <br>
-                          <button class='mt-4 play btn btn-outline-success' data-categories='". json_encode($categories) ."' data-language='".$language."' data-author ='".$author."' data-title='".$title."' data-image='".$image."' data-description='".$description."' data-url='".$url."' data-id='".$id."' onclick='savePodcastPlaylistInPlatform(event)'>
+                          <button class='mt-4 play btn btn-outline-success' data-categories='". $category_to_insert. "' data-language='".$language."' data-author ='".$author."' data-title='".$title."' data-image='".$image."' data-description='".$description."' data-url='".$url."' data-id='".$id."' onclick='savePodcastPlaylistInPlatform(event)'>
                             SAVE
                         </button>
                             <div class='d-none'>
@@ -149,49 +163,58 @@ if ($audio_search){
             </div>
         ";
         }
+        /**
+         * end display resutl of search
+         */
     }
 }elseif ($playlist_audio){
     $user_connected = wp_get_current_user();
     $user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
     $message = "";
     extract($playlist_audio);
-    //var_dump($categories);
     $cat = json_decode($categories[0],true);
 
     $sql = $wpdb->prepare( "SELECT course_id FROM $table  WHERE course_id = $id");
     $isCourseInPlateform = $wpdb->get_results( $sql)[0]->course_id;
     if ($isCourseInPlateform) {
         $message = "$title is already saved in platform ❌❌❌";
+        echo $message;
+        return;
     }else{
         $xml = simplexml_load_file($url);
         $podcasts="";
-        //var_dump($xml->channel[0]);
         foreach($xml->channel[0] as $key => $pod) {
             if($pod->enclosure->attributes()->url) {
                 $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
                 $mp3 = $pod->enclosure->attributes()->url;
-                $podcasts .= "$mp3~$title_podcast~$description_podcast|";
+                $date =(string)$pod->pubDate;
+                $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
+
+                $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio|";
             }
         }
+        //var_dump($podcasts);die;
         //wich table will I do the request to show the list of podcast ?
         $data = array(
+            //'titel' => htmlentities($title,ENT_NOQUOTES),
             'titel' => $title,
             'type' => 'Podcast',
             'podcasts' => substr($podcasts,0,-1), //remove the last char | before saving
-            //'podcasts' => strip_tags($podcasts),
             'short_description' => $description,
             'long_description' => $description,
             'duration' => null,
             'prijs' => 0,
             'prijs_vat' => 0,
             'image_xml' => $image,
-            'onderwerpen' => null, //tableau $categories
+            //'onderwerpen' => $categories, //tableau $categories //tableau $categories
+            'onderwerpen' => null, //tableau $categories //tableau $categories
             'date_multiple' => null,
             'course_id' => $id,
             'author_id' => $user_id,
             'status' => 'extern'
         );
+        //var_dump($data);die();
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
