@@ -89,7 +89,7 @@
             'Read 50 articles !',
             'Read 10 videos !',
             'Read 50 videos !' ,
-            'Read 30 podcasts !' 
+            'Read 7 podcasts !' 
         ];
         $array_badges = array();
 
