@@ -126,7 +126,7 @@ $artikel = $blogs[0];
         </div>
         <div class="content-Ontwikkel-je">
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group3.png" class="" alt="">
-            <p>Ontwikkel je mederwerker(s) al voor €59,40 per jaar!</p>
+            <p>Ontwikkel je medewerker(s) al voor €59,40 per jaar!</p>
         </div>
         <div class="content-detail-pricing">
             <h2>Wat kost dat dan?</h2>
@@ -134,10 +134,10 @@ $artikel = $blogs[0];
             <div class="row">
                 <div class="col-lg-6">
                    <div class="content-first-detail">
-                       <p class="title">Bereken hoeveel LiveLearn jou organisatie kost.</p>
+                       <p class="title">Bereken hoeveel LiveLearn jouw organisatie kost.</p>
                        <p class="description">Hoeveel medewerkers heeft de organisatie in dienst?</p>
                        <div class="content-Medewerkers">
-                           <p class="number">367</p>
+                           <input type="number" id="medewerkers" name='' class="number" placeholder='' value="360" style="width: 125px;">
                            <p class="text">Medewerkers</p>
                        </div>
                        <p class="description">Elke medewerker krijgt een eigen app en complete leeromgeving. Als (HR) manager krijg je inzicht in de ontwikkelingen elke individu</p>
@@ -147,11 +147,12 @@ $artikel = $blogs[0];
                     <div class="content-second-detail">
                         <div class="d-flex justify-content-between">
                             <div class="sub-block">
-                                <p class="title">LiveLearn Licenties</p>
                                 <p class="description">Automatisch gefactureerd en dynamisch aan de hand van de actieve gebruikers.</p>
                             </div>
                             <div class="sub-block">
-                                <p class="title">€1.816,65</p>
+                                <span id="autocomplete-pricing">
+                                    <p class="title output">€1.782,00</p>
+                                </span>
                                 <p class="description" id="text-maand">Per maand</p>
                             </div>
                         </div>
@@ -170,3 +171,29 @@ $artikel = $blogs[0];
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+$('#medewerkers').keyup(function(){
+    var number = $(this).val();
+
+    if(number){
+        $.ajax({
+            url:"/fetch-pricing",
+            method:"post",
+            data:{
+                medewerkers: number
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete-pricing').html(data);
+            }
+        });
+    }
+    else
+        $('#autocomplete-pricing').html("<p class='title output'>€0,00</p>");
+});
+</script>
+

@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 
-<!-- <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
+<!-- 
+<nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
     <div class="container-fluid">
         <a class="navbar-brand navBrand" href="/">
             <div class="logoModife">
@@ -37,4 +38,5 @@
             </ul>
         </div>
     </div>
-</nav> -->
+</nav> 
+-->

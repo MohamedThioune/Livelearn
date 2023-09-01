@@ -161,7 +161,7 @@
             <h2>Een revolutionair <span>LXP-platform</span> voor leerders, opleiders en organisaties</h2>
             <p class="description">Ontdek de kracht van ons LXP-platform waar leerders, opleiders en organisaties samenkomen. Met een gepersonaliseerde leerervaring, geavanceerde tools voor opleiders en uitgebreide analysemogelijkheden creëren we een optimaal leerproces. </p>
             <p class="description">Leerders krijgen toegang tot diverse leermaterialen, terwijl opleiders interactieve content kunnen ontwikkelen en de voortgang van leerders kunnen volgen. Voor organisaties biedt ons platform een centrale hub voor leren en ontwikkeling, waar samenwerking en kennisdeling gestimuleerd worden. Met ons LXP-platform kunnen leerders, opleiders en organisaties hun leerdoelen bereiken en groeien.</p>
-            <a href="" class="btn btn-doe-jij">Creëer een account</a>
+            <a href="/voor-jou/" class="btn btn-doe-jij">Creëer een account</a>
         </section>
 
         <section class="section-card-voor">
@@ -171,7 +171,7 @@
                         <p class="title-card">Voor jou!</p>
                         <p class="description-card">Een altijd gratis leeromgeving om je oneindig door te laten groeien; word de expert in de markt.</p>
                         <div class="w-100">
-                            <a href="/voor-jou">Sign-up!</a>
+                            <a href="/voor-jou/">Sign-up!</a>
                         </div>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="" class="btn btn-Bekijk">Bekijk al onze functionaliteiten</a>
+                <a href="/functionaliteiten/" class="btn btn-Bekijk">Bekijk al onze functionaliteiten</a>
             </div>
 
         </section>

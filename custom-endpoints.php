@@ -1988,6 +1988,7 @@ function save_user_views(WP_REST_Request $request)
 
     /** end Badges */
 
+
     //testing wheither data_id exist ?
     $sql = $wpdb->prepare( "SELECT occurence FROM $table_tracker_views  WHERE data_id = $data_id");
     $occurence_id = $wpdb->get_results( $sql)[0]->occurence;

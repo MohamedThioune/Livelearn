@@ -3,23 +3,19 @@
 
 $page = 'check_visibility.php';
 require($page); 
-
-require __DIR__ . '/../vendor/autoload.php';
-use Automattic\WooCommerce\Client;
-
 require('module-subscribe.php'); 
 
-$woocommerce = new Client(
-'https:www.livelearn.nl/',
-'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-[
-    'wp_api' => true, // Enable the WP REST API integration
-    'version' => 'wc/v3', // WooCommerce WP REST API version
-    'timeout'=> 4000,
-    'verify_ssl'=> false,
-]
-);
+// require __DIR__ . '/../vendor/autoload.php';
+// use Automattic\WooCommerce\Client;
+
+// $woocommerce = new Client(
+// 'https:www.livelearn.nl/',
+// 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+// 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+// [
+//     'version' => 'wc/v3', // WooCommerce WP REST API version
+// ]
+// );
 
 $mail_notification_invitation = '/mail-notification-invitation.php';
 require(__DIR__ . $mail_notification_invitation); 
@@ -1012,6 +1008,30 @@ else if(isset($details_user_departement)){
 }
 
 else if(isset($follow_community)){
+    //Private community
+    if(isset($password)){
+        $password_community = get_field('password_community', $community_id);
+        if($password != $password_community){
+            $path = "/dashboard/user/communities/?message=This community is private, please check the correct password !";
+            header("Location: ". $path);
+            return 0;
+        }
+    }
+
+    //Intern community
+    $user_id = get_current_user_id();
+    $company = get_field('company_author', $community_id);
+    $company_user = get_field('company',  'user_' . $user_id);
+    $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+    $visibility_community = get_field('visibility_community', $community_id); 
+    if($visibility_community){
+        if($company->post_title != $company_title_user){
+            $path = "/dashboard/user/communities/?message=This community is intern !";
+            header("Location: ". $path);
+            return 0;  
+        }  
+    }
+    
     $user = wp_get_current_user();
     $followers = get_field('follower_community', $community_id);
     if(!$followers)
@@ -1428,10 +1448,13 @@ else if(isset($reaction_post)){
     $reactions = array();
     $bunch_reactions = get_field('reaction', $id); 
     $current_user = wp_get_current_user();
-    // $my_review_bool = false;
+    $my_review_bool = false;
     foreach ($bunch_reactions as $reaction):
-        if($reaction['user_reaction']->ID == $current_user->id)
+        if($reaction['user_reaction']->ID == $current_user->id){
+            if($reaction['type_reaction'] == $reaction_post)
+                $my_review_bool = true;
             continue;
+        }
 
         array_push($reactions, $reaction);
     endforeach;
@@ -1439,10 +1462,10 @@ else if(isset($reaction_post)){
     $reaction = array();
     $reaction['user_reaction'] = $current_user;
     $reaction['type_reaction'] = $reaction_post;
-    if($reaction['user_reaction']){ 
-        array_push($reactions, $reaction);
+    if($reaction['user_reaction']){
+        if(!$my_review_bool) 
+            array_push($reactions, $reaction);
         update_field('reaction', $reactions, $id);
-        // var_dump($reaction);
     }
     $path = get_permalink($id) . "/?message=Reaction successfully saved !";
     header("Location: " . $path);

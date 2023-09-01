@@ -4,12 +4,14 @@
 <?php require('module-subscribe.php'); ?>
 
 <?php
+$is_trial = (!empty($is_trial)) ? true : false;
 $information = [
     'first_name' => $first_name,
     'last_name' => $last_name,
     'factuur_address' => $factuur_address,
     'email' => $email,
     'phone' => $phone,
+    'is_trial' => $is_trial
 ];
 
 //Start the credit card subscription

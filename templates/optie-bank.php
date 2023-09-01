@@ -10,9 +10,9 @@ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $i
 $course = $wpdb->get_results( $sql )[0];
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
-        //Insert some other course type
-        $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Podcast'];
-        $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar','podcast'=>'Podcast'];
+    //Insert some other course type
+    $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Podcast'];
+    $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar','podcast'=>'Podcast'];
 
     //Insert Artikel
     if (strval($course->type) == "Artikel"){
@@ -25,6 +25,12 @@ if($optie == "✔"){
         );
         $id_post = wp_insert_post($args, true);
         //Custom
+
+        if($course->image_xml==null)
+        {
+            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+            update_field('image_xml', $image, $id_post);
+        }
         update_field('course_type', 'article', $id_post);
         update_field('article_itself', nl2br($course->long_description), $id_post);        
     }
@@ -71,17 +77,20 @@ if($optie == "✔"){
         $id_post = wp_insert_post($args, true);
         //var_dump($course->podcasts);
         $podcasts = explode('|', $course->podcasts);
+        $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
         foreach ($podcasts as $item) {
             $podcasts_playlist = [];
             $podcast = explode('~', $item);
             $podcasts_playlist['podcast_url'] = $podcast[0];
-            $podcasts_playlist['podcast_image'] = $course->image_xml;
             $podcasts_playlist['podcast_title'] = $podcast[1];
             $podcasts_playlist['podcast_description'] = $podcast[2];
+            $podcasts_playlist['podcast_date'] = $podcast[3];
+            $podcasts_playlist['podcast_image'] = $podcast[4];
 
             $podcasts_playlists [] = $podcasts_playlist;
         }
+
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post);
     }

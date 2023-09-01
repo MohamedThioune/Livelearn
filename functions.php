@@ -1665,12 +1665,10 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCourses',
   ));
 
-   register_rest_route('custom/v1', '/articles', array(
-     'methods' => 'GET',
-     'callback' => 'allArticles',
-   ));
-           
-           
+  register_rest_route('custom/v1', '/articles', array(
+    'methods' => 'GET',
+    'callback' => 'allArticles',
+  ));   
 
   register_rest_route('custom/v1', '/authors', array(
     'methods' => 'GET',

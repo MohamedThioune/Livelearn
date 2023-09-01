@@ -1,6 +1,8 @@
 <?php /** Template Name: new course podcast */ ?>
+
 <?php wp_head(); ?>
 <?php get_header(); ?>
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
@@ -23,7 +25,7 @@ if(empty($podcast_index))
                 header('Location: ' . get_permalink($post->ID));
 
 //Long description             
-$long_description = ($long_description) ? : "No long description found for this course ";
+$long_description = ($long_description) ? : "No long description found for this course "; 
 
 //Author
 $author = get_user_by('id', $post->post_author);
@@ -35,9 +37,13 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
-$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-
+if ($user_id==0){
+    $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
+    $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
+}else {
+    $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+    $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
+}
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -222,12 +228,15 @@ endif;
                                         $reading = $podcast['podcast_url'];
                                         $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
                                     }
-
+                                    $imagPodcast = $podcast['podcast_date'];
+                                    $date_podcast = !empty($imagPodcast) ? date("d-m-Y H:i:s", strtotime($imagPodcast)) : "";
+                                    $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
                                     $lecture_index = $key + 1;
                                     ?>
                                     <div class="elemnt-list-podcast">
                                         <p class="number-list"><?= $lecture_index ?></p>
-                                        <div class="detail-block-podcast">
+                                        <div class="detail-block-podcast"><br>
+                                            <img src="<?= $image_podcast ?>" height="50" width="50">
                                             <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
                                             <div class="audio">
                                                 <div class="cp-audioquote">
@@ -245,6 +254,12 @@ endif;
                                                             <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="">
+                                                    <p><?= $podcast['podcast_description']; ?></p>
+                                                </div>
+                                                <div class="mt-3 date">
+                                                    <p><?= $date_podcast ?></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -456,8 +471,11 @@ endif;
                                             </div>
                                             <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                             <div class="position-relative">
-                                                <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
-                                                <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                                <?php if ($user_id==0) : ?>
+                                                    <button type="button" class='btn btn-send' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Send</button>
+                                                <?php else : ?>
+                                                    <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                                <?php endif; ?>
                                             </div>
                                             </form>
                                         </div>

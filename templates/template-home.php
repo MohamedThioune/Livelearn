@@ -6,10 +6,27 @@
 
 $page = 'check_visibility.php';
 require($page);
+global $wpdb;
 
 $user_connected_id = get_current_user_id();
 $user_connected_head = wp_get_current_user();
-
+// View table name
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+// Get id of courses viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
+$all_user_views = $wpdb->get_results($sql_request);
+$id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
+$expert_from_database = array();
+/**
+ * get experts doing the course by database
+ */
+foreach ($id_courses_viewed as $id_course) {
+    $course = get_post($id_course);
+    $expert_id = $course->post_author;
+    //if ($expert_id)
+    $expert_from_database[] = $expert_id;
+}
+$expert_from_database = array_unique($expert_from_database);
 // if($user_connected_id))
 //     header('Location: /dashboard/user/');
 
@@ -79,20 +96,28 @@ $keys = array_column($numbers_count, 'digit');
 array_multisort($keys, SORT_DESC, $numbers_count);
 
 $most_active_members = array();
-$i = 0;
+//$i = 0;
 if(!empty($numbers_count))
     foreach ($numbers_count as $element) {
-        $i++;
-        if($i >= 13)
-            break;
+        //$i++;
+        //if($i >= 13)
+        //    break;
         $value = get_user_by('ID', $element['id']);
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
         $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         array_push($most_active_members, $value);
     }
-
+$purchantage = array();
+$numberGray = array();
+for ($i = 0; $i< count($most_active_members)*3; $i++){
+    $purchantage[]= number_format(rand(20,99), 2, '.', ',');
+    $numberGray [] = rand(0,100000);
+}
+$numberGray = array_unique($numberGray);
+$purchantage = array_unique($purchantage);
+rsort($purchantage);
+rsort($numberGray);
 //Alles coursetype
-
 $type_course = array(
     "Alles",
     "Opleidingen",
@@ -992,7 +1017,7 @@ $saved = get_user_meta($user_id, 'course');
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/first-group-parteners-logo.png" class="logo-parteners-right" alt="">
 
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
-                <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
+                <p class="altijdText2">Wil jij jezelf blijven ontwikkelen? LiveLearn is hét platform voor jouw persoonlijke upskilling én voor organisaties die hun talent willen laten groeien.</p>
                 <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
@@ -1313,17 +1338,7 @@ $saved = get_user_meta($user_id, 'course');
             </div>
         </div>
     </div>
-    <div class="block-store-doawnload text-center">
-        <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
-        <div class="group-btn-store d-flex flex-wrap justify-content-center">
-            <a href="https://apps.apple.com/nl/app/livelearn/id1666976386">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="googlePlay">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
-            </a>
-        </div>
-    </div>
+
 </div>
 <div class="onze-expert-block">
     <div class="container-fluid">
@@ -1340,20 +1355,23 @@ $saved = get_user_meta($user_id, 'course');
                         ?>
                     </select>
                 </div>
+                    <div id="loader" class="spinner-border spinner-border-sm text-primary d-none" role="status"></div>
             </div>
-            <!--
-             <div class="dropdown show">
-                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Over de <b>laatste 7 dagen</b>
+            <!-- period -->
+            <div class="dropdown show">
+                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Over de <b id="complete-period">All time</b>
                 </a>
-                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Last 7 days</a>
-                    <a class="dropdown-item" href="#">Last 1 month</a>
-                    <a class="dropdown-item" href="#">Last 1 year</a>
-                    <a class="dropdown-item" href="#">All time</a>
+                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
+                    <select class="form-select selectSearchHome" id="period" multiple>
+                        <option value="all">All time</option>
+                        <option value="lastweek">Last 7 days</option>
+                        <option value="lastmonth">Last 1 month</option>
+                        <option value="lastyear">Last 1 year</option>
+                    </select>
                 </div>
-             </div>
-             -->
+            </div>
+            <!-- period -->
             <a href="/voor-opleiders/" class="zelf-block">
                 <p class="mr-2">Zelf ook een expert? </p>
                 <div class="all-expert">
@@ -1365,7 +1383,11 @@ $saved = get_user_meta($user_id, 'course');
             <?php
             $num = 1;
             if(!empty($most_active_members)){
-                foreach($most_active_members as $user) {
+                //$teachers = $expert_from_database;
+                for($j=0; $j< count($most_active_members); $j++) {
+                    $user = $most_active_members[$j];
+                    if($num==13)
+                        break;
                     $image_user = get_field('profile_img',  'user_' . $user->ID);
                     $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
@@ -1400,12 +1422,12 @@ $saved = get_user_meta($user_id, 'course');
                                     </div>
                                     <div class="iconeTextListCollection">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
-                                        <p class="number-brain"><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
+                                        <p class="number-brain"><?=number_format($numberGray[$j+2], 2, '.', ',')?></p>
                                     </div>
                                 </div>
 
                             </div>
-                            <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
+                            <p class="pourcentageCollection"><?= $purchantage[$j+2] ?>%</p>
                         </div>
                     </a>
                 <?php }
@@ -1742,10 +1764,10 @@ $saved = get_user_meta($user_id, 'course');
                 je kan de app hier gratis downloaden:</h3>
             <div class="d-flex justify-content-center">
                 <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="btn btnStore">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/btn-app-store.png" alt="">
                 </a>
                 <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" class="btn btnPlayGoogle">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/btn-google-play.png" alt="">
                 </a>
             </div>
             <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
@@ -1943,9 +1965,44 @@ $saved = get_user_meta($user_id, 'course');
                     topic_search: topic_search,
                 },
                 dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',topic_search)
+                },
                 success: function(data){
-                    console.log(data);
+                    console.log('elt : ',data);
                     $('#autocomplete_categorieen').html(data);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
+                }
+            });
+        });
+    </script>
+    <script>
+        $('#period').change(function(){
+            var selectedOptions = $(this).find("option:selected")[0];
+            var period = selectedOptions.value;
+            var complete_period = selectedOptions.text;
+            $('#complete-period').html(complete_period);
+
+            $.ajax({
+                url:"/fetch-ajax-home2",
+                method:"post",
+                data:{
+                    period: period,
+                },
+                dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',period)
+                },
+                success: function(data){
+                    console.log('elt');
+                    $('#autocomplete_categorieen').html(data);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
                 }
             });
         });
