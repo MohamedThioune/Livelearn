@@ -1799,10 +1799,6 @@ if(isset($_GET['message']))
                 if(!$value)
                     continue;
 
-                if($i == 3)
-                    break;
-                $i++;
-
                 $company = get_field('company_author', $value->ID);
                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                 $community_image = get_field('image_community', $value->ID) ?: $company_image;
@@ -1829,6 +1825,11 @@ if(isset($_GET['message']))
                     $access_community = '<p  class="title">' . $value->post_title . ', Netherlands</p>';
                 else
                     continue;
+
+                if($i == 3)
+                    break;
+                $i++;
+
             ?>
             <a href="/dashboard/user/community-detail/?mu=<?= $value->ID ?>" class="card-Community d-flex align-items-center">
                 <div class="imgCommunity">
