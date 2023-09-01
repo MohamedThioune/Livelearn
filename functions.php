@@ -1812,6 +1812,18 @@ add_action( 'rest_api_init', function () {
     'callback' => 'save_user_views',
   ));
 
+  register_rest_route ('custom/v1', '/user/badges', array(
+    'methods' => 'GET',
+    'callback' => 'get_user_badges',
+  ));
+
+  register_rest_route ('custom/v1', '/user/smartphone_token/', array(
+    'methods' => 'PUT',
+    'callback' => 'update_user_smartphone_token',
+  ));
+
+  
+
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
