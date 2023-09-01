@@ -872,10 +872,26 @@ function recommended_course($data)
     'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 200
+    'posts_per_page' => 400
   );
   $global_courses = get_posts($args);
   shuffle($global_courses);
+
+  $more_global_courses = array();
+  if(empty($global_courses)){
+        $args = array(
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'posts_per_page' => 300
+        );
+        $more_global_courses = get_posts($args);
+        shuffle($more_global_courses);
+
+        $global_courses = $more_global_courses;
+  }
+
   foreach ($global_courses as $key => $course) {    
       /*
       *  Date and Location
@@ -1013,7 +1029,6 @@ function recommended_course($data)
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
-
     
     foreach($all_user_views as $key => $view) {
         if(!$view['course'])
@@ -1093,15 +1108,23 @@ function recommended_course($data)
                     array_push($random_id, $course->ID);
                     array_push($recommended_courses, $course);
                 }
+            
+            if(!empty($recommended_courses)){
+                $count_recommended_course = count($recommended_courses);
+                if($count_recommended_course == 25)
+                    break;
+            }
         }
     }
   }
 
-  if(empty($recommended_courses))
-    $recommended_courses = $courses;
-  else
-    $recommended_courses = array_slice($recommended_courses, 0, 50); 
+  if(empty($recommended_courses)){
+    $recommended_courses = (!empty($courses)) ? $courses : $global_courses;
+    $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $more_global_courses;
+  }
 
+  $recommended_courses = array_slice($recommended_courses, 0, 25, true); 
+ 
   $course_id = array();
   $random_id = array(); 
   if (!empty($recommended_courses)) {
@@ -1586,6 +1609,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'seperate_tags',
   ) );
 
+
   register_rest_route( 'custom/v1', '/follow', array(
     'methods' => 'POST',
     'callback' => 'follow_meta',
@@ -1789,6 +1813,18 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'save_user_views',
   ));
+
+  register_rest_route ('custom/v1', '/user/badges', array(
+    'methods' => 'GET',
+    'callback' => 'get_user_badges',
+  ));
+
+  register_rest_route ('custom/v1', '/user/smartphone_token/', array(
+    'methods' => 'PUT',
+    'callback' => 'update_user_smartphone_token',
+  ));
+
+  
 
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
