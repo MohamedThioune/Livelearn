@@ -1,5 +1,7 @@
 <?php /** Template Name: new-artikel */ ?>
-<body>
+<?php $page = 'check_visibility.php';
+require($page);
+?>
 <?php wp_head(); ?>
 <?php 
 get_header(); 
@@ -554,6 +556,3 @@ foreach($reactions as $value)
 
 
 </script>
-
-</body>
-</html>
