@@ -195,9 +195,20 @@ jQuery(function($) {
     });
 
 
+    // for modal add to do
+    $(".element-trigger").click(function() {
+        var targetClass = $(this).data("target");
+        $(".content-block-bg").hide();
+        $(".modal-header").hide();
+        $(".detail-content-modal").hide();
+        $(".content-" + targetClass).show();
+    });
 
-
-
+    $(".btn-back-frist-element").click(function() {
+        $(".content-block-bg").show();
+        $(".modal-header").show();
+        $(".detail-content-modal").hide();
+    });
 
 
 

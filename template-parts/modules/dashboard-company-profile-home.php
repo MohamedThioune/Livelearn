@@ -1,73 +1,74 @@
 
 <?php
-     
-    /*
-    ** Categories - all  * 
-    */
 
-    $categories = array();
+/*
+** Categories - all  *
+*/
 
-    $cats = get_categories( 
-        array(
+$categories = array();
+
+$cats = get_categories(
+    array(
         'taxonomy'   => 'course_category',  //Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
         'exclude'    => 'Uncategorized',
         'parent'     => 0,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) 
-    );
+    )
+);
 
-    foreach($cats as $category){
-        $cat_id = strval($category->cat_ID);
-        $category = intval($cat_id);
-        array_push($categories, $category);
-    }
+foreach($cats as $category){
+    $cat_id = strval($category->cat_ID);
+    $category = intval($cat_id);
+    array_push($categories, $category);
+}
 
-    $subtopics = array();
-     
-    foreach($categories as $categ){
-        //Topics
-        $topicss = get_categories(
-            array(
+$subtopics = array();
+
+foreach($categories as $categ){
+    //Topics
+    $topicss = get_categories(
+        array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categ,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ) 
+        )
+    );
+
+    foreach ($topicss as  $value) {
+        $subtopic = get_categories(
+            array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
+                //  change to 1 to hide categores not having a single post
+            )
         );
-
-        foreach ($topicss as  $value) {
-            $subtopic = get_categories( 
-                 array(
-                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                 'parent'  => $value->cat_ID,
-                 'hide_empty' => 0,
-                  //  change to 1 to hide categores not having a single post
-                ) 
-            );
-            $subtopics = array_merge($subtopics, $subtopic);      
-        }
+        $subtopics = array_merge($subtopics, $subtopic);
     }
+}
 
-    $user = get_users(array('include'=> $_GET['id']))[0]->data;
+$user = get_users(array('include'=> $_GET['id']))[0]->data;
 
-    //Skills 
-    $topics_external = get_user_meta($user->ID, 'topic');
-    $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+//Skills
+$topics_external = get_user_meta($user->ID, 'topic');
+$topics_internal = get_user_meta($user->ID, 'topic_affiliate');
 
-    $topics = array();
-    if(!empty($topics_external))
-        $topics = $topics_external;
+$topics = array();
+if(!empty($topics_external))
+    $topics = $topics_external;
 
-    if(!empty($topics_internal))
-        foreach($topics_internal as $value)
-            array_push($topics, $value);
+if(!empty($topics_internal))
+    foreach($topics_internal as $value)
+        array_push($topics, $value);
 
-    //Note
-    $skills_note = get_field('skills', 'user_' . $user->ID);
+//Note
+$skills_note = get_field('skills', 'user_' . $user->ID);
 
 ?>
 <!-- Latest BS-Select compiled and minified CSS/JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="contentProilView">
     <div class="head-profil-company"></div>
     <div class="content-general-info d-flex">
@@ -275,16 +276,16 @@
                                     <div class="content-block-bg">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="block-one-add-element">
-                                                   <div>
-                                                       <p class="title">Doe een</p>
-                                                       <p class="description">Een opleiding, cursus,
-                                                           podcast, event o.i.d.</p>
-                                                   </div>
+                                                <div id="element-Doe-een" data-target="Persoonlijk" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">Doe een</p>
+                                                        <p class="description">Een opleiding, cursus,
+                                                            podcast, event o.i.d.</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="block-one-add-element">
+                                                <div id="element-Schrijf-een" data-target="Schrijf-een" class="element-trigger block-one-add-element">
                                                     <div>
                                                         <p class="title">Schrijf een</p>
                                                         <p class="description">Een persoonlijk
@@ -293,7 +294,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="block-one-add-element">
+                                                <div id="element-Leer-een-onderwerp" data-target="Leer-een-onderwerp" class="element-trigger block-one-add-element">
                                                     <div>
                                                         <p class="title">Leer een onderwerp</p>
                                                         <p class="description">Zet de uren vast!</p>
@@ -301,23 +302,200 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="block-one-add-element">
-                                                   <div>
-                                                       <p class="title">Geef feedback</p>
-                                                       <p class="description">Aan je collega’s</p>
-                                                   </div>
+                                                <div id="element-Geef-feedback" data-target="Geef-feedback" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">Geef feedback</p>
+                                                        <p class="description">Aan je collega’s</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="content-Persoonlijk">
-                                        <div></div>
+
+                                    <div class="detail-content-modal content-Persoonlijk">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Do a course</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van to do</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Selecteer bestaande intern of extern kennisproduct óf creëer een nieuwe</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Select</option>
+                                                    <option value="internal">Internal course</option>
+                                                    <option value="external">External course</option>
+                                                    <option value="external">Create a new one</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Selecteer product (for</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Select</option>
+                                                    <option value="">A</option>
+                                                    <option value="">B</option>
+                                                    <option value="">C</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="dateDone">Te doen voor welke datum?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Geldig tot?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-Schrijf-een">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Persoonlijk ontwikkelplan</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van ontwikkelplan</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Waarover een ontwikkelplan maken?</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Voor welke datum?</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Select</option>
+                                                    <option value="internal">Internal course</option>
+                                                    <option value="external">External course</option>
+                                                    <option value="external">Create a new one</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Over welke competenties?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-Leer-een-onderwerp">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span> Leer een onderwerp</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van de to do</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Selecteer het onderwerp (sub-topic)</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Type topic …</option>
+                                                    <option value="">A</option>
+                                                    <option value="">B</option>
+                                                    <option value="">C</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Select hours to learn</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Type topic …</option>
+                                                    <option value="">A</option>
+                                                    <option value="">B</option>
+                                                    <option value="">C</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-Geef-feedback">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Geef Feedback</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van te geven feedback</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group formModifeChoose">
+                                                <label class="sub-label">Selecteer de collega(s)</label>
+                                                <select id="" name=""  class="multipleSelect2" multiple="true" required>
+                                                    <option value="">A</option>
+                                                    <option value="">C</option>
+                                                    <option value="">D</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dateDone">Voor welke datum?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Over welke competenties?</label>
+                                                <textarea class="message-area" placeholder="Type topics …" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" placeholder="" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="body-content-to-do">
 
@@ -356,402 +534,402 @@
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">PoP</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        50 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="50"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">PoP</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    50 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="50"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        80 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="80"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    80 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="80"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">PoP</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        50 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="50"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">PoP</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    50 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="50"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        80 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="80"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    80 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="80"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">PoP</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        50 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="50"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">PoP</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    50 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="50"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        80 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="80"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    80 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="80"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -769,94 +947,94 @@
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">PoP</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        50 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="50"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">PoP</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    50 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="50"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
 
                                 </tbody>
                             </table>
@@ -875,226 +1053,226 @@
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">PoP</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        50 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="50"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">PoP</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    50 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="50"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        80 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="80"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    80 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="80"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        80 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="80"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    80 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="80"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1112,94 +1290,94 @@
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">PoP</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        50 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="50"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">PoP</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    50 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="50"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
 
                                 </tbody>
                             </table>
@@ -1218,182 +1396,182 @@
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">PoP</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        50 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="50"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">PoP</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    50 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="50"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        20 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="20"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    20 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="20"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        80 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="80"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    80 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="80"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                    <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
                                             </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element" id="mr-element">Podcast</p>
-                                        </td>
-                                        <td>
-                                            <div class="progress-bar-element-profil">
-                                                <div class="task-progress">
-                                                    <p class="text-center">
-                                                        80 <span>%</span>
-                                                    </p>
-                                                    <progress class="progress progress2" max="100" value="80"></progress>
-                                                </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <a href="" class="btn view-detail">View details</a>
-                                        </td>
-                                        <td>
-                                            <p class="text-other-element">04/08/2024</p>
-                                        </td>
-                                        <td class="textTh">
-                                            <div class="dropdown text-white">
-                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Podcast</p>
+                                    </td>
+                                    <td>
+                                        <div class="progress-bar-element-profil">
+                                            <div class="task-progress">
+                                                <p class="text-center">
+                                                    80 <span>%</span>
                                                 </p>
-                                                <ul class="dropdown-menu">
-                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                                </ul>
+                                                <progress class="progress progress2" max="100" value="80"></progress>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1401,7 +1579,7 @@
                         <div id="empty" class="b-tab aa contentBlockSetting">
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
-                                    <tr>
+                                <tr>
                                     <th scope="col courseTitle">To do</th>
                                     <th scope="col">What</th>
                                     <th scope="col">Progress</th>
@@ -1425,15 +1603,1914 @@
                 </div>
             </ul>
 
-            <ul id="Certificaten" class="hide">d</ul>
+            <ul id="Certificaten" class="hide">
+                <div class="sub-to-do d-flex justify-content-between align-items-center">
+                    <p class="text-to-do-for">Achievements by Mamadou</p>
+                    <button class="btn btn-add-to-do" type="button" data-toggle="modal" data-target="#Add-achievement-Modal">Add achievement</button>
 
-            <ul id="Statistieken" class="hide">e</ul>
+                    <!-- Modal Add Add achievement -->
 
-            <ul id="Interne-groei" class="hide">f</ul>
+                    <div class="modal fade new-modal-to-do" id="Add-achievement-Modal" tabindex="-1" role="dialog" aria-labelledby="to-do-ModalModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="MandatoryModalLabel">To do</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="content-block-bg">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div id="element-BADGE" data-target="BADGE" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">BADGE</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div id="element-CERTFICATE" data-target="CERTFICATE" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">CERTFICATE</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div id="element-PRESTATIE" data-target="PRESTATIE" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">PRESTATIE</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div id="element-DIPLOMA" data-target="DIPLOMA" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">DIPLOMA</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-            <ul id="Externe-groei" class="hide">g</ul>
+                                    <div class="detail-content-modal content-BADGE">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Badge</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="">Titel van de badge</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Hoe is deze badge behaald?</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Upload de batch</label>
+                                                <div>
+                                                    <div x-data="imageData()" class="file-input flex items-center">
+                                                        <!-- Preview Image -->
+                                                        <div class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                                                            <!-- Placeholder image -->
+                                                            <div x-show="!previewPhoto" class="preview-badge">
+                                                                <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                                            </div>
+                                                            <!-- Show a preview of the photo -->
+                                                            <div x-show="previewPhoto" class="preview-badge">
+                                                                <img :src="previewPhoto"
+                                                                     alt=""
+                                                                     class="h-12 w-12 object-cover">
+                                                            </div>
+                                                        </div>
 
-            <ul id="Feedback" class="hide">h</ul>
+                                                        <div class="flex items-center">
+                                                            <!-- File Input -->
+                                                            <div class="ml-5 rounded-md shadow-sm">
+                                                                <!-- Replace the file input styles with our own via the label -->
+                                                                <input @change="updatePreview($refs)" x-ref="input"
+                                                                       type="file"
+                                                                       accept="image/*,capture=camera"
+                                                                       name="photo" id="photo"
+                                                                       class="custom">
+                                                                <label for="photo"
+                                                                       class="py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-indigo-500 hover:border-indigo-300 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-800 transition duration-150 ease-in-out">
+                                                                    Upload Photo
+                                                                </label>
+                                                            </div>
+                                                            <div class="flex items-center text-sm text-gray-500 mx-2">
+                                                                <!-- Display the file name when available -->
+                                                                <span x-text="fileName || emptyText"></span>
+                                                                <!-- Removes the selected file -->
+                                                                <button x-show="fileName"
+                                                                        @click="clearPreview($refs)"
+                                                                        type="button"
+                                                                        aria-label="Remove image"
+                                                                        class="mx-1 mt-1">
+                                                                    <svg viewBox="0 0 20 20" fill="currentColor" class="x-circle w-4 h-4"
+                                                                         aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Selecteer bestaande intern of extern kennisproduct óf creëer een nieuwe</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Select</option>
+                                                    <option value="internal">Internal course</option>
+                                                    <option value="external">External course</option>
+                                                    <option value="external">Create a new one</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Selecteer product (for</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Select</option>
+                                                    <option value="">A</option>
+                                                    <option value="">B</option>
+                                                    <option value="">C</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="dateDone">Te doen voor welke datum?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Geldig tot?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-CERTFICATE">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Persoonlijk ontwikkelplan</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van ontwikkelplan</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Waarover een ontwikkelplan maken?</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Voor welke datum?</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Select</option>
+                                                    <option value="internal">Internal course</option>
+                                                    <option value="external">External course</option>
+                                                    <option value="external">Create a new one</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Over welke competenties?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-PRESTATIE">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span> Leer een onderwerp</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van de to do</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Selecteer het onderwerp (sub-topic)</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Type topic …</option>
+                                                    <option value="">A</option>
+                                                    <option value="">B</option>
+                                                    <option value="">C</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group" id="">
+                                                <label class="sub-label">Select hours to learn</label>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
+                                                    <option value="0" selected>Type topic …</option>
+                                                    <option value="">A</option>
+                                                    <option value="">B</option>
+                                                    <option value="">C</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-DIPLOMA">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Geef Feedback</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van te geven feedback</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group formModifeChoose">
+                                                <label class="sub-label">Selecteer de collega(s)</label>
+                                                <select id="" name=""  class="multipleSelect2" multiple="true" required>
+                                                    <option value="">A</option>
+                                                    <option value="">C</option>
+                                                    <option value="">D</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dateDone">Voor welke datum?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Over welke competenties?</label>
+                                                <textarea class="message-area" placeholder="Type topics …" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Nog op- en of aanmerkingen?</label>
+                                                <textarea class="message-area" placeholder="" name="" id="" rows="5"></textarea>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="body-content-to-do">
+
+                    <div class="content-tab">
+                        <div class="content-button-tabs">
+                            <button  data-tab="Badges" class="b-nav-tab btn active">
+                                Badges<span class="number-content">0</span>
+                            </button>
+                            <button  data-tab="Certificates" class="b-nav-tab btn">
+                                Certificates <span class="number-content">0</span>
+                            </button>
+                            <button  data-tab="Prestaties" class="b-nav-tab btn">
+                                Prestaties <span class="number-content">O</span>
+                            </button>
+                            <button  data-tab="Diploma" class="b-nav-tab btn">
+                                Diploma <span class="number-content">0</span>
+                            </button>
+                        </div>
+
+                        <div id="Badges" class="b-tab active contentBlockSetting">
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                            </div>
+                        </div>
+
+                        <div id="Certificates" class="b-tab contentBlockSetting">
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                            </div>
+                        </div>
+
+                        <div id="Prestaties" class="b-tab contentBlockSetting">
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                            </div>
+                        </div>
+
+                        <div id="Diploma" class="b-tab contentBlockSetting">
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </ul>
+
+            <ul id="Statistieken" class="hide">
+                <div class="group-statistieken">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Courses done</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">12</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Training Costs:</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">€1.415,-</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Average Training Hours</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">3,5 hours <span>/ 1,5 hours</span> </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Courses in progress</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">2</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Assessments done</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">2</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Mandatory courses done</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">0/2</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Self-Assessment of Skills:</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">12</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">External Learning Opportunities:</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">56</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Feedback given on average</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat">3,6 <span>/ 4,3</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
+                        <div class="head-card d-flex justify-content-between align-items-center">
+                            <p class="title">Key Skill Development Progress: (See all)</p>
+                            <div class="select">
+                                <select>
+                                    <option value="Year">OOH</option>
+                                    <option value="Month">Month</option>
+                                    <option value="Day">Day</option>
+                                </select>
+                                <div>
+                                    <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100">
+                            <canvas id="Key-Skill"></canvas>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Learning Delivery Methods:</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="d-block w-100 subTopics-usage-block">
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Articles</p>
+                                        </div>
+                                        <p class="number">76%</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Articles</p>
+                                        </div>
+                                        <p class="number">76%</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Articles</p>
+                                        </div>
+                                        <p class="number">76%</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Articles</p>
+                                        </div>
+                                        <p class="number">76%</p>
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div>
+                               <div class="theme-card-statistiken-1 height-fit-content mb-3">
+                                   <div class="head-card d-flex justify-content-between align-items-center">
+                                       <p class="title">Feedback received</p>
+                                       <div class="select">
+                                           <select>
+                                               <option value="Year">Year</option>
+                                               <option value="Month">Month</option>
+                                               <option value="Day">Day</option>
+                                           </select>
+                                           <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                       </div>
+                                   </div>
+                                   <p class="text-stat">2</p>
+                               </div>
+                               <div class="theme-card-statistiken-1 height-fit-content">
+                                   <div class="head-card d-flex justify-content-between align-items-center">
+                                       <p class="title">Feedback given</p>
+                                       <div class="select">
+                                           <select>
+                                               <option value="Year">Year</option>
+                                               <option value="Month">Month</option>
+                                               <option value="Day">Day</option>
+                                           </select>
+                                           <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                       </div>
+                                   </div>
+                                   <p class="text-stat">2</p>
+                               </div>
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Most Viewed Topics</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat"></p>
+                                <div class="empty-topic-block">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-topic.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Followed topics</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="d-block w-100 subTopics-usage-block">
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Agile / Scrum</p>
+                                        </div>
+                                        <p class="number">122k</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Articles</p>
+                                        </div>
+                                        <p class="number">76%</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Cocktail maken</p>
+                                        </div>
+                                        <p class="number">23k</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Transport</p>
+                                        </div>
+                                        <p class="number">5k</p>
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Followed teachers</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <p class="text-stat"></p>
+                                <div class="empty-topic-block">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-topic.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Most Viewed Expert</p>
+                                    <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="d-block w-100 subTopics-usage-block">
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Seydou Diallo</p>
+                                        </div>
+                                        <p class="number">232</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Articles</p>
+                                        </div>
+                                        <p class="number">76%</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Mohamed Thioune</p>
+                                        </div>
+                                        <p class="number">134</p>
+                                    </a>
+                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                            </div>
+                                            <p class="text-subTopics">Daniel van der Kolk</p>
+                                        </div>
+                                        <p class="number">45</p>
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                  <div class="row">
+                      <div class="col-md-8">
+                          <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
+                              <div class="head-card d-flex justify-content-between align-items-center">
+                                  <p class="title">Usage desktop vs Mobile app</p>
+                                  <div class="select">
+                                      <select>
+                                          <option value="Year">OOH</option>
+                                          <option value="Month">Month</option>
+                                          <option value="Day">Day</option>
+                                      </select>
+                                      <div>
+                                          <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="w-100">
+                                  <canvas id="Usage-desktop"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="theme-card-statistiken-1">
+                              <div class="head-card d-flex justify-content-between align-items-center">
+                                  <p class="title">Followed topics</p>
+                                  <div class="select">
+                                      <select>
+                                          <option value="Year">Year</option>
+                                          <option value="Month">Month</option>
+                                          <option value="Day">Day</option>
+                                      </select>
+                                      <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                  </div>
+                              </div>
+                              <div class="d-block w-100 subTopics-usage-block">
+                                  <div class="element-SubTopics d-flex justify-content-between">
+                                      <div class="d-flex">
+                                          <div class="imgTopics">
+                                              <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                          </div>
+                                          <p class="text-subTopics">ux/ui Designerf</p>
+                                      </div>
+                                      <a href="" class="number">Apply</a>
+                                  </div>
+                                  <div class="element-SubTopics d-flex justify-content-between">
+                                      <div class="d-flex">
+                                          <div class="imgTopics">
+                                              <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                          </div>
+                                          <p class="text-subTopics">ux/ui Designerf</p>
+                                      </div>
+                                      <a href="" class="number">Apply</a>
+                                  </div>
+                                  <div class="element-SubTopics d-flex justify-content-between">
+                                      <div class="d-flex">
+                                          <div class="imgTopics">
+                                              <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                          </div>
+                                          <p class="text-subTopics">ux/ui Designerf</p>
+                                      </div>
+                                      <a href="" class="number">Apply</a>
+                                  </div>
+                                  <div class="element-SubTopics d-flex justify-content-between">
+                                      <div class="d-flex">
+                                          <div class="imgTopics">
+                                              <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                          </div>
+                                          <p class="text-subTopics">ux/ui Designerf</p>
+                                      </div>
+                                      <a href="" class="number">Apply</a>
+                                  </div>
+
+                              </div>
+
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
+                              <div class="head-card d-flex justify-content-between align-items-center">
+                                  <p class="title">Latest badges</p>
+                                  <div class="select">
+                                      <select>
+                                          <option value="See-all">See all</option>
+                                          <option value="">...</option>
+                                          <option value="">...</option>
+                                      </select>
+                                      <div>
+                                          <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="block-empty-badge">
+                                  <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-badge.png" alt="">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                </div>
+            </ul>
+
+            <ul id="Interne-groei" class="hide">
+
+                <div class="contentBlockSetting">
+                    <div class="content">
+                        <form action="" method="POST">
+
+                            <div class="form-group formModifeChoose">
+
+                                <select class="multipleSelect2" name="selected_subtopics[]" multiple="true" required>
+                                    <?php
+
+                                    foreach($subtopics as $value){
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <input type="hidden" name="manager" value=<?php $manager->ID?> >
+                                <input type="hidden" name="id_user" value=<?php $user->ID?> >
+                                <button name="add_internal_growth" class="btn btnVoegTab " type="submit">Voeg toe</button>
+                            </div>
+
+                            <?php
+                            if (!empty (get_user_meta($user->ID,'topic_affiliate')))
+                            {
+                                $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate'); ?>
+
+
+                                <div class="inputGroein">
+                                    <?php
+                                    foreach($internal_growth_subtopics as $value){
+                                        echo "
+                                            <form action='/dashboard/user/' method='POST'>
+                                            <input type='hidden' name='meta_value' value='". $value . "' id=''>
+                                            <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
+                                            <input type='hidden' name='meta_key' value='topic_affiliate' id=''>";
+                                        echo "<p> <button type='submit' name='delete' style='border:none;background:#C7D8F5'><i style='font-size 0.5em; color:white'class='fa fa-trash'></i>&nbsp;".(String)get_the_category_by_ID($value)."</button></p>";
+                                        echo "</form>";
+                                        ?>
+
+
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+
+                                <?php
+                            }else {
+                                echo "<p>No topics yet</p>" ;
+                            }
+                            ?>
+                        </form>
+                    </div>
+                </div>
+
+            </ul>
+
+            <ul id="Externe-groei" class="hide">
+                <div id="Externe-groei" class="contentBlockSetting">
+                    <div class="content">
+                        <div class="inputGroein">
+
+                            <?php
+                             if (!empty (get_user_meta($user->ID,'topic')))
+                                {
+                                    $external_growth_subtopics = get_user_meta($user->ID,'topic');
+                                    ?>
+
+                            <div class="inputGroein">
+                                <?php
+                                   foreach($external_growth_subtopics as $value){
+                                        echo "<p>".(String)get_the_category_by_ID($value)."</p>";
+                                    }
+
+                                    ?>
+                            </div>
+
+                            <?php
+                             }else {
+                                    echo "<p>No topics yet</p>" ;
+                                }
+                                ?>
+
+                        </div>
+                    </div>
+                </div>
+            </ul>
+
+            <ul id="Feedback" class="hide">
+                <div class="sub-to-do d-flex justify-content-between align-items-center">
+                    <p class="text-to-do-for">Feedback for Mamadou</p>
+                    <button class="btn btn-add-to-do" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Add Feedback</button>
+
+                    <!-- Modal Add to do -->
+
+                    <div class="modal fade new-modal-to-do" id="Add-Feedback-Modal" tabindex="-1" role="dialog" aria-labelledby="to-do-ModalModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="MandatoryModalLabel">Feedback</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="content-block-bg">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div id="element-FEEDBACK" data-target="FEEDBACK" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">FEEDBACK</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div id="element-ONTWIKKELPLAN" data-target="ONTWIKKELPLAN" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">ONTWIKKELPLAN</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div id="element-BEOORDELING" data-target="BEOORDELING" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">BEOORDELING</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div id="element-COMPLIMENT" data-target="COMPLIMENT" class="element-trigger block-one-add-element">
+                                                    <div>
+                                                        <p class="title">COMPLIMENT</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-content-modal content-FEEDBACK">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Feedback</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van feedback</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Beschrijf de feedback</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Competenties waar de feedback over gaat</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group position-relative">
+                                                <label for="">Geef een rating </label>
+                                                <div class="rating-element">
+                                                    <div class="rating">
+                                                        <input type="radio" id="star5-Geef" class="stars" name="rating-Geef" value="5" />
+                                                        <label class="star" for="star5-Geef" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4-Geef" class="stars" name="rating-Geef" value="4" />
+                                                        <label class="star" for="star4-Geef" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3-Geef" class="stars" name="rating-Geef" value="3" />
+                                                        <label class="star" for="star3-Geef" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2-Geef" class="stars" name="rating-Geef" value="2" />
+                                                        <label class="star" for="star2-Geef" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1-Geef" name="rating-Geef" value="1" />
+                                                        <label class="star" for="star1-Geef" class="stars" title="Bad" aria-hidden="true"></label>
+                                                    </div>
+                                                    <span class="rating-counter"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Hoe te verbeteren / overige opmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+                                            <div class="form-group d-flex checkbokElement">
+                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
+                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                            </div>
+
+
+                                            <button class="btn btn-submi-form-to-do">Stuur feedback</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-ONTWIKKELPLAN">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Ontwikkelplan</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van ontwikkelplan</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Competenties waar het ontwikkelen over gaat</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Wat wil je dat er bereikt wordt?</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Hoe denk je dat dit het best bereikt kan worden? </label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group d-flex">
+                                                <label for="">Denk je dat er hulp bij nodig is?</label>
+                                                <div class="d-flex">
+                                                    <div class="d-flex checkbokElement mr-3">
+                                                        <input type="checkbox" id="Ja" name="Denk" value="Ja">
+                                                        <label class="sub-label-check" for="Anoniem-versturen?">Ja</label>
+                                                    </div>
+                                                    <div class="d-flex checkbokElement ">
+                                                        <input type="checkbox" id="Nee" name="Denk" value="Nee">
+                                                        <label class="sub-label-check" for="Nee">Nee</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Huidige waardering (voor ontwikkelplan)</label>
+                                                <div class="rating-element">
+                                                    <div class="rating">
+                                                        <input type="radio" id="star5-Huidige" class="stars" name="rating-Geef" value="5" />
+                                                        <label class="star" for="star5-Huidige" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4-Huidige" class="stars" name="rating-Geef" value="4" />
+                                                        <label class="star" for="star4-Huidige" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3-Huidige" class="stars" name="rating-Geef" value="3" />
+                                                        <label class="star" for="star3-Huidige" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2-Huidige" class="stars" name="rating-Geef" value="2" />
+                                                        <label class="star" for="star2-Huidige" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1-Huidige" name="rating-Geef" value="1" />
+                                                        <label class="star" for="star1-Huidige" class="stars" title="Bad" aria-hidden="true"></label>
+                                                    </div>
+                                                    <span class="rating-counter"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Overige opmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+                                            <div class="form-group d-flex checkbokElement">
+                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
+                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+
+                                        </form>
+                                    </div>
+                                    <div class="detail-content-modal content-BEOORDELING">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Beoordeling</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van beoordeling</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Competenties waar de beoordeling over gaat</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Algemene beoordeling bovenstaande competenties</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group position-relative">
+                                                <label for="">Beoordeling competentie “Skill A”</label>
+                                                <div class="rating-element">
+                                                    <div class="rating">
+                                                        <input type="radio" id="star5-Beoordeling" class="stars" name="rating-Beoordeling" value="5" />
+                                                        <label class="star" for="star5-Beoordeling" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4-Beoordeling" class="stars" name="rating-Beoordeling" value="4" />
+                                                        <label class="star" for="star4-Beoordeling" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3-Beoordeling" class="stars" name="rating-Beoordeling" value="3" />
+                                                        <label class="star" for="star3-Beoordeling" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2-Beoordeling" class="stars" name="rating-Beoordeling" value="2" />
+                                                        <label class="star" for="star2-Beoordeling" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1-Beoordeling" name="rating-Geef" value="1" />
+                                                        <label class="star" for="star1-Beoordeling" class="stars" title="Bad" aria-hidden="true"></label>
+                                                    </div>
+                                                    <span class="rating-counter"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group position-relative">
+                                                <label for="">Beoordeling competentie “Skill B”</label>
+                                                <div class="rating-element">
+                                                    <div class="rating">
+                                                        <input type="radio" id="star5-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="5" />
+                                                        <label class="star" for="star5-Beoordeling-2" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="4" />
+                                                        <label class="star" for="star4-Beoordeling-2" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="3" />
+                                                        <label class="star" for="star3-Beoordeling-2" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="2" />
+                                                        <label class="star" for="star2-Beoordeling-2" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1-Beoordeling-2" name="rating-Geef" value="1" />
+                                                        <label class="star" for="star1-Beoordeling-2" class="stars" title="Bad" aria-hidden="true"></label>
+                                                    </div>
+                                                    <span class="rating-counter"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dateDone">Voor welke datum?</label>
+                                               <div class="d-flex">
+                                                   <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                   <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                               </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Overige opmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+                                            <div class="form-group d-flex checkbokElement">
+                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
+                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur feedback</button>
+
+                                        </form>
+
+                                    </div>
+                                    <div class="detail-content-modal content-COMPLIMENT">
+                                        <div class="head-detail-form">
+                                            <button class="btn btn-back-frist-element">
+                                                <i class="fa fa-angle-left"></i>
+                                                <span>Compliment</span>
+                                            </button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="post" class="form-to-do" action="">
+                                            <div class="form-group">
+                                                <label for="maneMandatory">Titel van Compliment</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Competenties waar het compliment over gaat</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Waarom een compliment?</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group position-relative">
+                                                <label for="">Compliment competentie “Skill A”</label>
+                                                <div class="rating-element">
+                                                    <div class="rating">
+                                                        <input type="radio" id="star5-Beoordeling" class="stars" name="rating-Beoordeling" value="5" />
+                                                        <label class="star" for="star5-Beoordeling" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4-Beoordeling" class="stars" name="rating-Beoordeling" value="4" />
+                                                        <label class="star" for="star4-Beoordeling" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3-Beoordeling" class="stars" name="rating-Beoordeling" value="3" />
+                                                        <label class="star" for="star3-Beoordeling" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2-Beoordeling" class="stars" name="rating-Beoordeling" value="2" />
+                                                        <label class="star" for="star2-Beoordeling" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1-Beoordeling" name="rating-Geef" value="1" />
+                                                        <label class="star" for="star1-Beoordeling" class="stars" title="Bad" aria-hidden="true"></label>
+                                                    </div>
+                                                    <span class="rating-counter"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group position-relative">
+                                                <label for="">Compliment competentie “Skill B”</label>
+                                                <div class="rating-element">
+                                                    <div class="rating">
+                                                        <input type="radio" id="star5-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="5" />
+                                                        <label class="star" for="star5-Beoordeling-2" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="4" />
+                                                        <label class="star" for="star4-Beoordeling-2" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="3" />
+                                                        <label class="star" for="star3-Beoordeling-2" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="2" />
+                                                        <label class="star" for="star2-Beoordeling-2" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1-Beoordeling-2" name="rating-Geef" value="1" />
+                                                        <label class="star" for="star1-Beoordeling-2" class="stars" title="Bad" aria-hidden="true"></label>
+                                                    </div>
+                                                    <span class="rating-counter"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dateDone">Compliment voor de periode van .. tot</label>
+                                                <div class="d-flex">
+                                                    <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Overige opmerkingen?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
+                                            <div class="form-group d-flex checkbokElement">
+                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
+                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                            </div>
+
+                                            <button class="btn btn-submi-form-to-do">Stuur feedback</button>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body-content-to-do">
+                    <div class="content-tab">
+                        <div class="content-button-tabs">
+                            <button  data-tab="AllFeddback" class="b-nav-tab btn active">
+                                All <span class="number-content">14</span>
+                            </button>
+                            <button  data-tab="Feedback" class="b-nav-tab btn">
+                                Feedback <span class="number-content">2</span>
+                            </button>
+                            <button  data-tab="Ontwikkelplan" class="b-nav-tab btn">
+                                Ontwikkelplan <span class="number-content">5</span>
+                            </button>
+                            <button  data-tab="Beoordeling" class="b-nav-tab btn">
+                                Beoordeling <span class="number-content">2</span>
+                            </button>
+                            <button  data-tab="Compliment" class="b-nav-tab btn">
+                                Compliment <span class="number-content">4</span>
+                            </button>
+                            <button  data-tab="empty-" class="b-nav-tab btn">
+                                Empty <span class="number-content">O</span>
+                            </button>
+                        </div>
+
+                        <div id="AllFeddback" class="b-tab active contentBlockSetting">
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Due-date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
+                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="Feedback" class="b-tab contentBlockSetting">
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Due-date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
+                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="Ontwikkelplan" class="b-tab contentBlockSetting">
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Due-date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
+                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="Beoordeling" class="b-tab contentBlockSetting">
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Due-date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
+                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="Compliment" class="b-tab contentBlockSetting">
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Due-date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgCourse">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
+                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element" id="mr-element">Feedback</p>
+                                    </td>
+                                    <td class="position-relative">
+                                        <div class="rating-element">
+                                            <div class="rating">
+                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
+                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                            </div>
+                                            <span class="rating-counter"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn view-detail">View details</a>
+                                    </td>
+                                    <td>
+                                        <p class="text-other-element">04/08/2024</p>
+                                    </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu">
+                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="empty-" class="b-tab  contentBlockSetting">
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <a href="" class="btn btn-creer-eeen">Creëer een eerste to do</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </ul>
 
 
         </div> <!-- END List Wrap -->
@@ -1442,13 +3519,13 @@
 
 
 
-   <!-- <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12">
             <div id="profilVIewDetail" class="detailContentCandidat">
                 <div>
                     <?php
-/*
-                    if(isset($_GET['message'])) if($_GET['message']) echo "<span class='alert alert-success alert-dismissible fade show' role='alert'>" . $_GET['message'] . "</span>"; */?>
+    /*
+                        if(isset($_GET['message'])) if($_GET['message']) echo "<span class='alert alert-success alert-dismissible fade show' role='alert'>" . $_GET['message'] . "</span>"; */?>
                     <div class="overviewFirstBlock">
                         <div class="blockImageCandidat">
                             <img src="<?php /*echo $image; */?>" alt="">
@@ -1477,12 +3554,12 @@
                                     <p class="nameOtherSkill">Language :
                                         <span>
                                                         <?php
-/*                                                        foreach($languages as $key => $language){
-                                                            echo $language;
-                                                            if(isset($languages[$key+1]))
-                                                                echo ", ";
-                                                        }
-                                                        */?>
+    /*                                                        foreach($languages as $key => $language){
+                                                                echo $language;
+                                                                if(isset($languages[$key+1]))
+                                                                    echo ", ";
+                                                            }
+                                                            */?>
                                                     </span>
                                     </p>
                                 </div>
@@ -1526,19 +3603,19 @@
                         <div class="content">
                             <p class="textDetailCategorie"><?php /*echo $biographical_info;  */?></p>
                             <?php
-/*                            if($educations){
-                                */?>
+    /*                            if($educations){
+                                    */?>
                                 <div class="categorieDetailCandidat">
                                     <h2 class="titleCategorieDetailCandidat">Education</h2>
                                     <?php
-/*                                    foreach($educations as $value) {
-                                        $value = explode(";", $value);
-                                        if(isset($value[2]))
-                                            $year = explode("-", $value[2])[0];
-                                        if(isset($value[3]))
-                                            if(intval($value[2]) != intval($value[3]))
-                                                $year = $year . "-" .  explode("-", $value[3])[0];
-                                        */?>
+    /*                                    foreach($educations as $value) {
+                                            $value = explode(";", $value);
+                                            if(isset($value[2]))
+                                                $year = explode("-", $value[2])[0];
+                                            if(isset($value[3]))
+                                                if(intval($value[2]) != intval($value[3]))
+                                                    $year = $year . "-" .  explode("-", $value[3])[0];
+                                            */?>
                                         <div class="contentEducationCandidat">
                                             <div class="titleDateEducation">
                                                 <p class="titleCoursCandiddat"><?php /*echo $value[1]; */?></p>
@@ -1552,25 +3629,25 @@
                                     <?php /*} */?>
                                 </div>
                                 <?php
-/*                            }
-                            */?>
+    /*                            }
+                                */?>
 
                             <?php
-/*                            if($experiences){
-                                */?>
+    /*                            if($experiences){
+                                    */?>
                                 <div class="categorieDetailCandidat workExperiece">
                                     <h2 class="titleCategorieDetailCandidat ex">Work & Experience</h2>
                                     <?php
-/*                                    if($experiences)
-                                        if(!empty($experiences))
-                                            foreach($experiences as $value) {
-                                                $value = explode(";", $value);
-                                                if(isset($value[2]))
-                                                    $year = explode("-", $value[2])[0];
-                                                if(isset($value[3]))
-                                                    if(intval($value[2]) != intval($value[3]))
-                                                        $year = $year . "-" .  explode("-", $value[3])[0];
-                                                */?>
+    /*                                    if($experiences)
+                                            if(!empty($experiences))
+                                                foreach($experiences as $value) {
+                                                    $value = explode(";", $value);
+                                                    if(isset($value[2]))
+                                                        $year = explode("-", $value[2])[0];
+                                                    if(isset($value[3]))
+                                                        if(intval($value[2]) != intval($value[3]))
+                                                            $year = $year . "-" .  explode("-", $value[3])[0];
+                                                    */?>
                                                 <div class="contentEducationCandidat">
                                                     <div class="titleDateEducation">
                                                         <p class="titleCoursCandiddat"><?php /*echo $value[1]; */?></p>
@@ -1585,26 +3662,26 @@
                                             <?php /*} */?>
                                 </div>
                                 <?php
-/*                            }
-                            */?>
+    /*                            }
+                                */?>
                         </div>
                     </div>
 
                     <div id="Skills" class="b-tab contentBlockSetting">
                         <div class="content">
                             <?php
-/*                            if(!empty($topics_user)){
-                                foreach($topics_user as $value){
-                                    $topic = get_the_category_by_ID($value);
-                                    $note = 0;
-                                    if(!$topic)
-                                        continue;
-                                    if(!empty($skills_note))
-                                        foreach($skills_note as $skill)
-                                            if($skill['id'] == $value)
-                                                $note = $skill['note'];
-                                    $name_topic = (String)$topic;
-                                    */?>
+    /*                            if(!empty($topics_user)){
+                                    foreach($topics_user as $value){
+                                        $topic = get_the_category_by_ID($value);
+                                        $note = 0;
+                                        if(!$topic)
+                                            continue;
+                                        if(!empty($skills_note))
+                                            foreach($skills_note as $skill)
+                                                if($skill['id'] == $value)
+                                                    $note = $skill['note'];
+                                        $name_topic = (String)$topic;
+                                        */?>
                                     <div class="skillbars">
                                         <label class="skillName"><?php /*echo $name_topic;  */?></label>
                                         <div class="progress" data-fill="<?php /*= $note */?>" >
@@ -1650,7 +3727,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group" id="autocomplete_select_course">
-                                                
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="dateDone">Has to be done Before</label>
@@ -1688,19 +3765,19 @@
                         <div class="content">
                             <div class="categorieDetailCandidat workExperiece">
                                 <?php
-/*                                if($awards){
-                                    if(!empty($awards))
-                                        foreach($awards as $value) {
-                                            $value = explode(";", $value);
-                                            $year_start = explode("-", $value[2])[0];
-                                            $year_end = explode("-", $value[3])[0];
-                                            if($year_start && !$year_end)
-                                                $year = $year_start;
-                                            else if($year_end && !$year_start)
-                                                $year = $year_end;
-                                            else if($year_end != $year_start)
-                                                $year = $year_start .'-'. $year_end;
-                                            */?>
+    /*                                if($awards){
+                                        if(!empty($awards))
+                                            foreach($awards as $value) {
+                                                $value = explode(";", $value);
+                                                $year_start = explode("-", $value[2])[0];
+                                                $year_end = explode("-", $value[3])[0];
+                                                if($year_start && !$year_end)
+                                                    $year = $year_start;
+                                                else if($year_end && !$year_start)
+                                                    $year = $year_end;
+                                                else if($year_end != $year_start)
+                                                    $year = $year_start .'-'. $year_end;
+                                                */?>
                                             <div class="contentEducationCandidat">
                                                 <div class="titleDateEducation">
                                                     <p class="titleCoursCandiddat"><?php /*echo $value[0]; */?> </p>
@@ -1711,11 +3788,11 @@
                                                 <p class="textDetailCategorie"><?php /*echo $value[1]; */?></p>
                                             </div>
                                             <?php
-/*                                        }
-                                }
-                                else
-                                    echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
-                                */?>
+    /*                                        }
+                                    }
+                                    else
+                                        echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
+                                    */?>
 
                             </div>
                         </div>
@@ -1736,11 +3813,11 @@
 
                                     <select class="multipleSelect2" name="selected_subtopics[]" multiple="true" required>
                                         <?php
-/*                                        //Subtopics
-                                        foreach($subtopics as $value){
-                                            echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        }
-                                        */?>
+    /*                                        //Subtopics
+                                            foreach($subtopics as $value){
+                                                echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            }
+                                            */?>
                                     </select>
                                     <input type="hidden" name="manager" value=<?php /*=$manager->ID*/?> >
                                     <input type="hidden" name="id_user" value=<?php /*=$user->ID*/?> >
@@ -1748,35 +3825,35 @@
                                 </div>
 
                                 <?php
-/*                                if (!empty (get_user_meta($user->ID,'topic_affiliate')))
-                                {
-                                    $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');
-                                    */?>
+    /*                                if (!empty (get_user_meta($user->ID,'topic_affiliate')))
+                                    {
+                                        $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');
+                                        */?>
 
                                     <div class="inputGroein">
                                         <?php
-/*                                        foreach($internal_growth_subtopics as $value){
-                                            echo "
-                                                <form action='/dashboard/user/' method='POST'>
-                                                <input type='hidden' name='meta_value' value='". $value . "' id=''>
-                                                <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
-                                                <input type='hidden' name='meta_key' value='topic_affiliate' id=''>";
-                                            echo "<p> <button type='submit' name='delete' style='border:none;background:#C7D8F5'><i style='font-size 0.5em; color:white'class='fa fa-trash'></i>&nbsp;".(String)get_the_category_by_ID($value)."</button></p>";
-                                            echo "</form>";
+    /*                                        foreach($internal_growth_subtopics as $value){
+                                                echo "
+                                                    <form action='/dashboard/user/' method='POST'>
+                                                    <input type='hidden' name='meta_value' value='". $value . "' id=''>
+                                                    <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
+                                                    <input type='hidden' name='meta_key' value='topic_affiliate' id=''>";
+                                                echo "<p> <button type='submit' name='delete' style='border:none;background:#C7D8F5'><i style='font-size 0.5em; color:white'class='fa fa-trash'></i>&nbsp;".(String)get_the_category_by_ID($value)."</button></p>";
+                                                echo "</form>";
 
-                                            */?>
+                                                */?>
 
 
                                             <?php
-/*                                        }
-                                        */?>
+    /*                                        }
+                                            */?>
                                     </div>
 
                                     <?php
-/*                                }else {
-                                    echo "<p>No topics yet</p>" ;
-                                }
-                                */?>
+    /*                                }else {
+                                        echo "<p>No topics yet</p>" ;
+                                    }
+                                    */?>
                             </form>
                         </div>
                     </div>
@@ -1786,25 +3863,25 @@
                             <div class="inputGroein">
 
                                 <?php
-/*                                if (!empty (get_user_meta($user->ID,'topic')))
-                                {
-                                    $external_growth_subtopics = get_user_meta($user->ID,'topic');
-                                    */?>
+    /*                                if (!empty (get_user_meta($user->ID,'topic')))
+                                    {
+                                        $external_growth_subtopics = get_user_meta($user->ID,'topic');
+                                        */?>
 
                                     <div class="inputGroein">
                                         <?php
-/*                                        foreach($external_growth_subtopics as $value){
-                                            echo "<p>".(String)get_the_category_by_ID($value)."</p>";
-                                        }
+    /*                                        foreach($external_growth_subtopics as $value){
+                                                echo "<p>".(String)get_the_category_by_ID($value)."</p>";
+                                            }
 
-                                        */?>
+                                            */?>
                                     </div>
 
                                     <?php
-/*                                }else {
-                                    echo "<p>No topics yet</p>" ;
-                                }
-                                */?>
+    /*                                }else {
+                                        echo "<p>No topics yet</p>" ;
+                                    }
+                                    */?>
 
                             </div>
                         </div>
@@ -1816,33 +3893,33 @@
                                 <div class="otherSkills">
                                     <button class="btn btnAddToDo"  data-toggle="modal" data-target="#exampleModalWork">Toevoegen om te doen</button>
                                     <?php
-/*                                    if(!empty($todos))
-                                        foreach($todos as $key=>$todo) {
-                                            if($key == 8)
-                                                break;
+    /*                                    if(!empty($todos))
+                                            foreach($todos as $key=>$todo) {
+                                                if($key == 8)
+                                                    break;
 
-                                            $type = get_field('type_feedback', $todo->ID);
-                                            $manager = get_field('manager_feedback', $todo->ID);
+                                                $type = get_field('type_feedback', $todo->ID);
+                                                $manager = get_field('manager_feedback', $todo->ID);
 
-                                            $image = get_field('profile_img',  'user_' . $manager->ID);
-                                            if(!$image)
-                                                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                                $image = get_field('profile_img',  'user_' . $manager->ID);
+                                                if(!$image)
+                                                    $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-                                            if($type == "Feedback" || $type == "Compliment")
-                                                $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
-                                            else if($type == "Persoonlijk ontwikkelplan")
-                                                $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
-                                            else if($type == "Beoordeling Gesprek")
-                                                $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                                                if($type == "Feedback" || $type == "Compliment")
+                                                    $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                                                else if($type == "Persoonlijk ontwikkelplan")
+                                                    $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                                                else if($type == "Beoordeling Gesprek")
+                                                    $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
 
-                                            */?>
+                                                */?>
                                             <div class="activiteRecent">
                                                 <img width="25" src="<?php /*echo $image */?>" alt="">
                                                 <div class="contentRecentActivite">
                                                     <div class="titleActivite"><?php /*=$todo->post_title;*/?> by <span style="font-weight:bold">
                                                     <?php
-/*                                                    if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name;
-                                                    */?>
+    /*                                                    if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name;
+                                                        */?>
                                                     </span>
                                                     </div>
                                                     <p class="activiteRecentText"><?php /*if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; */?></p>
@@ -1870,7 +3947,7 @@
         </div>
 
     </div>-->
-    <!-- Modal  -->
+
     <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="width: 93% !important;">
             <div class="modal-content">
@@ -2077,7 +4154,7 @@
                                         }
 
                                         ?>
-                                        
+
                                         <!-- old rate -->
                                         <!-- <div class="rate feedback" id="selected_stars_'.($key+1).'">
                                              <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
@@ -2210,12 +4287,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
 <script src="https://rawgit.com/andreruffert/rangeslider.js/develop/dist/rangeslider.min.js"></script>
+
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/organictabs.jquery.js"></script>
 <script>
@@ -2308,14 +4387,14 @@
 </script>
 
 <script>
-    
+
     // Afficher un champ de commentaire spécifique aprés avoir noté un topics sur le modal des feedbacks
     $(".rate.feedback").click(function() {
         var id = $(this).attr('id');
         console.log("#commentaire_hidden_"+id.substr(-1));
         $("#commentaire_hidden_"+id.substr(-1)).attr("hidden",function(n, v){
-      return false;
-    });
+            return false;
+        });
     });
 
 
@@ -2445,4 +4524,106 @@
             }
         });
     });
+</script>
+
+<script>
+    var data = {
+        labels: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        datasets: [
+            {
+                label: 'You',
+                backgroundColor: '#14A89D',
+                borderColor: '#14A89D',
+                borderWidth: 1,
+                data: [100, 120, 140, 130, 150, 170, 160, 180, 190, 200, 210, 220] 
+            },
+            {
+                label: 'Average learner following this topic',
+                backgroundColor: '#023356',
+                borderColor: '#023356',
+                borderWidth: 1,
+                data: [200, 180, 160, 170, 150, 130, 140, 120, 110, 100, 90, 80] 
+            }
+        ]
+    };
+
+
+    var ctx = document.getElementById('Key-Skill').getContext('2d');
+
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<script>
+
+    var data = {
+        labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        datasets: [
+            {
+                label: 'Mobile',
+                borderColor: '#14A89D',
+                backgroundColor: '#14A89D',
+                borderWidth: 2,
+                data: [100, 120, 140, 130, 150, 170, 160, 180, 190, 200, 210, 220]
+            },
+            {
+                label: 'Desktop',
+                borderColor: '#023356',
+                backgroundColor: '#023356',
+                borderWidth: 2,
+                data: [200, 180, 160, 170, 150, 130, 140, 120, 110, 100, 90, 80]
+            }
+        ]
+    };
+
+
+    var ctx = document.getElementById('Usage-desktop').getContext('2d');
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.6.0/alpine.js"></script>
+<script>
+    function imageData(url) {
+        const originalUrl = url || '';
+        return {
+            previewPhoto: originalUrl,
+            fileName: null,
+            emptyText: originalUrl ? 'No new file chosen' : 'No file chosen',
+            updatePreview($refs) {
+                var reader,
+                    files = $refs.input.files;
+                reader = new FileReader();
+                reader.onload = (e) => {
+                    this.previewPhoto = e.target.result;
+                    this.fileName = files[0].name;
+                };
+                reader.readAsDataURL(files[0]);
+            },
+            clearPreview($refs) {
+                $refs.input.value = null;
+                this.previewPhoto = originalUrl;
+                this.fileName = false;
+            }
+        };
+    }
 </script>
