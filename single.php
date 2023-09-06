@@ -1,7 +1,5 @@
 <?php /** Template Name: new-artikel */ ?>
-<?php $page = 'check_visibility.php';
-require($page);
-?>
+
 <?php wp_head(); ?>
 <?php 
 get_header(); 
