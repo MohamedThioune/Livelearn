@@ -210,6 +210,16 @@ jQuery(function($) {
         $(".detail-content-modal").hide();
     });
 
+    $(".nav-three").click(function() {
+        $("#All").addClass("active");
+    });
+    $(".nav-four").click(function() {
+        $("#Badges").addClass("active");
+    });
+    $(".nav-feedback").click(function() {
+        $("#AllFeddback").addClass("active");
+    });
+
 
 
 
