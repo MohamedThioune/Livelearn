@@ -21406,6 +21406,63 @@ background: #FFFFFF !important;
     height: 100%;
     object-fit: cover;
 }
+.input-upload-btnGroup label{
+    border: none !important;
+    padding: 0 !important;
+    font-size: 15px;
+}
+.content-BADGE .group-text-upload{
+    margin-left: 15px;
+    cursor: pointer;
+}
+.input-upload-btnGroup label span{
+    color: #4A4A4A;
+    font-size: 13px;
+    font-weight: 500;
+}
+.upload-batch-group {
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    padding: 19px 15px;
+    margin-top: 1px;
+    margin-bottom: 13px;
+}
+.w-48{
+    width: 48%;
+}
+.block-with-content-badge .card-badge {
+    text-align: center;
+    border: 1px solid #dedede;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 0 10px 25px;
+}
+.block-with-content-badge .card-badge .img-card-badge img{
+    width: 84px;
+}
+.block-with-content-badge .card-badge .title-badge {
+    font-size: 17px;
+    font-weight: 500;
+    color: #033356;
+}
+.block-with-content-badge .card-badge .statut-text{
+    font-size: 15px;
+    color: #353535;
+}
+.block-with-content-badge .card-badge .bar-badge{
+    background: linear-gradient(90deg, rgba(2,51,86,1) 33%, rgba(0,168,157,1) 100%);
+    width: 100%;
+    height: 10px;
+    border-radius: 20px;
+    margin: 40px 0 20px;
+}
+.block-with-content-badge .card-badge .statut-badge{
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 500;
+    color: #17a99d;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
