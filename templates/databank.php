@@ -18,12 +18,13 @@ if(isset($_GET['id']))
 
     $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
     $count = $wpdb->get_results( $sql_count );
-    $count = $count[0]->{'COUNT(*)'};
+    $count = intval($count[0]->{'COUNT(*)'});
 
 if( $count % $pagination == 0)
     $pagination_number = $count / $pagination;
 else
     $pagination_number = intval($count / $pagination) + 1;
+
 
 
 $user = wp_get_current_user();
@@ -236,9 +237,6 @@ $urls =
                             <?php
                             if(!empty($courses)){
                                 foreach($courses as $course){
-                                    if($course->state)
-                                        continue;
-
                                     //Author Image
                                     $image_author = get_field('profile_img',  'user_' . $course->author_id);
                                     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
@@ -306,7 +304,7 @@ $urls =
                     </table>  
                     <center>
                     <?php
-
+                        if($count)
                         foreach (range(1, $pagination_number) as $number){
                             if(isset($_GET['id']))
                                 if($_GET['id'] == $number)
