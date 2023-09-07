@@ -698,10 +698,10 @@ function xmlParse()
 
             if (!isset($check_image[0]) && !isset($check_title[0])) {
 
-                // $wpdb->insert($table, $post);
-                // $post_id = $wpdb->insert_id;
+                $wpdb->insert($table, $post);
+                $post_id = $wpdb->insert_id;
                 // $post_id = 1;
-                var_dump($post);
+                // var_dump($post);
 
                 echo $wpdb->last_error;
 
