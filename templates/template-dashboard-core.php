@@ -86,6 +86,244 @@ function makeApiCall($endpoint, $type) {
     return json_decode( $response, true );
 }
 
+function topic_expert_badges(){
+    $user_visibility = wp_get_current_user();
+    $user_id = $user_visibility->ID;
+    $count = ['Expert' => 0 , 'Ondewerpen' => 0];
+    $libelle_badges = [
+        'Thank you ' . $user_visibility->display_name . ' so much for supporting our content creator !',
+        $user_visibility->display_name . ' Looks like you\'re enjoying to explore our various topics !',
+    ];
+    $trigger_badges = [
+        'Subscribe to 10 experts !',
+        'Subscribe to 10 categories !',
+    ];
+    $array_badges = array();
+    $topics_followed = get_user_meta($user_id, 'topic');
+    $experts_followed = get_user_meta($user_id, 'expert');
+    $count['Ondewerpen'] = (!empty($topics_followed)) ? count($topics_followed) : 0;
+    $count['Expert'] = (!empty($experts_followed)) ? count($experts_followed) : 0;
+
+    $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
+    $trigger_badge = null;
+    if($count['Expert'] >= 10){
+        $array_badge = array();
+        $array_badge['libelle'] = $libelle_badges[0];
+        $array_badge['image'] = $image_badge;
+        $array_badge['trigger'] = $trigger_badges[0];
+        $object_badge = (Object)$array_badge;
+        array_push($array_badges, $object_badge);
+    }
+    if($count['Ondewerpen'] >= 10){
+        $array_badge = array();
+        $array_badge['libelle'] = $libelle_badges[1];
+        $array_badge['image'] = $image_badge;
+        $array_badge['trigger'] = $trigger_badges[1];
+        $object_badge = (Object)$array_badge;
+        array_push($array_badges, $object_badge);
+    }
+
+    foreach($array_badges as $badge)
+        if($badge){
+            //Occurrence check
+            $args = array(
+                'post_type' => 'badge', 
+                'title' => $badge->libelle,
+                'post_status' => 'publish',
+                'author' => $user_id,
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_term_cache' => false,
+                'update_post_meta_cache' => false
+            );
+            $badges = get_posts($args);
+
+            if(empty($badges)){
+                $post_data = array(
+                    'post_title' => $badge->libelle,
+                    'post_author' => $user_id,
+                    'post_type' => 'badge',
+                    'post_status' => 'publish'
+                );
+                $badge_id = wp_insert_post($post_data);
+            }
+
+            if(isset($badge_id))
+                if($badge_id){
+                    update_field('image_badge', $badge->image, $badge_id);
+                    update_field('trigger_badge', $badge->trigger, $badge_id);
+                }
+        } 
+}
+
+function purchase_badges(){
+    $user = wp_get_current_user();
+    $user_id = $user->ID;
+    $count_enrolled = 0;
+
+    //Orders - enrolled courses  
+    $args = array(
+        'customer_id' => $user_id,
+        'post_status' => array('wc-processing', 'wc-completed'),
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'limit' => -1,
+    );
+    $bunch_orders = wc_get_orders($args);
+
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            //Get woo orders from user
+            if($item->get_product_id()){
+                $id_course = intval($item->get_product_id()) - 1;
+                $count_enrolled += 1;  
+                break;
+            }
+        }
+        if($count_enrolled)
+            break;
+    }
+
+    //Badges
+    $libelle_badges = [
+        'Congratulations ' . $user_visibility->display_name . ' on your first course purchase !',
+    ];
+    $trigger_badges = [
+        'Purchase your first course',
+    ];
+    $array_badges = array();
+
+    $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
+    $trigger_badge = null;
+    if($count_enrolled >= 1){
+        $array_badge = array();
+        $array_badge['libelle'] = $libelle_badges[0];
+        $array_badge['image'] = $image_badge;
+        $array_badge['trigger'] = $trigger_badges[0];
+        $object_badge = (Object)$array_badge;
+        array_push($array_badges, $object_badge);
+    }
+
+    foreach($array_badges as $badge)
+        if($badge){
+            //Occurrence check
+            $args = array(
+                'post_type' => 'badge', 
+                'title' => $badge->libelle,
+                'post_status' => 'publish',
+                'author' => $user_id,
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_term_cache' => false,
+                'update_post_meta_cache' => false
+            );
+            $badges = get_posts($args);
+
+            if(empty($badges)){
+                $post_data = array(
+                    'post_title' => $badge->libelle,
+                    'post_author' => $user_id,
+                    'post_type' => 'badge',
+                    'post_status' => 'publish'
+                );
+                $badge_id = wp_insert_post($post_data);
+            }
+
+            if(isset($badge_id))
+                if($badge_id){
+                    update_field('image_badge', $badge->image, $badge_id);
+                    update_field('trigger_badge', $badge->trigger, $badge_id);
+                }
+        } 
+
+}
+purchase_badges();
+
+function community_badges(){
+    $user_visibility = wp_get_current_user();
+    $user_id = $user_visibility->ID;
+    $count_communities = 0;
+    $libelle_badges = [
+        'Communities for the best !',
+    ];
+    $trigger_badges = [
+        'You joined 3 communities',
+    ];
+    $array_badges = array();
+
+    $args = array(
+        'post_type' => 'community',
+        'post_status' => 'publish',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    
+    $communities = get_posts($args);
+    foreach($communities as $key => $value){
+
+        if(!$value)
+            continue;
+
+        //Followers
+        $max_follower = 0;
+        $followers = get_field('follower_community', $value->ID);
+        if(!empty($followers))
+            $max_follower = count($followers);
+        $bool = false;
+        foreach ($followers as $key => $item)
+            if($item->ID == $user_id){
+                $bool = true;
+                $count_communities +=1;
+            }
+    }
+
+    $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
+    $trigger_badge = null;
+    if($count_communities >= 3){
+        $array_badge = array();
+        $array_badge['libelle'] = $libelle_badges[0];
+        $array_badge['image'] = $image_badge;
+        $array_badge['trigger'] = $trigger_badges[0];
+        $object_badge = (Object)$array_badge;
+        array_push($array_badges, $object_badge);
+    }
+
+    foreach($array_badges as $badge)
+        if($badge){
+            //Occurrence check
+            $args = array(
+                'post_type' => 'badge', 
+                'title' => $badge->libelle,
+                'post_status' => 'publish',
+                'author' => $user_id,
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_term_cache' => false,
+                'update_post_meta_cache' => false
+            );
+            $badges = get_posts($args);
+
+            if(empty($badges)){
+                $post_data = array(
+                    'post_title' => $badge->libelle,
+                    'post_author' => $user_id,
+                    'post_type' => 'badge',
+                    'post_status' => 'publish'
+                );
+                $badge_id = wp_insert_post($post_data);
+            }
+
+            if(isset($badge_id))
+                if($badge_id){
+                    update_field('image_badge', $badge->image, $badge_id);
+                    update_field('trigger_badge', $badge->trigger, $badge_id);
+                }
+        } 
+}
+
 if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
     if(!empty($bunch)){
@@ -382,13 +620,15 @@ else if(isset($interest_push)){
                 wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
             }
             add_user_meta($user_id, $meta_key, $meta_value);
+            // Badges
+            topic_expert_badges();
             if(isset($artikel)){
                 $path = get_permalink($artikel) . "/?message=Succesvol followed";
-                header("location: " .$path);
+                header("location: " . $path);
             }
             else{
                 $message = "Succesvol toegevoegd";
-                header("location: ../../dashboard/user/?message=".$message);
+                header("location: ../../dashboard/user/?message=" . $message);
             }
             
         }else{
@@ -1039,6 +1279,9 @@ else if(isset($follow_community)){
     array_push($followers, $user);
 
     update_field('follower_community', $followers, $community_id);
+
+    //Badges
+    community_badges();
 
     $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
     header("Location: ". $path);

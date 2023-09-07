@@ -1888,21 +1888,27 @@ function save_user_views(WP_REST_Request $request)
     /** Badges **/
     $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id");
     $occurences = $wpdb->get_results( $sql );
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $user_id . " AND data_type = 'topic' AND occurence >= 10 GROUP BY data_id ORDER BY occurence DESC");
+    $topic_views = $wpdb->get_results($sql);
+    $best_topic_views = intval($topic_views[0]->occurence);
+
     $count = array('Opleidingen' => 0, 'Workshop' => 0, 'E-learning' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0, 'Podcast' => 0);
     $libelle_badges = [
         'Congratulations ' . $user_visibility->display_name . ', you\'ve just read your first article !',
         'Well done ' . $user_visibility->display_name . ' you become expert in article',
         'Good job ' . $user_visibility->display_name . ', video expert apprentice !',
         'Well done ' . $user_visibility->display_name . ' you become expert in video',
-        $user_visibility->display_name . ', you\'re really a podcast enthusiast !' 
+        $user_visibility->display_name . ', you\'re really a podcast enthusiast !',
+        $user_visibility->display_name . ', you\'re really determined to learn !'
     ];
     $trigger_badges = [
         'Read my first article !',
         'Read 50 articles !',
         'Read 10 videos !',
         'Read 50 videos !' ,
-        'Read 30 podcasts !' 
-    ];
+        'Read 7 podcasts !' ,
+        'View the same topic more than 10 times'
+];
     $array_badges = array();
 
     foreach ($occurences as $occurence) {
@@ -1951,6 +1957,14 @@ function save_user_views(WP_REST_Request $request)
         $array_badge['trigger'] = $trigger_badges[4];
         $object_badge = (Object)$array_badge;
         array_push($array_badges, $object_badge);
+    }
+    if($best_topic_views >= 10){
+      $array_badge = array();
+      $array_badge['libelle'] = $libelle_badges[5];
+      $array_badge['image'] = $image_badge;
+      $array_badge['trigger'] = $trigger_badges[5];
+      $object_badge = (Object)$array_badge;
+      array_push($array_badges, $object_badge);
     }
 
     foreach($array_badges as $badge)
@@ -2014,9 +2028,7 @@ function save_user_views(WP_REST_Request $request)
     return $wpdb->insert_id;
 }
 
-/**
- * Badge Endpoints
- */
+/* Badge Endpoints */
 
  function get_user_badges()
  {
