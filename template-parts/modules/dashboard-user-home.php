@@ -1845,11 +1845,11 @@ if(isset($_GET['message']))
 
             if(empty($communities))
                 echo "<div class='upcoming-group'>
-                      <div class='element-upcoming-block'>
-                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
-                          <p>Join je eerste community</p>
-                      </div>
-                  </div>";
+                        <div class='element-upcoming-block'>
+                            <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
+                            <p>Join je eerste community</p>
+                        </div>
+                     </div>";
             ?>
         </div>
         <div class="user-expert-block">

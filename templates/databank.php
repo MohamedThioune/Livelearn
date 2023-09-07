@@ -13,17 +13,18 @@ if(isset($_GET['id']))
     $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
-    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d ", array($pagination, $offset));
+    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
     $courses = $wpdb->get_results( $sql );
 
-    $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank");
+    $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
     $count = $wpdb->get_results( $sql_count );
     $count = $count[0]->{'COUNT(*)'};
 
 if( $count % $pagination == 0)
-    $pagination_number = $count/$pagination;
+    $pagination_number = $count / $pagination;
 else
-    $pagination_number = intval($count/$pagination) + 1;
+    $pagination_number = intval($count / $pagination) + 1;
+
 
 $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
@@ -304,6 +305,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     </table>  
                     <center>
                     <?php
+
                         foreach (range(1, $pagination_number) as $number){
                             if(isset($_GET['id']))
                                 if($_GET['id'] == $number)
