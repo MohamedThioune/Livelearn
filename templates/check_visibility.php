@@ -43,7 +43,7 @@
         $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
         $data_name = "";
         if(!$user_id)
-            return;
+            return 0;
         $occurence = 1;
 
         //Add by MaxBird - get name entity
@@ -99,8 +99,8 @@
         ];
         $array_badges = array();
 
-        foreach ($occurences as $occurence) {
-            $course_type = get_field('course_type', $occurence->data_id);
+        foreach ($occurences as $value) {
+            $course_type = get_field('course_type', $value->data_id);
             $count[$course_type]++;
         }
 
