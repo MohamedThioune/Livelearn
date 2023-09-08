@@ -61,7 +61,7 @@
             $data_name = (String)get_the_category_by_ID($corse_id);
             
         //testing wheither data_id exist ?
-        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $corse_id");
+        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $corse_id AND user_id = $user_id");
         $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
         $id_tracker_founded = $wpdb->get_results( $sql)[0]->id;
         if($type == 'course'){
