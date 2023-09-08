@@ -345,10 +345,10 @@ function xmlParse()
     $users = get_users();
 
     $website_urls = [
-        "2xplain-b.v-20221018.0222.xml",
+        // "2xplain-b.v-20221018.0222.xml",
         // "agile-scrum-group-20221021.1902.xml",
         // "anker-kompas-20221021.1902.xml",
-        // "aeres-tech-20221018.0223.xml",
+        "aeres-tech-20221018.0223.xml",
         // "academie-voor-arbeidsmarktcommunicatie-b.v-20221018.0223.xml",
 
     ];
