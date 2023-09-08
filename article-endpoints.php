@@ -357,11 +357,11 @@ function xmlParse()
     echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
 
     foreach ($website_urls as $website) {
-        var_dump($website);
-        // //Get the URL content
-        // $file = get_stylesheet_directory_uri() . "/" . $website;
-        // $xml = simplexml_load_file($file);
-        // $data_xml = $xml->program;
+        //Get the URL content
+        $file = get_stylesheet_directory_uri() . "/" . $website;
+        $xml = simplexml_load_file($file);
+        $data_xml = $xml->program;
+        var_dump($data_xml);
 
         // $author_id = null;
 
