@@ -74,7 +74,7 @@
             $data_name = (String)get_the_category_by_ID($corse_id);
 
         /** Badges **/
-        $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id");
+        $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id AND data_type = course");
         $occurences = $wpdb->get_results( $sql );
         $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $user_id . " AND data_type = 'topic' AND occurence >= 10 GROUP BY data_id ORDER BY occurence DESC");
         $topic_views = $wpdb->get_results($sql);
