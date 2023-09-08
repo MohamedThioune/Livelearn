@@ -363,8 +363,8 @@ function xmlParse()
         $data_xml = $xml->program;
         // var_dump($data_xml);
 
-        if(!$data_xml)
-            continue;
+        // if(!$data_xml)
+        //     continue;
 
         $author_id = null;
 
@@ -373,9 +373,9 @@ function xmlParse()
         //Retrieve courses
         // $i = 0;
         foreach ($data_xml as $key => $datum) {
-            // $i++;
-            // if($i == 2)
-            //   break;
+            $i++;
+            if($i == 2)
+              break;
 
             $status = 'extern';
             $course_type = "Opleidingen";
