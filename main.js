@@ -220,6 +220,17 @@ jQuery(function($) {
         $("#AllFeddback").addClass("active");
     });
 
+    //for close notification
+
+    var buttonInsideModal = $(".buttonInsideModal");
+
+    var modal = $("#ModalNotification");
+    buttonInsideModal.click(function(event) {
+        event.stopPropagation();
+    });
+
+    modal.click(function() {
+    });
 
 
 
