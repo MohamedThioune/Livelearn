@@ -92,7 +92,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
             <li class="nav-five "><a href="#Statistieken">Statistieken</a></li>
             <li class="nav-seven "><a href="#Interne-groei">Interne groei</a></li>
             <li class="nav-eight last"><a href="#Externe-groei">Externe groei</a></li>
-            <li class="nav-eight last"><a href="#Feedback">Feedback</a></li>
+            <li class="nav-eight nav-feedback"><a href="#Feedback">Feedback</a></li>
         </ul>
 
         <div class="list-wrap">
@@ -262,7 +262,6 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                     <button class="btn btn-add-to-do" type="button" data-toggle="modal" data-target="#to-do-Modal">Add to do</button>
 
                     <!-- Modal Add to do -->
-
                     <div class="modal fade new-modal-to-do" id="to-do-Modal" tabindex="-1" role="dialog" aria-labelledby="to-do-ModalModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -496,6 +495,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="body-content-to-do">
 
@@ -521,7 +521,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                             </button>
                         </div>
 
-                        <div id="All" class="b-tab active contentBlockSetting">
+                        <div id="All" class="b-tab active contentBlockSetting -">
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -1614,7 +1614,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="MandatoryModalLabel">To do</h5>
+                                    <h5 class="modal-title" id="MandatoryModalLabel">Add achievement</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -1672,15 +1672,15 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                                 <label for="">Hoe is deze badge behaald?</label>
                                                 <textarea class="message-area" name="" id="" rows="3"></textarea>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group mt-4">
                                                 <label for="">Upload de batch</label>
-                                                <div>
-                                                    <div x-data="imageData()" class="file-input flex items-center">
+                                                <div class="upload-batch-group">
+                                                    <div x-data="imageData()" class="file-input d-flex items-center">
                                                         <!-- Preview Image -->
                                                         <div class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
                                                             <!-- Placeholder image -->
                                                             <div x-show="!previewPhoto" class="preview-badge">
-                                                                <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/default-badge.jpg" alt="">
                                                             </div>
                                                             <!-- Show a preview of the photo -->
                                                             <div x-show="previewPhoto" class="preview-badge">
@@ -1690,21 +1690,20 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                                             </div>
                                                         </div>
 
-                                                        <div class="flex items-center">
+                                                        <div class="group-text-upload">
                                                             <!-- File Input -->
-                                                            <div class="ml-5 rounded-md shadow-sm">
+                                                            <div class="input-upload-btnGroup">
                                                                 <!-- Replace the file input styles with our own via the label -->
                                                                 <input @change="updatePreview($refs)" x-ref="input"
                                                                        type="file"
                                                                        accept="image/*,capture=camera"
                                                                        name="photo" id="photo"
                                                                        class="custom">
-                                                                <label for="photo"
-                                                                       class="py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-indigo-500 hover:border-indigo-300 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-800 transition duration-150 ease-in-out">
-                                                                    Upload Photo
+                                                                <label for="photo">
+                                                                    Sleep en zet neer of klik om een afbeelding te uploaden <span>PNG OF SVG to 5MB</span>
                                                                 </label>
                                                             </div>
-                                                            <div class="flex items-center text-sm text-gray-500 mx-2">
+                                                            <div class="">
                                                                 <!-- Display the file name when available -->
                                                                 <span x-text="fileName || emptyText"></span>
                                                                 <!-- Removes the selected file -->
@@ -1717,41 +1716,32 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                                                          aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
                                                                 </button>
                                                             </div>
-
                                                         </div>
 
                                                     </div>
                                                 </div>
-
                                             </div>
-
-                                            <div class="form-group" id="">
-                                                <label class="sub-label">Selecteer bestaande intern of extern kennisproduct óf creëer een nieuwe</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Select</option>
-                                                    <option value="internal">Internal course</option>
-                                                    <option value="external">External course</option>
-                                                    <option value="external">Create a new one</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group" id="">
-                                                <label class="sub-label">Selecteer product (for</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Select</option>
-                                                    <option value="">A</option>
-                                                    <option value="">B</option>
-                                                    <option value="">C</option>
-                                                </select>
+                                            <div class="form-group d-flex checkbokElement">
+                                                <input type="checkbox" id="Deze-badge" name="Deze-badge" value="Anoniem versturen?">
+                                                <label class="sub-label-check" for="Anoniem-versturen?">Deze badge vervalt niet</label>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="dateDone">Te doen voor welke datum?</label>
-                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Voor welke datum?</label>
+                                                        <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    </div>
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Voor welke datum?</label>
+                                                        <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="">Geldig tot?</label>
-                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                            <div class="form-group mb-2">
+                                                <label for="">Over welke competenties?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
                                             </div>
 
                                             <div class="form-group">
@@ -1767,7 +1757,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                         <div class="head-detail-form">
                                             <button class="btn btn-back-frist-element">
                                                 <i class="fa fa-angle-left"></i>
-                                                <span>Persoonlijk ontwikkelplan</span>
+                                                <span>Certificaat</span>
                                             </button>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -1775,24 +1765,39 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                         </div>
                                         <form method="post" class="form-to-do" action="">
                                             <div class="form-group">
-                                                <label for="maneMandatory">Titel van ontwikkelplan</label>
+                                                <label for="">Titel van het certificaat</label>
                                                 <input type="text" class="form-control" id="" name="" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="">Waarover een ontwikkelplan maken?</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <label for="">Uitgegeven door?</label>
+                                                <input type="text" class="form-control" id="" name="" required>
                                             </div>
-                                            <div class="form-group" id="">
-                                                <label class="sub-label">Voor welke datum?</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Select</option>
-                                                    <option value="internal">Internal course</option>
-                                                    <option value="external">External course</option>
-                                                    <option value="external">Create a new one</option>
-                                                </select>
+                                            <div class="form-group">
+                                                <label for="">URL aanbieder</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Certificaatnummer, indien van toepassing</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group d-flex checkbokElement">
+                                                <input type="checkbox" id="" name="" value="">
+                                                <label class="sub-label-check" for="">Dit certificaat vervalt niet</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Voor welke datum?</label>
+                                                        <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    </div>
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Voor welke datum?</label>
+                                                        <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group mb-2">
                                                 <label for="">Over welke competenties?</label>
                                                 <textarea class="message-area" name="" id="" rows="5"></textarea>
                                             </div>
@@ -1809,7 +1814,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                         <div class="head-detail-form">
                                             <button class="btn btn-back-frist-element">
                                                 <i class="fa fa-angle-left"></i>
-                                                <span> Leer een onderwerp</span>
+                                                <span>Prestatie</span>
                                             </button>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -1817,28 +1822,29 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                         </div>
                                         <form method="post" class="form-to-do" action="">
                                             <div class="form-group">
-                                                <label for="maneMandatory">Titel van de to do</label>
+                                                <label for="">Titel van de prestatie</label>
                                                 <input type="text" class="form-control" id="" name="" required>
                                             </div>
-                                            <div class="form-group" id="">
-                                                <label class="sub-label">Selecteer het onderwerp (sub-topic)</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Type topic …</option>
-                                                    <option value="">A</option>
-                                                    <option value="">B</option>
-                                                    <option value="">C</option>
-                                                </select>
+                                            <div class="form-group">
+                                                <label for="">Beschrijf de prestatie</label>
+                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
                                             </div>
-                                            <div class="form-group" id="">
-                                                <label class="sub-label">Select hours to learn</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Type topic …</option>
-                                                    <option value="">A</option>
-                                                    <option value="">B</option>
-                                                    <option value="">C</option>
-                                                </select>
+                                            <div class="form-group">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Uren</label>
+                                                        <input placeholder="Getal" type="text" class="form-control" id="" name="" required>
+                                                    </div>
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Punten</label>
+                                                        <input placeholder="Getal" type="text" class="form-control" id="" name="" required>
+                                                    </div>
+                                                </div>
                                             </div>
-
+                                            <div class="form-group mb-2">
+                                                <label for="">Over welke competenties?</label>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="">Nog op- en of aanmerkingen?</label>
                                                 <textarea class="message-area" name="" id="" rows="5"></textarea>
@@ -1860,30 +1866,54 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                         </div>
                                         <form method="post" class="form-to-do" action="">
                                             <div class="form-group">
-                                                <label for="maneMandatory">Titel van te geven feedback</label>
+                                                <label for="">Diploma</label>
                                                 <input type="text" class="form-control" id="" name="" required>
                                             </div>
-                                            <div class="form-group formModifeChoose">
-                                                <label class="sub-label">Selecteer de collega(s)</label>
-                                                <select id="" name=""  class="multipleSelect2" multiple="true" required>
-                                                    <option value="">A</option>
-                                                    <option value="">C</option>
-                                                    <option value="">D</option>
-                                                </select>
+                                            <div class="form-group">
+                                                <label for="">Titel van het diploma</label>
+                                                <input type="text" class="form-control" id="" name="" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="dateDone">Voor welke datum?</label>
-                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                <label for="">Uitgegeven door universiteit of hogeschool</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">URL aanbieder</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Land</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Niveau</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Startdatum</label>
+                                                        <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    </div>
+                                                    <div class="w-48">
+                                                        <label for="dateDone">Einddatum</label>
+                                                        <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="form-group">
+                                                <label for="">Aantal punten</label>
+                                                <input type="text" class="form-control" id="" name="" required>
+                                            </div>
+
+                                            <div class="form-group mb-2">
                                                 <label for="">Over welke competenties?</label>
-                                                <textarea class="message-area" placeholder="Type topics …" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="">Nog op- en of aanmerkingen?</label>
-                                                <textarea class="message-area" placeholder="" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
                                             </div>
 
                                             <button class="btn btn-submi-form-to-do">Stuur</button>
@@ -1901,7 +1931,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                     <div class="content-tab">
                         <div class="content-button-tabs">
                             <button  data-tab="Badges" class="b-nav-tab btn active">
-                                Badges<span class="number-content">0</span>
+                                Badges<span class="number-content">10</span>
                             </button>
                             <button  data-tab="Certificates" class="b-nav-tab btn">
                                 Certificates <span class="number-content">0</span>
@@ -1915,9 +1945,52 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                         </div>
 
                         <div id="Badges" class="b-tab active contentBlockSetting">
-                            <div class="block-empty-content">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                            <div class="block-with-content-badge d-flex flex-wrap">
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
+                                    </div>
+                                    <p class="title-badge">Badge Profil</p>
+                                    <p class="statut-text">Your profil is complete at 100%</p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge">Unlocked</p>
+                                </div>
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-advance.png" alt="">
+                                    </div>
+                                    <p class="title-badge">Badge Profil</p>
+                                    <p class="statut-text">Your profil is complete at 100%</p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge">Unlocked</p>
+                                </div>
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-pro.png" alt="">
+                                    </div>
+                                    <p class="title-badge">Badge Profil</p>
+                                    <p class="statut-text">Your profil is complete at 100%</p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge">Unlocked</p>
+                                </div>
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-expert.png" alt="">
+                                    </div>
+                                    <p class="title-badge">Badge Profil</p>
+                                    <p class="statut-text">Your profil is complete at 100%</p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge">Unlocked</p>
+                                </div>
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
+                                    </div>
+                                    <p class="title-badge">Badge Profil</p>
+                                    <p class="statut-text">Your profil is complete at 100%</p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge">Unlocked</p>
+                                </div>
                             </div>
                         </div>
 
@@ -2353,7 +2426,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                             </div>
                         </div>
                     </div>
-                  <div class="row">
+                   <div class="row">
                       <div class="col-md-8">
                           <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
                               <div class="head-card d-flex justify-content-between align-items-center">
@@ -2442,6 +2515,53 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                                       <div>
                                           <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                       </div>
+                                  </div>
+                              </div>
+                              <div class="block-with-content-badge d-flex flex-wrap">
+                                  <div class="card-badge">
+                                      <div class="img-card-badge">
+                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
+                                      </div>
+                                      <p class="title-badge">Badge Profil</p>
+                                      <p class="statut-text">Your profil is complete at 100%</p>
+                                      <div class="bar-badge"></div>
+                                      <p class="statut-badge">Unlocked</p>
+                                  </div>
+                                  <div class="card-badge">
+                                      <div class="img-card-badge">
+                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-advance.png" alt="">
+                                      </div>
+                                      <p class="title-badge">Badge Profil</p>
+                                      <p class="statut-text">Your profil is complete at 100%</p>
+                                      <div class="bar-badge"></div>
+                                      <p class="statut-badge">Unlocked</p>
+                                  </div>
+                                  <div class="card-badge">
+                                      <div class="img-card-badge">
+                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-pro.png" alt="">
+                                      </div>
+                                      <p class="title-badge">Badge Profil</p>
+                                      <p class="statut-text">Your profil is complete at 100%</p>
+                                      <div class="bar-badge"></div>
+                                      <p class="statut-badge">Unlocked</p>
+                                  </div>
+                                  <div class="card-badge">
+                                      <div class="img-card-badge">
+                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-expert.png" alt="">
+                                      </div>
+                                      <p class="title-badge">Badge Profil</p>
+                                      <p class="statut-text">Your profil is complete at 100%</p>
+                                      <div class="bar-badge"></div>
+                                      <p class="statut-badge">Unlocked</p>
+                                  </div>
+                                  <div class="card-badge">
+                                      <div class="img-card-badge">
+                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
+                                      </div>
+                                      <p class="title-badge">Badge Profil</p>
+                                      <p class="statut-text">Your profil is complete at 100%</p>
+                                      <div class="bar-badge"></div>
+                                      <p class="statut-badge">Unlocked</p>
                                   </div>
                               </div>
                               <div class="block-empty-badge">
@@ -2889,7 +3009,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                             <button  data-tab="AllFeddback" class="b-nav-tab btn active">
                                 All <span class="number-content">14</span>
                             </button>
-                            <button  data-tab="Feedback" class="b-nav-tab btn">
+                            <button  data-tab="FeddbackSecond" class="b-nav-tab btn">
                                 Feedback <span class="number-content">2</span>
                             </button>
                             <button  data-tab="Ontwikkelplan" class="b-nav-tab btn">
@@ -3025,7 +3145,8 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                             </table>
                         </div>
 
-                        <div id="Feedback" class="b-tab contentBlockSetting">
+
+                        <div id="FeddbackSecond" class="b-tab contentBlockSetting">
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -4626,4 +4747,17 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
             }
         };
     }
+</script>
+<script>
+    $(document).ready(function () {
+        function showandhideblockModal() {
+            $('.content-block-bg').show();
+            $(".modal-header").show();
+            $('.detail-content-modal').hide();
+        }
+
+        $('.new-modal-to-do').on('hidden.bs.modal', function () {
+            showandhideblockModal();
+        });
+    });
 </script>
