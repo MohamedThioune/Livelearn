@@ -6526,6 +6526,7 @@ td .blockCardCoursRoad .descriptionTextRoad {
     padding: 8px 20px;
     position: relative;
     margin-bottom: 20px;
+    width: 100% !important;
 }
 
 .btnNext:hover {
@@ -21499,6 +21500,20 @@ background: #FFFFFF !important;
 }
 .dropdownNotificationWeb .content-tab .contentBlockSetting {
     border: none;
+}
+.content-new-user .grid .loader-course{
+    width: 48%;
+    margin-bottom: 25px;
+}
+.content-new-user .grid .new-card-course {
+    width: 100%;
+    display: block;
+    margin-bottom: 0;
+    height: 100%;
+}
+.content-new-user .list .loader-course{
+    display: block;
+    width: 100%;
 }
 
 /*responsive mobile*/
