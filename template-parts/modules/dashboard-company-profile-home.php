@@ -65,6 +65,13 @@ if(!empty($topics_internal))
 //Note
 $skills_note = get_field('skills', 'user_' . $user->ID);
 
+//Is a manager + company + phone + bio
+$manageds = get_field('managed',  'user_' . $id_user);
+$is_a_manager = (!empty($manageds)) ? 'Manager' : 'Employee';
+$display_company = (!empty($company)) ? $company->post_title : 'No company';
+$phone = (!empty($phone)) ? $phone : '(xx) xxx xxx xx';
+$biographical_info = (!empty($biographical_info)) ? $biographical_info : "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
+Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
 ?>
 <!-- Latest BS-Select compiled and minified CSS/JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
@@ -76,9 +83,9 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
             <img src="<?php echo $image;?>" alt="">
         </div>
         <div class="other-general-info">
-            <p class="name">Mobina Mirbagheri</p>
-            <p class="professionCandidat">Manager</p>
-            <p class="company">Company : <span>Livelearn Team</span></p>
+            <p class="name"><?php echo $user->display_name; ?></p>
+            <p class="professionCandidat"><?= $is_a_manager ?></p>
+            <p class="company">Company : <span> <?= $display_company ?></span></p>
         </div>
     </div>
 
@@ -87,7 +94,7 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
         <ul class="nav">
             <li class="nav-one"><a href="#Over" class="current">Over</a></li>
             <li class="nav-two"><a href="#Skills">Skills</a></li>
-            <li class="nav-three"><a href="#Verplichte-training">To Do’s</a></li>
+            <li class="nav-three"><a href="#Verplichte-training">To Do's</a></li>
             <li class="nav-four "><a href="#Certificaten">Certificaten</a></li>
             <li class="nav-five "><a href="#Statistieken">Statistieken</a></li>
             <li class="nav-seven "><a href="#Interne-groei">Interne groei</a></li>
@@ -103,84 +110,97 @@ $skills_note = get_field('skills', 'user_' . $user->ID);
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_about.svg" alt="">
                         <h2>ABOUT</h2>
                     </div>
-                    <p class="text-about-profil">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo con.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatu.
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id es nisi ut
-                        aliquip ex ea commodo con. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                        nulla pariatu.
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id es</p>
+                    <p class="text-about-profil">
+                        <?= $biographical_info ?>
+                    </p>
                     <div class="d-flex group-other-info flex-wrap">
                         <div class="d-flex element-content-other-info">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_baseline-phone.svg" alt="">
-                            <p>(123)33 123 234</p>
+                            <p><?= $phone ?></p>
                         </div>
                         <div class="d-flex element-content-other-info">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_baseline-email.svg" alt="">
-                            <p>user@email.domain</p>
+                            <p><?= $user->user_email ?></p>
                         </div>
                         <div class="d-flex element-content-other-info">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/bxs_map.svg" alt="">
-                            <p>50 rue Rambuteau à Paris 3e – 6 salles</p>
+                            <p><?= $country ?></p>
                         </div>
                     </div>
                 </div>
 
+                <?php
+                if($experiences): 
+                ?>
                 <div class="element-over">
                     <div class="sub-head-over d-flex align-items-center">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_outline-work.svg" alt="">
                         <h2>EXPERIENCE</h2>
                     </div>
+                    <?php
+                    foreach($experiences as $value):
+                    $value = explode(";", $value);
+                    if(isset($value[2]))
+                        $year = explode("-", $value[2])[0];
+                    if(isset($value[3]))
+                        if(intval($value[2]) != intval($value[3]))
+                            $year = $year . "-" .  explode("-", $value[3])[0];
+                    ?>
                     <div class="one-experience d-flex align-items-center">
                         <div class="">
-                            <p class="name-company">Apple</p>
-                            <p class="profession">Software developer engineer</p>
+                            <p class="name-company"><?= $value[1]; ?></p>
+                            <p class="profession"><?= $value[0]; ?></p>
                         </div>
-                        <p class="date">2020-2021</p>
+                        <?php 
+                        if($year):
+                        ?>
+                            <p class="date"><?php echo $year; ?></p>
+                        <?php 
+                        endif;
+                        ?>
                     </div>
-                    <div class="one-experience d-flex align-items-center">
-                        <div class="">
-                            <p class="name-company">Apple</p>
-                            <p class="profession">Software developer engineer</p>
-                        </div>
-                        <p class="date">2020-2021</p>
-                    </div>
-                    <div class="one-experience d-flex align-items-center">
-                        <div class="">
-                            <p class="name-company">Apple</p>
-                            <p class="profession">Software developer engineer</p>
-                        </div>
-                        <p class="date">2020-2021</p>
-                    </div>
+                    <?php
+                    endforeach;
+                    ?>
                 </div>
+                <?php
+                endif;
+                ?>
 
+
+                <?php
+                if($educations): 
+                ?>
                 <div class="element-over element-over-education">
                     <div class="sub-head-over d-flex align-items-center">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/zondicons_education.svg" alt="">
                         <h2>EDUCATION</h2>
                     </div>
+                    <?php
+                    foreach($educations as $value):
+                        $value = explode(";", $value);
+                        if(isset($value[2]))
+                            $year = explode("-", $value[2])[0];
+                        if(isset($value[3]))
+                            if(intval($value[2]) != intval($value[3]))
+                                $year = $year . "-" .  explode("-", $value[3])[0];
+                    ?>
                     <div class="one-experience d-flex align-items-center">
                         <div class="">
-                            <p class="name-company">Apple</p>
-                            <p class="profession">Software developer engineer</p>
+                            <p class="name-company"><?php echo $value[0]; ?></p>
+                            <p class="profession"><?= $value[1]; ?></p>
                         </div>
-                        <p class="date">2020-2021</p>
+                        <?php if($year) { ?>
+                            <p class="dateCourCandidat"><?php echo $year; ?></p>
+                        <?php } ?>                    
                     </div>
-                    <div class="one-experience d-flex align-items-center">
-                        <div class="">
-                            <p class="name-company">Apple</p>
-                            <p class="profession">Software developer engineer</p>
-                        </div>
-                        <p class="date">2020-2021</p>
-                    </div>
-                    <div class="one-experience d-flex align-items-center">
-                        <div class="">
-                            <p class="name-company">Apple</p>
-                            <p class="profession">Software developer engineer</p>
-                        </div>
-                        <p class="date">2020-2021</p>
-                    </div>
+                    <?php
+                    endforeach;
+                    ?>
                 </div>
+                <?php
+                endif;
+                ?>
 
                 <div class="element-over">
                     <div class="sub-head-over d-flex align-items-center">
