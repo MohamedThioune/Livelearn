@@ -46,6 +46,7 @@ class Course
   public $for_who;
   public $data_locaties;
   public $links;
+
   function __construct($course) {
      $this->id = $course->ID;
      $this->date = $course->post_date;
@@ -100,8 +101,51 @@ class Badge
   }
 }
 
-/** **************** Api Custom Endpoints **************** */
+//Push notifications
+function sendPushNotification($title, $body) {
+  $current_user = wp_get_current_user();
+  $token = get_field('smartphone_token',  'user_' . $current_user->ID);
+  if(!$token)
+      return 0;
 
+  $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
+  $data = [
+      'to' => $token,
+      'notification' => [
+          'title' => $title,
+          'body' => $body,
+      ],
+  ];
+
+  $dataString = json_encode($data);
+
+  $headers = [
+      'Authorization: ' . $serverKey,
+      'Content-Type: application/json',
+  ];
+
+  $url = 'https://fcm.googleapis.com/fcm/send';
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+  $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+
+  var_dump($httpCode);
+
+  $response = curl_exec($ch);
+
+  curl_close($ch);
+
+  return $response;
+}
+
+/** **************** Api Custom Endpoints **************** */
 
 /**
  * Expert Endpoints
@@ -1886,7 +1930,7 @@ function save_user_views(WP_REST_Request $request)
         $data_name = (String)get_the_category_by_ID($data_id);
 
     /** Badges **/
-    $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id AND data_type = course");
+    $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id");
     $occurences = $wpdb->get_results( $sql );
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $user_id . " AND data_type = 'topic' AND occurence >= 10 GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
@@ -1991,6 +2035,11 @@ function save_user_views(WP_REST_Request $request)
                 'post_status' => 'publish'
             );
             $badge_id = wp_insert_post($post_data);
+
+            //Push notifications
+            $title = $badge->libelle;
+            $body = $badge->trigger;
+            sendPushNotification($title, $body);
         }
 
         if(isset($badge_id))
