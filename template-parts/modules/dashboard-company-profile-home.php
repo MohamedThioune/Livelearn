@@ -187,11 +187,11 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                     ?>
                     <div class="one-experience d-flex align-items-center">
                         <div class="">
-                            <p class="name-company"><?php echo $value[0]; ?></p>
+                            <p class="name-company"><?= $value[0]; ?></p>
                             <p class="profession"><?= $value[1]; ?></p>
                         </div>
                         <?php if($year) { ?>
-                            <p class="dateCourCandidat"><?php echo $year; ?></p>
+                            <p class="dateCourCandidat"><?= $year; ?></p>
                         <?php } ?>                    
                     </div>
                     <?php
@@ -201,37 +201,31 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                 <?php
                 endif;
                 ?>
-
+                 
+                <?php
+                if($portfolios):
+                ?>
                 <div class="element-over">
                     <div class="sub-head-over d-flex align-items-center">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_portfolio.svg" alt="">
                         <h2>PORTFOLIO</h2>
                     </div>
+                    <?php
+                      foreach($portfolios as $value):
+                        $value = explode(";", $value);  
+                    ?>
                     <div class="one-portfolio">
-                        <p class="name-portfolio">Projet Alakham</p>
-                        <p class="description-portfolio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo con.
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatu.
-                            Excepteur sint occaecat cupidatat non proident, sunt in</p>
-                        <p class="link-portfolio">Link : <span>www.alkham.com</span></p>
+                        <p class="name-portfolio"><?= $value[0]; ?></p>
+                        <p class="description-portfolio"><?= $value[1]; ?></p>
+                        <!-- <p class="link-portfolio">Link : <span>www.alkham.com</span></p> -->
                     </div>
-                    <div class="one-portfolio">
-                        <p class="name-portfolio">Projet Alakham</p>
-                        <p class="description-portfolio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo con.
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatu.
-                            Excepteur sint occaecat cupidatat non proident, sunt in</p>
-                        <p class="link-portfolio">Link : <span>www.alkham.com</span></p>
-                    </div>
-                    <div class="one-portfolio">
-                        <p class="name-portfolio">Projet Alakham</p>
-                        <p class="description-portfolio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo con.
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatu.
-                            Excepteur sint occaecat cupidatat non proident, sunt in</p>
-                        <p class="link-portfolio">Link : <span>www.alkham.com</span></p>
-                    </div>
+                    <?php
+                    endforeach;
+                    ?>
                 </div>
+                <?php
+                endif;
+                ?>
             </ul>
 
             <ul id="Skills" class="hide">
