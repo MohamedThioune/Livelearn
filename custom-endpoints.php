@@ -102,7 +102,7 @@ class Badge
 }
 
 //Push notifications
-function sendPushNotification($title, $body) {
+function sendPushNotificationN($title, $body) {
   $current_user = wp_get_current_user();
   $token = get_field('smartphone_token',  'user_' . $current_user->ID);
   if(!$token)
@@ -2039,7 +2039,7 @@ function save_user_views(WP_REST_Request $request)
             //Push notifications
             $title = $badge->libelle;
             $body = $badge->trigger;
-            sendPushNotification($title, $body);
+            sendPushNotificationN($title, $body);
         }
 
         if(isset($badge_id))
