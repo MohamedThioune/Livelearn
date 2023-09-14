@@ -5557,11 +5557,13 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 #ModalNotification {
-    widht: 200px;
     position: absolute;
     top: 44px;
-    left: -155px;
+    left: unset;
     height: auto;
+    right: -135px;
+    width: fit-content;
+    min-width: 580px;
 }
 
 #ModalNotification h5 {
@@ -6524,6 +6526,7 @@ td .blockCardCoursRoad .descriptionTextRoad {
     padding: 8px 20px;
     position: relative;
     margin-bottom: 20px;
+    width: 100% !important;
 }
 
 .btnNext:hover {
@@ -7648,16 +7651,14 @@ tbody {
 }
 
 .dropdown-menu .BekijkNotifications {
-    margin-top: 20px;
-    padding: 8px 15px;
-    border-radius: 7px;
-    background: #043356 !important;
+    padding: 13px 15px;
+    border-radius: 20px;
+    background: #14A89D !important;
     color: white !important;
-}
-
-.dropdown-menu .BekijkNotifications:hover {
-    background: #043356 !important;
-    color: white !important;
+    width: 80%;
+    margin: 30px auto 0;
+    display: block;
+    font-weight: 600;
 }
 
 .dropdown-item {
@@ -21089,7 +21090,7 @@ background: #FFFFFF !important;
     border: none;
     color: red;
 }
-.body-content-to-do .content-button-tabs {
+.content-button-tabs {
     display: flex;
     justify-content: normal;
     background: #EBEBEB;
@@ -21099,27 +21100,27 @@ background: #FFFFFF !important;
     border-radius: 25px;
     padding: 5px 20px;
 }
-.body-content-to-do .content-button-tabs button {
+.content-button-tabs button {
     width: fit-content;
     font-size: 15px;
     padding: 5px 5px;
     margin: 0 10px;
 }
-.body-content-to-do .b-nav-tab.active {
+.content-button-tabs .b-nav-tab.active {
     color: #043356;
     background: white;
     font-weight: 500;
     border-radius: 10px;
     padding: 7px 10px;
 }
-.body-content-to-do .number-content{
+.content-button-tabs .number-content{
     background: #e1eff4;
     padding: 5px;
     border-radius: 8px;
     margin-left: 5px;
     font-weight: 500;
 }
-.body-content-to-do .active .number-content{
+.content-button-tabs .active .number-content{
     font-weight: 600;
 }
 .body-content-to-do .contentBlockSetting {
@@ -21405,6 +21406,114 @@ background: #FFFFFF !important;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.input-upload-btnGroup label{
+    border: none !important;
+    padding: 0 !important;
+    font-size: 15px;
+}
+.content-BADGE .group-text-upload{
+    margin-left: 15px;
+    cursor: pointer;
+}
+.input-upload-btnGroup label span{
+    color: #4A4A4A;
+    font-size: 13px;
+    font-weight: 500;
+}
+.upload-batch-group {
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    padding: 19px 15px;
+    margin-top: 1px;
+    margin-bottom: 13px;
+}
+.w-48{
+    width: 48%;
+}
+.block-with-content-badge .card-badge {
+    text-align: center;
+    border: 1px solid #dedede;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 0 10px 25px;
+}
+.block-with-content-badge .card-badge .img-card-badge img{
+    width: 84px;
+}
+.block-with-content-badge .card-badge .title-badge {
+    font-size: 17px;
+    font-weight: 500;
+    color: #033356;
+}
+.block-with-content-badge .card-badge .statut-text{
+    font-size: 15px;
+    color: #353535;
+}
+.block-with-content-badge .card-badge .bar-badge{
+    background: linear-gradient(90deg, rgba(2,51,86,1) 33%, rgba(0,168,157,1) 100%);
+    width: 100%;
+    height: 10px;
+    border-radius: 20px;
+    margin: 40px 0 20px;
+}
+.block-with-content-badge .card-badge .statut-badge{
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 500;
+    color: #17a99d;
+}
+.dropdownNotificationWeb .img-emty-notification {
+    padding-top: 30px;
+}
+.dropdownNotificationWeb .img-emty-notification img{
+    height: 230px;
+    margin: 0 auto;
+    width: fit-content;
+    display: block;
+}
+.actif-element-notification{
+    width: 10px;
+    height: 10px;
+    background: #00A89D;
+    border-radius: 100%;
+}
+.dropdownNotificationWeb .content-tab .blockImgCourse {
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    border-radius: 100%;
+    margin-right: 14px;
+}
+.dropdownNotificationWeb .content-tab .blockImgCourse img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.dropdownNotificationWeb .content-tab .text-date {
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+.dropdownNotificationWeb .content-tab .block-notification-tab{
+    margin-bottom: 17px;
+}
+.dropdownNotificationWeb .content-tab .contentBlockSetting {
+    border: none;
+}
+.content-new-user .grid .loader-course{
+    width: 48%;
+    margin-bottom: 25px;
+}
+.content-new-user .grid .new-card-course {
+    width: 100%;
+    display: block;
+    margin-bottom: 0;
+    height: 100%;
+}
+.content-new-user .list .loader-course{
+    display: block;
+    width: 100%;
 }
 
 /*responsive mobile*/
@@ -25840,10 +25949,10 @@ background: #FFFFFF !important;
         padding: 10px;
         overflow: scroll;
     }
-    .body-content-to-do .content-button-tabs {
+    .content-button-tabs {
         flex-wrap: wrap;
     }
-    .body-content-to-do .content-button-tabs button {
+    .content-button-tabs button {
         width: fit-content;
         font-size: 15px;
         padding: 5px 5px;

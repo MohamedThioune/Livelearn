@@ -74,10 +74,10 @@
             $data_name = (String)get_the_category_by_ID($corse_id);
 
         /** Badges **/
-        $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id AND data_type = course");
+        $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id");
         $occurences = $wpdb->get_results( $sql );
-        $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $user_id . " AND data_type = 'topic' AND occurence >= 10 GROUP BY data_id ORDER BY occurence DESC");
-        $topic_views = $wpdb->get_results($sql);
+        $sql_topic = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $user_id . " AND data_type = 'topic' AND occurence >= 10 GROUP BY data_id ORDER BY occurence DESC");
+        $topic_views = $wpdb->get_results($sql_topic);
         $best_topic_views = intval($topic_views[0]->occurence);
 
         $count = array('Opleidingen' => 0, 'Workshop' => 0, 'E-learning' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0, 'Podcast' => 0);
@@ -179,6 +179,11 @@
                         'post_status' => 'publish'
                     );
                     $badge_id = wp_insert_post($post_data);
+
+                    //Push notifications
+                    $title = $badge->libelle;
+                    $body = $badge->trigger;
+                    sendPushNotification($title, $body);
                 }
 
                 if(isset($badge_id))
@@ -213,3 +218,4 @@
             
         return $wpdb->insert_id;
     }
+

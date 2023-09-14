@@ -20,7 +20,6 @@ global $wpdb;
 
 view($post);
 
-
 if(!visibility($post, $visibility_company))
     header('location: /'); 
 

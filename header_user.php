@@ -381,7 +381,7 @@ $see_experts = get_users(
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
                             <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton" id="ModalNotification">
-                                <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Your notifications</h5>
                                 <?php
                                     if(!empty($todos)){
                                         foreach($todos as $todo){
@@ -408,12 +408,206 @@ $see_experts = get_users(
                                     }
                                     else{
                                 ?>
-                                        <div>
-                                            <div class="">
-                                                <p class="feedbackText">No new updates ...</p>
-                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                      <div class="empty-block-notification">
+                                            <div class="content-button-tabs">
+                                                <button  data-tab="All" class="b-nav-tab buttonInsideModal btn active">
+                                                    View all <span class="number-content">0</span>
+                                                </button>
+                                                <button  data-tab="Activiteiten" class="b-nav-tab buttonInsideModal btn">
+                                                    Feedback<span class="number-content">0</span>
+                                                </button>
+                                                <button  data-tab="Plannen" class="b-nav-tab buttonInsideModal btn">
+                                                    Courses <span class="number-content">0</span>
+                                                </button>
+                                                <button  data-tab="Onderwerpen" class="b-nav-tab buttonInsideModal btn">
+                                                    To do’s <span class="number-content">0</span>
+                                                </button>
                                             </div>
+                                            <div class="img-emty-notification">
+                                                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/empty-to-do-table.png" alt="">
+                                            </div>
+                                            <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to you activity page</a>
                                         </div>
+
+                                        <div class="content-tab">
+                                            <div class="content-button-tabs">
+                                                <button  data-tab="allNotification" class="b-nav-tab buttonInsideModal btn active">
+                                                    View all<span class="number-content">14</span>
+                                                </button>
+                                                <button  data-tab="feddbackNotification" class="b-nav-tab buttonInsideModal btn">
+                                                    Feedback <span class="number-content">2</span>
+                                                </button>
+                                                <button  data-tab="courseNotification" class="b-nav-tab buttonInsideModal btn">
+                                                    Courses <span class="number-content">O</span>
+                                                </button>
+                                                <button  data-tab="to-do-notification" class="b-nav-tab buttonInsideModal btn">
+                                                    To do’s <span class="number-content">12</span>
+                                                </button>
+                                            </div>
+
+                                            <div id="allNotification" class="b-tab active contentBlockSetting">
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                            </div>
+
+                                            <div id="feddbackNotification" class="b-tab contentBlockSetting">
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                            </div>
+
+                                            <div id="courseNotification" class="b-tab contentBlockSetting">
+                                                <div class="img-emty-notification">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                                </div>
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to you activity page</a>
+                                            </div>
+
+                                            <div id="to-do-notification" class="b-tab contentBlockSetting">
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
+                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actif-element-notification"></div>
+                                                </a>
+                                            </div>
+
+
+                                        </div>
+
                                 <?php
                                     }
                                 ?>
@@ -624,3 +818,45 @@ $see_experts = get_users(
         </div>
     </div>
 
+    <script src="<?php echo get_stylesheet_directory_uri();?>/organictabs.jquery.js"></script>
+    <script>
+        'use strict';
+
+        function Tabs() {
+            var bindAll = function() {
+                var menuElements = document.querySelectorAll('[data-tab]');
+                for(var i = 0; i < menuElements.length ; i++) {
+                    menuElements[i].addEventListener('click', change, false);
+                }
+            };
+
+            var clear = function() {
+                var menuElements = document.querySelectorAll('[data-tab]');
+                for(var i = 0; i < menuElements.length ; i++) {
+                    menuElements[i].classList.remove('active');
+                    var id = menuElements[i].getAttribute('data-tab');
+                    document.getElementById(id).classList.remove('active');
+                }
+            };
+
+            var change = function(e) {
+                clear();
+                e.target.classList.add('active');
+                var id = e.currentTarget.getAttribute('data-tab');
+                document.getElementById(id).classList.add('active');
+            };
+
+            bindAll();
+
+            //window.location.hash = target_panel_selector ;
+            if(history.pushState) {
+                history.pushState(null, null, target_panel_selector);
+            } else {
+                window.location.hash = target_panel_selector;
+            }
+            return false;
+        }
+
+        var connectTabs = new Tabs();
+
+    </script>
