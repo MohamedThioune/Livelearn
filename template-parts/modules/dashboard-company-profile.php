@@ -22,7 +22,7 @@ if(isset($_GET['manager'])){
 if(!isset($id_user))
     $id_user = get_current_user_id();
 
-$user = get_users(array('include'=> $id_user))[0]->data;
+$user = get_user_by('ID', $id_user);
 
 //CONNECTED USER INFORMATIONS
 $user_connected = wp_get_current_user();
@@ -54,6 +54,7 @@ $gender = get_field('gender',  'user_' . $user->ID);
 $education_level = get_field('education_level',  'user_' . $user->ID);
 $languages = get_field('language',  'user_' . $user->ID);
 $biographical_info = get_field('biographical_info',  'user_' . $user->ID);
+$phone = get_field('telnr',  'user_' . $user->ID);
 
 $stackoverflow = get_field('stackoverflow',  'user_' . $user->ID);
 $github = get_field('github',  'user_' . $user->ID);

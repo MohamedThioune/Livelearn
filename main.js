@@ -210,6 +210,27 @@ jQuery(function($) {
         $(".detail-content-modal").hide();
     });
 
+    $(".nav-three").click(function() {
+        $("#All").addClass("active");
+    });
+    $(".nav-four").click(function() {
+        $("#Badges").addClass("active");
+    });
+    $(".nav-feedback").click(function() {
+        $("#AllFeddback").addClass("active");
+    });
+
+    //for close notification
+
+    var buttonInsideModal = $(".buttonInsideModal");
+
+    var modal = $("#ModalNotification");
+    buttonInsideModal.click(function(event) {
+        event.stopPropagation();
+    });
+
+    modal.click(function() {
+    });
 
 
 

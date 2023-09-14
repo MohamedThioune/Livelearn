@@ -46,7 +46,51 @@ function RandomString(){
     }
     return $randstring;
 }
- 
+
+//Push notifications
+function sendPushNotification($title, $body) {
+    $current_user = wp_get_current_user();
+    $token = get_field('smartphone_token',  'user_' . $current_user->ID);
+    if(!$token)
+        return 0;
+
+    $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
+    $data = [
+        'to' => $token,
+        'notification' => [
+            'title' => $title,
+            'body' => $body,
+        ],
+    ];
+
+    $dataString = json_encode($data);
+
+    $headers = [
+        'Authorization: ' . $serverKey,
+        'Content-Type: application/json',
+    ];
+
+    $url = 'https://fcm.googleapis.com/fcm/send';
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+    $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+
+    var_dump($httpCode);
+
+    $response = curl_exec($ch);
+
+    curl_close($ch);
+
+    return $response;
+}
+
 function makeApiCall($endpoint, $type) {
     // credentials
     $params = array(
@@ -85,6 +129,7 @@ function makeApiCall($endpoint, $type) {
     // return data
     return json_decode( $response, true );
 }
+
 //Subscribe to 10 experts: "Thank you so much for supporting our content creator !" 
 //Subscribe to 10 topics: "Looks like you're a category enthusiast !"
 function topic_expert_badges(){
@@ -148,6 +193,11 @@ function topic_expert_badges(){
                     'post_status' => 'publish'
                 );
                 $badge_id = wp_insert_post($post_data);
+
+                //Push notifications
+                $title = $badge->libelle;
+                $body = $badge->trigger;
+                sendPushNotification($title, $body);
             }
 
             if(isset($badge_id))
@@ -157,6 +207,7 @@ function topic_expert_badges(){
                 }
         } 
 }
+
 // Purchase your first course: "Congratulations on your first course purchase !"  ????
 function purchase_badges(){
     $user = wp_get_current_user();
@@ -230,6 +281,11 @@ function purchase_badges(){
                     'post_status' => 'publish'
                 );
                 $badge_id = wp_insert_post($post_data);
+
+                //Push notifications
+                $title = $badge->libelle;
+                $body = $badge->trigger;
+                sendPushNotification($title, $body);
             }
 
             if(isset($badge_id))
@@ -316,6 +372,11 @@ function community_badges(){
                     'post_status' => 'publish'
                 );
                 $badge_id = wp_insert_post($post_data);
+
+                //Push notifications
+                $title = $badge->libelle;
+                $body = $badge->trigger;
+                sendPushNotification($title, $body);
             }
 
             if(isset($badge_id))
@@ -491,6 +552,11 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
     update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
+
+    //Push notifications
+    $title = $title_feedback;
+    $body = $beschrijving_feedback;
+    sendPushNotification($title, $body);
 
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);
