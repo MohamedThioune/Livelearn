@@ -228,47 +228,41 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                 ?>
             </ul>
 
+            <?php
+            if(!empty($topics)):
+            ?>
             <ul id="Skills" class="hide">
                 <div class="content-card-skills content-card-skills-profil">
-                    <div class="card-skills">
-                        <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">40</span>
+                                  
+                    <?php
+                    foreach($topics as $key => $value):
+                        $i = 0;
+                        $topic = get_the_category_by_ID($value);
+                        $note = 0;
+                        if(!$topic)
+                            continue;
+                        if(!empty($skills_note))
+                            foreach($skills_note as $skill)
+                                if($skill['id'] == $value){
+                                    $note = $skill['note'];
+                                    break;
+                                }
+                        $name_topic = (String)$topic;
+                        ?>
+                        <div class="card-skills">
+                            <div class="group position-relative">
+                                <span class="donut-chart has-big-cente"><?= $note ?></span>
+                            </div>
+                            <p class="name-course"><?= $name_topic ?></p>
                         </div>
-                        <p class="name-course">Accountancy</p>
-                    </div>
-                    <div class="card-skills">
-                        <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">30</span>
-                        </div>
-                        <p class="name-course">Accountancy</p>
-                    </div>
-                    <div class="card-skills">
-                        <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">10</span>
-                        </div>
-                        <p class="name-course">Accountancy</p>
-                    </div>
-                    <div class="card-skills">
-                        <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">90</span>
-                        </div>
-                        <p class="name-course">Accountancy</p>
-                    </div>
-                    <div class="card-skills">
-                        <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">50</span>
-                        </div>
-                        <p class="name-course">Accountancy</p>
-                    </div>
-                    <div class="card-skills">
-                        <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">10</span>
-                        </div>
-                        <p class="name-course">Accountancy</p>
-                    </div>
-
+                    <?php
+                    endforeach;
+                    ?>
                 </div>
             </ul>
+            <?php
+            endif;
+            ?>
 
             <ul id="Verplichte-training" class="hide">
                 <div class="sub-to-do d-flex justify-content-between align-items-center">
