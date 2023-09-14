@@ -43,7 +43,7 @@
         $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
         $data_name = "";
         if(!$user_id)
-            return;
+            return 0;
         $occurence = 1;
 
         //Add by MaxBird - get name entity
@@ -61,7 +61,7 @@
             $data_name = (String)get_the_category_by_ID($corse_id);
             
         //testing wheither data_id exist ?
-        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $corse_id");
+        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $corse_id AND user_id = $user_id");
         $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
         $id_tracker_founded = $wpdb->get_results( $sql)[0]->id;
         if($type == 'course'){
@@ -74,7 +74,7 @@
             $data_name = (String)get_the_category_by_ID($corse_id);
 
         /** Badges **/
-        $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id");
+        $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id AND data_type = course");
         $occurences = $wpdb->get_results( $sql );
         $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $user_id . " AND data_type = 'topic' AND occurence >= 10 GROUP BY data_id ORDER BY occurence DESC");
         $topic_views = $wpdb->get_results($sql);
@@ -99,8 +99,8 @@
         ];
         $array_badges = array();
 
-        foreach ($occurences as $occurence) {
-            $course_type = get_field('course_type', $occurence->data_id);
+        foreach ($occurences as $value) {
+            $course_type = get_field('course_type', $value->data_id);
             $count[$course_type]++;
         }
 
