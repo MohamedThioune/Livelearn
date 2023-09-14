@@ -64,7 +64,7 @@ if(!empty($topics_internal))
 
 //Note
 $skills_note = get_field('skills', 'user_' . $user->ID);
-
+ 
 //Is a manager + company + phone + bio
 $manageds = get_field('managed',  'user_' . $id_user);
 $is_a_manager = (!empty($manageds)) ? 'Manager' : 'Employee';
