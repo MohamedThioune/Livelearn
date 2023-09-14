@@ -46,7 +46,7 @@ function RandomString(){
     }
     return $randstring;
 }
-
+ 
 function makeApiCall($endpoint, $type) {
     // credentials
     $params = array(
@@ -85,7 +85,8 @@ function makeApiCall($endpoint, $type) {
     // return data
     return json_decode( $response, true );
 }
-
+//Subscribe to 10 experts: "Thank you so much for supporting our content creator !" 
+//Subscribe to 10 topics: "Looks like you're a category enthusiast !"
 function topic_expert_badges(){
     $user_visibility = wp_get_current_user();
     $user_id = $user_visibility->ID;
@@ -156,7 +157,7 @@ function topic_expert_badges(){
                 }
         } 
 }
-
+// Purchase your first course: "Congratulations on your first course purchase !"  ????
 function purchase_badges(){
     $user = wp_get_current_user();
     $user_id = $user->ID;
@@ -241,6 +242,7 @@ function purchase_badges(){
 }
 purchase_badges();
 
+//You joined 3 communities : "Communities for the best" 
 function community_badges(){
     $user_visibility = wp_get_current_user();
     $user_id = $user_visibility->ID;

@@ -8,8 +8,6 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
-view($post);
-
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -19,6 +17,9 @@ view($post);
 global $post;
 global $wp;
 global $wpdb;
+
+view($post);
+
 
 if(!visibility($post, $visibility_company))
     header('location: /'); 
