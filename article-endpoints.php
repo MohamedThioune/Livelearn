@@ -1,17 +1,16 @@
 <?php
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
-// function RandomString()
-// {
-//     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//     $randstring = '';
-//     $rand = '';
-//     for ($i = 0; $i < 10; $i++) {
-//         $rand = $characters[rand(0, strlen($characters))];
-//         $randstring .= $rand;
-//     }
-//     return $randstring;
-// }
+ function RandomString()
+ {
+     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+     $randstring = '';
+     for ($i = 0; $i < 10; $i++) {
+         $rand = $characters[rand(0, strlen($characters))];
+         $randstring .= $rand;
+     }
+     return $randstring;
+ }
 
 function strip_html_tags($text)
 {
@@ -344,7 +343,7 @@ function xmlParse()
     //Get all users
     $users = get_users();
 
-    $website_urls = ['2xplain-b.v-20221018.0222.xml', 'agile-scrum-group-20221021.1902.xml', 'anker-kompas-20221021.1902.xml', 'aeres-tech-20221018.0223.xml', 'academie-voor-arbeidsmarktcommunicatie-b.v-20221018.0223.xml'];
+$website_urls = ['2xplain-b.v-20221018.0222.xml'/*, 'agile-scrum-group-20221021.1902.xml', 'anker-kompas-20221021.1902.xml', 'aeres-tech-20221018.0223.xml', 'academie-voor-arbeidsmarktcommunicatie-b.v-20221018.0223.xml'*/];
 
   //Start inserting course 
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
@@ -640,7 +639,7 @@ function xmlParse()
 
           $data_locaties = join('~', $data_locaties_xml);
         }
-        
+
       /*  
       * * END
       */
