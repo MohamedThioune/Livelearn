@@ -640,9 +640,6 @@ function xmlParse()
 
           $data_locaties = join('~', $data_locaties_xml);
         }
-
-        var_dump($data_locaties);
-        die();
         
       /*  
       * * END
