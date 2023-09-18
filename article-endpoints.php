@@ -352,7 +352,7 @@ $website_urls = ['2xplain-b.v-20221018.0222.xml'/*, 'agile-scrum-group-20221021.
     //Get the URL content
     $file = get_stylesheet_directory_uri() . "/" . $website ;
     $xml = simplexml_load_file($file);
-    $data_xml = $xml->program;
+    $data_xml = $xml->program; 
 
     $author_id = NULL;
 
