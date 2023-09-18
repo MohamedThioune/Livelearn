@@ -642,6 +642,7 @@ function xmlParse()
         }
 
         var_dump($data_locaties);
+        die();
         
       /*  
       * * END
@@ -739,4 +740,8 @@ function xmlParse()
 
     echo "<h2 class='titleGroupText'> End .</h2>";
   }
+}
+
+function youtubeEndpoint() {
+  
 }
