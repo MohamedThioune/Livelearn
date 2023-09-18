@@ -39,7 +39,7 @@ function crontab_podcast( ) {
             $all_title_of_podcast_in_plateform [] = $title;
         }
     }
-    foreach ($podcasts as $key => $course) {
+    foreach ($podcasts as $course) {
         # podcast index ?
         $podcast_index = get_field('podcasts_index', $course->ID);
         if(!$podcast_index)
