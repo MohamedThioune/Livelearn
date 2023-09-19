@@ -229,11 +229,11 @@ Outside of let'say all the information that could be deemed relevant to a allow 
             </ul>
 
             <?php
-            if(!empty($topics)):
+            if(empty($topics)):
             ?>
             <ul id="Skills" class="hide">
                 <div class="content-card-skills content-card-skills-profil">
-                                  
+                                
                     <?php
                     foreach($topics as $key => $value):
                         $i = 0;
@@ -261,12 +261,20 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                 </div>
             </ul>
             <?php
+            else:
+            echo 
+            '<div id="Skills" class="hide">
+                <div class="block-empty-content" style="background: white; padding : 20px 0px">
+                    <img src="'. get_stylesheet_directory_uri() .'/img/empty-to-do-table.png" alt="Empty skills">
+                    <a href="#Interne-groei" class="btn btn-creer-eeen">Vaardigheden toevoegen</a>
+                </div>
+            </div>';
             endif;
             ?>
 
             <ul id="Verplichte-training" class="hide">
                 <div class="sub-to-do d-flex justify-content-between align-items-center">
-                    <p class="text-to-do-for">To do’s for Mamadou</p>
+                    <p class="text-to-do-for">To do's for Mamadou</p>
                     <button class="btn btn-add-to-do" type="button" data-toggle="modal" data-target="#to-do-Modal">Add to do</button>
 
                     <!-- Modal Add to do -->
