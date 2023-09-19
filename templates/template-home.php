@@ -1,8 +1,10 @@
-<?php /** Template Name: Home 2 */ ?>
+<?php /** Template Name: Home 2 odl */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php
+
+extract($_POST);
 
 $page = 'check_visibility.php';
 require($page);
@@ -467,10 +469,7 @@ function RandomString()
     return $randstring;
 }
 
-if (isset($_POST))
-{
 
-extract($_POST);
 if(isset($email)){
 
         if($email != null)
@@ -561,7 +560,6 @@ if(isset($email)){
 
              }
          }
-     }
      }
 
 /**
@@ -2082,7 +2080,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-categorien').html(complete_categorieen);
 
             $.ajax({
-                url:"/fetch-ajax-home2",
+                url:"/livelearn/fetch-ajax-home2",
                 method:"post",
                 data:{
                     topic_search: topic_search,
@@ -2110,7 +2108,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-period').html(complete_period);
 
             $.ajax({
-                url:"/fetch-ajax-home2",
+                url:"/livelearn/fetch-ajax-home2",
                 method:"post",
                 data:{
                     period: period,
