@@ -1675,7 +1675,6 @@ $saved = get_user_meta($user_id, 'course');
             </div>
             <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
             <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
-
         </div>
     </div>
     <div class="blockCardBleu3">
