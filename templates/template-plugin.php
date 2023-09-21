@@ -66,7 +66,7 @@ if (isset($selectedValues)) {
 
         //Accord the author a company
         if (!is_wp_error($author_id)) {
-            update_field('company', $company, 'user_' . $author_id); 
+            update_field('company', $company, 'user_' . $author_id);
         }
 
         $span = $website . "wp-json/wp/v2/posts/";
@@ -87,7 +87,7 @@ if (isset($selectedValues)) {
                         if (!isset($images['data']['status'])) {
                             $status = 'extern';
                             $datas = array(
-                                'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
+                                'titel' => $article['title']['rendered'],
                                 'type' => 'Artikel',
                                 'videos' => null,
                                 'short_description' => strip_html_tags($article['excerpt']['rendered']),
@@ -107,7 +107,7 @@ if (isset($selectedValues)) {
                 } else {
                         $status = 'extern';
                         $datas = array(
-                            'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
+                            'titel' => $article['title']['rendered'],
                             'type' => 'Artikel',
                             'videos' => null,
                             'short_description' => strip_html_tags($article['excerpt']['rendered']),
@@ -130,7 +130,7 @@ if (isset($selectedValues)) {
                 if (!isset($result_title[0])) {
                     $status = 'extern';
                     $datas = array(
-                        'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
+                        'titel' => $article['title']['rendered'],
                         'type' => 'Artikel',
                         'videos' => null,
                         'short_description' => strip_html_tags($article['excerpt']['rendered']),
@@ -165,3 +165,4 @@ if (isset($selectedValues)) {
 }
 // header("location:/livelearn/databank");
 ?>
+
