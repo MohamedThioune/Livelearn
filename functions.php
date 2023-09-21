@@ -5,7 +5,6 @@ $GLOBALS['id_user'] = get_current_user_id();
 
 include "custom-endpoints.php";
 include "article-endpoints.php";
-// include "podcast-endpoints.php";
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -1833,8 +1832,4 @@ add_action( 'rest_api_init', function () {
     'callback' => 'xmlParse'
  ));
   
-//  register_rest_route ('custom/v1', '/podcast', array(
-//     'methods' => 'GET',
-//     'callback' => 'crontab_podcast'
-//  ));
 });
