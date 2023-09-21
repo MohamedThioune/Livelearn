@@ -2,16 +2,16 @@
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
 
-// function RandomString()
-// {
-//     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//     $randstring = '';
-//     for ($i = 0; $i < 10; $i++) {
-//         $rand = $characters[rand(0, strlen($characters))];
-//         $randstring .= $rand;
-//     }
-//     return $randstring;
-//}
+function RandomDoubleString()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;
+    }
+    return $randstring;
+}
 
 function strip_html_tags($text)
 {
@@ -443,13 +443,13 @@ function xmlParse()
                     }
                 }
 
-                $login = RandomString();
-                $password = RandomString();
-                $random = RandomString();
+                $login = RandomDoubleString();
+                $password = RandomDoubleString();
+                $random = RandomDoubleString();
                 $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
-                $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomString();
-                $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomString();
-                $display_name = ($first_name) ?? RandomString();
+                $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomDoubleString();
+                $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomDoubleString();
+                $display_name = ($first_name) ?? RandomDoubleString();
 
                 $userdata = array(
                     'user_pass' => $password,
@@ -755,9 +755,4 @@ function xmlParse()
 
         echo "<h2 class='titleGroupText'> End .</h2>";
     }
-}
-
-function youtubeEndpoint()
-{
-
 }

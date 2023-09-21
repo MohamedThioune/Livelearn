@@ -72,7 +72,7 @@ if (isset($selectedValues)) {
         $span = $website . "wp-json/wp/v2/posts/";
         $artikels = json_decode(file_get_contents($span), true);
         foreach ($artikels as $article) {
-            //         // $onderwerpen = trim($onderwerpen);
+            // $onderwerpen = trim($onderwerpen);
 
             if ($article != null) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
@@ -90,7 +90,7 @@ if (isset($selectedValues)) {
                                 'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
                                 'type' => 'Artikel',
                                 'videos' => null,
-                                'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
+                                'short_description' => strip_html_tags($article['excerpt']['rendered']),
                                 'long_description' => $article['content']['rendered'],
                                 'duration' => null,
                                 'prijs' => 0,
@@ -110,7 +110,7 @@ if (isset($selectedValues)) {
                             'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
                             'type' => 'Artikel',
                             'videos' => null,
-                            'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
+                            'short_description' => strip_html_tags($article['excerpt']['rendered']),
                             'long_description' => $article['content']['rendered'],
                             'duration' => null,
                             'prijs' => 0,
@@ -133,7 +133,7 @@ if (isset($selectedValues)) {
                         'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
                         'type' => 'Artikel',
                         'videos' => null,
-                        'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
+                        'short_description' => strip_html_tags($article['excerpt']['rendered']),
                         'long_description' => $article['content']['rendered'],
                         'duration' => null,
                         'prijs' => 0,
