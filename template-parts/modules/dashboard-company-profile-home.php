@@ -2094,96 +2094,96 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Courses done</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">12</p>
+                                <p class="text-stat"><?= $progress_courses['done'] ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Training Costs:</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">€1.415,-</p>
+                                <p class="text-stat"><?= $budget_spent ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Average Training Hours</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">3,5 hours <span>/ 1,5 hours</span> </p>
+                                <p class="text-stat">x hours <span>/ x hours</span> </p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Courses in progress</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">2</p>
+                                <p class="text-stat"><?= $progress_courses['in_progress'] ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Assessments done</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">2</p>
+                                <p class="text-stat"><?= $assessment_validated ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Mandatory courses done</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">0/2</p>
+                                <p class="text-stat">0/<?= $count_mandatories ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -2199,7 +2199,7 @@ $badges = get_posts($args);
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div>
                                 </div>
-                                <p class="text-stat">12</p>
+                                <p class="text-stat">x</p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -2215,23 +2215,23 @@ $badges = get_posts($args);
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div>
                                 </div>
-                                <p class="text-stat">56</p>
+                                <p class="text-stat">x</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Feedback given on average</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">3,6 <span>/ 4,3</span></p>
+                                <p class="text-stat"><?= $score_rate_feedback ?> <span>/ 5 (4,3)</span></p>
                             </div>
                         </div>
                     </div>
@@ -2275,16 +2275,16 @@ $badges = get_posts($args);
                                             </div>
                                             <p class="text-subTopics">Articles</p>
                                         </div>
-                                        <p class="number">76%</p>
+                                        <p class="number">78%</p>
                                     </a>
                                     <a href="" class="element-SubTopics d-flex justify-content-between">
                                         <div class="d-flex">
                                             <div class="imgTopics">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
                                             </div>
-                                            <p class="text-subTopics">Articles</p>
+                                            <p class="text-subTopics">Videos</p>
                                         </div>
-                                        <p class="number">76%</p>
+                                        <p class="number">90%</p>
                                     </a>
                                     <a href="" class="element-SubTopics d-flex justify-content-between">
                                         <div class="d-flex">
@@ -2314,30 +2314,30 @@ $badges = get_posts($args);
                                <div class="theme-card-statistiken-1 height-fit-content mb-3">
                                    <div class="head-card d-flex justify-content-between align-items-center">
                                        <p class="title">Feedback received</p>
-                                       <div class="select">
+                                       <!-- <div class="select">
                                            <select>
                                                <option value="Year">Year</option>
                                                <option value="Month">Month</option>
                                                <option value="Day">Day</option>
                                            </select>
                                            <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                       </div>
+                                       </div> -->
                                    </div>
-                                   <p class="text-stat">2</p>
+                                   <p class="text-stat"><?= $count_feedback_received ?></p>
                                </div>
                                <div class="theme-card-statistiken-1 height-fit-content">
                                    <div class="head-card d-flex justify-content-between align-items-center">
                                        <p class="title">Feedback given</p>
-                                       <div class="select">
+                                       <!-- <div class="select">
                                            <select>
                                                <option value="Year">Year</option>
                                                <option value="Month">Month</option>
                                                <option value="Day">Day</option>
                                            </select>
                                            <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                       </div>
+                                       </div> -->
                                    </div>
-                                   <p class="text-stat">2</p>
+                                   <p class="text-stat"><?= $count_feedback_given ?></p>
                                </div>
                            </div>
                         </div>
@@ -2345,19 +2345,42 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Most Viewed Topics</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <p class="text-stat"></p>
-                                <div class="empty-topic-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-topic.png" alt="">
-                                </div>
+                                <?php
+                                if($topic_views):
+                                    foreach($topic_views as $topic):
+                                        $value = $topic->data_id;
+                                        $occurence = $topic->occurence;
+                                        $name_topic = (String)get_the_category_by_ID($value);
+                                        $image_topic = get_field('image', 'category_'. $value);
+                                        $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';
+                                        ?>
+                                        <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
+                                            <div class="d-flex">
+                                                <div class="imgTopics">
+                                                    <img src="<?= $image_topic ?>" alt="">
+                                                </div>
+                                                <p class="text-subTopics"><?= $name_topic ?></p>
+                                            </div>
+                                            <p class="number"><?= $occurence ?></p>
+                                        </a>
+                                    <?php
+                                    endforeach;
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                             <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif
+                                ?>
                             </div>
                         </div>
                     </div>
