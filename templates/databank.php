@@ -607,7 +607,7 @@ $urls =
                     console.log(response);
                     // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
-                },error:function() {
+                },error:function() { 
                     console.log('error');
                 },
                 complete:function(response){
