@@ -47,50 +47,6 @@ function RandomString(){
     return $randstring;
 }
 
-//Push notifications
-function sendPushNotification($title, $body) {
-    $current_user = wp_get_current_user();
-    $token = get_field('smartphone_token',  'user_' . $current_user->ID);
-    if(!$token)
-        return 0;
-
-    $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
-    $data = [
-        'to' => $token,
-        'notification' => [
-            'title' => $title,
-            'body' => $body,
-        ],
-    ];
-
-    $dataString = json_encode($data);
-
-    $headers = [
-        'Authorization: ' . $serverKey,
-        'Content-Type: application/json',
-    ];
-
-    $url = 'https://fcm.googleapis.com/fcm/send';
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-    $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-
-    var_dump($httpCode);
-
-    $response = curl_exec($ch);
-
-    curl_close($ch);
-
-    return $response;
-}
-
 function makeApiCall($endpoint, $type) {
     // credentials
     $params = array(
@@ -153,7 +109,10 @@ function topic_expert_badges(){
     $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
     $trigger_badge = null;
     if($count['Expert'] >= 10){
+        $level = 'advance';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[0];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[0];
@@ -161,7 +120,10 @@ function topic_expert_badges(){
         array_push($array_badges, $object_badge);
     }
     if($count['Ondewerpen'] >= 10){
+        $level = 'advance';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[1];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[1];
@@ -204,6 +166,7 @@ function topic_expert_badges(){
                 if($badge_id){
                     update_field('image_badge', $badge->image, $badge_id);
                     update_field('trigger_badge', $badge->trigger, $badge_id);
+                    update_field('level_badge', $badge->level, $badge_id);
                 }
         } 
 }
@@ -249,7 +212,10 @@ function purchase_badges(){
     $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
     $trigger_badge = null;
     if($count_enrolled >= 1){
+        $level = 'pro';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[0];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[0];
@@ -292,6 +258,7 @@ function purchase_badges(){
                 if($badge_id){
                     update_field('image_badge', $badge->image, $badge_id);
                     update_field('trigger_badge', $badge->trigger, $badge_id);
+                    update_field('level_badge', $badge->level, $badge_id);
                 }
         } 
 
@@ -340,7 +307,10 @@ function community_badges(){
     $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
     $trigger_badge = null;
     if($count_communities >= 3){
+        $level = 'advance';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[0];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[0];
@@ -383,6 +353,7 @@ function community_badges(){
                 if($badge_id){
                     update_field('image_badge', $badge->image, $badge_id);
                     update_field('trigger_badge', $badge->trigger, $badge_id);
+                    update_field('level_badge', $badge->level, $badge_id);
                 }
         } 
 }
@@ -525,16 +496,20 @@ else if(isset($interest_save)){
 // Feedback & compliment saving 
 else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment']) ){
     $id_user = $_POST['id_user'];
-    $title_feedback = $_POST['title_feedback'];
+    $manager = $_POST['manager'];
     $type = $_POST['type'];
-    $manager = get_user_by('id',$_POST['manager']);
+    $title_feedback = $_POST['title_feedback'];
 
     $onderwerp_feedback='';
-    if (isset ($_POST['onderwerp_feedback']) &&  !empty($_POST['onderwerp_feedback']))
-        foreach ($_POST['onderwerp_feedback']as  $value) {
-            $onderwerp_feedback.=$value.';';        
-        }
+    if (isset ($_POST['onderwerp_feedback']) && !empty($_POST['onderwerp_feedback']))
+        foreach ($_POST['onderwerp_feedback'] as  $value) 
+            $onderwerp_feedback .= $value.';';        
+        
     $beschrijving_feedback = $_POST['beschrijving_feedback'];
+    $competencies_feedback = $_POST['competencies_feedback'];
+    $rating_feedback = (isset($_POST['rating_feedback'])) ? $_POST['rating_feedback'] : 0;
+    $opmerkingen = $_POST['opmerkingen'];
+    $anoniem_feedback = (isset($_POST['anoniem_feedback'])) ? $_POST['anoniem_feedback'] : null;
 
     //Data to create the feedback
     $post_data = array(
@@ -552,6 +527,10 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
     update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
+    update_field('competencies_feedback', $competencies_feedback, $post_id);
+    update_field('rating_feedback', $rating_feedback, $post_id);
+    update_field('opmerkingen', $opmerkingen, $post_id);
+    update_field('anoniem_feedback', $anoniem_feedback, $post_id);
 
     //Push notifications
     $title = $title_feedback;
@@ -567,17 +546,23 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $id_user = $_POST['id_user'];
     $title_beoordelingsgesprek = $_POST['title_beoordelingsgesprek'];
     $type = $_POST['type'];
-    $manager = get_user_by('id',$_POST['manager']);
+    $manager = $_POST['manager'];
 
     $algemene_beoordeling = $_POST['algemene_beoordeling'];
+    $competencies_feedback = $_POST['competencies_feedback'];
+    $welke_datum_feedback = $_POST['welke_datum_feedback'];
+    $opmerkingen = $_POST['opmerkingen'];
+    $beschrijving_feedback = (isset($_POST['beschrijving_feedback'])) ? $_POST['beschrijving_feedback'] : null;
+    $anoniem_feedback = (isset($_POST['anoniem_feedback'])) ? $_POST['anoniem_feedback'] : null;
+
     $rates_comments='';
     $topic_affiliate = get_user_meta($id_user,'topic_affiliate');
     if (isset ($topic_affiliate) &&  !empty($topic_affiliate))
     {
         foreach ($topic_affiliate as $value) {
-            $rate_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_rate'];
-            $comment_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_toelichting'];
-            $rates_comments=$rates_comments.$value.';'.$rate_topic.';'.$comment_topic.';';
+            $rate_topic = $_POST[lcfirst((String)get_the_category_by_ID($value)).'_rate'];
+            $comment_topic = $_POST[lcfirst((String)get_the_category_by_ID($value)).'_toelichting'];
+            $rates_comments = $rates_comments.$value.';'.$rate_topic.';'.$comment_topic.';';
         }
         $rates_comments=substr_replace($rates_comments ,"",-1);
     }
@@ -598,6 +583,10 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('algemene_beoordeling', $algemene_beoordeling, $post_id);
+    update_field('welke_datum_feedback', $welke_datum_feedback, $post_id);
+    update_field('opmerkingen', $opmerkingen, $post_id);
+    update_field('anoniem_feedback', $anoniem_feedback, $post_id);
+    update_field('beschrijving_feedback', $anoniem_feedback, $post_id);
 
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);
@@ -609,20 +598,24 @@ else if(isset($_POST['add_todo_persoonlijk']))
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_persoonlijk'];
     $type = $_POST['type'];
-    $manager = get_user_by('id',$_POST['manager']);
+    $manager = $_POST['manager'];
 
     $onderwerp_feedback = '';
     if (isset ($_POST['onderwerp_pop']) &&  !empty($_POST['onderwerp_pop']))
         foreach ($_POST['onderwerp_pop'] as $value) {
-            $onderwerp_feedback.=$value.';';        
+            $onderwerp_feedback .= $value.';';        
         }
+
     $wat_bereiken = $_POST['wat_bereiken'];  
     $hoe_bereiken = $_POST['hoe_bereiken'];
     $hulp_text = $_POST['hulp_text'];
     $opmerkingen = $_POST['opmerkingen'];
+    $competencies_feedback = $_POST['competencies_feedback'];
+    $rating_feedback = (isset($_POST['rating_feedback'])) ? $_POST['rating_feedback'] : 0;
+    $anoniem_feedback = (isset($_POST['anoniem_feedback'])) ? $_POST['anoniem_feedback'] : null;
 
     if (isset($_POST['hulp_radio_JA']) && !empty ($_POST['hulp_radio_JA']))
-        $hulp_radio=$_POST['hulp_radio_JA'];
+        $hulp_radio = $_POST['hulp_radio_JA'];
             
     //Data to create the feedback
     $post_data = array(
@@ -642,7 +635,10 @@ else if(isset($_POST['add_todo_persoonlijk']))
     update_field('hulp_nodig', $hulp_radio_JA, $post_id);
     update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
+    update_field('competencies_feedback', $competencies_feedback, $post_id);
+    update_field('rating_feedback', $rating_feedback, $post_id);
     update_field('opmerkingen', $opmerkingen, $post_id);
+    update_field('anoniem_feedback', $anoniem_feedback, $post_id);
 
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);

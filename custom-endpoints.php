@@ -1953,6 +1953,7 @@ function save_user_views(WP_REST_Request $request)
         'Read 7 podcasts !' ,
         'View the same topic more than 10 times'
 ];
+
     $array_badges = array();
 
     foreach ($occurences as $value) {
@@ -1960,10 +1961,12 @@ function save_user_views(WP_REST_Request $request)
         $count[$course_type]++;
     }
 
-    $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
     $trigger_badge = null;
     if($count['Artikel'] >= 1 && $count['Artikel'] < 50){
+        $level = 'basic';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[0];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[0];
@@ -1971,7 +1974,10 @@ function save_user_views(WP_REST_Request $request)
         array_push($array_badges, $object_badge);
     }
     if($count['Artikel'] >= 50){
+        $level = 'advance';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[1];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[1];
@@ -1979,7 +1985,10 @@ function save_user_views(WP_REST_Request $request)
         array_push($array_badges, $object_badge);
     }
     if($count['Video'] >= 10 && $count['Video'] < 50){
+        $level = 'pro';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[2];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[2];
@@ -1987,7 +1996,10 @@ function save_user_views(WP_REST_Request $request)
         array_push($array_badges, $object_badge);
     }
     if($count['Video'] >= 50){
+        $level = 'expert';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[3];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[3];
@@ -1995,7 +2007,10 @@ function save_user_views(WP_REST_Request $request)
         array_push($array_badges, $object_badge);
     }
     if($count['Podcast'] >= 7){
+        $level = 'pro';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
         $array_badge = array();
+        $array_badge['level'] = $level;
         $array_badge['libelle'] = $libelle_badges[4];
         $array_badge['image'] = $image_badge;
         $array_badge['trigger'] = $trigger_badges[4];
@@ -2003,12 +2018,15 @@ function save_user_views(WP_REST_Request $request)
         array_push($array_badges, $object_badge);
     }
     if($best_topic_views >= 10){
-      $array_badge = array();
-      $array_badge['libelle'] = $libelle_badges[5];
-      $array_badge['image'] = $image_badge;
-      $array_badge['trigger'] = $trigger_badges[5];
-      $object_badge = (Object)$array_badge;
-      array_push($array_badges, $object_badge);
+        $level = 'advance';
+        $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
+        $array_badge = array();
+        $array_badge['level'] = $level;
+        $array_badge['libelle'] = $libelle_badges[5];
+        $array_badge['image'] = $image_badge;
+        $array_badge['trigger'] = $trigger_badges[5];
+        $object_badge = (Object)$array_badge;
+        array_push($array_badges, $object_badge);
     }
 
     foreach($array_badges as $badge)
@@ -2044,8 +2062,9 @@ function save_user_views(WP_REST_Request $request)
 
         if(isset($badge_id))
             if($badge_id){
-                update_field('image_badge', $badge->image, $badge_id);
-                update_field('trigger_badge', $badge->trigger, $badge_id);
+              update_field('image_badge', $badge->image, $badge_id);
+              update_field('trigger_badge', $badge->trigger, $badge_id);
+              update_field('level_badge', $badge->level, $badge_id);
             }
       } 
 
