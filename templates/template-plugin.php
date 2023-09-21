@@ -66,7 +66,7 @@ if (isset($selectedValues)) {
 
         //Accord the author a company
         if (!is_wp_error($author_id)) {
-            update_field('company', $company, 'user_' . $author_id);
+            update_field('company', $company, 'user_' . $author_id); 
         }
 
         $span = $website . "wp-json/wp/v2/posts/";
