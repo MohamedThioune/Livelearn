@@ -179,16 +179,9 @@ $urls =
                            playlist audios
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="40" height="40">
                        </button>
-                   <div class="col-md-3">
-                        
-                        <select class="form form-control" id="select_field">
-                            <option value="">Get new contents from</option> 
-                            <?php foreach ($websites as $website)  ?>
-                                <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
-                        </select>
-                    </div>
-                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
-                    </div>
+                   
+                        <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
+                        </div>
                     </p>
 
                     <div class="inpustSearchDataBank">
