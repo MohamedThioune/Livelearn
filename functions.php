@@ -1832,5 +1832,10 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'xmlParse'
  ));
+
+ register_rest_route ('custom/v1', '/youtube', array(
+    'methods' => 'GET',
+    'callback' => 'youtubeEndpoint'
+ ));
   
 });
