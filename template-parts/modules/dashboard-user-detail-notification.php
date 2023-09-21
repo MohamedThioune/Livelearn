@@ -3,17 +3,17 @@
    /*
     * * Feedbacks
     */
+    $user_id = get_current_user_id();
     $args = array(
         'post_type' => 'feedback', 
-        'author' => $user->ID,
+        'author' => $user_id,
         'orderby' => 'post_date',
         'order' => 'DESC',
         'posts_per_page' => -1,
     );
 
     $todos = get_posts($args);
-    $user_id = get_current_user_id();
-    if($_GET['todo'] > 0 ){
+    if($_GET['todo'] > 0 ){ 
 
         $value = get_post($_GET['todo']);  
         if(!empty($value)){
@@ -31,7 +31,6 @@
                 $manager_display = $manager->display_name;
             }else
                 $manager_display = 'A manager';
-            
         
             if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
                 $beschrijving_feedback = get_field('beschrijving_feedback', $value->ID);
@@ -45,12 +44,9 @@
     }
 
     $state = false;
-    foreach($todos as $todo)
-        if($todo->ID == $_GET['todo']){
-            $state = true;
-            break;
-        }
-            
+    if($manager_id == $user_id)
+        $state = true;
+    
 ?>
 <div class="contentActivity">
     <h1 class="activityTitle">Detail Notification</h1>

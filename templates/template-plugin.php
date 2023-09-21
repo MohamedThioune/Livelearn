@@ -87,7 +87,7 @@ if (isset($selectedValues)) {
                         if (!isset($images['data']['status'])) {
                             $status = 'extern';
                             $datas = array(
-                                'titel' => $article['title']['rendered'],
+                                'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
                                 'type' => 'Artikel',
                                 'videos' => null,
                                 'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
@@ -107,7 +107,7 @@ if (isset($selectedValues)) {
                 } else {
                         $status = 'extern';
                         $datas = array(
-                            'titel' => $article['title']['rendered'],
+                            'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
                             'type' => 'Artikel',
                             'videos' => null,
                             'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
@@ -130,7 +130,7 @@ if (isset($selectedValues)) {
                 if (!isset($result_title[0])) {
                     $status = 'extern';
                     $datas = array(
-                        'titel' => $article['title']['rendered'],
+                        'titel' => htmlspecialchars(strip_html_tags($article['title']['rendered'])),
                         'type' => 'Artikel',
                         'videos' => null,
                         'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
