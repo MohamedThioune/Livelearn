@@ -983,6 +983,7 @@ if(isset($topic_search)){
                 </div>
             </a>';
         }
+
         $data['content'] = $block;
         $data['name'] = ($topic_search != 0) ? (String)get_the_category_by_ID($topic_search) : '';
 
