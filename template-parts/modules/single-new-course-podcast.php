@@ -9,9 +9,9 @@
 <?php
 //$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
 //$url = "https://anchor.fm/s/878cadd4/podcast/rss";
-$url = "https://feeds.buzzsprout.com/2145970.rss";
+//$url = "https://feeds.buzzsprout.com/2145970.rss";
 //$url = "https://aod.nrjaudio.fm/xml/169.xml";
-$xml = simplexml_load_file($url);
+//$xml = simplexml_load_file($url);
 ?>
 
 <?php
