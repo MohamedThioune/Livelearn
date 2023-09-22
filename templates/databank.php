@@ -221,10 +221,7 @@ $urls =
                                 <th scope="col">Status</th>
                                 <th scope="col">Author</th>
                                 <th scope="col">Company</th>
-                                <th class="tdCenter textThBorder">
-                                    <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔" />&nbsp;
-                                    <input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌" />
-                                </th>
+                                <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -257,7 +254,7 @@ $urls =
                                     <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                     <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                     <td class="textTh tdCenter"><?= $course->type; ?></td>
-                                    <td class="textTh tdCenter"><?= $course->prijs; ?></td>
+                                    <td class="textTh tdCenter textTh"><?= $course->prijs; ?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
                                         // if ($course->type != 'Video') {                                        
@@ -280,12 +277,20 @@ $urls =
                                         ?>
                                     </td>
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
-                                    <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
-                                    <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
-                                    <td class="tdCenter textThBorder">
-                                        <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔" />&nbsp;&nbsp;
-                                        <input tittle="remove" type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp;
-                                        <a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> 
+                                    <td class="textTh tdCenter textTh-center"> <?php if($course->author_id) echo ''; else echo 'author';  ?> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
+                                    <td class="textTh tdCenter textTh-center"> <?php if(!empty($company)) echo ''; else echo 'company';  ?> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
+                                    <td class="textTh">
+                                        <div class="dropdown text-white">
+                                            <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                                <img style="width:20px"
+                                                     src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                            </p>
+                                            <ul class="dropdown-menu dropdowwn-databank">
+                                                <li><i class="fa fa-check"></i><input tittle="edit" type="button" class="optie btn-default" id="accept" value="Validate" /></li>
+                                                <li><i class="fa fa-remove"></i><input tittle="remove" type="button" class="optie red btn-default" id="decline" value="Remove" /></li>
+                                                <li><i class="fa fa-gear"></i><a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" target="_blank" >Setting</a> </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php
