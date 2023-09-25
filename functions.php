@@ -1827,7 +1827,7 @@ add_action( 'rest_api_init', function () {
      'callback' => 'Artikel_From_Company'
   ));
 
-  register_rest_route ('custom/v1', '/xml', array(
+  register_rest_route ('custom/v1', '/xml/(?P<id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'xmlParse'
  ));
