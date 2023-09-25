@@ -1,0 +1,1127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<programs xmlns="http://studieData.nl/schema/edudex/program">
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate of participation</degree>
+    <offeredSince>2019-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">16</programDuration>
+    <programForm>part-time</programForm>
+    <programId>49756</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">Diploma terugwinnen Koudemiddel voor mobiele airco's</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11020</searchword>
+    <webLink xml:lang="nl">https://www.aerestech.nl/opleidingen-en-trainingen/trainingen/terugwinnen-koudemiddel-mobiele-airco?finderPage=%2Fopleidingen-en-trainingen&amp;filterSet=490d2e07-3c12-4fa9-9726-638433fb837a</webLink>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>52987</id>
+        <amount>907.00</amount>
+        <amountVAT>190.47</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Terugwinnen Koudemiddelen Mobiele Airco's</summaryText>
+      </cost>
+      <numberOfContactSessions>2</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>696463</id>
+      <status>application closed</status>
+      <startDate isFinal="true">2023-09-27</startDate>
+      <endDate isFinal="true">2023-09-28</endDate>
+      <cost>
+        <id>52987</id>
+        <amount>907.00</amount>
+        <amountVAT>190.47</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Terugwinnen Koudemiddelen Mobiele Airco's</summaryText>
+      </cost>
+      <courseDay>
+        <id>2765517</id>
+        <date>2023-09-27</date>
+        <name xml:lang="nl">Dag 1 </name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26374</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2765518</id>
+        <date>2023-09-28</date>
+        <name xml:lang="nl">Dag 2 </name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26374</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26374</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate of participation</degree>
+    <offeredSince>2019-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">16</programDuration>
+    <programForm>part-time</programForm>
+    <programId>49758</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">Airco Diagnose</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11021</searchword>
+    <webLink xml:lang="nl">https://www.aerestech.nl/opleidingen-en-trainingen/trainingen/airco-diagnose</webLink>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>52988</id>
+        <amount>631.00</amount>
+        <amountVAT>132.51</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Airco Diagnose</summaryText>
+      </cost>
+      <numberOfContactSessions>2</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>696465</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-16</startDate>
+      <endDate isFinal="false">2023-11-17</endDate>
+      <cost>
+        <id>52988</id>
+        <amount>631.00</amount>
+        <amountVAT>132.51</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Airco Diagnose</summaryText>
+      </cost>
+      <courseDay>
+        <id>2765520</id>
+        <date>2023-11-16</date>
+        <name xml:lang="nl">Dag 1</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>25692</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2765521</id>
+        <date>2023-11-17</date>
+        <name xml:lang="nl">Dag 2</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>25692</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>25692</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate of participation</degree>
+    <offeredSince>2019-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">24</programDuration>
+    <programForm>part-time</programForm>
+    <programId>49762</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">SKL Keurmeester Akkerbouwmachines</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11024</searchword>
+    <webLink xml:lang="nl">https://www.aerestech.nl/opleidingen-en-trainingen/trainingen/keurmeester-spuitapparatuur-akkerbouw</webLink>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>52991</id>
+        <amount>1208.00</amount>
+        <amountVAT>253.68</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">SKL Keurmeester Akkerbouwmachines</summaryText>
+      </cost>
+      <numberOfContactSessions>3</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>728424</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-24</startDate>
+      <endDate isFinal="false">2023-12-08</endDate>
+      <cost>
+        <id>52991</id>
+        <amount>1208.00</amount>
+        <amountVAT>253.68</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">SKL Keurmeester Akkerbouwmachines</summaryText>
+      </cost>
+      <courseDay>
+        <id>2930740</id>
+        <date>2023-11-24</date>
+        <name xml:lang="nl">Dag 1 </name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2930741</id>
+        <date>2023-12-01</date>
+        <name xml:lang="nl">Dag 2 </name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2930742</id>
+        <date>2023-12-08</date>
+        <name xml:lang="nl">Dag 3 Examen</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate of participation</degree>
+    <offeredSince>2019-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">24</programDuration>
+    <programForm>part-time</programForm>
+    <programId>49763</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">SKL Keurmeester Tuinbouwmachines</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11025</searchword>
+    <webLink xml:lang="nl">https://www.aerestech.nl/opleidingen-en-trainingen/trainingen/keurmeester-spuitapparatuur-tuinbouw</webLink>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>52992</id>
+        <amount>874.00</amount>
+        <amountVAT>183.54</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">3-daagse training</summaryText>
+      </cost>
+      <numberOfContactSessions>3</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>728427</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-29</startDate>
+      <endDate isFinal="false">2023-12-07</endDate>
+      <cost>
+        <id>52992</id>
+        <amount>874.00</amount>
+        <amountVAT>183.54</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">3-daagse training</summaryText>
+      </cost>
+      <courseDay>
+        <id>2930745</id>
+        <date>2023-11-29</date>
+        <name xml:lang="nl">Dag 1 </name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2930746</id>
+        <date>2023-12-04</date>
+        <name xml:lang="nl">Dag 2 </name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2930747</id>
+        <date>2023-12-07</date>
+        <name xml:lang="nl">Dag 3 Examen</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>12</maxNumberOfParticipants>
+    <minNumberOfParticipants>8</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree/>
+    <offeredSince>2019-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">8</programDuration>
+    <programForm>part-time</programForm>
+    <programId>53586</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">SKL Bijscholing Akkerbouwmachines</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11194</searchword>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>58067</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">1-daagse training</summaryText>
+      </cost>
+      <numberOfContactSessions>1</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>680748</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-10-12</startDate>
+      <endDate isFinal="false">2023-10-12</endDate>
+      <cost>
+        <id>58067</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">1-daagse training</summaryText>
+      </cost>
+      <courseDay>
+        <id>2689857</id>
+        <date>2023-10-12</date>
+        <name xml:lang="nl">SKL Bijscholing Akkerbouwmachines</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+    <programRun>
+      <id>680750</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-10-19</startDate>
+      <endDate isFinal="false">2023-10-19</endDate>
+      <cost>
+        <id>58067</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">1-daagse training</summaryText>
+      </cost>
+      <courseDay>
+        <id>2689860</id>
+        <date>2023-10-19</date>
+        <name xml:lang="nl">SKL Bijscholing Akkerbouwmachines</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+    <programRun>
+      <id>680751</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-07</startDate>
+      <endDate isFinal="false">2023-11-07</endDate>
+      <cost>
+        <id>58067</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">1-daagse training</summaryText>
+      </cost>
+      <courseDay>
+        <id>2689861</id>
+        <date>2023-11-07</date>
+        <name xml:lang="nl">SKL Bijscholing Akkerbouwmachines</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+    <programRun>
+      <id>680752</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-08</startDate>
+      <endDate isFinal="false">2023-11-08</endDate>
+      <cost>
+        <id>58067</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">1-daagse training</summaryText>
+      </cost>
+      <courseDay>
+        <id>2689862</id>
+        <date>2023-11-08</date>
+        <name xml:lang="nl">SKL Bijscholing Akkerbouwmachines</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+    <programRun>
+      <id>680753</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-22</startDate>
+      <endDate isFinal="false">2023-11-22</endDate>
+      <cost>
+        <id>58067</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">1-daagse training</summaryText>
+      </cost>
+      <courseDay>
+        <id>2689863</id>
+        <date>2023-11-22</date>
+        <name xml:lang="nl">SKL Bijscholing Akkerbouwmachines</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+    <programRun>
+      <id>680755</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-23</startDate>
+      <endDate isFinal="false">2023-11-23</endDate>
+      <cost>
+        <id>58067</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">1-daagse training</summaryText>
+      </cost>
+      <courseDay>
+        <id>2689866</id>
+        <date>2023-11-23</date>
+        <name xml:lang="nl">SKL Bijscholing Akkerbouwmachines</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26367</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26367</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>7</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate of participation</degree>
+    <offeredSince>2020-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">16</programDuration>
+    <programForm>part-time</programForm>
+    <programId>62130</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">APK 3 voor Land- en Bosbouwtrekkers</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11213</searchword>
+    <webLink xml:lang="nl">https://www.aerestech.nl/opleidingen-en-trainingen/trainingen/apk-3-voor-land-en-bosbouwtrekkers</webLink>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>88740</id>
+        <amount>734.00</amount>
+        <amountVAT>154.14</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">APK 3 voor Land-en Bosbouwtrekkers excl. examen</summaryText>
+      </cost>
+      <numberOfContactSessions>2</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>691165</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2023-11-14</startDate>
+      <endDate isFinal="true">2023-11-21</endDate>
+      <cost>
+        <id>88740</id>
+        <amount>734.00</amount>
+        <amountVAT>154.14</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">APK 3 voor Land-en Bosbouwtrekkers excl. examen</summaryText>
+      </cost>
+      <courseDay>
+        <id>2734694</id>
+        <date>2023-11-14</date>
+        <name xml:lang="nl">Dag 1</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26361</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2734695</id>
+        <date>2023-11-21</date>
+        <name xml:lang="nl">Dag 2</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26361</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26361</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate of participation</degree>
+    <offeredSince>2020-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">0</programDuration>
+    <programForm>part-time</programForm>
+    <programId>63015</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <teacher>
+      <id>24409</id>
+      <name>Ansjeliek Coolbergen</name>
+    </teacher>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">Praktijkopleiderstraining</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11220</searchword>
+    <webLink xml:lang="nl">https://www.aerestech.nl/opleidingen-en-trainingen/trainingen/praktijkopleiderstraining</webLink>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>65896</id>
+        <amount>984.00</amount>
+        <amountVAT>206.64</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Praktijkopleiderstraining</summaryText>
+      </cost>
+      <numberOfContactSessions>2</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>691568</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-11-09</startDate>
+      <endDate isFinal="false">2023-11-30</endDate>
+      <cost>
+        <id>65896</id>
+        <amount>984.00</amount>
+        <amountVAT>206.64</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Praktijkopleiderstraining</summaryText>
+      </cost>
+      <courseDay>
+        <id>2737403</id>
+        <date>2023-11-09</date>
+        <name xml:lang="nl">Dag 1</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26373</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>2737404</id>
+        <date>2023-11-30</date>
+        <name xml:lang="nl">Dag 2</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26373</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26373</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor>fb.coachview@aeres.nl</editor>
+  <expires>2023-10-01</expires>
+  <format/>
+  <generator/>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T00:00:00+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>group</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>none</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate of participation</degree>
+    <offeredSince>2021-01-01</offeredSince>
+    <orgUnitId>aerestech</orgUnitId>
+    <programDuration unit="hour">12</programDuration>
+    <programForm>part-time</programForm>
+    <programId>65364</programId>
+    <programLevel>none</programLevel>
+    <programLocation>n.v.t.</programLocation>
+    <programType>training</programType>
+  </programClassification>
+  <programCompetences/>
+  <programContacts/>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>NL</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <studyLoad period="hour">0</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl">Opfrisdag APK 3 voor Land- en Bosbouwtrekkers</programName>
+    <programSummaryText xml:lang="nl"/>
+    <programDescriptionText xml:lang="nl"/>
+    <searchword xml:lang="nl">11233</searchword>
+    <webLink xml:lang="nl">https://www.aerestech.nl/opleidingen-en-trainingen/trainingen/opfrisdag-en-herexamen-apk-3-voor-land-en-bosbouwtrekkers</webLink>
+  </programDescriptions>
+  <programExternalAcknowledgements/>
+  <programSchedule>
+    <genericProgramRun>
+      <cost>
+        <id>69491</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Opfrisdag APK 3</summaryText>
+      </cost>
+      <numberOfContactSessions>2</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>691169</id>
+      <status>application opened</status>
+      <startDate isFinal="false">2023-12-11</startDate>
+      <endDate isFinal="false">2023-12-11</endDate>
+      <cost>
+        <id>69491</id>
+        <amount>291.00</amount>
+        <amountVAT>61.11</amountVAT>
+        <amountIsFinal>false</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <summaryText xml:lang="nl">Opfrisdag APK 3</summaryText>
+      </cost>
+      <courseDay>
+        <id>2734701</id>
+        <date>2023-12-11</date>
+        <name xml:lang="nl">Opfrisdag APK 3</name>
+        <startTime>08:30:00</startTime>
+        <endTime>16:30:00</endTime>
+        <location>
+          <id>26361</id>
+          <locationName xml:lang="nl">Aeres Tech</locationName>
+          <address>Zandlaan 29</address>
+          <zipcode>6717 LN</zipcode>
+          <city>Ede</city>
+          <country>NL</country>
+        </location>
+      </courseDay>
+      <location>
+        <id>26361</id>
+        <locationName xml:lang="nl">Aeres Tech</locationName>
+        <address>Zandlaan 29</address>
+        <zipcode>6717 LN</zipcode>
+        <city>Ede</city>
+        <country>NL</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+</programs>
