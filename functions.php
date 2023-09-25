@@ -1822,7 +1822,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'update_user_smartphone_token',
   ));
 
-
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'

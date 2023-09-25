@@ -28,13 +28,14 @@ else
 
 
 $user = wp_get_current_user();
-$websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
+// $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
+$websites = ['smartwp','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
 
 $urls = 
     [
         'WorkPlace Academy'=>'https://workplaceacademy.nl/',
         'Ynno'=>'https://www.ynno.com/',
-        'DeZZP'=>'https://www.dezzp.nl/',
+        // 'DeZZP'=>'https://www.dezzp.nl/',
         'Aestate'=>'https://www.aestate.nl/',
         'Alba Concepts'=>'https://albaconcepts.nl/',
         'AM'=>'https://www.am.nl/',
@@ -179,16 +180,9 @@ $urls =
                            playlist audios
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="40" height="40">
                        </button>
-                   <div class="col-md-3">
-                        
-                        <select class="form form-control" id="select_field">
-                            <option value="">Get new contents from</option> 
-                            <?php foreach ($websites as $website)  ?>
-                                <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
-                        </select>
-                    </div>
-                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
-                    </div>
+                   
+                        <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
+                        </div>
                     </p>
 
                     <div class="inpustSearchDataBank">

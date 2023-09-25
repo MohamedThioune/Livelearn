@@ -9,6 +9,26 @@ require($page);
 $user_connected_id = get_current_user_id();
 $user_connected_head = wp_get_current_user();
 
+// View table name
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+// Get id of courses viewed from db
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
+$all_user_views = $wpdb->get_results($sql_request);
+$id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
+$expert_from_database = array();
+/**
+ * get experts doing the course by database
+ */
+$pricing = 0;
+$purchantage_on_top = 0;
+$purchantage_on_bottop = 0;
+foreach ($id_courses_viewed as $id_course) {
+    $course = get_post($id_course);
+    $expert_id = $course->post_author;
+    //if ($expert_id)
+    $expert_from_database[] = $expert_id;
+}
+$expert_from_database = array_unique($expert_from_database);
 // if($user_connected_id))
 //     header('Location: /dashboard/user/');
 
@@ -82,8 +102,6 @@ $i = 0;
 if(!empty($numbers_count))
     foreach ($numbers_count as $element) {
         $i++;
-        if($i >= 13)
-            break;
         $value = get_user_by('ID', $element['id']);
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
         $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -1329,20 +1347,23 @@ $saved = get_user_meta($user_id, 'course');
                         ?>
                     </select>
                 </div>
+                <div id="loader" class="spinner-border spinner-border-sm text-primary d-none" role="status"></div>
             </div>
-            <!--
-             <div class="dropdown show">
-                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Over de <b>laatste 7 dagen</b>
+            <!-- period -->
+            <div class="dropdown show">
+                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Over de <b id="complete-period">All time</b>
                 </a>
-                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Last 7 days</a>
-                    <a class="dropdown-item" href="#">Last 1 month</a>
-                    <a class="dropdown-item" href="#">Last 1 year</a>
-                    <a class="dropdown-item" href="#">All time</a>
+                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
+                    <select class="form-select selectSearchHome" id="period" multiple>
+                        <option value="all">All time</option>
+                        <option value="lastweek">Last 7 days</option>
+                        <option value="lastmonth">Last 1 month</option>
+                        <option value="lastyear">Last 1 year</option>
+                    </select>
                 </div>
-             </div>
-             -->
+            </div>
+            <!-- period -->
             <a href="/voor-opleiders/" class="zelf-block">
                 <p class="mr-2">Zelf ook een expert? </p>
                 <div class="all-expert">
@@ -1355,6 +1376,128 @@ $saved = get_user_meta($user_id, 'course');
             $num = 1;
             if(!empty($most_active_members)){
                 foreach($most_active_members as $user) {
+                    if($num==13)
+                        break;
+                    //get pricing from price of course
+                    foreach ($bunch_orders as $order) {
+                        foreach ($order->get_items() as $item) {
+                            //Get woo orders from user
+                            $id_course = intval($item->get_product_id()) - 1;
+                            $course = get_post($id_course);
+                            $prijs = get_field('price', $id_course);
+                            $favorited = get_field('favorited',$id_course);
+                            $tracker_views = get_field('tracker_views', $course->ID);
+                            //var_dump($prijs); //also null usualy
+                            if ($course->ID) {
+                                if ($course->post_author == $user->ID) { // $user->ID = expert
+                                    if ($prijs) {
+                                        $pricing = $pricing + $prijs * 20;
+                                    }
+                                    if ($favorited)
+                                        $pricing = $pricing + 40;
+                                    if ($tracker_views)
+                                        $pricing = $pricing + 15 + 1; // views and click
+                                }
+                                $pricing = $pricing + 100;
+                            }
+                        }
+                    }
+                    //get pricing from price of course
+
+                    /* get price from post doing by user for free course */
+                    $args = array(
+                        'author' => $user->ID,
+                        'post_status' => 'publish',
+                        'posts_per_page' => -1,
+                        'order' => 'DESC',
+                        'author' => $user->ID,
+                        //'date'=>get_the_date('Y-m-d'),
+                    );
+                    $courses_doing_by_this_user = get_posts($args);
+                    //var_dump($user->ID.'-'.$user->display_name ,$courses_doing_by_this_user);
+                    foreach ($courses_doing_by_this_user as $course) {
+                        $course_type = get_field('course_type', $course->ID);
+                        $prijs = get_field('price', $course->ID);
+                        $tracker_views = get_field('tracker_views', $course->ID);
+                        $tracker_views = $tracker_views ? $tracker_views : 0;
+                        $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
+                        //$reaction = get_field('reaction', $course->ID);
+
+                        //get pricing from type of course: course free
+                        if(!$prijs) {
+                            if ($course_type == 'Artikel') {
+                                $pricing = $pricing + 50;
+                                if ($tracker_views !=0) {
+                                    $pricing = $pricing + 1.25; //views+click
+                                }
+                                if ($favorited){
+                                    $pricing = $pricing + 5;
+                                }
+                            }
+                            else if ($course_type == 'Podcast') {
+                                $pricing = $pricing + 100;
+                                if ($favorited){
+                                    $pricing = $pricing + 10;
+                                }
+                            }
+                            else if ($course_type == 'Video') {
+                                $pricing = $pricing + 75;
+                                if ($tracker_views !=0) {
+                                    $pricing = $pricing + 3.5; //views+click+
+                                }
+                            }elseif ($course_type == 'Opleidingen' || $course_type == 'Training' || $course_type == 'Webinar' || $course_type == 'Workshop'){
+                                $pricing = $pricing + 100;
+                                if ($favorited){
+                                    $pricing = $pricing + 20;
+                                }
+                                if ($tracker_views !=0) {
+                                    $pricing = $pricing + 10;
+                                }
+                            }
+                        }
+                    }
+                    /* get price from post doing by user for free course */
+
+                    /**
+                     * put points on object user
+                     */
+                    $user->pricing = $pricing;
+                    /**
+                     * Get purchantages (courses courent year)/(courses last year)
+                     */
+                    // args to get artikel of current year
+                    $args_current_year = array(
+                        'post_type' =>'post',// array('post', 'course'),
+                        'post_status' => array('wc-processing', 'wc-completed'),
+                        'orderby' => 'date',
+                        'order' => 'DESC',
+                        'limit' => -1,
+                        'author' => $user->ID,
+                        'date_query'=>array(
+                            array(
+                                'after' => $start_of_current_year,
+                                'before' => $start_of_last_year,
+                                'inclusive' => true,
+                            ),
+                        ),
+                    );
+                    $courses_current_year = get_posts($args_current_year);
+                    // args to get artikel of last year
+                    $args_last_year = array(
+                        'date_query' => array(
+                            'after'     => $start_of_last_year,
+                            'before'    => $current_year . '-01-01',
+                            'inclusive' => true,
+                        ),
+                        'author' => $user->ID,
+                        'post_type'      => 'post',
+                        'posts_per_page' => -1, // Récupérer tous les articles de l'année passée
+                    );
+                    $courses_last_year = get_posts($args_last_year);
+                    $purchantage_on_top = $purchantage_on_top + count($courses_last_year);
+                    $purchantage_on_bottop = $purchantage_on_bottop + count($courses_current_year);
+                    $purcent = $purchantage_on_bottop ? number_format(( $purchantage_on_top/$purchantage_on_bottop )*100  , 2, '.', ',') : $purchantage_on_top;
+
                     $image_user = get_field('profile_img',  'user_' . $user->ID);
                     $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
@@ -1389,12 +1532,11 @@ $saved = get_user_meta($user_id, 'course');
                                     </div>
                                     <div class="iconeTextListCollection">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
-                                        <p class="number-brain"><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
+                                        <p class="number-brain"><?=number_format($user->pricing, 2, '.', ',')?></p>
                                     </div>
                                 </div>
-
                             </div>
-                            <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
+                            <p class="pourcentageCollection"><?= $purcent ?>%</p>
                         </div>
                     </a>
                 <?php }
@@ -1533,7 +1675,6 @@ $saved = get_user_meta($user_id, 'course');
             </div>
             <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
             <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
-
         </div>
     </div>
     <div class="blockCardBleu3">
@@ -1931,12 +2072,46 @@ $saved = get_user_meta($user_id, 'course');
                     topic_search: topic_search,
                 },
                 dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',topic_search)
+                },
                 success: function(data){
-                    console.log(data);
+                    console.log('elt : ',data);
                     $('#autocomplete_categorieen').html(data);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
                 }
             });
         });
     </script>
 
+    <script>
+        $('#period').change(function(){
+            var selectedOptions = $(this).find("option:selected")[0];
+            var period = selectedOptions.value;
+            var complete_period = selectedOptions.text;
+            $('#complete-period').html(complete_period);
 
+            $.ajax({
+                url:"/fetch-ajax-home2",
+                method:"post",
+                data:{
+                    period: period,
+                },
+                dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',period)
+                },
+                success: function(data){
+                    console.log('elt');
+                    $('#autocomplete_categorieen').html(data);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
+                }
+            });
+        });
+    </script>

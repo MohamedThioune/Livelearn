@@ -1,10 +1,7 @@
 
 <?php
 
-/*
-** Categories - all  *
-*/
-
+// Categories - all 
 $categories = array();
 
 $cats = get_categories(
@@ -16,15 +13,12 @@ $cats = get_categories(
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     )
 );
-
 foreach($cats as $category){
     $cat_id = strval($category->cat_ID);
     $category = intval($cat_id);
     array_push($categories, $category);
 }
-
 $subtopics = array();
-
 foreach($categories as $categ){
     //Topics
     $topicss = get_categories(
@@ -48,7 +42,7 @@ foreach($categories as $categ){
     }
 }
 
-$user = get_users(array('include'=> $_GET['id']))[0]->data;
+$user = get_users(array('include'=> $id_user))[0]->data;
 
 //Skills
 $topics_external = get_user_meta($user->ID, 'topic');
@@ -66,12 +60,78 @@ if(!empty($topics_internal))
 $skills_note = get_field('skills', 'user_' . $user->ID);
  
 //Is a manager + company + phone + bio
-$manageds = get_field('managed',  'user_' . $id_user);
+$manageds = get_field('managed',  'user_' . $user->ID);
 $is_a_manager = (!empty($manageds)) ? 'Manager' : 'Employee';
 $display_company = (!empty($company)) ? $company->post_title : 'No company';
 $phone = (!empty($phone)) ? $phone : '(xx) xxx xxx xx';
 $biographical_info = (!empty($biographical_info)) ? $biographical_info : "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
 Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+
+
+// Feedbacks
+$args = array(
+    'post_type' => 'feedback', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+$todos = get_posts($args);
+$feedbacks = array();
+$persoonlijk_ontwikkelplan = array();
+$beoordeling_gesprek = array();
+$compliments = array();
+$gedeelde_cursus = array();
+$verplichte_cursus = array();
+if(!empty($todos))
+    foreach($todos as $key=>$todo):
+        if($key == 8)
+            break;
+
+        $type = get_field('type_feedback', $todo->ID);
+        $todo->manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+        $todo->manager_image = get_field('profile_img',  'user_' . $todo->manager->ID);
+        if(!$image)
+            $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+        switch ($type) {
+            case 'Feedback':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($feedbacks, $todo);
+                break;
+            case 'Compliment':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($compliments, $todo);
+                break;
+            case 'Persoonlijk ontwikkelplan':
+                $todo->beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                array_push($persoonlijk_ontwikkelplan, $todo);
+                break;
+            case 'Beoordeling Gesprek':
+                $todo->beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                array_push($beoordeling_gesprek, $todo);
+                break;
+            case 'Gedeelde cursus':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($gedeelde_cursus, $todo);
+                break;
+            case 'Verplichte cursus':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($verplichte_cursus, $todo);
+                break;
+        }
+    endforeach;
+
+// Badges
+$args = array(
+    'post_type' => 'badge', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+$badges = get_posts($args);
 ?>
 <!-- Latest BS-Select compiled and minified CSS/JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
@@ -229,7 +289,7 @@ Outside of let'say all the information that could be deemed relevant to a allow 
             </ul>
 
             <?php
-            if(empty($topics)):
+            if(!empty($topics)):
             ?>
             <ul id="Skills" class="hide">
                 <div class="content-card-skills content-card-skills-profil">
@@ -274,7 +334,7 @@ Outside of let'say all the information that could be deemed relevant to a allow 
 
             <ul id="Verplichte-training" class="hide">
                 <div class="sub-to-do d-flex justify-content-between align-items-center">
-                    <p class="text-to-do-for">To do's for Mamadou</p>
+                    <p class="text-to-do-for">To do's for <?= $user->display_name ?></p>
                     <button class="btn btn-add-to-do" type="button" data-toggle="modal" data-target="#to-do-Modal">Add to do</button>
 
                     <!-- Modal Add to do -->
@@ -1621,7 +1681,7 @@ Outside of let'say all the information that could be deemed relevant to a allow 
 
             <ul id="Certificaten" class="hide">
                 <div class="sub-to-do d-flex justify-content-between align-items-center">
-                    <p class="text-to-do-for">Achievements by Mamadou</p>
+                    <p class="text-to-do-for">Achievements by <?= $user->display_name ?></p>
                     <button class="btn btn-add-to-do" type="button" data-toggle="modal" data-target="#Add-achievement-Modal">Add achievement</button>
 
                     <!-- Modal Add Add achievement -->
@@ -1836,14 +1896,14 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" class="form-to-do" action="/dashboard/user">
                                             <div class="form-group">
                                                 <label for="">Titel van de prestatie</label>
                                                 <input type="text" class="form-control" id="" name="" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Beschrijf de prestatie</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="" id="" rows="3" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <div class="d-flex w-100 justify-content-between">
@@ -1946,8 +2006,11 @@ Outside of let'say all the information that could be deemed relevant to a allow 
 
                     <div class="content-tab">
                         <div class="content-button-tabs">
+                            <?php
+                            $count_badges = (!empty($badges)) ? count($badges) : 0;
+                            ?>
                             <button  data-tab="Badges" class="b-nav-tab btn active">
-                                Badges<span class="number-content">10</span>
+                                Badges<span class="number-content"><?= $count_badges ?></span>
                             </button>
                             <button  data-tab="Certificates" class="b-nav-tab btn">
                                 Certificates <span class="number-content">0</span>
@@ -1961,73 +2024,60 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                         </div>
 
                         <div id="Badges" class="b-tab active contentBlockSetting">
+                            <?php
+                            if (!empty($badges)):
+                            ?>
                             <div class="block-with-content-badge d-flex flex-wrap">
+                                <?php
+                                foreach ($badges as $key => $badge):
+                                // Image + trigger
+                                $image_badge = get_field('image_badge', $badge->ID);
+                                $trigger_badge = get_field('trigger_badge', $badge->ID);
+                                $level_badge = get_field('level_badge', $badge->ID);
+                                ?>
                                 <div class="card-badge">
                                     <div class="img-card-badge">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
+                                        <img src="<?= $image_badge ?>" alt="">
                                     </div>
-                                    <p class="title-badge">Badge Profil</p>
-                                    <p class="statut-text">Your profil is complete at 100%</p>
+                                    <p class="title-badge">Badge <?= $level_badge ?></p>
+                                    <p class="statut-text"><?= $badge->post_title ?></p>
                                     <div class="bar-badge"></div>
-                                    <p class="statut-badge">Unlocked</p>
+                                    <p class="statut-badge"><?= $trigger_badge ?></p>
                                 </div>
-                                <div class="card-badge">
-                                    <div class="img-card-badge">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-advance.png" alt="">
-                                    </div>
-                                    <p class="title-badge">Badge Profil</p>
-                                    <p class="statut-text">Your profil is complete at 100%</p>
-                                    <div class="bar-badge"></div>
-                                    <p class="statut-badge">Unlocked</p>
-                                </div>
-                                <div class="card-badge">
-                                    <div class="img-card-badge">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-pro.png" alt="">
-                                    </div>
-                                    <p class="title-badge">Badge Profil</p>
-                                    <p class="statut-text">Your profil is complete at 100%</p>
-                                    <div class="bar-badge"></div>
-                                    <p class="statut-badge">Unlocked</p>
-                                </div>
-                                <div class="card-badge">
-                                    <div class="img-card-badge">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-expert.png" alt="">
-                                    </div>
-                                    <p class="title-badge">Badge Profil</p>
-                                    <p class="statut-text">Your profil is complete at 100%</p>
-                                    <div class="bar-badge"></div>
-                                    <p class="statut-badge">Unlocked</p>
-                                </div>
-                                <div class="card-badge">
-                                    <div class="img-card-badge">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
-                                    </div>
-                                    <p class="title-badge">Badge Profil</p>
-                                    <p class="statut-text">Your profil is complete at 100%</p>
-                                    <div class="bar-badge"></div>
-                                    <p class="statut-badge">Unlocked</p>
-                                </div>
+                                <?php
+                                endforeach;
+                                ?>
                             </div>
+                            <?php
+                            else:
+                            ?>
+                                <div class="block-empty-content">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                    <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-achievement-Modal">Geef <span><?= $user->display_name ?></span> waardering</button>
+                                </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Certificates" class="b-tab contentBlockSetting">
                             <div class="block-empty-content">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                                <a href="" class="btn btn-creer-eeen">Geef <span><?= $user->display_name ?></span> waardering</a>
                             </div>
                         </div>
 
                         <div id="Prestaties" class="b-tab contentBlockSetting">
                             <div class="block-empty-content">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                                <a href="" class="btn btn-creer-eeen">Geef <span><?= $user->display_name ?></span> waardering</a>
                             </div>
                         </div>
 
                         <div id="Diploma" class="b-tab contentBlockSetting">
                             <div class="block-empty-content">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Geef <span>Mamadou</span> waardering</a>
+                                <a href="" class="btn btn-creer-eeen">Geef <span><?= $user->display_name ?></span> waardering</a>
                             </div>
                         </div>
 
@@ -2044,96 +2094,96 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Courses done</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">12</p>
+                                <p class="text-stat"><?= $progress_courses['done'] ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Training Costs:</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">€1.415,-</p>
+                                <p class="text-stat"><?= $budget_spent ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Average Training Hours</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">3,5 hours <span>/ 1,5 hours</span> </p>
+                                <p class="text-stat">x hours <span>/ x hours</span> </p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Courses in progress</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">2</p>
+                                <p class="text-stat"><?= $progress_courses['in_progress'] ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Assessments done</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">2</p>
+                                <p class="text-stat"><?= $assessment_validated ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Mandatory courses done</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">0/2</p>
+                                <p class="text-stat">0/<?= $count_mandatories ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -2149,7 +2199,7 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div>
                                 </div>
-                                <p class="text-stat">12</p>
+                                <p class="text-stat">x</p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -2165,23 +2215,23 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div>
                                 </div>
-                                <p class="text-stat">56</p>
+                                <p class="text-stat">x</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Feedback given on average</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat">3,6 <span>/ 4,3</span></p>
+                                <p class="text-stat"><?= $score_rate_feedback ?> <span>/ 5 (4,3)</span></p>
                             </div>
                         </div>
                     </div>
@@ -2225,16 +2275,16 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                             </div>
                                             <p class="text-subTopics">Articles</p>
                                         </div>
-                                        <p class="number">76%</p>
+                                        <p class="number">78%</p>
                                     </a>
                                     <a href="" class="element-SubTopics d-flex justify-content-between">
                                         <div class="d-flex">
                                             <div class="imgTopics">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
                                             </div>
-                                            <p class="text-subTopics">Articles</p>
+                                            <p class="text-subTopics">Videos</p>
                                         </div>
-                                        <p class="number">76%</p>
+                                        <p class="number">90%</p>
                                     </a>
                                     <a href="" class="element-SubTopics d-flex justify-content-between">
                                         <div class="d-flex">
@@ -2264,30 +2314,30 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                <div class="theme-card-statistiken-1 height-fit-content mb-3">
                                    <div class="head-card d-flex justify-content-between align-items-center">
                                        <p class="title">Feedback received</p>
-                                       <div class="select">
+                                       <!-- <div class="select">
                                            <select>
                                                <option value="Year">Year</option>
                                                <option value="Month">Month</option>
                                                <option value="Day">Day</option>
                                            </select>
                                            <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                       </div>
+                                       </div> -->
                                    </div>
-                                   <p class="text-stat">2</p>
+                                   <p class="text-stat"><?= $count_feedback_received ?></p>
                                </div>
                                <div class="theme-card-statistiken-1 height-fit-content">
                                    <div class="head-card d-flex justify-content-between align-items-center">
                                        <p class="title">Feedback given</p>
-                                       <div class="select">
+                                       <!-- <div class="select">
                                            <select>
                                                <option value="Year">Year</option>
                                                <option value="Month">Month</option>
                                                <option value="Day">Day</option>
                                            </select>
                                            <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                       </div>
+                                       </div> -->
                                    </div>
-                                   <p class="text-stat">2</p>
+                                   <p class="text-stat"><?= $count_feedback_given ?></p>
                                </div>
                            </div>
                         </div>
@@ -2295,19 +2345,42 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Most Viewed Topics</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <p class="text-stat"></p>
-                                <div class="empty-topic-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-topic.png" alt="">
-                                </div>
+                                <?php
+                                if($topic_views):
+                                    foreach($topic_views as $topic):
+                                        $value = $topic->data_id;
+                                        $occurence = $topic->occurence;
+                                        $name_topic = (String)get_the_category_by_ID($value);
+                                        $image_topic = get_field('image', 'category_'. $value);
+                                        $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';
+                                        ?>
+                                        <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
+                                            <div class="d-flex">
+                                                <div class="imgTopics">
+                                                    <img src="<?= $image_topic ?>" alt="">
+                                                </div>
+                                                <p class="text-subTopics"><?= $name_topic ?></p>
+                                            </div>
+                                            <p class="number"><?= $occurence ?></p>
+                                        </a>
+                                    <?php
+                                    endforeach;
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                             <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -2679,7 +2752,7 @@ Outside of let'say all the information that could be deemed relevant to a allow 
 
             <ul id="Feedback" class="hide">
                 <div class="sub-to-do d-flex justify-content-between align-items-center">
-                    <p class="text-to-do-for">Feedback for Mamadou</p>
+                    <p class="text-to-do-for">Feedback for <?= $user->display_name ?></p>
                     <button class="btn btn-add-to-do" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Add Feedback</button>
 
                     <!-- Modal Add to do -->
@@ -2736,32 +2809,36 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" class="form-to-do" action="/dashboard/user">
+                                            <input type="hidden" name="type" value="Feedback">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
+
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van feedback</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_feedback" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Beschrijf de feedback</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="beschrijving_feedback" id="" rows="3" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Competenties waar de feedback over gaat</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="competencies_feedback" id="" rows="3" required></textarea>
                                             </div>
                                             <div class="form-group position-relative">
                                                 <label for="">Geef een rating </label>
                                                 <div class="rating-element">
                                                     <div class="rating">
-                                                        <input type="radio" id="star5-Geef" class="stars" name="rating-Geef" value="5" />
+                                                        <input type="radio" id="star5-Geef" class="stars" name="rating_feedback" value="5" />
                                                         <label class="star" for="star5-Geef" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Geef" class="stars" name="rating-Geef" value="4" />
+                                                        <input type="radio" id="star4-Geef" class="stars" name="rating_feedback" value="4" />
                                                         <label class="star" for="star4-Geef" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Geef" class="stars" name="rating-Geef" value="3" />
+                                                        <input type="radio" id="star3-Geef" class="stars" name="rating_feedback" value="3" />
                                                         <label class="star" for="star3-Geef" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Geef" class="stars" name="rating-Geef" value="2" />
+                                                        <input type="radio" id="star2-Geef" class="stars" name="rating_feedback" value="2" />
                                                         <label class="star" for="star2-Geef" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Geef" name="rating-Geef" value="1" />
+                                                        <input type="radio" id="star1-Geef" name="rating_feedback" value="1" />
                                                         <label class="star" for="star1-Geef" class="stars" title="Bad" aria-hidden="true"></label>
                                                     </div>
                                                     <span class="rating-counter"></span>
@@ -2769,15 +2846,14 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Hoe te verbeteren / overige opmerkingen?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="opmerkingen" id="" rows="5" required></textarea>
                                             </div>
                                             <div class="form-group d-flex checkbokElement">
-                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
-                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                                <input type="checkbox" id="anoniem-versturen" name="anoniem_feedback" value="JA">
+                                                <label class="sub-label-check" for="anoniem-versturen">Anoniem versturen ?</label>
                                             </div>
 
-
-                                            <button class="btn btn-submi-form-to-do">Stuur feedback</button>
+                                            <button type="submit" class="btn btn-submi-form-to-do" name="add_todo_feedback">Stuur feedback</button>
 
                                         </form>
                                     </div>
@@ -2791,32 +2867,36 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" class="form-to-do" action="/dashboard/user">
+                                            <input type="hidden" name="type" value="Persoonlijk ontwikkelplan">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
+
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van ontwikkelplan</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_persoonlijk" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Competenties waar het ontwikkelen over gaat</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" id="" rows="3" name="competencies_feedback" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Wat wil je dat er bereikt wordt?</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="wat_bereiken" id="" rows="3" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Hoe denk je dat dit het best bereikt kan worden? </label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="hoe_bereiken" id="" rows="3" required></textarea>
                                             </div>
                                             <div class="form-group d-flex">
                                                 <label for="">Denk je dat er hulp bij nodig is?</label>
                                                 <div class="d-flex">
                                                     <div class="d-flex checkbokElement mr-3">
-                                                        <input type="checkbox" id="Ja" name="Denk" value="Ja">
+                                                        <input type="radio" id="JA" name="hulp_radio_JA" value="JA">
                                                         <label class="sub-label-check" for="Anoniem-versturen?">Ja</label>
                                                     </div>
                                                     <div class="d-flex checkbokElement ">
-                                                        <input type="checkbox" id="Nee" name="Denk" value="Nee">
+                                                        <input type="radio" id="NEE" name="hulp_radio_JA" value="NEE">
                                                         <label class="sub-label-check" for="Nee">Nee</label>
                                                     </div>
                                                 </div>
@@ -2825,31 +2905,31 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                                 <label for="">Huidige waardering (voor ontwikkelplan)</label>
                                                 <div class="rating-element">
                                                     <div class="rating">
-                                                        <input type="radio" id="star5-Huidige" class="stars" name="rating-Geef" value="5" />
-                                                        <label class="star" for="star5-Huidige" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Huidige" class="stars" name="rating-Geef" value="4" />
-                                                        <label class="star" for="star4-Huidige" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Huidige" class="stars" name="rating-Geef" value="3" />
-                                                        <label class="star" for="star3-Huidige" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Huidige" class="stars" name="rating-Geef" value="2" />
-                                                        <label class="star" for="star2-Huidige" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Huidige" name="rating-Geef" value="1" />
-                                                        <label class="star" for="star1-Huidige" class="stars" title="Bad" aria-hidden="true"></label>
+                                                        <input type="radio" id="star5-Geef" class="stars" name="rating_feedback" value="5" />
+                                                        <label class="star" for="star5-Geef" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4-Geef" class="stars" name="rating_feedback" value="4" />
+                                                        <label class="star" for="star4-Geef" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3-Geef" class="stars" name="rating_feedback" value="3" />
+                                                        <label class="star" for="star3-Geef" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2-Geef" class="stars" name="rating_feedback" value="2" />
+                                                        <label class="star" for="star2-Geef" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1-Geef" name="rating_feedback" value="1" />
+                                                        <label class="star" for="star1-Geef" class="stars" title="Bad" aria-hidden="true"></label>
                                                     </div>
                                                     <span class="rating-counter"></span>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="">Overige opmerkingen?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <label for="">Overrige opmerkingen?</label>
+                                                <textarea class="message-area" name="opmerkingen" id="" rows="5" required></textarea>
                                             </div>
                                             <div class="form-group d-flex checkbokElement">
-                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
-                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                                <input type="checkbox" id="anoniem-versturen" name="anoniem_feedback" value="JA">
+                                                <label class="sub-label-check" for="anoniem-versturen">Anoniem versturen ?</label>
                                             </div>
 
-                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+                                            <button name="add_todo_persoonlijk" type="submit" class="btn btn-submi-form-to-do">Stuur</button>
 
                                         </form>
                                     </div>
@@ -2863,72 +2943,63 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" class="form-to-do" action="/dashboard/user">
+                                            <input type="hidden" name="type" value="Beoordeling Gesprek">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van beoordeling</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_beoordelingsgesprek" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Competenties waar de beoordeling over gaat</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="competencies_feedback" id="" rows="3" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Algemene beoordeling bovenstaande competenties</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="algemene_beoordeling" id="" rows="3" required></textarea>
                                             </div>
-                                            <div class="form-group position-relative">
-                                                <label for="">Beoordeling competentie “Skill A”</label>
-                                                <div class="rating-element">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Beoordeling" class="stars" name="rating-Beoordeling" value="5" />
-                                                        <label class="star" for="star5-Beoordeling" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Beoordeling" class="stars" name="rating-Beoordeling" value="4" />
-                                                        <label class="star" for="star4-Beoordeling" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Beoordeling" class="stars" name="rating-Beoordeling" value="3" />
-                                                        <label class="star" for="star3-Beoordeling" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Beoordeling" class="stars" name="rating-Beoordeling" value="2" />
-                                                        <label class="star" for="star2-Beoordeling" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Beoordeling" name="rating-Geef" value="1" />
-                                                        <label class="star" for="star1-Beoordeling" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group position-relative">
-                                                <label for="">Beoordeling competentie “Skill B”</label>
-                                                <div class="rating-element">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="5" />
-                                                        <label class="star" for="star5-Beoordeling-2" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="4" />
-                                                        <label class="star" for="star4-Beoordeling-2" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="3" />
-                                                        <label class="star" for="star3-Beoordeling-2" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="2" />
-                                                        <label class="star" for="star2-Beoordeling-2" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Beoordeling-2" name="rating-Geef" value="1" />
-                                                        <label class="star" for="star1-Beoordeling-2" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                            </div>
+                                            <?php
+                                            $internal_growth_subtopics = get_user_meta($user->ID,'topic_affiliate');
+                                            if(!empty($internal_growth_subtopics))
+                                                foreach($internal_growth_subtopics as $key =>  $value){
+                                                    echo '<div class="form-group position-relative">';
+                                                    echo '<label for="">Beoordeling competentie “'.lcfirst((String)get_the_category_by_ID($value)).'”</label>';
+                                                    echo '<div class="rating-element">';
+                                                    echo '<div class="rating" id="selected_stars_'.($key+1).'">
+                                                            <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                            <label class="star mt-4" for="star5_'.$key.'" title="Awesome" aria-hidden="true"></label>
+                                                            <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                            <label class="star mt-4" for="star4_'.$key.'" title="Great" aria-hidden="true"></label>
+                                                            <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                            <label class="star mt-4" for="star3_'.$key.'" title="Very good" aria-hidden="true"></label>
+                                                            <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                            <label class="star mt-4" for="star2_'.$key.'" title="Good" aria-hidden="true"></label>
+                                                            <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                            <label class="star mt-4" for="star1_'.$key.'" title="Bad" aria-hidden="true"></label>
+                                                          </div>';
+                                                    echo '<span class="rating-counter"></span>';
+                                                    echo '</div>';
+                                                    echo '</div>';
+                                                }
+                                            ?>
                                             <div class="form-group">
                                                 <label for="dateDone">Voor welke datum?</label>
                                                <div class="d-flex">
-                                                   <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
-                                                   <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]">
+                                                    <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ"  name="welke_datum_feedback[]">
                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Overige opmerkingen?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="opmerkingen" id="" rows="5" required></textarea>
                                             </div>
                                             <div class="form-group d-flex checkbokElement">
-                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
-                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                                <input type="checkbox" id="anoniem-versturen" name="anoniem_feedback" value="JA">
+                                                <label class="sub-label-check" for="anoniem-versturen">Anoniem versturen ?</label>
                                             </div>
 
-                                            <button class="btn btn-submi-form-to-do">Stuur feedback</button>
+                                            <button name="add_todo_beoordelingsgesprek" type="submit" class="btn btn-submi-form-to-do">Stuur</button>
 
                                         </form>
 
@@ -2943,72 +3014,63 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" class="form-to-do" action="/dashboard/user">
+                                            <input type="hidden" name="type" value="Compliment">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van Compliment</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_beoordelingsgesprek" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Competenties waar het compliment over gaat</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="competencies_feedback" id="" rows="3" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Waarom een compliment?</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="beschrijving_feedback" id="" rows="3" required></textarea>
                                             </div>
-                                            <div class="form-group position-relative">
-                                                <label for="">Compliment competentie “Skill A”</label>
-                                                <div class="rating-element">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Beoordeling" class="stars" name="rating-Beoordeling" value="5" />
-                                                        <label class="star" for="star5-Beoordeling" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Beoordeling" class="stars" name="rating-Beoordeling" value="4" />
-                                                        <label class="star" for="star4-Beoordeling" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Beoordeling" class="stars" name="rating-Beoordeling" value="3" />
-                                                        <label class="star" for="star3-Beoordeling" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Beoordeling" class="stars" name="rating-Beoordeling" value="2" />
-                                                        <label class="star" for="star2-Beoordeling" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Beoordeling" name="rating-Geef" value="1" />
-                                                        <label class="star" for="star1-Beoordeling" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group position-relative">
-                                                <label for="">Compliment competentie “Skill B”</label>
-                                                <div class="rating-element">
-                                                    <div class="rating">
-                                                        <input type="radio" id="star5-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="5" />
-                                                        <label class="star" for="star5-Beoordeling-2" title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio" id="star4-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="4" />
-                                                        <label class="star" for="star4-Beoordeling-2" title="Great" aria-hidden="true"></label>
-                                                        <input type="radio" id="star3-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="3" />
-                                                        <label class="star" for="star3-Beoordeling-2" title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star2-Beoordeling-2" class="stars" name="rating-Beoordeling-2" value="2" />
-                                                        <label class="star" for="star2-Beoordeling-2" title="Good" aria-hidden="true"></label>
-                                                        <input type="radio" id="star1-Beoordeling-2" name="rating-Geef" value="1" />
-                                                        <label class="star" for="star1-Beoordeling-2" class="stars" title="Bad" aria-hidden="true"></label>
-                                                    </div>
-                                                    <span class="rating-counter"></span>
-                                                </div>
-                                            </div>
+                                            <?php
+                                            $internal_growth_subtopics = get_user_meta($user->ID,'topic_affiliate');
+                                            if(!empty($internal_growth_subtopics))
+                                                foreach($internal_growth_subtopics as $key =>  $value){
+                                                    echo '<div class="form-group position-relative">';
+                                                    echo '<label for="">Beoordeling competentie “'.lcfirst((String)get_the_category_by_ID($value)).'”</label>';
+                                                    echo '<div class="rating-element">';
+                                                    echo '<div class="rating" id="selected_stars_'.($key+1).'">
+                                                            <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                            <label class="star mt-4" for="star5_'.$key.'" title="Awesome" aria-hidden="true"></label>
+                                                            <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                            <label class="star mt-4" for="star4_'.$key.'" title="Great" aria-hidden="true"></label>
+                                                            <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                            <label class="star mt-4" for="star3_'.$key.'" title="Very good" aria-hidden="true"></label>
+                                                            <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                            <label class="star mt-4" for="star2_'.$key.'" title="Good" aria-hidden="true"></label>
+                                                            <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                            <label class="star mt-4" for="star1_'.$key.'" title="Bad" aria-hidden="true"></label>
+                                                          </div>';
+                                                    echo '<span class="rating-counter"></span>';
+                                                    echo '</div>';
+                                                    echo '</div>';
+                                                }
+                                            ?>
                                             <div class="form-group">
                                                 <label for="dateDone">Compliment voor de periode van .. tot</label>
                                                 <div class="d-flex">
-                                                    <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
-                                                    <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                    <input type="date" class="form-control mr-3" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]">
+                                                    <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ"  name="welke_datum_feedback[]">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Overige opmerkingen?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="opmerkingen" id="" rows="5"></textarea>
                                             </div>
                                             <div class="form-group d-flex checkbokElement">
-                                                <input type="checkbox" id="Anoniem" name="Anoniem-versturen?" value="Anoniem versturen?">
-                                                <label class="sub-label-check" for="Anoniem-versturen?">Anoniem versturen?</label>
+                                                <input type="checkbox" id="anoniem-versturen" name="anoniem_feedback" value="JA">
+                                                <label class="sub-label-check" for="anoniem-versturen">Anoniem versturen ?</label>
                                             </div>
 
-                                            <button class="btn btn-submi-form-to-do">Stuur feedback</button>
+                                            <button name="add_todo_beoordelingsgesprek" type="submit" class="btn btn-submi-form-to-do">Stuur</button>
 
                                         </form>
 
@@ -3022,27 +3084,57 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                 <div class="body-content-to-do">
                     <div class="content-tab">
                         <div class="content-button-tabs">
-                            <button  data-tab="AllFeddback" class="b-nav-tab btn active">
-                                All <span class="number-content">14</span>
+                            <?php
+                            $count_todos = (!empty($todos)) ? count($todos) : 0;
+                            ?>
+                            <button data-tab="AllFeddback" class="b-nav-tab btn active">
+                                All <span class="number-content"><?= $count_todos ?></span>
                             </button>
-                            <button  data-tab="FeddbackSecond" class="b-nav-tab btn">
-                                Feedback <span class="number-content">2</span>
+                            <?php
+                            $count_feedback = (!empty($feedbacks)) ? count($feedbacks) : 0;
+                            ?>
+                            <button data-tab="FeddbackSecond" class="b-nav-tab btn">
+                                Feedback <span class="number-content"><?= $count_feedback ?></span>
                             </button>
-                            <button  data-tab="Ontwikkelplan" class="b-nav-tab btn">
-                                Ontwikkelplan <span class="number-content">5</span>
+                            <?php
+                            $count_ontwikkelplan = (!empty($persoonlijk_ontwikkelplan)) ? count($persoonlijk_ontwikkelplan) : 0;
+                            ?>
+                            <button data-tab="Ontwikkelplan" class="b-nav-tab btn">
+                                Ontwikkelplan <span class="number-content"><?= $count_ontwikkelplan ?></span>
                             </button>
-                            <button  data-tab="Beoordeling" class="b-nav-tab btn">
-                                Beoordeling <span class="number-content">2</span>
+                            <?php
+                            $count_beoordeling = (!empty($beoordeling_gesprek)) ? count($beoordeling_gesprek) : 0;
+                            ?>
+                            <button data-tab="Beoordeling" class="b-nav-tab btn">
+                                Beoordeling <span class="number-content"><?= $count_beoordeling ?></span>
                             </button>
-                            <button  data-tab="Compliment" class="b-nav-tab btn">
-                                Compliment <span class="number-content">4</span>
+                            <?php
+                            $count_compliment = (!empty($compliments)) ? count($compliments) : 0;
+                            ?>
+                            <button data-tab="Compliment" class="b-nav-tab btn">
+                                Compliment <span class="number-content"><?= $count_compliment ?></span>
                             </button>
-                            <button  data-tab="empty-" class="b-nav-tab btn">
-                                Empty <span class="number-content">O</span>
-                            </button>
+                            <?php
+                            $count_verplichte = (!empty($verplichte_cursus)) ? count($verplichte_cursus) : 0;
+                            ?>
+                            <!-- <button data-tab="Verplichte" class="b-nav-tab btn">
+                                Verplichte <span class="number-content"><?= $count_verplichte ?></span>
+                            </button> -->
+                            <?php
+                            $count_gedeelde = (!empty($gedeelde_cursus)) ? count($gedeelde_cursus) : 0;
+                            ?>
+                            <!-- <button data-tab="Gedeelde" class="b-nav-tab btn">
+                            Gedeelde <span class="number-content"><?= $count_gedeelde?></span>
+                            </button> -->
+                            <!-- <button data-tab="empty-" class="b-nav-tab btn">
+                                Empty <span class="number-content">0</span>
+                            </button> -->
                         </div>
 
                         <div id="AllFeddback" class="b-tab active contentBlockSetting">
+                            <?php
+                            if(!empty($todos)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -3050,119 +3142,112 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                     <th scope="col">Type</th>
                                     <th scope="col">Rating</th>
                                     <th scope="col">Details</th>
-                                    <th scope="col">Due-date</th>
+                                    <!-- <th scope="col">Due-date</th> -->
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                    <?php
+                                    foreach($todos as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = get_field('type_feedback', $todo->ID);
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+
+                                    $rating = get_field('rating_feedback', $todo->ID);
+                                    $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+
+                                    $max_rate = 0;
+                                    $stars = 0;
+                                    if($type == 'Beoordeling Gesprek'){
+                                        $rates_comment = explode(';', get_field('rate_comments', $todo->ID));
+                                        $max_rate = count($rates_comment);
+                                        $count_rate = 0;
+                                        $stars = 0;
+                                        for($i=0; $i<$max_rate; $i++){
+                                            $stars = $stars + intval($rates_comment[$i+1]);
+                                            $count_rate += 1;
+                                            $i = $i + 2;
+                                        }
+                                        
+                                        if($count_rate){
+                                            $rating = intval($stars / $count_rate);
+                                            $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+                                        }
+                                    }
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $todo->post_title ?></p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
-                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
-                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
-                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
-                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
-                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
-                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" />
-                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td class="position-relative">
+                                            <?php echo $rating ?>
+                                        </td>
+                                        <td>
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                        </td>
+                                        <!-- 
+                                        <td>
+                                            <p class="text-other-element">04/08/2024</p>
+                                        </td> 
+                                        -->
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li> 
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
-
                         <div id="FeddbackSecond" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($feedbacks)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -3170,118 +3255,106 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                     <th scope="col">Type</th>
                                     <th scope="col">Rating</th>
                                     <th scope="col">Details</th>
-                                    <th scope="col">Due-date</th>
+                                    <!-- <th scope="col">Due-date</th> -->
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                    <?php
+                                    foreach($feedbacks as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = get_field('type_feedback', $todo->ID);
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+
+                                    $rating = get_field('rating_feedback', $todo->ID);
+                                    $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $todo->post_title ?></p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
-                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
-                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
-                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
-                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
-                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
-                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" />
-                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td class="position-relative">
+                                            <?php echo $rating ?>
+                                            <!-- <div class="rating-element">
+                                                <div class="rating">
+                                                    <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                    <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                    <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                    <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                    <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                    <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                    <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                    <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                                </div>
+                                                <span class="rating-counter"></span>
+                                            </div> -->
+                                        </td>
+                                        <td>
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                        </td>
+                                        <!-- <td>
+                                            <p class="text-other-element">04/08/2024</p>
+                                        </td> -->
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li> 
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Ontwikkelplan" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($persoonlijk_ontwikkelplan)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -3289,118 +3362,91 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                     <th scope="col">Type</th>
                                     <th scope="col">Rating</th>
                                     <th scope="col">Details</th>
-                                    <th scope="col">Due-date</th>
+                                    <!-- <th scope="col">Due-date</th> -->
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                    <?php
+                                    foreach($persoonlijk_ontwikkelplan as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = get_field('type_feedback', $todo->ID);
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+
+                                    $rating = get_field('rating_feedback', $todo->ID);
+                                    $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $todo->post_title ?></p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
-                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
-                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
-                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
-                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
-                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
-                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" />
-                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td class="position-relative">
+                                            <?php echo $rating ?>
+                                        </td>
+                                        <td>
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                        </td>
+                                        <!-- <td>
+                                            <p class="text-other-element">04/08/2024</p>
+                                        </td> -->
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Beoordeling" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($beoordeling_gesprek)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -3413,238 +3459,431 @@ Outside of let'say all the information that could be deemed relevant to a allow 
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                    <?php
+                                    foreach($beoordeling_gesprek as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = get_field('type_feedback', $todo->ID);
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+
+                                    $rating = get_field('rating_feedback', $todo->ID);
+                                    $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+
+                                    $max_rate = 0;
+                                    $stars = 0;
+                                    if($type == 'Beoordeling Gesprek'){
+                                        $rates_comment = explode(';', get_field('rate_comments', $todo->ID));
+                                        $max_rate = count($rates_comment);
+                                        $count_rate = 0;
+                                        $stars = 0;
+                                        for($i=0; $i<$max_rate; $i++){
+                                            $stars = $stars + intval($rates_comment[$i+1]);
+                                            $count_rate += 1;
+                                            $i = $i + 2;
+                                        }
+                                        
+                                        if($count_rate){
+                                            $rating = intval($stars / $count_rate);
+                                            $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+                                        }
+                                    }
+
+                                    $due_date = get_field('welke_datum_feedback', $todo->ID)[1];
+                                    $due_date = date("d/m/Y", strtotime($due_date));
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $todo->post_title ?></p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
-                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
-                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
-                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
-                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
-                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
-                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" />
-                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td class="position-relative">
+                                            <?php echo $rating ?>
+                                        </td>
+                                        <td>
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element"><?= $due_date ?></p>
+                                        </td>
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
-                        </div>
-
-                        <div id="Compliment" class="b-tab contentBlockSetting">
-                            <table class="table table-responsive table-to-do text-left">
-                                <thead>
-                                <tr>
-                                    <th scope="col courseTitle">Feedback</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Rating</th>
-                                    <th scope="col">Details</th>
-                                    <th scope="col">Due-date</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
-                                                <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
-                                                <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
-                                                <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
-                                                <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1-Great" name="rating-Great" value="1" />
-                                                <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Fantastisch om met jou samen te werken!</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Feedback</p>
-                                    </td>
-                                    <td class="position-relative">
-                                        <div class="rating-element">
-                                            <div class="rating">
-                                                <input type="radio" id="star5" class="stars" checked  name="rating" value="5" />
-                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" />
-                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                            </div>
-                                            <span class="rating-counter"></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div id="empty-" class="b-tab  contentBlockSetting">
+                            <?php
+                            else:
+                            ?>
                             <div class="block-empty-content">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Creëer een eerste to do</a>
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Creëer een eerste to do</button>
                             </div>
+                            <?php
+                            endif;
+                            ?>
+                        </div>   
+
+                        <div id="Compliment" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($compliments)):
+                            ?>
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Due-date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                    <?php
+                                    foreach($compliments as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = get_field('type_feedback', $todo->ID);
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+
+                                    $rating = get_field('rating_feedback', $todo->ID);
+                                    $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+
+                                    $max_rate = 0;
+                                    $stars = 0;
+                                    if($type == 'Beoordeling Gesprek'){
+                                        $rates_comment = explode(';', get_field('rate_comments', $todo->ID));
+                                        $max_rate = count($rates_comment);
+                                        $count_rate = 0;
+                                        $stars = 0;
+                                        for($i=0; $i<$max_rate; $i++){
+                                            $stars = $stars + intval($rates_comment[$i+1]);
+                                            $count_rate += 1;
+                                            $i = $i + 2;
+                                        }
+                                        
+                                        if($count_rate){
+                                            $rating = intval($stars / $count_rate);
+                                            $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+                                        }
+                                    }
+
+                                    $due_date = get_field('welke_datum_feedback', $todo->ID)[1];
+                                    $due_date = date("d/m/Y", strtotime($due_date));
+                                    
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $todo->post_title ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td class="position-relative">
+                                           <?php echo $rating ?>
+                                        </td>
+                                        <td>
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element"><?= $due_date ?></p>
+                                        </td>
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
+                                </tbody>
+                            </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
+                        </div>  
+
+                        <div id="Verplichte" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($verplichte_cursus)):
+                            ?>
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <!-- <th scope="col">Due-date</th> -->
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                    <?php
+                                    foreach($verplichte_cursus as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = get_field('type_feedback', $todo->ID);
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $todo->post_title ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td class="position-relative">
+                                            <div class="rating-element">
+                                                <div class="rating">
+                                                    <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                    <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                    <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                    <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                    <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                    <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                    <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                    <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                                </div>
+                                                <span class="rating-counter"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                        </td>
+                                        <!-- <td>
+                                            <p class="text-other-element">04/08/2024</p>
+                                        </td> -->
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
+                                </tbody>
+                            </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
+                        <div id="Gedeelde" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($gedeelde_cursus)):
+                            ?>
+                            <table class="table table-responsive table-to-do text-left">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Feedback</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Rating</th>
+                                    <th scope="col">Details</th>
+                                    <!-- <th scope="col">Due-date</th> -->
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-left">
+                                    <?php
+                                    foreach($gedeelde_cursus as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = get_field('type_feedback', $todo->ID);
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $todo->post_title ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td class="position-relative">
+                                            <div class="rating-element">
+                                                <div class="rating">
+                                                    <input type="radio" id="star5-Great" class="stars" checked  name="rating-Great" value="5" />
+                                                    <label class="star" for="star5-Great" title="Awesome" aria-hidden="true"></label>
+                                                    <input type="radio" id="star4-Great" class="stars" name="rating-Great" value="4" />
+                                                    <label class="star" for="star4-Great" title="Great" aria-hidden="true"></label>
+                                                    <input type="radio" id="star3-Great" class="stars" name="rating-Great" value="3" />
+                                                    <label class="star" for="star3-Great" title="Very good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star2-Great" class="stars" name="rating-Great" value="2" />
+                                                    <label class="star" for="star2-Great" title="Good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star1-Great" name="rating-Great" value="1" />
+                                                    <label class="star" for="star1-Great" class="stars" title="Bad" aria-hidden="true"></label>
+                                                </div>
+                                                <span class="rating-counter"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                        </td>
+                                        <!-- <td>
+                                            <p class="text-other-element">04/08/2024</p>
+                                        </td> -->
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
+                                </tbody>
+                            </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-Feedback-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
+                        </div>
+
+                        <div id="empty-" class="b-tab contentBlockSetting">
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <a href="#" class="btn btn-creer-eeen">Creëer een eerste to do</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </ul>
