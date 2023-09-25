@@ -2,7 +2,6 @@
     $user_visibility = wp_get_current_user();
     $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
 
-
     if(!empty($company_visibility))
         $visibility_company = $company_visibility[0]->post_title;
 
@@ -19,6 +18,50 @@
             $bool = false;
 
         return $bool;
+    }
+
+    //Push notifications
+    function sendPushNotification($title, $body) {
+        $current_user = wp_get_current_user();
+        $token = get_field('smartphone_token',  'user_' . $current_user->ID);
+        if(!$token)
+            return 0;
+
+        $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
+        $data = [
+            'to' => $token,
+            'notification' => [
+                'title' => $title,
+                'body' => $body,
+            ],
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: ' . $serverKey,
+            'Content-Type: application/json',
+        ];
+
+        $url = 'https://fcm.googleapis.com/fcm/send';
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+
+        var_dump($httpCode);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
     }
 
     //function view($course, $user_visibility){
@@ -97,6 +140,7 @@
             'Read 7 podcasts !' ,
             'View the same topic more than 10 times'
         ];
+
         $array_badges = array();
 
         foreach ($occurences as $value) {
@@ -104,10 +148,12 @@
             $count[$course_type]++;
         }
 
-        $image_badge = get_stylesheet_directory_uri() . '/img/badge-assessment-sucess.png';
         $trigger_badge = null;
         if($count['Artikel'] >= 1 && $count['Artikel'] < 50){
+            $level = 'basic';
+            $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
             $array_badge = array();
+            $array_badge['level'] = $level;
             $array_badge['libelle'] = $libelle_badges[0];
             $array_badge['image'] = $image_badge;
             $array_badge['trigger'] = $trigger_badges[0];
@@ -115,7 +161,10 @@
             array_push($array_badges, $object_badge);
         }
         if($count['Artikel'] >= 50){
+            $level = 'advance';
+            $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
             $array_badge = array();
+            $array_badge['level'] = $level;
             $array_badge['libelle'] = $libelle_badges[1];
             $array_badge['image'] = $image_badge;
             $array_badge['trigger'] = $trigger_badges[1];
@@ -123,7 +172,10 @@
             array_push($array_badges, $object_badge);
         }
         if($count['Video'] >= 10 && $count['Video'] < 50){
+            $level = 'pro';
+            $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
             $array_badge = array();
+            $array_badge['level'] = $level;
             $array_badge['libelle'] = $libelle_badges[2];
             $array_badge['image'] = $image_badge;
             $array_badge['trigger'] = $trigger_badges[2];
@@ -131,7 +183,10 @@
             array_push($array_badges, $object_badge);
         }
         if($count['Video'] >= 50){
+            $level = 'expert';
+            $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
             $array_badge = array();
+            $array_badge['level'] = $level;
             $array_badge['libelle'] = $libelle_badges[3];
             $array_badge['image'] = $image_badge;
             $array_badge['trigger'] = $trigger_badges[3];
@@ -139,7 +194,10 @@
             array_push($array_badges, $object_badge);
         }
         if($count['Podcast'] >= 7){
+            $level = 'pro';
+            $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
             $array_badge = array();
+            $array_badge['level'] = $level;
             $array_badge['libelle'] = $libelle_badges[4];
             $array_badge['image'] = $image_badge;
             $array_badge['trigger'] = $trigger_badges[4];
@@ -147,7 +205,10 @@
             array_push($array_badges, $object_badge);
         }
         if($best_topic_views >= 10){
+            $level = 'advance';
+            $image_badge = get_stylesheet_directory_uri() . '/img' . '/badge-' . $level . '.png';
             $array_badge = array();
+            $array_badge['level'] = $level;
             $array_badge['libelle'] = $libelle_badges[5];
             $array_badge['image'] = $image_badge;
             $array_badge['trigger'] = $trigger_badges[5];
@@ -190,6 +251,7 @@
                     if($badge_id){
                         update_field('image_badge', $badge->image, $badge_id);
                         update_field('trigger_badge', $badge->trigger, $badge_id);
+                        update_field('level_badge', $badge->level, $badge_id);
                     }
             } 
 
