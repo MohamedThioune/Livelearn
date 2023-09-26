@@ -21515,6 +21515,36 @@ background: #FFFFFF !important;
     display: block;
     width: 100%;
 }
+.wp-block-image.alignfull figure a img, .wp-block-image.alignwide figure a img {
+    height: auto;
+    width: 35% !important;
+}
+figure ul li {
+    list-style: none;
+    list-style: inside;
+    margin-bottom: 10px;
+}
+.dropdowwn-databank{
+    padding: 17px;
+}
+.dropdowwn-databank li input {
+    margin-left: -7px;
+    font-size: 15px;
+    padding-bottom: 15px;
+}
+.dropdowwn-databank li .fa, .dropdowwn-databank .fa-check:before{
+    color: #5a5a5a !important;
+    width: 16px !important;
+    margin-right: 11px;
+    position: relative;
+    top: 0px;
+}
+.dropdowwn-databank li .red, .dropdowwn-databank .fa-remove:before i {
+    color: red !important;
+}
+.table .textTh-center {
+    text-align: center !important;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
