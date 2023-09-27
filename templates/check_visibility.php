@@ -216,7 +216,7 @@
             array_push($array_badges, $object_badge);
         }
 
-        foreach($array_badges as $badge)
+        foreach($array_badges as $badge):
             if($badge){
                 //Occurrence check
                 $args = array(
@@ -253,7 +253,8 @@
                         update_field('trigger_badge', $badge->trigger, $badge_id);
                         update_field('level_badge', $badge->level, $badge_id);
                     }
-            } 
+            }
+        endforeach;
 
         if ($occurence_id) {
             $occurence = intval($occurence_id) + 1;
