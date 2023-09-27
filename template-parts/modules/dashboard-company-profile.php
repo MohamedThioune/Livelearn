@@ -183,6 +183,7 @@ if($statikien_bool):
     $todos_company = get_posts($args);
     $score_rate_company = 0;
     $score_rate_max_company = 0;
+    $score_rate_feedback_company = 0;
     foreach($todos_all as $todo){
         $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
         if(!in_array($manager->ID, $numbers))
@@ -215,7 +216,8 @@ if($statikien_bool):
             $score_rate_max_company += 1;
         }
     }
-    $score_rate_feedback_company = $score_rate_company / $score_rate_max_company;
+    if($score_rate_max_company)
+        $score_rate_feedback_company = $score_rate_company / $score_rate_max_company;
     $topic_views = array();
 
     $assessment_validated = array();
