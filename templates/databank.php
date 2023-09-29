@@ -523,6 +523,7 @@ $urls =
 
 <!--begin traitement podcast audio remove now !!! -->
 <script type="text/javascript">
+    /*
     $('#search_audio').on('input', function(e) {
         const search = e.target.value;
         const backAudioApi = document.getElementById('content-back-audio');
@@ -555,6 +556,8 @@ $urls =
             },
         });
     });
+    */
+     */
 </script>
 <!--end traitement podcast audio remove now !!! -->
 
@@ -958,3 +961,4 @@ $(document).ready(function () {
 </script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
