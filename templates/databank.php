@@ -523,6 +523,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <!--begin traitement podcast audio remove now !!! -->
 <script type="text/javascript">
+    /*
     $('#search_audio').on('input', function(e) {
         const search = e.target.value;
         const backAudioApi = document.getElementById('content-back-audio');
@@ -555,6 +556,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             },
         });
     });
+    */
+     */
 </script>
 <!--end traitement podcast audio remove now !!! -->
 
