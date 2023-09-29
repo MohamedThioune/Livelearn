@@ -58,6 +58,7 @@ if(!empty($topics_internal))
 
 //Note
 $skills_note = get_field('skills', 'user_' . $user->ID);
+$count_skills_note  = (empty($skills_note)) ? 0 : count($skills_note);
  
 //Is a manager + company + phone + bio
 $manageds = get_field('managed',  'user_' . $user->ID);
@@ -66,7 +67,6 @@ $display_company = (!empty($company)) ? $company->post_title : 'No company';
 $phone = (!empty($phone)) ? $phone : '(xx) xxx xxx xx';
 $biographical_info = (!empty($biographical_info)) ? $biographical_info : "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
 Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
-
 
 // Feedbacks
 $args = array(
@@ -295,12 +295,17 @@ $badges = get_posts($args);
                 <div class="content-card-skills content-card-skills-profil">
                                 
                     <?php
+                    $avoid_repetition = array();
                     foreach($topics as $key => $value):
                         $i = 0;
                         $topic = get_the_category_by_ID($value);
                         $note = 0;
-                        if(!$topic)
+                        if(!$topic || in_array($value,$avoid_repetition))
                             continue;
+
+                        //Avoid repetition
+                        array_push($avoid_repetition,$value);
+
                         if(!empty($skills_note))
                             foreach($skills_note as $skill)
                                 if($skill['id'] == $value){
@@ -2183,45 +2188,13 @@ $badges = get_posts($args);
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div> -->
                                 </div>
-                                <p class="text-stat">0/<?= $count_mandatories ?></p>
+                                <p class="text-stat"><?= $count_mandatory_done . "/" . $count_mandatories ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Self-Assessment of Skills:</p>
-                                    <div class="select">
-                                        <select>
-                                            <option value="Year">Year</option>
-                                            <option value="Month">Month</option>
-                                            <option value="Day">Day</option>
-                                        </select>
-                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
-                                </div>
-                                <p class="text-stat">x</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="theme-card-statistiken-1">
-                                <div class="head-card d-flex justify-content-between align-items-center">
-                                    <p class="title">External Learning Opportunities:</p>
-                                    <div class="select">
-                                        <select>
-                                            <option value="Year">Year</option>
-                                            <option value="Month">Month</option>
-                                            <option value="Day">Day</option>
-                                        </select>
-                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
-                                </div>
-                                <p class="text-stat">x</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="theme-card-statistiken-1">
-                                <div class="head-card d-flex justify-content-between align-items-center">
-                                    <p class="title">Feedback given on average</p>
                                     <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
@@ -2231,7 +2204,39 @@ $badges = get_posts($args);
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div> -->
                                 </div>
-                                <p class="text-stat"><?= $score_rate_feedback ?> <span>/ 5 (4,3)</span></p>
+                                <p class="text-stat"><?= $count_skills_note ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">External Learning Opportunities:</p>
+                                    <!-- <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div> -->
+                                </div>
+                                <p class="text-stat"><?= $external_learning_opportunities ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Average feedback given (Me / Team)</p>
+                                    <!-- <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div> -->
+                                </div>
+                                <p class="text-stat"><?= $score_rate_feedback ?> <span>/ <?= $score_rate_feedback_company ?></span></p>
                             </div>
                         </div>
                     </div>
@@ -2258,54 +2263,43 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Learning Delivery Methods:</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
+                                <?php
+                                if($count_course_views):
+                                ?>
                                 <div class="d-block w-100 subTopics-usage-block">
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                    <?php
+                                    foreach ($type_courses as $type => $occurence):
+                                    $learning_delivery_methods = ($occurence/$count_course_views) * 100;
+                                    ?>
+                                    <a href="#" class="element-SubTopics d-flex justify-content-between">
                                         <div class="d-flex">
                                             <div class="imgTopics">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
                                             </div>
-                                            <p class="text-subTopics">Articles</p>
+                                            <p class="text-subTopics"><?= $type ?></p>
                                         </div>
-                                        <p class="number">78%</p>
+                                        <p class="number"><?= intval($learning_delivery_methods) ?>%</p>
                                     </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Videos</p>
-                                        </div>
-                                        <p class="number">90%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </div>
+                                <?php
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                            <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif;
+                                ?>
 
                             </div>
                         </div>
@@ -2364,15 +2358,15 @@ $badges = get_posts($args);
                                         $image_topic = get_field('image', 'category_'. $value);
                                         $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';
                                         ?>
-                                        <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
-                                            <div class="d-flex">
-                                                <div class="imgTopics">
-                                                    <img src="<?= $image_topic ?>" alt="">
-                                                </div>
-                                                <p class="text-subTopics"><?= $name_topic ?></p>
+                                        <a href="#" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
                                             </div>
-                                            <p class="number"><?= $occurence ?></p>
-                                        </a>
+                                            <p class="text-subTopics"><?= $type ?></p>
+                                        </div>
+                                        <p class="number"><?= intval($learning_delivery_methods) ?>%</p>
+                                    </a>
                                     <?php
                                     endforeach;
                                 else:
@@ -2389,54 +2383,58 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Followed topics</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
+                                <?php
+                                if(!empty($followed_topics)):
+                                ?>
                                 <div class="d-block w-100 subTopics-usage-block">
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Agile / Scrum</p>
-                                        </div>
-                                        <p class="number">122k</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Cocktail maken</p>
-                                        </div>
-                                        <p class="number">23k</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Transport</p>
-                                        </div>
-                                        <p class="number">5k</p>
-                                    </a>
+                                    <?php
+                                    $read_one = array();
+                                    foreach($followed_topics as $value):
+                                        if(!$value || in_array($value, $read_one))
+                                            continue;
 
+                                        array_push($read_one, $value);
+                                        $topic = get_the_category_by_ID($value);
+                                        $note = 0;
+                                        if(!$topic)
+                                            continue;
+                                        if(!empty($skills_note))
+                                            foreach($skills_note as $skill)
+                                                if($skill['id'] == $value)
+                                                    $note = $skill['note'];
+                                        $name_topic = (String)$topic;
+                                        $image_topic = get_field('image', 'category_'. $value);
+                                        $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';                
+                                    ?>
+                                    <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?= $image_topic ?>" alt="">
+                                            </div>
+                                            <p class="text-subTopics"><?= $name_topic ?></p>
+                                        </div>
+                                        <p class="number"><?= $note ?> / 100</p>
+                                    </a>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </div>
+                                <?php
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                             <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif
+                                ?>
 
                             </div>
                         </div>
@@ -2444,71 +2442,101 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Followed teachers</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat"></p>
-                                <div class="empty-topic-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-topic.png" alt="">
+                                <?php
+                                if(!empty($followed_teachers)):
+                                ?>
+                                <div class="d-block w-100 subTopics-usage-block">
+                                    <?php
+                                    $read_one = array();
+                                    foreach($followed_teachers as $value):
+                                        if(!$value && in_array($value, $read_one))
+                                            continue;
+
+                                        array_push($read_one, $value);
+                                        $user = get_user_by_id('ID', $value);
+                    
+                                        $name_user = ($user->first_name) ? : $user->display_name;
+                                        $image_user = get_field('profile_img',  'user_' . $value->ID);
+                                        $image_user = $image_user ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';                
+                                    ?>
+                                    <a href="/user-overview?id=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?= $image_user ?>" alt="">
+                                            </div>
+                                            <p class="text-subTopics"><?= $name_user ?></p>
+                                        </div>
+                                        <p class="number"></p>
+                                    </a>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </div>
+                                <?php
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                             <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif
+                                ?>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Most Viewed Expert</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
+                                
                                 <div class="d-block w-100 subTopics-usage-block">
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                    <p class="text-stat"></p>
+                                    <?php
+                                    if($expert_views):
+                                        foreach($expert_views as $key => $expert):
+                                            $value = $expert->data_id;
+                                            $occurence = $expert->occurence;
+                                            if(!$value && in_array($value, $read_one))
+                                                continue;
+
+                                            $user = get_user_by_id('ID', $value);
+                        
+                                            $name_user = ($user->first_name) ? : $user->display_name;
+                                            $image_user = get_field('profile_img',  'user_' . $value->ID);
+                                            $image_user = $image_user ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                            ?>
+                                            <a href="#" class="element-SubTopics d-flex justify-content-between">
+                                            <div class="d-flex">
+                                                <div class="imgTopics">
+                                                    <img src="<?= $image_user ?>" alt="">
+                                                </div>
+                                                <p class="text-subTopics"><?= $name_user ?></p>
                                             </div>
-                                            <p class="text-subTopics">Seydou Diallo</p>
-                                        </div>
-                                        <p class="number">232</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Mohamed Thioune</p>
-                                        </div>
-                                        <p class="number">134</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Daniel van der Kolk</p>
-                                        </div>
-                                        <p class="number">45</p>
-                                    </a>
+                                            <p class="number"><?= $occurence ?></p>
+                                        </a>
+                                        <?php
+                                        endforeach;
+                                    else:
+                                        echo '<div class="empty-topic-block">
+                                                <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                            </div>';
+                                    endif
+                                    ?>
 
                                 </div>
 
@@ -2516,7 +2544,7 @@ $badges = get_posts($args);
                         </div>
                     </div>
                    <div class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-12">
                           <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
                               <div class="head-card d-flex justify-content-between align-items-center">
                                   <p class="title">Usage desktop vs Mobile app</p>
@@ -2536,6 +2564,7 @@ $badges = get_posts($args);
                               </div>
                           </div>
                       </div>
+                      <!-- 
                       <div class="col-md-4">
                           <div class="theme-card-statistiken-1">
                               <div class="head-card d-flex justify-content-between align-items-center">
@@ -2590,72 +2619,54 @@ $badges = get_posts($args);
                               </div>
 
                           </div>
-                      </div>
+                      </div> -->
                       <div class="col-md-12">
                           <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
-                              <div class="head-card d-flex justify-content-between align-items-center">
+                                <div class="head-card d-flex justify-content-between align-items-center">
                                   <p class="title">Latest badges</p>
-                                  <div class="select">
+                                  <!-- <div class="select">
                                       <select>
                                           <option value="See-all">See all</option>
-                                          <option value="">...</option>
-                                          <option value="">...</option>
                                       </select>
                                       <div>
                                           <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                       </div>
-                                  </div>
-                              </div>
-                              <div class="block-with-content-badge d-flex flex-wrap">
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-advance.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-pro.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-expert.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                              </div>
-                              <div class="block-empty-badge">
-                                  <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-badge.png" alt="">
-                              </div>
+                                  </div> -->
+                                </div>
+                                <?php
+                                if (!empty($badges)):
+                                ?>
+                                    <div class="block-with-content-badge d-flex flex-wrap">
+                                        <?php
+                                        foreach ($badges as $key => $badge):
+                                        if($key == 2)
+                                            break;
+                                        // Image + trigger
+                                        $image_badge = get_field('image_badge', $badge->ID);
+                                        $trigger_badge = get_field('trigger_badge', $badge->ID);
+                                        $level_badge = get_field('level_badge', $badge->ID);
+                                        ?>
+                                        <div class="card-badge">
+                                            <div class="img-card-badge">
+                                                <img src="<?= $image_badge ?>" alt="">
+                                            </div>
+                                            <p class="title-badge">Badge <?= $level_badge?></p>
+                                            <p class="statut-text"><?= $badge->post_title ?></p>
+                                            <div class="bar-badge"></div>
+                                            <p class="statut-badge"><?= $trigger_badge ?></p>
+                                        </div>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </div>
+                                <?php
+                                else:
+                                    echo '
+                                        <div class="block-empty-badge">
+                                            <img src="' . get_stylesheet_directory_uri() . '/img/empty-badge.png" alt="">
+                                        </div>';
+                                endif;
+                                ?>
                           </div>
                       </div>
                   </div>
