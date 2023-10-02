@@ -1822,6 +1822,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'update_user_smartphone_token',
   ));
 
+  register_rest_route ('custom/v1', '/user/progression/(?P<course_title>[-\w]+)', array(
+    'methods' => 'POST',
+    'callback' => 'get_user_course_progression',
+  ));
+
+  register_rest_route ('custom/v1', '/user/progression/(?P<course_title>[-\w]+)', array(
+    'methods' => 'PUT',
+    'callback' => 'update_user_progression_course',
+  ));
+
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
