@@ -15,25 +15,22 @@ $mollie = new \Mollie\Api\MollieApiClient();
 $mollie->setApiKey($global_mollie_key);
 
 $user = wp_get_current_user();
+$url = home_url( $wp->request );
+$link = (!empty($user)) ? '/dashboard/user' : '/';
 
-/*
-* * Feedbacks
-*/
+/* * Notifications * */
 $args = array(
-    'post_type' => 'feedback',
+    'post_type' => array('feedback', 'mandatory', 'badge'),
     'author' => $user->ID,
     'orderby' => 'post_date',
     'order' => 'DESC',
     'posts_per_page' => -1,
 );
-
 $notifications = get_posts($args);
 $todos = array();
-
-$url = home_url( $wp->request );
-
-$link = (!empty($user)) ? '/dashboard/user' : '/';
-
+$read_feedbacks = array();
+$read_todos = array(); 
+$read_badges = array();
 if(!empty($notifications))
     foreach($notifications as $todo){
 
@@ -42,7 +39,50 @@ if(!empty($notifications))
             continue;
 
         array_push($todos,$todo);
+
+        //Readed by post_type check
+        switch ($todo->post_type) {
+            case 'feedback':
+                array_push($read_feedbacks, $todo);
+                break;
+            case 'mandatory':
+                array_push($read_todos, $todo);
+                break;
+            case 'badge':
+                array_push($read_badges, $todo);
+                break;
+        }
     }
+
+//Feedbacks 
+$args = array(
+    'post_type' => 'feedback',
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+$notification_feedbacks = get_posts($args);
+
+//Mandatories
+$args = array(
+    'post_type' => 'mandatory',
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+$notification_mandatories = get_posts($args);
+
+//Badges
+$args = array(
+    'post_type' => 'badge',
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+$notification_badges = get_posts($args);
 
 /*
 * * Get all experts
@@ -382,235 +422,203 @@ $see_experts = get_users(
                             </button>
                             <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton" id="ModalNotification">
                                 <h5 class="modal-title" id="exampleModalLabel">Your notifications</h5>
-                                <?php
-                                    if(!empty($todos)){
-                                        foreach($todos as $todo){
-                                            if($key == 4)
-                                                break;
 
-                                            $read = get_field('read_feedback', $todo->ID);
-                                            if($read)
-                                                continue;
-
-                                            $type = get_field('type_feedback', $todo->ID);
-                                            $value = get_field('manager_feedback', $todo->ID);
-                                            $manager = get_user_by('ID', $value);
-                                    ?>
-                                        <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="">
-                                            <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
-                                            <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
-                                        </a>
-                                <?php
-                                        }
-                                        echo '<div class="">
-                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
-                                              </div>';
-                                    }
-                                    else{
-                                ?>
-                                      <div class="empty-block-notification">
-                                            <div class="content-button-tabs">
-                                                <button  data-tab="All" class="b-nav-tab buttonInsideModal btn active">
-                                                    View all <span class="number-content">0</span>
-                                                </button>
-                                                <button  data-tab="Activiteiten" class="b-nav-tab buttonInsideModal btn">
-                                                    Feedback<span class="number-content">0</span>
-                                                </button>
-                                                <button  data-tab="Plannen" class="b-nav-tab buttonInsideModal btn">
-                                                    Courses <span class="number-content">0</span>
-                                                </button>
-                                                <button  data-tab="Onderwerpen" class="b-nav-tab buttonInsideModal btn">
-                                                    To do’s <span class="number-content">0</span>
-                                                </button>
-                                            </div>
-                                            <div class="img-emty-notification">
-                                                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/empty-to-do-table.png" alt="">
-                                            </div>
-                                            <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to you activity page</a>
+                                    <div class="content-tab">
+                                        <div class="content-button-tabs">
+                                            <?php $count_notifications = (!empty($todos)) ? count($todos) : 0; ?>
+                                            <button data-tab="allNotification" class="b-nav-tab buttonInsideModal btn active">
+                                                View all<span class="number-content"><?= $count_notifications ?></span>
+                                            </button>
+                                            <?php $count_notification_feedbacks = (!empty($read_feedbacks)) ? count($read_feedbacks) : 0; ?>
+                                            <button data-tab="feddbackNotification" class="b-nav-tab buttonInsideModal btn">
+                                                Feedback <span class="number-content"><?= $count_notification_feedbacks ?></span>
+                                            </button>
+                                            <?php $count_notification_todos = (!empty($read_todos)) ? count($read_todos) : 0; ?>
+                                            <button data-tab="to-do-notification" class="b-nav-tab buttonInsideModal btn">
+                                                To do's <span class="number-content"><?= $count_notification_todos ?></span>
+                                            </button>
+                                            <?php $count_notification_badges = (!empty($read_badges)) ? count($read_badges) : 0; ?>
+                                            <button data-tab="courseNotification" class="b-nav-tab buttonInsideModal btn">
+                                                Badges <span class="number-content"><?= $count_notification_badges ?></span>
+                                            </button>
                                         </div>
 
-                                        <div class="content-tab">
-                                            <div class="content-button-tabs">
-                                                <button  data-tab="allNotification" class="b-nav-tab buttonInsideModal btn active">
-                                                    View all<span class="number-content">14</span>
-                                                </button>
-                                                <button  data-tab="feddbackNotification" class="b-nav-tab buttonInsideModal btn">
-                                                    Feedback <span class="number-content">2</span>
-                                                </button>
-                                                <button  data-tab="courseNotification" class="b-nav-tab buttonInsideModal btn">
-                                                    Courses <span class="number-content">O</span>
-                                                </button>
-                                                <button  data-tab="to-do-notification" class="b-nav-tab buttonInsideModal btn">
-                                                    To do’s <span class="number-content">12</span>
-                                                </button>
-                                            </div>
-
-                                            <div id="allNotification" class="b-tab active contentBlockSetting">
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                        <div id="allNotification" class="b-tab active contentBlockSetting">
+                                            <?php
+                                            if(!empty($notifications)):
+                                                foreach($notifications as $key=>$notification):
+                                                if($key == 5)
+                                                    break;
+                                                $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+                                                $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+                                                $notification->manager = get_user_by('ID', $notification_id_manager);
+                                                $notification->manager_image = get_field('profile_img',  'user_' . $notification->manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+                                                $notification->manager_name = ($notification->manager->display_name) ?: 'Livelearn';
+                                                $notification_date = date("d M Y | h:i", strtotime($notification->post_date));
+                                                $read_notification = get_field('read_feedback', $notification->ID);
+                                                ?>
+                                                <a href="/dashboard/user/detail-notification/?do=<?= $notification->ID; ?>" class="d-flex align-items-center block-notification-tab justify-content-between">
                                                     <div class="d-flex align-items-center">
                                                         <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
+                                                            <img src="<?= $notification->manager_image . ' ' . $notification_id_manager ?>" alt="">
                                                         </div>
                                                         <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
+                                                            <p class="text-date">@<b><?= $notification->manager_name ?></b> gave you a <?= $notification->post_type ?></p>
+                                                            <p class="text-date mb-0"><?= $notification_date ?></p>
                                                         </div>
                                                     </div>
-                                                    <div class="actif-element-notification"></div>
+                                                    <?php
+                                                    if (!$read_notification)
+                                                        echo '<div class="actif-element-notification"></div>';
+                                                    ?>                                                
                                                 </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                            </div>
-
-                                            <div id="feddbackNotification" class="b-tab contentBlockSetting">
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                            </div>
-
-                                            <div id="courseNotification" class="b-tab contentBlockSetting">
+                                                <?php
+                                                endforeach;
+                                                ?>
+                                            <?php
+                                            else:
+                                            ?>
                                                 <div class="img-emty-notification">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
                                                 </div>
-                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to you activity page</a>
-                                            </div>
-
-                                            <div id="to-do-notification" class="b-tab contentBlockSetting">
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                                <a href="" class="d-flex align-items-center block-notification-tab justify-content-between">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgCourse">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-date">@<b>Sophiedemaaro</b> gave you feedback</p>
-                                                            <p class="text-date mb-0">23 AUG 2023 | 19:22</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actif-element-notification"></div>
-                                                </a>
-                                            </div>
-
-
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
+                                            <?php
+                                            endif;
+                                            ?>
                                         </div>
 
-                                <?php
-                                    }
-                                ?>
+                                        <div id="feddbackNotification" class="b-tab contentBlockSetting">
+                                            <?php
+                                            if(!empty($notification_feedbacks)):
+                                                foreach($notification_feedbacks as $key=>$notification):
+                                                if($key == 5)
+                                                    break;
+                                                $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+                                                $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+                                                $notification->manager = get_user_by('ID', $notification_id_manager);
+                                                $notification->manager_image = get_field('profile_img',  'user_' . $notification->manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+                                                $notification->manager_name = ($notification->manager->display_name) ?: 'Livelearn';
+                                                $notification_date = date("d M Y | h:i", strtotime($notification->post_date));
+
+                                                $read_notification = get_field('read_feedback', $notification->ID);
+                                                ?>
+                                                <a href="/dashboard/user/detail-notification/?do=<?= $notification->ID; ?>" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?= $notification->manager_image . ' ' . $notification_id_manager ?>" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b><?= $notification->manager_name ?></b> gave you a <?= $notification->post_type ?></p>
+                                                            <p class="text-date mb-0"><?= $notification_date ?></p>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                    if (!$read_notification)
+                                                        echo '<div class="actif-element-notification"></div>';
+                                                    ?>                                            
+                                                </a>
+                                                <?php
+                                                endforeach;
+                                            else:
+                                            ?>
+                                                <div class="img-emty-notification">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                                </div>
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
+                                            <?php
+                                            endif;
+                                            ?>
+                                        </div>
+
+                                        <div id="courseNotification" class="b-tab contentBlockSetting">
+                                        <?php
+                                            if(!empty($notification_badges)):
+                                                foreach($notification_badges as $key=>$notification):
+                                                if($key == 5)
+                                                    break;
+                                                $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+                                                $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+                                                $notification->manager = get_user_by('ID', $notification_id_manager);
+                                                $notification->manager_image = get_field('profile_img',  'user_' . $notification->manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+                                                $notification->manager_name = ($notification->manager->display_name) ?: 'Livelearn';
+                                                $notification_date = date("d M Y | h:i", strtotime($notification->post_date));
+
+                                                $read_notification = get_field('read_feedback', $notification->ID);
+                                                ?>
+                                                <a href="/dashboard/user/detail-notification/?do=<?= $notification->ID; ?>" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?= $notification->manager_image . ' ' . $notification_id_manager ?>" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b><?= $notification->manager_name ?></b> gave you a <?= $notification->post_type ?></p>
+                                                            <p class="text-date mb-0"><?= $notification_date ?></p>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                    if (!$read_notification)
+                                                        echo '<div class="actif-element-notification"></div>';
+                                                    ?>                                            
+                                                </a>
+                                                <?php
+                                                endforeach;
+                                            else:
+                                            ?>
+                                                <div class="img-emty-notification">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                                </div>
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
+                                            <?php
+                                            endif;
+                                            ?>
+                                        </div>
+
+                                        <div id="to-do-notification" class="b-tab contentBlockSetting">
+                                            <?php
+                                            if(!empty($notification_mandatories)):
+                                                foreach($notification_mandatories as $key=>$notification):
+                                                if($key == 5)
+                                                    break;
+                                                $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+                                                $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+                                                $notification->manager = get_user_by('ID', $notification_id_manager);
+                                                $notification->manager_image = get_field('profile_img',  'user_' . $notification->manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+                                                $notification->manager_name = ($notification->manager->display_name) ?: 'Livelearn';
+                                                $notification_date = date("d M Y | h:i", strtotime($notification->post_date));
+
+                                                $read_notification = get_field('read_feedback', $notification->ID);
+                                                ?>
+                                                <a href="/dashboard/user/detail-notification/?do=<?= $notification->ID; ?>" class="d-flex align-items-center block-notification-tab justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="blockImgCourse">
+                                                            <img src="<?= $notification->manager_image . ' ' . $notification_id_manager ?>" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-date">@<b><?= $notification->manager_name ?></b> gave you a <?= $notification->post_type ?></p>
+                                                            <p class="text-date mb-0"><?= $notification_date ?></p>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                    if (!$read_notification)
+                                                        echo '<div class="actif-element-notification"></div>';
+                                                    ?>                                            
+                                                </a>
+                                                <?php
+                                                endforeach;
+                                            else:
+                                            ?>
+                                                <div class="img-emty-notification">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                                </div>
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
+                                            <?php
+                                            endif;
+                                            ?>
+                                        </div>
+                                        
+                                        <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to see all your notifications !</a>
+
+                                    </div>
                             </div>
                         </li>
                         <?php
