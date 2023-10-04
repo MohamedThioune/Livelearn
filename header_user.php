@@ -505,7 +505,7 @@ $see_experts = get_users(
                                                 <a href="/dashboard/user/detail-notification/?do=<?= $notification->ID; ?>" class="d-flex align-items-center block-notification-tab justify-content-between">
                                                     <div class="d-flex align-items-center">
                                                         <div class="blockImgCourse">
-                                                            <img src="<?= $notification->manager_image . ' ' . $notification_id_manager ?>" alt="">
+                                                            <img src="<?= $notification->manager_image ?>" alt="">
                                                         </div>
                                                         <div>
                                                             <p class="text-date">@<b><?= $notification->manager_name ?></b> gave you a <?= $notification->post_type ?></p>
