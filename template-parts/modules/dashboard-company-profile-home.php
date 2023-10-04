@@ -3023,7 +3023,7 @@ $post_todos = get_posts($args);
                                             <?php echo $rating ?>
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <!-- 
                                         <td>
@@ -3132,7 +3132,7 @@ $post_todos = get_posts($args);
                                             </div> -->
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <!-- <td>
                                             <p class="text-other-element">04/08/2024</p>
@@ -3224,7 +3224,7 @@ $post_todos = get_posts($args);
                                             <?php echo $rating ?>
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <!-- <td>
                                             <p class="text-other-element">04/08/2024</p>
@@ -3338,7 +3338,7 @@ $post_todos = get_posts($args);
                                             <?php echo $rating ?>
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <td>
                                             <p class="text-other-element"><?= $due_date ?></p>
