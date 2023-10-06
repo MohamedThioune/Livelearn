@@ -102,7 +102,7 @@ foreach($bunch_orders as $order){
 }
 
 if(!$bool)
-    header('Location: /dashboard/user/activity?message=You need to buy this course first !' );
+    header('Location: /dashboard/user/activity?message=You need to register at this course first !' );
 
 $count_enrolled = 0;
 if(!empty($enrolled))
