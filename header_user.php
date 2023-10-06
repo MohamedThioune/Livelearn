@@ -481,7 +481,6 @@ $see_experts = get_users(
                                                 <div class="img-emty-notification">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
                                                 </div>
-                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
                                             <?php
                                             endif;
                                             ?>
@@ -524,7 +523,6 @@ $see_experts = get_users(
                                                 <div class="img-emty-notification">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
                                                 </div>
-                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
                                             <?php
                                             endif;
                                             ?>
@@ -567,7 +565,6 @@ $see_experts = get_users(
                                                 <div class="img-emty-notification">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
                                                 </div>
-                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
                                             <?php
                                             endif;
                                             ?>
@@ -609,8 +606,7 @@ $see_experts = get_users(
                                             ?>
                                                 <div class="img-emty-notification">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
-                                                </div>
-                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Go to your notification page</a>
+                                                </div> 
                                             <?php
                                             endif;
                                             ?>
