@@ -168,6 +168,7 @@ if(isset($_GET['manager']))
 if($statikien_bool):
     //Company user 
     $numbers = array();
+    $members = array();
     $users = get_users();
     foreach ($users as $value ) {
         if($user->ID == $value->ID)
@@ -175,8 +176,10 @@ if($statikien_bool):
 
         $company_value = get_field('company',  'user_' . $value->ID);
         if(!empty($company_value))
-            if($company_value[0]->post_title == $company_name)
+            if($company_value[0]->post_title == $company_name):
                 array_push($numbers, $value->ID);
+                array_push($members, $value);
+            endif;
     }
 
     //Feedback given by company
@@ -221,6 +224,11 @@ if($statikien_bool):
     $topic_views = array();
 
     $assessment_validated = array();
+
+    $todos_feedback = array();
+    $todos_onderwerpen = array();
+    $todos_plannen = array();
+    $todos_cursus = array();
     $count_mandatories = 0;
     /* Mandatories */
     $args = array(
@@ -238,6 +246,7 @@ if($statikien_bool):
     $count_mandatory_done = 0;
     //course mandatory finished 
     foreach($mandatories as $mandatory){
+        $pourcentage = 0;
         //Get read by user 
         $args = array(
             'post_type' => 'progression', 
@@ -255,9 +264,67 @@ if($statikien_bool):
             $progression_id = $progressions[0]->ID;
             //Finish read
             $is_finish = get_field('state_actual', $progression_id);
-            if($is_finish)
+            if($is_finish){
                 $count_mandatory_done += 1;
+                $pourcentage = 100;
+            }
+
+            $post = get_page_by_path($mandatory->post_title, OBJECT, 'course');
+            $type_post = ($post) ? get_field('course_type', $post->ID) : 'NaN';
+            // var_dump($type_post);
+            
+            if($type_post == 'Video'){
+                $courses = get_field('data_virtual', $post->ID);
+                $youtube_videos = get_field('youtube_videos', $post->ID);
+                if(!empty($courses))
+                    $count_lesson = count($courses);
+                else if(!empty($youtube_videos))
+                    $count_lesson = count($youtube_videos);
+            }
+            else if($type_post == 'Podcast'){
+                $podcasts = get_field('podcasts', $post->ID);
+                $podcast_index = get_field('podcasts_index', $post->ID);
+                if(!empty($podcasts))
+                    $count_lesson = count($podcasts);
+                else if(!empty($podcast_index))
+                    $count_lesson = count($podcast_index);
+            }
+            else{
+                $count_lesson = 0;
+            }
+
+            //Pourcentage
+            $lesson_reads = get_field('lesson_actual_read', $progression_id);
+            $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+            if($count_lesson)
+                $pourcentage = ($count_lesson) ? ($count_lesson_reads / $count_lesson) * 100 : 0;                
         endif;
+        $mandatory->pourcentage = intval($pourcentage);
+
+        $type = get_field('type_feedback', $mandatory->ID);
+        $mandatory->manager = get_user_by('ID', get_field('manager_feedback', $mandatory->ID));
+        $mandatory->manager_image = get_field('profile_img',  'user_' . $mandatory->manager->ID);
+        if(!$image)
+            $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+        switch ($type) {
+            case 'Feedback':
+                $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+                array_push($todos_feedback, $mandatory);
+                break;
+            case 'Persoonlijk ontwikkelplan':
+                $mandatory->beschrijving_feedback = get_field('opmerkingen', $mandatory->ID);
+                array_push($todos_plannen, $mandatory);
+                break;
+            case 'Onderwerpen':
+                $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+                array_push($todos_onderwerpen, $mandatory);
+                break;
+            case 'Verplichte cursus':
+                $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+                array_push($todos_cursus, $mandatory);
+                break;
+        }
     }
 
     /*
@@ -422,6 +489,45 @@ if($statikien_bool):
     } 
 
     arsort($type_courses);
+
+    //Post courses
+    $args = array(
+        'post_type' => array('post', 'course'),
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $posts = get_posts($args);
+    $internal_cursus = '<label class="sub-label">Interne cursus :</label>
+                         <select class="form-select select-internal-external mb-0" name="interne_cursus" aria-label="Default" id="">
+                            <option value="0">Selecteer interne cursus</option>';
+
+    $external_cursus = '<label class="sub-label">Externe cursus :</label>
+                         <select class="form-select select-internal-external mb-0" name="externe_cursus" aria-label="Default" id="">
+                            <option value="0">Selecteer externe cursus</option>';
+    foreach($posts as $key => $post):
+        if(in_array($post->post_author, $numbers))
+            $internal_cursus .= '<option value="' . $post->ID . '" >' . $post->post_title . '</option>';
+        else
+            $external_cursus .= '<option value="' . $post->ID . '" >' . $post->post_title . '</option>';
+
+        if($key == 100)
+            break;
+    endforeach;
+    $internal_cursus .= '</select>';
+    $external_cursus .= '</select>';
+    
+    //Badge updated 
+    if(isset($_GET['post_id']) && isset($_GET['typeBadge']) && isset($_GET['manager']) ):
+        $type_badge = get_field('type_badge', $_GET['post_id']);
+        $manager_badge = get_field('manager_badge', $_GET['post_id']);
+        if(!$manager_badge)
+            if($_GET['post_id']){
+                update_field('type_badge', $_GET['typeBadge'], $_GET['post_id']);
+                update_field('manager_badge', $_GET['manager'], $_GET['post_id']);   
+            }
+    endif;
 
 endif;
 ?>
