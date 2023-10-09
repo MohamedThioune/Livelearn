@@ -279,19 +279,7 @@ $urls =
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
                                     <td class="textTh tdCenter textTh-center"> <?php if($course->author_id) echo ''; else echo 'author';  ?> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
                                     <td class="textTh tdCenter textTh-center"> <?php if(!empty($company)) echo ''; else echo 'company';  ?> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                                <img style="width:20px"
-                                                     src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu dropdowwn-databank">
-                                                <li><i class="fa fa-check"></i><input tittle="edit" type="button" class="optie btn-default" id="accept" value="Validate" /></li>
-                                                <li><i class="fa fa-remove"></i><input tittle="remove" type="button" class="optie red btn-default" id="decline" value="Remove" /></li>
-                                                <li><i class="fa fa-gear"></i><a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" target="_blank" >Setting</a> </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                                 </tr>
                             <?php
                                 }
