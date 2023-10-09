@@ -1,4 +1,4 @@
-<?php /** Template Name: Product Search */ ?>
+<?php /** Template Name: overview subTopic */ ?>
 
 <body>
 <?php wp_head(); ?>
@@ -14,193 +14,54 @@ require($page);
     <section class="boxOne3-1">
         <div class="container">
             <div class="BaangerichteBlock">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/product-search.png" class="img-head-about border-0" alt="">
-                <h1 class="wordDeBestText2">Product Search</h1>
-            </div>
-        </div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
+                <h1 class="wordDeBestText2">Corporate Training</h1>
+                <button class="btn btn-follown" type="button">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/follow-icon.svg" class="img-follown" alt="">
+                    Follow
+                </button>
+             </div>
+
     </section>
-    <section class="content-product-search">
+    <section class="content-product-search content-company-overview content-sub-topic">
         <div class="theme-content">
-            <div class="theme-side-menu">
-                <div class="block-filter">
-                    <button class="btn btn-close-filter">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Close.png" class="img-head-about" alt="">
-                    </button>
-                    <p class="text-filter-course">Filter Courses</p>
-                    <form action="">
-                        <div class="sub-section">
-                            <p class="description-sub-section">LEERVORM</p>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        Backend
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        Css
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        Frontend
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        General
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        IT & Software
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        Photography
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        Programming Language
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Backend">
-                                    <label class="form-check-label" for="Backend">
-                                        Technology
-                                    </label>
-                                </div>
-                                <p class="number-course">10</p>
-                            </div>
-                        </div>
-                        <div class="sub-section">
-                            <p class="description-sub-section">LEERVORM</p>
-                            <div class="form-group">
-                                <label for="Vanaf" class="form-label">Vanaf</label>
-                                <input type="text" class="form-control" id="Vanaf">
-                            </div>
-                            <div class="form-group">
-                                <label for="Tot" class="form-label">Tot</label>
-                                <input type="text" class="form-control" id="Tot">
-                            </div>
-                        </div>
-                        <div class="sub-section">
-                            <p class="description-sub-section">Locatie</p>
-                            <div class="form-group">
-                                <label for="PostCode" class="form-label">PostCode</label>
-                                <input type="text" class="form-control" id="PostCode">
-                            </div>
-                            <div class="form-group">
-                                <label for="Afstand" class="form-label">Afstand(m)</label>
-                                <input type="text" class="form-control" id="Afstand">
-                            </div>
-                            <div class="form-check d-flex justify-content-between">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Alleen-online">
-                                    <label class="form-check-label" for="Alleen-online">
-                                        Alleen online
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sub-section">
-                            <p class="description-sub-section">EXPERT</p>
-                            <div class="position-relative">
-                                <i class="fa fa-search"></i>
-                                <input type="search" placeholder="Search Expert">
-                            </div>
-                            <div class="form-check">
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Jane-Cooper">
-                                    <label class="form-check-label" for="Jane-Cooper">
-                                        Jane Cooper
-                                    </label>
-                                </div>
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="">
-                                    <label class="form-check-label" for="">
-                                        Wade Warren
-                                    </label>
-                                </div>
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="">
-                                    <label class="form-check-label" for="">
-                                        Brooklyn Simmons
-                                    </label>
-                                </div>
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="">
-                                    <label class="form-check-label" for="">
-                                        Cameron Williamson
-                                    </label>
-                                </div>
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="">
-                                    <label class="form-check-label" for="">
-                                        Leslie Alexander
-                                    </label>
-                                </div>
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="">
-                                    <label class="form-check-label" for="">
-                                        Guy Hawkins
-                                    </label>
-                                </div>
-                                <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="">
-                                    <label class="form-check-label" for="">
-                                        Jacob Jones
-                                    </label>
-                                </div>
-                                <button class="btn btn-more-expert">+ More expert</button>
-
-                            </div>
-                        </div>
-                        <button class="btn btn-Apply">Apply</button>
-                    </form>
-
-                </div>
-            </div>
             <div class="theme-learning">
                 <div class="">
+                    <div class="block-subTocis d-flex flex-wrap">
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                        <button class="btn btn-subTopics">Traning 1 </button>
+                    </div>
                     <div class="btn-group-layouts">
                         <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
                         <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
                     </div>
+                    <form action="" class="d-flex align-items-center justify-content-between form-search-course-filter mb-0">
+                        <div class="form-group position-relative mb-0">
+                            <i class="fa fa-search"></i>
+                            <input type="search" placeholder="Search" class="search-course">
+                        </div>
+                        <div class="custom-select-course position-relative">
+                            <select class="form-select">
+                                <option selected>Filter</option>
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="3">Option 3</option>
+                            </select>
+                            <span class="filter-icon">
+                                <i class="fa fa-filter"></i>
+                            </span>
+                        </div>
+                    </form>
                     <div class="block-filter-mobile">
                         <button class="content-filter d-flex ">
                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/filter.png" alt="">
-                            <span>Filter</span>
+                            <span>show left bar</span>
                         </button>
                     </div>
                     <div class="block-new-card-course grid" id="autocomplete_recommendation">
@@ -735,6 +596,55 @@ require($page);
                     <div class="pagination-container">
                         <!-- Les boutons de pagination seront ajoutés ici -->
                     </div>
+                </div>
+            </div>
+            <div class="theme-side-menu d-block">
+                <div class="block-filter">
+                    <p class="text-filter-course">Infos</p>
+                    <div class="sub-section">
+                        <p class="description-sub-section">Others Topics</p>
+                        <div class="d-flex flex-wrap">
+                            <p class="topic-element">Audicien</p>
+                            <p class="topic-element">Bakker</p>
+                            <p class="topic-element">Bloemist</p>
+                            <p class="topic-element">Audicien</p>
+                            <p class="topic-element">Bakker</p>
+                            <p class="topic-element">Bloemist</p>
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <p class="description-sub-section">Expert</p>
+                        <div class="profil-expert d-flex align-items-center">
+                            <div class="group-img">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" alt="">
+                            </div>
+                            <p>Cameron Williamson</p>
+                        </div>
+                        <div class="profil-expert d-flex align-items-center">
+                            <div class="group-img">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" alt="">
+                            </div>
+                            <p>Brooklyn Simmons</p>
+                        </div>
+                        <div class="profil-expert d-flex align-items-center">
+                            <div class="group-img">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert2.png" alt="">
+                            </div>
+                            <p>Savannah Nguyen</p>
+                        </div>
+                        <div class="profil-expert d-flex align-items-center">
+                            <div class="group-img">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert3.png" alt="">
+                            </div>
+                            <p>Darlene Robertson</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-pub-course">
+                    <h2>We Help You Learn While
+                        Staying Home</h2>
+                    <a href="/about" class="btn btn-started-now">Get Started Now</a>
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/man-pub.png" alt="">
                 </div>
             </div>
         </div>
