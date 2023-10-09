@@ -667,6 +667,7 @@ else if(isset($_POST['add_todo_sample'])){
     $interne_cursus = (isset($_POST['interne_cursus'])) ? intval($_POST['interne_cursus']) : null;
     $externe_cursus = (isset($_POST['externe_cursus'])) ? intval($_POST['externe_cursus']) : null;
     $opmerkingen = (isset($_POST['opmerkingen'])) ? $_POST['opmerkingen'] : null;
+    $collegas_feedback = (isset($_POST['collegas_feedback'])) ? $_POST['collegas_feedback'] : null;
     $welke_datum_feedback = (isset($_POST['welke_datum_feedback'])) ? $_POST['welke_datum_feedback'] : null;
     $beschrijving_feedback = (isset($_POST['beschrijving_feedback'])) ? $_POST['beschrijving_feedback'] : null;
     $competencies_feedback = (isset($_POST['competencies_feedback'])) ? $_POST['competencies_feedback'] : null;
@@ -695,8 +696,8 @@ else if(isset($_POST['add_todo_sample'])){
     update_field('manager_feedback', $manager, $post_id);
     update_field('message_must', $beschrijving_feedback, $post_id);
     update_field('competencies_feedback', $competencies_feedback, $post_id);
-    // update_field('opmerkingen', $opmerkingen, $post_id);
     update_field('opmerkingen', $opmerkingen, $post_id);
+    update_field('collegas_feedback', $collegas_feedback, $post_id);
     update_field('welke_datum_feedback', $welke_datum_feedback, $post_id);
     update_field('onderwerpen_todo', $onderwerpen_todo, $post_id);
 

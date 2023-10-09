@@ -21,13 +21,14 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
-// if ($user_id==0) {
-//     $startorbuy ="<button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-buy-now'>Buy Now</button>";
-//     $startorbuy ="<button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-stratNow'>Start Now</button>";
-// } else {
+if (!$user_id) {
+    $startorbuy ="<button type='button' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-buy-now'>Buy Now</button>";
+    $startorbuy ="<button type='button' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-stratNow'>Start Now</button>";
+} else {
     $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
     $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-// }
+}
+
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -263,14 +264,14 @@ endif;
 
                                                                         do_action( 'woocommerce_after_add_to_cart_quantity' );
 
-                                                                        if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+                                                                        if($user_id == 0)
+                                                                            echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                        else if($user_id != $post->post_author)
+                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';    
 
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
                                                                     <?php
-                                                                    if($user_id == 0)
-                                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                     do_action( 'woocommerce_after_add_to_cart_form' );
                                                                     endif;
                                                                     ?>
@@ -399,8 +400,10 @@ endif;
 
                                                                         do_action( 'woocommerce_after_add_to_cart_quantity' );
 
-                                                                        if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+                                                                        if($user_id == 0)
+                                                                            echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                        else if($user_id != $post->post_author)
+                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';    
 
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
@@ -505,14 +508,14 @@ endif;
 
                                                                         do_action( 'woocommerce_after_add_to_cart_quantity' );
 
-                                                                        if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+                                                                        if($user_id == 0)
+                                                                            echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                        else if($user_id != $post->post_author)
+                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';    
 
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
                                                                     <?php
-                                                                    if($user_id == 0)
-                                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                     do_action( 'woocommerce_after_add_to_cart_form' ); 
                                                                     endif;
                                                                     ?>

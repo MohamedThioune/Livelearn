@@ -614,7 +614,7 @@ $post_todos = get_posts($args);
                                             </div>
                                             <div class="form-group formModifeChoose">
                                                 <label class="sub-label">Selecteer de collega(s)</label>
-                                                <select id="" name=""  class="multipleSelect2" multiple="true">
+                                                <select id="" name="collegas_feedback[]"  class="multipleSelect2" multiple="true">
                                                     <option value="">Pick team members …</option>
                                                     <?php
                                                     foreach($members as $member)
