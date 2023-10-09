@@ -835,7 +835,7 @@ function youtubeEndpoint()
                 $onderwerpen = "";
                 $categories = array();
                 $cats = get_categories(
-                    array(
+                    array( 
                         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                         'orderby'    => 'name',
                         'exclude' => 'Uncategorized',
