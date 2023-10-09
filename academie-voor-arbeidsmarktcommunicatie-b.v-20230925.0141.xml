@@ -2,12 +2,12 @@
 <programs xmlns="http://studieData.nl/schema/edudex/program">
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -24,7 +24,6 @@
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -33,21 +32,21 @@
     <programName xml:lang="nl">Bootcamp Arbeidsmarktcommunicatie</programName>
     <programSummaryText xml:lang="nl">Je arbeidsmarktcommunicatie naar een hoger plan tillen? Werk twee dagen intensief aan je arbeidsmarktcommunicatie tijdens de Bootcamp Arbeidsmarktcommunicatie. Update je kennis en ga aan de slag met j</programSummaryText>
     <programSummaryHtml xml:lang="nl">Je arbeidsmarktcommunicatie naar een hoger plan tillen? Werk twee dagen intensief aan je arbeidsmarktcommunicatie tijdens de Bootcamp Arbeidsmarktcommunicatie. Update je kennis en ga aan de slag met j</programSummaryHtml>
-    <programDescriptionText xml:lang="nl">Met een kleine groep deelnemers ga je tijdens de Bootcamp Arbeidsmarktcommunicatie in een informele sfeer actief aan de slag met jouw eigen arbeidsmarktcommunicatie. Korte theorieblokken worden afgewisseld met cases en werksessies waarin je werkt aan jouw eigen arbeidsmarktcommunicatie. Met onderwerpen als werving, online recruitment, social media recruitment, employer branding, employee relationship management en strategie komt het hele vakgebied aan bod. Na afloop van de Bootcamp Arbeidsmarktcommunicatie heb je niet alleen je kennis op peil gebracht, maar ga je naar huis met concrete onderdelen van jouw arbeidsmarktcommunicatiestrategie en -operatie.</programDescriptionText>
+    <programDescriptionText xml:lang="nl">Met een kleine groep deelnemers ga je tijdens de Bootcamp Arbeidsmarktcommunicatie in een informele sfeer actief aan de slag met jouw eigen arbeidsmarktcommunicatie. Korte theorieblokken worden afgewisseld met cases en werksessies waarin je werkt aan jouw eigen arbeidsmarktcommunicatie. Met onderwerpen als werving, online recruitment, social media recruitment, employer branding, employee relationship management en strategie komt het hele vakgebied aan bod. Na afloop van de Bootcamp Arbeidsmarktcommunicatie heb je niet alleen je kennis op peil gebracht, maar ga je naar huis met concrete onderdelen van jouw arbeidsmarktcommunicatiestrategie en -operatie.</programDescriptionText>
     <programDescriptionHtml xml:lang="nl">Met een kleine groep deelnemers ga je tijdens de Bootcamp Arbeidsmarktcommunicatie in een informele sfeer actief aan de slag met jouw eigen arbeidsmarktcommunicatie. Korte theorieblokken worden afgewisseld met cases en werksessies waarin je werkt aan jouw eigen arbeidsmarktcommunicatie. Met onderwerpen als werving, online recruitment, social media recruitment,&amp;nbsp;employer branding, employee relationship management en strategie komt het hele vakgebied aan bod. Na afloop van de Bootcamp Arbeidsmarktcommunicatie heb je niet alleen je kennis op peil gebracht, maar ga je naar huis met concrete onderdelen van jouw arbeidsmarktcommunicatiestrategie en -operatie.</programDescriptionHtml>
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C23-0001</id>
+      <id>C24-0001</id>
       <status>application opened</status>
-      <startDate isFinal="true">2023-02-02</startDate>
-      <endDate isFinal="true">2023-02-03</endDate>
+      <startDate isFinal="true">2024-02-01</startDate>
+      <endDate isFinal="true">2024-02-02</endDate>
       <cost>
         <id>0</id>
-        <amount>1795.0000</amount>
-        <amountVAT>376.9500</amountVAT>
+        <amount>1999.0000</amount>
+        <amountVAT>419.7900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-03-02</amountValidUntil>
+        <amountValidUntil>2024-03-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -57,15 +56,15 @@
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C23-0001_20230202</id>
-        <date>2023-02-02</date>
+        <id>C24-0001_20240201</id>
+        <date>2024-02-01</date>
         <startTime>10:00:00.0000000+02:00</startTime>
         <endTime>18:00:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C23-0001_20230203</id>
-        <date>2023-02-03</date>
-        <startTime>09:00:00.0000000+02:00</startTime>
+        <id>C24-0001_20240202</id>
+        <date>2024-02-02</date>
+        <startTime>09:30:00.0000000+02:00</startTime>
         <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
       <location>
@@ -80,12 +79,12 @@
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8489177+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -102,7 +101,6 @@
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -115,7 +113,7 @@
 
 De arbeidsmarkt is meer dan ooit in beweging. Van werkgevers vergt dit extra inspanningen om de juiste medewerkers voor de organisatie aan te trekken en te behouden. Door corona is vooruitkijken niet eenvoudig, maar toch wil je consistent en continu werken aan je arbeidsmarktcommunicatie. Een gedegen, maar ook praktisch arbeidsmarktcommunicatieplan is dan ook essentieel.
 
-In deze e-learning leer je niet alleen hoe je een goed arbeidsmarktcommunicatieplan opstelt, maar werk je er ook actief aan door het bekijken van video, het lezen van artikelen en het maken van opdrachten. Daarnaast heb je zowel aan het begin als op het einde een 1 op 1 sessie met docent Martijn Hemminga via een video call. Een intake om je goed te laten starten en op het einde een sessie voor feedback op jouw eigen arbeidsmarktcommunicatieplan. En tussentijds kun je vragen stellen via onze leerportal: Mijn Academie.
+In deze e-learning leer je niet alleen hoe je een goed arbeidsmarktcommunicatieplan opstelt, maar werk je er ook actief aan door het bekijken van video, het lezen van artikelen en het maken van opdrachten. Daarnaast heb je zowel aan het begin als op het einde een 1 op 1 sessie met docent Martijn Hemminga via een video call. Een intake om je goed te laten starten en op het einde een sessie voor feedback op jouw eigen arbeidsmarktcommunicatieplan. En tussentijds kun je vragen stellen via onze leerportal: Mijn Academie.
 
 Programma
 
@@ -180,16 +178,16 @@ De e-learning bestaat uit de volgende onderdelen:
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0014</id>
+      <id>C23-0008</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2022-12-01</endDate>
+      <startDate isFinal="true">2023-11-01</startDate>
+      <endDate isFinal="true">2023-11-01</endDate>
       <cost>
         <id>0</id>
-        <amount>595.0000</amount>
-        <amountVAT>124.9500</amountVAT>
+        <amount>669.0000</amount>
+        <amountVAT>140.4900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-12-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -199,8 +197,8 @@ De e-learning bestaat uit de volgende onderdelen:
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0014_20221201</id>
-        <date>2022-12-01</date>
+        <id>C23-0008_20231101</id>
+        <date>2023-11-01</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
@@ -216,12 +214,12 @@ De e-learning bestaat uit de volgende onderdelen:
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -238,7 +236,6 @@ De e-learning bestaat uit de volgende onderdelen:
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -251,7 +248,7 @@ In deze e-learning maak je kennis met recruitment en leer je de basis om een goe
 In deze e-learning maak je kennis met recruitment en leer je de basis om een goede bureau recruiter te zijn.</programSummaryHtml>
     <programDescriptionText xml:lang="nl">De krapte op de arbeidsmarkt maakt dat er veel vraag is naar goede recruiters, maar ook die zijn momenteel nauwelijks te vinden. In plaats van te zoeken naar een speld in een hooiberg, is een goede optie om de bestaande recruiters goed te trainen en de juiste kennis mee te geven. Op die manier verhoogt de productiviteit en zijn er minder recruiters nodig.
 
-In onze e-learning Introductie Bureau Recruitment leer je het verschil tussen uitzenden, detacheren, werven en selecteren. Daarnaast leer je wat een goede bureau recruiter doet en hoe je er een wordt. In 15 modules maak je kennis met het recruitmentvak en krijg je van ons de basis om een goede bureau recruiter te zijn.
+In onze e-learning Introductie Bureau Recruitment leer je het verschil tussen uitzenden, detacheren, werven en selecteren. Daarnaast leer je wat een goede bureau recruiter doet en hoe je er een wordt. In 15 modules maak je kennis met het recruitmentvak en krijg je van ons de basis om een goede bureau recruiter te zijn.
 </programDescriptionText>
     <programDescriptionHtml xml:lang="nl">&lt;p&gt;De krapte op de arbeidsmarkt maakt dat er veel vraag is naar goede recruiters, maar ook die zijn momenteel nauwelijks te vinden. In plaats van te zoeken naar een speld in een hooiberg, is een goede optie om de bestaande recruiters goed te trainen en de juiste kennis mee te geven. Op die manier verhoogt de productiviteit en zijn er minder recruiters nodig.&lt;/p&gt;
 
@@ -260,16 +257,16 @@ In onze e-learning Introductie Bureau Recruitment leer je het verschil tussen ui
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0021</id>
+      <id>C23-0011</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2022-12-01</endDate>
+      <startDate isFinal="true">2023-11-01</startDate>
+      <endDate isFinal="true">2023-11-01</endDate>
       <cost>
         <id>0</id>
         <amount>795.0000</amount>
         <amountVAT>166.9500</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-12-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -279,10 +276,10 @@ In onze e-learning Introductie Bureau Recruitment leer je het verschil tussen ui
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0021_20221201</id>
-        <date>2022-12-01</date>
+        <id>C23-0011_20231101</id>
+        <date>2023-11-01</date>
         <startTime>09:00:00.0000000+02:00</startTime>
-        <endTime>17:00:00.0000000+02:00</endTime>
+        <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
       <location>
         <address/>
@@ -296,12 +293,12 @@ In onze e-learning Introductie Bureau Recruitment leer je het verschil tussen ui
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -318,7 +315,6 @@ In onze e-learning Introductie Bureau Recruitment leer je het verschil tussen ui
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -329,7 +325,7 @@ In onze e-learning Introductie Bureau Recruitment leer je het verschil tussen ui
     <programSummaryHtml xml:lang="nl">In deze e-learning maak je kennis met recruitment en leer je de basis om een goede corporate recruiter te zijn.</programSummaryHtml>
     <programDescriptionText xml:lang="nl">De krapte op de arbeidsmarkt maakt dat er veel vraag is naar goede recruiters, maar ook die zijn momenteel nauwelijks te vinden. In plaats van te zoeken naar een speld in een hooiberg, is een goede optie om de bestaande recruiters goed te trainen en de juiste kennis mee te geven. Op die manier verhoogt de productiviteit en zijn er minder recruiters nodig.
 
-In onze E-learning Introductie Corporate Recruitment leer je wat een goede corporate recruiter doet en hoe je er een wordt. In 11 modules maak je kennis met het recruitmentvak en krijg je van ons de basis om een goede corporate recruiter te zijn.
+In onze E-learning Introductie Corporate Recruitment leer je wat een goede corporate recruiter doet en hoe je er een wordt. In 11 modules maak je kennis met het recruitmentvak en krijg je van ons de basis om een goede corporate recruiter te zijn.
 </programDescriptionText>
     <programDescriptionHtml xml:lang="nl">&lt;p&gt;De krapte op de arbeidsmarkt maakt dat er veel vraag is naar goede recruiters, maar ook die zijn momenteel nauwelijks te vinden. In plaats van te zoeken naar een speld in een hooiberg, is een goede optie om de bestaande recruiters goed te trainen en de juiste kennis mee te geven. Op die manier verhoogt de productiviteit en zijn er minder recruiters nodig.&lt;/p&gt;
 
@@ -338,16 +334,16 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0020</id>
+      <id>C23-0012</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2022-12-01</endDate>
+      <startDate isFinal="true">2023-11-01</startDate>
+      <endDate isFinal="true">2023-11-01</endDate>
       <cost>
         <id>0</id>
         <amount>795.0000</amount>
         <amountVAT>166.9500</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-12-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -357,10 +353,10 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0020_20221201</id>
-        <date>2022-12-01</date>
-        <startTime>00:00:00.0000000+02:00</startTime>
-        <endTime>23:59:00.0000000+02:00</endTime>
+        <id>C23-0012_20231101</id>
+        <date>2023-11-01</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
+        <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
       <location>
         <address/>
@@ -374,12 +370,12 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -396,7 +392,6 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -410,16 +405,16 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C00-0002</id>
+      <id>C23-0013</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2022-12-01</endDate>
+      <startDate isFinal="true">2023-11-01</startDate>
+      <endDate isFinal="true">2023-11-01</endDate>
       <cost>
         <id>0</id>
         <amount>795.0000</amount>
         <amountVAT>166.9500</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-12-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -429,10 +424,10 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C00-0002_20221201</id>
-        <date>2022-12-01</date>
+        <id>C23-0013_20231101</id>
+        <date>2023-11-01</date>
         <startTime>09:00:00.0000000+02:00</startTime>
-        <endTime>14:20:00.0000000+02:00</endTime>
+        <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
       <location>
         <address/>
@@ -446,12 +441,12 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8489177+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -468,7 +463,6 @@ In onze E-learning Introductie Corporate Recruitment leer je wat een goede corpo
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -522,16 +516,16 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0015</id>
+      <id>C23-0010</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2022-12-01</endDate>
+      <startDate isFinal="true">2023-11-01</startDate>
+      <endDate isFinal="true">2023-11-01</endDate>
       <cost>
         <id>0</id>
-        <amount>175.0000</amount>
-        <amountVAT>36.7500</amountVAT>
+        <amount>199.0000</amount>
+        <amountVAT>41.7900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-12-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -541,8 +535,8 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0015_20221201</id>
-        <date>2022-12-01</date>
+        <id>C23-0010_20231101</id>
+        <date>2023-11-01</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>09:00:00.0000000+02:00</endTime>
       </courseDay>
@@ -558,12 +552,12 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8469176+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -580,7 +574,6 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -594,16 +587,16 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C21-0011</id>
+      <id>C23-0009</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2022-12-01</endDate>
+      <startDate isFinal="true">2023-11-01</startDate>
+      <endDate isFinal="true">2023-11-01</endDate>
       <cost>
         <id>0</id>
-        <amount>195.0000</amount>
-        <amountVAT>40.9500</amountVAT>
+        <amount>219.0000</amount>
+        <amountVAT>45.9900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-12-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -613,10 +606,10 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C21-0011_20221201</id>
-        <date>2022-12-01</date>
-        <startTime>00:00:00.0000000+02:00</startTime>
-        <endTime>23:59:00.0000000+02:00</endTime>
+        <id>C23-0009_20231101</id>
+        <date>2023-11-01</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
+        <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
       <location>
         <address/>
@@ -630,12 +623,119 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>individual</applicationType>
+    <maxNumberOfParticipants>12</maxNumberOfParticipants>
+    <paymentDue>afterwards</paymentDue>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>none</degree>
+    <orgUnitId>arbeidsmarktcommunicatie</orgUnitId>
+    <programDuration unit="hour">32</programDuration>
+    <programForm>full-time</programForm>
+    <programId>Intervisie</programId>
+    <programLevel>none</programLevel>
+    <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
+    <programType>training</programType>
+    <theme>training and education</theme>
+  </programClassification>
+  <programContacts/>
+  <programCurriculum/>
+  <programDescriptions>
+    <programName xml:lang="nl">Arbeidsmarktcommunicatie Leer-&amp; Intervisietraject</programName>
+    <programSummaryText xml:lang="nl">Ben jij een medior of senior professional die zich bezighoudt met arbeidsmarktcommunicatie, employer branding en recruitment (marketing)? Dan weet je hoe waardevol het is om te sparren met vakgenot</programSummaryText>
+    <programSummaryHtml xml:lang="nl">&lt;p&gt;Ben jij een medior of senior professional die zich bezighoudt met arbeidsmarktcommunicatie, employer branding en recruitment (marketing)? Dan weet je hoe waardevol het is om te sparren met vakgenot</programSummaryHtml>
+    <programDescriptionText xml:lang="nl">Ben jij een medior of senior professional die zich bezighoudt met arbeidsmarktcommunicatie, employer branding en recruitment (marketing)? Dan weet je hoe waardevol het is om te sparren met vakgenoten over jouw aanpak en plannen. Om te leren van andere organisaties, geïnspireerd te worden door experts en een kritische externe blik te betrekken bij jouw vraagstukken.
+
+De meerwaarde van dit Leer- &amp; intervisietraject:
+- Je wordt elke sessie persoonlijk begeleid door docenten Bianca en Anne-Britt. Je wordt meegenomen in de theoretische kaders en de trends en ontwikkelingen die voor jou van toepassing zijn.
+- Je krijgt de kennis en tools aangereikt om jezelf te ontwikkelen tot een nog betere professional en adviseur.
+- Je kunt jouw specifieke vragen inbrengen en samen pakken we deze aan.
+- Je gaat concreet aan de slag met jouw projecten.
+- Je hoort hoe andere organisaties vergelijkbare uitdagingen aanpakken.
+- Je maakt onderdeel uit van een intervisiegroep, waarmee je zowel binnen als buiten de sessies kunt sparren. Deze ‘tijdelijke collega's’ bieden een frisse blik en inspiratie.
+- Je gaat naar huis met concrete tips en verbeterpunten waarmee je direct aan de slag kunt. Daarnaa</programDescriptionText>
+    <programDescriptionHtml xml:lang="nl">&lt;p&gt;Ben jij een medior of senior professional die zich bezighoudt met arbeidsmarktcommunicatie, employer branding en recruitment (marketing)? Dan weet je hoe waardevol het is om te sparren met vakgenoten over jouw aanpak en plannen. Om te leren van andere organisaties, ge&amp;iuml;nspireerd te worden door experts en een kritische externe blik te betrekken bij jouw vraagstukken.&lt;br /&gt;
+&lt;br /&gt;
+De meerwaarde van dit Leer- &amp;amp; intervisietraject:&lt;/p&gt;
+- Je wordt elke sessie persoonlijk begeleid door docenten Bianca en Anne-Britt. Je wordt meegenomen in de theoretische kaders en de trends en ontwikkelingen die voor jou van toepassing zijn.&lt;br /&gt;
+-&amp;nbsp;Je krijgt de kennis en tools aangereikt om jezelf te ontwikkelen tot een nog betere professional en adviseur.&lt;br /&gt;
+- Je kunt jouw specifieke vragen inbrengen en samen pakken we deze aan.&lt;br /&gt;
+- Je gaat concreet aan de slag met jouw projecten.&lt;br /&gt;
+- Je hoort hoe andere organisaties vergelijkbare uitdagingen aanpakken.&lt;br /&gt;
+- Je maakt onderdeel uit van een intervisiegroep, waarmee je zowel binnen als buiten de sessies kunt sparren. Deze &amp;lsquo;tijdelijke collega&amp;#39;s&amp;rsquo; bieden een frisse blik en inspiratie.&lt;br /&gt;
+- Je gaat naar huis met concrete tips en verbeterpunten waarmee je direct aan de slag kunt. Daarnaast ontvang je nieuwe inspiratie en creatieve idee&amp;euml;n vanuit je intervisiecollega&amp;rsquo;s &amp;eacute;n De Werkgeversarchitecten.</programDescriptionHtml>
+  </programDescriptions>
+  <programSchedule>
+    <programRun>
+      <id>C23-0024</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2023-10-10</startDate>
+      <endDate isFinal="true">2024-06-25</endDate>
+      <cost>
+        <id>0</id>
+        <amount>2850.0000</amount>
+        <amountVAT>598.5000</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <amountValidUntil>2023-11-10</amountValidUntil>
+        <costType>tuition fee</costType>
+        <currency>EUR</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <payableBy>individual</payableBy>
+        <period>program</period>
+        <summaryText xml:lang="nl">Registratiekosten</summaryText>
+        <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
+      </cost>
+      <courseDay>
+        <id>C23-0024_20231010</id>
+        <date>2023-10-10</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
+        <endTime>16:00:00.0000000+02:00</endTime>
+      </courseDay>
+      <courseDay>
+        <id>C23-0024_20240116</id>
+        <date>2024-01-16</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
+        <endTime>16:00:00.0000000+02:00</endTime>
+      </courseDay>
+      <courseDay>
+        <id>C23-0024_20240326</id>
+        <date>2024-03-26</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
+        <endTime>16:00:00.0000000+02:00</endTime>
+      </courseDay>
+      <courseDay>
+        <id>C23-0024_20240625</id>
+        <date>2024-06-25</date>
+        <startTime>11:00:00.0000000+02:00</startTime>
+        <endTime>20:00:00.0000000+02:00</endTime>
+      </courseDay>
+      <location>
+        <address>Nijverheidsweg 16</address>
+        <zipcode>3534 AM</zipcode>
+        <city>Utrecht</city>
+        <country>nl</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
+  <expires>2024-09-23</expires>
+  <format>EDU-DEX 1.5.1</format>
+  <generator>ChainWise EDU-DEX Tool</generator>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -652,7 +752,6 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -661,7 +760,7 @@ In deze e-learning leren we hoe jij de STARR-methodiek kan toepassen om gestruct
     <programName xml:lang="nl">Leergang Arbeidsmarktcommunicatie</programName>
     <programSummaryText xml:lang="nl">De Leergang Arbeidsmarktcommunicatie is de meest complete opleiding op het gebied van arbeidsmarktcommunicatie in Nederland. Van werving tot employee relationship management en van employer branding t</programSummaryText>
     <programSummaryHtml xml:lang="nl">De Leergang Arbeidsmarktcommunicatie is de meest complete opleiding op het gebied van arbeidsmarktcommunicatie in Nederland. Van werving tot employee relationship management en van employer branding t</programSummaryHtml>
-    <programDescriptionText xml:lang="nl">De arbeidsmarktcommunicatie-opleiding
+    <programDescriptionText xml:lang="nl">De arbeidsmarktcommunicatie-opleiding
 
 De leergang bestaat uit 4 opleidingsdagen en een eindpresentatie op dag 5. Voorafgaand aan elke opleidingsdag volg je een e-learning van ongeveer 45 minuten waarin de belangrijkste theorie wordt besproken. Hierdoor ligt tijdens de opleidingsdagen de nadruk meer op de praktijk. Met best practices uit binnen- en buitenland, werken aan kleine opdrachten en cases voor de eigen organisatie.
 
@@ -676,16 +775,16 @@ De leergang wordt succesvol afgesloten met een eindopdracht. Jouw eigen praktijk
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0029</id>
+      <id>C23-0017</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2023-04-13</endDate>
+      <startDate isFinal="true">2023-10-03</startDate>
+      <endDate isFinal="true">2024-01-16</endDate>
       <cost>
         <id>0</id>
-        <amount>3150.0000</amount>
-        <amountVAT>661.5000</amountVAT>
+        <amount>3559.0000</amount>
+        <amountVAT>747.3900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-11-03</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -695,32 +794,32 @@ De leergang wordt succesvol afgesloten met een eindopdracht. Jouw eigen praktijk
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0029_20221201</id>
-        <date>2022-12-01</date>
+        <id>C23-0017_20231003</id>
+        <date>2023-10-03</date>
         <startTime>10:30:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0029_20230112</id>
-        <date>2023-01-12</date>
+        <id>C23-0017_20231031</id>
+        <date>2023-10-31</date>
         <startTime>10:30:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0029_20230209</id>
-        <date>2023-02-09</date>
+        <id>C23-0017_20231121</id>
+        <date>2023-11-21</date>
         <startTime>10:30:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0029_20230323</id>
-        <date>2023-03-23</date>
+        <id>C23-0017_20231212</id>
+        <date>2023-12-12</date>
         <startTime>10:30:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0029_20230413</id>
-        <date>2023-04-13</date>
+        <id>C23-0017_20240116</id>
+        <date>2024-01-16</date>
         <startTime>14:00:00.0000000+02:00</startTime>
         <endTime>21:00:00.0000000+02:00</endTime>
       </courseDay>
@@ -736,12 +835,12 @@ De leergang wordt succesvol afgesloten met een eindopdracht. Jouw eigen praktijk
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -758,7 +857,6 @@ De leergang wordt succesvol afgesloten met een eindopdracht. Jouw eigen praktijk
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -776,7 +874,7 @@ In de opleiding gaan we uit van de spelregels van de huidige arbeidsmarkt. We ve
 In onze Leergang Recruitment kun je het volgende verwachten:
 
 
-	Maximaal 12 deelnemers
+	Maximaal 12 deelnemers
 	In 2 keer 2 dagen (incl. 2 overnachtingen)
 	Altijd 2 docenten op de groep
 	Veel interactie, praktijkgerichte werkvormen en intervisie
@@ -811,16 +909,16 @@ Om jouw motivatie te toetsen om</programDescriptionText>
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0028</id>
+      <id>C23-0020</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-11-17</startDate>
-      <endDate isFinal="true">2022-12-09</endDate>
+      <startDate isFinal="true">2023-10-09</startDate>
+      <endDate isFinal="true">2023-11-07</endDate>
       <cost>
         <id>0</id>
-        <amount>2695.0000</amount>
-        <amountVAT>565.9500</amountVAT>
+        <amount>2999.0000</amount>
+        <amountVAT>629.7900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2022-12-17</amountValidUntil>
+        <amountValidUntil>2023-11-09</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -830,26 +928,26 @@ Om jouw motivatie te toetsen om</programDescriptionText>
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0028_20221117</id>
-        <date>2022-11-17</date>
+        <id>C23-0020_20231009</id>
+        <date>2023-10-09</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0028_20221118</id>
-        <date>2022-11-18</date>
+        <id>C23-0020_20231010</id>
+        <date>2023-10-10</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0028_20221208</id>
-        <date>2022-12-08</date>
+        <id>C23-0020_20231106</id>
+        <date>2023-11-06</date>
         <startTime>09:30:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0028_20221209</id>
-        <date>2022-12-09</date>
+        <id>C23-0020_20231107</id>
+        <date>2023-11-07</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
@@ -865,12 +963,12 @@ Om jouw motivatie te toetsen om</programDescriptionText>
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8489177+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -887,7 +985,6 @@ Om jouw motivatie te toetsen om</programDescriptionText>
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -921,16 +1018,16 @@ In de opleiding gaan we uit van de spelregels van de huidige arbeidsmarkt. Dat b
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0027</id>
+      <id>C24-0002</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-11-10</startDate>
-      <endDate isFinal="true">2022-12-02</endDate>
+      <startDate isFinal="true">2024-03-14</startDate>
+      <endDate isFinal="true">2024-04-12</endDate>
       <cost>
         <id>0</id>
-        <amount>2995.0000</amount>
-        <amountVAT>628.9500</amountVAT>
+        <amount>3399.0000</amount>
+        <amountVAT>713.7900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2022-12-10</amountValidUntil>
+        <amountValidUntil>2024-04-14</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -940,33 +1037,33 @@ In de opleiding gaan we uit van de spelregels van de huidige arbeidsmarkt. Dat b
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0027_20221110</id>
-        <date>2022-11-10</date>
-        <startTime>09:15:00.0000000+02:00</startTime>
+        <id>C24-0002_20240314</id>
+        <date>2024-03-14</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0027_20221111</id>
-        <date>2022-11-11</date>
+        <id>C24-0002_20240315</id>
+        <date>2024-03-15</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>17:00:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0027_20221201</id>
-        <date>2022-12-01</date>
-        <startTime>09:15:00.0000000+02:00</startTime>
+        <id>C24-0002_20240411</id>
+        <date>2024-04-11</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0027_20221202</id>
-        <date>2022-12-02</date>
+        <id>C24-0002_20240412</id>
+        <date>2024-04-12</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>16:00:00.0000000+02:00</endTime>
       </courseDay>
       <location>
-        <address>Winthontlaan 4</address>
-        <zipcode>3526 KV</zipcode>
-        <city>Utrecht</city>
+        <address>Goudsesingel 80</address>
+        <zipcode>3011 KD</zipcode>
+        <city>Rotterdam</city>
         <country>nl</country>
       </location>
     </programRun>
@@ -975,12 +1072,128 @@ In de opleiding gaan we uit van de spelregels van de huidige arbeidsmarkt. Dat b
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>individual</applicationType>
+    <maxNumberOfParticipants>16</maxNumberOfParticipants>
+    <paymentDue>afterwards</paymentDue>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>none</degree>
+    <orgUnitId>arbeidsmarktcommunicatie</orgUnitId>
+    <programDuration unit="hour">8</programDuration>
+    <programForm>full-time</programForm>
+    <programId>MC-AI</programId>
+    <programLevel>none</programLevel>
+    <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
+    <programType>training</programType>
+    <theme>training and education</theme>
+  </programClassification>
+  <programContacts/>
+  <programCurriculum/>
+  <programDescriptions>
+    <programName xml:lang="nl">Masterclass Recruitment en AI</programName>
+    <programSummaryText xml:lang="nl">Leer de geheimen om je wervingsproces te transformeren en te verrijken met de kracht van kunstmatige intelligentie, waaronder ChatGPT
+ </programSummaryText>
+    <programSummaryHtml xml:lang="nl">Leer de geheimen om je wervingsproces te transformeren en te verrijken met de kracht van kunstmatige intelligentie, waaronder ChatGPT&lt;br /&gt;
+&amp;nbsp;</programSummaryHtml>
+    <programDescriptionText xml:lang="nl">AI is niet meer weg te denken uit ons dagelijkse leven en ook in de recruitmentwereld neemt AI de overhand. Want met een flinke dosis technologische innovatie ben jij in staat om de meest geschikte kandidaten te vinden en aan te trekken voor jouw organisatie. Deze masterclass gaat over prompts, over vacatureteksten maar ook over virtual recruiters, chatbots, geautomatiseerde intakes en live advies tijdens interviews. En hacks die je kunt gebruiken in sourcing en benaderen van kandidaten.
+
+In de Masterclass Recruitment en AI nemen we je mee op de betoverende reis naar de wereld van AI. Je ontdekt de fundamentele principes van kunstmatige intelligente en leert hoe je deze kunt toepassen om jouw wervingsstrategieën te verbeteren. Praktisch, tactisch maar we raken ook even de strategie aan.  We behandelen hoe je AI kunt inzetten om kandidaten te identificeren, screenen en selecteren en hoe je met AI de juiste match vindt tussen kandidaten en functievereisten. Hierdoor maak je jouw wervingsproces efficiënter en effectiever.
+
+Maar het draait niet alleen om technologie. We staan ook stil bij de ethische en privacy overwegingen die gepaard gaan met het gebruik van AI in recruitment. Je</programDescriptionText>
+    <programDescriptionHtml xml:lang="nl">AI is niet meer weg te denken uit ons dagelijkse leven en ook in de recruitmentwereld neemt AI de overhand. Want met een flinke dosis technologische innovatie ben jij in staat om de meest geschikte kandidaten te vinden en aan te trekken voor jouw organisatie. Deze masterclass gaat over prompts, over vacatureteksten maar ook over virtual recruiters, chatbots, geautomatiseerde intakes en live advies tijdens interviews. En hacks die je kunt gebruiken in sourcing en benaderen van kandidaten.&lt;br /&gt;
+&lt;br /&gt;
+In de Masterclass Recruitment en AI nemen we je mee op de betoverende reis naar de wereld van AI. Je ontdekt de fundamentele principes van kunstmatige intelligente en leert hoe je deze kunt toepassen om jouw wervingsstrategie&amp;euml;n te verbeteren. Praktisch, tactisch maar we raken ook even de strategie aan. &amp;nbsp;We behandelen hoe je AI kunt inzetten om kandidaten te identificeren, screenen en selecteren en hoe je met AI de juiste match vindt tussen kandidaten en functievereisten. Hierdoor maak je jouw wervingsproces effici&amp;euml;nter en effectiever.&lt;br /&gt;
+&lt;br /&gt;
+Maar het draait niet alleen om technologie. We staan ook stil bij de ethische en privacy overwegingen die gepaard gaan met het gebruik van AI in recruitment. Je leert hoe je de voordelen van technologie benut en daarbij de menselijke factor behoudt. Want dat is tenslotte de kracht van ons vakgebied.&lt;br /&gt;
+&lt;br /&gt;
+Als kers op de taart ontvang je waardevolle tips en tricks om het gebruik van AI in recruitment te optimaliseren. Met deze inzichten vind je de beste kandidaten, versterk je de organisatie en behaal je successen die voorheen onbereikbaar leken.&lt;br /&gt;
+&amp;nbsp;</programDescriptionHtml>
+  </programDescriptions>
+  <programSchedule>
+    <programRun>
+      <id>C23-0026</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2023-12-11</startDate>
+      <endDate isFinal="true">2023-12-11</endDate>
+      <cost>
+        <id>0</id>
+        <amount>759.0000</amount>
+        <amountVAT>159.3900</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <amountValidUntil>2024-01-11</amountValidUntil>
+        <costType>tuition fee</costType>
+        <currency>EUR</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <payableBy>individual</payableBy>
+        <period>program</period>
+        <summaryText xml:lang="nl">Registratiekosten</summaryText>
+        <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
+      </cost>
+      <courseDay>
+        <id>C23-0026_20231211</id>
+        <date>2023-12-11</date>
+        <startTime>10:00:00.0000000+02:00</startTime>
+        <endTime>16:30:00.0000000+02:00</endTime>
+      </courseDay>
+      <location>
+        <address>Goudsesingel 80</address>
+        <zipcode>3011 KD</zipcode>
+        <city>Rotterdam</city>
+        <country>nl</country>
+      </location>
+    </programRun>
+    <programRun>
+      <id>C24-0003</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2024-02-29</startDate>
+      <endDate isFinal="true">2024-02-29</endDate>
+      <cost>
+        <id>0</id>
+        <amount>759.0000</amount>
+        <amountVAT>159.3900</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <amountValidUntil>2024-03-29</amountValidUntil>
+        <costType>tuition fee</costType>
+        <currency>EUR</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <payableBy>individual</payableBy>
+        <period>program</period>
+        <summaryText xml:lang="nl">Registratiekosten</summaryText>
+        <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
+      </cost>
+      <courseDay>
+        <id>C24-0003_20240229</id>
+        <date>2024-02-29</date>
+        <startTime>10:00:00.0000000+02:00</startTime>
+        <endTime>16:30:00.0000000+02:00</endTime>
+      </courseDay>
+      <location>
+        <address>Goudsesingel 80</address>
+        <zipcode>3011 KD</zipcode>
+        <city>Rotterdam</city>
+        <country>nl</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
+  <expires>2024-09-23</expires>
+  <format>EDU-DEX 1.5.1</format>
+  <generator>ChainWise EDU-DEX Tool</generator>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T17:20:01.8489177+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -997,7 +1210,6 @@ In de opleiding gaan we uit van de spelregels van de huidige arbeidsmarkt. Dat b
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -1008,7 +1220,7 @@ In de opleiding gaan we uit van de spelregels van de huidige arbeidsmarkt. Dat b
 Neem een voorsprong met een sterk werkgeversmerk. Om nieuw talent binnen te halen en om te verbinden met jouw huidig talent. Ontdek in 1 dag alle ins en outs over employer branding. Van ontwik</programSummaryText>
     <programSummaryHtml xml:lang="nl">&lt;br /&gt;
 Neem een voorsprong met een sterk werkgeversmerk. Om nieuw talent binnen te halen en om te verbinden met jouw huidig talent. Ontdek in 1 dag alle ins en outs over employer branding. Van ontwik</programSummaryHtml>
-    <programDescriptionText xml:lang="nl">Duurzame voorsprong verwezenlijken op de arbeidsmarkt?
+    <programDescriptionText xml:lang="nl">Duurzame voorsprong verwezenlijken op de arbeidsmarkt?
 
 In deze krappe arbeidsmarkt maakt een goed werkgeversmerk het verschil. Er is op de arbeidsmarkt veel veranderd, maar de rol van employer branding blijft belangrijk. Want je moet als werkgever nog steeds in beeld komen bij schaarse doelgroepen. Maar de band met je eigen medewerkers wordt ook steeds belangrijker. Dat doe je allemaal vanuit je employer brand.
 
@@ -1026,16 +1238,16 @@ Je leert het belang van authenticiteit door van binnenuit jouw werkgeversmerk te
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0030</id>
+      <id>C23-0019</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-12</startDate>
-      <endDate isFinal="true">2022-12-12</endDate>
+      <startDate isFinal="true">2023-10-02</startDate>
+      <endDate isFinal="true">2023-10-02</endDate>
       <cost>
         <id>0</id>
         <amount>795.0000</amount>
         <amountVAT>166.9500</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-12</amountValidUntil>
+        <amountValidUntil>2023-11-02</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -1045,8 +1257,8 @@ Je leert het belang van authenticiteit door van binnenuit jouw werkgeversmerk te
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0030_20221212</id>
-        <date>2022-12-12</date>
+        <id>C23-0019_20231002</id>
+        <date>2023-10-02</date>
         <startTime>10:30:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
@@ -1058,16 +1270,16 @@ Je leert het belang van authenticiteit door van binnenuit jouw werkgeversmerk te
       </location>
     </programRun>
     <programRun>
-      <id>C23-0002</id>
+      <id>C23-0025</id>
       <status>application opened</status>
-      <startDate isFinal="true">2023-02-16</startDate>
-      <endDate isFinal="true">2023-02-16</endDate>
+      <startDate isFinal="true">2023-11-27</startDate>
+      <endDate isFinal="true">2023-11-27</endDate>
       <cost>
         <id>0</id>
         <amount>795.0000</amount>
         <amountVAT>166.9500</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-03-16</amountValidUntil>
+        <amountValidUntil>2023-12-27</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -1077,8 +1289,8 @@ Je leert het belang van authenticiteit door van binnenuit jouw werkgeversmerk te
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C23-0002_20230216</id>
-        <date>2023-02-16</date>
+        <id>C23-0025_20231127</id>
+        <date>2023-11-27</date>
         <startTime>10:30:00.0000000+02:00</startTime>
         <endTime>17:30:00.0000000+02:00</endTime>
       </courseDay>
@@ -1094,12 +1306,95 @@ Je leert het belang van authenticiteit door van binnenuit jouw werkgeversmerk te
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>individual</applicationType>
+    <maxNumberOfParticipants>16</maxNumberOfParticipants>
+    <paymentDue>afterwards</paymentDue>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>none</degree>
+    <orgUnitId>arbeidsmarktcommunicatie</orgUnitId>
+    <programDuration unit="hour">4</programDuration>
+    <programForm>full-time</programForm>
+    <programId>ONBOARDING</programId>
+    <programLevel>none</programLevel>
+    <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
+    <programType>training</programType>
+    <theme>training and education</theme>
+  </programClassification>
+  <programContacts/>
+  <programCurriculum/>
+  <programDescriptions>
+    <programName xml:lang="nl">Succesvolle onboarding start bij werving</programName>
+    <programSummaryText xml:lang="nl">Succesvolle onboarding start bij werving. Leer hoe je de juiste verwachtingen creeert en managet en hoe je zorgt dat nieuwe medewerkers vol enthousiasme starten en gemotiveerd blijven.
+ </programSummaryText>
+    <programSummaryHtml xml:lang="nl">Succesvolle onboarding start bij werving. Leer hoe je de juiste verwachtingen creeert en managet en hoe je zorgt dat nieuwe medewerkers vol enthousiasme starten en gemotiveerd blijven.&lt;br /&gt;
+&amp;nbsp;</programSummaryHtml>
+    <programDescriptionText xml:lang="nl">Het aannemen van nieuwe medewerkers is een cruciale stap in het opbouwen van een sterk team. Het begint allemaal bij de werving en selectie het aantrekken van de juiste kandidaten en het duidelijk communiceren van de verwachtingen. Het is van essentieel belang dat de verwachtingen van zowel de organisatie als de kandidaat goed op elkaar zijn afgestemd. Bij kandidaten ontstaan verwachtingen, welke soms (te) hooggespannen zijn. Na binnenkomst kan dat zorgen voor teleurstellingen en dat wil je natuurlijk voorkomen. Tijdens de workshop Succesvolle onboarding start bij werving delen we praktische tips om verwachtingsmanagement tijdens het wervingsproces effectief aan te pakken. Daarnaast ontvang je waardevolle inzichten en handvatten om de kwaliteit van je wervings- en onboardingsproces te verbeteren. Samen zorgen we ervoor dat jouw team vanaf dag een gemotiveerd en goed geinformeerd aan de slag gaat, wat zal leiden tot een hogere betrokkenheid, productiviteit en retentie binnen jouw organisatie.
+Tijdens de workshop staan de volgende vragen centraal:
+
+	Hoe zorg je ervoor dat kandidaten enthousiast starten en gemotiveerd blijven tijdens je onboarding?
+	Wat betekent dat voor je wervin</programDescriptionText>
+    <programDescriptionHtml xml:lang="nl">Het aannemen van nieuwe medewerkers is een cruciale stap in het opbouwen van een sterk team. Het begint allemaal bij de werving en selectie het aantrekken van de juiste kandidaten en het duidelijk communiceren van de verwachtingen. Het is van essentieel belang dat de verwachtingen van zowel de organisatie als de kandidaat goed op elkaar zijn afgestemd. Bij kandidaten ontstaan verwachtingen, welke soms (te) hooggespannen zijn. Na binnenkomst kan dat zorgen voor teleurstellingen en dat wil je natuurlijk voorkomen. Tijdens de workshop Succesvolle onboarding start bij werving delen we praktische tips om verwachtingsmanagement tijdens het wervingsproces effectief aan te pakken. Daarnaast ontvang je waardevolle inzichten en handvatten om de kwaliteit van je wervings- en onboardingsproces te verbeteren. Samen zorgen we ervoor dat jouw team vanaf dag een gemotiveerd en goed geinformeerd aan de slag gaat, wat zal leiden tot een hogere betrokkenheid, productiviteit en retentie binnen jouw organisatie.&lt;br /&gt;
+Tijdens de workshop staan de volgende vragen centraal:
+&lt;ul&gt;
+	&lt;li&gt;Hoe zorg je ervoor dat kandidaten enthousiast starten en gemotiveerd blijven tijdens je onboarding?&lt;/li&gt;
+	&lt;li&gt;Wat betekent dat voor je werving?&lt;/li&gt;
+&lt;/ul&gt;
+</programDescriptionHtml>
+  </programDescriptions>
+  <programSchedule>
+    <programRun>
+      <id>C23-0023</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2023-10-30</startDate>
+      <endDate isFinal="true">2023-10-30</endDate>
+      <cost>
+        <id>0</id>
+        <amount>599.0000</amount>
+        <amountVAT>125.7900</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <amountValidUntil>2023-11-30</amountValidUntil>
+        <costType>tuition fee</costType>
+        <currency>EUR</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <payableBy>individual</payableBy>
+        <period>program</period>
+        <summaryText xml:lang="nl">Registratiekosten</summaryText>
+        <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
+      </cost>
+      <courseDay>
+        <id>C23-0023_20231030</id>
+        <date>2023-10-30</date>
+        <startTime>13:00:00.0000000+02:00</startTime>
+        <endTime>17:00:00.0000000+02:00</endTime>
+      </courseDay>
+      <location>
+        <address>Goudsesingel 80</address>
+        <zipcode>3011 KD</zipcode>
+        <city>Rotterdam</city>
+        <country>nl</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
+  <expires>2024-09-23</expires>
+  <format>EDU-DEX 1.5.1</format>
+  <generator>ChainWise EDU-DEX Tool</generator>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2023-09-24T17:20:01.8489177+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -1116,30 +1411,33 @@ Je leert het belang van authenticiteit door van binnenuit jouw werkgeversmerk te
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
   <programCurriculum/>
   <programDescriptions>
     <programName xml:lang="nl">Recruitment Marketing Automation</programName>
-    <programSummaryText xml:lang="nl">Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit e-commerce, data analytics en marketing automation is deze nieuwe combinatie ontstaan. Een combinatie van inbound en ou</programSummaryText>
-    <programSummaryHtml xml:lang="nl">Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit e-commerce, data analytics en marketing automation is deze nieuwe combinatie ontstaan. Een combinatie van inbound en ou</programSummaryHtml>
-    <programDescriptionText xml:lang="nl">Met de technieken waarmee Amazon, Netflix of Bol.com sitebezoekers of (potentiele) klanten serviced, met die technieken wordt het huidige en toekomstige recruitment landschap ingekleurd. Met de huidige recruitmenttechniek is het al goed mogelijk om -op naam- in beeld te hebben wie je vacatures bekijken, actief op zoek zijn naar een nieuwe baan of beschikbaar zijn voor een opdracht. Je hebt direct zicht op een actieve talentpool in eigen beheer. Geen dure recruitment seats of het jarenlang opbouwen van talentpools, maar gebruik maken van e-commerce technologie binnen de recruitment.
+    <programSummaryText xml:lang="nl">Verleid latent zoekende kandidaten met Recruitment Marketing Automation. Ontdek het volledige proces, krijg grip op je funnel en bouw merkvoorkeur op.</programSummaryText>
+    <programSummaryHtml xml:lang="nl">Verleid latent zoekende kandidaten met Recruitment Marketing Automation. Ontdek het volledige proces, krijg grip op je funnel en bouw merkvoorkeur op.</programSummaryHtml>
+    <programDescriptionText xml:lang="nl">In het najaar van 2023 start de zevende editie van de Tweedaagse Recruitment Marketing &amp; Automation. Deze training belicht het volledige spectrum van Recruitment Marketing Automation. We nemen je mee door het proces en pakken daarbij jouw eigen casus uitgebreid aan. Na de tweedaagse ben je direct klaar om Recruitment Marketing Automation toe te passen op jouw specifieke doelgroep en prioriteiten.
 
-Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit e-commerce, data analytics en marketing automation is deze nieuwe combinatie ontstaan. Een combinatie van inbound arbeidsmarktcommunicatie/ inbound recruitment marketing, data en analyse, Candidate Relation Mananagement Software (CRM) en sourcing. Elke bezoeker op een aan carriere gerelateerde webpagina (vacature, werkenbij, projecten etc.) wordt gemeten en gemonitord als ware je een klant bij bol.com bent of kijker van Netflix. En indien al dan niet actief op zoek naar een baan of opdracht, verleid of benaderd door de re</programDescriptionText>
-    <programDescriptionHtml xml:lang="nl">&lt;p&gt;Met de technieken waarmee Amazon, Netflix of Bol.com sitebezoekers of (potentiele) klanten serviced, met die technieken wordt het huidige en toekomstige recruitment landschap ingekleurd. Met de huidige recruitmenttechniek is het al goed mogelijk om -op naam- in beeld te hebben wie je vacatures bekijken, actief op zoek zijn naar een nieuwe baan of beschikbaar zijn voor een opdracht. Je hebt direct zicht op een actieve talentpool in eigen beheer. Geen dure recruitment seats of het jarenlang opbouwen van talentpools, maar gebruik maken van e-commerce technologie binnen de recruitment.&lt;/p&gt;
+Met Recruitment Marketing Automation krijg je grip op unieke kandidaten die je naar je toe wilt halen, zodat je adequaat kunt reageren op toekomstige personeelsbehoeften. Optimaliseer je funnel en realiseer succesvolle hires, vooral voor uitdagende profielen. Leer welke kanalen en welk type content het beste aansluiten bij je doelgroep en volg het gedrag van latent zoekende kandidaten op de voet.
 
-&lt;p&gt;Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit e-commerce, data analytics en marketing automation is deze nieuwe combinatie ontstaan. Een combinatie van inbound arbeidsmarktcommunicatie/ inbound recruitment marketing, data en&amp;nbsp;analyse, Candidate Relation Mananagement Software (CRM) en sourcing. Elke bezoeker op een aan carriere gerelateerde webpagina (vacature, werkenbij, projecten etc.) wordt gemeten en gemonitord&amp;nbsp;als ware je een klant bij bol.com bent of kijker van Netflix. En indien al dan niet actief op zoek naar een baan of opdracht, verleid of benaderd door de recruiter.&lt;/p&gt;
+Het draait allemaal om verleiding en het bouwen van merkvoorkeur bij latent zoekende kandidaten. Content speelt een cruciale rol, en daarbij zetten we de kracht van in om het proces efficiënter en effectiever te maken, terwijl we als mensen nog steeds de regie behouden. Dankzij de data en inzichten die we verkrijgen, kunnen we content vormgeven die perfect aansluit bij verschillende doelgroe</programDescriptionText>
+    <programDescriptionHtml xml:lang="nl">&lt;p&gt;In het najaar van 2023 start de zevende editie van de Tweedaagse Recruitment Marketing &amp;amp; Automation. Deze training belicht het volledige spectrum van Recruitment Marketing Automation. We nemen je mee door het proces en pakken daarbij jouw eigen casus uitgebreid aan. Na de tweedaagse ben je direct klaar om Recruitment Marketing Automation toe te passen op jouw specifieke doelgroep en prioriteiten.&lt;/p&gt;
 
-&lt;p&gt;Recruitment Marketing Automation is de meest ideale combinatie tussen inbound arbeidsmarktcommunicatie, recruitment tech, data en sourcing. Door relevante content weet je de doelgroep te verleiden om op je vacature en/of recruitmentsite te komen en daar gegevens achter te laten. Daarna bouw je de relatie uit totdat je op het juiste moment de kandidaat kunt benaderen. Op het moment dat hij/zij ook echt op jouw bericht zit te wachten.&lt;/p&gt;
+&lt;p&gt;Met Recruitment Marketing Automation krijg je grip op unieke kandidaten die je naar je toe wilt halen, zodat je adequaat kunt reageren op toekomstige personeelsbehoeften. Optimaliseer je funnel en realiseer succesvolle hires, vooral voor uitdagende profielen. Leer welke kanalen en welk type content het beste aansluiten bij je doelgroep en volg het gedrag van latent zoekende kandidaten op de voet.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Deze tweedaagse laat alle disciplines langskomen van recruitment marketing automation, met de belangrijkste kennisdragers van dit onderwerp. Belangrijk onderdeel van de training is dat je ook zelf actief aan de gang gaat met elk onderwerp, zodat je weet en richting hebt over wat je na de training gaat doen.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Het draait allemaal om verleiding en het bouwen van merkvoorkeur bij latent zoekende kandidaten. Content speelt een cruciale rol, en daarbij zetten we de kracht van in om het proces effici&amp;euml;nter en effectiever te maken, terwijl we als mensen nog steeds de regie behouden. Dankzij de data en inzichten die we verkrijgen, kunnen we content vormgeven die perfect aansluit bij verschillende doelgroepen en de fases waarin zij zich bevinden.&lt;/p&gt;
+
+&lt;p&gt;Ontdek met ons de mogelijkheden van Recruitment Marketing Automation en zet de eerste stap naar een vernieuwende en succesvolle aanpak van jouw recruitmentstrategie.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Deze tweedaagse laat alle disciplines langskomen van recruitment marketing &amp;amp; automation, met de belangrijkste kennisdragers van dit onderwerp. Belangrijk onderdeel van de training is dat je ook zelf actief aan de gang gaat met elk onderwerp, zodat je weet en richting hebt over wat je na de training gaat doen.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Dit doen we:&lt;/p&gt;
 
 &lt;ul&gt;
-	&lt;li&gt;Maximaal 16 personen&lt;/li&gt;
+	&lt;li&gt;Maximaal 16 deelnemers&lt;/li&gt;
 	&lt;li&gt;In 1 keer 2 dagen (incl. &amp;eacute;&amp;eacute;n overnachting)&lt;/li&gt;
 	&lt;li&gt;Veel interactie, oefeningen en intervisie&lt;/li&gt;
 	&lt;li&gt;Voorafgaand en tussen de trainingsdagen opdrachten en oefeningen. Deelnemers zijn gemiddeld 4 tot 6 uur bezig met de voorbereiding.&lt;/li&gt;
@@ -1150,16 +1448,16 @@ Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C22-0023</id>
+      <id>C23-0022</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-11-23</startDate>
-      <endDate isFinal="true">2022-11-24</endDate>
+      <startDate isFinal="true">2023-11-22</startDate>
+      <endDate isFinal="true">2023-11-23</endDate>
       <cost>
         <id>0</id>
-        <amount>1795.0000</amount>
-        <amountVAT>376.9500</amountVAT>
+        <amount>1999.0000</amount>
+        <amountVAT>419.7900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2022-12-23</amountValidUntil>
+        <amountValidUntil>2023-12-22</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -1169,14 +1467,52 @@ Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0023_20221123</id>
-        <date>2022-11-23</date>
+        <id>C23-0022_20231122</id>
+        <date>2023-11-22</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
+        <endTime>18:30:00.0000000+02:00</endTime>
+      </courseDay>
+      <courseDay>
+        <id>C23-0022_20231123</id>
+        <date>2023-11-23</date>
+        <startTime>09:00:00.0000000+02:00</startTime>
+        <endTime>17:00:00.0000000+02:00</endTime>
+      </courseDay>
+      <location>
+        <address>Goudsesingel 80</address>
+        <zipcode>3011 KD</zipcode>
+        <city>Rotterdam</city>
+        <country>nl</country>
+      </location>
+    </programRun>
+    <programRun>
+      <id>C24-0004</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2024-03-06</startDate>
+      <endDate isFinal="true">2024-03-07</endDate>
+      <cost>
+        <id>0</id>
+        <amount>1999.0000</amount>
+        <amountVAT>419.7900</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <amountValidUntil>2024-04-06</amountValidUntil>
+        <costType>tuition fee</costType>
+        <currency>EUR</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <payableBy>individual</payableBy>
+        <period>program</period>
+        <summaryText xml:lang="nl">Registratiekosten</summaryText>
+        <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
+      </cost>
+      <courseDay>
+        <id>C24-0004_20240306</id>
+        <date>2024-03-06</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>19:00:00.0000000+02:00</endTime>
       </courseDay>
       <courseDay>
-        <id>C22-0023_20221124</id>
-        <date>2022-11-24</date>
+        <id>C24-0004_20240307</id>
+        <date>2024-03-07</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>17:00:00.0000000+02:00</endTime>
       </courseDay>
@@ -1192,12 +1528,12 @@ Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -1214,7 +1550,6 @@ Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>personal development</theme>
   </programClassification>
   <programContacts/>
@@ -1225,7 +1560,7 @@ Recruitment Marketing Automation is binnen werving een nieuwe discipline. Vanuit
     <programSummaryHtml xml:lang="nl">Vind de baan die bij jou past! In deze complete opleiding solliciteren leer je hoe jij de baan vindt die jou werkgeluk oplevert.</programSummaryHtml>
     <programDescriptionText xml:lang="nl">Je leert welke stappen er nodig zijn om de baan te vinden die bij jou past.
 
-Je krijgt toegang tot het gehele programma van de online academy van SES: Slim en Efficient Solliciteren. Hier vind je trainingen en downloads met stappenplannen, informatie, voorbeelden en templates van een cv en brieven,  praktische en effectieve adviezen en tips, thuisopdrachten en nog veel meer!
+Je krijgt toegang tot het gehele programma van de online academy van SES: Slim en Efficient Solliciteren. Hier vind je trainingen en downloads met stappenplannen, informatie, voorbeelden en templates van een cv en brieven,  praktische en effectieve adviezen en tips, thuisopdrachten en nog veel meer!
 
 Je krijgt toegang tot alle kennis en ervaring over de arbeidsmarkt en Solliciteren Anno Nu.
 
@@ -1237,10 +1572,10 @@ De trainingen hebben diverse onderwerpen:
 	Ik en de arbeidsmarkt, waar ligt mijn toekomst?
 	Vacature analyse, belscript
 	Presentatie (cv en brief)
-	Word Zichtbaar en Vindbaar op LinkedIn
+	Word Zichtbaar en Vindbaar op LinkedIn
 	Netwerken en Pitchen
 	Sollicitatiegesprek Anno Nu
-	Verwezenlijk de plakfactor
+	Verwezenlijk de plakfactor
 	Mindset en regie houden
 
 
@@ -1279,14 +1614,14 @@ Met die informatie ga je onderzoeken wat voor werk nu eigenlijk bij jou past. Wa
     <programRun>
       <id>C22-0022</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-12-01</startDate>
-      <endDate isFinal="true">2022-12-01</endDate>
+      <startDate isFinal="true">2023-11-01</startDate>
+      <endDate isFinal="true">2023-11-01</endDate>
       <cost>
         <id>0</id>
         <amount>795.0000</amount>
         <amountVAT>166.9500</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-01-01</amountValidUntil>
+        <amountValidUntil>2023-12-01</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -1296,8 +1631,8 @@ Met die informatie ga je onderzoeken wat voor werk nu eigenlijk bij jou past. Wa
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C22-0022_20221201</id>
-        <date>2022-12-01</date>
+        <id>C22-0022_20231101</id>
+        <date>2023-11-01</date>
         <startTime>09:00:00.0000000+02:00</startTime>
         <endTime>17:00:00.0000000+02:00</endTime>
       </courseDay>
@@ -1313,12 +1648,12 @@ Met die informatie ga je onderzoeken wat voor werk nu eigenlijk bij jou past. Wa
 
 <program xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <editor>opleidingen@arbeidsmarktcommunicatie.eu</editor>
-  <expires>2023-10-17</expires>
+  <expires>2024-09-23</expires>
   <format>EDU-DEX 1.5.1</format>
   <generator>ChainWise EDU-DEX Tool</generator>
   <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-10-17T17:20:00.4957778+02:00</lastEdited>
+  <lastEdited>2023-09-24T17:20:01.8479193+02:00</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -1335,7 +1670,6 @@ Met die informatie ga je onderzoeken wat voor werk nu eigenlijk bij jou past. Wa
     <programLevel>none</programLevel>
     <programLocation id="1">Goudsesingel 80, 3011 KD Rotterdam, nl</programLocation>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <theme>training and education</theme>
   </programClassification>
   <programContacts/>
@@ -1357,7 +1691,7 @@ Blended workshop in 3 stappen
 De blended workshop Schrijven van vacatureteksten combineert online en offline leren voor optimaal effect en bestaat uit 3 onderdelen:
 
 
-	e-Learning Vacatureteksten: Direct na inschrijving ontvang je toegang tot de e-Learning Vacatureteksten. In de portal staat o.a. de online training Schrijven van Vacatureteksten. Deze online training bestaat uit 8 modules en dien je voorafgaand aan de workshop volledig te hebben gevolgd. Houd er rekening mee dat dit ongeveer 8 </programDescriptionText>
+	e-Learning Vacatureteksten: Direct na inschrijving ontvang je toegang tot de e-Learning Vacatureteksten. In de portal staat o.a. de online training Schrijven van Vacatureteksten. Deze online training bestaat uit 8 modules en dien je voorafgaand aan de workshop volledig te hebben gevolgd. Houd er rekening mee dat dit ongeveer 8 </programDescriptionText>
     <programDescriptionHtml xml:lang="nl">&lt;h2 itemprop="headline"&gt;Betere respons met online vacatureteksten&lt;/h2&gt;
 
 &lt;p&gt;Vacatureteksten zijn nog steeds het meest gebruikte middel binnen arbeidsmarktcommunicatie en recruitment. Tijdens deze workshop krijg je handvatten om je vacatureteksten te optimaliseren. Van doelgroepgerichtheid tot online vindbaarheid (SEO). Van optimale indeling tot selecterend vermogen.&lt;/p&gt;
@@ -1377,16 +1711,16 @@ De blended workshop Schrijven van vacatureteksten combineert online en offline l
   </programDescriptions>
   <programSchedule>
     <programRun>
-      <id>C23-0003</id>
+      <id>C23-0018</id>
       <status>application opened</status>
-      <startDate isFinal="true">2023-02-13</startDate>
-      <endDate isFinal="true">2023-02-13</endDate>
+      <startDate isFinal="true">2023-09-28</startDate>
+      <endDate isFinal="true">2023-09-28</endDate>
       <cost>
         <id>0</id>
-        <amount>495.0000</amount>
-        <amountVAT>103.9500</amountVAT>
+        <amount>559.0000</amount>
+        <amountVAT>117.3900</amountVAT>
         <amountIsFinal>true</amountIsFinal>
-        <amountValidUntil>2023-03-13</amountValidUntil>
+        <amountValidUntil>2023-10-28</amountValidUntil>
         <costType>tuition fee</costType>
         <currency>EUR</currency>
         <isRequiredCost>true</isRequiredCost>
@@ -1396,8 +1730,8 @@ De blended workshop Schrijven van vacatureteksten combineert online en offline l
         <descriptionText xml:lang="nl">Registratiekosten</descriptionText>
       </cost>
       <courseDay>
-        <id>C23-0003_20230213</id>
-        <date>2023-02-13</date>
+        <id>C23-0018_20230928</id>
+        <date>2023-09-28</date>
         <startTime>13:30:00.0000000+02:00</startTime>
         <endTime>17:00:00.0000000+02:00</endTime>
       </courseDay>

@@ -221,10 +221,7 @@ $urls =
                                 <th scope="col">Status</th>
                                 <th scope="col">Author</th>
                                 <th scope="col">Company</th>
-                                <th class="tdCenter textThBorder">
-                                    <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔" />&nbsp;
-                                    <input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌" />
-                                </th>
+                                <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -282,7 +279,7 @@ $urls =
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
                                     <td class="textTh tdCenter textTh-center"> <?php if($course->author_id) echo ''; else echo 'author';  ?> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
                                     <td class="textTh tdCenter textTh-center"> <?php if(!empty($company)) echo ''; else echo 'company';  ?> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
-                                    <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
+                                    <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                                 </tr>
                             <?php
                                 }
@@ -712,7 +709,7 @@ $urls =
                 $('#loader').attr('hidden',false)
                 $('#select_field').attr('hidden',true)  
                 // alert('Something is wrong');
-                location.reload();
+                // location.reload();
                },
                success: function(data) {
                 $('#loader').attr('hidden',true)
@@ -722,8 +719,8 @@ $urls =
                         $("#"+ids[i]).remove();
                         // console.log(ids[i]);
                     }
-                    alert("Record applied successfully");
-                    location.reload();
+                    // alert("Record applied successfully");
+                    // location.reload();
                     // window.location.href = "/optieAll";
                 },
                 complete: function(data){
@@ -774,7 +771,7 @@ $urls =
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
-                    location.reload();
+                    // location.reload();
                     // alert("Record applied successfully");  
                 }
             });
