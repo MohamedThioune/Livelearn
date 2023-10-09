@@ -1,6 +1,7 @@
 
 <?php
 
+
 // Categories - all 
 $categories = array();
 
@@ -47,6 +48,7 @@ $user = get_users(array('include'=> $id_user))[0]->data;
 //Skills
 $topics_external = get_user_meta($user->ID, 'topic');
 $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+$internal_growth_subtopics = get_user_meta($user->ID,'topic_affiliate');
 
 $topics = array();
 if(!empty($topics_external))
@@ -58,6 +60,7 @@ if(!empty($topics_internal))
 
 //Note
 $skills_note = get_field('skills', 'user_' . $user->ID);
+$count_skills_note  = (empty($skills_note)) ? 0 : count($skills_note);
  
 //Is a manager + company + phone + bio
 $manageds = get_field('managed',  'user_' . $user->ID);
@@ -66,7 +69,6 @@ $display_company = (!empty($company)) ? $company->post_title : 'No company';
 $phone = (!empty($phone)) ? $phone : '(xx) xxx xxx xx';
 $biographical_info = (!empty($biographical_info)) ? $biographical_info : "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
 Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
-
 
 // Feedbacks
 $args = array(
@@ -85,8 +87,6 @@ $gedeelde_cursus = array();
 $verplichte_cursus = array();
 if(!empty($todos))
     foreach($todos as $key=>$todo):
-        if($key == 8)
-            break;
 
         $type = get_field('type_feedback', $todo->ID);
         $todo->manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
@@ -123,7 +123,7 @@ if(!empty($todos))
         }
     endforeach;
 
-// Badges
+// Badges    
 $args = array(
     'post_type' => 'badge', 
     'author' => $user->ID,
@@ -131,7 +131,54 @@ $args = array(
     'order' => 'DESC',
     'posts_per_page' => -1,
 );
-$badges = get_posts($args);
+$achievements = get_posts($args);
+$badges = array();
+$certificats = array();
+$prestaties = array();
+$diplomas = array();
+if(!empty($achievements))
+    foreach($achievements as $key=>$achievement):
+
+        $type = get_field('type_badge', $achievement->ID);
+        $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+
+        $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->manager->ID);
+        if(!$image)
+            $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+        switch ($type) {
+            case 'Genuine':
+                $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                array_push($badges, $achievement);
+                break;
+            case 'Certificaat':
+                $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                array_push($certificats, $achievement);
+                break;
+            case 'Prestatie':
+                $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                array_push($prestaties, $achievement);
+                break;
+            case 'Diploma':
+                $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                array_push($diplomas, $achievement);
+                break;
+            default:
+                $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                array_push($badges, $achievement);
+                break;
+        }
+    endforeach;
+
+//Todos post
+$args = array(
+    'post_type' => 'todo', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+$post_todos = get_posts($args);
 ?>
 <!-- Latest BS-Select compiled and minified CSS/JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
@@ -295,12 +342,17 @@ $badges = get_posts($args);
                 <div class="content-card-skills content-card-skills-profil">
                                 
                     <?php
+                    $avoid_repetition = array();
                     foreach($topics as $key => $value):
                         $i = 0;
                         $topic = get_the_category_by_ID($value);
                         $note = 0;
-                        if(!$topic)
+                        if(!$topic || in_array($value,$avoid_repetition))
                             continue;
+
+                        //Avoid repetition
+                        array_push($avoid_repetition,$value);
+
                         if(!empty($skills_note))
                             foreach($skills_note as $skill)
                                 if($skill['id'] == $value){
@@ -397,46 +449,50 @@ $badges = get_posts($args);
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+
+                                        <form method="post" action="/dashboard/user" class="form-to-do">
+                                            <input type="hidden" name="type" value="Verplichte cursus">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
+
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van to do</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_todo" required>
                                             </div>
+
+                                            <!-- 
                                             <div class="form-group" id="">
                                                 <label class="sub-label">Selecteer bestaande intern of extern kennisproduct óf creëer een nieuwe</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Select</option>
+                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="input-intern-extern" >
                                                     <option value="internal">Internal course</option>
                                                     <option value="external">External course</option>
-                                                    <option value="external">Create a new one</option>
                                                 </select>
+                                            </div> 
+                                            -->
+
+                                            <div hidden=true class="form-group" id="internal_output" >
+                                                <?php echo $internal_cursus ?>
                                             </div>
-                                            <div class="form-group" id="">
-                                                <label class="sub-label">Selecteer product (for</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Select</option>
-                                                    <option value="">A</option>
-                                                    <option value="">B</option>
-                                                    <option value="">C</option>
-                                                </select>
+                                            <div chidden=true lass="form-group" id="external_output">
+                                                <?php echo $external_cursus ?>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="dateDone">Te doen voor welke datum?</label>
-                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">Geldig tot?</label>
-                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">Nog op- en of aanmerkingen?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="beschrijving_feedback" id="" rows="5" required></textarea>
                                             </div>
 
-                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+                                            <button type="submit" class="btn btn-submi-form-to-do" name="add_todo_sample">Stuur</button>
 
                                         </form>
                                     </div>
@@ -450,35 +506,40 @@ $badges = get_posts($args);
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" action="/dashboard/user" class="form-to-do">
+                                            <input type="hidden" name="type" value="Persoonlijk ontwikkelplan">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
+
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van ontwikkelplan</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_todo" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Waarover een ontwikkelplan maken?</label>
-                                                <textarea class="message-area" name="" id="" rows="3"></textarea>
+                                                <textarea class="message-area" name="beschrijving_feedback" id="" rows="3" required></textarea>
                                             </div>
-                                            <div class="form-group" id="">
-                                                <label class="sub-label">Voor welke datum?</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Select</option>
-                                                    <option value="internal">Internal course</option>
-                                                    <option value="external">External course</option>
-                                                    <option value="external">Create a new one</option>
-                                                </select>
+
+                                            <div class="form-group">
+                                                <label for="dateDone">Voor welke datum?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Geldig tot?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]" required>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">Over welke competenties?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="competencies_feedback" id="" rows="5"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="">Nog op- en of aanmerkingen?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="opmerkingen" id="" rows="5" required></textarea>
                                             </div>
 
-                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+                                            <button type="submit" name="add_todo_sample" class="btn btn-submi-form-to-do">Stuur</button>
 
                                         </form>
                                     </div>
@@ -492,36 +553,43 @@ $badges = get_posts($args);
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" action="/dashboard/user" class="form-to-do">
+                                            <input type="hidden" name="type" value="Onderwerpen">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
+
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van de to do</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_todo" required>
                                             </div>
                                             <div class="form-group" id="">
                                                 <label class="sub-label">Selecteer het onderwerp (sub-topic)</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Type topic …</option>
-                                                    <option value="">A</option>
-                                                    <option value="">B</option>
-                                                    <option value="">C</option>
+                                                <select class="form-select select-internal-external mb-0" name="onderwerpen_todo" aria-label="Default" id="" required>
+                                                    <option value="0" selected>Choose topic …</option>
+                                                    <?php
+                                                    foreach($internal_growth_subtopics as $value)
+                                                        echo "<option value='".$value."'>".(String)get_the_category_by_ID($value)."</option>";
+                                                    ?>
                                                 </select>
                                             </div>
                                             <div class="form-group" id="">
                                                 <label class="sub-label">Select hours to learn</label>
-                                                <select class="form-select select-internal-external mb-0" aria-label="Default" id="" >
-                                                    <option value="0" selected>Type topic …</option>
-                                                    <option value="">A</option>
-                                                    <option value="">B</option>
-                                                    <option value="">C</option>
+                                                <select class="form-select select-internal-external mb-0" name="hour_todo" aria-label="Default" id="" >
+                                                    <option value="0" selected>Hours</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5+">5+</option>
                                                 </select>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">Nog op- en of aanmerkingen?</label>
-                                                <textarea class="message-area" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" name="beschrijving_feedback" id="" rows="5" required></textarea>
                                             </div>
 
-                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+                                            <button type="submit" name="add_todo_sample" class="btn btn-submi-form-to-do">Stuur</button>
 
                                         </form>
                                     </div>
@@ -535,35 +603,47 @@ $badges = get_posts($args);
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form method="post" class="form-to-do" action="">
+                                        <form method="post" action="/dashboard/user" class="form-to-do" >
+                                            <input type="hidden" name="type" value="Feedback">
+                                            <input type="hidden" name="manager" value=<?=$superior->ID?> >
+                                            <input type="hidden" name="id_user" value=<?=$user->ID?> >
+
                                             <div class="form-group">
                                                 <label for="maneMandatory">Titel van te geven feedback</label>
-                                                <input type="text" class="form-control" id="" name="" required>
+                                                <input type="text" class="form-control" id="" name="title_todo" required>
                                             </div>
                                             <div class="form-group formModifeChoose">
                                                 <label class="sub-label">Selecteer de collega(s)</label>
-                                                <select id="" name=""  class="multipleSelect2" multiple="true" required>
-                                                    <option value="">A</option>
-                                                    <option value="">C</option>
-                                                    <option value="">D</option>
+                                                <select id="" name=""  class="multipleSelect2" multiple="true">
+                                                    <option value="">Pick team members …</option>
+                                                    <?php
+                                                    foreach($members as $member)
+                                                        echo "<option value='" . $member->ID . "'>" . $member->display_name . "</option>";
+                                                    ?>
                                                 </select>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="dateDone">Voor welke datum?</label>
-                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" form="mandatory-form" name="">
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Geldig tot?</label>
+                                                <input type="date" class="form-control" id="" placeholder="DD / MM / JJJJ" name="welke_datum_feedback[]" required>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">Over welke competenties?</label>
-                                                <textarea class="message-area" placeholder="Type topics …" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" placeholder="" name="competencies_feedback" id="" rows="5"></textarea>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="">Nog op- en of aanmerkingen?</label>
-                                                <textarea class="message-area" placeholder="" name="" id="" rows="5"></textarea>
+                                                <textarea class="message-area" placeholder="" name="opmerkingen" id="" rows="5"></textarea>
                                             </div>
 
-                                            <button class="btn btn-submi-form-to-do">Stuur</button>
+                                            <button type="submit" name="add_todo_sample" class="btn btn-submi-form-to-do">Stuur</button>
 
                                         </form>
                                     </div>
@@ -578,26 +658,38 @@ $badges = get_posts($args);
                     <div class="content-tab">
                         <div class="content-button-tabs">
                             <button  data-tab="All" class="b-nav-tab btn active">
-                                All <span class="number-content">14</span>
+                                All <span class="number-content"><?= $count_mandatories ?></span>
                             </button>
+                            <?php
+                            $count_todos_feedback = (!empty($todos_feedback)) ? count($todos_feedback) : 0;
+                            ?>
                             <button  data-tab="Activiteiten" class="b-nav-tab btn">
-                                Activiteiten <span class="number-content">2</span>
+                                Activiteiten <span class="number-content"><?= $count_todos_feedback ?></span>
                             </button>
+                            <?php
+                            $count_todos_plannen = (!empty($todos_plannen)) ? count($todos_plannen) : 0;
+                            ?>
                             <button  data-tab="Plannen" class="b-nav-tab btn">
-                                Plannen <span class="number-content">5</span>
+                                Plannen <span class="number-content"><?= $count_todos_plannen ?></span>
                             </button>
+                            <?php
+                            $count_todos_onderwerpen = (!empty($todos_onderwerpen)) ? count($todos_onderwerpen) : 0;
+                            ?>
                             <button  data-tab="Onderwerpen" class="b-nav-tab btn">
-                                Onderwerpen <span class="number-content">2</span>
+                                Onderwerpen <span class="number-content"><?= $count_todos_onderwerpen?></span>
                             </button>
+                            <?php
+                            $count_todos_cursus = (!empty($todos_cursus)) ? count($todos_cursus) : 0;
+                            ?>
                             <button  data-tab="Courses" class="b-nav-tab btn">
-                                Courses <span class="number-content">4</span>
-                            </button>
-                            <button  data-tab="empty" class="b-nav-tab btn">
-                                Empty <span class="number-content">O</span>
+                                Courses <span class="number-content"><?= $count_todos_cursus ?></span>
                             </button>
                         </div>
 
                         <div id="All" class="b-tab active contentBlockSetting -">
+                            <?php
+                            if(!empty($mandatories)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -610,407 +702,169 @@ $badges = get_posts($args);
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                    <?php
+                                    foreach($mandatories as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = (get_field('type_feedback', $todo->ID)) ?: 'Mandatory';
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+                                    $due_date = get_field('welke_datum_feedback', $todo->ID);
+                                    $due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+
+                                    $title_todo = get_field('title_todo', $todo->ID);
+                                    $title = ($title_todo) ?: $todo->post_title;
+
+                                    //Pourcentage
+                                    $pourcentage = 0;
+                                    $count_lesson = 0;
+
+                                    $args = array(
+                                        'post_type' => 'progression', 
+                                        'title' => $todo->post_title,
+                                        'post_status' => 'publish',
+                                        'author' => $user->ID,
+                                        'posts_per_page'         => 1,
+                                        'no_found_rows'          => true,
+                                        'ignore_sticky_posts'    => true,
+                                        'update_post_term_cache' => false,
+                                        'update_post_meta_cache' => false
+                                    );
+                                    $progressions = get_posts($args);
+                                    if(!empty($progressions)):
+                                        $progression_id = $progressions[0]->ID;
+                                        //Finish read
+                                        $is_finish = get_field('state_actual', $progression_id);
+                                        if($is_finish){
+                                            $count_mandatory_done += 1;
+                                            $pourcentage = 100;
+                                        }
+                            
+                                        $post = get_page_by_path($todo->post_title, OBJECT, 'course');
+                                        $type_post = ($post) ? get_field('course_type', $post->ID) : 'NaN';
+                            
+                                        if($type_post == 'Video'){
+                                            $courses = get_field('data_virtual', $post->ID);
+                                            $youtube_videos = get_field('youtube_videos', $post->ID);
+                                            if(!empty($courses))
+                                                $count_lesson = count($courses);
+                                            else if(!empty($youtube_videos))
+                                                $count_lesson = count($youtube_videos);
+                                        }
+                                        else if($type_post == 'Podcast'){
+                                            $podcasts = get_field('podcasts', $post->ID);
+                                            $podcast_index = get_field('podcasts_index', $post->ID);
+                                            if(!empty($podcasts))
+                                                $count_lesson = count($podcasts);
+                                            else if(!empty($podcast_index))
+                                                $count_lesson = count($podcast_index);
+                                        }
+                                        else
+                                            $count_lesson = 0;
+                                        
+                            
+                                        //Pourcentage
+                                        $lesson_reads = get_field('lesson_actual_read', $progression_id);
+                                        $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+                                        if($count_lesson)
+                                            $pourcentage = ($count_lesson) ? ($count_lesson_reads / $count_lesson) * 100 : 0;
+                                        $todo->pourcentage = intval($pourcentage);
+                                            
+                                    endif;
+
+
+                                    //Onderwerpen : situation
+                                    if($type == 'Onderwerpen'):
+                                        $skill_todo = get_field('onderwerpen_todo', $todo->ID);
+                                        $title = ($skill_todo) ? '['. (String)get_the_category_by_ID($skill_todo) .'] '. $title : $title;
+                                        //Pourcentage
+                                        $pourcentage_todo = 0;
+                                        if(!empty($skills_note))
+                                            foreach($skills_note as $skill)
+                                                if($skill['id'] == $skill_todo){
+                                                    $todo->pourcentage = $skill['note'];
+                                                    break;
+                                                }
+                                    endif;
+                            
+
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $title ?></p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td>
+                                            <div class="progress-bar-element-profil">
+                                                <div class="task-progress">
+                                                    <p class="text-center">
+                                                        <?= $todo->pourcentage ?> <span>%</span>
+                                                    </p>
+                                                    <progress class="progress progress2" max="100" value="<?= $todo->pourcentage ?>"></progress>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">PoP</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    50 <span>%</span>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn view-detail">View details</a>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element"><?= $due_date ?></p>
+                                        </td>
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                                 </p>
-                                                <progress class="progress progress2" max="100" value="50"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    80 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="80"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">PoP</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    50 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="50"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    80 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="80"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">PoP</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    50 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="50"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    80 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="80"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#to-do-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Activiteiten" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($todos_feedback)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -1023,100 +877,97 @@ $badges = get_posts($args);
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">PoP</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    50 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="50"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <?php
+                                    foreach($todos_feedback as $todo):
+                                    // if($key == 8)
+                                    //     break;
 
+                                    $type = (get_field('type_feedback', $todo->ID)) ?: 'Mandatory';
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+                                    $due_date = get_field('welke_datum_feedback', $todo->ID);
+                                    $due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+
+                                    $title_todo = get_field('title_todo', $todo->ID);
+                                    $title = ($title_todo) ?: $todo->post_title;
+
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $title ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td>
+                                            <!-- 
+                                            <div class="progress-bar-element-profil">
+                                                <div class="task-progress">
+                                                    <p class="text-center">
+                                                        <?= $todo->pourcentage ?> <span>%</span>
+                                                    </p>
+                                                    <progress class="progress progress2" max="100" value="<?= $todo->pourcentage ?>"></progress>
+                                                </div>
+                                            </div> -->
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn view-detail">View details</a>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element"><?= $due_date ?></p>
+                                        </td>
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#to-do-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Plannen" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($todos_plannen)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -1129,231 +980,97 @@ $badges = get_posts($args);
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                    <?php
+                                    foreach($todos_plannen as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = (get_field('type_feedback', $todo->ID)) ?: 'Mandatory';
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+                                    $due_date = get_field('welke_datum_feedback', $todo->ID);
+                                    $due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+
+                                    $title_todo = get_field('title_todo', $todo->ID);
+                                    $title = ($title_todo) ?: $todo->post_title;
+
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $title ?></p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">PoP</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    50 <span>%</span>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td>
+                                            <!-- 
+                                            <div class="progress-bar-element-profil">
+                                                <div class="task-progress">
+                                                    <p class="text-center">
+                                                        <?= $todo->pourcentage ?> <span>%</span>
+                                                    </p>
+                                                    <progress class="progress progress2" max="100" value="<?= $todo->pourcentage ?>"></progress>
+                                                </div>
+                                            </div> -->
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn view-detail">View details</a>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element"><?= $due_date ?></p>
+                                        </td>
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                                 </p>
-                                                <progress class="progress progress2" max="100" value="50"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    80 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="80"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    80 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="80"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#to-do-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Onderwerpen" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($todos_onderwerpen)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -1361,105 +1078,107 @@ $badges = get_posts($args);
                                     <th scope="col">What</th>
                                     <th scope="col">Progress</th>
                                     <th scope="col">Details</th>
-                                    <th scope="col">Due-date</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">PoP</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    50 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="50"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <?php
+                                    foreach($todos_onderwerpen as $todo):
+                                    // if($key == 8)
+                                    //     break;
 
+                                    $type = (get_field('type_feedback', $todo->ID)) ?: 'Mandatory';
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+                                    $due_date = get_field('welke_datum_feedback', $todo->ID);
+                                    $due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+
+                                    $title_todo = get_field('title_todo', $todo->ID);
+                                    $title = ($title_todo) ?: $todo->post_title;
+
+                                    $skill_todo = get_field('onderwerpen_todo', $todo->ID);
+                                    $title = ($skill_todo) ?'['. (String)get_the_category_by_ID($skill_todo) .'] '. $title : $title;
+                                    //Pourcentage
+                                    $pourcentage_todo = 0;
+                                    if(!empty($skills_note))
+                                        foreach($skills_note as $skill)
+                                            if($skill['id'] == $skill_todo){
+                                                $pourcentage_todo = $skill['note'];
+                                                break;
+                                            }
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $title ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td>
+                                            <div class="progress-bar-element-profil">
+                                                <div class="task-progress">
+                                                    <p class="text-center">
+                                                        <?= $pourcentage_todo ?> <span>%</span>
+                                                    </p>
+                                                    <progress class="progress progress2" max="100" value="<?= $pourcentage_todo ?>"></progress>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn view-detail">View details</a>
+                                        </td>
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                </p>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#to-do-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Courses" class="b-tab contentBlockSetting">
+                            <?php
+                            if(!empty($todos_cursus)):
+                            ?>
                             <table class="table table-responsive table-to-do text-left">
                                 <thead>
                                 <tr>
@@ -1472,184 +1191,90 @@ $badges = get_posts($args);
                                 </tr>
                                 </thead>
                                 <tbody class="text-left">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
+                                    <?php
+                                    foreach($todos_cursus as $todo):
+                                    // if($key == 8)
+                                    //     break;
+
+                                    $type = (get_field('type_feedback', $todo->ID)) ?: 'Mandatory';
+                                    $manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                    
+                                    $display = $manager->first_name ? $manager->first_name : $manager->display_name;
+                                    $display = ($superior->ID == $manager->ID) ? 'You' : $display; 
+
+                                    $display = ($display) ?: 'Anonymous'; 
+
+                                    $post_date = date("d M Y | h:i", strtotime($todo->post_date));
+                                    $due_date = get_field('welke_datum_feedback', $todo->ID);
+                                    $due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+
+                                    $title_todo = get_field('title_todo', $todo->ID);
+                                    $title = ($title_todo) ?: $todo->post_title;
+
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image ?>" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="text-date"><b><?= $display ?></b>  <?= $post_date ?> </p>
+                                                    <p class="text-date mb-0"><?= $title ?></p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element" id="mr-element"><?= $type ?></p>
+                                        </td>
+                                        <td>
+                                            <div class="progress-bar-element-profil">
+                                                <div class="task-progress">
+                                                    <p class="text-center">
+                                                        <?= $todo->pourcentage ?> <span>%</span>
+                                                    </p>
+                                                    <progress class="progress progress2" max="100" value="<?= $todo->pourcentage ?>"></progress>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">PoP</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    50 <span>%</span>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn view-detail">View details</a>
+                                        </td>
+                                        <td>
+                                            <p class="text-other-element"><?= $due_date ?></p>
+                                        </td>
+                                        <td class="textTh">
+                                            <!-- <div class="dropdown text-white">
+                                                <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
+                                                    <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                                 </p>
-                                                <progress class="progress progress2" max="100" value="50"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    20 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="20"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    80 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="80"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/expert3.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="text-date"><b>You</b>  25 AUG 2023 | 09:23  </p>
-                                                <p class="text-date mb-0">Schrijf je eigen Persoonlijk ontwikkelplan.</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element" id="mr-element">Podcast</p>
-                                    </td>
-                                    <td>
-                                        <div class="progress-bar-element-profil">
-                                            <div class="task-progress">
-                                                <p class="text-center">
-                                                    80 <span>%</span>
-                                                </p>
-                                                <progress class="progress progress2" max="100" value="80"></progress>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn view-detail">View details</a>
-                                    </td>
-                                    <td>
-                                        <p class="text-other-element">04/08/2024</p>
-                                    </td>
-                                    <td class="textTh">
-                                        <div class="dropdown text-white">
-                                            <p class="dropdown-toggle dropdownTable-to-do mb-0" type="" data-toggle="dropdown">
-                                                <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                            </p>
-                                            <ul class="dropdown-menu">
-                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
-                                                <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
-                                                <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                <ul class="dropdown-menu">
+                                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="">Bekijk</a></li>
+                                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="">Pas aan</a></li>
+                                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button"  value="Verwijderen"/></li>
+                                                </ul>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </tbody>
                             </table>
+                            <?php
+                            else:
+                            ?>
+                            <div class="block-empty-content">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-to-do-table.png" alt="">
+                                <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#to-do-Modal">Creëer een eerste to do</button>
+                            </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="empty" class="b-tab aa contentBlockSetting">
@@ -1739,6 +1364,8 @@ $badges = get_posts($args);
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        
+                                        <!-- 
                                         <form method="post" class="form-to-do" action="">
                                             <div class="form-group">
                                                 <label for="">Titel van de badge</label>
@@ -1752,13 +1379,10 @@ $badges = get_posts($args);
                                                 <label for="">Upload de batch</label>
                                                 <div class="upload-batch-group">
                                                     <div x-data="imageData()" class="file-input d-flex items-center">
-                                                        <!-- Preview Image -->
                                                         <div class="h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                                                            <!-- Placeholder image -->
                                                             <div x-show="!previewPhoto" class="preview-badge">
                                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/default-badge.jpg" alt="">
                                                             </div>
-                                                            <!-- Show a preview of the photo -->
                                                             <div x-show="previewPhoto" class="preview-badge">
                                                                 <img :src="previewPhoto"
                                                                      alt=""
@@ -1767,9 +1391,7 @@ $badges = get_posts($args);
                                                         </div>
 
                                                         <div class="group-text-upload">
-                                                            <!-- File Input -->
                                                             <div class="input-upload-btnGroup">
-                                                                <!-- Replace the file input styles with our own via the label -->
                                                                 <input @change="updatePreview($refs)" x-ref="input"
                                                                        type="file"
                                                                        accept="image/*,capture=camera"
@@ -1780,9 +1402,7 @@ $badges = get_posts($args);
                                                                 </label>
                                                             </div>
                                                             <div class="">
-                                                                <!-- Display the file name when available -->
                                                                 <span x-text="fileName || emptyText"></span>
-                                                                <!-- Removes the selected file -->
                                                                 <button x-show="fileName"
                                                                         @click="clearPreview($refs)"
                                                                         type="button"
@@ -1828,6 +1448,23 @@ $badges = get_posts($args);
                                             <button class="btn btn-submi-form-to-do">Stuur</button>
 
                                         </form>
+                                        -->
+                                        <?php
+                                        acf_form(array(
+                                            'post_id'  => 'new_post',
+                                            'new_post' => array(
+                                                'post_type'   => 'badge',
+                                                'post_status' => 'publish',
+                                                'post_author' => $user->ID
+                                            ),
+                                            'post_title'   => true,
+                                            'post_excerpt' => false,
+                                            'post_content' => false,
+                                            'fields' => array('trigger_badge', 'genuine_image_badge', 'voor_welke_datum_badge', 'tot_welke_datum_badge', 'competencies_badge', 'opmerkingen_badge'),
+                                            'submit_value'  => __('Stuur'),
+                                            'return' => '?id=' . $user->ID . '&manager='. $superior->ID .'&post_id=%post_id%&typeBadge=Genuine'
+                                        )); 
+                                        ?>
                                     </div>
                                     <div class="detail-content-modal content-CERTFICATE">
                                         <div class="head-detail-form">
@@ -1839,6 +1476,7 @@ $badges = get_posts($args);
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        <!-- 
                                         <form method="post" class="form-to-do" action="">
                                             <div class="form-group">
                                                 <label for="">Titel van het certificaat</label>
@@ -1884,7 +1522,24 @@ $badges = get_posts($args);
 
                                             <button class="btn btn-submi-form-to-do">Stuur</button>
 
-                                        </form>
+                                        </form> 
+                                        -->
+                                        <?php
+                                        acf_form(array(
+                                            'post_id'  => 'new_post',
+                                            'new_post' => array(
+                                                'post_type'   => 'badge',
+                                                'post_status' => 'publish',
+                                                'post_author' => $user->ID
+                                            ),
+                                            'post_title'   => true,
+                                            'post_excerpt' => false,
+                                            'post_content' => false,
+                                            'fields' => array('uitgegeven_door_badge', 'url_aanbieder_badge', 'certificaatnummer_badge', 'voor_welke_datum_badge', 'tot_welke_datum_badge', 'competencies_badge', 'opmerkingen_badge'),
+                                            'submit_value'  => __('Stuur'),
+                                            'return' => '?id=' . $user->ID . '&manager='. $superior->ID .'&post_id=%post_id%&typeBadge=Certificaat'
+                                        )); 
+                                        ?>
                                     </div>
                                     <div class="detail-content-modal content-PRESTATIE">
                                         <div class="head-detail-form">
@@ -1896,6 +1551,7 @@ $badges = get_posts($args);
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        <!-- 
                                         <form method="post" class="form-to-do" action="/dashboard/user">
                                             <div class="form-group">
                                                 <label for="">Titel van de prestatie</label>
@@ -1928,18 +1584,36 @@ $badges = get_posts($args);
 
                                             <button class="btn btn-submi-form-to-do">Stuur</button>
 
-                                        </form>
+                                        </form> 
+                                        -->
+                                        <?php
+                                        acf_form(array(
+                                            'post_id'  => 'new_post',
+                                            'new_post' => array(
+                                                'post_type'   => 'badge',
+                                                'post_status' => 'publish',
+                                                'post_author' => $user->ID
+                                            ),
+                                            'post_title'   => true,
+                                            'post_excerpt' => false,
+                                            'post_content' => false,
+                                            'fields' => array('trigger_badge', 'uren_badge', 'punten_badge', 'voor_welke_datum_badge', 'tot_welke_datum_badge', 'competencies_badge', 'opmerkingen_badge'),
+                                            'submit_value'  => __('Stuur'),
+                                            'return' => '?id=' . $user->ID . '&manager='. $superior->ID .'&post_id=%post_id%&typeBadge=Prestatie'
+                                        )); 
+                                        ?>
                                     </div>
                                     <div class="detail-content-modal content-DIPLOMA">
                                         <div class="head-detail-form">
                                             <button class="btn btn-back-frist-element">
                                                 <i class="fa fa-angle-left"></i>
-                                                <span>Geef Feedback</span>
+                                                <span>Geef Diploma</span>
                                             </button>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        <!-- 
                                         <form method="post" class="form-to-do" action="">
                                             <div class="form-group">
                                                 <label for="">Diploma</label>
@@ -1994,7 +1668,24 @@ $badges = get_posts($args);
 
                                             <button class="btn btn-submi-form-to-do">Stuur</button>
 
-                                        </form>
+                                        </form> 
+                                        -->
+                                        <?php
+                                        acf_form(array(
+                                            'post_id'  => 'new_post',
+                                            'new_post' => array(
+                                                'post_type'   => 'badge',
+                                                'post_status' => 'publish',
+                                                'post_author' => $user->ID
+                                            ),
+                                            'post_title'   => true,
+                                            'post_excerpt' => false,
+                                            'post_content' => false,
+                                            'fields' => array('uitgegeven_door_badge', 'land_badge', 'niveau_badge', 'url_aanbieder_badge', 'certificaatnummer_badge', 'voor_welke_datum_badge', 'tot_welke_datum_badge', 'punten_badge', 'competencies_badge', 'opmerkingen_badge'),
+                                            'submit_value'  => __('Stuur'),
+                                            'return' => '?id=' . $user->ID . '&manager='. $superior->ID .'&post_id=%post_id%&typeBadge=Diploma'
+                                        )); 
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -2009,17 +1700,26 @@ $badges = get_posts($args);
                             <?php
                             $count_badges = (!empty($badges)) ? count($badges) : 0;
                             ?>
-                            <button  data-tab="Badges" class="b-nav-tab btn active">
+                            <button data-tab="Badges" class="b-nav-tab btn active">
                                 Badges<span class="number-content"><?= $count_badges ?></span>
                             </button>
-                            <button  data-tab="Certificates" class="b-nav-tab btn">
-                                Certificates <span class="number-content">0</span>
+                            <?php
+                            $count_certficats = (!empty($certificats)) ? count($certificats) : 0;
+                            ?>
+                            <button data-tab="Certificates" class="b-nav-tab btn">
+                                Certificates <span class="number-content"><?= $count_certficats ?></span>
                             </button>
-                            <button  data-tab="Prestaties" class="b-nav-tab btn">
-                                Prestaties <span class="number-content">O</span>
+                            <?php
+                            $count_prestaties = (!empty($prestaties)) ? count($prestaties) : 0;
+                            ?>
+                            <button data-tab="Prestaties" class="b-nav-tab btn">
+                                Prestaties <span class="number-content"><?= $count_prestaties ?></span>
                             </button>
-                            <button  data-tab="Diploma" class="b-nav-tab btn">
-                                Diploma <span class="number-content">0</span>
+                            <?php
+                            $count_diplomas = (!empty($diplomas)) ? count($diplomas) : 0;
+                            ?>
+                            <button data-tab="Diploma" class="b-nav-tab btn">
+                                Diploma <span class="number-content"><?= $count_diplomas ?></span>
                             </button>
                         </div>
 
@@ -2030,10 +1730,12 @@ $badges = get_posts($args);
                             <div class="block-with-content-badge d-flex flex-wrap">
                                 <?php
                                 foreach ($badges as $key => $badge):
+                                if($key == 3)
+                                    break;
                                 // Image + trigger
-                                $image_badge = get_field('image_badge', $badge->ID);
+                                $image_badge = get_field('image_badge', $badge->ID) ?: get_stylesheet_directory_uri() . '/img/badge-basic.png';
                                 $trigger_badge = get_field('trigger_badge', $badge->ID);
-                                $level_badge = get_field('level_badge', $badge->ID);
+                                $level_badge = get_field('level_badge', $badge->ID) ?: '<b>Company</b>';
                                 ?>
                                 <div class="card-badge">
                                     <div class="img-card-badge">
@@ -2061,24 +1763,134 @@ $badges = get_posts($args);
                         </div>
 
                         <div id="Certificates" class="b-tab contentBlockSetting">
-                            <div class="block-empty-content">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Geef <span><?= $user->display_name ?></span> waardering</a>
+                            <?php
+                            if (!empty($certificats)):
+                            ?>
+                            <div class="block-with-content-badge d-flex flex-wrap">
+                                <?php
+                                foreach ($certificats as $key => $badge):
+                                if($key == 3)
+                                    break;
+                                // Image 
+                                $image_badge = get_field('image_badge', $badge->ID) ?: get_stylesheet_directory_uri() . '/img/badge-assessment.png';
+                                // $trigger_badge = get_field('trigger_badge', $badge->ID);
+                                // $level_badge = get_field('level_badge', $badge->ID) ?: 'Company';
+                                $certificaatnummer_badge = get_field('certificaatnummer_badge', $badge->ID) ?: 'None';
+                                $url_aanbieder_badge = get_field('url_aanbieder_badge', $badge->ID) ?: 'None';
+                                $uitgegeven_door_badge = get_field('uitgegeven_door_badge', $badge->ID) ?: 'None';
+                                ?>
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?= $image_badge ?>" alt="">
+                                    </div>
+                                    <p class="title-badge">Certificat #<?= $certificaatnummer_badge ?></p>
+                                    <p class="statut-text"><?= $badge->post_title ?></p>
+                                    <p class="statut-text"><a href=" <?= $url_aanbieder_badge ?>" target="_blank"><b>URL AANBIEDER</b></a></p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge"> <b>Uitgegeven door : </b><br> <?= $uitgegeven_door_badge ?></p>
+                                </div>
+                                <?php
+                                endforeach;
+                                ?>
                             </div>
+                            <?php
+                            else:
+                            ?>
+                                <div class="block-empty-content">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                    <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-achievement-Modal">Geef <span><?= $user->display_name ?></span> waardering</button>
+                                </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Prestaties" class="b-tab contentBlockSetting">
-                            <div class="block-empty-content">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Geef <span><?= $user->display_name ?></span> waardering</a>
+                            <?php
+                            if (!empty($prestaties)):
+                            ?>
+                            <div class="block-with-content-badge d-flex flex-wrap">
+                                <?php
+                                foreach ($prestaties as $key => $badge):
+                                if($key == 3)
+                                    break;
+                                // Image 
+                                $image_badge = get_field('image_badge', $badge->ID) ?: get_stylesheet_directory_uri() . '/img/badge-assessment.png';
+                                // $trigger_badge = get_field('trigger_badge', $badge->ID);
+                                // $level_badge = get_field('level_badge', $badge->ID) ?: 'Company';
+                                $uren_badge = get_field('uren_badge', $badge->ID) ?: 'None';
+                                $punten_badge = get_field('punten_badge', $badge->ID) ?: 'None';
+                                $competencies_badge = get_field('competencies_badge', $badge->ID) ?: 'None';
+                                $opmerkingen_badge = get_field('opmerkingen_badge', $badge->ID) ?: 'None';
+                                ?>
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?= $image_badge ?>" alt="">
+                                    </div>
+                                    <p class="title-badge">Punten : <?= $punten_badge ?> | Uren : <?= $uren_badge ?></p>
+                                    <p class="statut-text"><?= $badge->post_title ?></p>
+                                    <p class="statut-text"><b> Competencies : </b><br> <?= $competencies_badge?></p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge"> <b> Opmerkingen : </b> <?= $opmerkingen_badge ?></p>
+                                </div>
+                                <?php
+                                endforeach;
+                                ?>
                             </div>
+                            <?php
+                            else:
+                            ?>
+                                <div class="block-empty-content">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                    <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-achievement-Modal">Geef <span><?= $user->display_name ?></span> waardering</button>
+                                </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
                         <div id="Diploma" class="b-tab contentBlockSetting">
-                            <div class="block-empty-content">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
-                                <a href="" class="btn btn-creer-eeen">Geef <span><?= $user->display_name ?></span> waardering</a>
+                        <?php
+                            if (!empty($diplomas)):
+                            ?>
+                            <div class="block-with-content-badge d-flex flex-wrap">
+                                <?php
+                                foreach ($diplomas as $key => $badge):
+                                if($key == 3)
+                                    break;
+                                // Image 
+                                $image_badge = get_field('image_badge', $badge->ID) ?: get_stylesheet_directory_uri() . '/img/badge-assessment.png';
+
+                                // $trigger_badge = get_field('trigger_badge', $badge->ID);
+                                // $level_badge = get_field('level_badge', $badge->ID) ?: 'Company';
+                                $certificaatnummer_badge = get_field('certificaatnummer_badge', $badge->ID) ?: 'None';
+                                $url_aanbieder_badge = get_field('url_aanbieder_badge', $badge->ID) ?: 'None';
+                                $uitgegeven_door_badge = get_field('uitgegeven_door_badge', $badge->ID) ?: 'None';
+                                ?>
+                                <div class="card-badge">
+                                    <div class="img-card-badge">
+                                        <img src="<?= $image_badge ?>" alt="">
+                                    </div>
+                                    <p class="title-badge">Diploma #<?= $certificaatnummer_badge ?></p>
+                                    <p class="statut-text"><?= $badge->post_title ?></p>
+                                    <p class="statut-text"><a href="<?= $url_aanbieder_badge ?>" target="_blank"><b>URL AANBIEDER</b></a></p>
+                                    <div class="bar-badge"></div>
+                                    <p class="statut-badge"> <b>Uitgegeven door : </b><br> <?= $uitgegeven_door_badge ?></p>
+                                </div>
+                                <?php
+                                endforeach;
+                                ?>
                             </div>
+                            <?php
+                            else:
+                            ?>
+                                <div class="block-empty-content">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-certifican.png" alt="">
+                                    <button class="btn btn-creer-eeen" type="button" data-toggle="modal" data-target="#Add-achievement-Modal">Geef <span><?= $user->display_name ?></span> waardering</button>
+                                </div>
+                            <?php
+                            endif;
+                            ?>
                         </div>
 
 
@@ -2183,45 +1995,13 @@ $badges = get_posts($args);
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div> -->
                                 </div>
-                                <p class="text-stat">0/<?= $count_mandatories ?></p>
+                                <p class="text-stat"><?= $count_mandatory_done . "/" . $count_mandatories ?></p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Self-Assessment of Skills:</p>
-                                    <div class="select">
-                                        <select>
-                                            <option value="Year">Year</option>
-                                            <option value="Month">Month</option>
-                                            <option value="Day">Day</option>
-                                        </select>
-                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
-                                </div>
-                                <p class="text-stat">x</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="theme-card-statistiken-1">
-                                <div class="head-card d-flex justify-content-between align-items-center">
-                                    <p class="title">External Learning Opportunities:</p>
-                                    <div class="select">
-                                        <select>
-                                            <option value="Year">Year</option>
-                                            <option value="Month">Month</option>
-                                            <option value="Day">Day</option>
-                                        </select>
-                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
-                                </div>
-                                <p class="text-stat">x</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="theme-card-statistiken-1">
-                                <div class="head-card d-flex justify-content-between align-items-center">
-                                    <p class="title">Feedback given on average</p>
                                     <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
@@ -2231,7 +2011,39 @@ $badges = get_posts($args);
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                     </div> -->
                                 </div>
-                                <p class="text-stat"><?= $score_rate_feedback ?> <span>/ 5 (4,3)</span></p>
+                                <p class="text-stat"><?= $count_skills_note ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">External Learning Opportunities:</p>
+                                    <!-- <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div> -->
+                                </div>
+                                <p class="text-stat"><?= $external_learning_opportunities ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="theme-card-statistiken-1">
+                                <div class="head-card d-flex justify-content-between align-items-center">
+                                    <p class="title">Average feedback given (Me / Team)</p>
+                                    <!-- <div class="select">
+                                        <select>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Day">Day</option>
+                                        </select>
+                                        <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
+                                    </div> -->
+                                </div>
+                                <p class="text-stat"><?= $score_rate_feedback ?> <span>/ <?= $score_rate_feedback_company ?></span></p>
                             </div>
                         </div>
                     </div>
@@ -2258,54 +2070,43 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Learning Delivery Methods:</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
+                                <?php
+                                if($count_course_views):
+                                ?>
                                 <div class="d-block w-100 subTopics-usage-block">
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
+                                    <?php
+                                    foreach ($type_courses as $type => $occurence):
+                                    $learning_delivery_methods = ($occurence/$count_course_views) * 100;
+                                    ?>
+                                    <a href="#" class="element-SubTopics d-flex justify-content-between">
                                         <div class="d-flex">
                                             <div class="imgTopics">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
                                             </div>
-                                            <p class="text-subTopics">Articles</p>
+                                            <p class="text-subTopics"><?= $type ?></p>
                                         </div>
-                                        <p class="number">78%</p>
+                                        <p class="number"><?= intval($learning_delivery_methods) ?>%</p>
                                     </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Videos</p>
-                                        </div>
-                                        <p class="number">90%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </div>
+                                <?php
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                            <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif;
+                                ?>
 
                             </div>
                         </div>
@@ -2364,15 +2165,15 @@ $badges = get_posts($args);
                                         $image_topic = get_field('image', 'category_'. $value);
                                         $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';
                                         ?>
-                                        <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
-                                            <div class="d-flex">
-                                                <div class="imgTopics">
-                                                    <img src="<?= $image_topic ?>" alt="">
-                                                </div>
-                                                <p class="text-subTopics"><?= $name_topic ?></p>
+                                        <a href="#" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
                                             </div>
-                                            <p class="number"><?= $occurence ?></p>
-                                        </a>
+                                            <p class="text-subTopics"><?= $type ?></p>
+                                        </div>
+                                        <p class="number"><?= intval($learning_delivery_methods) ?>%</p>
+                                    </a>
                                     <?php
                                     endforeach;
                                 else:
@@ -2389,54 +2190,58 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Followed topics</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
+                                <?php
+                                if(!empty($followed_topics)):
+                                ?>
                                 <div class="d-block w-100 subTopics-usage-block">
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Agile / Scrum</p>
-                                        </div>
-                                        <p class="number">122k</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Cocktail maken</p>
-                                        </div>
-                                        <p class="number">23k</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Transport</p>
-                                        </div>
-                                        <p class="number">5k</p>
-                                    </a>
+                                    <?php
+                                    $read_one = array();
+                                    foreach($followed_topics as $value):
+                                        if(!$value || in_array($value, $read_one))
+                                            continue;
 
+                                        array_push($read_one, $value);
+                                        $topic = get_the_category_by_ID($value);
+                                        $note = 0;
+                                        if(!$topic)
+                                            continue;
+                                        if(!empty($skills_note))
+                                            foreach($skills_note as $skill)
+                                                if($skill['id'] == $value)
+                                                    $note = $skill['note'];
+                                        $name_topic = (String)$topic;
+                                        $image_topic = get_field('image', 'category_'. $value);
+                                        $image_topic = $image_topic ? $image_topic : get_stylesheet_directory_uri() . '/img/placeholder.png';                
+                                    ?>
+                                    <a href="/category-overview?category=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?= $image_topic ?>" alt="">
+                                            </div>
+                                            <p class="text-subTopics"><?= $name_topic ?></p>
+                                        </div>
+                                        <p class="number"><?= $note ?> / 100</p>
+                                    </a>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </div>
+                                <?php
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                             <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif
+                                ?>
 
                             </div>
                         </div>
@@ -2444,71 +2249,101 @@ $badges = get_posts($args);
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Followed teachers</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <p class="text-stat"></p>
-                                <div class="empty-topic-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-topic.png" alt="">
+                                <?php
+                                if(!empty($followed_teachers)):
+                                ?>
+                                <div class="d-block w-100 subTopics-usage-block">
+                                    <?php
+                                    $read_one = array();
+                                    foreach($followed_teachers as $value):
+                                        if(!$value || in_array($value, $read_one))
+                                            continue;
+
+                                        array_push($read_one, $value);
+                                        $user = get_user_by('ID', $value);
+                    
+                                        $name_user = ($user->first_name) ? : $user->display_name;
+                                        $image_user = get_field('profile_img',  'user_' . $value->ID);
+                                        $image_user = $image_user ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';                
+                                    ?>
+                                    <a href="/user-overview?id=<?= $value ?>" class="element-SubTopics d-flex justify-content-between">
+                                        <div class="d-flex">
+                                            <div class="imgTopics">
+                                                <img src="<?= $image_user ?>" alt="">
+                                            </div>
+                                            <p class="text-subTopics"><?= $name_user ?></p>
+                                        </div>
+                                        <p class="number"></p>
+                                    </a>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </div>
+                                <?php
+                                else:
+                                    echo '<div class="empty-topic-block">
+                                             <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                          </div>';
+                                endif
+                                ?>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="theme-card-statistiken-1">
                                 <div class="head-card d-flex justify-content-between align-items-center">
                                     <p class="title">Most Viewed Expert</p>
-                                    <div class="select">
+                                    <!-- <div class="select">
                                         <select>
                                             <option value="Year">Year</option>
                                             <option value="Month">Month</option>
                                             <option value="Day">Day</option>
                                         </select>
                                         <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </div>
+                                
                                 <div class="d-block w-100 subTopics-usage-block">
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
+                                    <p class="text-stat"></p>
+                                    <?php
+                                    if($expert_views):
+                                        foreach($expert_views as $key => $expert):
+                                            $value = $expert->data_id;
+                                            $occurence = $expert->occurence;
+                                            if(!$value && in_array($value, $read_one))
+                                                continue;
+
+                                            $user = get_user_by_id('ID', $value);
+                        
+                                            $name_user = ($user->first_name) ? : $user->display_name;
+                                            $image_user = get_field('profile_img',  'user_' . $value->ID);
+                                            $image_user = $image_user ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                            ?>
+                                            <a href="#" class="element-SubTopics d-flex justify-content-between">
+                                            <div class="d-flex">
+                                                <div class="imgTopics">
+                                                    <img src="<?= $image_user ?>" alt="">
+                                                </div>
+                                                <p class="text-subTopics"><?= $name_user ?></p>
                                             </div>
-                                            <p class="text-subTopics">Seydou Diallo</p>
-                                        </div>
-                                        <p class="number">232</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Articles</p>
-                                        </div>
-                                        <p class="number">76%</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Mohamed Thioune</p>
-                                        </div>
-                                        <p class="number">134</p>
-                                    </a>
-                                    <a href="" class="element-SubTopics d-flex justify-content-between">
-                                        <div class="d-flex">
-                                            <div class="imgTopics">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/skills2.png" alt="">
-                                            </div>
-                                            <p class="text-subTopics">Daniel van der Kolk</p>
-                                        </div>
-                                        <p class="number">45</p>
-                                    </a>
+                                            <p class="number"><?= $occurence ?></p>
+                                        </a>
+                                        <?php
+                                        endforeach;
+                                    else:
+                                        echo '<div class="empty-topic-block">
+                                                <img src="' . get_stylesheet_directory_uri() . '/img/empty-topic.png" alt="">
+                                            </div>';
+                                    endif
+                                    ?>
 
                                 </div>
 
@@ -2516,7 +2351,7 @@ $badges = get_posts($args);
                         </div>
                     </div>
                    <div class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-12">
                           <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
                               <div class="head-card d-flex justify-content-between align-items-center">
                                   <p class="title">Usage desktop vs Mobile app</p>
@@ -2536,6 +2371,7 @@ $badges = get_posts($args);
                               </div>
                           </div>
                       </div>
+                      <!-- 
                       <div class="col-md-4">
                           <div class="theme-card-statistiken-1">
                               <div class="head-card d-flex justify-content-between align-items-center">
@@ -2590,72 +2426,54 @@ $badges = get_posts($args);
                               </div>
 
                           </div>
-                      </div>
+                      </div> -->
                       <div class="col-md-12">
                           <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
-                              <div class="head-card d-flex justify-content-between align-items-center">
+                                <div class="head-card d-flex justify-content-between align-items-center">
                                   <p class="title">Latest badges</p>
-                                  <div class="select">
+                                  <!-- <div class="select">
                                       <select>
                                           <option value="See-all">See all</option>
-                                          <option value="">...</option>
-                                          <option value="">...</option>
                                       </select>
                                       <div>
                                           <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                       </div>
-                                  </div>
-                              </div>
-                              <div class="block-with-content-badge d-flex flex-wrap">
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-advance.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-pro.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-expert.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                                  <div class="card-badge">
-                                      <div class="img-card-badge">
-                                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/badge-basic.png" alt="">
-                                      </div>
-                                      <p class="title-badge">Badge Profil</p>
-                                      <p class="statut-text">Your profil is complete at 100%</p>
-                                      <div class="bar-badge"></div>
-                                      <p class="statut-badge">Unlocked</p>
-                                  </div>
-                              </div>
-                              <div class="block-empty-badge">
-                                  <img src="<?php echo get_stylesheet_directory_uri();?>/img/empty-badge.png" alt="">
-                              </div>
+                                  </div> -->
+                                </div>
+                                <?php
+                                if (!empty($badges)):
+                                ?>
+                                    <div class="block-with-content-badge d-flex flex-wrap">
+                                        <?php
+                                        foreach ($badges as $key => $badge):
+                                        if($key == 3)
+                                            break;
+                                        // Image + trigger
+                                        $image_badge = get_field('image_badge', $badge->ID);
+                                        $trigger_badge = get_field('trigger_badge', $badge->ID);
+                                        $level_badge = get_field('level_badge', $badge->ID);
+                                        ?>
+                                        <div class="card-badge">
+                                            <div class="img-card-badge">
+                                                <img src="<?= $image_badge ?>" alt="">
+                                            </div>
+                                            <p class="title-badge">Badge <?= $level_badge?></p>
+                                            <p class="statut-text"><?= $badge->post_title ?></p>
+                                            <div class="bar-badge"></div>
+                                            <p class="statut-badge"><?= $trigger_badge ?></p>
+                                        </div>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </div>
+                                <?php
+                                else:
+                                    echo '
+                                        <div class="block-empty-badge">
+                                            <img src="' . get_stylesheet_directory_uri() . '/img/empty-badge.png" alt="">
+                                        </div>';
+                                endif;
+                                ?>
                           </div>
                       </div>
                   </div>
@@ -2687,7 +2505,7 @@ $badges = get_posts($args);
                             <?php
                             if (!empty (get_user_meta($user->ID,'topic_affiliate')))
                             {
-                                $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate'); ?>
+                            ?>
 
 
                                 <div class="inputGroein">
@@ -2960,7 +2778,6 @@ $badges = get_posts($args);
                                                 <textarea class="message-area" name="algemene_beoordeling" id="" rows="3" required></textarea>
                                             </div>
                                             <?php
-                                            $internal_growth_subtopics = get_user_meta($user->ID,'topic_affiliate');
                                             if(!empty($internal_growth_subtopics))
                                                 foreach($internal_growth_subtopics as $key =>  $value){
                                                     echo '<div class="form-group position-relative">';
@@ -3031,7 +2848,6 @@ $badges = get_posts($args);
                                                 <textarea class="message-area" name="beschrijving_feedback" id="" rows="3" required></textarea>
                                             </div>
                                             <?php
-                                            $internal_growth_subtopics = get_user_meta($user->ID,'topic_affiliate');
                                             if(!empty($internal_growth_subtopics))
                                                 foreach($internal_growth_subtopics as $key =>  $value){
                                                     echo '<div class="form-group position-relative">';
@@ -3207,7 +3023,7 @@ $badges = get_posts($args);
                                             <?php echo $rating ?>
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <!-- 
                                         <td>
@@ -3316,7 +3132,7 @@ $badges = get_posts($args);
                                             </div> -->
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <!-- <td>
                                             <p class="text-other-element">04/08/2024</p>
@@ -3408,7 +3224,7 @@ $badges = get_posts($args);
                                             <?php echo $rating ?>
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <!-- <td>
                                             <p class="text-other-element">04/08/2024</p>
@@ -3522,7 +3338,7 @@ $badges = get_posts($args);
                                             <?php echo $rating ?>
                                         </td>
                                         <td>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
+                                            <a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>" class="btn view-detail">View details</a>
                                         </td>
                                         <td>
                                             <p class="text-other-element"><?= $due_date ?></p>
@@ -3610,7 +3426,7 @@ $badges = get_posts($args);
                                         
                                         if($count_rate){
                                             $rating = intval($stars / $count_rate);
-                                            $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+                                            $rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️'; 
                                         }
                                     }
 
@@ -3888,441 +3704,9 @@ $badges = get_posts($args);
                 </div>
             </ul>
 
-
         </div> <!-- END List Wrap -->
 
     </div>
-
-
-
-    <!-- <div class="row">
-        <div class="col-md-12">
-            <div id="profilVIewDetail" class="detailContentCandidat">
-                <div>
-                    <?php
-    /*
-                        if(isset($_GET['message'])) if($_GET['message']) echo "<span class='alert alert-success alert-dismissible fade show' role='alert'>" . $_GET['message'] . "</span>"; */?>
-                    <div class="overviewFirstBlock">
-                        <div class="blockImageCandidat">
-                            <img src="<?php /*echo $image; */?>" alt="">
-                        </div>
-                        <div class="overviewSecondBlock">
-                            <p class="professionCandidat"><?php /*if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name*/?>
-                            <p class="professionCandidat"><?php /*if(isset($user->email)) echo $user->email; */?></p>
-                            <?php /*if($country) { */?>
-                                <p class="professionCandidat"><?php /*echo $country; */?></p>
-                            <?php /*} */?>
-                        </div>
-                        <div class="overviewTreeBlock">
-                            <p class="titleOvervien">Manager : <span><?php /*if(isset($superior->first_name) && isset($superior->last_name)) echo $superior->first_name . '' . $superior->last_name; else echo $superior->display_name; */?></span></p>
-                            <p class="titleOvervien">Company : <span><?php /*echo $company_name; */?></span></p>
-                        </div>
-                        <br>
-                        <div class="overviewFourBlock">
-                            <?php /*if($experience){ */?>
-
-                                <div class="d-flex">
-                                    <p class="nameOtherSkill">Experience : <span><?php /*echo $experience; */?></span></p>
-                                </div>
-                            <?php /*} if($languages){ */?>
-
-                                <div class="d-flex">
-                                    <p class="nameOtherSkill">Language :
-                                        <span>
-                                                        <?php
-    /*                                                        foreach($languages as $key => $language){
-                                                                echo $language;
-                                                                if(isset($languages[$key+1]))
-                                                                    echo ", ";
-                                                            }
-                                                            */?>
-                                                    </span>
-                                    </p>
-                                </div>
-                                <br>
-                            <?php /*} */?>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="content-tab">
-                    <div class="content-button-tabs">
-                        <button  data-tab="Over" class="b-nav-tab btn active">
-                           Over
-                        </button>
-                        <button  data-tab="Skills" class="b-nav-tab btn">
-                            Skills
-                        </button>
-                        <button  data-tab="Mandatory" class="b-nav-tab btn">
-                            Verplichte training
-                        </button>
-                        <button  data-tab="Certificaten" class="b-nav-tab btn">
-                            Certificaten
-                        </button>
-                        <button  data-tab="Statistieken" class="b-nav-tab btn">
-                            Statistieken
-                        </button>
-                        <button  data-tab="Interne-groei" class="b-nav-tab btn">
-                            Interne groei
-                        </button>
-                        <button  data-tab="Externe-groei" class="b-nav-tab btn">
-                            Externe groei
-                        </button>
-                        <button  data-tab="Feedback" class="b-nav-tab btn">
-                            Feedback
-                        </button>
-                    </div>
-
-                    <div id="Over" class="b-tab active contentBlockSetting">
-                        <div class="content">
-                            <p class="textDetailCategorie"><?php /*echo $biographical_info;  */?></p>
-                            <?php
-    /*                            if($educations){
-                                    */?>
-                                <div class="categorieDetailCandidat">
-                                    <h2 class="titleCategorieDetailCandidat">Education</h2>
-                                    <?php
-    /*                                    foreach($educations as $value) {
-                                            $value = explode(";", $value);
-                                            if(isset($value[2]))
-                                                $year = explode("-", $value[2])[0];
-                                            if(isset($value[3]))
-                                                if(intval($value[2]) != intval($value[3]))
-                                                    $year = $year . "-" .  explode("-", $value[3])[0];
-                                            */?>
-                                        <div class="contentEducationCandidat">
-                                            <div class="titleDateEducation">
-                                                <p class="titleCoursCandiddat"><?php /*echo $value[1]; */?></p>
-                                                <?php /*if($year) { */?>
-                                                    <p class="dateCourCandidat"><?php /*echo $year; */?></p>
-                                                <?php /*} */?>
-                                            </div>
-                                            <p class="schoolCandidat"><?php /*echo $value[0]; */?></p>
-                                            <p class="textDetailCategorie"><?php /*echo $value[4]?: ''; */?></p>
-                                        </div>
-                                    <?php /*} */?>
-                                </div>
-                                <?php
-    /*                            }
-                                */?>
-
-                            <?php
-    /*                            if($experiences){
-                                    */?>
-                                <div class="categorieDetailCandidat workExperiece">
-                                    <h2 class="titleCategorieDetailCandidat ex">Work & Experience</h2>
-                                    <?php
-    /*                                    if($experiences)
-                                            if(!empty($experiences))
-                                                foreach($experiences as $value) {
-                                                    $value = explode(";", $value);
-                                                    if(isset($value[2]))
-                                                        $year = explode("-", $value[2])[0];
-                                                    if(isset($value[3]))
-                                                        if(intval($value[2]) != intval($value[3]))
-                                                            $year = $year . "-" .  explode("-", $value[3])[0];
-                                                    */?>
-                                                <div class="contentEducationCandidat">
-                                                    <div class="titleDateEducation">
-                                                        <p class="titleCoursCandiddat"><?php /*echo $value[1]; */?></p>
-                                                        <?php /*if($year) { */?>
-                                                            <p class="dateCourCandidat"><?php /*echo $year; */?></p>
-                                                        <?php /*} */?>
-                                                    </div>
-                                                    <p class="schoolCandidat"><?php /*echo $value[0]; */?></p>
-                                                    <p class="textDetailCategorie"><?php /*echo $value[4]?: '' */?> </p>
-                                                </div>
-
-                                            <?php /*} */?>
-                                </div>
-                                <?php
-    /*                            }
-                                */?>
-                        </div>
-                    </div>
-
-                    <div id="Skills" class="b-tab contentBlockSetting">
-                        <div class="content">
-                            <?php
-    /*                            if(!empty($topics_user)){
-                                    foreach($topics_user as $value){
-                                        $topic = get_the_category_by_ID($value);
-                                        $note = 0;
-                                        if(!$topic)
-                                            continue;
-                                        if(!empty($skills_note))
-                                            foreach($skills_note as $skill)
-                                                if($skill['id'] == $value)
-                                                    $note = $skill['note'];
-                                        $name_topic = (String)$topic;
-                                        */?>
-                                    <div class="skillbars">
-                                        <label class="skillName"><?php /*echo $name_topic;  */?></label>
-                                        <div class="progress" data-fill="<?php /*= $note */?>" >
-                                        </div>
-                                    </div>
-                                <?php /*}
-                            }else {
-                                echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
-                            }
-                            */?>
-                        </div>
-                    </div>
-
-                    <div id="Mandatory" class="b-tab contentBlockSetting">
-                        <div class="content">
-
-                            <button type="button" class="btn btnAddToDo" data-toggle="modal" data-target="#MandatoryModal">
-                                Een verplichte cursus toevoegen
-                            </button>
-
-
-                            <div class="modal fade" id="MandatoryModal" tabindex="-1" role="dialog" aria-labelledby="MandatoryModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="MandatoryModalLabel">Verplichte training Sharing</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form method="post" id="mandatory-form" action="">
-                                                <div class="form-group">
-                                                    <label for="maneMandatory">Name</label>
-                                                    <input type="text" class="form-control" id="maneMandatory" aria-describedby="maneMandatoryHelp" placeholder="Enter name of the mandatory" form="mandatory-form" name="name_mandatory" required>
-                                                </div>
-                                                <div class="form-group" id="">
-                                                    <label class="sub-label">Select internal course or external course</label>
-                                                    <select class="form-select select-internal-external mb-0" aria-label="Default" id="starter-select-course" >
-                                                        <option value="0" selected>Select</option>
-                                                        <option value="internal">Internal course</option>
-                                                        <option value="external">External course</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" id="autocomplete_select_course">
-
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="dateDone">Has to be done Before</label>
-                                                    <input type="date" class="form-control" id="dateDone" placeholder="choose date" form="mandatory-form" name="done_must">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="dateValid">Valid for (days)</label>
-                                                    <input type="number" class="form-control" id="amount" placeholder="7 days" form="mandatory-form" name="valid_must">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="amount">Amount of points </label>
-                                                    <input type="number" class="form-control" id="amount" placeholder="456" form="mandatory-form" name="point_must">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <textarea class="message-area" form="mandatory-form" name="message_must" id="" cols="30" rows="10"></textarea>
-                                                </div>
-
-                                                <input type="hidden" name="user_must" form="mandatory-form"  value="<?php /*= $user->ID */?>">
-
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-Submit" form="mandatory-form" name="mandatory_course">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="Certificaten" class="b-tab contentBlockSetting">
-                        <div class="content">
-                            <div class="categorieDetailCandidat workExperiece">
-                                <?php
-    /*                                if($awards){
-                                        if(!empty($awards))
-                                            foreach($awards as $value) {
-                                                $value = explode(";", $value);
-                                                $year_start = explode("-", $value[2])[0];
-                                                $year_end = explode("-", $value[3])[0];
-                                                if($year_start && !$year_end)
-                                                    $year = $year_start;
-                                                else if($year_end && !$year_start)
-                                                    $year = $year_end;
-                                                else if($year_end != $year_start)
-                                                    $year = $year_start .'-'. $year_end;
-                                                */?>
-                                            <div class="contentEducationCandidat">
-                                                <div class="titleDateEducation">
-                                                    <p class="titleCoursCandiddat"><?php /*echo $value[0]; */?> </p>
-                                                    <?php /*if($year) { */?>
-                                                        <p class="dateCourCandidat"><?php /*echo $year; */?></p>
-                                                    <?php /*} */?>
-                                                </div>
-                                                <p class="textDetailCategorie"><?php /*echo $value[1]; */?></p>
-                                            </div>
-                                            <?php
-    /*                                        }
-                                    }
-                                    else
-                                        echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
-                                    */?>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="Statistieken" class="b-tab contentBlockSetting">
-                        <div class="content">
-                            <h2 class="titleCategorieDetailCandidat ex">Statistic</h2>
-                            <p class="textDetailCategorie">we do not have statistics at this time </p>
-                        </div>
-                    </div>
-
-                    <div id="Interne-groei" class="b-tab contentBlockSetting">
-                        <div class="content">
-                            <form action="" method="POST">
-
-                                <div class="form-group formModifeChoose">
-
-                                    <select class="multipleSelect2" name="selected_subtopics[]" multiple="true" required>
-                                        <?php
-    /*                                        //Subtopics
-                                            foreach($subtopics as $value){
-                                                echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                            }
-                                            */?>
-                                    </select>
-                                    <input type="hidden" name="manager" value=<?php /*=$manager->ID*/?> >
-                                    <input type="hidden" name="id_user" value=<?php /*=$user->ID*/?> >
-                                    <button name="add_internal_growth" class="btn btnVoegTab " type="submit">Voeg toe</button>
-                                </div>
-
-                                <?php
-    /*                                if (!empty (get_user_meta($user->ID,'topic_affiliate')))
-                                    {
-                                        $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');
-                                        */?>
-
-                                    <div class="inputGroein">
-                                        <?php
-    /*                                        foreach($internal_growth_subtopics as $value){
-                                                echo "
-                                                    <form action='/dashboard/user/' method='POST'>
-                                                    <input type='hidden' name='meta_value' value='". $value . "' id=''>
-                                                    <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
-                                                    <input type='hidden' name='meta_key' value='topic_affiliate' id=''>";
-                                                echo "<p> <button type='submit' name='delete' style='border:none;background:#C7D8F5'><i style='font-size 0.5em; color:white'class='fa fa-trash'></i>&nbsp;".(String)get_the_category_by_ID($value)."</button></p>";
-                                                echo "</form>";
-
-                                                */?>
-
-
-                                            <?php
-    /*                                        }
-                                            */?>
-                                    </div>
-
-                                    <?php
-    /*                                }else {
-                                        echo "<p>No topics yet</p>" ;
-                                    }
-                                    */?>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="Externe-groei" class="b-tab contentBlockSetting">
-                        <div class="content">
-                            <div class="inputGroein">
-
-                                <?php
-    /*                                if (!empty (get_user_meta($user->ID,'topic')))
-                                    {
-                                        $external_growth_subtopics = get_user_meta($user->ID,'topic');
-                                        */?>
-
-                                    <div class="inputGroein">
-                                        <?php
-    /*                                        foreach($external_growth_subtopics as $value){
-                                                echo "<p>".(String)get_the_category_by_ID($value)."</p>";
-                                            }
-
-                                            */?>
-                                    </div>
-
-                                    <?php
-    /*                                }else {
-                                        echo "<p>No topics yet</p>" ;
-                                    }
-                                    */?>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="Feedback" class="b-tab contentBlockSetting">
-                        <div class="content">
-                            <div class="addBlockComment">
-                                <div class="otherSkills">
-                                    <button class="btn btnAddToDo"  data-toggle="modal" data-target="#exampleModalWork">Toevoegen om te doen</button>
-                                    <?php
-    /*                                    if(!empty($todos))
-                                            foreach($todos as $key=>$todo) {
-                                                if($key == 8)
-                                                    break;
-
-                                                $type = get_field('type_feedback', $todo->ID);
-                                                $manager = get_field('manager_feedback', $todo->ID);
-
-                                                $image = get_field('profile_img',  'user_' . $manager->ID);
-                                                if(!$image)
-                                                    $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-
-                                                if($type == "Feedback" || $type == "Compliment")
-                                                    $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
-                                                else if($type == "Persoonlijk ontwikkelplan")
-                                                    $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
-                                                else if($type == "Beoordeling Gesprek")
-                                                    $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
-
-                                                */?>
-                                            <div class="activiteRecent">
-                                                <img width="25" src="<?php /*echo $image */?>" alt="">
-                                                <div class="contentRecentActivite">
-                                                    <div class="titleActivite"><?php /*=$todo->post_title;*/?> by <span style="font-weight:bold">
-                                                    <?php
-    /*                                                    if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name;
-                                                        */?>
-                                                    </span>
-                                                    </div>
-                                                    <p class="activiteRecentText"><?php /*if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; */?></p>
-                                                </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <form action="" method="POST">
-                                                    <input type="hidden" name="id" value="<?php /*echo $todo->ID; */?>">
-                                                    <input type="hidden" name="user_id" value="<?php /*echo $user->ID; */?>">
-                                                    <button class="btn btn-removeAdd"  name="delete_todos" type="submit">
-                                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/trash.png" alt="remove-Image">
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        <?php /*}
-
-                                    */?>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-    </div>-->
 
     <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="width: 93% !important;">
@@ -4400,7 +3784,7 @@ $badges = get_posts($args);
                             <div class="col-lg-12 col-md-12">
                                 <div class="group-input-settings">
                                     <label for="">Beschrijving</label>
-                                    <textarea name="beschrijving_feedback" id="" rows="4"></textarea>
+                                    <textarea name="beschrijving_feedback" id="" rows="4" required></textarea>
                                 </div>
                             </div>
                             <div>
@@ -4531,36 +3915,6 @@ $badges = get_posts($args);
 
                                         ?>
 
-                                        <!-- old rate -->
-                                        <!-- <div class="rate feedback" id="selected_stars_'.($key+1).'">
-                                             <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
-                                             <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
-                                             <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
-                                             <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
-                                             <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
-                                             <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
-                                             <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
-                                             <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
-                                             <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
-                                             <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
-                                         </div> -->
-
-
-                                        <!--  the news rate get from course page -->
-                                        <!-- <div class="rating">
-                                            <input type="radio" id="star5" name="rating" value="5" />
-                                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                            <input type="radio" id="star4" name="rating" value="4" />
-                                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                            <input type="radio" id="star3" name="rating" value="3" />
-                                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                            <input type="radio" id="star2" name="rating" value="2" />
-                                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                            <input type="radio" id="star1" name="rating" value="1" />
-                                            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                                        </div> -->
-
-
                                     </div>
 
                                 </div>
@@ -4627,31 +3981,9 @@ $badges = get_posts($args);
                             <button class="btn btnSaveSetting" name="add_todo_compliment" >Save</button>
                         </div>
 
-
-
                     </div>
                 </form>
             </div>
-            <!--   <div class="modal-body">
-                   <div class="row">
-                       <div class="col-lg-12 col-md-12">
-                           <div class="group-input-settings">
-                               <label for="">Title</label>
-                               <input name="job" type="text" placeholder="Engineer">
-                           </div>
-                       </div>
-                       <div class="col-lg-12 col-md-12">
-                           <div class="group-input-settings">
-                               <label for="">Commentary</label>
-                               <textarea name="commentary" id="" rows="4"></textarea>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               <div class="modal-footer">
-                   <button class="btn btnSaveSetting" name="add_work" >Save</button>
-               </div>-->
-
         </div>
     </div>
 
@@ -4671,6 +4003,18 @@ $badges = get_posts($args);
 <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
 <script src="https://rawgit.com/andreruffert/rangeslider.js/develop/dist/rangeslider.min.js"></script>
 
+
+<script>
+    $("#internal_output").hide();
+    $("#internal_output").hide();
+    $("#input-intern-extern").change(function() {
+        if(this.val()) == "internal" {
+            $("#internal_output").show();
+        } else {
+            $("#external_output").show();
+        }
+    });
+</script>
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/organictabs.jquery.js"></script>
 <script>
