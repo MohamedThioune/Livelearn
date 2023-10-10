@@ -106,7 +106,7 @@
       foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
         
-        if(strtolower($company_user[0]->post_title) == strtolower(strval($post['org'])) ){
+        if(trim(strtolower($company_user[0]->post_title)) == trim(strtolower(strval($post['org']))) ){
           $author_id = $user->ID;
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;  
@@ -122,7 +122,7 @@
 
         $companies = get_posts($args);
         foreach($companies as $value) 
-          if(strtolower($value->post_title) == strval($post['org']) ){
+          if(trim(strtolower($value->post_title)) == trim(strval($post['org']))  ){
             $company = $value;
             $company_id = $value->ID;
             break;
