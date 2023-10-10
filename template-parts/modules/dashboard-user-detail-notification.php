@@ -155,14 +155,28 @@
                                         </div>';
                             echo ' <p>Opmerkingen : </p>' . $opmerkingen;
                             break;
+                        case 'Onderwerpen' :
+                            echo '<div class="d-flex"> <p class="title"><span>Title</span> : '. $value->post_title  .' </p>  </div> ' ;
+                            echo '<p class="subTitle">Beschrijving :</p> <p class="content-beschrij">'.$beschrijving_feedback;
+                            $onderwerp_todos = (get_field('onderwerpen_todo', $value->ID)) ? (String)get_the_category_by_ID(get_field('onderwerpen_todo', $value->ID)) : null; 
+                            if($onderwerp_todos):
+                                echo '<p>Topic :</p> 
+                                      <div class="inputGroein">
+                                      <p>' . $onderwerp_todos . '</p>';
+                                echo '</div>';
+                            endif;
+                            break;
+                        
                         // Pour afficher les infos de type feedback ou compliment vu qu'ils ont le meme format
                         default :
                             echo '<div class="d-flex"> <p class="title"><span>Title</span> : '. $value->post_title  .' </p>  </div> ' ;
                             echo ' <p class="subTitle">Beschrijving :</p> <p class="content-beschrij">'.$beschrijving_feedback;
                             $onderwerp_feedback = get_field('onderwerp_feedback', $value->ID);
+                            if ($onderwerp_feedback)
+                                echo '<p>Topics :</p> ';
                             $onderwerp_feedback = explode(';',$onderwerp_feedback) .' </p> ';
-                            echo '<p>Topics :</p>  ';
 
+                            if ($onderwerp_feedback):
                             echo '<div class="inputGroein">';
                             foreach($onderwerp_feedback as $onderwerp)
                             {
@@ -170,6 +184,19 @@
                                     echo '<p>'.(String)get_the_category_by_ID($onderwerp). '</p>';
                             }
                             echo '</div>';
+                            endif;
+
+                            $collegas_feedback = get_field('collegas_feedback', $value->ID);
+                            $show_collegas_feedback = ($collegas_feedback) ? '<p>Te verwittigen collegas : </p> <br>' : null;
+                            echo '<br><p class="subTitle">Te verwittigen collegas :</p>' . $beschrijving_feedback;
+                            if ($collegas_feedback):
+                                echo '<div class="inputGroein">';
+                                foreach($collegas_feedback as $collega):
+                                    if($collega)
+                                        echo '<p>'. $collega->display_name . '</p>';
+                                endforeach;
+                                echo '</div>';
+                            endif;    
                             break;
                     }
                     ?>
