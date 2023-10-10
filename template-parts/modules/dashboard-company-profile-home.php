@@ -179,6 +179,44 @@ $args = array(
     'posts_per_page' => -1,
 );
 $post_todos = get_posts($args);
+
+//Graph stat web-mobile
+$first_day_year = date('Y') . '-' . '01-01 ' . '00:00:00';
+$last_day_year = date('Y') . '-' . '12-31 ' . '00:00:00';
+
+$sql_interaction_web = $wpdb->prepare("SELECT MONTH(created_at) as monthly, count(*) as interaction 
+FROM $table_tracker_views 
+WHERE user_id = '" . $user->ID . "' AND platform = 'web' 
+AND created_at >= '" .$first_day_year. "' AND created_at <= '" .$last_day_year. "'
+GROUP BY MONTH(created_at)
+ORDER BY MONTH(created_at)
+");
+$data_interaction_web = $wpdb->get_results($sql_interaction_web);
+
+$sql_interaction_mobile = $wpdb->prepare("SELECT MONTH(created_at) as monthly, count(*) as interaction 
+FROM $table_tracker_views 
+WHERE user_id = '" . $user->ID . "' AND platform = 'mobile' 
+AND created_at >= '" .$first_day_year. "' AND created_at <= '" .$last_day_year. "'
+GROUP BY MONTH(created_at)
+ORDER BY MONTH(created_at)
+");
+$data_interaction_mobile = $wpdb->get_results($sql_interaction_mobile)[0];
+
+$data_web = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+$data_mobile = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+if(!empty($data_interaction_web))
+    foreach ($data_interaction_web as $web)
+        if($web->monthly)
+            $data_web[$web->monthly] = $web->interaction;
+if(!empty($data_interaction_mobile))
+    foreach ($data_interaction_mobile as $mobile)
+        $data_mobile[$mobile->monthly] = $mobile->interaction;
+
+// var_dump($data_mobile);
+
+$canva_data_web = join(',', $data_web);
+$canva_data_mobile = join(',', $data_mobile);
+
 ?>
 <!-- Latest BS-Select compiled and minified CSS/JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
@@ -2355,7 +2393,7 @@ $post_todos = get_posts($args);
                           <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
                               <div class="head-card d-flex justify-content-between align-items-center">
                                   <p class="title">Usage desktop vs Mobile app</p>
-                                  <div class="select">
+                                  <!-- <div class="select">
                                       <select>
                                           <option value="Year">OOH</option>
                                           <option value="Month">Month</option>
@@ -2364,7 +2402,7 @@ $post_todos = get_posts($args);
                                       <div>
                                           <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
                                       </div>
-                                  </div>
+                                  </div> -->
                               </div>
                               <div class="w-100">
                                   <canvas id="Usage-desktop"></canvas>
@@ -4293,14 +4331,14 @@ $post_todos = get_posts($args);
                 borderColor: '#14A89D',
                 backgroundColor: '#14A89D',
                 borderWidth: 2,
-                data: [100, 120, 140, 130, 150, 170, 160, 180, 190, 200, 210, 220]
+                data: [<?php echo $canva_data_mobile ?>]
             },
             {
                 label: 'Desktop',
                 borderColor: '#023356',
                 backgroundColor: '#023356',
                 borderWidth: 2,
-                data: [200, 180, 160, 170, 150, 130, 140, 120, 110, 100, 90, 80]
+                data: [<?php echo $canva_data_web ?>]
             }
         ]
     };

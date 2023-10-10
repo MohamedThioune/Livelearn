@@ -61,6 +61,7 @@ if(!empty($counting_rate)):
     $star_review[4] = ($star_review[4] / $counting_rate) * 100;
     $star_review[5] = ($star_review[5] / $counting_rate) * 100;
 endif;
+
 ?>
 <body>
 <div class="content-new-Courses video-content-course">
