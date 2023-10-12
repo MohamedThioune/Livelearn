@@ -239,11 +239,11 @@ if(isset($topic_search)){
 
         /* get price from post doing by user for free course */
         $args = array(
+            'post_type' => array('course', 'post'),
             'author' => $user->ID,
             'post_status' => 'publish',
             'posts_per_page' => -1,
             'order' => 'DESC',
-            'author' => $user->ID,
             //'date'=>get_the_date('Y-m-d'),
         );
         $courses_doing_by_this_user = get_posts($args);
