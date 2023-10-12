@@ -246,7 +246,6 @@ if(isset($topic_search)){
             'order' => 'DESC',
             //'date'=>get_the_date('Y-m-d'),
         );
-
         $courses_doing_by_this_user = get_posts($args);
         foreach ($courses_doing_by_this_user as $course) {
             //var_dump('<->',$course->post_date);
