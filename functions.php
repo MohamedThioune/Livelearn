@@ -5,11 +5,8 @@ $GLOBALS['id_user'] = get_current_user_id();
 
 include "custom-endpoints.php";
 include "article-endpoints.php";
-<<<<<<< HEAD
-=======
 include "podcast-endpoints.php";
 include "video-endpoints.php";
->>>>>>> origin/Xadim
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
