@@ -454,7 +454,6 @@ $user_post_view = get_posts(
     )
 )[0];
 
-
 //Experts
 $postAuthorSearch = array();
 $experts = array();
