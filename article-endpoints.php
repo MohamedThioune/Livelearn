@@ -1,6 +1,19 @@
 <?php
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
+<<<<<<<<< Temporary merge branch 1
+
+function RandomDoubleString()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;
+    }
+    return $randstring;
+}
+=========
 // function RandomString()
 // {
 //     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
