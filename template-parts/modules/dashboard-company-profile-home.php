@@ -212,11 +212,93 @@ if(!empty($data_interaction_mobile))
     foreach ($data_interaction_mobile as $mobile)
         $data_mobile[$mobile->monthly] = $mobile->interaction;
 
-// var_dump($data_mobile);
-
 $canva_data_web = join(',', $data_web);
 $canva_data_mobile = join(',', $data_mobile);
 
+//Graph stat topic you-team
+$data_you_read = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+$data_other_read = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+$topic_learner_id = (isset($_GET['topic_learner'])) ? $_GET['topic_learner'] : null;
+if(isset($topics_internal[0]))
+    if(!$topic_learner_id)
+        $topic_learner_id = $topics_internal[0];
+
+if($topic_learner_id):
+
+//For each user get the monthly application
+$factor = 0;
+foreach($numbers as $number):
+    $other_read = false;
+    $sql_other = $wpdb->prepare("SELECT data_id as ID, MONTH(created_at) as monthly 
+    FROM $table_tracker_views 
+    WHERE user_id = '" . $number . "' AND data_type = 'course' 
+    AND created_at >= '" .$first_day_year. "' AND created_at <= '" .$last_day_year. "'
+    ORDER BY MONTH(created_at)
+    ");
+    $data_interaction_other = $wpdb->get_results($sql_other);
+    foreach($data_interaction_other as $course):
+
+        $category_default = get_field('categories', $course->ID);
+        $category_xml = get_field('category_xml', $course->ID);
+
+        if(!empty($category_default))
+            foreach($category_default as $item)
+                if($item)
+                    if($item['value'] == $topic_learner_id):
+                        $data_other_read[$course->monthly] += 1;
+                        $other_read = true;
+                        break;
+                    endif;
+
+        if(!empty($category_default))
+            foreach($category_default as $item)
+                if($item)
+                    if($item['value'] == $topic_learner_id):
+                        $data_other_read[$course->monthly] += 1;
+                        $other_read = true;
+                        break;
+                    endif;     
+    endforeach;
+    if($other_read)
+        $factor += 1;
+endforeach;
+if($factor)
+    $data_member_read = array_map( function($val) use ($factor) { return intval($val / $factor); }, $data_other_read);
+    
+$sql_you = $wpdb->prepare("SELECT data_id as ID, MONTH(created_at) as monthly
+FROM $table_tracker_views 
+WHERE user_id = '" . $user->ID . "' AND data_type = 'course' 
+AND created_at >= '" .$first_day_year. "' AND created_at <= '" .$last_day_year. "'
+ORDER BY MONTH(created_at)
+");
+$data_interaction_you = $wpdb->get_results($sql_you);
+foreach($data_interaction_you as $course):
+
+    $category_default = get_field('categories', $course->ID);
+    $category_xml = get_field('category_xml', $course->ID);
+
+    if(!empty($category_default))
+        foreach($category_default as $item)
+            if($item)
+                if($item['value'] == $topic_learner_id):
+                    $data_you_read[$course->monthly] += 1;
+                    break;
+                endif;
+
+    if(!empty($category_default))
+        foreach($category_default as $item)
+            if($item)
+                if($item['value'] == $topic_learner_id):
+                    $data_you_read[$course->monthly] += 1;
+                    break;
+                endif;
+            
+endforeach;
+
+endif;
+
+$canva_data_you_read = join(',', $data_you_read);
+$canva_data_member_read = join(',', $data_member_read);
 ?>
 <!-- Latest BS-Select compiled and minified CSS/JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
@@ -228,7 +310,11 @@ $canva_data_mobile = join(',', $data_mobile);
             <img src="<?php echo $image;?>" alt="">
         </div>
         <div class="other-general-info">
-            <p class="name"><?php echo $user->display_name; ?></p>
+            <p class="name">
+                <?php
+                // var_dump($data_interaction_you); 
+                echo $user->display_name; 
+                ?></p>
             <p class="professionCandidat"><?= $is_a_manager ?></p>
             <p class="company">Company : <span> <?= $display_company ?></span></p>
         </div>
@@ -2088,7 +2174,18 @@ $canva_data_mobile = join(',', $data_mobile);
                     <div class="theme-card-statistiken-1 mb-4 position-relative height-fit-content">
                         <div class="head-card d-flex justify-content-between align-items-center">
                             <p class="title">Key Skill Development Progress: (See all)</p>
+                            
+                            <?php
+                            $read_learning = array();
+                            foreach($topics_internal as $key => $learning):
+                            if(!$learning && !in_array($learning, $read_learning))
+                                continue;
+                            $link_stat = '?id=' . $user->ID . '&manager='. $superior->ID .'&tab=Statistieken%&topic_learner=' . $learning;
+                            ?>
                             <div class="select">
+                                <a href="<?= $link_stat ?>">
+                                <?php echo (String)get_the_category_by_ID($learning); ?>
+                                <!-- 
                                 <select>
                                     <option value="Year">OOH</option>
                                     <option value="Month">Month</option>
@@ -2096,8 +2193,15 @@ $canva_data_mobile = join(',', $data_mobile);
                                 </select>
                                 <div>
                                     <img class="image-filter" src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-filter-list.png" alt="">
-                                </div>
+                                </div> -->
+                                </a>
                             </div>
+                            <?php
+                            array_push($read_learning, $learning);
+                            if($key == 2)
+                                break;
+                            endforeach;
+                            ?>
                         </div>
                         <div class="w-100">
                             <canvas id="Key-Skill"></canvas>
@@ -4293,14 +4397,14 @@ $canva_data_mobile = join(',', $data_mobile);
                 backgroundColor: '#14A89D',
                 borderColor: '#14A89D',
                 borderWidth: 1,
-                data: [100, 120, 140, 130, 150, 170, 160, 180, 190, 200, 210, 220] 
+                data: [<?php echo $canva_data_you_read?>] 
             },
             {
-                label: 'Average learner following this topic',
+                label: 'Average learner from your team learning on this topic',
                 backgroundColor: '#023356',
                 borderColor: '#023356',
                 borderWidth: 1,
-                data: [200, 180, 160, 170, 150, 130, 140, 120, 110, 100, 90, 80] 
+                data: [<?php echo $canva_data_member_read ?>] 
             }
         ]
     };
@@ -4324,7 +4428,7 @@ $canva_data_mobile = join(',', $data_mobile);
 <script>
 
     var data = {
-        labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        labels: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
         datasets: [
             {
                 label: 'Mobile',
