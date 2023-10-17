@@ -1886,19 +1886,26 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/xml', array(
     'methods' => 'GET',
     'callback' => 'xmlParse'
- ));
+  ));
 
-    register_rest_route ('custom/v1', '/podcast', array(
-        'methods' => 'GET',
-        'callback' => 'crontab_podcast'
-    ));
+  register_rest_route ('custom/v1', '/podcast', array(
+    'methods' => 'GET',
+    'callback' => 'crontab_podcast'
+  ));
 
-    register_rest_route ('custom/v1', '/youtube', array(
-        'methods' => 'GET',
-        'callback' => 'youtubeEndpoint'
-    ));
-    register_rest_route ('custom/v1', '/update-youtube', array(
-        'methods' => 'GET',
-        'callback' => 'updateYoutube'
-    ));
+  register_rest_route ('custom/v1', '/youtube', array(
+    'methods' => 'GET',
+    'callback' => 'youtubeEndpoint'
+  ));
+
+  register_rest_route ('custom/v1', '/update-youtube', array(
+    'methods' => 'GET',
+    'callback' => 'updateYoutube'
+  ));
+
+  register_rest_route ('custom/v1', '/matching-topic-course', array(
+    'methods' => 'GET',
+    'callback' => 'matchin_topics'
+  ));
+
 });
