@@ -1,7 +1,6 @@
 <?php
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
-<<<<<<<<< Temporary merge branch 1
 
 function RandomDoubleString()
 {
@@ -13,7 +12,7 @@ function RandomDoubleString()
     }
     return $randstring;
 }
-=========
+
 // function RandomString()
 // {
 //     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
