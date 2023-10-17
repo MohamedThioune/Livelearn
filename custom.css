@@ -15053,7 +15053,8 @@ background: #FFFFFF !important;
     position: relative;
 }
 .block-new-card-course .new-card-course{
-    width: 48.5%;
+    width: 100%;
+    display: block;
 }
 .new-card-course{
     background: white;
@@ -21208,6 +21209,7 @@ background: #FFFFFF !important;
 }
 .loader-course{
     display: none;
+    width: 48.5%;
 }
 .loader-block {
     margin: 0 auto;
