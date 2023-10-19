@@ -1428,7 +1428,6 @@ function answerAssessment (WP_REST_Request $request)
       if (isset ($questions) && !empty($questions))
       {
         foreach ($questions as $key => $question) {
-          
          if($question["correct_response"] == $user_responses[$key])
           {
             $score++; 
