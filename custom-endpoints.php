@@ -617,8 +617,9 @@ function allArticles($data)
     $courses[$key]->youtubeVideos = get_field('youtube_videos',$courses[$key]->ID) ? get_field('youtube_videos',$courses[$key]->ID) : []  ;
     $courses[$key]->podcasts = get_field('podcasts',$courses[$key]->ID) ? get_field('podcasts',$courses[$key]->ID) : [];
     $courses[$key]->connectedProduct = get_field('connected_product',$courses[$key]->ID);
-    $tags = get_field('categories',$courses[$key]->ID) ?? [];
-    $courses[$key]->tags= array();
+    $tags = get_field('categories', $courses[$key]->ID);
+    //categories xml missing
+    $courses[$key]->tags = array();
     if($tags)
       if (!empty($tags))
         foreach ($tags as $key => $category):
