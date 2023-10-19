@@ -746,11 +746,16 @@ function allArticles($data)
           if(!$category)
             continue;
 
+          if(!is_int($category['value']))
+            continue;
+
           if(is_wp_error(get_the_category_by_ID($category['value'])))
               continue;
 
-          $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
-          array_push($courses[$key]->tags,$tag);
+          if(is_array($courses[$key]->tags)):
+            $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+            array_push($courses[$key]->tags,$tag);
+          endif;
           
         endforeach;
 
