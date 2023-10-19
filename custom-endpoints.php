@@ -637,6 +637,8 @@ function allArticles($data)
             array_push($courses[$key]->tags,$tag);
           }
         endforeach;
+
+        $courses[$key]->tags = is_array($courses[$key]->tags) ? $courses[$key]->tags : [];
     /**
      * Handle Image exception
      */
