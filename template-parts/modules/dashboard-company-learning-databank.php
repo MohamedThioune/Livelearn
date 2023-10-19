@@ -225,10 +225,10 @@
 
         foreach ($topics as $value) {
             $tag = get_categories( 
-                 array(
-                 'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                 'parent'  => $value->cat_ID,
-                 'hide_empty' => 0,
+                array(
+                'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
                 ) 
             );
             $categorys = array_merge($categorys, $tag);      

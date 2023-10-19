@@ -48,28 +48,28 @@ class Course
   public $links;
 
   function __construct($course) {
-     $this->id = $course->ID;
-     $this->date = $course->post_date;
-     $this->title = $course->post_title;
-     $this->pathImage = $course->pathImage;
-     $this->shortDescription = $course->shortDescription;
-     $this->longDescription = $course->longDescription;
-     $this->price = $course->price;
-     $this->tags = $course->tags;
-     $this->courseType = $course->courseType;
-     $this->data_locaties_xml = $course->data_locaties_xml;
-     $this->youtubeVideos = $course->youtubeVideos;
-     $this->experts = $course->experts;
-     $this->visibility = $course->visibility ?? null;
-     $this->links = $course->guid;
-     $this->podcasts = $course->podcasts;
-     $this->connectedProduct = $course->connectedProduct;
-     $this->author = $course->author;
-     $this->articleItself = get_field('article_itself', $course->ID) ?? '';
-     $this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ;
-     $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
-     $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
-    }
+    $this->id = $course->ID;
+    $this->date = $course->post_date;
+    $this->title = $course->post_title;
+    $this->pathImage = $course->pathImage;
+    $this->shortDescription = $course->shortDescription;
+    $this->longDescription = $course->longDescription;
+    $this->price = $course->price;
+    $this->tags = $course->tags;
+    $this->courseType = $course->courseType;
+    $this->data_locaties_xml = $course->data_locaties_xml;
+    $this->youtubeVideos = $course->youtubeVideos;
+    $this->experts = $course->experts;
+    $this->visibility = $course->visibility ?? null;
+    $this->links = $course->guid;
+    $this->podcasts = $course->podcasts;
+    $this->connectedProduct = $course->connectedProduct;
+    $this->author = $course->author;
+    $this->articleItself = get_field('article_itself', $course->ID) ?? '';
+    $this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ;
+    $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
+    $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
+  }
 }
 
 class Tags
@@ -543,7 +543,7 @@ function get_course_image($data)
             
 }
 
-function allArticles ($data)
+function allArticles($data)
 {        
   $current_user_id = $GLOBALS['user_id'];
   $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
@@ -560,7 +560,9 @@ function allArticles ($data)
    );
   $courses = get_posts($args);
   if (!$courses)
-    return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+    return ["courses" => [],
+            'message' => "There is no courses related to this course type in the database! ",
+            "codeStatus" => 400];
     
   // if (!isset ($data['page']))
   //   $page = 1;
@@ -585,6 +587,7 @@ function allArticles ($data)
     if ($courses[$key]->visibility != [])
       if ($author_company != $current_user_company)
         continue;
+
     $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $courses[$key]->experts = array();
     $experts = get_field('experts',$courses[$key]->ID);
@@ -593,7 +596,7 @@ function allArticles ($data)
         $expert = get_user_by( 'ID', $expert );
         $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         array_push($courses[$key]->experts, new Expert ($expert,$experts_img));
-        }
+      }
 
     $courses[$key]-> author = new Expert ($author , $author_img);
     $courses[$key]->longDescription = get_field('long_description',$courses[$key]->ID);
@@ -609,9 +612,6 @@ function allArticles ($data)
                     $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$key]->courseType) . '.jpg';
     }
     
-
-
-    
     $courses[$key]->pathImage = $image;
     $courses[$key]->price = get_field('price',$courses[$key]->ID) ?? 0;
     $courses[$key]->youtubeVideos = get_field('youtube_videos',$courses[$key]->ID) ? get_field('youtube_videos',$courses[$key]->ID) : []  ;
@@ -621,11 +621,21 @@ function allArticles ($data)
     $courses[$key]->tags= array();
     if($tags)
       if (!empty($tags))
-        foreach ($tags as $key => $category)
+        foreach ($tags as $key => $category):
+          //Code added by MaxBird
+          if(!$category)
+            continue;
+          if(!is_int($category['value']))
+              continue;
+          $topic_category = get_the_category_by_ID($category['value']);
+          if(is_wp_error($topic_category))
+              continue;
+
           if(isset($category['value'])){
             $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
             array_push($courses[$key]->tags,$tag);
           }
+        endforeach;
     /**
      * Handle Image exception
      */
@@ -648,6 +658,7 @@ function allArticles ($data)
   }
 
   return ['courses' => $outcome_courses, "codeStatus" => 200];
+
 }
 
 function get_saved_course()
