@@ -120,7 +120,7 @@ endif;
                                                     echo  '<li>
                                                                 <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                 <a href="/category-overview?category=' . $tag->ID . '" class="text-tabs">' . $tag->name . '</a>
-                                                            </li>';  
+                                                           </li>';  
                                             else{
                                                 $read_category = array();
                                                 if(!empty($category_default))
@@ -133,7 +133,6 @@ endif;
                                                                             <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
                                                                         </li>';  
                                                             }
-
                                                 else if(!empty($category_xml))
                                                     foreach($category_xml as $item)
                                                         if($item)
@@ -161,6 +160,8 @@ endif;
                                     <div class="list-content-podcast">
                                         <?php
                                         foreach($podcasts as $key => $podcast) {
+                                            if(!$podcast)
+                                                continue;
                                             $style = "";
                                             if(isset($lesson))
                                                 if($lesson == $key)
@@ -187,7 +188,7 @@ endif;
                                                         </div>
                                                         <p class="title-podcast"><?= $podcast['course_podcast_title'] ?></p>
                                                     </div>
-                                                    <p class="date-added-playlist">10/15/22</p>
+                                                    <p class="date-added-playlist">xx/xx/xxxx</p>
                                                 </div>
                                                 <div class="audio">
                                                     <div class="cp-audioquote">
@@ -219,26 +220,28 @@ endif;
                                <ul id="Course">
                                    <div class="list-content-podcast">
                                        <?php
-                                       foreach($podcast_index as $key => $podcast) {
-                                       $style = "";
-                                       if(isset($lesson))
-                                           if($lesson == $key)
-                                               $style = "color:#F79403";
-                                       $link = '#';
-                                       $reading = "#";
-                                       $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                       if($bool_link || $key == 0){
-                                           $reading = $podcast['podcast_url'];
-                                           $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
-                                       }
-                                       $date_podcast = $podcast['podcast_date'];
-                                       //$date_podcast = !empty($date_podcast) ? date("d-m-Y H:i:s", strtotime($date_podcast)) : "";
-                                       $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
-                                       $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
-                                       $lecture_index = $key + 1;
-                                       $description_podcast = $podcast['podcast_description'] ? : $short_description ;
+                                        foreach($podcast_index as $key => $podcast) {
+                                        if(!$podcast)
+                                            continue;
+                                        $style = "";
+                                        if(isset($lesson))
+                                            if($lesson == $key)
+                                                $style = "color:#F79403";
+                                        $link = '#';
+                                        $reading = "#";
+                                        $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                        if($bool_link || $key == 0){
+                                            $reading = $podcast['podcast_url'];
+                                            $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                        }
+                                        $date_podcast = $podcast['podcast_date'];
+                                        //$date_podcast = !empty($date_podcast) ? date("d-m-Y H:i:s", strtotime($date_podcast)) : "";
+                                        $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
+                                        $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
+                                        $lecture_index = $key + 1;
+                                        $description_podcast = $podcast['podcast_description'] ? : $short_description ;
 
-                                           ?>
+                                        ?>
                                        <div class="elemnt-list-podcast">
                                            <div class="detail-block-podcast">
                                                <div class="d-flex align-items-center justify-content-between">

@@ -2160,27 +2160,92 @@ function save_user_views(WP_REST_Request $request)
    * User's Progression 
    */
 
-   function get_user_course_progression($request)
-   {
-      $course_title = $request['course_title'] ?? false;
-      if ($course_title == false)
+  function get_user_course_progression($request)
+  {
+    $course_title = $request['course_title'] ?? false;
+    if ($course_title == false)
+    {
+      $response = new WP_REST_Response('You have to fill in the course title');
+      $response->set_status(400);
+      return $response;
+    }
+    
+    $user_id = $request['user_id'] ?? 0;
+    $user = get_user_by( 'ID', $user_id );
+      if ($user == false)
       {
-        $response = new WP_REST_Response('You have to fill in the course title');
+        $response = new WP_REST_Response('This user doesn\'t exist');
         $response->set_status(400);
         return $response;
       }
       
-      $user_id = $request['user_id'] ?? 0;
-      $user = get_user_by( 'ID', $user_id );
-        if ($user == false)
-        {
-          $response = new WP_REST_Response('This user doesn\'t exist');
-          $response->set_status(400);
-          return $response;
-        }
-        
-        //Get read by user 
-        //Get posts searching by title
+      //Get read by user 
+      //Get posts searching by title
+    $args = array(
+      'post_type' => 'progression', 
+      'title' => $course_title,
+      'post_status' => 'publish',
+      'author' => $user->ID,
+      'posts_per_page'         => 1,
+      'no_found_rows'          => true,
+      'ignore_sticky_posts'    => true,
+      'update_post_term_cache' => false,
+      'update_post_meta_cache' => false,
+    );
+    $progressions = get_posts($args) ?? [];
+    
+    if(empty($progressions))
+    {
+      //Create progression
+      $post_data = array(
+          'post_title' => $course_title,
+          'post_author' => $user->ID,
+          'post_type' => 'progression',
+          'post_status' => 'publish'
+      );
+      $progression_id = wp_insert_post($post_data);
+    }
+    else
+      $progression_id = $progressions[0]->ID;
+  //Lesson read
+  $lesson_reads = get_field('lesson_actual_read', $progression_id) == null || get_field('lesson_actual_read', $progression_id) == false ? [] : get_field('lesson_actual_read', $progression_id);
+  $response = new WP_REST_Response($lesson_reads);
+  $response->set_status(200);
+  $progressions = get_posts($args);
+  return $lesson_reads;    
+
+  }
+
+  function update_user_progression_course($request)
+  {
+    $request['course_title'];
+    $course_title = $request['course_title'] ?? false;
+    if ($course_title == false)
+    {
+      $response = new WP_REST_Response('You have to fill in the course title');
+      $response->set_status(400);
+      return $response;
+    }
+
+    $user_id = $request['user_id'] ?? 0;
+    $user = get_user_by( 'ID', $user_id );
+
+    if ($user == false)
+    {
+      $response = new WP_REST_Response('This user doesn\'t exist');
+      $response->set_status(400);
+      return $response;
+    }
+
+    $key_lesson = $request['key_lesson'] ?? [];
+    if (empty($key_lesson))
+      {
+        $response = new WP_REST_Response('You have to fill in the user progression');
+        $response->set_status(400);
+        return $response;
+      }
+      
+
       $args = array(
         'post_type' => 'progression', 
         'title' => $course_title,
@@ -2192,83 +2257,157 @@ function save_user_views(WP_REST_Request $request)
         'update_post_term_cache' => false,
         'update_post_meta_cache' => false,
       );
-      $progressions = get_posts($args) ?? [];
-      
-      if(empty($progressions))
-      {
-        //Create progression
-        $post_data = array(
-            'post_title' => $course_title,
-            'post_author' => $user->ID,
-            'post_type' => 'progression',
-            'post_status' => 'publish'
-        );
-        $progression_id = wp_insert_post($post_data);
+      $progression = get_posts($args)[0];
+      $lesson_reads = get_field('lesson_actual_read', $progression->ID) == null || get_field('lesson_actual_read', $progression->ID) == false ? [] : get_field('lesson_actual_read', $progression->ID);
+      $is_already_validated = array_search($key_lesson,$lesson_reads);
+    
+      if (is_integer($is_already_validated)){
+        array_splice($lesson_reads,$is_already_validated,1);
       }
       else
-        $progression_id = $progressions[0]->ID;
-    //Lesson read
-    $lesson_reads = get_field('lesson_actual_read', $progression_id) == null || get_field('lesson_actual_read', $progression_id) == false ? [] : get_field('lesson_actual_read', $progression_id);
-    $response = new WP_REST_Response($lesson_reads);
-    $response->set_status(200);
-    $progressions = get_posts($args);
-    return $lesson_reads;    
+        array_push($lesson_reads,$key_lesson);
 
-   }
+      update_field('lesson_actual_read', $lesson_reads, $progression->ID);
+      $response = new WP_REST_Response($lesson_reads);
+      $response->set_status(200);
+      return $response;
+  }
+   
+  function matchin_topics(){
+    global $wpdb;
 
-   function update_user_progression_course($request)
-   {
-      $request['course_title'];
-      $course_title = $request['course_title'] ?? false;
-      if ($course_title == false)
-      {
-        $response = new WP_REST_Response('You have to fill in the course title');
-        $response->set_status(400);
-        return $response;
-      }
+    $main_categories = array();
+    $data_historiq = array();
 
-      $user_id = $request['user_id'] ?? 0;
-      $user = get_user_by( 'ID', $user_id );
+    $categories_get = get_categories( 
+      array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+      ) 
+    );
 
-      if ($user == false)
-      {
-        $response = new WP_REST_Response('This user doesn\'t exist');
-        $response->set_status(400);
-        return $response;
-      }
+    foreach($categories_get as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($main_categories, $category);
+    }
 
-      $key_lesson = $request['key_lesson'] ?? [];
-      if (empty($key_lesson))
-        {
-          $response = new WP_REST_Response('You have to fill in the user progression');
-          $response->set_status(400);
-          return $response;
-        }
-        
+    $main_topics = array();
+    foreach($main_categories as $category_id){
 
-        $args = array(
-          'post_type' => 'progression', 
-          'title' => $course_title,
-          'post_status' => 'publish',
-          'author' => $user->ID,
-          'posts_per_page'         => 1,
-          'no_found_rows'          => true,
-          'ignore_sticky_posts'    => true,
-          'update_post_term_cache' => false,
-          'update_post_meta_cache' => false,
+        //Topics
+        $topics_get = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $category_id,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            )
         );
-        $progression = get_posts($args)[0];
-        $lesson_reads = get_field('lesson_actual_read', $progression->ID) == null || get_field('lesson_actual_read', $progression->ID) == false ? [] : get_field('lesson_actual_read', $progression->ID);
-        $is_already_validated = array_search($key_lesson,$lesson_reads);
-      
-        if (is_integer($is_already_validated)){
-          array_splice($lesson_reads,$is_already_validated,1);
-        }
-        else
-          array_push($lesson_reads,$key_lesson);
 
-        update_field('lesson_actual_read', $lesson_reads, $progression->ID);
-        $response = new WP_REST_Response($lesson_reads);
-        $response->set_status(200);
-        return $response;
-   }
+        if($category_id)
+          $main_topics = array_merge($main_topics, $topics_get);
+    }
+
+    $args = array(
+      'post_type' => array('post', 'course'),
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC',
+    );
+    $global_posts = get_posts($args);
+
+    //Iteration of all topics to get their courses 
+    foreach($main_topics as $topic):
+
+      //Initialize arrays
+      $child_topics_id = array();
+
+      // $blogs = array();
+      // $blogs_id = array();
+
+      //Get child topics category
+      if($topic)
+        $child_topics = get_categories(
+          array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'orderby'    => 'name',
+            'parent'     => $topic->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+          ) 
+        );
+      
+      if(isset($child_topics))
+          foreach($child_topics as $category)
+              array_push($child_topics_id, $category->cat_ID);
+            
+      foreach($global_posts as $blog):
+        /*
+        * Categories
+        */
+        $category_default = get_field('categories', $blog->ID);
+        $categories_xml = get_field('category_xml', $blog->ID);
+        $merge_categories_id = array();
+        // $category_id = 0;
+    
+        /*
+        * Merge categories from customize and xml
+        */
+        if(!empty($category_default))
+          foreach($category_default as $item)
+            if($item)
+              if($item['value'])
+                  if(!in_array($item['value'], $merge_categories_id))
+                    array_push($merge_categories_id, $item['value']);
+    
+        else if(!empty($category_xml))
+          foreach($category_xml as $item)
+            if($item)
+              if($item['value'])
+                if(!in_array($item['value'], $merge_categories_id))
+                    array_push($merge_categories_id, $item['value']);
+    
+        $born = false;
+        foreach($child_topics_id as $categoriee){
+          if($merge_categories_id)
+            if(in_array($categoriee, $merge_categories_id)){
+                // array_push($blogs, $blog);
+                // array_push($blogs_id, $blog->ID);
+
+
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}matchin_topics WHERE topic_id = %d AND post_id = %d", array($categoriee, $blog->ID));
+                $iteration = $wpdb->get_results( $sql )[0];
+            
+                if($iteration)
+                  if($iteration != 0)
+                    break;
+                
+                // Insert matching course to each course record 
+                $table_matching = $wpdb->prefix . 'matchin_topics';
+                $data = ['topic_id' => $categoriee, 'post_id' => $blog->ID];
+                $wpdb->insert($table_matching, $data);
+                // $born = true;
+
+                array_push($data_historiq, $data);
+                
+                break;
+            }
+        }
+
+        // if(!empty($data_historiq)):
+        //   $response = new WP_REST_Response($data_historiq);
+        //   $response->set_status(200);
+        //   return $response;
+        // endif;
+
+      endforeach;
+
+    endforeach;
+
+    $response = new WP_REST_Response($data_historiq);
+    $response->set_status(200);
+    return $response;
+
+  }

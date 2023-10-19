@@ -8,27 +8,29 @@
 if (isset ($_POST['add_subtopics']) && !empty($_POST['add_subtopics']) && $_POST['action'] == 'add_subtopics') {
 {
     // getting subtopics for a specific course  
- $course = get_field('categories', $_POST['id_course']);
-  $subtopics=array();
-  // new subtopics selected by user
-  $subtopics=$_POST['add_subtopics'];
-  $field='';
-  //Adding new subtopics on this course
+    $course = get_field('categories', $_POST['id_course']);
+    $subtopics = array();
+    // new subtopics selected by user
+    $subtopics = $_POST['add_subtopics'];
+    $field = '';
+    //Adding new subtopics on this course
     update_field('categories', $subtopics, $_POST['id_course']);
     foreach ($subtopics as $key => $value) {
-            if ($value!='')
-            $field.=(String)get_the_category_by_ID($value).',';
-        }
+        if($key == 2)
+            break;
+
+        if ($value != '')
+            $field .= (String)get_the_category_by_ID($value) . ',';
+    }
         // this string will contains all the subtopics of this course
-    $field=substr($field,0,-1);
+    $field = substr($field,0,-1);
 
   }
 
 }
 else if (empty($_POST['add_subtopics']) && $_POST['action'] == 'add_subtopics') 
-{
-  update_field('categories',[], $_POST['id_course']);
-}
+    update_field('categories', [], $_POST['id_course']);
+
 // display the subtopics of this course 
 echo $field;
 $user_connected = get_current_user_id();
