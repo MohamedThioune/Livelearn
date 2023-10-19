@@ -1693,7 +1693,7 @@ function getCommunities()
             $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
             if (strtolower($course->courseType) == 'podcast')
           {
-             $podcasts = get_field('podcasts',$course-x>ID) ? get_field('podcasts',$course->ID) : [];
+             $podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
              if (!empty($podcasts))
                 $course->podcasts = $podcasts;
               else {
