@@ -28,10 +28,10 @@ if(is_user_logged_in()){
     acf_form_head();
 } 
 
-$user_connected_id = get_current_user_id();
+$user_connected = get_current_user_id();
 $user_data = wp_get_current_user();
 
-if(!$user_connected_id)
+if(!$user_connected)
     header('Location: /');
 
 $message = ""; 
