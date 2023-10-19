@@ -617,8 +617,9 @@ function allArticles($data)
     $courses[$key]->youtubeVideos = get_field('youtube_videos',$courses[$key]->ID) ? get_field('youtube_videos',$courses[$key]->ID) : []  ;
     $courses[$key]->podcasts = get_field('podcasts',$courses[$key]->ID) ? get_field('podcasts',$courses[$key]->ID) : [];
     $courses[$key]->connectedProduct = get_field('connected_product',$courses[$key]->ID);
-    $tags = get_field('categories', $courses[$key]->ID) ?? [];
+    $tags = get_field('categories', $courses[$key]->ID);
     //categories xml missing
+
     $courses[$key]->tags = array();
     if($tags)
       if (!empty($tags))
@@ -626,16 +627,13 @@ function allArticles($data)
           //Code added by MaxBird
           if(!$category)
             continue;
-          if(!is_int($category['value']))
-              continue;
-          $topic_category = get_the_category_by_ID($category['value']);
-          if(is_wp_error($topic_category))
+
+          if(is_wp_error(get_the_category_by_ID($category['value'])))
               continue;
 
-          if(isset($category['value'])){
-            $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
-            array_push($courses[$key]->tags,$tag);
-          }
+          $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+          array_push($courses[$key]->tags,$tag);
+          
         endforeach;
 
         // $courses[$key]->tags = (is_array($courses[$key]->tags) && $courses[$key]->tags != '' ) ? $courses[$key]->tags : [];
