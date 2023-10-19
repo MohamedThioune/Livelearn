@@ -29,11 +29,17 @@
     return $randstring;
   }
 
-  $website_urls = ['2xplain-b.v-20230925.0140.xml',
-      'agile-scrum-group-20230922.1323.xml',
-      'anker-kompas-20230922.1323.xml', 
-      'aeres-tech-20230925.0141.xml', 
-  'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml']; 
+  $table = $wpdb->prefix . 'databank';
+  
+  //Get all users
+  $users = get_users(); 
+
+  $website_urls = [
+    '2xplain-b.v-20230925.0140.xml', 
+    'agile-scrum-group-20230922.1323.xml', 
+    'anker-kompas-20230922.1323.xml', 
+    'aeres-tech-20230925.0141.xml', 
+    'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml'];
 
   //Start inserting course 
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
