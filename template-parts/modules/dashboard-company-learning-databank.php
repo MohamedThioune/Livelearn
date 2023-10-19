@@ -439,7 +439,7 @@
                         <tr>
                             <td scope="row"><?= $key; ?></td>
                             <td class="textTh text-left"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
-                                <td class="textTh"><?php echo $price; ?></td>
+                            <td class="textTh"><?php echo $price; ?></td>
                             <?php
                             if (in_array('administrator', $user_in->roles ) ) {
                             ?>
@@ -451,8 +451,17 @@
                                 if($course_subtopics != null){
                                     if (is_array($course_subtopics) || is_object($course_subtopics)){
                                         foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if(!$course_subtopic)
+                                                continue;
+                                            if(!is_int($course_subtopic['value']))
+                                                continue;
+
+                                            $topic_category = get_the_category_by_ID($course_subtopic['value']);
+                                            if(is_wp_error($topic_category))
+                                                continue;
+
                                             if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
-                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                $field .= (String)$topic_category . ',';
                                                 array_push($read_topis, intval($course_subtopic['value']));
                                             }
                                         }
@@ -472,8 +481,17 @@
                                 if($course_subtopics != null){
                                     if (is_array($course_subtopics) || is_object($course_subtopics)){
                                         foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if(!$course_subtopic)
+                                                continue;
+                                            if(!is_int($course_subtopic['value']))
+                                                continue;
+
+                                            $topic_category = get_the_category_by_ID($course_subtopic['value']);
+                                            if(is_wp_error($topic_category))
+                                                continue;
+
                                             if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
-                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                $field .= (String)$topic_category . ',';
                                                 array_push($read_topis, intval($course_subtopic['value']));
                                             }
                                         }

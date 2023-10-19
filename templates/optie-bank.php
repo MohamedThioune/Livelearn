@@ -121,7 +121,16 @@ if($optie == "✔"){
         // echo "post-id : " . $id_post;
         echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
     }
-    $onderwerpen = explode(',', $course->onderwerpen);
+    $main_onderwerpen = explode(',', $course->onderwerpen);
+    $onderwerpen = array();
+    if(!empty($main_onderwerpen))
+        foreach($main_onderwerpen as $key => $value):
+            if(!$value)
+                continue;
+            if(!in_array($value, $onderwerpen))
+                array_push($onderwerpen, $value);
+        endforeach;
+
     /*
     ** UPDATE COMMON FIELDS
     */
@@ -134,7 +143,7 @@ if($optie == "✔"){
             
     //Categories
     if(isset($onderwerpen[0]))
-        if($onderwerpen[0] && $onderwerpen[0] != "" && $onderwerpen[0] != " " )
+        if($onderwerpen[0])
             update_field('categories', $onderwerpen, $id_post);
     
     update_field('short_description', nl2br($course->short_description), $id_post);
@@ -172,6 +181,7 @@ else if($optie == "❌"){
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
 return $updated;
+
 // if($updated){
 //     return true;
 // }
