@@ -161,6 +161,12 @@ if($optie == "✔"){
         if(isset($data_locaties[0]))
             if($data_locaties[0] && $data_locaties[0] != "" && $data_locaties[0] != " " )
                 update_field('data_locaties_xml', $data_locaties, $id_post);
+
+    //Prijs
+    $course->prijs = ($course->prijs) ? intval($course->prijs) : 0;
+    $prijs = ($course->prijs > 0) ? $course->prijs : 0;
+    update_field('price', $prijs, $id_post);
+
     /*
     ** END
     */
