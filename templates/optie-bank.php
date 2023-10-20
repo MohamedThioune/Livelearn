@@ -171,7 +171,7 @@ if($optie == "✔"){
     ** END
     */
     
-    // $data = [ 'course_id' => $id_post]; // NULL value.
+    // $data = [ 'course_id' =:> $id_post]; // NULL value.
     // $wpdb->update( $table, $data, $where );
 }     
 else if($optie == "❌"){
