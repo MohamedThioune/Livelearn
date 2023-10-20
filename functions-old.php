@@ -1714,13 +1714,7 @@ add_action( 'rest_api_init', function () {
   register_rest_route('custom/v1', '/articles', array(
     'methods' => 'GET',
     'callback' => 'allArticles',
-  ));
-
-  register_rest_route('custom/v1', '/offline/courses', array(
-    'methods' => 'GET',
-    'callback' => 'getOfflineCourse',
-  ));
-  
+  ));   
 
   register_rest_route('custom/v1', '/authors', array(
     'methods' => 'GET',
