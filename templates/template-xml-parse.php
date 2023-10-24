@@ -38,7 +38,8 @@
     '2xplain-b.v-20230925.0140.xml', 
     'agile-scrum-group-20230922.1323.xml', 
     'anker-kompas-20230922.1323.xml', 
-    'aeres-tech-20230925.0141.xml', 
+    'aeres-tech-20230925.0141.xml',
+    'edumia-20231024.1105.xml',
     'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml'];
 
   //Start inserting course 
