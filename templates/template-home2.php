@@ -5,11 +5,13 @@
 
 $page = 'check_visibility.php';
 require($page);
+global $wpdb;
 
 $user_connected_id = get_current_user_id();
 $user_connected_head = wp_get_current_user();
 
 // View table name
+
 $table_tracker_views = $wpdb->prefix . 'tracker_views';
 // Get id of courses viewed from db
 $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
@@ -1375,84 +1377,87 @@ $saved = get_user_meta($user_id, 'course');
             <?php
             $num = 1;
             if(!empty($most_active_members)){
-                foreach($most_active_members as $user) {
-                    if($num==13)
-                        break;
-                    //get pricing from price of course
-                    foreach ($bunch_orders as $order) {
-                        foreach ($order->get_items() as $item) {
-                            //Get woo orders from user
-                            $id_course = intval($item->get_product_id()) - 1;
-                            $course = get_post($id_course);
-                            $prijs = get_field('price', $id_course);
-                            $favorited = get_field('favorited',$id_course);
-                            $tracker_views = get_field('tracker_views', $course->ID);
-                            //var_dump($prijs); //also null usualy
-                            if ($course->ID) {
-                                if ($course->post_author == $user->ID) { // $user->ID = expert
-                                    if ($prijs) {
-                                        $pricing = $pricing + $prijs * 20;
+                for($i = count($most_active_members); $i>0; $i--) {
+                    $user = $most_active_members[$i];
+
+                    if ($num == 13)
+                            break;
+
+                        //get pricing from price of course
+                        foreach ($bunch_orders as $order) {
+                            foreach ($order->get_items() as $item) {
+                                //Get woo orders from user
+                                $id_course = intval($item->get_product_id()) - 1;
+                                $course = get_post($id_course);
+                                $prijs = get_field('price', $id_course);
+                                $favorited = get_field('favorited', $id_course); // BD
+                                $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+                                $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+                                $tracker_views = intval($number_of_this_is_looking) ?: 0;
+
+                                //var_dump($prijs); //also null usualy
+                                if ($course->ID) {
+                                    if ($course->post_author == $user->ID) { // $user->ID = expert
+                                        if ($prijs) {
+                                            $pricing = $pricing + $prijs * 20;
+                                        }
+                                        if ($favorited)
+                                            $pricing = $pricing + 40;
+                                        if ($tracker_views)
+                                            $pricing = $pricing + 15 + 1; // views and click
                                     }
-                                    if ($favorited)
-                                        $pricing = $pricing + 40;
-                                    if ($tracker_views)
-                                        $pricing = $pricing + 15 + 1; // views and click
+                                    $pricing = $pricing + 100;
                                 }
-                                $pricing = $pricing + 100;
                             }
                         }
-                    }
                     //get pricing from price of course
 
                     /* get price from post doing by user for free course */
                     $args = array(
+                        'post_type' => array('course', 'post'),
                         'author' => $user->ID,
                         'post_status' => 'publish',
                         'posts_per_page' => -1,
                         'order' => 'DESC',
-                        'author' => $user->ID,
                         //'date'=>get_the_date('Y-m-d'),
                     );
                     $courses_doing_by_this_user = get_posts($args);
-                    //var_dump($user->ID.'-'.$user->display_name ,$courses_doing_by_this_user);
                     foreach ($courses_doing_by_this_user as $course) {
                         $course_type = get_field('course_type', $course->ID);
-                        $prijs = get_field('price', $course->ID);
-                        $tracker_views = get_field('tracker_views', $course->ID);
-                        $tracker_views = $tracker_views ? $tracker_views : 0;
+                        $prijs = get_field('price', $course->ID) ? intval(get_field('price', $course->ID)) : 0;
+                        $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+                        $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+                        $tracker_views = intval($number_of_this_is_looking) ?: 0;
+
                         $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
                         //$reaction = get_field('reaction', $course->ID);
 
                         //get pricing from type of course: course free
-                        if(!$prijs) {
-                            if ($course_type == 'Artikel') {
-                                $pricing = $pricing + 50;
-                                if ($tracker_views !=0) {
-                                    $pricing = $pricing + 1.25; //views+click
-                                }
-                                if ($favorited){
-                                    $pricing = $pricing + 5;
-                                }
+                        if ($course_type == 'Artikel') {
+                            $pricing = $pricing + 50;
+                            if ($tracker_views != 0) {
+                                $pricing = $pricing + $tracker_views * 1.25; //views+click
                             }
-                            else if ($course_type == 'Podcast') {
-                                $pricing = $pricing + 100;
-                                if ($favorited){
-                                    $pricing = $pricing + 10;
-                                }
+                            if ($favorited) {
+                                $pricing = $pricing + 5; // nombre de fois où le cours est liké
                             }
-                            else if ($course_type == 'Video') {
-                                $pricing = $pricing + 75;
-                                if ($tracker_views !=0) {
-                                    $pricing = $pricing + 3.5; //views+click+
-                                }
-                            }elseif ($course_type == 'Opleidingen' || $course_type == 'Training' || $course_type == 'Webinar' || $course_type == 'Workshop'){
-                                $pricing = $pricing + 100;
-                                if ($favorited){
-                                    $pricing = $pricing + 20;
-                                }
-                                if ($tracker_views !=0) {
-                                    $pricing = $pricing + 10;
-                                }
+                        } else if ($course_type == 'Podcast') {
+                            $pricing = $pricing + 100;
+                            if ($favorited) {
+                                $pricing = $pricing + 10;
+                            }
+                        } else if ($course_type == 'Video') {
+                            $pricing = $pricing + 75;
+                            if ($tracker_views != 0) {
+                                $pricing = $pricing + $tracker_views * 3.5; //views+click+
+                            }
+                        } else {
+                            $pricing = $pricing + 100;
+                            if ($favorited) {
+                                $pricing = $pricing + 20;
+                            }
+                            if ($tracker_views != 0) {
+                                $pricing = $pricing + $tracker_views * 10;
                             }
                         }
                     }
@@ -1465,6 +1470,7 @@ $saved = get_user_meta($user_id, 'course');
                     /**
                      * Get purchantages (courses courent year)/(courses last year)
                      */
+
                     // args to get artikel of current year
                     $args_current_year = array(
                         'post_type' =>'post',// array('post', 'course'),
@@ -2093,7 +2099,6 @@ $saved = get_user_meta($user_id, 'course');
             var period = selectedOptions.value;
             var complete_period = selectedOptions.text;
             $('#complete-period').html(complete_period);
-
             $.ajax({
                 url:"/fetch-ajax-home2",
                 method:"post",
