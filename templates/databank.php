@@ -35,7 +35,7 @@ $urls =
     [
         'WorkPlace Academy'=>'https://workplaceacademy.nl/',
         'Ynno'=>'https://www.ynno.com/',
-        // 'DeZZP'=>'https://www.dezzp.nl/',
+        // 'DeZZP'=>'https://www.dezzp.nl/', 
         'Aestate'=>'https://www.aestate.nl/',
         'Alba Concepts'=>'https://albaconcepts.nl/',
         'AM'=>'https://www.am.nl/',
