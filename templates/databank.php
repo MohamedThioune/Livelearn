@@ -757,7 +757,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/optie-bank',
+                url: '/livelearn/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
@@ -961,4 +961,3 @@ $(document).ready(function () {
 </script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
-

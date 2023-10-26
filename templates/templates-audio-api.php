@@ -177,19 +177,18 @@ if ($audio_search){
     $sql = $wpdb->prepare( "SELECT course_id FROM $table  WHERE course_id = $id");
     $isCourseInPlateform = $wpdb->get_results( $sql)[0]->course_id;
     if ($isCourseInPlateform) {
-        $message = "$title is already saved in platform ❌❌❌";
-        echo $message;
+        echo "$title is already saved in platform ❌❌❌";
         return;
     }else{
         $xml = simplexml_load_file($url);
         $podcasts="";
         foreach($xml->channel[0] as $key => $pod) {
-            if($pod->enclosure->attributes()->url) {
-                $description_podcast = (string)$pod->description;
+            if($pod->enclosure->attributes()->url && $pod->title) {
+                $mp3 = (string)$pod->enclosure->attributes()->url;
                 $title_podcast = (string)$pod->title;
-                $mp3 = $pod->enclosure->attributes()->url;
-                $date =(string)$pod->pubDate;
-                $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
+                $description_podcast = (string)$pod->description ? : $pod->title;
+                $date = (string)$pod->pubDate ? : date('Y-m-d H:i:s');
+                $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href ? : $image;
 
                 $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio|";
             }
@@ -197,7 +196,6 @@ if ($audio_search){
         //var_dump($podcasts);die;
         //wich table will I do the request to show the list of podcast ?
         $data = array(
-            //'titel' => htmlentities($title,ENT_NOQUOTES),
             'titel' => $title,
             'type' => 'Podcast',
             'podcasts' => substr($podcasts,0,-1), //remove the last char | before saving
@@ -215,11 +213,10 @@ if ($audio_search){
             'status' => 'extern'
         );
         //var_dump($data);die();
-        $wpdb->insert($table, $data);
+        $wpdb->insert($table, $data); //insert in databank table
         $post_id = $wpdb->insert_id;
-        if ($post_id) {
+        if ($post_id)
             $message = "$title saved in platform success ✅✅✅";
-        }
     }
     echo $message;
 }
