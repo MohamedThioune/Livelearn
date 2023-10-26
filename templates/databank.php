@@ -495,7 +495,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         //console.log('information to save',data)
         const spinner = e.target.nextElementSibling
         $.ajax({
-            url : "/audio-api/",
+            url :"/audio-api/",
             method : "POST",
             data : {
                 playlist_audio : data
