@@ -86,7 +86,7 @@ if($optie == "✔"){
             $podcasts_playlist['podcast_url'] = $podcast[0];
             $podcasts_playlist['podcast_title'] = $podcast[1] ? : $course->titel;
             $podcasts_playlist['podcast_description'] = $podcast[2] ? : $course->short_description;
-            $podcasts_playlist['podcast_date'] = $podcast[3] ? : $course->date_multiple;
+            $podcasts_playlist['podcast_date'] = $podcast[3] ? : date('Y-m-d H:i:s');
             $podcasts_playlist['podcast_image'] = $podcast[4] ? : $course->image_xml;
 
             $podcasts_playlists [] = $podcasts_playlist;
