@@ -193,7 +193,7 @@ if ($audio_search){
                 $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio|";
             }
         }
-        //var_dump($podcasts);die;
+
         //wich table will I do the request to show the list of podcast ?
         $data = array(
             'titel' => $title,
