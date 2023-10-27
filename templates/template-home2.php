@@ -1377,9 +1377,8 @@ $saved = get_user_meta($user_id, 'course');
             <?php
             $num = 1;
             if(!empty($most_active_members)){
-                for($i = count($most_active_members); $i>0; $i--) {
-                    $user = $most_active_members[$i];
-
+                //for($i = count($most_active_members); $i>0; $i--) {
+                  foreach ($most_active_members as $index => $user) {
                     if ($num == 13)
                             break;
 
@@ -2086,6 +2085,9 @@ $saved = get_user_meta($user_id, 'course');
                     console.log('elt : ',data);
                     $('#autocomplete_categorieen').html(data);
                 },
+                error: function (err) {
+                    console.log('error : ',err);
+                },
                 complete:function (complete) {
                     $('#loader').addClass('d-none');
                 }
@@ -2113,6 +2115,9 @@ $saved = get_user_meta($user_id, 'course');
                 success: function(data){
                     console.log('elt');
                     $('#autocomplete_categorieen').html(data);
+                },
+                error: function (error) {
+                    console.log('error : ',error);
                 },
                 complete:function (complete) {
                     $('#loader').addClass('d-none');

@@ -206,8 +206,7 @@ if(isset($topic_search)){
     );
     $bunch_orders = wc_get_orders($args);
     //$teachers = $expert_from_database;
-    for($j= count($most_active_members); $j>0; $j--) {
-        $user = $most_active_members[$j];
+    foreach ($most_active_members as $index => $user) {
         if($num==12)
             break;
         if(!in_array($user->ID, $teachers))
@@ -384,7 +383,7 @@ if(isset($topic_search)){
     $start_of_current_year = $current_year . '-01-01';
     $start_of_last_year = ($current_year - 1) . '-01-01';
     $current_date = current_time('Y-m-d');
-    $categories_topic = get_categories( array(
+    $categories_topic = get_categories( array (
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
         //'parent'     => array(174,175,176,177,178,179),
@@ -394,7 +393,7 @@ if(isset($topic_search)){
             'after'=>'',
             'inclusive'=>true,
         )
-    ) );
+    ));
     $global_blogs = get_posts($args);
 
     $categoriees = array();
@@ -443,8 +442,7 @@ if(isset($topic_search)){
         }
     }
     if($period == 'lastyear'){
-        for($j= count($most_active_members); $j>0; $j--) {
-            $user = $most_active_members[$j];
+        foreach ($most_active_members as $index => $user) {
             if($num==9)
                 break;
             $args_current_year = array(
@@ -587,8 +585,7 @@ if(isset($topic_search)){
         // Calculez la date de début du mois en cours
         $start_of_month = date('Y-m-01', strtotime($current_date));
         $end_of_month = date('Y-m-t', strtotime($current_date));
-        for($j= count($most_active_members); $j>0; $j--) {
-            $user = $most_active_members[$j];
+        foreach ($most_active_members as $index => $user) {
             if($num==9)
                 break;
             $args_current_month = array(
@@ -727,8 +724,7 @@ if(isset($topic_search)){
 
         $start_of_last_week = date('Y-m-d', strtotime('last monday', strtotime('-1 week', strtotime($current_date))));
         $end_of_last_week = date('Y-m-d', strtotime('next sunday', strtotime($start_of_last_week)));
-        for($j= count($most_active_members); $j>0; $j--) {
-            $user = $most_active_members[$j];
+        foreach ($most_active_members as $index => $user) {
             if($num==9)
                 break;
             $args_current_week = array(
@@ -861,8 +857,7 @@ if(isset($topic_search)){
 
         echo $data['content'];
     }elseif($period == 'all'){
-        for($j= count($most_active_members); $j>0; $j--) {
-            $user = $most_active_members[$j];
+        foreach ($most_active_members as $index => $user) {
             if($num==9)
                 break;
             $args_current_year = array(
