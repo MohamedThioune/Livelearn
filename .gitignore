@@ -5,8 +5,9 @@ main-user.js
 main.css
 main.js
 composer.lock
+debug.log
 
-/vendor/
+/vendor
 /.idea/
 .vscode
 api.http
