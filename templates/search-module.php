@@ -189,7 +189,6 @@ function searching_course_by_group($global_posts, $group, $value){
 
     endforeach;
 
-
     //Fill up the information
     $infos['courses'] = $courses;
     $infos['order_type'] = $order_type;
