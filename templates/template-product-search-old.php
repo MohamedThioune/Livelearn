@@ -44,373 +44,346 @@ if($_GET['filter'] == "header")
 $course_categories = array();
 $course_users = array();
 
+if(isset($category)){
+    ## SIDE PRODUCT CATEGORIES
+    foreach($global_courses as $course)
+    {
+        $hidden = true;
+        $hidden = visibility($course, $visibility_company);
+        if(!$hidden)
+            continue;
 
-if(isset($search)){
-    $courses = array();
+        $bool = false;
+        $experts = get_field('experts', $post->ID);
+
+        /*
+        * Categories
+        */
+
+        $category_default = get_field('categories', $course->ID);
+        $category_xml = get_field('category_xml', $course->ID);
+        $categories = array();
+
+        if(!empty($category_default))
+            foreach($category_default as $item)
+                if($item)
+                    if(!in_array($item['value'], $categories))
+                        array_push($categories,$item['value']);
+                    else if(!empty($category_xml))
+                        foreach($category_xml as $item)
+                            if($item)
+                                if(!in_array($item['value'], $categories))
+                                    array_push($categories,$item['value']);
+
+        if(!empty($categories))
+            if(in_array($category, $categories)){
+                array_push($courses, $course);
+                if(!in_array($course->post_author, $teachers))
+                    array_push($teachers, $course->post_author);
+                foreach($experts as $expert)
+                    if(!in_array($expert, $teachers))
+                        array_push($teachers, $expert);
+            }
+
+        $experts = get_field('experts', $course->ID);
+        if(!empty($profes))
+            if(!in_array($course->post_author, $profes))
+                array_push($profes, $course->post_author);
+        if(!empty($experts))
+            foreach($experts as $expert)
+                if(!in_array($expert, $profes))
+                    array_push($profes, $expert);
+    }
+}else if(isset($user)){
+    ## SIDE PRODUCT USERS
+    foreach($global_courses as $course)
+    {
+        $hidden = true;
+        $hidden = visibility($course, $visibility_company);
+        if(!$hidden)
+            continue;
+
+        $bool = false;
+        $expert = get_field('experts', $course->ID);
+
+        if($course->post_author == $user)
+            $bool = true;
+        if(!empty($expert))
+            if(in_array($user, $expert))
+                $bool = true;
+
+        if($bool){
+            array_push($courses, $course);
+
+            /*
+            * Categories
+            */
+            $category = 0;
+            if($category == ' '){
+                $one_category = get_field('categories',  $course->ID);
+                if(isset($one_category[0]['value']))
+                    $category = intval(explode(',', $one_category[0]['value'])[0]);
+                else{
+                    $one_category = get_field('category_xml',  $course->ID);
+                    if(isset($one_category[0]['value']))
+                        $category = intval($one_category[0]['value']);
+                }
+            }
+
+            $experts = get_field('experts', $course->ID);
+            if(!in_array($course->post_author, $profes))
+                array_push($profes, $course->post_author);
+            foreach($experts as $expert)
+                if(!in_array($expert, $teachers))
+                    array_push($teachers, $expert);
+        }
+    }
+}
+else if(isset($companie)) {
+    ## SIDE PRODUCT COMPANIES
+    $args = array(
+        'post_type' => 'company',
+        'posts_per_page' => 1,
+        'include' => $companie
+    );
+    $company = get_posts($args)[0];
+
+    $users = get_users();
+    $users_companie = array();
+    foreach($users as $user) {
+        $company_user = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_user) && !empty($company))
+            if($company_user[0]->ID == $company->ID)
+                array_push($users_companie, $user->ID);
+    }
+
+    $args = array(
+        'post_type' => array('post','course'),
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'author__in' => $users_companie,
+    );
+
+    $courses = get_posts($args);
+}
+else{
     $args = array(
         'post_type' => array('post','course'),
         'post_status' => 'publish',
         'orderby' => 'date',
         'order'   => 'DESC',
-        'posts_per_page' => -1,
+        'posts_per_page' => 500,
     );
-    $posts = get_posts($args);
-    foreach($posts as $datum)
-        if(stristr($datum->post_title, $search)){
-            if($search_type == 'Alles')
-                array_push($courses, $datum);
-            else{
-                $course_type = get_field('course_type', $datum->ID);
-                if($course_type == $search_type)
-                    array_push($courses, $datum);
-            }
-        }
-}
-else{
-    if(isset($category)){
-        ## SIDE PRODUCT CATEGORIES
-        foreach($global_courses as $course)
-        {
-            $hidden = true;
-            $hidden = visibility($course, $visibility_company);
-            if(!$hidden)
-                continue;
+    $courses = get_posts($args);
 
-            $bool = false;
-            $experts = get_field('experts', $post->ID);
-
-            /*
-            * Categories
-            */
-
-            $category_default = get_field('categories', $course->ID);
-            $category_xml = get_field('category_xml', $course->ID);
-            $categories = array();
-
-            if(!empty($category_default))
-                foreach($category_default as $item)
-                    if($item)
-                        if(!in_array($item['value'], $categories))
-                            array_push($categories,$item['value']);
-
-                        else if(!empty($category_xml))
-                            foreach($category_xml as $item)
-                                if($item)
-                                    if(!in_array($item['value'], $categories))
-                                        array_push($categories,$item['value']);
-
-            if(!empty($categories))
-                if(in_array($category, $categories)){
-                    array_push($courses, $course);
-                    if(!in_array($course->post_author, $teachers))
-                        array_push($teachers, $course->post_author);
-                    foreach($experts as $expert)
-                        if(!in_array($expert, $teachers))
-                            array_push($teachers, $expert);
-                }
-
-            $experts = get_field('experts', $course->ID);
-            if(!empty($profes))
-                if(!in_array($course->post_author, $profes))
-                    array_push($profes, $course->post_author);
-            if(!empty($experts))
-                foreach($experts as $expert)
-                    if(!in_array($expert, $profes))
-                        array_push($profes, $expert);
-        }
-    }else if(isset($user)){
-        ## SIDE PRODUCT USERS
-        foreach($global_courses as $course)
-        {
-            $hidden = true;
-            $hidden = visibility($course, $visibility_company);
-            if(!$hidden)
-                continue;
-
-            $bool = false;
-            $expert = get_field('experts', $course->ID);
-
-            if($course->post_author == $user)
-                $bool = true;
-            if(!empty($expert))
-                if(in_array($user, $expert))
-                    $bool = true;
-
-            if($bool){
-                array_push($courses, $course);
-
-                /*
-                * Categories
-                */
-                $category = 0;
-                if($category == ' '){
-                    $one_category = get_field('categories',  $course->ID);
-                    if(isset($one_category[0]['value']))
-                        $category = intval(explode(',', $one_category[0]['value'])[0]);
-                    else{
-                        $one_category = get_field('category_xml',  $course->ID);
-                        if(isset($one_category[0]['value']))
-                            $category = intval($one_category[0]['value']);
-                    }
-                }
-
-                if(!in_array($category, $categories) && $category)
-                    array_push($categories, $category);
-
-                $experts = get_field('experts', $course->ID);
-                if(!in_array($course->post_author, $profes))
-                    array_push($profes, $course->post_author);
-                foreach($experts as $expert)
-                    if(!in_array($expert, $teachers))
-                        array_push($teachers, $expert);
-            }
-        }
+    foreach($courses as $course){
+        $experts = get_field('experts', $course->ID);
+        if(!empty($profes))
+            if(!in_array($course->post_author, $profes))
+                array_push($profes, $course->post_author);
+        if(!empty($experts))
+            foreach($experts as $expert)
+                if(!in_array($expert, $profes))
+                    array_push($profes, $expert);
     }
-    else if(isset($companie)) {
-        ## SIDE PRODUCT COMPANIES
+    if(empty($experties)){
+        $experties = array();
         $args = array(
-            'post_type' => 'company',
-            'posts_per_page' => 1,
-            'include' => $companie
-        );
-
-        $company = get_posts($args)[0];
-
-        $users = get_users();
-        $users_companie = array();
-        foreach($users as $user) {
-            $company_user = get_field('company',  'user_' . $user->ID);
-            if(!empty($company_user) && !empty($company))
-                if($company_user[0]->ID == $company->ID)
-                    array_push($users_companie, $user->ID);
-        }
-
-        $args = array(
-            'post_type' => array('post','course'),
+            'role__in' => ['author'],
             'posts_per_page' => -1,
-            'orderby' => 'date',
-            'order'   => 'DESC',
-            'author__in' => $users_companie,
         );
-
-        $courses = get_posts($args);
-    }else{
-        $args = array(
-            'post_type' => array('post','course'),
-            'post_status' => 'publish',
-            'orderby' => 'date',
-            'order'   => 'DESC',
-            'posts_per_page' => 500,
-        );
-        $courses = get_posts($args);
-
-        foreach($courses as $course){
-            $experts = get_field('experts', $course->ID);
-            if(!empty($profes))
-                if(!in_array($course->post_author, $profes))
-                    array_push($profes, $course->post_author);
-            if(!empty($experts))
-                foreach($experts as $expert)
-                    if(!in_array($expert, $profes))
-                        array_push($profes, $expert);
-        }
-        if(empty($experties)){
-            $experties = array();
-            $args = array(
-                'role__in' => ['author'],
-                'posts_per_page' => -1,
-            );
-            $expertiess = get_users($args);
-            foreach($expertiess as $value)
-                array_push($experties, $value->ID);
-
-        }
+        $expertiess = get_users($args);
+        foreach($expertiess as $value)
+            array_push($experties, $value->ID);
 
     }
-    ## START WITH THE FILTERS
-    /**
-     * Leervom Group
-     */
-    if(!empty($leervom)){
-        $i = 0;
-        foreach($courses as $datum){
-            $coursetype = get_field('course_type', $datum->ID);
-            if(!in_array($coursetype, $leervom)){
-                unset($courses[$i]);
+
+}
+
+## START WITH THE FILTERS
+/**
+ * Leervom Group
+ */
+if(!empty($leervom)){
+    $i = 0;
+    foreach($courses as $datum){
+        $coursetype = get_field('course_type', $datum->ID);
+        if(!in_array($coursetype, $leervom)){
+            unset($courses[$i]);
+        }
+        $i++;
+    }
+}
+/**
+ * Price interval
+ */
+if(isset($min) || isset($max) || isset($gratis)){
+    if(isset($gratis)){
+        if($gratis){
+            $prices = array();
+            foreach($courses as $datum){
+                $price = intval(get_field('price', $datum->ID));
+                if($price == 0)
+                    array_push($prices,$datum);
             }
-            $i++;
         }
-    }
-    /**
-     * Price interval
-     */
-    if(isset($min) || isset($max) || isset($gratis)){
-        if(isset($gratis)){
-            if($gratis){
-                $prices = array();
+    }else if(isset($min) || isset($max)){
+        if($min || $max){
+            $prices = array();
+            $tmp = 0;
+            if($min != null && $max!= null){
+                if($min > $max) {
+                    $tmp = $min;
+                    $min = $max;
+                    $max = $tmp;
+                }
+                //Here we got interval
                 foreach($courses as $datum){
                     $price = intval(get_field('price', $datum->ID));
-                    if($price == 0)
-                        array_push($prices,$datum);
+                    $min = intval($min);
+                    $max = intval($max);
+                    if($price >= $min)
+                        if($price <= $max)
+                            array_push($prices,$datum);
                 }
-            }
-        }else if(isset($min) || isset($max)){
-            if($min || $max){
-                $prices = array();
-                $tmp = 0;
-                if($min != null && $max!= null){
-                    if($min > $max) {
-                        $tmp = $min;
-                        $min = $max;
-                        $max = $tmp;
-                    }
-                    //Here we got interval
-                    foreach($courses as $datum){
-                        $price = intval(get_field('price', $datum->ID));
-                        $min = intval($min);
-                        $max = intval($max);
-                        if($price >= $min)
-                            if($price <= $max)
-                                array_push($prices,$datum);
-                    }
-                }
-                else{
-                    //Tested by one value
-                    foreach($courses as $datum){
-                        $price = intval(get_field('price', $datum->ID));
-                        if($min == null){
-                            $max = intval($max);
-                            if($price <= $max)
-                                array_push($prices,$datum);
-                        }
-                        else if($max == null){
-                            $min = intval($min);
-                            if($price >= $min)
-                                array_push($prices,$datum);
-                        }
-                    }
-                }
-            }
-        }
-        if(isset($prices)){
-            if(!empty($prices)){
-                $courses = $prices;
             }
             else{
-                $courses = array();
+                //Tested by one value
+                foreach($courses as $datum){
+                    $price = intval(get_field('price', $datum->ID));
+                    if($min == null){
+                        $max = intval($max);
+                        if($price <= $max)
+                            array_push($prices,$datum);
+                    }
+                    else if($max == null){
+                        $min = intval($min);
+                        if($price >= $min)
+                            array_push($prices,$datum);
+                    }
+                }
             }
         }
     }
-    /**
-     * Location orientation
-     */
-    if(isset($locate) || isset($online)){
-        if(isset($online)){
-            if($online){
+    if(isset($prices)){
+        if(!empty($prices)){
+            $courses = $prices;
+        }
+        else{
+            $courses = array();
+        }
+    }
+}
+/**
+ * Location orientation
+ */
+if(isset($locate) || isset($online)){
+    if(isset($online)){
+        if($online){
+            $locates = array();
+            foreach($courses as $datum){
+                //Iterate the location ?
+                $data = get_field('data_locaties', $datum->ID);
+                if(!$data)
+                    array_push($locates,$datum);
+            }
+        }
+    }else if(isset($locate)){
+        if($locate)
+            if($locate != null){
                 $locates = array();
+                if($range == null)
+                    $range = 1;
+                $scope_postal = postal_range($locate, $range);
+
+                array_push($scope_postal, $locate);
+
+                $cities = array();
+                $municipalities = array();
+                $provinces = array();
+
+                $compare = array();
+
+                if($scope_postal)
+                    foreach($scope_postal as $postal){
+                        $value = postal_locator($postal);
+
+                        if(!in_array($value[0]->{'city'}, $cities))
+                            array_push($cities, $value[0]->{'city'});
+
+                        if(!in_array($value[0]->{'municipality'}, $municipalities))
+                            array_push($municipalities, $value[0]->{'municipality'});
+
+                        if(!in_array($value[0]->{'province'}, $provinces))
+                            array_push($provinces, $value[0]->{'province'});
+                    }
+
+                if($cities || count($cities) >= 0)
+                    $compare = $cities;
+                else if(!$cities || count($cities) <= 0)
+                    $compare = $municipalities;
+                else if(!$municipalities || count($municipalities) <= 0)
+                    $compare = $provinces;
+
                 foreach($courses as $datum){
                     //Iterate the location ?
                     $data = get_field('data_locaties', $datum->ID);
-                    if(!$data)
-                        array_push($locates,$datum);
-                }
-            }
-        }else if(isset($locate)){
-            if($locate)
-                if($locate != null){
-                    $locates = array();
-                    if($range == null)
-                        $range = 1;
-                    $scope_postal = postal_range($locate, $range);
-
-                    array_push($scope_postal, $locate);
-
-                    $cities = array();
-                    $municipalities = array();
-                    $provinces = array();
-
-                    $compare = array();
-
-                    if($scope_postal)
-                        foreach($scope_postal as $postal){
-                            $value = postal_locator($postal);
-
-                            if(!in_array($value[0]->{'city'}, $cities))
-                                array_push($cities, $value[0]->{'city'});
-
-                            if(!in_array($value[0]->{'municipality'}, $municipalities))
-                                array_push($municipalities, $value[0]->{'municipality'});
-
-                            if(!in_array($value[0]->{'province'}, $provinces))
-                                array_push($provinces, $value[0]->{'province'});
-                        }
-
-                    if($cities || count($cities) >= 0)
-                        $compare = $cities;
-                    else if(!$cities || count($cities) <= 0)
-                        $compare = $municipalities;
-                    else if(!$municipalities || count($municipalities) <= 0)
-                        $compare = $provinces;
-
-                    foreach($courses as $datum){
-                        //Iterate the location ?
-                        $data = get_field('data_locaties', $datum->ID);
-                        if($data)
-                            if(!empty($data)){
-                                $datx = $data[0]['data'];
-                                if($datx){
-                                    $location = $datx[0]['location'];
-                                    if($location != ""){
-                                        if(in_array($location, $compare))
-                                            array_push($locates,$datum);
-                                    }
+                    if($data)
+                        if(!empty($data)){
+                            $datx = $data[0]['data'];
+                            if($datx){
+                                $location = $datx[0]['location'];
+                                if($location != ""){
+                                    if(in_array($location, $compare))
+                                        array_push($locates,$datum);
                                 }
                             }
-                    }
+                        }
+                }
+            }
+    }
+    if(isset($locates)){
+        if(!empty($locates)){
+            $courses = $locates;
+        }
+        else{
+            $courses = array();
+        }
+    }
+}
+/**
+ * Expert request
+ */
+if(isset($experties))
+    if(!empty($experties)){
+        $teachers = array();
+        foreach($courses as $datum){
+            $authors = array();
+            $expertss = array();
+            array_push($authors, $datum->post_author);
+
+            $experts = get_field('experts', $datum->ID);
+
+            if($experts)
+                $expertss = array_merge($authors, $experts);
+            else
+                $expertss = $authors;
+            foreach($experties as $expertie)
+                if(in_array($expertie,$expertss) ){
+                    array_push($teachers, $datum);
+                    break;
                 }
         }
-        if(isset($locates)){
-            if(!empty($locates)){
-                $courses = $locates;
+        if(isset($teachers)){
+            if(!empty($teachers)){
+                $courses = $teachers;
             }
             else{
                 $courses = array();
             }
         }
     }
-    /**
-     * Expert request
-     */
-    if(isset($experties))
-        if(!empty($experties)){
-            $teachers = array();
-            foreach($courses as $datum){
-                $authors = array();
-                $expertss = array();
-                array_push($authors, $datum->post_author);
-
-                $experts = get_field('experts', $datum->ID);
-
-                if($experts)
-                    $expertss = array_merge($authors, $experts);
-                else
-                    $expertss = $authors;
-                foreach($experties as $expertie)
-                    if(in_array($expertie,$expertss) ){
-                        array_push($teachers, $datum);
-                        break;
-                    }
-            }
-            if(isset($teachers)){
-                if(!empty($teachers)){
-                    $courses = $teachers;
-                }
-                else{
-                    $courses = array();
-                }
-            }
-        }
-}
 $close_menu = get_stylesheet_directory_uri() . '/img/X.png';
 
 ?>
@@ -471,7 +444,7 @@ $close_menu = get_stylesheet_directory_uri() . '/img/X.png';
                             echo "<input type='hidden' name='companie' value='".$companie."'>";
                         ?>
                         <div class="checkFilter">
-                            <label class="contModifeCheck">Opleiding
+                            <label class="contModifeCheck">Opleidingen
                                 <input style="color:red;" type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen"  <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Opleidingen', $leervom) || $search_type == "Opleidingen" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
