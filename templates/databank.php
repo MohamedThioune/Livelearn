@@ -1,5 +1,9 @@
 <?php /** Template Name: Databank */ ?>
 
+<?php 
+    
+?>
+
 <?php
 
 global $wpdb;
