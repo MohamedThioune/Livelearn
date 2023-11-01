@@ -23,7 +23,7 @@ $course = $wpdb->get_results( $sql )[0];
  */
 
  function strip_html_tags($text) {
-    $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
+    $allowed_tags = ['h2', 'a', 'br', 'strong', 'em', 'u', 'blockquote', 'ul', 'ol', 'li', 'img', 'mark'];
     $text = preg_replace("/\n{1,}/", "\n", $text); 
     $text = str_replace("\n","<br>",$text);
     $text = str_replace("&lt;","<",$text); 

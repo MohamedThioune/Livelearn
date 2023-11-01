@@ -1,9 +1,5 @@
 <?php /** Template Name: Databank */ ?>
 
-<?php 
-    
-?>
-
 <?php
 
 global $wpdb;
@@ -17,8 +13,36 @@ if(isset($_GET['id']))
     $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
-    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-    $courses = $wpdb->get_results( $sql );
+
+    if(isset($_POST['type']))
+    switch ($_POST['type']) {
+        case 'All':
+            $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            $courses = $wpdb->get_results( $sql );
+            break;
+        case 'Artikel':
+            $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Artikel' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            $courses = $wpdb->get_results( $sql );
+            break;
+        case 'Podcast':
+            $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Podcast' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            $courses = $wpdb->get_results( $sql );
+            break;
+        case 'Video':
+            $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Video' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            $courses = $wpdb->get_results( $sql );
+            break;
+        case 'courses':
+            $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type<>'Artikel' and type<>'Podcast' and type<>'Video' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            $courses = $wpdb->get_results( $sql );
+            break;
+        default:
+            $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            $courses = $wpdb->get_results( $sql );
+            break;
+    }
+    
+    
 
     $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
     $count = $wpdb->get_results( $sql_count );
@@ -212,6 +236,23 @@ $urls =
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         <br>
                     </center>
+                    <br>
+                    <br>
+                    <form action="/livelearn/databank" method="post">
+                        <div class="inpustSearchDataBank">
+                            <select name="type" id="type">
+                                <option value="" selected disabled hidden>Select type of data</option>
+                                <option value="All">All</option>
+                                <option value="Artikel">Artikel</option>
+                                <option value="Podcast">Podcast</option>
+                                <option value="course">Courses</option>
+                                <option value="Video">Videos</option>
+                            </select>
+                            <button class="btn btnSearchCourseDatabank">
+                                <img  src="<?= get_stylesheet_directory_uri(); ?>/img/searchM.png" alt="youtube image">
+                            </button>
+                        </div>
+                    </form>
                     <div class="text-center" id="content-back-topics"></div>
                     <table class="table table-responsive">
                             <thead>
