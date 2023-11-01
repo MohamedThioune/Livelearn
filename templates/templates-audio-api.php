@@ -205,8 +205,8 @@ if ($audio_search){
             'prijs' => 0,
             'prijs_vat' => 0,
             'image_xml' => $image,
-            'onderwerpen' => $categories, //tableau $categories //tableau $categories
-            //'onderwerpen' => null, //tableau $categories //tableau $categories
+            //'onderwerpen' => $categories, //tableau $categories //tableau $categories
+            'onderwerpen' => null, //tableau $categories //tableau $categories
             'date_multiple' => null,
             'course_id' => $id,
             'author_id' => $user_id,
