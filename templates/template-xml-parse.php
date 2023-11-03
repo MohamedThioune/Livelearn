@@ -35,12 +35,41 @@
   $users = get_users(); 
 
   $website_urls = [
+    '112bhv-20231101.1430.xml',
     '2xplain-b.v-20230925.0140.xml', 
     'agile-scrum-group-20230922.1323.xml', 
     'anker-kompas-20230922.1323.xml', 
     'aeres-tech-20230925.0141.xml',
     'edumia-20231024.1105.xml',
-    'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml'];
+    'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml',
+    'beeckestijn-20231101.2250.xml',
+    'berenschot-20231101.1421.xml',
+    'bhv.nl-20231102.0032.xml',
+    'bit-academy-20231101.1430.xml',
+    'blom-20231102.0026.xml',
+    'bureau-vris-20231101.1431.xml',
+    'buro-brand-20231101.1422.xml',
+    'cm-partners-20231102.0033.xml',
+    'comenius-20231101.1422.xml',
+    'competence-factory-20231102.0027.xml',
+    'faculty-of-skills-20231101.1430.xml',
+    'frankwatching-20231102.0033.xml',
+    'growth-tribe-20231101.1422.xml',
+    'horizon-20231102.0028.xml',
+    'hr-academy-20231102.0028.xml',
+    'kenneth-smit-20231102.0028.xml',
+    'kenneth-smit-direct-20231102.0028.xml',
+    'possible-20231102.0028.xml',
+    'saxion-parttime-school-20231101.1423.xml',
+    'scheidegger-20231102.0027.xml',
+    'schouten-nelissen-20231102.0028.xml',
+    'start2move-20231101.1423.xml',
+    'tekkieworden-20231101.1423.xml',
+    'tvvl-20231101.1423.xml',
+    'vijfhart-20231102.0028.xml',
+    'winc-academy-20231101.1423.xml',
+    'yearth-academy-20231102.0029.xml'
+  ];
 
   //Start inserting course 
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";

@@ -832,7 +832,7 @@ $urls =
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',true)
                 $('#select_field').attr('hidden',false)
-                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something is wrong</span>";
+                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the article.</span>";
                 //   alert('Something is wrong');
                 // location.reload();
                },
