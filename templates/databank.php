@@ -780,7 +780,7 @@ $urls =
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',false)
                 $('#select_field').attr('hidden',true)  
-                // alert('Something is wrong');
+                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the articles.</span>";
                 location.reload();
                },
                success: function(data) {
