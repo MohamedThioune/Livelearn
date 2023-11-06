@@ -100,6 +100,7 @@ function crontab_podcast( ) {
             }
         }
 
+
         if(!empty($podcasts_playlists)) {  // if there is new audio to add to the course
             $all_audios_in_plateform_for_this_cours [] =  $podcasts_playlists;
             $all_audios_in_plateform_for_this_cours = array_reverse($all_audios_in_plateform_for_this_cours);
