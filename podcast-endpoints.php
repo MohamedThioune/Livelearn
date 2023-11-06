@@ -2,7 +2,7 @@
 function crontab_podcast( ) {
     global $wpdb;
     $args = array(
-        'post_type' => 'course',
+        'post_type' => array('course', 'post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'ordevalue' => 'podcast',
@@ -28,30 +28,39 @@ function crontab_podcast( ) {
     ];
     $podcasts = get_posts($args);
 
+    //creation constraints for update
     $all_title_of_podcast_in_plateform = array();
+    $all_urls_of_podcast_in_plateform = array();
     foreach ($podcasts as  $course) {
         # podcast index ?
         $podcast_index = get_field('podcasts_index', $course->ID);
         if (!$podcast_index)
             continue;
 
-        foreach ($podcast_index as $podcast)
+        foreach ($podcast_index as $podcast) {
             $all_title_of_podcast_in_plateform [] = $podcast['podcast_title'];
-
+            if ($podcast['podcast_url']) {
+                $all_urls_of_podcast_in_plateform [] = $podcast['podcast_url'];
+            }
+        }
     }
 
     foreach ($podcasts as $course) {
+
         # podcast index ?
         $podcast_index = get_field('podcasts_index', $course->ID);
         if(!$podcast_index)
             continue;
         // var_dump($podcast_index);
+        $all_audios_in_plateform_for_this_cours =  $podcast_index;
 
         //Reach podcasts and add new lesson
         $sql = $wpdb->prepare("SELECT course_id FROM {$wpdb->prefix}databank WHERE {$wpdb->prefix}databank.titel ="."'$course->post_title'");
         $feedid = $wpdb->get_results($sql)[0]->course_id;
+
         if ($feedid==null)
             continue;
+        //var_dump($feedid);
         $url = 'https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id='.$feedid;
         //$url = "https://api.podcastindex.org/api/1.0/search/bytitle?q=$course->post_title";
 
@@ -74,7 +83,9 @@ function crontab_podcast( ) {
                 $mp3 = $pod->enclosure->attributes()->url;
                 $date =(string)$pod->pubDate;
                 $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
-                if (in_array($title_podcast,$all_title_of_podcast_in_plateform))
+                //if (in_array($title_podcast,$all_title_of_podcast_in_plateform))
+                  //  continue;
+                if (in_array($mp3,$all_urls_of_podcast_in_plateform))
                     continue;
 
                 $podcasts_playlist = [];
@@ -85,13 +96,19 @@ function crontab_podcast( ) {
                 $podcasts_playlist['podcast_date'] = $date;
                 $podcasts_playlist['podcast_image'] = $image_audio;
 
-                $podcast_index [] = $podcasts_playlist;
+                $podcasts_playlists [] = $podcasts_playlist;
             }
         }
-        //var_dump($podcasts_playlists);die;
-        $podcasts_playlists = array_reverse($podcast_index);
-        if(!empty($podcasts_playlists))
-            if(update_field('podcasts_index', $podcasts_playlists, $course->ID))
-                    echo "<h1>$course->post_title updated</h1>";
+
+        if(!empty($podcasts_playlists)) {  // if there is new audio to add to the course
+            $all_audios_in_plateform_for_this_cours [] =  $podcasts_playlists;
+            $all_audios_in_plateform_for_this_cours = array_reverse($all_audios_in_plateform_for_this_cours);
+
+            update_field('podcasts_index', null , $course->ID);
+            update_field('podcasts_index', $all_audios_in_plateform_for_this_cours, $course->ID);
+
+            echo "<h1>$course->post_title is updated</h1>";
+        }
+
     }
 }
