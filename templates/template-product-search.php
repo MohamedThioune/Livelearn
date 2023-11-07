@@ -421,7 +421,7 @@ $courses = array_slice(0, 500, $courses);
                         elseif(!empty($data_locaties_xml)):
                             $count_data = count($data_locaties_xml) - 1;
                             if($data_locaties_xml):
-                                if(isset($data_locaties_xml[0]['value']))
+                                if(isset($data_locaties_xml[intval($count_data)]['value']))
                                     $element = $data_locaties_xml[intval($count_data)]['value'];
                                 if(isset($data_locaties_xml[0]['value'])){
                                     $data_first = explode('-', $datum[0]['value']);
