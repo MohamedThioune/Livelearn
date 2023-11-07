@@ -41,6 +41,8 @@ $args = array(
     'posts_per_page' => -1,
 );
 $global_posts = get_posts($args);
+var_dump($global_posts);
+die();
 
 $no_filter = true;
 
@@ -109,8 +111,6 @@ endif;
 
 //Check empty 
 $courses = ($no_filter) ? $global_posts : $courses;
-var_dump($courses);
-die();
 
 ?>
 <div class="content-community-overview bg-gray">
