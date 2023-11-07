@@ -1,4 +1,4 @@
-<?php /** Template Name: Product Search Actual */ ?>
+<?php /** Template Name: Product Search */ ?>
 
 <body>
 <?php wp_head(); ?>
@@ -109,6 +109,8 @@ endif;
 
 //Check empty 
 $courses = ($no_filter) ? $global_posts : $courses;
+var_dump($courses);
+die();
 
 ?>
 <div class="content-community-overview bg-gray">
