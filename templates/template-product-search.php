@@ -17,6 +17,7 @@ require_once('search-module.php');
 <?php
 //Let's kick it off
 extract($_GET);
+
 // extract($_POST);   
 
 $courses = array();
@@ -29,6 +30,8 @@ $order_type = array();
 
 if (!isset($leervom))
     $leervom = array();
+if (!isset($experties))
+    $experties = array();
 
 $args = array(
     'post_type' => array('post','course'),
@@ -39,16 +42,73 @@ $args = array(
 );
 $global_posts = get_posts($args);
 
+$no_filter = true;
 
 //Natural Search 
 if(isset($search) && isset($search_type)):
     $courses = searching_course($search, $search_type, $global_posts)['courses'];
     $order_type = searching_course($search, $search_type, $global_posts)['order_type'];
+    $expertise = searching_course($search, $search_type, $global_posts)['experts'];
+    $no_filter = false;
 //Head Search
 elseif($filter):
     $courses = searching_course_by_type($global_posts, $filter)['courses'];
     $order_type = searching_course_by_type($global_posts, $filter)['order_type'];
+    $expertise = searching_course_by_type($global_posts, $filter)['experts'];    
+    $no_filter = false;
 endif;
+
+/* * Group by type * */
+$main_courses = array();
+$start_courses = (!empty($courses)) ? $courses : $global_posts;
+// $category_input = 216;
+// $user_input = 3;
+// $companie_input = 1435;
+
+if(isset($category_input) || isset($user_input) || isset($companie_input))
+    $no_filter = false;
+
+// Category post 
+if(isset($category_input)):
+    $courses = searching_course_by_group($start_courses, 'category', $category_input)['courses'];
+    $order_type = searching_course_by_group($start_courses, 'category', $category_input)['order_type'];
+    $expertise = searching_course_by_group($start_courses, 'category', $category_input)['experts'];
+// Expert post 
+elseif(isset($user_input)):
+    $courses = searching_course_by_group($start_courses, 'expert', $user_input)['courses'];
+    $order_type = searching_course_by_group($start_courses, 'expert', $user_input)['order_type'];
+    $expertise = searching_course_by_group($start_courses, 'category', $category_input)['experts'];
+// Company post 
+elseif(isset($companie_input)):
+    $courses = searching_course_by_group($start_courses, 'company', $companie_input)['courses'];
+    $order_type = searching_course_by_group($start_courses, 'company', $companie_input)['order_type'];
+    $expertise = searching_course_by_group($start_courses, 'category', $category_input)['experts'];
+endif;
+/* * End group by * */
+
+/* * Search by filter * */
+if(isset($filter_args)):
+    $no_filter = false;
+
+    // Define args for search
+    $args = array();
+    $args['leervom'] = (!empty($leervom)) ? $leervom : null;
+    $args['min'] = ($min) ? $min : null;
+    $args['max'] = ($max) ? $max : null;
+    $args['gratis'] = (isset($gratis)) ? 1 : null;
+    $args['locate'] = ($locate) ? $locate : null;
+    $args['online'] = (isset($online)) ? 1 : null;
+    $args['experties'] = (!empty($experties)) ? $experties : null;
+  
+    //Apply filter 
+    $courses = searching_course_with_filter($courses, $args)['courses']; 
+    $order_type = searching_course_with_filter($courses, $args)['order_type'];
+    $expertise = searching_course_with_filter($courses, $args)['experts'];
+    /* * End search by * */
+endif;
+
+//Check empty 
+$courses = ($no_filter) ? $global_posts : $courses;
 
 ?>
 <div class="content-community-overview bg-gray">
@@ -70,12 +130,14 @@ endif;
                     <p class="text-filter-course">Filter | Courses </p>
                     <form action="/product-search" method="GET">
                         <?php
-                        if(isset($_GET['category']))
-                            echo "<input type='hidden' name='category' value='".$category."'>";
-                        else if(isset($_GET['user']))
-                            echo "<input type='hidden' name='user' value='".$user."'>";
-                        else if(isset($_GET['companie']))
-                            echo "<input type='hidden' name='companie' value='".$companie."'>";
+                        echo "<input type='hidden' name='filter_args' value='1'>";
+
+                        if(isset($_GET['category_input']))
+                            echo "<input type='hidden' name='category_input' value='". $category_input ."'>";
+                        else if(isset($_GET['user_input']))
+                            echo "<input type='hidden' name='user_input' value='". $user_input ."'>";
+                        else if(isset($_GET['companie_input']))
+                            echo "<input type='hidden' name='companie_input' value='". $companie_input ."'>";
                         ?>
                         <div class="sub-section">
                             <p class="description-sub-section">LEERVORM</p>
@@ -185,11 +247,11 @@ endif;
                             <p class="description-sub-section">PRIJS</p>
                             <div class="form-group">
                                 <label for="Vanaf" class="form-label">Vanaf</label>
-                                <input type="text" class="form-control" id="Vanaf" name="min" value="<?php if(isset($min)) echo $min ?>"  placeholder="€min">
+                                <input type="number" class="form-control" id="Vanaf" name="min" value="<?php if(isset($min)) echo $min ?>"  placeholder="€min">
                             </div>
                             <div class="form-group">
                                 <label for="Tot" class="form-label">Tot</label>
-                                <input type="text" class="form-control" id="Tot" name="max" value="<?php if(isset($max)) echo $max ?>"  placeholder="€max">
+                                <input type="number" class="form-control" id="Tot" name="max" value="<?php if(isset($max)) echo $max ?>"  placeholder="€max">
                             </div>
                             <div class="form-check d-flex justify-content-between">
                                 <div class="group-input-check">
@@ -205,11 +267,11 @@ endif;
                             <p class="description-sub-section">LOCATIE</p>
                             <div class="form-group">
                                 <label for="PostCode" class="form-label">PostCode</label>
-                                <input type="text" class="form-control" id="PostCode" name="locate" placeholder="&nbsp;Postcode">
+                                <input type="number" class="form-control" id="PostCode" name="locate" placeholder="&nbsp;Postcode">
                             </div>
                             <div class="form-group">
                                 <label for="Afstand" class="form-label">Afstand(m)</label>
-                                <input type="text" class="form-control" id="Afstand" name="range" placeholder="&nbsp;Afstand(m)">
+                                <input type="number" class="form-control" id="Afstand" name="range" placeholder="&nbsp;Afstand(m)">
                             </div>
                             <div class="form-check d-flex justify-content-between">
                                 <div class="group-input-check">
@@ -234,7 +296,7 @@ endif;
                                 if(!$expert)
                                     continue;
 
-                                $teacher_data = get_user_by('id', $profe);
+                                $teacher_data = get_user_by('id', $expert);
 
                                 $user_id = get_current_user_id();
                                 if($teacher_data->ID != $user_id)
@@ -246,9 +308,9 @@ endif;
                                     continue;
                             ?>
                                 <div class="group-input-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="Jane-Cooper">
-                                    <label class="form-check-label" for="Jane-Cooper">
-                                        Jane Cooper
+                                    <input class="form-check-input" name="experties[]" type="checkbox" value="<?= $expert ?>" id="">
+                                    <label class="form-check-label" for="">
+                                        <?= $name ?>
                                     </label>
                                 </div>
                             <?

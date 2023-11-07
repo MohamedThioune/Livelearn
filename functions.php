@@ -1914,4 +1914,9 @@ add_action( 'rest_api_init', function () {
     'callback' => 'matchin_topics'
   ));
 
+  register_rest_route ('custom/v1', '/register/company', array(
+    'methods' => 'POST',
+    'callback' => 'register_company'
+  ));
+
 });
