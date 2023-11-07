@@ -103,7 +103,7 @@ if(isset($filter_args)):
     //Apply filter 
     $courses = searching_course_with_filter($courses, $args)['courses']; 
     $order_type = searching_course_with_filter($courses, $args)['order_type'];
-    $expertise = searching_course_with_filter($courses, $args)['experts'];
+    $expertise = searching_course_with_filter($courses, $args)['experts']; 
     /* * End search by * */
 endif;
 
