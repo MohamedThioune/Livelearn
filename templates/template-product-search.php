@@ -7,10 +7,10 @@
 <?php
 $page = 'check_visibility.php';
 require($page);
-require_once('postal.php'); 
 
 //Modules 
-// require_once('search-module.php'); 
+require_once('postal.php'); 
+require_once('search-module.php'); 
 
 ?>
 
