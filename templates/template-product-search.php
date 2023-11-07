@@ -495,6 +495,7 @@ $courses = ($no_filter) ? $global_posts : $courses;
                         <?php
                         endforeach;
                         ?>
+                        
                         <!-- 
                         <a href="" class="new-card-course visible">
                             <div class="content-course-block">
