@@ -206,7 +206,7 @@ if(isset($topic_search)){
     );
     $bunch_orders = wc_get_orders($args);
     //$teachers = $expert_from_database;
-    for($j=0; $j< count($most_active_members); $j++) {
+    for($j= count($most_active_members); $j>0; $j--) {
         $user = $most_active_members[$j];
         if($num==12)
             break;
@@ -251,18 +251,19 @@ if(isset($topic_search)){
             //var_dump('<->',$course->post_date);
             $course_type = get_field('course_type', $course->ID);
             $prijs = get_field('price', $course->ID);
-            $tracker_views = get_field('tracker_views', $course->ID);
-            $tracker_views = $tracker_views ?  : 0;
+            //$tracker_views = get_field('tracker_views', $course->ID);
+            $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+            $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+            $tracker_views = intval($number_of_this_is_looking) ?  : 0;
             $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
             //$reaction = get_field('reaction', $course->ID);
 
             //get pricing from type of course: course free
-            if(!$prijs) {
                 if ($course_type == 'Artikel') {
                     $pricing = $pricing + 50;
-                    if ($tracker_views !=0) {
-                        $pricing = $pricing + 1.25; //views+click
-                    }
+                    if ($tracker_views !=0)
+                        $pricing = $pricing + $tracker_views * 1.25; //views+click
+
                     if ($favorited){
                         $pricing = $pricing + 5;
                     }
@@ -276,18 +277,17 @@ if(isset($topic_search)){
                 else if ($course_type == 'Video') {
                     $pricing = $pricing + 75;
                     if ($tracker_views !=0) {
-                        $pricing = $pricing + 3.5; //views+click+
+                        $pricing = $pricing + $tracker_views * 3.5; //views+click+
                     }
-                }elseif ($course_type == 'Opleidingen' || $course_type == 'Training' || $course_type == 'Webinar' || $course_type == 'Workshop'){
+                } else {
                     $pricing = $pricing + 100;
                     if ($favorited){
                         $pricing = $pricing + 20;
                     }
                     if ($tracker_views !=0) {
-                        $pricing = $pricing + 10;
+                        $pricing = $pricing + $tracker_views * 10;
                     }
                 }
-            }
         }
         /* get price from post doing by user for free course */
 
@@ -443,7 +443,8 @@ if(isset($topic_search)){
         }
     }
     if($period == 'lastyear'){
-        foreach ($most_active_members as $user ) {
+        for($j= count($most_active_members); $j>0; $j--) {
+            $user = $most_active_members[$j];
             if($num==9)
                 break;
             $args_current_year = array(
@@ -478,17 +479,18 @@ if(isset($topic_search)){
                 foreach ($courses_last_year as $course) {
                     $course_type = get_field('course_type', $course->ID);
                     $prijs = get_field('price', $course->ID);
-                    $tracker_views = get_field('tracker_views', $course->ID);
-                    $tracker_views = $tracker_views ? $tracker_views : 0;
+                    $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+                    $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+                    $tracker_views = intval($number_of_this_is_looking) ?  : 0;
+
                     $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
                     //$reaction = get_field('reaction', $course->ID);
 
                     //get pricing from type of course: course free
-                    if(!$prijs) {
                         if ($course_type == 'Artikel') {
                             $pricing = $pricing + 50;
                             if ($tracker_views !=0) {
-                                $pricing = $pricing + 1.25; //views+click
+                                $pricing = $pricing + $tracker_views * 1.25; //views+click
                             }
                             if ($favorited){
                                 $pricing = $pricing + 5;
@@ -503,7 +505,7 @@ if(isset($topic_search)){
                         else if ($course_type == 'Video') {
                             $pricing = $pricing + 75;
                             if ($tracker_views !=0) {
-                                $pricing = $pricing + 3.5; //views+click+
+                                $pricing = $pricing + $tracker_views * 3.5; //views+click+
                             }
                         }elseif ($course_type == 'Opleidingen' || $course_type == 'Training' || $course_type == 'Webinar' || $course_type == 'Workshop'){
                             $pricing = $pricing + 100;
@@ -511,17 +513,16 @@ if(isset($topic_search)){
                                 $pricing = $pricing + 20;
                             }
                             if ($tracker_views !=0) {
-                                $pricing = $pricing + 10;
+                                $pricing = $pricing + $tracker_views * 10;
                             }
                         }
-                    }
                 }
                 /* get price from post doing by user for free course */
 
             /**
              * put points on object user
              */
-            $user->pricing = $pricing?:0;
+            $user->pricing = $pricing;
             /**
              * Get purchantages (courses courent year)/(courses last year)
              */
@@ -586,7 +587,8 @@ if(isset($topic_search)){
         // Calculez la date de début du mois en cours
         $start_of_month = date('Y-m-01', strtotime($current_date));
         $end_of_month = date('Y-m-t', strtotime($current_date));
-        foreach ($most_active_members as $user ) {
+        for($j= count($most_active_members); $j>0; $j--) {
+            $user = $most_active_members[$j];
             if($num==9)
                 break;
             $args_current_month = array(
@@ -621,17 +623,18 @@ if(isset($topic_search)){
             foreach ($courses_current_month as $course) {
                 $course_type = get_field('course_type', $course->ID);
                 $prijs = get_field('price', $course->ID);
-                $tracker_views = get_field('tracker_views', $course->ID);
-                $tracker_views = $tracker_views ? $tracker_views : 0;
+                $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+                $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+                $tracker_views = intval($number_of_this_is_looking) ?  : 0;
+
                 $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
                 //$reaction = get_field('reaction', $course->ID);
 
                 //get pricing from type of course: course free
-                if(!$prijs) {
                     if ($course_type == 'Artikel') {
                         $pricing = $pricing + 50;
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 1.25; //views+click
+                            $pricing = $pricing + $tracker_views * 1.25; //views+click
                         }
                         if ($favorited){
                             $pricing = $pricing + 5;
@@ -646,7 +649,7 @@ if(isset($topic_search)){
                     else if ($course_type == 'Video') {
                         $pricing = $pricing + 75;
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 3.5; //views+click+
+                            $pricing = $pricing + $tracker_views * 3.5; //views+click+
                         }
                     }elseif ($course_type == 'Opleidingen' || $course_type == 'Training' || $course_type == 'Webinar' || $course_type == 'Workshop'){
                         $pricing = $pricing + 100;
@@ -654,10 +657,9 @@ if(isset($topic_search)){
                             $pricing = $pricing + 20;
                         }
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 10;
+                            $pricing = $pricing + $tracker_views * 10;
                         }
                     }
-                }
             }
             /* get price from post doing by user for free course */
 
@@ -725,7 +727,8 @@ if(isset($topic_search)){
 
         $start_of_last_week = date('Y-m-d', strtotime('last monday', strtotime('-1 week', strtotime($current_date))));
         $end_of_last_week = date('Y-m-d', strtotime('next sunday', strtotime($start_of_last_week)));
-        foreach ($most_active_members as $user ) {
+        for($j= count($most_active_members); $j>0; $j--) {
+            $user = $most_active_members[$j];
             if($num==9)
                 break;
             $args_current_week = array(
@@ -759,17 +762,18 @@ if(isset($topic_search)){
             foreach ($courses_last_week as $course) {
                 $course_type = get_field('course_type', $course->ID);
                 $prijs = get_field('price', $course->ID);
-                $tracker_views = get_field('tracker_views', $course->ID);
-                $tracker_views = $tracker_views ? $tracker_views : 0;
+                $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+                $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+                $tracker_views = intval($number_of_this_is_looking) ?  : 0;
+
                 $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
                 //$reaction = get_field('reaction', $course->ID);
 
                 //get pricing from type of course: course free
-                if(!$prijs) {
                     if ($course_type == 'Artikel') {
                         $pricing = $pricing + 50;
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 1.25; //views+click
+                            $pricing = $pricing + $tracker_views * 1.25; //views+click
                         }
                         if ($favorited){
                             $pricing = $pricing + 5;
@@ -784,18 +788,17 @@ if(isset($topic_search)){
                     else if ($course_type == 'Video') {
                         $pricing = $pricing + 75;
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 3.5; //views+click+
+                            $pricing = $pricing + $tracker_views * 3.5; //views+click+
                         }
-                    }elseif ($course_type == 'Opleidingen' || $course_type == 'Training' || $course_type == 'Webinar' || $course_type == 'Workshop'){
+                    } else {
                         $pricing = $pricing + 100;
                         if ($favorited){
                             $pricing = $pricing + 20;
                         }
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 10;
+                            $pricing = $pricing + $tracker_views * 10;
                         }
                     }
-                }
             }
             /* get price from post doing by user for free course */
 
@@ -858,14 +861,14 @@ if(isset($topic_search)){
 
         echo $data['content'];
     }elseif($period == 'all'){
-        foreach ($most_active_members as $user ) {
+        for($j= count($most_active_members); $j>0; $j--) {
+            $user = $most_active_members[$j];
             if($num==9)
                 break;
             $args_current_year = array(
                 'post_type' => 'post',// array('post', 'course'),
                 'post_status' => array('wc-processing', 'wc-completed'),
                 'orderby' => 'date',
-                //'order' => 'DESC',
                 'limit' => -1,
                 'author' => $user->ID,
                 'date_query' => array(
@@ -892,17 +895,18 @@ if(isset($topic_search)){
             foreach ($courses_last_year as $course) {
                 $course_type = get_field('course_type', $course->ID);
                 $prijs = get_field('price', $course->ID);
-                $tracker_views = get_field('tracker_views', $course->ID);
-                $tracker_views = $tracker_views ? $tracker_views : 0;
+                $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+                $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+                $tracker_views = intval($number_of_this_is_looking) ?  : 0;
+
                 $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
                 //$reaction = get_field('reaction', $course->ID);
 
                 //get pricing from type of course: course free
-                if(!$prijs) {
                     if ($course_type == 'Artikel') {
                         $pricing = $pricing + 50;
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 1.25; //views+click
+                            $pricing = $pricing +$tracker_views * 1.25; //views+click
                         }
                         if ($favorited){
                             $pricing = $pricing + 5;
@@ -917,7 +921,7 @@ if(isset($topic_search)){
                     else if ($course_type == 'Video') {
                         $pricing = $pricing + 75;
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 3.5; //views+click+
+                            $pricing = $pricing + $tracker_views * 3.5; //views+click+
                         }
                     }elseif ($course_type == 'Opleidingen' || $course_type == 'Training' || $course_type == 'Webinar' || $course_type == 'Workshop'){
                         $pricing = $pricing + 100;
@@ -925,10 +929,9 @@ if(isset($topic_search)){
                             $pricing = $pricing + 20;
                         }
                         if ($tracker_views !=0) {
-                            $pricing = $pricing + 10;
+                            $pricing = $pricing + $tracker_views * 10;
                         }
                     }
-                }
             }
             /* get price from post doing by user for free course */
 

@@ -2,12 +2,11 @@
 <programs xmlns="http://studieData.nl/schema/edudex/program">
 <program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
   <editor><![CDATA[edwin.zoetemeijer@h-l.nl]]></editor>
-  <expires>2022-09-10</expires>
+  <expires>2024-05-01</expires>
   <format><![CDATA[Edudex]]></format>
   <generator><![CDATA[Publisher 2.0]]></generator>
-  <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-03-10T17:10:12.243</lastEdited>
+  <lastEdited>2023-11-01T17:05:11.520</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -19,6 +18,7 @@
   </programAdmission>
   <programClassification>
     <degree>certificate</degree>
+    <offeredSince>2018-01-01</offeredSince>
     <orgUnitId><![CDATA[horizon]]></orgUnitId>
     <priceCategory/>
     <programDuration unit="month">5</programDuration>
@@ -27,7 +27,6 @@
     <programLevel>bachelor</programLevel>
     <programLocation/>
     <programType>training</programType>
-    <startingYear>2018</startingYear>
     <targetFunctionRijksoverheid>F0</targetFunctionRijksoverheid>
     <targetFunctionRijksoverheid>F1</targetFunctionRijksoverheid>
     <targetFunctionRijksoverheid>F2</targetFunctionRijksoverheid>
@@ -80,7 +79,7 @@
     </instructionLanguage>
     <instructionMode>classroom teaching</instructionMode>
     <instructionMode>training</instructionMode>
-    <studyLoad period="program">45</studyLoad>
+    <studyLoad period="program">124</studyLoad>
   </programCurriculum>
   <programDescriptions>
     <programName xml:lang="nl"><![CDATA[Backbone Programma]]></programName>
@@ -143,7 +142,7 @@ Met deze resultaten kun je je eigen ontwikkeling en die van de business blijven 
     <subjectText>
       <subject>curriculum</subject>
       <header1 xml:lang="nl"><![CDATA[Opzet van het programma]]></header1>
-      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Leren op je werkplek via het Learning Experience Platform (LXP):</b></p><p>Tijdens het programma heb je de beschikking over een LXP. Dit is een online-omgeving waar je rond de thema’s van het programma verschillende ‘learning experiences’ vindt. Deze bestaan uit korte praktijkopdrachten, filmpjes, infographics, blogs en andere aantrekkelijke content. De LXP nodigt je uit om de draad van het traject in de dagelijkse praktijk vast te houden en toe te passen. De LXP nodigt je ook uit om je leerproces in eigen hand te nemen. Je kiest de items die interessant voor je zijn, je plant die zelf in en je schakelt zelf de mensen in die jou helpen bij je leerproces.</p><p><br></p><p><b>Oriëntatie opdracht:</b></p><p>Samen met je team, je leidinggevende en je (interne) partners formuleer je een businessfocus die jou uitdaagt om uit je comfortzone te stappen en je persoonlijke ontwikkeling te versnellen. Dit vraagt om een eerste verkenning van jouw (verborgen) kwaliteiten en je ontwikkelpotentieel, én van de kansen in de business.</p><p><br></p><p><b>Praktische informatie:</b></p><ul><li>Negendaagse training van 22 dagdelen: vier blokken van twee aaneengesloten dagen met avondprogramma en overnachtingen en een afsluiting van een dag.</li><li>Daarnaast heb je een (individueel) start- en coachgesprek met de trainer.</li><li>Studiebelasting: naast de bijeenkomsten is de studiebelasting 2 á 4 uur per week (gedurende de looptijd van het programma ca. 40 uur). Onder andere neem je de tijd om het startgesprek voor te bereiden om jouw businessfocus te bepalen.</li></ul>]]></descriptionHtml>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Leren op je werkplek via het Learning Experience Platform (LXP):</b></p><p>Tijdens het programma heb je de beschikking over een LXP. Dit is een online-omgeving waar je rond de thema’s van het programma verschillende ‘learning experiences’ vindt. Deze bestaan uit korte praktijkopdrachten, filmpjes, infographics, blogs en andere aantrekkelijke content. De LXP nodigt je uit om de draad van het traject in de dagelijkse praktijk vast te houden en toe te passen. De LXP nodigt je ook uit om je leerproces in eigen hand te nemen. Je kiest de items die interessant voor je zijn, je plant die zelf in en je schakelt zelf de mensen in die jou helpen bij je leerproces.</p><p><br></p><p><b>Oriëntatie opdracht:</b></p><p>Samen met je team, je leidinggevende en je (interne) partners formuleer je een businessfocus die jou uitdaagt om uit je comfortzone te stappen en je persoonlijke ontwikkeling te versnellen. Dit vraagt om een eerste verkenning van jouw (verborgen) kwaliteiten en je ontwikkelpotentieel, én van de kansen in de business.</p><p><br></p><p><b>Praktische informatie:</b></p><ul><li>Negendaagse training van 20 dagdelen: vier blokken van twee aaneengesloten dagen met avondprogramma en overnachtingen.</li><li>Daarnaast heb je een (individueel) start- en coachgesprek met de trainer.</li><li>Studiebelasting: naast de bijeenkomsten is de studiebelasting 2 á 4 uur per week (gedurende de looptijd van het programma ca. 40 uur). Onder andere neem je de tijd om het startgesprek voor te bereiden om jouw businessfocus te bepalen.</li></ul><p><a href="https://horizontraining.nl/training/backbone-programma/" target="_blank">.</a></p>]]></descriptionHtml>
       <descriptionText xml:lang="nl"><![CDATA[Leren op je werkplek via het Learning Experience Platform (LXP):
 Tijdens het programma heb je de beschikking over een LXP. Dit is een online-omgeving waar je rond de thema’s van het programma verschillende ‘learning experiences’ vindt. Deze bestaan uit korte praktijkopdrachten, filmpjes, infographics, blogs en andere aantrekkelijke content. De LXP nodigt je uit om de draad van het traject in de dagelijkse praktijk vast te houden en toe te passen. De LXP nodigt je ook uit om je leerproces in eigen hand te nemen. Je kiest de items die interessant voor je zijn, je plant die zelf in en je schakelt zelf de mensen in die jou helpen bij je leerproces.
 
@@ -152,16 +151,17 @@ Samen met je team, je leidinggevende en je (interne) partners formuleer je een b
 
 Praktische informatie:
 
-- Negendaagse training van 22 dagdelen: vier blokken van twee aaneengesloten dagen met avondprogramma en overnachtingen en een afsluiting van een dag.
+- Negendaagse training van 20 dagdelen: vier blokken van twee aaneengesloten dagen met avondprogramma en overnachtingen.
 - Daarnaast heb je een (individueel) start- en coachgesprek met de trainer.
 - Studiebelasting: naast de bijeenkomsten is de studiebelasting 2 á 4 uur per week (gedurende de looptijd van het programma ca. 40 uur). Onder andere neem je de tijd om het startgesprek voor te bereiden om jouw businessfocus te bepalen.
 
+.
 ]]></descriptionText>
     </subjectText>
     <subjectText>
       <subject>course schedule</subject>
       <header1 xml:lang="nl"><![CDATA[Opbouw van de training en modules]]></header1>
-      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Modules</b></p><ul><li>Oriëntatieopdracht businessfocus</li><li>1-op-1 startgesprek met de trainer</li><li>Module 1 | Talent en Business</li><li>Module 2 | De Kracht van Dialoog</li><li>Individuele coaching</li><li>Module 3 | Beïnvloeden en veranderen</li><li>Module 4 | Persoonlijk Leiderschap</li><li>Afsluiting ‘finishfoto’</li></ul>]]></descriptionHtml>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Modules</b></p><ul><li>Oriëntatieopdracht businessfocus</li><li>1-op-1 startgesprek met de trainer</li><li>Module 1 | Talent en Business</li><li>Module 2 | De Kracht van Dialoog</li><li>Individuele coaching</li><li>Module 3 | Beïnvloeden en veranderen</li><li>Module 4 | Persoonlijk Leiderschap</li></ul>]]></descriptionHtml>
       <descriptionText xml:lang="nl"><![CDATA[Modules
 
 - Oriëntatieopdracht businessfocus
@@ -171,11 +171,10 @@ Praktische informatie:
 - Individuele coaching
 - Module 3 | Beïnvloeden en veranderen
 - Module 4 | Persoonlijk Leiderschap
-- Afsluiting ‘finishfoto’
 
 ]]></descriptionText>
     </subjectText>
-    <webLink>https://horizontraining.nl/trainingen/backbone-programma/</webLink>
+    <webLink xml:lang="nl">https://horizontraining.nl/trainingen/backbone-programma/</webLink>
   </programDescriptions>
   <programSchedule>
     <genericProgramRun>
@@ -192,22 +191,22 @@ Praktische informatie:
         <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
       </cost>
       <cost>
-        <amount>1316.00</amount>
-        <amountVAT>276.36</amountVAT>
+        <amount>1350.00</amount>
+        <amountVAT>283.50</amountVAT>
         <amountIsFinal>true</amountIsFinal>
         <costType>accommodation</costType>
         <currency>eur</currency>
         <isRequiredCost>true</isRequiredCost>
-        <VATExemptAmount>1447.60</VATExemptAmount>
+        <VATExemptAmount>1485.00</VATExemptAmount>
         <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
       </cost>
-      <numberOfContactSessions>7</numberOfContactSessions>
+      <numberOfContactSessions>20</numberOfContactSessions>
     </genericProgramRun>
     <programRun>
-      <id>BB.010426</id>
+      <id>BB.011589</id>
       <status>application opened</status>
-      <startDate isFinal="true">2022-06-27</startDate>
-      <endDate isFinal="true">2022-12-22</endDate>
+      <startDate isFinal="true">2023-11-06</startDate>
+      <endDate isFinal="true">2024-04-16</endDate>
       <cost>
         <amount>4995.00</amount>
         <amountVAT>1048.95</amountVAT>
@@ -219,74 +218,74 @@ Praktische informatie:
         <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
       </cost>
       <cost>
-        <amount>1316.00</amount>
-        <amountVAT>276.36</amountVAT>
+        <amount>1350.00</amount>
+        <amountVAT>283.50</amountVAT>
         <amountIsFinal>true</amountIsFinal>
         <costType>accommodation</costType>
         <currency>eur</currency>
         <isRequiredCost>true</isRequiredCost>
-        <VATExemptAmount>1447.60</VATExemptAmount>
+        <VATExemptAmount>1485.00</VATExemptAmount>
         <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
       </cost>
       <courseDay>
-        <id>a0E4I0000110mo2UAA</id>
-        <date>2022-06-27</date>
+        <id>a0E4I000013UJQ8UAO</id>
+        <date>2023-11-06</date>
         <name xml:lang="nl">Module 1</name>
         <startTime>09:00:00</startTime>
         <endTime>21:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110mo3UAA</id>
-        <date>2022-06-28</date>
+        <id>a0E4I000013UJQ9UAO</id>
+        <date>2023-11-07</date>
         <name xml:lang="nl">Module 1</name>
         <startTime>09:00:00</startTime>
         <endTime>17:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110mo4UAA</id>
-        <date>2022-09-07</date>
+        <id>a0E4I000013UJQAUA4</id>
+        <date>2023-12-04</date>
         <name xml:lang="nl">Module 2</name>
         <startTime>09:00:00</startTime>
         <endTime>21:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110mo5UAA</id>
-        <date>2022-09-08</date>
+        <id>a0E4I000013UJQBUA4</id>
+        <date>2023-12-05</date>
         <name xml:lang="nl">Module 2</name>
         <startTime>09:00:00</startTime>
         <endTime>17:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110mo6UAA</id>
-        <date>2022-10-04</date>
+        <id>a0E4I000013UJQCUA4</id>
+        <date>2024-01-16</date>
         <name xml:lang="nl">Coaching</name>
         <startTime>09:00:00</startTime>
         <endTime>17:00:00</endTime>
@@ -299,8 +298,8 @@ Praktische informatie:
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110mo7UAA</id>
-        <date>2022-10-10</date>
+        <id>a0E4I000013UJQDUA4</id>
+        <date>2024-01-17</date>
         <name xml:lang="nl">Coaching</name>
         <startTime>09:00:00</startTime>
         <endTime>17:00:00</endTime>
@@ -313,80 +312,66 @@ Praktische informatie:
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110mo8UAA</id>
-        <date>2022-11-01</date>
+        <id>a0E4I000013UJQEUA4</id>
+        <date>2024-02-26</date>
         <name xml:lang="nl">Module 3</name>
         <startTime>09:00:00</startTime>
         <endTime>21:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110mo9UAA</id>
-        <date>2022-11-02</date>
+        <id>a0E4I000013UJQFUA4</id>
+        <date>2024-02-27</date>
         <name xml:lang="nl">Module 3</name>
         <startTime>09:00:00</startTime>
         <endTime>17:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110moAUAQ</id>
-        <date>2022-11-28</date>
+        <id>a0E4I000013UJQGUA4</id>
+        <date>2024-04-15</date>
         <name xml:lang="nl">Module 4</name>
         <startTime>09:00:00</startTime>
-        <endTime>20:00:00</endTime>
+        <endTime>21:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <courseDay>
-        <id>a0E4I0000110moBUAQ</id>
-        <date>2022-11-29</date>
+        <id>a0E4I000013UJQHUA4</id>
+        <date>2024-04-16</date>
         <name xml:lang="nl">Module 4</name>
         <startTime>09:00:00</startTime>
         <endTime>17:00:00</endTime>
         <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
-          <country>nl</country>
-        </location>
-      </courseDay>
-      <courseDay>
-        <id>a0E4I0000110moCUAQ</id>
-        <date>2022-12-22</date>
-        <name xml:lang="nl">Afsluiting</name>
-        <startTime>09:00:00</startTime>
-        <endTime>17:00:00</endTime>
-        <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
+          <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+          <address>Speulderbosweg 54</address>
+          <zipcode>3886 AP</zipcode>
+          <city>GARDEREN</city>
           <country>nl</country>
         </location>
       </courseDay>
       <location>
-        <locationName xml:lang="nl">Nog niet bekend</locationName>
-        <address/>
-        <zipcode/>
-        <city/>
+        <locationName xml:lang="nl">Bilderberg Hotel 't Speulderbos</locationName>
+        <address>Speulderbosweg 54</address>
+        <zipcode>3886 AP</zipcode>
+        <city>GARDEREN</city>
         <country>nl</country>
       </location>
     </programRun>
@@ -395,12 +380,11 @@ Praktische informatie:
 
 <program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
   <editor><![CDATA[edwin.zoetemeijer@h-l.nl]]></editor>
-  <expires>2022-09-10</expires>
+  <expires>2024-05-01</expires>
   <format><![CDATA[Edudex]]></format>
   <generator><![CDATA[Publisher 2.0]]></generator>
-  <includeInCatalog>rio/stap</includeInCatalog>
   <inPublication>true</inPublication>
-  <lastEdited>2022-03-10T17:10:12.243</lastEdited>
+  <lastEdited>2023-11-01T17:05:11.520</lastEdited>
   <programAdmission>
     <applicationOpen>true</applicationOpen>
     <applicationType>individual</applicationType>
@@ -413,6 +397,7 @@ Praktische informatie:
   <programClassification>
     <credits system="PE">0</credits>
     <degree>certificate</degree>
+    <offeredSince>2022-01-01</offeredSince>
     <orgUnitId><![CDATA[horizon]]></orgUnitId>
     <priceCategory/>
     <programDuration unit="week">6</programDuration>
@@ -421,7 +406,6 @@ Praktische informatie:
     <programLevel>bachelor</programLevel>
     <programLocation/>
     <programType>training</programType>
-    <startingYear>2022</startingYear>
     <targetFunctionRijksoverheid>F0</targetFunctionRijksoverheid>
     <targetFunctionRijksoverheid>F3</targetFunctionRijksoverheid>
     <targetFunctionRijksoverheid>F5</targetFunctionRijksoverheid>
@@ -468,7 +452,8 @@ Praktische informatie:
       <percentage>100</percentage>
     </instructionLanguage>
     <instructionMode>classroom teaching</instructionMode>
-    <studyLoad period="program">4</studyLoad>
+    <instructionMode>training</instructionMode>
+    <studyLoad period="program">24</studyLoad>
   </programCurriculum>
   <programDescriptions>
     <programName xml:lang="nl"><![CDATA[Leidinggeven aan talentontwikkeling]]></programName>
@@ -542,10 +527,10 @@ Al tijdens de voorbereiding ga je aan de slag met jouw team en jouw business. Da
     <subjectText>
       <subject>course schedule</subject>
       <header1 xml:lang="nl"><![CDATA[Praktische informatie en opbouw van het programma]]></header1>
-      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Opbouw: </b></p><ul><li>Twee modules (twee trainingsdagen) en twee individuele coachgesprekken.</li><li>De trainingsdagen zijn van 9.00 uur tot 17.00 uur op een conferentieoord in Midden-Nederland.</li><li>De individuele coachgesprekken zijn online (via Teams of Zoom, 30 minuten). Het startgesprek vindt plaats voorafgaand aan de eerste trainingsdag. Het tweede gesprek plan je na de tweede trainingsdag in met de trainer. </li><li>Tussen module 1 en 2 zit ongeveer vier weken.</li></ul><p><b>Studiebelasting:</b> naast de bijeenkomsten en coaching is de studiebelasting een à twee uur per week (gedurende de looptijd van het programma ca. vier uur).</p><p><b>Groepsgrootte:</b> minimaal zes en maximaal twaalf deelnemers.</p>]]></descriptionHtml>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Opbouw: </b></p><ul><li>Twee modules (twee losse trainingsdagen) en twee individuele coachgesprekken.</li><li>De trainingsdagen zijn van 9.00 uur tot 17.00 uur op een conferentieoord in Midden-Nederland.</li><li>De individuele coachgesprekken zijn online (via Teams of Zoom, 30 minuten). Het startgesprek vindt plaats voorafgaand aan de eerste trainingsdag. Het tweede gesprek plan je na de tweede trainingsdag in met de trainer.</li><li>Tussen module 1 en 2 zit ongeveer vier weken.</li></ul><p><b>Studiebelasting:</b> naast de bijeenkomsten en coaching is de studiebelasting een à twee uur per week (gedurende de looptijd van het programma ca. vier uur).</p><p><b>Groepsgrootte:</b> minimaal zes en maximaal twaalf deelnemers.</p>]]></descriptionHtml>
       <descriptionText xml:lang="nl"><![CDATA[Opbouw:
 
-- Twee modules (twee trainingsdagen) en twee individuele coachgesprekken.
+- Twee modules (twee losse trainingsdagen) en twee individuele coachgesprekken.
 - De trainingsdagen zijn van 9.00 uur tot 17.00 uur op een conferentieoord in Midden-Nederland.
 - De individuele coachgesprekken zijn online (via Teams of Zoom, 30 minuten). Het startgesprek vindt plaats voorafgaand aan de eerste trainingsdag. Het tweede gesprek plan je na de tweede trainingsdag in met de trainer.
 - Tussen module 1 en 2 zit ongeveer vier weken.
@@ -554,7 +539,7 @@ Studiebelasting: naast de bijeenkomsten en coaching is de studiebelasting een à
 Groepsgrootte: minimaal zes en maximaal twaalf deelnemers.
 ]]></descriptionText>
     </subjectText>
-    <webLink>https://horizontraining.nl/training/leidinggeven-aan-talentontwikkeling/</webLink>
+    <webLink xml:lang="nl">https://horizontraining.nl/training/leidinggeven-aan-talentontwikkeling/</webLink>
   </programDescriptions>
   <programSchedule>
     <genericProgramRun>
@@ -582,10 +567,10 @@ Groepsgrootte: minimaal zes en maximaal twaalf deelnemers.
       <numberOfContactSessions>4</numberOfContactSessions>
     </genericProgramRun>
     <programRun>
-      <id>LT.010598</id>
-      <status>application opened</status>
-      <startDate isFinal="true">2022-07-06</startDate>
-      <endDate isFinal="true">2022-09-26</endDate>
+      <id>LT.012009</id>
+      <status>canceled</status>
+      <startDate isFinal="true">2023-12-01</startDate>
+      <endDate isFinal="true">2023-12-02</endDate>
       <cost>
         <amount>1495.00</amount>
         <amountVAT>313.95</amountVAT>
@@ -607,39 +592,25 @@ Groepsgrootte: minimaal zes en maximaal twaalf deelnemers.
         <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
       </cost>
       <courseDay>
-        <id>a0E4I0000111W3DUAU</id>
-        <date>2022-07-06</date>
-        <name xml:lang="nl">Dag 1</name>
-        <startTime>09:00:00</startTime>
-        <endTime>17:00:00</endTime>
-        <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
-          <country>nl</country>
-        </location>
-      </courseDay>
-      <courseDay>
-        <id>a0E4I0000111W3EUAU</id>
-        <date>2022-09-06</date>
-        <name xml:lang="nl">Dag 2</name>
-        <startTime>09:00:00</startTime>
-        <endTime>17:00:00</endTime>
-        <location>
-          <locationName xml:lang="nl">Nog niet bekend</locationName>
-          <address/>
-          <zipcode/>
-          <city/>
-          <country>nl</country>
-        </location>
-      </courseDay>
-      <courseDay>
-        <id>a0E4I0000111W3FUAU</id>
-        <date>2022-09-26</date>
+        <id>a0E8e000000Y2cqEAC</id>
+        <date>2023-12-01</date>
         <name xml:lang="nl">Coaching</name>
         <startTime>09:00:00</startTime>
         <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E8e000000Y2crEAC</id>
+        <date>2023-12-02</date>
+        <name xml:lang="nl">Coaching</name>
+        <startTime>09:00:00</startTime>
+        <endTime>13:00:00</endTime>
         <location>
           <locationName xml:lang="nl">Nog niet bekend</locationName>
           <address/>
