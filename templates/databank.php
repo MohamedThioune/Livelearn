@@ -13,12 +13,64 @@ if(isset($_GET['id']))
     $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
-    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-    $courses = $wpdb->get_results( $sql );
 
-    $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
-    $count = $wpdb->get_results( $sql_count );
-    $count = intval($count[0]->{'COUNT(*)'});
+    if(isset($_POST['type'])){
+        switch ($_POST['type']) {
+            case 'All':
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results( $sql );
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+                $count = $wpdb->get_results( $sql_count );
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'Artikel':
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Artikel' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results( $sql );
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Artikel'");
+                $count = $wpdb->get_results( $sql_count );
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'Podcast':
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Podcast' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results( $sql );
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Podcast'");
+                $count = $wpdb->get_results( $sql_count );
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'Video':
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Video' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results( $sql );
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Video'");
+                $count = $wpdb->get_results( $sql_count );
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'courses':
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type<>'Artikel' and type<>'Podcast' and type<>'Video' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results( $sql );
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type<>'Artikel' and type<>'Podcast' and type<>'Video'");
+                $count = $wpdb->get_results( $sql_count );
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            default:
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results( $sql );
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+                $count = $wpdb->get_results( $sql_count );
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            
+        }
+    }else {
+        $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+        $courses = $wpdb->get_results( $sql );
+        $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+        $count = $wpdb->get_results( $sql_count );
+        $count = intval($count[0]->{'COUNT(*)'});
+    }
+    
+    
+
+    
 
 if( $count % $pagination == 0)
     $pagination_number = $count / $pagination;
@@ -35,7 +87,7 @@ $urls =
     [
         'WorkPlace Academy'=>'https://workplaceacademy.nl/',
         'Ynno'=>'https://www.ynno.com/',
-        // 'DeZZP'=>'https://www.dezzp.nl/',
+        // 'DeZZP'=>'https://www.dezzp.nl/', 
         'Aestate'=>'https://www.aestate.nl/',
         'Alba Concepts'=>'https://albaconcepts.nl/',
         'AM'=>'https://www.am.nl/',
@@ -208,6 +260,23 @@ $urls =
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         <br>
                     </center>
+                    <br>
+                    <br>
+                    <form action="/databank" method="post">
+                        <div class="inpustSearchDataBank">
+                            <select name="type" id="type">
+                                <option value="" selected disabled hidden>Select type of data</option>
+                                <option value="All">All</option>
+                                <option value="Artikel">Artikel</option>
+                                <option value="Podcast">Podcast</option>
+                                <option value="course">Courses</option>
+                                <option value="Video">Videos</option>
+                            </select>
+                            <button class="btn btnSearchCourseDatabank">
+                                <img  src="<?= get_stylesheet_directory_uri(); ?>/img/searchM.png" alt="youtube image">
+                            </button>
+                        </div>
+                    </form>
                     <div class="text-center" id="content-back-topics"></div>
                     <table class="table table-responsive">
                             <thead>
@@ -711,7 +780,7 @@ $urls =
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',false)
                 $('#select_field').attr('hidden',true)  
-                // alert('Something is wrong');
+                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the articles.</span>";
                 location.reload();
                },
                success: function(data) {
@@ -763,7 +832,7 @@ $urls =
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',true)
                 $('#select_field').attr('hidden',false)
-                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something is wrong</span>";
+                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the article.</span>";
                 //   alert('Something is wrong');
                 // location.reload();
                },

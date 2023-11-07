@@ -1,7 +1,7 @@
 <?php /** Template Name: Subtopics */ ?>
 <?php
     // function strip_html_tags($text) {
-    //     $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
+        // $allowed_tags = ['h2', 'br', 'strong', 'em', 'u', 'blockquote', 'ul', 'ol', 'li', 'img', 'mark'];
     //     $text = preg_replace("/\n{1,}/", "\n", $text); 
     //     $text = str_replace("\n"," ",$text);
     //     $text = str_replace("/"," ",$text);
