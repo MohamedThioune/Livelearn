@@ -494,7 +494,505 @@ $courses = ($no_filter) ? $global_posts : $courses;
                         endforeach;
                         ?>
                  
+                        <!-- 
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="" class="new-card-course visible">
+                            <div class="content-course-block">
+                                <div class="head">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                </div>
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm">UI design</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm">Dakar Senegal</p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <p class="autor">Samanthan wiliams</p>
+                                        </div>
+                                        <p class="price">$ 400</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a> -->
                     </div>
+
                     <div class="pagination-container">
                         <!-- Les boutons de pagination seront ajoutés ici -->
                     </div>
