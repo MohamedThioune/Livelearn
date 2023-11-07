@@ -1,4 +1,4 @@
-<?php /** Template Name: Product Search */ ?>
+<?php /** Template Name: Product Search Actual */ ?>
 
 <body>
 <?php wp_head(); ?>
