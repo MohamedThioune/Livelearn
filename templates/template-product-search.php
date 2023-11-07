@@ -106,6 +106,8 @@ endif;
 
 //Check empty 
 $courses = ($no_filter) ? $global_posts : $courses;
+
+$courses = array_slice(0, 500, $courses);
 ?>
 
 <div class="content-community-overview bg-gray">
