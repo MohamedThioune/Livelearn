@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <?php
 $page = 'check_visibility.php';
-require($page);
-require_once('postal.php'); 
+// require($page);
+// require_once('postal.php'); 
 
 //Modules 
 require_once('search-module.php'); 
