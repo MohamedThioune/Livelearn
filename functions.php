@@ -1885,6 +1885,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'update_user_progression_course',
   ));
 
+  register_rest_route ('custom/v1', '/user/cart/signups', array(
+    'methods' => 'GET',
+    'callback' => 'get_user_signups',
+  ));
+
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
