@@ -7,13 +7,13 @@ $GLOBALS['user_id'] = get_current_user_id();
 
 class Expert
 {
- public $id;
- public $name;
- public $profilImg;
- public $company;
- public $role;
+  public $id;
+  public $name;
+  public $profilImg;
+  public $company;
+  public $role;
 
- function __construct($expert,$profilImg) {
+  function __construct($expert,$profilImg) {
     $this->id=(int)$expert->ID;
     $this->name=$expert->display_name;
     $this->profilImg =$profilImg;
@@ -2350,8 +2350,7 @@ function save_user_views(WP_REST_Request $request)
 
   }
 
-  function update_user_progression_course($request)
-  {
+  function update_user_progression_course($request){
     $request['course_title'];
     $course_title = $request['course_title'] ?? false;
     if ($course_title == false)
@@ -2459,9 +2458,6 @@ function save_user_views(WP_REST_Request $request)
       //Initialize arrays
       $child_topics_id = array();
 
-      // $blogs = array();
-      // $blogs_id = array();
-
       //Get child topics category
       if($topic)
         $child_topics = get_categories(
@@ -2484,7 +2480,6 @@ function save_user_views(WP_REST_Request $request)
         $category_default = get_field('categories', $blog->ID);
         $categories_xml = get_field('category_xml', $blog->ID);
         $merge_categories_id = array();
-        // $category_id = 0;
     
         /*
         * Merge categories from customize and xml
@@ -2507,10 +2502,6 @@ function save_user_views(WP_REST_Request $request)
         foreach($child_topics_id as $categoriee){
           if($merge_categories_id)
             if(in_array($categoriee, $merge_categories_id)){
-                // array_push($blogs, $blog);
-                // array_push($blogs_id, $blog->ID);
-
-
                 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}matchin_topics WHERE topic_id = %d AND post_id = %d", array($categoriee, $blog->ID));
                 $iteration = $wpdb->get_results( $sql )[0];
             
@@ -2530,15 +2521,10 @@ function save_user_views(WP_REST_Request $request)
             }
         }
 
-        // if(!empty($data_historiq)):
-        //   $response = new WP_REST_Response($data_historiq);
-        //   $response->set_status(200);
-        //   return $response;
-        // endif;
-
       endforeach;
 
     endforeach;
+
 
     $response = new WP_REST_Response($data_historiq);
     $response->set_status(200);
@@ -2546,85 +2532,75 @@ function save_user_views(WP_REST_Request $request)
 
   }
 
-  /* * Liggeey * */
+  function matchin_child_topics(){
+    global $wpdb;
 
-  // Register the company chief
-  function register_company(WP_REST_Request $request){
-    $errors = ['errors' => '', 'error_data' => ''];
-    $required_parameters = ['first_name', 'last_name', 'email', 'bedrijf', 'phone', 'password', 'password_confirmation'];
-    //country ?
-    //Check required parameters register
-    foreach ($required_parameters as $required):
+    $data_historiq = array();
 
-      if (!isset($request[$required])):
-        $errors['errors'] = $required . " field is missing !";
-        $errors = (Object)$errors;
-        $response = new WP_REST_Response($errors); 
-        $response->set_status(400);
-        return $response;
-      elseif ($request[$required] == false):
-        $errors['errors'] = $required . " field is missing value !";
-        $errors = (Object)$errors;
-        $response = new WP_REST_Response($errors); 
-        $response->set_status(400);
-        return $response;
-      endif;
-
-    endforeach;
-
-    //Get value fields
-    $first_name = $request['first_name'] ?? false;
-    $last_name = $request['last_name'] ?? false;
-    $email = $request['email'] ?? false;
-    $bedrijf = $request['bedrijf'] ?? false;
-    $phone = $request['phone'] ?? false;
-    $country = $request['country'] ?? false;
-    $password = $request['password'] ?? false;
-    $password_confirmation = $request['password_confirmation'] ?? false;
-
-    //Password confirmation match ?
-    if($password != $password_confirmation):
-      $errors['errors'] = "the passwords did not match !";
-      $errors = (Object)$errors;
-      $response = new WP_REST_Response($errors); 
-      $response->set_status(400);
-      return $response;
-    endif;
-
-    //Create the user
-    $userdata = array(
-        'first_name' => $first_name,
-        'last_name' => $last_name,
-        'display_name' => $first_name . ' ' . $last_name,
-        'user_url' => 'https://livelearn.nl/inloggen/',
-        'user_login' => $email,
-        'user_email' => $email,
-        'user_pass' => $password,
-        'role' => 'hr'
-    );
-    $user_id = wp_insert_user(wp_slash($userdata));    
-    
-    //Create the company
+    //Global posts 
     $args = array(
-      'post_type'   => 'company',
-      'post_author' => 3,
-      'post_status' => 'pending',
-      'post_title'  => $bedrijf
+      'post_type' => array('post', 'course'),
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC',
     );
-    $company_id = wp_insert_post($args);
-    $company = get_post($company_id);
-    update_field('company_country', $country, $company_id);
+    $global_posts = get_posts($args);
 
-    //Affect the company to the user 
-    update_field('company', $company, 'user_' . $user_id);
+    //Iteration courses to get corresponding topics                  
+    foreach($global_posts as $blog):
 
-    $user = get_user_by('ID', $user_id);
+      // Categories //
+      $category_default = get_field('categories', $blog->ID);
+      $categories_xml = get_field('category_xml', $blog->ID);
+      $merge_categories_id = array();
+  
+      // Merge categories from customize and xml //
+      if(!empty($category_default))
+        foreach($category_default as $item)
+          if($item)
+            if($item['value'])
+                if(!in_array($item['value'], $merge_categories_id))
+                  array_push($merge_categories_id, $item['value']);
+      else if(!empty($category_xml))
+        foreach($category_xml as $item)
+          if($item)
+            if($item['value'])
+              if(!in_array($item['value'], $merge_categories_id))
+                  array_push($merge_categories_id, $item['value']);
+              
+      // Fit the category to course of
+      $born = false;
+      if(!empty($merge_categories_id))
+        foreach($merge_categories_id as $value):
+          $explode_categoriee = explode(',', $value);
+          foreach($explode_categoriee as $categoriee){
+            $categoriee = intval($categoriee);
 
-    //Information about the user
-    $response = new WP_REST_Response($user);
+            if(!$categoriee)
+              continue;
+            if(!is_int($categoriee))
+              continue;
+
+            $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}matchin_topics WHERE topic_id = %d AND post_id = %d", array($categoriee, $blog->ID));
+            $iteration = $wpdb->get_results( $sql )[0];
+        
+            if($iteration)
+              if($iteration != 0)
+                break;
+            
+            // Insert matching course to each course record 
+            $table_matching = $wpdb->prefix . 'matchin_topics';
+            $data = ['topic_id' => $categoriee, 'post_id' => $blog->ID];
+            $wpdb->insert($table_matching, $data);
+
+            array_push($data_historiq, $data);
+          }
+        endforeach;
+
+    endforeach;    
+
+    $response = new WP_REST_Response($data_historiq);
     $response->set_status(200);
     return $response;
 
   }
-
-  /* * End Liggeey * */
