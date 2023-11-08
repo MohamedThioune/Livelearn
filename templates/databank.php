@@ -37,17 +37,17 @@ if(isset($_GET['id']))
                 $count = $wpdb->get_results( $sql_count );
                 $count = intval($count[0]->{'COUNT(*)'});
                 break;
-            case 'Video':
-                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Video' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            case 'Videos':
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
                 $courses = $wpdb->get_results( $sql );
-                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Video'");
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
                 $count = $wpdb->get_results( $sql_count );
                 $count = intval($count[0]->{'COUNT(*)'});
                 break;
-            case 'courses':
-                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type<>'Artikel' and type<>'Podcast' and type<>'Video' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+            case 'Courses':
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
                 $courses = $wpdb->get_results( $sql );
-                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type<>'Artikel' and type<>'Podcast' and type<>'Video'");
+                $sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar'");
                 $count = $wpdb->get_results( $sql_count );
                 $count = intval($count[0]->{'COUNT(*)'});
                 break;
@@ -262,14 +262,14 @@ $urls =
                     </center>
                     <br>
                     <br>
-                    <form action="/databank" method="post">
+                    <form action="#" method="post">
                         <div class="inpustSearchDataBank">
                             <select name="type" id="type">
                                 <option value="" selected disabled hidden>Select type of data</option>
                                 <option value="All">All</option>
                                 <option value="Artikel">Artikel</option>
                                 <option value="Podcast">Podcast</option>
-                                <option value="course">Courses</option>
+                                <option value="Courses">Courses</option>
                                 <option value="Video">Videos</option>
                             </select>
                             <button class="btn btnSearchCourseDatabank">
