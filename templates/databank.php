@@ -266,7 +266,7 @@ $urls =
                         <div class="inpustSearchDataBank">
                             <select name="type" id="type">
                                 <option value="" selected disabled hidden>Select type of data</option>
-                                <option value="All">All</option>
+                                <option value="All">All</option> 
                                 <option value="Artikel">Artikel</option>
                                 <option value="Podcast">Podcast</option>
                                 <option value="Courses">Courses</option>
