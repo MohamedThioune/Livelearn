@@ -7,6 +7,7 @@ include "custom-endpoints.php";
 include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
+include "liggeey-endpoints.php";
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -1912,6 +1913,11 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/matching-topic-course', array(
     'methods' => 'GET',
     'callback' => 'matchin_topics'
+  ));
+
+  register_rest_route ('custom/v1', '/matching-child-course', array(
+    'methods' => 'GET',
+    'callback' => 'matchin_child_topics'
   ));
 
   register_rest_route ('custom/v1', '/register/company', array(
