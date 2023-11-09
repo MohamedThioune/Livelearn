@@ -336,8 +336,8 @@ $url = home_url( $wp->request );
         <p class="liverTilteHead2"><?php echo $name ?></p>
         <div>
             <form action="../dashboard/user/" method="POST">
-                <input type="hidden" name="meta_value" value="<?php echo $category ?>" id="">
-                <input type="hidden" name="user_id" value="<?=$user_id;?>" id="">
+                <input type="hidden" name="meta_value" value="<?= $category ?>" id="">
+                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
                 <div>
                     <?php
                         if($user_id != 0)
@@ -384,7 +384,7 @@ $url = home_url( $wp->request );
                 <span class="text-dark font-weight-bold h5 pt-2">
 
                 <?php
-                    if ($volgers!=null && $volgers!=0)
+                    if ($volgers != null && $volgers != 0)
                         echo ceil(($volgers*975) - ($_GET['category']/2));
                     else
                         echo '0';
@@ -436,7 +436,9 @@ $url = home_url( $wp->request );
         <!-- ------------------------------------ Start Slide bar ---------------------------------------- -->
         <div class="col-md-3 ">
             <div class="sousProductTest Mobelement pr-4" style="background: #F4F7F6;color: #043356;">
-                <form action="/product-search/" method="POST">
+                <form action="/product-search/" method="GET">
+                    <input type='hidden' name='filter_args' value='1'>
+                    <input type="hidden" name="category_input" value="<?php echo $_GET['category'] ?>">
                     <div class="LeerBlock pl-4" style="">
                         <div class="leerv">
                             <p class="sousProduct1Title" style="color: #043356;">LEERVORM</p>
@@ -445,9 +447,8 @@ $url = home_url( $wp->request );
                                 <i class="bi bi-x text-dark" style="font-size: 35px"></i>
                             </button>
                         </div>
-                        <input type="hidden" name="category" value="<?php echo $_GET['category'] ?>">
                         <div class="checkFilter">
-                            <label class="contModifeCheck">Opleiding
+                            <label class="contModifeCheck">Opleidingen
                                 <input style="color:red;" type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
@@ -473,6 +474,18 @@ $url = home_url( $wp->request );
                         <div class="checkFilter">
                             <label class="contModifeCheck">Event
                                 <input type="checkbox" id="event" name="leervom[]" value="Event">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Lezing
+                                <input type="checkbox" id="lezing" name="leervom[]" value="Lezing">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Podcast
+                                <input type="checkbox" id="podcast" name="leervom[]" value="Podcast">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
