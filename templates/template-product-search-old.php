@@ -32,8 +32,7 @@ $args = array(
 );
 $global_courses = get_posts($args);
 
-/*
-~ Header filter
+/* * Header filter
 */
 if($_GET['filter'] == "header")
     $leervom = array($_GET['opleidin']);
