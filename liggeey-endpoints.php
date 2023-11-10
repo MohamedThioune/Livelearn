@@ -56,7 +56,17 @@ function register_company(WP_REST_Request $request){
       'user_pass' => $password,
       'role' => 'hr'
   );
-  $user_id = wp_insert_user(wp_slash($userdata));    
+  $user_id = wp_insert_user(wp_slash($userdata));  
+  
+  //Check if there are no errors
+  if(is_wp_error($user_id)):
+    $errors['errors'] = $user_id;
+    $errors = (Object)$errors;
+    $response = new WP_REST_Response($errors); 
+    $response->set_status(400);
+    return $response;
+  endif; 
+
   
   //Create the company
   $args = array(
@@ -72,9 +82,19 @@ function register_company(WP_REST_Request $request){
   //Affect the company to the user 
   update_field('company', $company, 'user_' . $user_id);
 
+  //Get user created information
   $user = get_user_by('ID', $user_id);
+  
+  //Sending email notification
+  $first_name = $user->first_name ?: $user->display_name;
+  $email = $user->user_email;
+  $path_mail = '/templates/mail-notification-invitation.php';
+  require(__DIR__ . $path_mail); 
+  $subject = 'Je hebt een nieuwe volger !';
+  $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+  wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
 
-  //Information about the user
+  //Send response
   $response = new WP_REST_Response($user);
   $response->set_status(200);
   return $response;
