@@ -1733,6 +1733,20 @@ add_action( 'rest_api_init', function () {
     'callback' => 'related_topics_subtopics',
   ));
 
+  register_rest_route( 'custom/v1', '/category/(?P<category_id>\d+)/courses', array(
+    'methods' => 'GET',
+    'callback' => 'get_related_course_by_category',
+  ));
+
+  register_rest_route( 'custom/v1', 'user/recommended/courses', array(
+    'methods' => 'GET',
+    'callback' => 'course_recommendation_by_follow',
+  ));
+
+  
+
+  
+
   register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
     'methods' => 'GET',
     'callback' => 'get_course_image',
@@ -1889,6 +1903,11 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'get_user_signups',
   ));
+  register_rest_route ('custom/v1', '/user/signup', array(
+    'methods' => 'POST',
+    'callback' => 'reserve_course',
+  ));
+  
 
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
