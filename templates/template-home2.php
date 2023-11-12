@@ -254,6 +254,12 @@ $type_course = array(
     #modalVideo .modal-dialog {
         width: 50% !important;
     }
+    .headerdashboard .frist-block-subnav p {
+        color: #033356 !important;
+    }
+    .headerdashboard .language-selector-custom select {
+        color: #043356 !important;
+    }
     @media (min-width: 300px) and (max-width: 767px){
         .titleSubscription {
             margin-top: 30px;

@@ -149,7 +149,7 @@ endif;
                             }
                             if(!empty($data) || get_field('dates', $post->ID)):
                             ?>
-                            <div class="section-tabs" id="date">
+                            <div class="section-tabs block-date-tabs" id="date">
                                 <h2>Dates</h2>
                                 <?php
                                 if(!isset($xml_parse)){
@@ -179,7 +179,7 @@ endif;
                                                 <a id="bookdates" name="bookdates"></a>
 
                                                 <!-------------------------------------------- Start cards on bottom --------------------------- -->
-                                                <div class="block2evens block2evensTabs">
+                                                <div class="block2evens block2evensTabs visible">
                                                     <section>
                                                         <details>
                                                             <summary class="dateText1">
@@ -311,7 +311,7 @@ endif;
 
                                             ?>
                                             <a id="bookdates" name="bookdates"></a>
-                                            <div class="block2evens block2evensTabs">
+                                            <div class="block2evens block2evensTabs visible">
                                                 <section>
                                                     <details>
                                                         <summary class="dateText1">
@@ -531,6 +531,12 @@ endif;
                                     }
                                 }
                                 ?>
+
+
+                                <div class="pagination-container">
+                                    <!-- Les boutons de pagination seront ajoutés ici -->
+                                </div>
+
                             </div>
                             <?php
                             endif;
@@ -930,6 +936,83 @@ endif;
     });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+    const itemsPerPage = 6;
+    const blockList = document.querySelector('.block-date-tabs');
+    const blocks = blockList.querySelectorAll('.block2evensTabs');
+    const paginationContainer = document.querySelector('.pagination-container');
+
+    function displayPage(pageNumber) {
+        const start = (pageNumber - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        blocks.forEach((block, index) => {
+            if (index >= start && index < end) {
+                block.style.display = 'block';
+                block.classList.add('visible');
+            } else {
+                block.style.display = 'none';
+                block.classList.remove('visible');
+            }
+        });
+
+        const containerHeight = blockList.offsetHeight;
+
+        setTimeout(() => {
+            blockList.style.height = containerHeight + 'px';
+        }, 10);
+        setTimeout(() => {
+            blockList.style.height = '';
+        }, 300);
+    }
+
+    function createPaginationButtons() {
+        const pageCount = Math.ceil(blocks.length / itemsPerPage);
+
+        if (pageCount <= 1) {
+            return;
+        }
+
+        let firstButtonAdded = false; // Keep track of whether the first button is added
+
+        for (let i = 1; i <= pageCount; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add('pagination-button');
+            button.addEventListener('click', () => {
+                scrollToTop(); // Scroll to the top when a button is clicked
+                displayPage(i);
+
+                // Remove the .active class from all buttons
+                const buttons = document.querySelectorAll('.pagination-button');
+                buttons.forEach((btn) => {
+                    btn.classList.remove('active');
+                });
+
+                // Add the .active class to the clicked button
+                button.classList.add('active');
+            });
+            paginationContainer.appendChild(button);
+
+            // Add the .active class to the first button
+            if (!firstButtonAdded) {
+                button.classList.add('active');
+                firstButtonAdded = true;
+            }
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    displayPage(1);
+    createPaginationButtons();
+
+
+</script>
+
 <script>
     class ProgressBar{
         constructor(progressBar, fill, skillName){
