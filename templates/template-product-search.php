@@ -1015,7 +1015,7 @@ $courses = array_slice($courses, 0, 500);
 <!--script pagination-->
 
 <script>
-    const itemsPerPage = 30;
+    const itemsPerPage = 12;
     const blockList = document.querySelector('.block-new-card-course');
     const blocks = blockList.querySelectorAll('.new-card-course');
     const paginationContainer = document.querySelector('.pagination-container');

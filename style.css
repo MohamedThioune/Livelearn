@@ -61,9 +61,12 @@ body, html {
     margin: 0 -15px;
     position:relative;
     z-index: 1111;
-    display: flex;
+    display: block;
     left: 0;
     right: 0;
+}
+.frist-block-subnav p {
+    color: white;
 }
 .headerdashboard-content{
     width: 100%;
@@ -4259,6 +4262,7 @@ form {
     margin-bottom: 7px;
     text-transform: none !important;
 }
+
 
 @media all and (min-width: 300px) and (max-width: 767px) {
     .webReult {
