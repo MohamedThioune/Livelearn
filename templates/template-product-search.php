@@ -58,9 +58,6 @@ endif;
 /* * Group by type * */
 $main_courses = array();
 $start_courses = (!empty($courses)) ? $courses : $global_posts;
-// $category_input = 216;
-// $user_input = 3;
-// $companie_input = 1435;
 
 if(isset($category_input) || isset($user_input) || isset($companie_input))
     $no_filter = false;
@@ -97,10 +94,15 @@ if(isset($filter_args)):
     $args['online'] = (isset($online)) ? 1 : null;
     $args['experties'] = (!empty($experties)) ? $experties : null;
   
+    $courses = (empty($courses)) ? $global_posts : $courses;
     //Apply filter 
     $courses = searching_course_with_filter($courses, $args)['courses']; 
     $order_type = searching_course_with_filter($courses, $args)['order_type'];
     $expertise = searching_course_with_filter($courses, $args)['experts'];
+
+    // var_dump($courses);
+    // die();
+
     /* * End search by * */
 endif;
 
