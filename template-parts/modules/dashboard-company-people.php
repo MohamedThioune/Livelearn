@@ -167,7 +167,7 @@
         }
     }
     ?>
-    <div class="cardPeople">
+    <div class="cardPeople cardPeopleModife">
         <div class="headListeCourse">
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
