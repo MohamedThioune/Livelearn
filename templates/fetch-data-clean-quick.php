@@ -78,7 +78,6 @@ foreach($categories as $categ){
 
 
 if ( isset ($id) ) {
-
     $input = 'id';
     $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 
