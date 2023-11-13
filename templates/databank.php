@@ -199,7 +199,10 @@ $urls =
         'Classical Music'=>'https://www.classical-music.com/',
         'Slipped Disc'=>'https://slippedisc.com/',
         'The Violin Channel'=>'https://www.theviolinchannel.com/',
-        'Carey Nieuwhof'=>'https://careynieuwhof.com/'
+        'Carey Nieuwhof'=>'https://careynieuwhof.com/',
+        'Fresh'=>'https://www.stichtingfresh.nl/',
+        'Werf&'=>'https://www.werf-en.nl/',
+        'Monday,com'=>'https://monday.com/blog/'
     ];
 ?>
 
