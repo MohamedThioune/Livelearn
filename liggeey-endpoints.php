@@ -82,17 +82,19 @@ function register_company(WP_REST_Request $request){
   //Affect the company to the user 
   update_field('company', $company, 'user_' . $user_id);
 
+  $company = array($company);
+
   //Get user created information
   $user = get_user_by('ID', $user_id);
   
   //Sending email notification
-  $first_name = $user->first_name ?: $user->display_name;
-  $email = $user->user_email;
-  $path_mail = '/templates/mail-notification-invitation.php';
-  require(__DIR__ . $path_mail); 
-  $subject = 'Je hebt een nieuwe volger !';
-  $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-  wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
+  // $first_name = $user->first_name ?: $user->display_name;
+  // $email = $user->user_email;
+  // $path_mail = '/templates/mail-notification-invitation.php';
+  // require(__DIR__ . $path_mail); 
+  // $subject = 'Je hebt een nieuwe volger !';
+  // $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+  // wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
 
   //Send response
   $response = new WP_REST_Response($user);
