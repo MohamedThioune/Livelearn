@@ -119,7 +119,7 @@ require($page);
                         <p class="krijgText">
                             Personeel, het is altijd moeilijk om hier het beste uit te halen. Wat moet je aanbieden qua trainingen en hoe houd je alle ontwikkelingen bij? Als LiveLearn begrijpen we maar al te goed hoe je hier mee om moet gaan en daarom bieden wij een eenvoudig op te zetten ontwikkelomgeving voor MKB bedrijven.
                         </p>
-                        <div>
+                        <div class="d-flex flex-wrap">
                             <a href="/voor-organisaties/" class="btn btn-al-vanaf">
                                 Al vanaf €4,95
                             </a>

@@ -179,7 +179,7 @@ endif;
 
                                             $lecture_index = $key + 1;
                                             ?>
-                                        <div class="elemnt-list-podcast">
+                                        <div class="elemnt-list-podcast visible">
                                             <div class="detail-block-podcast">
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex">
@@ -212,6 +212,9 @@ endif;
                                             <img class="status-icon" src="<?= $status_icon ?>" alt="">
                                         </div>
                                         <?php } ?>
+                                        <div class="pagination-container">
+                                            <!-- Les boutons de pagination seront ajoutés ici -->
+                                        </div>
                                     </div>
                                 </ul>
                             <?php
@@ -242,7 +245,7 @@ endif;
                                         $description_podcast = $podcast['podcast_description'] ? : $short_description ;
 
                                         ?>
-                                       <div class="elemnt-list-podcast">
+                                       <div class="elemnt-list-podcast visible">
                                            <div class="detail-block-podcast">
                                                <div class="d-flex align-items-center justify-content-between">
                                                    <div class="d-flex">
@@ -275,6 +278,9 @@ endif;
                                            </div>
                                        </div>
                                        <?php } ?>
+                                       <div class="pagination-container">
+                                           <!-- Les boutons de pagination seront ajoutés ici -->
+                                       </div>
                                    </div>
                                </ul>
                             <?php 
@@ -730,6 +736,82 @@ endif;
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+
+<script>
+    const itemsPerPage = 6;
+    const blockList = document.querySelector('.list-content-podcast');
+    const blocks = blockList.querySelectorAll('.elemnt-list-podcast');
+    const paginationContainer = document.querySelector('.pagination-container');
+
+    function displayPage(pageNumber) {
+        const start = (pageNumber - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        blocks.forEach((block, index) => {
+            if (index >= start && index < end) {
+                block.style.display = 'flex';
+                block.classList.add('visible');
+            } else {
+                block.style.display = 'none';
+                block.classList.remove('visible');
+            }
+        });
+
+        const containerHeight = blockList.offsetHeight;
+
+        setTimeout(() => {
+            blockList.style.height = containerHeight + 'px';
+        }, 10);
+        setTimeout(() => {
+            blockList.style.height = '';
+        }, 300);
+    }
+
+    function createPaginationButtons() {
+        const pageCount = Math.ceil(blocks.length / itemsPerPage);
+
+        if (pageCount <= 1) {
+            return;
+        }
+
+        let firstButtonAdded = false; // Keep track of whether the first button is added
+
+        for (let i = 1; i <= pageCount; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add('pagination-button');
+            button.addEventListener('click', () => {
+                scrollToTop(); // Scroll to the top when a button is clicked
+                displayPage(i);
+
+                // Remove the .active class from all buttons
+                const buttons = document.querySelectorAll('.pagination-button');
+                buttons.forEach((btn) => {
+                    btn.classList.remove('active');
+                });
+
+                // Add the .active class to the clicked button
+                button.classList.add('active');
+            });
+            paginationContainer.appendChild(button);
+
+            // Add the .active class to the first button
+            if (!firstButtonAdded) {
+                button.classList.add('active');
+                firstButtonAdded = true;
+            }
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    displayPage(1);
+    createPaginationButtons();
+
+
+</script>
 
 <script>
     $('.owl-carousel').owlCarousel({
