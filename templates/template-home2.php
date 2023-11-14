@@ -2079,7 +2079,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-categorien').html(complete_categorieen);
 
             $.ajax({
-                url:"/fetch-ajax-home2",
+                url:"/livelearn/fetch-ajax-home2",
                 method:"post",
                 data:{
                     topic_search: topic_search,
@@ -2107,7 +2107,7 @@ $saved = get_user_meta($user_id, 'course');
             var complete_period = selectedOptions.text;
             $('#complete-period').html(complete_period);
             $.ajax({
-                url:"/fetch-ajax-home2",
+                url:"/livelearn/fetch-ajax-home2",
                 method:"post",
                 data:{
                     period: period,
@@ -2123,6 +2123,7 @@ $saved = get_user_meta($user_id, 'course');
                 },
                 complete:function (complete) {
                     $('#loader').addClass('d-none');
+                    console.log(complete)
                 }
             });
         });
