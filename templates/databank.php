@@ -223,15 +223,15 @@ $urls =
                 ?>
                <div class="headListeCourse">
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
-                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
-                       &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
-                       &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/playlist_icon.png" alt="load playlist"></button>
+                       <a href="/youtube-v3-playlist" title="load video youtube" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
+                       &nbsp;&nbsp;<a href="/xml-parse" title="load xml file" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
+                       &nbsp;&nbsp;<button id="subtopics" title="load subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
+                       &nbsp;&nbsp;<button id="playlist-youtube" title="load playlist youtube via file" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/playlist_icon.png" alt="load playlist"></button>
                        <!--<button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
                        </button>-->
 
-                       <button type="button" title="podcast playlist" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
+                       <button type="button" title="search podcast via API podcastindex" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
                            playlist audios
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="40" height="40">
                        </button>
@@ -744,7 +744,7 @@ $urls =
                     $('#loader').attr('hidden',true);
                     document.getElementById('content-back-topics').innerHTML = success;
                     console.log(success);
-                    location.reload(); 
+                    //location.reload();
                 },complete:function(complete){
                     // console.log("complete:",complete);
                     $('#loader').attr('hidden',true);
@@ -913,7 +913,6 @@ $urls =
                     var modal = document.getElementById("myModal");
                     $('.display-fields-clean').html(data)
                     // Get the button that opens the modal
-
 
                     // Get the <span> element that closes the modal
                     var span = document.getElementsByClassName("close")[0];
