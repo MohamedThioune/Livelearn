@@ -2629,7 +2629,7 @@ function save_user_views(WP_REST_Request $request)
         foreach($child_topics_id as $categoriee){
           if($merge_categories_id)
             if(in_array($categoriee, $merge_categories_id)){
-                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}matchin_topics WHERE topic_id = %d AND post_id = %d", array($categoriee, $blog->ID));
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}matchin_topics WHERE topic_id = %d AND post_id = %d", array($topic->cat_ID, $blog->ID));
                 $iteration = $wpdb->get_results( $sql )[0];
             
                 if($iteration)
@@ -2638,7 +2638,7 @@ function save_user_views(WP_REST_Request $request)
                 
                 // Insert matching course to each course record 
                 $table_matching = $wpdb->prefix . 'matchin_topics';
-                $data = ['topic_id' => $categoriee, 'post_id' => $blog->ID];
+                $data = ['topic_id' => $topic->cat_ID, 'post_id' => $blog->ID];
                 $wpdb->insert($table_matching, $data);
                 // $born = true;
 
