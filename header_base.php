@@ -293,7 +293,7 @@ $url = home_url( $wp->request );
                                 <p class="mb-0">Wij zijn compleet onafhankelijk van alle opleiders, experts en aangesloten organisaties </p>
                             </div>
                             <div class="second-block-subnavbar d-flex align-items-center">
-                                <a href="" class="btn-contact-sales">Contact Sales / demo?</a>
+                                <a href="/contact" class="btn-contact-sales">Contact Sales / demo?</a>
                                 <div class="block-rating-subnav d-flex">
                                     <span class="fa fa-star checked"></span>
                                     <span class="fa fa-star checked"></span>
