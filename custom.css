@@ -10253,6 +10253,7 @@ select {
     border-bottom: 0;
     padding: 0;
     margin-bottom: 15px;
+    margin-top: 115px;
 }
 
 .contentListeCourseDataBank .table thead th {
@@ -22390,6 +22391,9 @@ figure ul li {
 }
 .language-selector-custom .active{
     display: block;
+}
+#language-selector{
+    display: none !important;
 }
 
 /*responsive mobile*/
