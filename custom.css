@@ -22396,6 +22396,8 @@ figure ul li {
     display: none !important;
 }
 
+
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
