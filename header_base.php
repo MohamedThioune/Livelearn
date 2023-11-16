@@ -314,8 +314,6 @@ $url = home_url( $wp->request );
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-en.jpg" alt="English Flag" class="flag flag-img-nav " id="flag-en">
                                     <!-- Ajoutez d'autres drapeaux au besoin -->
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
