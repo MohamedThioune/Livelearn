@@ -46,6 +46,7 @@ function updateYoutube(){
 
             $new_episods [] = $episodes_to_adds;
         }
+
         if (!$new_episods)
             continue;
 
