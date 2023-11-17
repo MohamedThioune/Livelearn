@@ -13320,6 +13320,8 @@ ul .selectAll .styled-checkbox:checked + label:after {
     left: 30px;
     top: 104px;
     height: 400px;
+
+
 }
 .logo-parteners-right{
     position: absolute;
