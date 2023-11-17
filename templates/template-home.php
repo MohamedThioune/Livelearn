@@ -260,6 +260,10 @@ $type_course = array(
     .headerdashboard .language-selector-custom select {
         color: #043356 !important;
     }
+    .frist-block-subnav p {
+        color: #033357 !important;
+
+    }
     @media (min-width: 300px) and (max-width: 767px){
         .titleSubscription {
             margin-top: 30px;

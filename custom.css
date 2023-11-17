@@ -10253,6 +10253,7 @@ select {
     border-bottom: 0;
     padding: 0;
     margin-bottom: 15px;
+    margin-top: 115px;
 }
 
 .contentListeCourseDataBank .table thead th {
@@ -13232,7 +13233,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-home2 .voorBlock {
     margin-bottom: 0;
     margin-top: 0;
-    padding-top: 85px;
+    padding-top: 50px;
 }
 .content-home2 .boxOne3{
     display: block;
@@ -13317,8 +13318,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .logo-parteners-left{
     position: absolute;
     left: 30px;
-    top: 150px;
+    top: 104px;
     height: 400px;
+
+
 }
 .logo-parteners-right{
     position: absolute;
@@ -22391,6 +22394,11 @@ figure ul li {
 .language-selector-custom .active{
     display: block;
 }
+#language-selector{
+    display: none !important;
+}
+
+
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
