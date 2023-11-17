@@ -19,35 +19,35 @@ if ($page) {
 
 if (isset($_POST['type'])) {
     switch (strtolower($_POST['type'])) {
-        case 'All':
+        case 'all':
             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
             $courses = $wpdb->get_results($sql);
             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
             $count = $wpdb->get_results($sql_count);
             $count = intval($count[0]->{'COUNT(*)'});
             break;
-        case 'Artikel':
+        case 'artikel':
             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Artikel' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
             $courses = $wpdb->get_results($sql);
             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Artikel'");
             $count = $wpdb->get_results($sql_count);
             $count = intval($count[0]->{'COUNT(*)'});
             break;
-        case 'Podcast':
+        case 'podcast':
             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Podcast' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
             $courses = $wpdb->get_results($sql);
             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Podcast'");
             $count = $wpdb->get_results($sql_count);
             $count = intval($count[0]->{'COUNT(*)'});
             break;
-        case 'Videos':
+        case 'videos':
             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
             $courses = $wpdb->get_results($sql);
             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
             $count = $wpdb->get_results($sql_count);
             $count = intval($count[0]->{'COUNT(*)'});
             break;
-        case 'Courses':
+        case 'courses':
             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
             $courses = $wpdb->get_results($sql);
             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar'");
@@ -269,7 +269,7 @@ if (isset($_GET["message"])) {
                                 <option value="Artikel">Artikel</option>
                                 <option value="Podcast">Podcast</option>
                                 <option value="Courses">Courses</option>
-                                <option value="Video">Videos</option>
+                                <option value="Videos">Videos</option>
                             </select>
                             <button class="btn btnSearchCourseDatabank">
                                 <img  src="<?=get_stylesheet_directory_uri();?>/img/searchM.png" alt="youtube image">
