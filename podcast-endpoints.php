@@ -1,5 +1,6 @@
 <?php
 function crontab_podcast( ) {
+    global $wpdb;
     $args = array(
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
