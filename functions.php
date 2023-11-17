@@ -1831,10 +1831,6 @@ add_action( 'rest_api_init', function () {
         'callback' => 'crontab_podcast'
     ));
 
-    register_rest_route ('custom/v1', '/youtube', array(
-        'methods' => 'GET',
-        'callback' => 'youtubeEndpoint'
-    ));
     register_rest_route ('custom/v1', '/update-youtube', array(
         'methods' => 'GET',
         'callback' => 'updateYoutube'
