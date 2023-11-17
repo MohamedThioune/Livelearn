@@ -1835,4 +1835,5 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'updateYoutube'
     ));
+
 });
