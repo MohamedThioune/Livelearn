@@ -262,7 +262,6 @@ $type_course = array(
     }
     .frist-block-subnav p {
         color: #033357 !important;
-
     }
     @media (min-width: 300px) and (max-width: 767px){
         .titleSubscription {
