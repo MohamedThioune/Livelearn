@@ -415,6 +415,33 @@ if ($count) {
                     echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
                 }
             }
+        }else if (!isset($_GET['id'])) {
+            $_GET['id']++;
+            foreach (range($_GET['id'], $_GET['id']+2) as $number) {
+                if (isset($_GET['id'])) {
+                    if ($_GET['id'] == $number) {
+                        echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold; border:1px solid navy;" class="textLiDashboard">' . $number . '</a>&nbsp;&nbsp;&nbsp;';
+                    } else {
+                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                    }
+                } else {
+                    echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                }
+    
+            }
+            echo '... ';
+            echo '<a href="?id='.($_GET['id']+1).'" class="textLiDashboard">next>>&nbsp;&nbsp;&nbsp;</a>';
+            foreach (range(($pagination_number-2), $pagination_number) as $number) {
+                if (isset($_GET['id'])) {
+                    if ($_GET['id'] == $number) {
+                        echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                    } else {
+                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                    }
+                } else {
+                    echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                }
+            }
         }else {
             foreach (range($_GET['id'], $_GET['id']+2) as $number) {
                 if (isset($_GET['id'])) {
