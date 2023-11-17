@@ -390,7 +390,7 @@ if (!empty($courses)) {
 if ($count) {
     if($pagination_number>10){
         if ($_GET['id']>4) {
-            foreach (range($_GET['id']-3, $_GET['id']) as $number) {
+            foreach (range($_GET['id']-2, $_GET['id']) as $number) {
                 if (isset($_GET['id'])) {
                     if ($_GET['id'] == $number) {
                         echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
