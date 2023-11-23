@@ -164,7 +164,7 @@
         }
 
         $image_author = get_field('profile_img',  'user_' . $user->ID);
-        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png'; 
         //$logo_livelearn = get_stylesheet_directory_uri() . '/img/logoMobil.png';
         $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
         $close_menu = get_stylesheet_directory_uri() . '/img/X.png';

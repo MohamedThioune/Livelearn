@@ -1,4 +1,4 @@
-<?php /** Template Name: category overview */ ?>
+<?php /** Template Name: overview category */ ?>
 <?php
 
 global $wp;
@@ -66,7 +66,7 @@ $url = home_url( $wp->request );
 
 <?php
 
-    $category = ($_GET['category']) ?: ' ';
+    $category = ($_GET['']) ?: ' ';
     $user_id = get_current_user_id();
 
     //view_topic($category, $user_visibility);
