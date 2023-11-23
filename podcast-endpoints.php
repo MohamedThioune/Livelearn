@@ -28,39 +28,31 @@ function crontab_podcast( ) {
     ];
     $podcasts = get_posts($args);
 
-    //creation constraints for update
-    $all_title_of_podcast_in_plateform = array();
-    $all_urls_of_podcast_in_plateform = array();
-    foreach ($podcasts as  $course) {
-        # podcast index ?
-        $podcast_index = get_field('podcasts_index', $course->ID);
-        if (!$podcast_index)
-            continue;
-
-        foreach ($podcast_index as $podcast) {
-            $all_title_of_podcast_in_plateform [] = $podcast['podcast_title'];
-            if ($podcast['podcast_url']) {
-                $all_urls_of_podcast_in_plateform [] = $podcast['podcast_url'];
-            }
-        }
-    }
-
     foreach ($podcasts as $course) {
-
         # podcast index ?
         $podcast_index = get_field('podcasts_index', $course->ID);
+        $feedid_from_platform = get_field('origin_id',$course->ID);
+
         if(!$podcast_index)
             continue;
-        // var_dump($podcast_index);
-        $all_audios_in_plateform_for_this_cours =  $podcast_index;
+
+        $all_urls_of_podcast_in_plateform_for_this_cours = array();
+        $good_podcast_in_plateform = array();
+        foreach ($podcast_index as $podcast) {
+            if ($podcast['podcast_url']) {
+                $all_urls_of_podcast_in_plateform_for_this_cours [] = $podcast['podcast_url'];
+                $good_podcast_in_plateform [] = $podcast;
+            }
+        }
+
+        //$all_audios_in_plateform_for_this_cours =  $podcast_index;
 
         //Reach podcasts and add new lesson
-        $sql = $wpdb->prepare("SELECT course_id FROM {$wpdb->prefix}databank WHERE {$wpdb->prefix}databank.titel ="."'$course->post_title'");
-        $feedid = $wpdb->get_results($sql)[0]->course_id;
-
-        if ($feedid==null)
+        $sql = $wpdb->prepare("SELECT course_id FROM {$wpdb->prefix}databank WHERE {$wpdb->prefix}databank.titel =%s",array($course->post_title));
+        $feedid_from_databank = $wpdb->get_results($sql)[0]->course_id;
+        $feedid = $feedid_from_platform ? : $feedid_from_databank;
+        if (!$feedid)
             continue;
-        //var_dump($feedid);
         $url = 'https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id='.$feedid;
         //$url = "https://api.podcastindex.org/api/1.0/search/bytitle?q=$course->post_title";
 
@@ -73,19 +65,17 @@ function crontab_podcast( ) {
         curl_close ($ch);
         $data = (json_decode($response,TRUE));
         $url_to_get_audio = $data['feed']['url'];
-        //$url_to_get_audio = "https://feeds.buzzsprout.com/2145970.rss"; //fixer cette valeur pour débuguer
+
         $xml = simplexml_load_file($url_to_get_audio);
         $podcasts_playlists = [];
         foreach($xml->channel[0] as $pod) {
             if($pod->enclosure->attributes()->url) {
                 $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
-                $mp3 = $pod->enclosure->attributes()->url;
+                $mp3 = (string)$pod->enclosure->attributes()->url;
                 $date =(string)$pod->pubDate;
                 $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
-                //if (in_array($title_podcast,$all_title_of_podcast_in_plateform))
-                  //  continue;
-                if (in_array($mp3,$all_urls_of_podcast_in_plateform))
+                if (in_array($mp3,$all_urls_of_podcast_in_plateform_for_this_cours))
                     continue;
 
                 $podcasts_playlist = [];
@@ -101,13 +91,12 @@ function crontab_podcast( ) {
         }
 
         if(!empty($podcasts_playlists)) {  // if there is new audio to add to the course
-            $all_audios_in_plateform_for_this_cours [] =  $podcasts_playlists;
-            $all_audios_in_plateform_for_this_cours = array_reverse($all_audios_in_plateform_for_this_cours);
-
+            $number_new_episods = count($podcasts_playlists);
+            $all_audios_in_plateform_for_this_cours = array_merge($podcasts_playlists,$good_podcast_in_plateform);
             update_field('podcasts_index', null , $course->ID);
             update_field('podcasts_index', $all_audios_in_plateform_for_this_cours, $course->ID);
 
-            echo "<h1>$course->post_title is updated</h1>";
+            echo "<h1>$course->post_title is updated with $number_new_episods new episods</h1>";
         }
 
     }
