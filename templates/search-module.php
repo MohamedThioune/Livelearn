@@ -186,10 +186,13 @@ function searching_course_by_group($global_posts, $group, $value){
                 $courses = get_posts($args);
 
                 /* * End Companies * */
-                break;
+                break;   
         }
 
     endforeach;
+
+    // var_dump($experts);
+    // die();
 
     //Fill up the information
     $infos['courses'] = $courses;

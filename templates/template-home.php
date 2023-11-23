@@ -20,7 +20,7 @@ $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewin
 $expert_from_database = array();
 /**
  * get experts doing the course by database
- */
+*/
 $pricing = 0;
 $purchantage_on_top = 0;
 $purchantage_on_bottop = 0;
