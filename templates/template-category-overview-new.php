@@ -119,6 +119,7 @@ $topics_external = get_user_meta($user_id,'topic');
         <div class="theme-content">
             <div class="theme-learning">
                 <div class="">
+                    <!-- 
                     <div class="block-subTocis d-flex flex-wrap">
                         <button class="btn btn-subTopics">Traning 1 </button>
                         <button class="btn btn-subTopics">Traning 1 </button>
@@ -128,7 +129,7 @@ $topics_external = get_user_meta($user_id,'topic');
                         <button class="btn btn-subTopics">Traning 1 </button>
                         <button class="btn btn-subTopics">Traning 1 </button>
                         <button class="btn btn-subTopics">Traning 1 </button>
-                    </div>
+                    </div> -->
                     <div class="btn-group-layouts">
                         <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
                         <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
