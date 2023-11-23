@@ -261,7 +261,7 @@ if (isset($_GET["message"])) {
                     </center>
                     <br>
                     <br>
-                    <form action="#" method="post">
+                    <form action="#" method="post"> 
                         <div class="inpustSearchDataBank">
                             <select name="type" id="type">
                                 <option value="" selected disabled hidden>Select type of data</option>
