@@ -67,8 +67,7 @@ $topics_internal = get_user_meta($user_id,'topic_affiliate');
 $topics_external = get_user_meta($user_id,'topic');
 
 //Type course
-$types = array('Opleidingen', 'Workshop', 'Masterclass', 'E-learning', 'Event', 'Training', 'Video', 'Artikel', 'Podcast', 'Webinar', 'Lezing', 'Cursus');
-
+// $types = array('Opleidingen', 'Workshop', 'Masterclass', 'E-learning', 'Event', 'Training', 'Video', 'Artikel', 'Podcast', 'Webinar', 'Lezing', 'Cursus');
 
 ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
