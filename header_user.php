@@ -235,41 +235,6 @@ $see_experts = get_users(
     </div>
 
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
-            <div class="sub-navbar w-100">
-                <div class="container-fluid">
-                    <div class="content-sub-nabar w-100 d-flex justify-content-between align-items-center">
-                        <div class="frist-block-subnav d-flex">
-                            <img class="check-subnnav" src="<?php echo get_stylesheet_directory_uri();?>/img/check-subnnav.png" alt="">
-                            <p class="mb-0">Wij zijn compleet onafhankelijk van alle opleiders, experts en aangesloten organisaties </p>
-                        </div>
-                        <div class="second-block-subnavbar d-flex align-items-center">
-                            <a href="" class="btn-contact-sales">Contact Sales / demo?</a>
-                            <div class="block-rating-subnav d-flex">
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                            </div>
-                            <p class="mb-0 number-rating-header">9,3 / 2412</p>
-                            <img class="iconSubnav" src="<?php echo get_stylesheet_directory_uri();?>/img/iconSubnav.png" alt="">
-
-                            <div id="language-selector" class="d-flex language-selector-custom">
-                                <select id="language-select" onchange="changeLanguage(this.value)">
-                                    <option value="fr">Français</option>
-                                    <option value="en">English</option>
-                                    <!-- Ajoutez d'autres langues au besoin -->
-                                </select>
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-fr.jpg" alt="French Flag" class="flag flag-img-nav active" id="flag-fr">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-en.jpg" alt="English Flag" class="flag flag-img-nav " id="flag-en">
-                                <!-- Ajoutez d'autres drapeaux au besoin -->
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="blockIconeWidth">
                 <button id="burger-web" class="largeElement btn">
                     <i class="fa fa-bars text-white" style="font-size: 25px"></i>
