@@ -48,12 +48,6 @@ body {
     z-index: 11;
     margin: 0 -15px;
 }
-.allBlockWorjforce {
-    width: 96.5%;
-}
-.blockImgCardCoursGlobal img {
-    width: 100%;
-}
 .btn-outline-realblue {
     border: 2px solid #023356;
     color: #023356;
@@ -72,109 +66,6 @@ body {
     border-radius: 10px;
 }
 
-.headCardKraam img {
-    width: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
-}
-.blockImgCardCour {
-    height: 170px;
-    overflow: hidden;
-    position: relative;
-}
-
-.blockgroup7 {
-    position: absolute;
-    bottom: 0px;
-    background: #02335685;
-    color: #D6E0DF;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 5px 10px;
-    border-radius: 10px;
-    flex-wrap: wrap;
-}
-
-.iconeTextKraa {
-    display: flex;
-}
-
-.sousiconeTextKraa {
-    display: flex;
-    margin-right: 4px;
-}
-
-.icon7 {
-    width: 13px!important;
-    height: 13px;
-    margin-top: 2px;
-    margin-right: 1px;
-}
-
-.kraaText {
-    font-size: 12px;
-    font-weight: bold;
-    margin-left: 2px;
-    margin-bottom: 0;
-    margin-right: 3px;
-}
-
-.contentCardProd {
-    padding: 20px 15px 30px;
-    max-height: 212px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 20px;
-}
-
-.group8 {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-}
-
-.imgTitleCours {
-    display: flex;
-}
-
-.imgCoursProd {
-    width: 25px;
-    height: 25px;
-    background: #707070;
-    border-radius: 100%;
-    margin-top: -4px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    border: 1px solid #b5b5b5;
-}
-
-.imgCoursProd img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.nameCoursProd {
-    color: #42454D;
-    font-size: 12px;
-    font-weight: bold;
-    margin-right: 10px;
-    margin-bottom: 0;
-    margin-top: 0px;
-    margin-left: 5px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    height: fit-content;
-    width: 70%;
-}
-
-.group9 {
-    display: flex;
-}
 
 .blockOpein {
     display: flex;
@@ -193,492 +84,21 @@ body {
     -webkit-box-orient: vertical;
     height: fit-content;
 }
-
-.werkText {
-    color: #42454D;
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-}
 .swiper-container {
     margin-left: unset !important;
-}
-.descriptionPlatform {
-    color: #42454D;
-    font-size: 14px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-}
-.descriptionPlatform p{
-    color: #42454D;
-    font-size: 14px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-}
-.swiper-slide4 {
-    width: 346px !important;
-    box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
-    border-radius: 10px;
-    border-bottom: 2px solid rgb(0 0 0 / 10%);
-    height: auto !important;
-    background: white;
-}
-
-.swipSlideEvents {
-    width: 215px !important;
-    box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
-    border-radius: 10px;
-    border-bottom: 2px solid rgb(0 0 0 / 10%);
-    height: auto !important;
-}
-
-.iconAm1 {
-    height: 15px;
-    margin-top: 1px;
-    margin-right: 3px;
-    width: 12px !important;
-}
-
-.btnCloche {
-    position: absolute;
-    right: 10px;
-    top: 8px;
-    background-color: #FFF !important;
-    width: 24px;
-    height: 24px;
-    border-radius: 100% !important;
-    z-index: 10;
-    padding: unset !important;
-}
-
-.block-treaning {
-    margin-bottom: 35px;
-}
-
-.online-eveans {
-    margin-bottom: 35px;
-}
-
-.mobile-menu {
-    background: #043356 !important;
-}
-
-.blockgeneralPersoo {
-    display: flex;
-    justify-content: space-between;
-    padding-right: 25px;
-}
-
-.blockPersoo2 {
-    display: flex;
-    justify-content: space-between;
-    width: 65.5%;
-    flex-wrap: wrap;
-}
-
-.blockAlle {
-    width: 32.5%;
-}
-
-.blockPersoonlijke {
-    width: 72%;
-    background: #FFF;
-    padding: 10px 0px 10px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    height: 300px;
-    position: relative;
-}
-
-.blockPersoonlijke2 {
-    width: 48.5%;
-    background: #FFF;
-    padding: 10px 0px 10px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    height: 300px;
 }
 
 .contentBaan {
     padding-top: 25px;
 }
-
-.headPersoon {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 13px;
-    padding: 0 20px;
-    border-bottom: 1px solid #023356;
-}
-
-.titleHeadPersoon {
-    color: #023356;
-    font-size: 18px;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.titleOpleidingstype {
-    margin-bottom: 14px;
-    width: 100%;
-    background: white;
-    border-radius: 10px;
-    padding-bottom: 15px;
-}
-
-.titleOpleidingstype h2 {
-    color: #023356;
-    font-size: 18px;
-    font-weight: bold;
-    border-bottom: 1px solid #043356;
-    padding: 15px 15px 6px;
-}
-
-.titleCertification {
-    color: #023356;
-    font-size: 18px;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.blockImgName {
-    display: flex;
-    border-bottom: 1px solid #dfeef3;
-    padding: 0 20px 12px;
-    align-items: center;
-}
-
-.profilImg {
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    border-radius: 100%;
-    margin-right: 15px;
-}
-
-.profilImg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .name {
     color: #023356;
     margin-bottom: 2px;
 }
 
-.Uname {
-    color: #023356;
-    margin-bottom: 5px;
-}
-
-.blockDetailprofil {
-    display: flex;
-    border-bottom: 1px solid #dfeef3;
-    padding: 5px 20px;
-    align-items: center;
-}
-
-.iconeBlock {
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-    background-color: #dfeef3;
-    text-align: center;
-    align-items: center;
-}
-
-.iconeBlock img {
-    width: 60%;
-    margin-top: 5px;
-}
-
-.TextDetail {
-    font-size: 14px;
-    color: #023356;
-    margin-left: 30px;
-    margin-bottom: 0;
-}
-
-.topElement {
-    margin-top: -8px;
-}
-
-.flexJusElement {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.btnOpwaa {
-    background-color: #fc910d;
-    color: #FFFFFF;
-    font-size: 12px;
-    border-radius: 8px;
-    padding: 2px 15px;
-    font-weight: bold;
-}
-
-.iconeSetting {
-    width: 20px;
-}
-
-.btnBekijk {
-    width: 94%;
-    background: #47a99e;
-    color: white;
-    font-weight: bold;
-    position: absolute;
-    bottom: 7px;
-    text-align: center;
-    padding: 11px;
-    border-radius: 10px;
-    left: 10px;
-}
-
-.AllActiviteiten {
-    width: 100%;
-    background: #FFF;
-    padding: 10px 0px 10px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    height: auto;
-    position: relative;
-}
-
-.blockgeneralPersoo2 {
-    width: 80%;
-    margin: 0 auto;
-}
-
-.detailNamePhoto {
-    width: 100%;
-    background: #FFF;
-    padding: 24px 0px 13px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    height: auto;
-    position: relative;
-    text-align: center;
-}
-
-.BlockCertifiation {
-    width: 48.5%;
-    background: #FFF;
-    padding: 15px 20px 10px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    height: auto;
-    position: relative;
-}
-
-.settingDetail {
-    position: absolute;
-    right: 25px;
-    top: 2px;
-}
-
-.photoBlock {
-    width: 65px;
-    height: 65px;
-    background: #dfeef3;
-    margin: 0 auto 12px;
-    border-radius: 100%;
-}
-
-.nameTextProfil {
-    color: #043356;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.oprichter {
-    color: #043356;
-}
-
-.elementCertifications {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.textCertification {
-    color: #023356;
-    font-size: 15px;
-    margin-bottom: 0px;
-    margin-left: 14px;
-}
-
-.globalCertificationBlock {
-    display: flex;
-    justify-content: space-between;
-}
-
-.ratingElement {
-    display: flex;
-    justify-content: space-between;
-}
-
-.rating-bar {
-    width: 30px;
-    height: 11px;
-    border-radius: 8px;
-    background-color: #dfeef3;
-    margin-left: 10px;
-}
-
-.rating-barActive {
-    background-color: #00A89D;
-}
-
-.elementCertifications1 .textCertification {
-    margin-left: 0;
-    width: 66%;
-    margin-bottom: 0;
-}
-
-.headListeCourse {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #023356;
-    padding: 8px 20px;
-    align-items: center;
-}
-
-.JouwOpleid {
-    color: #023356;
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 0;
-}
-
-.btnNewCourse {
-    color: #023356 !important;
-    border: 1px solid #023356;
-    font-size: 15px;
-    padding: 7px 25px;
-    margin-bottom: 0;
-    font-weight: bold;
-    border-radius: 8px;
-    margin-left: 10px;
-    height: fit-content;
-}
-
-.btnNewCourse:hover {
-    background: #023356;
-    text-decoration: none;
-    color: #FFFFFF !important;
-}
-.btnActiviteit {
-    color: #FFFFFF;
-    background: #00A89D;
-    font-size: 14px;
-    padding: 4px 20px;
-    margin-bottom: 0;
-    font-weight: bold;
-    border-radius: 8px;
-    margin-left: 10px;
-    height: fit-content;
-}
-
-
-
-.cardListeCourse {
-    background: white;
-    border-radius: 8px;
-}
-
-.activiteit {
-    background: #00A89D !important;
-    color: #FFFFFF;
-}
-
-.zoek {
-    color: #023356 !important;
-    background: unset !important;
-    border: 1px solid #023356;
-}
-
-.thOnder {
-    width: 15%;
-}
-
-.titleTextListe {
-    width: 33%;
-    font-weight: 400;
-    color: #707070;
-}
-
-.textTh {
-    color: #707070;
-}
-
-.elementOnder {
-    width: 95%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-}
-
-.imgOnboarding {
-    width: 180px;
-    margin-top: -43px;
-}
-
-.imgOnboarding img {
-    width: 100%;
-}
-
-.imgOnboarding2 {
-    width: 115px;
-    margin-top: -30px;
-}
-
-.imgOnboarding img {
-    width: 100%;
-}
-
-.workCardBlock {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.photoElement {
-    width: 35px;
-    height: 35px;
-    border-radius: 100%;
-    overflow: hidden;
-    left: 10px;
-    position: relative;
-}
-
-.photoElement img {
-    width: 100%;
-}
-
 .table th,
 .table td {
     vertical-align: inherit !important;
-}
-
-.contentMensendetail {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
 }
 
 .toevoegenBlockCard {
@@ -22084,9 +21504,7 @@ figure ul li {
     .imgCoursProd {
         margin-bottom: 8px;
     }
-    .group9 {
-        margin-bottom: 9px;
-    }
+
     .col-xl-12 {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -22724,9 +22142,6 @@ figure ul li {
     .imgCoursProd {
         margin-bottom: 8px;
     }
-    .group9 {
-        margin-bottom: 9px;
-    }
     .col-xl-12 {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -23341,11 +22756,7 @@ figure ul li {
     .companyButton {
         padding: 0 !important;
     }
-    .item4 .dropdown-menu {
-        position: absolute;
-        left: -30px;
-        top: 40px;
-    }
+
     .groeipadenBlock {
         padding-left: 15px;
     }
@@ -27281,9 +26692,6 @@ figure ul li {
     .container-fluid {
         max-width: 1380px !important;
     }
-    .allBlockWorjforce {
-        width: 95%;
-    }
 }
 
 .inputSearch {
@@ -27294,8 +26702,5 @@ figure ul li {
 @media screen and (max-width: 2560px) and (min-width: 1400px) {
     .container-fluid {
         max-width: 1380px !important;
-    }
-    .allBlockWorjforce {
-        width: 95%;
     }
 }

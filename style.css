@@ -17,64 +17,14 @@ body {
 body, html {
     overflow-x: hidden;
 }
-.ccn_context_frontend header.ccnHeader1.header-nav.menu_style_home_one {
-    display: none !important;
-}
-#ccn-main-region {
-    padding-top: unset !important;
-    padding-bottom: unset !important;
-}
-
-.dropdown-menu-dashboard{
-    border-radius: 10px;
-    top: 47px;
-    left: 20px;
-}
-.dropdown-menu-dashboard a{
-    color: #040404;
-}
-.dropdown-menu-dashboard a span{
-    font-size: 10px;
-    background: #e0eff4;
-    padding: 2px 8px 3px;
-    border-radius: 12px;
-}
-
 .dropdown-menu.show{
     position:absolute;
     top:95%;
 }
-
-.imgArrowDropDown{
-    width: 15px;
-}
-.big-title {
-    font-size: 2.5rem;
-    /* background-color: #000000; */
-    color: #023356
- }
-.headerdashboard {
-    background: #023356;
-    color: #ffffff !important;
-    border-bottom: 1px solid #7070706e;
-    padding: 0 !important;
-    margin: 0 -15px;
-    position:relative;
-    z-index: 1111;
-    display: block;
-    left: 0;
-    right: 0;
-}
 .frist-block-subnav p {
     color: white;
 }
-.headerdashboard-content{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 2px 15px 0;
-    align-items: center;
-}
+
 .dropdownMenuDashboard{
     background: white !important;
     color: #0a0a0a !important;
@@ -83,16 +33,6 @@ body, html {
     display: none;
 }
 
-.userBlockNav {
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
-    border-radius: 100%;
-    border: 1px solid #00a78e;
-}
-.userBlockNav img{
-    width: 100%;
-}
 .navModife4::after {
     display: none !important;
 }
@@ -165,32 +105,6 @@ body, html {
     font-weight: 500;
     font-size: 14px;
 }
-
-.boxOne {
-    height: 90vh;
-    background: #043356;
-    color: white;
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.VoorOrganisaties {
-    background: #E0EFF4;
-    color: white;
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding-top: 60px;
-    padding-bottom: 50px;
-}
-
-.VoorOrganisaties .gform_button{
-    width: 100% !important;
-    text-align: center;
-    background: #47a99e !important;
-    color: #ffffff !important;
-}
 .boxOne3 {
     height: 425px;
     background: url("./img/bg1.png") no-repeat;
@@ -199,23 +113,6 @@ body, html {
     background-size: cover;
     display: flex;
     align-items: center;
-}
-
-.wordenBlock {
-    padding-top: 170px;
-    display: flex;
-}
-
-.wordenBlock-2 {
-    display: flex;
-}
-
-.wordDeBestText {
-    font-size: 32px;
-    font-weight: bold;
-    max-width: 485px;
-    line-height: 36px;
-    margin-bottom: 4px;
 }
 
 .wordDeBestText2 {
@@ -228,184 +125,15 @@ body, html {
     margin: 0px auto 6px;
 }
 
-.wordDeBestText3 {
-    font-size: 32px;
-    font-weight: bold;
-    max-width: 485px;
-    line-height: 36px;
-    margin-bottom: 4px;
-    color: #FFFFFF;
-}
-
-.altijdText {
-    font-weight: 500;
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
 .altijdText2 {
     font-weight: 500;
     font-size: 16px;
     margin-bottom: 15px;
     color: #023356;
 }
-
-.searchFront {
-    color: #707070;
-    border: none;
-    padding: 17px;
-    width: 910px;
-    background: white;
-    border-radius: 13px;
-    margin-bottom: 10px;
-}
-
-.altijdText3 {
-    font-weight: 500;
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #FFFFFF;
-    max-width: 750px;
-}
-
-.wordlBtn {
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border: 1px solid white;
-    border-radius: 35px;
-    padding: 6px 45px 6px 20px;
-    width: 100%;
-}
-
-.wordlBtn2 {
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border: 1px solid white;
-    border-radius: 35px;
-    padding: 8px 25px 10px 20px;
-    width: 197px;
-    background: #043356;
-}
-
-.featherBlock {
-    text-align: center;
-}
-
-.featherBlock img {
-    width: 50px;
-    margin-top: 30px;
-}
-
-.meetText {
-    color: #42454D;
-    margin-bottom: 0;
-    margin-top: 10px;
-    margin-left: 20px;
-}
-
-.titleTwo {
-    text-align: center;
-}
-
-.blijenText {
-    color: #023356;
-    font-weight: bold;
-    font-size: 27px;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 478px;
-    margin-bottom: 6px;
-    line-height: 33px;
-}
-
-.voorText {
-    color: #023356;
-    font-size: 16px;
-    margin-bottom: 50px;
-}
-
-.contentTwo {
-    padding: 45px 0px;
-    margin-bottom: 70px;
-}
-
-.titleTwo {
-    margin-bottom: 25px;
-}
-
-.imgComponent1 {
-    width: 300px;
-    margin-top: -100px;
-    margin-left: 125px;
-}
-
-.imgComponent2 {
-    width: 390px;
-    margin-top: -30px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.imgComponent1 img {
-    width: 100%
-}
-
-.imgComponent2 img {
-    width: 100%
-}
-
 .d-flex {
     display: flex;
 }
-
-.boxIconeDow {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    right: 0;
-    width: 85px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.boxIconeDow img {
-    width: 100%;
-}
-
-.boxImgCard {
-    width: 221px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-    height: 118px;
-}
-
-.boxImgCard img {
-    width: 100%;
-    height: 100%;
-}
-
-.cardModife {
-    padding: 30px 20px 2px !important;
-    text-align: center;
-    border: 1px solid #FFEBEB;
-    box-shadow: 0px 0px 20px #9C9FA2;
-}
-
-.cardModife3 {
-    padding: 30px 20px 2px !important;
-    border: 1px solid #FFEBEB;
-    box-shadow: 0px 0px 20px #9c9fa2;
-    text-align: left;
-    max-width: 350px;
-    border-radius: 20px;
-    height: 450px;
-    position: relative;
-}
-
 .titleGroupText {
     color: #023356;
     font-size: 18px;
@@ -421,217 +149,6 @@ body, html {
 
 .blockGroupText {
     margin-bottom: 35px;
-}
-
-.formDirect {
-    display: block;
-}
-
-.blockinputDirect {
-    display: flex;
-    justify-content: space-between;
-}
-
-.onzeText {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #023356;
-}
-
-.titleCard {
-    color: #023356;
-    font-weight: bold;
-    font-size: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 333px;
-    margin-bottom: 6px;
-    line-height: 33px;
-}
-
-.blockButton {
-    display: flex;
-    justify-content: space-between;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.btnCorporates {
-    color: #FFFFFF !important;
-    font-weight: bold;
-    font-size: 15px;
-    padding: 4px 20px;
-    background: #00A89D;
-    border-radius: 5px;
-    margin-top: -3px;
-}
-
-.btnCorporates:hover {
-    color: #FFFFFF !important;
-}
-
-.MKbText {
-    color: #42454D;
-    font-size: 15px;
-    text-decoration: underline;
-}
-
-.titleVoor {
-    font-size: 15px;
-    line-height: 20px;
-}
-
-.contentTree {
-    display: flex;
-    justify-content: space-between;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 730px;
-    margin-bottom: 40px;
-}
-
-.contentTreeFront {
-    display: flex;
-    justify-content: space-between;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 40px;
-}
-
-.contentTree2 {
-    display: flex;
-    justify-content: space-between;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 880px;
-    margin-bottom: 40px;
-    margin-top: 90px;
-}
-
-.MaakBtn {
-    font-weight: bold;
-    color: #FFFFFF;
-    background: #043356;
-    padding: 8px 23px 9px;
-    border-radius: 17px;
-}
-.MaakBtn:hover{
-    color: white;
-}
-
-.margin4 {
-    margin-bottom: 20px;
-}
-
-.imgGroup7 {
-    width: 330px;
-    margin-left: 88px;
-    margin-top: -44px;
-}
-
-.imgGroup7-2 {
-    width: 330px;
-    margin-left: 0;
-    margin-top: -44px;
-}
-
-.boxCards {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.boxCards2 {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.cardBleu {
-    background: #E0EFF4;
-    text-align: center;
-    align-items: center;
-    margin-right: 15px;
-    margin-bottom: 15px;
-    width: 291px;
-    padding: 35px 0 0;
-    border-radius: 10px;
-}
-
-.cardBleu2 {
-    background: #E0EFF4;
-    text-align: center;
-    align-items: center;
-    margin-right: 15px;
-    margin-bottom: 15px;
-    width: 18.5%;
-    height: 133px;
-    padding: 35px 0 0;
-    border-radius: 10px;
-    position: relative;
-}
-
-.textCardBleu2 {
-    position: absolute;
-    bottom: 5px;
-    left: 0;
-    right: 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #023356;
-}
-
-.cardBleu img {
-    width: 116px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.BleuImg1 {
-    width: 76px !important;
-}
-
-.BleuImg2 {
-    width: 150px !important;
-    margin-top: 5px;
-}
-
-.generalBlock {
-    display: flex;
-    justify-content: space-between;
-}
-
-.oneBlock {
-    width: 57%;
-}
-
-.textGroei {
-    font-size: 15px;
-    font-weight: bold;
-    margin-bottom: 21px;
-    color: #023356;
-}
-
-.twoBlock {
-    width: 46%;
-    padding: 10% 45px;
-}
-
-.marginElement {
-    margin-right: 133px;
-}
-
-.contentFour {
-    margin-bottom: 40px;
-}
-
-.BlockOneFive {
-    text-align: left;
-    width: 30%;
-    padding: 6% 0;
-}
-
-.margin2 {
-    margin-bottom: 23px !important;
 }
 
 .BlockTwoFive {
@@ -1027,11 +544,6 @@ body, html {
 
 .blockImGDaniel img {
     width: 100%;
-}
-
-.formDirect {
-    text-align: center;
-    width: 76%;
 }
 
 .textDirect {
@@ -5478,10 +4990,7 @@ form {
         line-height: 30px;
         margin: 0px auto 15px;
     }
-    .searchFront {
-        width: 100%;
-        font-size: 14px;
-    }
+
     .onzeText {
         margin-bottom: 15px;
         color: #023356;
@@ -6231,9 +5740,6 @@ form {
     .voorBlock {
         text-align: center;
         padding-top: 110px;
-    }
-    .searchFront {
-        width: 100%;
     }
     .cardVoor .web {
         display: none;
