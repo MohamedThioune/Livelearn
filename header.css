@@ -2,12 +2,11 @@
     width: 100%;
 }
 .navbar {
+    height: 115px;
     position: fixed !important;
     top: 0;
     z-index: 99;
-    height: 60px;
 }
-
 .navModife {
     background: #023356;
     color: #ffffff !important;
@@ -143,6 +142,7 @@
     height: 35px;
     margin-right: 15px;
     text-align: center;
+    /* border-radius: 100%; */
     overflow: hidden;
     /* background: #e0eff4; */
     /* border: 1px solid #b5dad6; */
@@ -210,7 +210,17 @@ form {
 .headSousMobilePrincipale {
     display: none;
 }
-
+.btnElementSousMenu {
+    padding: 0;
+    display: flex;
+    width: 100%;
+    position: relative;
+    color: #023356;
+    font-size: 15px;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    text-transform: none !important;
+}
 .headSousMobileProfile{
     display: none;
 }
@@ -470,6 +480,21 @@ form {
     .elementGroupGroeien {
         margin-bottom: 20px;
     }
+    .btnElementSousMenu{
+        padding: 0;
+        display: flex;
+        width: 100%;
+        position: relative;
+        color: #023356;
+        font-size: 15px;
+        justify-content: space-between;
+        margin-bottom: 7px;
+        text-transform: none !important;
+    }
+    .btnElementSousMenu img{
+        width: 11px;
+        float: right;
+    }
     .sousMenuNavMobil .accordion .element-nav-accordion:last-child {
         border-bottom: 0px solid #02335680;
         margin-bottom: 20px;
@@ -480,7 +505,9 @@ form {
     .headerdashboard .sub-navbar{
         display: none !important;
     }
-
+    .navbar {
+        height: 63px;
+    }
 
 
 }
@@ -536,6 +563,21 @@ form {
         right: 0;
         min-height: 100vh;
         overflow-y: scroll;
+    }
+    .btnElementSousMenu img {
+        width: 11px;
+        float: right;
+    }
+    .btnElementSousMenu {
+        padding: 0;
+        display: flex;
+        width: 100%;
+        position: relative;
+        color: #023356;
+        font-size: 15px;
+        justify-content: space-between;
+        margin-bottom: 7px;
+        text-transform: none !important;
     }
     .navMobile-custom{
         top: 126px !important;

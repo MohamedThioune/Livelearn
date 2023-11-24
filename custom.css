@@ -2,6 +2,16 @@ body {
     overflow-x: hidden;
     font-family: "Ubuntu" !important;
 }
+
+.az {
+    color: red;
+    font-size: 40px;
+}
+
+.xyz {
+    background: #FFFFFF;
+    width: 80%;
+}
 .nav-link {
     color: #ffffff !important;
     margin: 0 10px !important;
@@ -16,6 +26,18 @@ body {
     border-radius: 30px;
     margin: 0 0px !important;
 }
+#ccnSearchOverlayWrap {
+    display: none;
+}
+
+.inner_page_breadcrumb {
+    display: none;
+}
+
+#ccn-main-region .container {
+    max-width: unset;
+}
+
 .theme-error {
     background-color: #ffcccc;
     border: 2px solid #cc0000;
@@ -24,8 +46,64 @@ body {
     margin: 8px 0;
 }
 
+.respMenu li a {
+    color: #0a0a0a !important;
+}
+
+.contentDashboardTeacher {
+    padding-top: 25px;
+    background: #dfeef3;
+}
+
+.elementTextDashboard a span {
+    color: #023356;
+    font-size: 16px;
+}
+
+ul.sub-menu li a {
+    color: #0a0a0a !important;
+}
+
 .navbar-nav li {
     position: relative;
+}
+
+
+/*
+#ccn-main-region {
+    padding-top: 0;
+    padding-bottom: 30px;
+}*/
+
+.elementTextDashboard .active {
+    font-weight: bold;
+}
+
+.elementTextDashboard a span:before {
+    font-size: 23px;
+    margin-right: 15px;
+}
+
+.elementTextDashboard {
+    margin-bottom: 15px;
+}
+
+.elementContentDashboard {
+    display: flex;
+}
+
+.sidBarDashboard {
+    background-color: rgb(255, 255, 255);
+    -webkit-box-shadow: 0 1px 4px 0 rgb(0 0 0 / 9%);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .09);
+    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 9%);
+    width: 245px;
+    height: 100vh;
+    position: fixed;
+    top: 15px;
+    z-index: 0;
+    left: 15px;
+    padding-left: 5px;
 }
 
 .sidBarDashboard2 {
@@ -42,12 +120,179 @@ body {
     padding-left: 5px;
     padding-top: 20px;
 }
+
+.contentDashboardElement {
+    background: #dfeef3;
+    width: 100%;
+    margin-left: 247px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.contentDashboardElement2 {
+    width: 100%;
+}
+
+.contentDashboardElement2 form {
+    width: 100% !important;
+}
+
+.cardCoursGlocal {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    width: 100%;
+    margin-top: 0px;
+    align-content: baseline;
+    padding-top: 5px;
+    background: #dfeef3;
+    justify-content: space-between;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    padding-right: 5px;
+}
+
+.deworkforce {
+    color: #0e1851;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.cardBlockManager {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .footerLive {
     background: #043356;
     position: relative;
     z-index: 11;
     margin: 0 -15px;
 }
+
+.cardCoursManagerGlocal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cardCours {
+    width: 24%;
+    background: #FFF;
+    padding: 43px 20px 30px;
+    height: 135px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    margin-right: 0px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    align-items: center;
+}
+
+.cardCours:last-child {
+    margin-right: 0px;
+}
+
+.allBlockWorjforce {
+    width: 96.5%;
+}
+
+.cardCours small {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: #043356;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.commingSoonText {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: #043356;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.cardCoursManager {
+    width: 23%;
+    background: #FFF;
+    padding: 43px 20px 30px;
+    height: 135px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    margin-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.cardCoursManager small {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: #043356;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.blockImgCardCoursGlobal {
+    width: 57px;
+    margin-top: -4px;
+}
+
+.blockImgcardCoursManagerGlobal {
+    width: 57px;
+    margin-top: -4px;
+}
+
+.blockImgCardCoursGlobal img {
+    width: 100%;
+}
+
+.blockImgcardCoursManagerGlobal img {
+    width: 100%;
+}
+
+.cardWorkforceblock {
+    width: 33%;
+    background: #FFF;
+    padding: 43px 20px 30px;
+    height: 135px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardCours2 {
+    width: 23.5%;
+    background: #FFF;
+    padding: 38px 20px 30px;
+    height: 100px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contentText {
+    color: #023356;
+    line-height: 18px;
+}
+
+
+/* .two_section-img {
+    width: 50% !important;
+} */
+
+
+/* .img-cover {
+    width: 25% !important;
+} */
+
 .btn-outline-realblue {
     border: 2px solid #023356;
     color: #023356;
@@ -58,6 +303,273 @@ body {
     color: white;
 }
 
+.workeforceText {
+    color: #023356;
+    line-height: 18px;
+    font-size: 17px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.contentOpleiding {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contentKies-card {
+    width: 66%;
+}
+
+.kiesBlock {
+    background: #FFFFFF;
+    padding: 8px 0px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.importBlock2 {
+    background: #FFFFFF;
+    padding: 8px 0px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    margin-right: 21px;
+    margin-left: -21px;
+    height: 200px;
+    position: relative;
+}
+
+.kiesText {
+    font-size: 18px;
+    font-weight: 700;
+    color: #023356;
+    border-bottom: 1px solid #023356;
+    padding-left: 20px;
+    margin-bottom: 1px;
+}
+
+.textOpleiding {
+    color: #023356;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.blockImport-doawnload {
+    width: 31%;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.elementInputImport {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px 15px 0;
+}
+
+.elementInputImport .btndoawnload {
+    width: 100%;
+    font-size: 14px!important;
+    padding: 3px 3px 5px!important;
+    border-radius: 6px!important;
+    font-weight: bold!important;
+    background-color: #043356!important;
+    border: none!important;
+    color: #FFFFFF!important;
+}
+
+#uploadFile {
+    width: 69%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border: 1px solid #00A89D;
+    padding: 5px;
+}
+
+.btn-import {
+    width: 100%;
+    font-size: 14px !important;
+    padding: 3px 3px 5px !important;
+    border-radius: 6px !important;
+    font-weight: bold !important;
+    background-color: #00A89D !important;
+    border: none !important;
+    color: #FFFFFF !important;
+}
+
+.importBlock .file-upload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: #eee;
+    border: 2px solid #ddd;
+    text-align: center;
+    padding: 10px;
+}
+
+.importBlock .file-upload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    height: 100%;
+    width: 100%;
+}
+
+.contentDetailCourse {
+    display: flex;
+    justify-content: space-between;
+}
+
+.blockOneDetailCourse {
+    width: 65%;
+}
+
+.btn-box {
+    width: 100% !important;
+    height: auto !important;
+    padding-top: 50px !important;
+    padding-bottom: 60px !important;
+    background: white !important;
+    border-radius: 5px;
+    border: none !important;
+    box-shadow: unset !important;
+    margin-bottom: 15px !important;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.importText {
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.importSpan {
+    border: 1px solid #91cee2;
+    padding: 4px 68px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #707070;
+}
+
+.boxCourse input {
+    background-color: #FFF;
+    padding: 8px 20px;
+    border-radius: 5px;
+    color: #2a2a2a;
+    border: none;
+    width: 100%;
+}
+
+.boxCourse input::placeholder {
+    color: #2a2a2a;
+}
+
+.textLiDashboard {
+    color: #023356;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.CustumInputAlleen {
+    padding: 20px;
+    background: white;
+    color: #7f7f7f;
+}
+
+.iconeElement {
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    margin-right: 9px;
+    margin-left: -8px;
+}
+
+.iconeElement img {
+    width: 26px;
+}
+
+.respMenu li a {
+    color: #0a0a0a !important;
+}
+
+.textOnder {
+    font-size: 15px;
+    font-weight: 700;
+    color: #023356;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.faPLusModife {
+    margin-right: 15px;
+}
+
+.ccn_footer_style_1 .footer_middle_area,
+.ccn_footer_style_1 .footer_one {
+    display: none !important;
+}
+
+.btnOnderwerp {
+    background: #023356!important;
+    color: white!important;
+    border-radius: 12px!important;
+    font-size: 14px!important;
+    width: 100%;
+    margin-left: -9px;
+    margin-top: 10px;
+    margin-bottom: 28px;
+    display: flex!important;
+    padding: 5px 10px!important;
+}
+
+.faPLusModife {
+    border-radius: 100%;
+    border: 1px solid;
+    padding: 2px 3px;
+    margin-right: 6px;
+}
+
+.trendingTitle {
+    font-size: 25px;
+    font-weight: bold;
+    color: #023356;
+    margin-bottom: 15px;
+}
+
+.cardKraam {
+    background: #fff;
+    box-shadow: 0 0 15px #42454d00;
+    border-radius: 10px;
+    position: relative;
+    padding-bottom: 30px;
+}
+
 .headCardKraam {
     min-height: 130px;
     background: #42454D;
@@ -66,9 +578,125 @@ body {
     border-radius: 10px;
 }
 
+.headCardKraam img {
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.blockImgCardCour {
+    height: 170px;
+    overflow: hidden;
+    position: relative;
+}
+
+.blockImgCardCour2 {
+    height: 135px;
+    overflow: hidden;
+    position: relative;
+}
+
+.blockgroup7 {
+    position: absolute;
+    bottom: 0px;
+    background: #02335685;
+    color: #D6E0DF;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.iconeTextKraa {
+    display: flex;
+}
+
+.sousiconeTextKraa {
+    display: flex;
+    margin-right: 4px;
+}
+
+.icon7 {
+    width: 13px!important;
+    height: 13px;
+    margin-top: 2px;
+    margin-right: 1px;
+}
+
+.kraaText {
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 2px;
+    margin-bottom: 0;
+    margin-right: 3px;
+}
+
+.contentCardProd {
+    padding: 20px 15px 30px;
+    max-height: 212px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+}
+
+.group8 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.imgTitleCours {
+    display: flex;
+}
+
+.imgCoursProd {
+    width: 25px;
+    height: 25px;
+    background: #707070;
+    border-radius: 100%;
+    margin-top: -4px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border: 1px solid #b5b5b5;
+}
+
+.imgCoursProd img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nameCoursProd {
+    color: #42454D;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-bottom: 0;
+    margin-top: 0px;
+    margin-left: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    height: fit-content;
+    width: 70%;
+}
+
+.group9 {
+    display: flex;
+}
 
 .blockOpein {
     display: flex;
+}
+
+.iconAm {
+    width: 18px !important;
+    height: 11px;
+    margin-right: 3px;
+    margin-top: 3px;
 }
 
 .lieuAm {
@@ -84,21 +712,492 @@ body {
     -webkit-box-orient: vertical;
     height: fit-content;
 }
+
+.werkText {
+    color: #42454D;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
 .swiper-container {
     margin-left: unset !important;
+}
+.descriptionPlatform {
+    color: #42454D;
+    font-size: 14px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+.descriptionPlatform p{
+    color: #42454D;
+    font-size: 14px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+.swiper-slide4 {
+    width: 346px !important;
+    box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    border-bottom: 2px solid rgb(0 0 0 / 10%);
+    height: auto !important;
+    background: white;
+}
+
+.swipSlideEvents {
+    width: 215px !important;
+    box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    border-bottom: 2px solid rgb(0 0 0 / 10%);
+    height: auto !important;
+}
+
+.iconAm1 {
+    height: 15px;
+    margin-top: 1px;
+    margin-right: 3px;
+    width: 12px !important;
+}
+
+.btnCloche {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    background-color: #FFF !important;
+    width: 24px;
+    height: 24px;
+    border-radius: 100% !important;
+    z-index: 10;
+    padding: unset !important;
+}
+
+.block-treaning {
+    margin-bottom: 35px;
+}
+
+.online-eveans {
+    margin-bottom: 35px;
+}
+
+.mobile-menu {
+    background: #043356 !important;
+}
+
+.blockgeneralPersoo {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 25px;
+}
+
+.blockPersoo2 {
+    display: flex;
+    justify-content: space-between;
+    width: 65.5%;
+    flex-wrap: wrap;
+}
+
+.blockAlle {
+    width: 32.5%;
+}
+
+.blockPersoonlijke {
+    width: 72%;
+    background: #FFF;
+    padding: 10px 0px 10px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    height: 300px;
+    position: relative;
+}
+
+.blockPersoonlijke2 {
+    width: 48.5%;
+    background: #FFF;
+    padding: 10px 0px 10px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    height: 300px;
 }
 
 .contentBaan {
     padding-top: 25px;
 }
+
+.headPersoon {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 13px;
+    padding: 0 20px;
+    border-bottom: 1px solid #023356;
+}
+
+.titleHeadPersoon {
+    color: #023356;
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.titleOpleidingstype {
+    margin-bottom: 14px;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    padding-bottom: 15px;
+}
+
+.titleOpleidingstype h2 {
+    color: #023356;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #043356;
+    padding: 15px 15px 6px;
+}
+
+.titleCertification {
+    color: #023356;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.blockImgName {
+    display: flex;
+    border-bottom: 1px solid #dfeef3;
+    padding: 0 20px 12px;
+    align-items: center;
+}
+
+.profilImg {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 100%;
+    margin-right: 15px;
+}
+
+.profilImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .name {
     color: #023356;
     margin-bottom: 2px;
 }
 
+.Uname {
+    color: #023356;
+    margin-bottom: 5px;
+}
+
+.blockDetailprofil {
+    display: flex;
+    border-bottom: 1px solid #dfeef3;
+    padding: 5px 20px;
+    align-items: center;
+}
+
+.iconeBlock {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    background-color: #dfeef3;
+    text-align: center;
+    align-items: center;
+}
+
+.iconeBlock img {
+    width: 60%;
+    margin-top: 5px;
+}
+
+.TextDetail {
+    font-size: 14px;
+    color: #023356;
+    margin-left: 30px;
+    margin-bottom: 0;
+}
+
+.topElement {
+    margin-top: -8px;
+}
+
+.flexJusElement {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.btnOpwaa {
+    background-color: #fc910d;
+    color: #FFFFFF;
+    font-size: 12px;
+    border-radius: 8px;
+    padding: 2px 15px;
+    font-weight: bold;
+}
+
+.iconeSetting {
+    width: 20px;
+}
+
+.btnBekijk {
+    width: 94%;
+    background: #47a99e;
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    bottom: 7px;
+    text-align: center;
+    padding: 11px;
+    border-radius: 10px;
+    left: 10px;
+}
+
+.AllActiviteiten {
+    width: 100%;
+    background: #FFF;
+    padding: 10px 0px 10px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    height: auto;
+    position: relative;
+}
+
+.blockgeneralPersoo2 {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.detailNamePhoto {
+    width: 100%;
+    background: #FFF;
+    padding: 24px 0px 13px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    height: auto;
+    position: relative;
+    text-align: center;
+}
+
+.BlockCertifiation {
+    width: 48.5%;
+    background: #FFF;
+    padding: 15px 20px 10px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    height: auto;
+    position: relative;
+}
+
+.settingDetail {
+    position: absolute;
+    right: 25px;
+    top: 2px;
+}
+
+.photoBlock {
+    width: 65px;
+    height: 65px;
+    background: #dfeef3;
+    margin: 0 auto 12px;
+    border-radius: 100%;
+}
+
+.nameTextProfil {
+    color: #043356;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.oprichter {
+    color: #043356;
+}
+
+.elementCertifications {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.textCertification {
+    color: #023356;
+    font-size: 15px;
+    margin-bottom: 0px;
+    margin-left: 14px;
+}
+
+.globalCertificationBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ratingElement {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rating-bar {
+    width: 30px;
+    height: 11px;
+    border-radius: 8px;
+    background-color: #dfeef3;
+    margin-left: 10px;
+}
+
+.rating-barActive {
+    background-color: #00A89D;
+}
+
+.elementCertifications1 .textCertification {
+    margin-left: 0;
+    width: 66%;
+    margin-bottom: 0;
+}
+
+.headListeCourse {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #023356;
+    padding: 8px 20px;
+    align-items: center;
+}
+
+.JouwOpleid {
+    color: #023356;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+.btnNewCourse {
+    color: #023356 !important;
+    border: 1px solid #023356;
+    font-size: 15px;
+    padding: 7px 25px;
+    margin-bottom: 0;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-left: 10px;
+    height: fit-content;
+}
+
+.btnNewCourse:hover {
+    background: #023356;
+    text-decoration: none;
+    color: #FFFFFF !important;
+}
+.btnActiviteit {
+    color: #FFFFFF;
+    background: #00A89D;
+    font-size: 14px;
+    padding: 4px 20px;
+    margin-bottom: 0;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-left: 10px;
+    height: fit-content;
+}
+
+
+
+.cardListeCourse {
+    background: white;
+    border-radius: 8px;
+}
+
+.activiteit {
+    background: #00A89D !important;
+    color: #FFFFFF;
+}
+
+.zoek {
+    color: #023356 !important;
+    background: unset !important;
+    border: 1px solid #023356;
+}
+
+.thOnder {
+    width: 15%;
+}
+
+.titleTextListe {
+    width: 33%;
+    font-weight: 400;
+    color: #707070;
+}
+
+.textTh {
+    color: #707070;
+}
+
+.elementOnder {
+    width: 95%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+}
+
+.imgOnboarding {
+    width: 180px;
+    margin-top: -43px;
+}
+
+.imgOnboarding img {
+    width: 100%;
+}
+
+.imgOnboarding2 {
+    width: 115px;
+    margin-top: -30px;
+}
+
+.imgOnboarding img {
+    width: 100%;
+}
+
+.workCardBlock {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.photoElement {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    overflow: hidden;
+    left: 10px;
+    position: relative;
+}
+
+.photoElement img {
+    width: 100%;
+}
+
 .table th,
 .table td {
     vertical-align: inherit !important;
+}
+
+.contentMensendetail {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .toevoegenBlockCard {
@@ -311,6 +1410,14 @@ body {
     display: none !important;
 }
 
+.contentDashboardTeacher {
+    padding-top: unset;
+    background: unset;
+    margin-left: 0;
+    position: relative;
+    width: 100%;
+}
+
 .contentDashboardElement3 {
     display: flex;
     width: 100%;
@@ -438,6 +1545,103 @@ body {
     -ms-flex: 0 0 21.666667% !important;
     flex: 0 0 21.666667% !important;
     max-width: 21.666667% !important;
+}
+
+.importBlock2 .file-upload {
+    font-size: 12px;
+}
+
+.importBlock2 .file-upload .file-select {
+    display: block;
+    border: 2px solid #dce4ec;
+    color: #043356;
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #FFFFFF;
+    overflow: hidden;
+    margin: 40px 10px 0;
+}
+
+.importBlock2 .file-upload .file-select .file-select-button {
+    background: #00A89D;
+    padding: 0px 10px !important;
+    height: 36px;
+    line-height: 32px;
+    position: absolute;
+    bottom: 25px;
+    width: 89% !important;
+    left: 18px;
+    text-align: center;
+}
+
+.importBlock2 .file-upload .file-select .file-select-name {
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 10px;
+}
+
+.importBlock2 .file-upload .file-select:hover {
+    border-color: #34495e;
+    transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+}
+
+.importBlock2 .file-upload .file-select:hover .file-select-button {
+    background: #34495e;
+    color: #FFFFFF;
+    transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+}
+
+.importBlock2 .file-upload .file-select input[type=file] {
+    z-index: 100;
+    cursor: pointer;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.importBlock2 .file-upload .file-select.file-select-disabled {
+    opacity: 0.65;
+}
+
+.importBlock2 .file-upload .file-select.file-select-disabled:hover {
+    display: block;
+    border: 2px solid #dce4ec;
+    color: #34495e;
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 5px;
+    text-align: left;
+    background: #FFFFFF;
+    overflow: hidden;
+    position: relative;
+}
+
+.importBlock2 .file-upload .file-select.file-select-disabled:hover .file-select-button {
+    background: #dce4ec;
+    color: #666666;
+    padding: 0 10px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+}
+
+.importBlock2 .file-upload .file-select.file-select-disabled:hover .file-select-name {
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 10px;
 }
 
 .doawnloadBlock2 {
@@ -1067,6 +2271,23 @@ input:focus-visible {
     margin-bottom: 10px;
 }
 
+.allBlockWorjforce .groupCard {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.allBlockWorjforce .cardCours .blockImgCardCoursGlobal {
+    width: 129px;
+    margin-top: -15px;
+}
+
+.allBlockWorjforce .cardCours .blockImgCardCoursGlobal img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .imgSide2 {
     width: 24px;
 }
@@ -1603,6 +2824,18 @@ input:focus-visible {
 
 .body-ecosysteme {
     background: #F4F7F6;
+}
+
+.block-card-ecosysteme {}
+
+.block-card-ecosysteme .row .col-lg-4 .cardKraam2 .headCardKraam img {
+    width: 100%;
+    opacity: 0.5;
+}
+
+.block-card-ecosysteme .row .col-lg-4 .cardKraam2 .headCardKraam {
+    background: black;
+    position: relative;
 }
 
 .btnImgCoeurEcosysteme {
@@ -4794,7 +6027,7 @@ nav .show {
 }
 
 .rate:not(:checked)>label:before {
-    content: '★ ';
+    content: 'â˜… ';
 }
 
 .rate>input:checked~label {
@@ -5864,6 +7097,10 @@ tbody {
     width: 25px;
 }
 
+#sectionDashboard1 .iconeElement img {
+    width: 22px;
+}
+
 .userdash .iconeElement:first-child {
     margin-top: 2px;
     width: 24px;
@@ -5875,6 +7112,23 @@ tbody {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.extensive .btnOnderwerp {
+    background: none !important;
+    padding: 0 !important;
+}
+
+.extensive .btnOnderwerp i {
+    display: none;
+}
+
+.extensive .textOnder {
+    display: none;
+}
+
+.extensive .btnOnderwerp span {
+    display: none;
 }
 
 .extensive .iconAssesment {
@@ -5903,12 +7157,17 @@ tbody {
     width: 33px;
 }
 
+.btnOnderwerp span {
+    color: #FFFFFF !important;
+    font-size: 16px;
+}
+
 #assessmentIcone {
     margin-top: 21px;
     margin-bottom: 25px;
 }
 
-.extensive .sidBarDashboard, .extensive .sidBarDashboard .elementTextDashboard span{
+.extensive .sidBarDashboard .elementTextDashboard a span, .extensive .sidBarDashboard .elementTextDashboard span{
     display: none;
 }
 
@@ -13671,7 +14930,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .owl-carousel-card-course .owl-item {
     height: auto !important;
 }
-
+.owl-carousel-card-course .cardKraam {
+    height: 100%;
+}
 .content-new-user .first-section-dashboard{
     width: 65%;
     margin-right: 35px;
@@ -21130,15 +22391,6 @@ figure ul li {
 .language-selector-custom .active{
     display: block;
 }
-.customize-support .headerdashboard {
-    height: 70px;
-}
-.customize-support .sidBarDashboardIndividual {
-    padding: 100px 5px 15px 20px;
-}
-.customize-support .theme-learning {
-    padding-top: 63px;
-}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -21474,6 +22726,13 @@ figure ul li {
         position: fixed;
         margin-left: -15px;
     }
+    .cardWorkforceblock {
+        width: 100%;
+    }
+    .contentDashboardElement {
+        margin-left: 0;
+        padding: 15px;
+    }
     #page7 {
         width: 100%;
     }
@@ -21504,7 +22763,12 @@ figure ul li {
     .imgCoursProd {
         margin-bottom: 8px;
     }
-
+    .group9 {
+        margin-bottom: 9px;
+    }
+    .trendingTitle {
+        line-height: 30px;
+    }
     .col-xl-12 {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -21604,7 +22868,26 @@ figure ul li {
     .mm-panels {
         display: none !important;
     }
+    .contentOpleiding {
+        display: block;
+        justify-content: space-between;
+    }
+    .contentOpleiding {
+        display: block;
+    }
     .contentKies-card {
+        width: 100%;
+    }
+    .cardCours2 {
+        width: 48.5%;
+        background: #FFF;
+        padding: 38px 20px 30px;
+        height: 100px;
+        border-radius: 7px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .blockImport-doawnload {
         width: 100%;
     }
     .contentPageManager {
@@ -21652,6 +22935,14 @@ figure ul li {
     .logoModife {
         width: 115px;
     }
+    .cardCoursGlocal {
+        width: 100%;
+        margin-left: 0;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        overflow-x: hidden;
+    }
     .contentDashboardElement3 {
         display: flex;
         width: 100%;
@@ -21696,7 +22987,9 @@ figure ul li {
     .theme-content {
         padding-top: 0 !important;
     }
-
+    .cardCoursManager {
+        width: 100%;
+    }
     .cardCours {
         width: 100%;
     }
@@ -22022,6 +23315,10 @@ figure ul li {
     .btnSidbarMobCroix img {
         display: none;
     }
+    .cardCoursManagerGlocal {
+        padding-left: 15px;
+        padding-top: 20px;
+    }
     .head-content-ecosysteme .row {
         flex-direction: column-reverse;
     }
@@ -22113,6 +23410,13 @@ figure ul li {
         position: fixed;
         margin-left: -15px;
     }
+    .cardWorkforceblock {
+        width: 100%;
+    }
+    .contentDashboardElement {
+        margin-left: 0;
+        padding: 15px;
+    }
     #page7 {
         width: 100%;
     }
@@ -22141,6 +23445,12 @@ figure ul li {
     }
     .imgCoursProd {
         margin-bottom: 8px;
+    }
+    .group9 {
+        margin-bottom: 9px;
+    }
+    .trendingTitle {
+        line-height: 30px;
     }
     .col-xl-12 {
         padding-left: 0 !important;
@@ -22222,12 +23532,40 @@ figure ul li {
         margin-bottom: 20px;
         margin-right: 10px;
     }
-
+    .cardCours:last-child {
+        margin-right: 10px !important;
+    }
     .mm-panels {
         display: none !important;
     }
+    .contentOpleiding {
+        display: block;
+        justify-content: space-between;
+    }
+    .contentOpleiding {
+        display: block;
+    }
     .contentKies-card {
         width: 100%;
+    }
+    .cardCours2 {
+        width: 48.5%;
+        background: #FFF;
+        padding: 38px 20px 30px;
+        height: 100px;
+        border-radius: 7px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .blockImport-doawnload {
+        width: 100%;
+    }
+    .cardCoursGlocal {
+        width: 100%;
+        margin-left: 0;
+        padding-top: 35px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
     .contentDashboardElement3 {
         display: flex;
@@ -22347,6 +23685,10 @@ figure ul li {
         border: 1px solid;
         margin: 7px 0;
         width: 43px;
+    }
+    .allBlockWorjforce {
+        padding-left: 17px;
+        padding-top: 20px;
     }
     .section {
         padding: unset !important;
@@ -22756,7 +24098,11 @@ figure ul li {
     .companyButton {
         padding: 0 !important;
     }
-
+    .item4 .dropdown-menu {
+        position: absolute;
+        left: -30px;
+        top: 40px;
+    }
     .groeipadenBlock {
         padding-left: 15px;
     }
@@ -26098,10 +27444,16 @@ figure ul li {
     .blockAlle {
         width: 100%;
     }
+    .kiesText {
+        font-size: 16px;
+    }
     .cardCours2 {
         width: 32.5%;
         background: #FFF;
         padding: 38px 15px 30px;
+    }
+    .cardWorkforceblock {
+        width: 49%;
     }
     .imgOnboarding {
         margin-top: -25px;
@@ -26113,6 +27465,10 @@ figure ul li {
     #page7 {
         width: 49%;
         margin-bottom: 10px;
+    }
+    .cardCoursGlocal {
+        width: 100% !important;
+        padding-top: 35px;
     }
     .contentDashboardElement3 {
         display: flex;
@@ -26159,7 +27515,9 @@ figure ul li {
     .blockOverviewMensen {
         width: 48%;
     }
-
+    .cardCoursManager {
+        width: 47%;
+    }
     .theme-content {
         padding-top: 0 !important;
     }
@@ -26177,7 +27535,10 @@ figure ul li {
         width: 31% !important;
         margin-right: 16px;
     }
-
+    .cardCoursGlocal {
+        padding-top: 35px;
+        justify-content: normal;
+    }
     .b1 {
         display: none;
     }
@@ -26692,6 +28053,9 @@ figure ul li {
     .container-fluid {
         max-width: 1380px !important;
     }
+    .allBlockWorjforce {
+        width: 95%;
+    }
 }
 
 .inputSearch {
@@ -26702,5 +28066,8 @@ figure ul li {
 @media screen and (max-width: 2560px) and (min-width: 1400px) {
     .container-fluid {
         max-width: 1380px !important;
+    }
+    .allBlockWorjforce {
+        width: 95%;
     }
 }
