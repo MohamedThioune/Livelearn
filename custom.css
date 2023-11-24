@@ -1430,7 +1430,7 @@ ul.sub-menu li a {
 .sidBarDashboardIndividual {
     width: 300px;
     position: fixed;
-    padding: 150px 5px 15px 20px;
+    padding: 107px 5px 15px 20px;
     overflow-y: auto;
     max-height: 100vh;
     left: 0;
@@ -1440,7 +1440,7 @@ ul.sub-menu li a {
     padding-top: 0px !important;
 }
 .theme-learning {
-    padding-top: 115px;
+    padding-top: 88px;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
@@ -22391,7 +22391,9 @@ figure ul li {
 .language-selector-custom .active{
     display: block;
 }
-
+.headerdashboard {
+    height: 65px !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
