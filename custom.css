@@ -48,15 +48,12 @@ body {
     z-index: 11;
     margin: 0 -15px;
 }
-
 .allBlockWorjforce {
     width: 96.5%;
 }
-
 .blockImgCardCoursGlobal img {
     width: 100%;
 }
-
 .btn-outline-realblue {
     border: 2px solid #023356;
     color: #023356;
