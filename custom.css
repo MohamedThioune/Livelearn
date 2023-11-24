@@ -3,15 +3,6 @@ body {
     font-family: "Ubuntu" !important;
 }
 
-.az {
-    color: red;
-    font-size: 40px;
-}
-
-.xyz {
-    background: #FFFFFF;
-    width: 80%;
-}
 .nav-link {
     color: #ffffff !important;
     margin: 0 10px !important;
@@ -26,17 +17,6 @@ body {
     border-radius: 30px;
     margin: 0 0px !important;
 }
-#ccnSearchOverlayWrap {
-    display: none;
-}
-
-.inner_page_breadcrumb {
-    display: none;
-}
-
-#ccn-main-region .container {
-    max-width: unset;
-}
 
 .theme-error {
     background-color: #ffcccc;
@@ -46,64 +26,8 @@ body {
     margin: 8px 0;
 }
 
-.respMenu li a {
-    color: #0a0a0a !important;
-}
-
-.contentDashboardTeacher {
-    padding-top: 25px;
-    background: #dfeef3;
-}
-
-.elementTextDashboard a span {
-    color: #023356;
-    font-size: 16px;
-}
-
-ul.sub-menu li a {
-    color: #0a0a0a !important;
-}
-
 .navbar-nav li {
     position: relative;
-}
-
-
-/*
-#ccn-main-region {
-    padding-top: 0;
-    padding-bottom: 30px;
-}*/
-
-.elementTextDashboard .active {
-    font-weight: bold;
-}
-
-.elementTextDashboard a span:before {
-    font-size: 23px;
-    margin-right: 15px;
-}
-
-.elementTextDashboard {
-    margin-bottom: 15px;
-}
-
-.elementContentDashboard {
-    display: flex;
-}
-
-.sidBarDashboard {
-    background-color: rgb(255, 255, 255);
-    -webkit-box-shadow: 0 1px 4px 0 rgb(0 0 0 / 9%);
-    -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .09);
-    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 9%);
-    width: 245px;
-    height: 100vh;
-    position: fixed;
-    top: 15px;
-    z-index: 0;
-    left: 15px;
-    padding-left: 5px;
 }
 
 .sidBarDashboard2 {
@@ -121,50 +45,6 @@ ul.sub-menu li a {
     padding-top: 20px;
 }
 
-.contentDashboardElement {
-    background: #dfeef3;
-    width: 100%;
-    margin-left: 247px;
-    padding: 20px;
-    min-height: 100vh;
-}
-
-.contentDashboardElement2 {
-    width: 100%;
-}
-
-.contentDashboardElement2 form {
-    width: 100% !important;
-}
-
-.cardCoursGlocal {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 25px;
-    width: 100%;
-    margin-top: 0px;
-    align-content: baseline;
-    padding-top: 5px;
-    background: #dfeef3;
-    justify-content: space-between;
-    padding-left: 0px;
-    padding-bottom: 0px;
-    padding-right: 5px;
-}
-
-.deworkforce {
-    color: #0e1851;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    margin-top: 30px;
-}
-
-.cardBlockManager {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .footerLive {
     background: #043356;
     position: relative;
@@ -172,126 +52,13 @@ ul.sub-menu li a {
     margin: 0 -15px;
 }
 
-.cardCoursManagerGlocal {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.cardCours {
-    width: 24%;
-    background: #FFF;
-    padding: 43px 20px 30px;
-    height: 135px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    margin-right: 0px;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    align-items: center;
-}
-
-.cardCours:last-child {
-    margin-right: 0px;
-}
-
 .allBlockWorjforce {
     width: 96.5%;
-}
-
-.cardCours small {
-    position: absolute;
-    bottom: 8px;
-    right: 10px;
-    color: #043356;
-    font-size: 13px;
-    text-decoration: underline;
-}
-
-.commingSoonText {
-    position: absolute;
-    bottom: 8px;
-    right: 10px;
-    color: #043356;
-    font-size: 13px;
-    text-decoration: underline;
-}
-
-.cardCoursManager {
-    width: 23%;
-    background: #FFF;
-    padding: 43px 20px 30px;
-    height: 135px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    margin-right: 15px;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-}
-
-.cardCoursManager small {
-    position: absolute;
-    bottom: 8px;
-    right: 10px;
-    color: #043356;
-    font-size: 13px;
-    text-decoration: underline;
-}
-
-.blockImgCardCoursGlobal {
-    width: 57px;
-    margin-top: -4px;
-}
-
-.blockImgcardCoursManagerGlobal {
-    width: 57px;
-    margin-top: -4px;
 }
 
 .blockImgCardCoursGlobal img {
     width: 100%;
 }
-
-.blockImgcardCoursManagerGlobal img {
-    width: 100%;
-}
-
-.cardWorkforceblock {
-    width: 33%;
-    background: #FFF;
-    padding: 43px 20px 30px;
-    height: 135px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.cardCours2 {
-    width: 23.5%;
-    background: #FFF;
-    padding: 38px 20px 30px;
-    height: 100px;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.contentText {
-    color: #023356;
-    line-height: 18px;
-}
-
-
-/* .two_section-img {
-    width: 50% !important;
-} */
-
-
-/* .img-cover {
-    width: 25% !important;
-} */
 
 .btn-outline-realblue {
     border: 2px solid #023356;
@@ -301,273 +68,6 @@ ul.sub-menu li a {
 .btn-outline-realblue:hover {
     background-color: #043356;
     color: white;
-}
-
-.workeforceText {
-    color: #023356;
-    line-height: 18px;
-    font-size: 17px;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.contentOpleiding {
-    display: flex;
-    justify-content: space-between;
-}
-
-.contentKies-card {
-    width: 66%;
-}
-
-.kiesBlock {
-    background: #FFFFFF;
-    padding: 8px 0px 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.importBlock2 {
-    background: #FFFFFF;
-    padding: 8px 0px 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    margin-right: 21px;
-    margin-left: -21px;
-    height: 200px;
-    position: relative;
-}
-
-.kiesText {
-    font-size: 18px;
-    font-weight: 700;
-    color: #023356;
-    border-bottom: 1px solid #023356;
-    padding-left: 20px;
-    margin-bottom: 1px;
-}
-
-.textOpleiding {
-    color: #023356;
-    font-weight: 600;
-    margin-bottom: 0;
-}
-
-.blockImport-doawnload {
-    width: 31%;
-}
-
-.fileUpload {
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
-}
-
-.fileUpload input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
-}
-
-.elementInputImport {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 25px 15px 0;
-}
-
-.elementInputImport .btndoawnload {
-    width: 100%;
-    font-size: 14px!important;
-    padding: 3px 3px 5px!important;
-    border-radius: 6px!important;
-    font-weight: bold!important;
-    background-color: #043356!important;
-    border: none!important;
-    color: #FFFFFF!important;
-}
-
-#uploadFile {
-    width: 69%;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    border: 1px solid #00A89D;
-    padding: 5px;
-}
-
-.btn-import {
-    width: 100%;
-    font-size: 14px !important;
-    padding: 3px 3px 5px !important;
-    border-radius: 6px !important;
-    font-weight: bold !important;
-    background-color: #00A89D !important;
-    border: none !important;
-    color: #FFFFFF !important;
-}
-
-.importBlock .file-upload {
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
-    width: 200px;
-    height: 200px;
-    background-color: #eee;
-    border: 2px solid #ddd;
-    text-align: center;
-    padding: 10px;
-}
-
-.importBlock .file-upload input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
-    height: 100%;
-    width: 100%;
-}
-
-.contentDetailCourse {
-    display: flex;
-    justify-content: space-between;
-}
-
-.blockOneDetailCourse {
-    width: 65%;
-}
-
-.btn-box {
-    width: 100% !important;
-    height: auto !important;
-    padding-top: 50px !important;
-    padding-bottom: 60px !important;
-    background: white !important;
-    border-radius: 5px;
-    border: none !important;
-    box-shadow: unset !important;
-    margin-bottom: 15px !important;
-    margin-left: 0;
-    margin-top: 0;
-}
-
-.importText {
-    color: #000000;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.importSpan {
-    border: 1px solid #91cee2;
-    padding: 4px 68px;
-    font-weight: bold;
-    font-size: 18px;
-    color: #707070;
-}
-
-.boxCourse input {
-    background-color: #FFF;
-    padding: 8px 20px;
-    border-radius: 5px;
-    color: #2a2a2a;
-    border: none;
-    width: 100%;
-}
-
-.boxCourse input::placeholder {
-    color: #2a2a2a;
-}
-
-.textLiDashboard {
-    color: #023356;
-    font-size: 16px;
-    margin-bottom: 0;
-}
-
-.CustumInputAlleen {
-    padding: 20px;
-    background: white;
-    color: #7f7f7f;
-}
-
-.iconeElement {
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-    margin-right: 9px;
-    margin-left: -8px;
-}
-
-.iconeElement img {
-    width: 26px;
-}
-
-.respMenu li a {
-    color: #0a0a0a !important;
-}
-
-.textOnder {
-    font-size: 15px;
-    font-weight: 700;
-    color: #023356;
-    margin-top: 20px;
-    margin-bottom: 15px;
-}
-
-.faPLusModife {
-    margin-right: 15px;
-}
-
-.ccn_footer_style_1 .footer_middle_area,
-.ccn_footer_style_1 .footer_one {
-    display: none !important;
-}
-
-.btnOnderwerp {
-    background: #023356!important;
-    color: white!important;
-    border-radius: 12px!important;
-    font-size: 14px!important;
-    width: 100%;
-    margin-left: -9px;
-    margin-top: 10px;
-    margin-bottom: 28px;
-    display: flex!important;
-    padding: 5px 10px!important;
-}
-
-.faPLusModife {
-    border-radius: 100%;
-    border: 1px solid;
-    padding: 2px 3px;
-    margin-right: 6px;
-}
-
-.trendingTitle {
-    font-size: 25px;
-    font-weight: bold;
-    color: #023356;
-    margin-bottom: 15px;
-}
-
-.cardKraam {
-    background: #fff;
-    box-shadow: 0 0 15px #42454d00;
-    border-radius: 10px;
-    position: relative;
-    padding-bottom: 30px;
 }
 
 .headCardKraam {
@@ -585,12 +85,6 @@ ul.sub-menu li a {
 }
 .blockImgCardCour {
     height: 170px;
-    overflow: hidden;
-    position: relative;
-}
-
-.blockImgCardCour2 {
-    height: 135px;
     overflow: hidden;
     position: relative;
 }
@@ -690,13 +184,6 @@ ul.sub-menu li a {
 
 .blockOpein {
     display: flex;
-}
-
-.iconAm {
-    width: 18px !important;
-    height: 11px;
-    margin-right: 3px;
-    margin-top: 3px;
 }
 
 .lieuAm {
@@ -1410,14 +897,6 @@ ul.sub-menu li a {
     display: none !important;
 }
 
-.contentDashboardTeacher {
-    padding-top: unset;
-    background: unset;
-    margin-left: 0;
-    position: relative;
-    width: 100%;
-}
-
 .contentDashboardElement3 {
     display: flex;
     width: 100%;
@@ -1545,103 +1024,6 @@ ul.sub-menu li a {
     -ms-flex: 0 0 21.666667% !important;
     flex: 0 0 21.666667% !important;
     max-width: 21.666667% !important;
-}
-
-.importBlock2 .file-upload {
-    font-size: 12px;
-}
-
-.importBlock2 .file-upload .file-select {
-    display: block;
-    border: 2px solid #dce4ec;
-    color: #043356;
-    cursor: pointer;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    background: #FFFFFF;
-    overflow: hidden;
-    margin: 40px 10px 0;
-}
-
-.importBlock2 .file-upload .file-select .file-select-button {
-    background: #00A89D;
-    padding: 0px 10px !important;
-    height: 36px;
-    line-height: 32px;
-    position: absolute;
-    bottom: 25px;
-    width: 89% !important;
-    left: 18px;
-    text-align: center;
-}
-
-.importBlock2 .file-upload .file-select .file-select-name {
-    line-height: 40px;
-    display: inline-block;
-    padding: 0 10px;
-}
-
-.importBlock2 .file-upload .file-select:hover {
-    border-color: #34495e;
-    transition: all .2s ease-in-out;
-    -moz-transition: all .2s ease-in-out;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-}
-
-.importBlock2 .file-upload .file-select:hover .file-select-button {
-    background: #34495e;
-    color: #FFFFFF;
-    transition: all .2s ease-in-out;
-    -moz-transition: all .2s ease-in-out;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-}
-
-.importBlock2 .file-upload .file-select input[type=file] {
-    z-index: 100;
-    cursor: pointer;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    filter: alpha(opacity=0);
-}
-
-.importBlock2 .file-upload .file-select.file-select-disabled {
-    opacity: 0.65;
-}
-
-.importBlock2 .file-upload .file-select.file-select-disabled:hover {
-    display: block;
-    border: 2px solid #dce4ec;
-    color: #34495e;
-    cursor: pointer;
-    height: 40px;
-    line-height: 40px;
-    margin-top: 5px;
-    text-align: left;
-    background: #FFFFFF;
-    overflow: hidden;
-    position: relative;
-}
-
-.importBlock2 .file-upload .file-select.file-select-disabled:hover .file-select-button {
-    background: #dce4ec;
-    color: #666666;
-    padding: 0 10px;
-    display: inline-block;
-    height: 40px;
-    line-height: 40px;
-}
-
-.importBlock2 .file-upload .file-select.file-select-disabled:hover .file-select-name {
-    line-height: 40px;
-    display: inline-block;
-    padding: 0 10px;
 }
 
 .doawnloadBlock2 {
@@ -2271,23 +1653,6 @@ input:focus-visible {
     margin-bottom: 10px;
 }
 
-.allBlockWorjforce .groupCard {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.allBlockWorjforce .cardCours .blockImgCardCoursGlobal {
-    width: 129px;
-    margin-top: -15px;
-}
-
-.allBlockWorjforce .cardCours .blockImgCardCoursGlobal img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
 .imgSide2 {
     width: 24px;
 }
@@ -2824,18 +2189,6 @@ input:focus-visible {
 
 .body-ecosysteme {
     background: #F4F7F6;
-}
-
-.block-card-ecosysteme {}
-
-.block-card-ecosysteme .row .col-lg-4 .cardKraam2 .headCardKraam img {
-    width: 100%;
-    opacity: 0.5;
-}
-
-.block-card-ecosysteme .row .col-lg-4 .cardKraam2 .headCardKraam {
-    background: black;
-    position: relative;
 }
 
 .btnImgCoeurEcosysteme {
@@ -7097,10 +6450,6 @@ tbody {
     width: 25px;
 }
 
-#sectionDashboard1 .iconeElement img {
-    width: 22px;
-}
-
 .userdash .iconeElement:first-child {
     margin-top: 2px;
     width: 24px;
@@ -7112,23 +6461,6 @@ tbody {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.extensive .btnOnderwerp {
-    background: none !important;
-    padding: 0 !important;
-}
-
-.extensive .btnOnderwerp i {
-    display: none;
-}
-
-.extensive .textOnder {
-    display: none;
-}
-
-.extensive .btnOnderwerp span {
-    display: none;
 }
 
 .extensive .iconAssesment {
@@ -7157,17 +6489,12 @@ tbody {
     width: 33px;
 }
 
-.btnOnderwerp span {
-    color: #FFFFFF !important;
-    font-size: 16px;
-}
-
 #assessmentIcone {
     margin-top: 21px;
     margin-bottom: 25px;
 }
 
-.extensive .sidBarDashboard .elementTextDashboard a span, .extensive .sidBarDashboard .elementTextDashboard span{
+.extensive .sidBarDashboard, .extensive .sidBarDashboard .elementTextDashboard span{
     display: none;
 }
 
@@ -8140,7 +7467,7 @@ tbody {
             height: 27px;
         }
         .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
-             margin-top: 0px !important;
+            margin-top: 0px !important;
         }
         .cardKraam2 {
             height: fit-content !important;
@@ -8180,10 +7507,10 @@ tbody {
             position: relative;
             display: -webkit-inline-box;
         }
-       .body-content-view-statistic .subTopics-usage-block .subTopics-card {
-           height: initial !important;
-           overflow: scroll;
-       }
+        .body-content-view-statistic .subTopics-usage-block .subTopics-card {
+            height: initial !important;
+            overflow: scroll;
+        }
         .individualContent .subTopics-usage-block .subTopics-card {
             height: 357px !important;
             overflow: scroll;
@@ -10253,7 +9580,6 @@ select {
     border-bottom: 0;
     padding: 0;
     margin-bottom: 15px;
-    margin-top: 115px;
 }
 
 .contentListeCourseDataBank .table thead th {
@@ -10512,13 +9838,13 @@ select {
 }
 
 .block2evensTabs @keyframes open {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
+                     0% {
+                         opacity: 0;
+                     }
+                     100% {
+                         opacity: 1;
+                     }
+                 }
 
 .block2evensTabs details summary::-webkit-details-marker {
     display: none !important;
@@ -13233,7 +12559,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-home2 .voorBlock {
     margin-bottom: 0;
     margin-top: 0;
-    padding-top: 50px;
+    padding-top: 85px;
 }
 .content-home2 .boxOne3{
     display: block;
@@ -13318,10 +12644,8 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .logo-parteners-left{
     position: absolute;
     left: 30px;
-    top: 104px;
+    top: 150px;
     height: 400px;
-
-
 }
 .logo-parteners-right{
     position: absolute;
@@ -14194,7 +13518,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     padding: 0 30px;
 }
 .head-content-subscription .element-detail-cart{
-   display: flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
@@ -14428,12 +13752,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
     align-items: center;
 }
 .first-section-community .block-first-selection .first-col{
-   width: 45%;
-   margin: 0 auto;
+    width: 45%;
+    margin: 0 auto;
 }
 .first-section-community .block-first-selection .second-col{
-   width: 33%;
-   margin: 0 auto;
+    width: 33%;
+    margin: 0 auto;
 }
 .first-section-community .card-detail-element{
     box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px;
@@ -14533,7 +13857,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 16px;
 }
 .skills-mesure .bg-gris-Skills{
-background: #FFFFFF !important;
+    background: #FFFFFF !important;
 }
 .skills-mesure .skillbars .progress {
     background: #00A89D;
@@ -14933,9 +14257,7 @@ background: #FFFFFF !important;
 .owl-carousel-card-course .owl-item {
     height: auto !important;
 }
-.owl-carousel-card-course .cardKraam {
-    height: 100%;
-}
+
 .content-new-user .first-section-dashboard{
     width: 65%;
     margin-right: 35px;
@@ -16367,7 +15689,7 @@ background: #FFFFFF !important;
     margin-bottom: 0;
 }
 .card-all-certificat{
-   background: #FFFFFF;
+    background: #FFFFFF;
 }
 .card-all-certificat table th, .table td {
     text-align: center !important;
@@ -16675,7 +15997,7 @@ background: #FFFFFF !important;
     overflow: hidden;
 }
 .imgUserElement img{
-   width: 100%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
 }
@@ -22394,11 +21716,15 @@ figure ul li {
 .language-selector-custom .active{
     display: block;
 }
-#language-selector{
-    display: none !important;
+.customize-support .headerdashboard {
+    height: 70px;
 }
-
-
+.customize-support .sidBarDashboardIndividual {
+    padding: 100px 5px 15px 20px;
+}
+.customize-support .theme-learning {
+    padding-top: 63px;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -22734,13 +22060,6 @@ figure ul li {
         position: fixed;
         margin-left: -15px;
     }
-    .cardWorkforceblock {
-        width: 100%;
-    }
-    .contentDashboardElement {
-        margin-left: 0;
-        padding: 15px;
-    }
     #page7 {
         width: 100%;
     }
@@ -22773,9 +22092,6 @@ figure ul li {
     }
     .group9 {
         margin-bottom: 9px;
-    }
-    .trendingTitle {
-        line-height: 30px;
     }
     .col-xl-12 {
         padding-left: 0 !important;
@@ -22876,26 +22192,7 @@ figure ul li {
     .mm-panels {
         display: none !important;
     }
-    .contentOpleiding {
-        display: block;
-        justify-content: space-between;
-    }
-    .contentOpleiding {
-        display: block;
-    }
     .contentKies-card {
-        width: 100%;
-    }
-    .cardCours2 {
-        width: 48.5%;
-        background: #FFF;
-        padding: 38px 20px 30px;
-        height: 100px;
-        border-radius: 7px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    .blockImport-doawnload {
         width: 100%;
     }
     .contentPageManager {
@@ -22943,14 +22240,6 @@ figure ul li {
     .logoModife {
         width: 115px;
     }
-    .cardCoursGlocal {
-        width: 100%;
-        margin-left: 0;
-        padding-top: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-        overflow-x: hidden;
-    }
     .contentDashboardElement3 {
         display: flex;
         width: 100%;
@@ -22995,9 +22284,7 @@ figure ul li {
     .theme-content {
         padding-top: 0 !important;
     }
-    .cardCoursManager {
-        width: 100%;
-    }
+
     .cardCours {
         width: 100%;
     }
@@ -23323,10 +22610,6 @@ figure ul li {
     .btnSidbarMobCroix img {
         display: none;
     }
-    .cardCoursManagerGlocal {
-        padding-left: 15px;
-        padding-top: 20px;
-    }
     .head-content-ecosysteme .row {
         flex-direction: column-reverse;
     }
@@ -23418,13 +22701,6 @@ figure ul li {
         position: fixed;
         margin-left: -15px;
     }
-    .cardWorkforceblock {
-        width: 100%;
-    }
-    .contentDashboardElement {
-        margin-left: 0;
-        padding: 15px;
-    }
     #page7 {
         width: 100%;
     }
@@ -23456,9 +22732,6 @@ figure ul li {
     }
     .group9 {
         margin-bottom: 9px;
-    }
-    .trendingTitle {
-        line-height: 30px;
     }
     .col-xl-12 {
         padding-left: 0 !important;
@@ -23540,40 +22813,12 @@ figure ul li {
         margin-bottom: 20px;
         margin-right: 10px;
     }
-    .cardCours:last-child {
-        margin-right: 10px !important;
-    }
+
     .mm-panels {
         display: none !important;
     }
-    .contentOpleiding {
-        display: block;
-        justify-content: space-between;
-    }
-    .contentOpleiding {
-        display: block;
-    }
     .contentKies-card {
         width: 100%;
-    }
-    .cardCours2 {
-        width: 48.5%;
-        background: #FFF;
-        padding: 38px 20px 30px;
-        height: 100px;
-        border-radius: 7px;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    .blockImport-doawnload {
-        width: 100%;
-    }
-    .cardCoursGlocal {
-        width: 100%;
-        margin-left: 0;
-        padding-top: 35px;
-        padding-left: 10px;
-        padding-right: 10px;
     }
     .contentDashboardElement3 {
         display: flex;
@@ -23693,10 +22938,6 @@ figure ul li {
         border: 1px solid;
         margin: 7px 0;
         width: 43px;
-    }
-    .allBlockWorjforce {
-        padding-left: 17px;
-        padding-top: 20px;
     }
     .section {
         padding: unset !important;
@@ -24931,7 +24172,7 @@ figure ul li {
     .modal-topics-expert .head .position-relative {
         width: 100%;
     }
-   #bedrijfsprofiel_modal .nav-pills{
+    #bedrijfsprofiel_modal .nav-pills{
         height: 34px;
         display: flex;
         flex-wrap: wrap;
@@ -25043,7 +24284,7 @@ figure ul li {
         height: 100%;
         object-fit: contain;
     }
-   .text-Probeer {
+    .text-Probeer {
         margin-bottom: 0;
         font-size: 12px;
     }
@@ -27040,7 +26281,7 @@ figure ul li {
     .first-section-dashboard #tab-url1 {
         padding: 0;
     }
-     .learningDatabankContent.cardOverviewCours {
+    .learningDatabankContent.cardOverviewCours {
         margin: 60px 15px 15px;
     }
     .btn-show-sidbar{
@@ -27452,16 +26693,10 @@ figure ul li {
     .blockAlle {
         width: 100%;
     }
-    .kiesText {
-        font-size: 16px;
-    }
     .cardCours2 {
         width: 32.5%;
         background: #FFF;
         padding: 38px 15px 30px;
-    }
-    .cardWorkforceblock {
-        width: 49%;
     }
     .imgOnboarding {
         margin-top: -25px;
@@ -27473,10 +26708,6 @@ figure ul li {
     #page7 {
         width: 49%;
         margin-bottom: 10px;
-    }
-    .cardCoursGlocal {
-        width: 100% !important;
-        padding-top: 35px;
     }
     .contentDashboardElement3 {
         display: flex;
@@ -27523,9 +26754,7 @@ figure ul li {
     .blockOverviewMensen {
         width: 48%;
     }
-    .cardCoursManager {
-        width: 47%;
-    }
+
     .theme-content {
         padding-top: 0 !important;
     }
@@ -27543,10 +26772,7 @@ figure ul li {
         width: 31% !important;
         margin-right: 16px;
     }
-    .cardCoursGlocal {
-        padding-top: 35px;
-        justify-content: normal;
-    }
+
     .b1 {
         display: none;
     }
