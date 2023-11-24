@@ -7,9 +7,7 @@
     z-index: 99;
     height: 60px;
 }
-#nav-with-top-bar{
-    height: 115px;
-}
+
 .navModife {
     background: #023356;
     color: #ffffff !important;
@@ -212,17 +210,7 @@ form {
 .headSousMobilePrincipale {
     display: none;
 }
-.btnElementSousMenu {
-    padding: 0;
-    display: flex;
-    width: 100%;
-    position: relative;
-    color: #023356;
-    font-size: 15px;
-    justify-content: space-between;
-    margin-bottom: 7px;
-    text-transform: none !important;
-}
+
 .headSousMobileProfile{
     display: none;
 }
@@ -482,21 +470,6 @@ form {
     .elementGroupGroeien {
         margin-bottom: 20px;
     }
-    .btnElementSousMenu{
-        padding: 0;
-        display: flex;
-        width: 100%;
-        position: relative;
-        color: #023356;
-        font-size: 15px;
-        justify-content: space-between;
-        margin-bottom: 7px;
-        text-transform: none !important;
-    }
-    .btnElementSousMenu img{
-        width: 11px;
-        float: right;
-    }
     .sousMenuNavMobil .accordion .element-nav-accordion:last-child {
         border-bottom: 0px solid #02335680;
         margin-bottom: 20px;
@@ -563,21 +536,6 @@ form {
         right: 0;
         min-height: 100vh;
         overflow-y: scroll;
-    }
-    .btnElementSousMenu img {
-        width: 11px;
-        float: right;
-    }
-    .btnElementSousMenu {
-        padding: 0;
-        display: flex;
-        width: 100%;
-        position: relative;
-        color: #023356;
-        font-size: 15px;
-        justify-content: space-between;
-        margin-bottom: 7px;
-        text-transform: none !important;
     }
     .navMobile-custom{
         top: 126px !important;
