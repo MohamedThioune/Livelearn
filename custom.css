@@ -2,7 +2,6 @@ body {
     overflow-x: hidden;
     font-family: "Ubuntu" !important;
 }
-
 .nav-link {
     color: #ffffff !important;
     margin: 0 10px !important;
@@ -17,7 +16,6 @@ body {
     border-radius: 30px;
     margin: 0 0px !important;
 }
-
 .theme-error {
     background-color: #ffcccc;
     border: 2px solid #cc0000;
@@ -44,7 +42,6 @@ body {
     padding-left: 5px;
     padding-top: 20px;
 }
-
 .footerLive {
     background: #043356;
     position: relative;
