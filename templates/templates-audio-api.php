@@ -26,7 +26,8 @@ extract($_POST);
 $staticImg = get_stylesheet_directory_uri() . '/img/Image-79.png';
 if ($audio_search){
 
-    $url = 'https://api.podcastindex.org/api/1.0/search/byperson?q=' .$audio_search;
+    //$url = 'https://api.podcastindex.org/api/1.0/search/byperson?q=' .$audio_search;
+    $url = 'https://api.podcastindex.org/api/1.0/search/bytitle?q=' .$audio_search;
     $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -193,7 +194,6 @@ if ($audio_search){
                 $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio|";
             }
         }
-
         //wich table will I do the request to show the list of podcast ?
         $data = array(
             'titel' => $title,
