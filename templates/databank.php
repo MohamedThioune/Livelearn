@@ -291,7 +291,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="tdCenter textThBorder">
                                         <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔" />&nbsp;&nbsp;
                                         <input tittle="remove" type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp;
-                                        <a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> 
+                                        <a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" class="btn-default" target="_blank"  style="background:white" >⚙</a>
                                     </td>
                                 </tr>
                             <?php
@@ -854,6 +854,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('.display-fields-clean').html(data)
                     // Get the button that opens the modal
 
+
                     // Get the <span> element that closes the modal
                     var span = document.getElementsByClassName("close")[0];
 
@@ -953,7 +954,9 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                location.reload();
+                $('#loader').attr('hidden',true);
+                $('#select_field').attr('hidden',false);
+                //location.reload();
             },
         });
     })
