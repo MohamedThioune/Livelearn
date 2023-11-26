@@ -78,6 +78,7 @@ if($optie == "✔"){
             'post_status' => 'publish',
             'post_title'  => $course->titel
         );
+
         $id_post = wp_insert_post($args, true);
         $podcasts = explode('|', $course->podcasts);
         $podcasts = array_reverse($podcasts);
