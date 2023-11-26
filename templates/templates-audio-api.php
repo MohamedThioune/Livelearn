@@ -168,6 +168,7 @@ if ($audio_search){
          * end display resutl of search
          */
     }
+
 }elseif ($playlist_audio){
     $user_connected = wp_get_current_user();
     $user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
