@@ -433,9 +433,11 @@ if (!empty($courses)) {
                                 echo '<a href="?id='.($_GET['id']+1).'" class="textLiDashboard">next&nbsp;&nbsp;&nbsp;</a>';
                             }
                         }else {
+                            if ($_) {
+                                echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
+                            }
                             foreach (range(1, $pagination_number) as $number) {
                                 if (isset($_GET['id'])) {
-                                    echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
                                     if ($_GET['id'] == $number) {
                                         echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
                                     } else {
