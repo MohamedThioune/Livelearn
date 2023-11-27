@@ -417,7 +417,7 @@ if (!empty($courses)) {
                                     }
                                 }
                             }else if ($_GET['id']-5<=1) {
-                                foreach (range(1, $_GET['id']+5) as $number) {
+                                foreach (range(1, $_GET['id']+5) as $number) { 
                                     if (isset($_GET['id'])) {
                                         if ($_GET['id'] == $number) {
                                             echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
