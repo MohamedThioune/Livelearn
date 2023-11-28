@@ -39,7 +39,7 @@ $global_posts = get_posts($args);
 
 // Category post 
 $courses = searching_course_by_group($global_posts, 'category', $category_input)['courses'];
-// $order_type = searching_course_by_group($global_posts, 'category', $category_input)['order_type'];
+$order_type = searching_course_by_group($global_posts, 'category', $category_input)['order_type'];
 $expertise = searching_course_by_group($global_posts, 'category', $category_input)['experts'];
 
 //Category information
@@ -67,7 +67,13 @@ $topics_internal = get_user_meta($user_id,'topic_affiliate');
 $topics_external = get_user_meta($user_id,'topic');
 
 //Type course
-// $types = array('Opleidingen', 'Workshop', 'Masterclass', 'E-learning', 'Event', 'Training', 'Video', 'Artikel', 'Podcast', 'Webinar', 'Lezing', 'Cursus');
+$typo_course = array('Opleidingen', 'Workshop', 'Masterclass', 'E-learning', 'Event', 'Training', 'Video', 'Artikel', 'Podcast', 'Webinar', 'Lezing', 'Cursus');
+
+if(isset($_GET['filter_typo'])):
+    $courses = searching_course_by_type($courses, $_GET['filter_typo'])['courses'];
+    $expertise = searching_course_by_type($courses, $_GET['filter_typo'])['experts'];
+    $order_type = searching_course_by_type($courses, $_GET['filter_typo'])['order_type'];
+endif;
 
 ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -119,17 +125,14 @@ $topics_external = get_user_meta($user_id,'topic');
         <div class="theme-content">
             <div class="theme-learning">
                 <div class="">
-                    <!-- 
+                    
                     <div class="block-subTocis d-flex flex-wrap">
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                        <button class="btn btn-subTopics">Traning 1 </button>
-                    </div> -->
+                        <?php
+                            foreach ($typo_course as $typo) 
+                                echo '<a href="?category='. $category_input .'&filter_typo='.$typo.'" class="btn btn-subTopics">' . $typo . ' - '.$order_type[$typo].' </a>';
+                        ?>
+                       
+                    </div>
                     <div class="btn-group-layouts">
                         <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
                         <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
