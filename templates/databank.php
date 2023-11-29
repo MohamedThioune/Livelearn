@@ -433,7 +433,7 @@ if (!empty($courses)) {
                                 echo '<a href="?id='.($_GET['id']+1).'" class="textLiDashboard">next&nbsp;&nbsp;&nbsp;</a>';
                             }
                         }else {
-                            if ($_) {
+                            if ($_GET['id']<=10) {
                                 echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
                             }
                             foreach (range(1, $pagination_number) as $number) {
