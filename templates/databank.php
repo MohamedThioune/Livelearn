@@ -331,32 +331,26 @@ if (!empty($courses)) {
                                     <td class="textTh tdCenter textTh"><?=$course->prijs;?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
-                                        // if ($course->type != 'Video') {                                        
-                                            if(!empty($onderwerpen)){
-                                                $tab = [];
-                                                foreach($onderwerpen as $value1){
-                                                    if($value1 && !is_wp_error(get_the_category_by_ID($value1))){
-                                                        $tab[] = (String)get_the_category_by_ID($value1);
-                                                    }elseif (!$value1) {
-                                                        $tab[] = null;
-                                                    } 
-                                                        
-                                                }
-                                                $tab = array_unique($tab);
-                                                foreach ($tab as $key => $value2) {
-                                                    if($value2)
-                                                        echo $value2.',';
-                                                }
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="textTh tdCenter"><?= $course->status; ?></td>
-                                    <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
-                                    <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
-                                    <td class="tdCenter textThBorder">
-                                        <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔" />&nbsp;&nbsp;
-                                        <input tittle="remove" type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp;
-                                        <a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" class="btn-default" target="_blank"  style="background:white" >⚙</a>
+// if ($course->type != 'Video') {
+        if (!empty($onderwerpen)) {
+            $tab = [];
+            foreach ($onderwerpen as $value1) {
+                if ($value1 && !is_wp_error(get_the_category_by_ID($value1))) {
+                    $tab[] = (String) get_the_category_by_ID($value1);
+                } elseif (!$value1) {
+                    $tab[] = null;
+                }
+
+            }
+            $tab = array_unique($tab);
+            foreach ($tab as $key => $value2) {
+                if ($value2) {
+                    echo $value2 . ',';
+                }
+
+            }
+        }
+        ?>
                                     </td>
                                     <td class="textTh tdCenter"><?=$course->status;?></td>
                                     <td class="textTh tdCenter textTh-center"> <?php if ($course->author_id) {
@@ -423,7 +417,7 @@ if (!empty($courses)) {
                                     }
                                 }
                             }else if ($_GET['id']-5<=1) {
-                                foreach (range(1, $_GET['id']+5) as $number) { 
+                                foreach (range(1, $_GET['id']+5) as $number) {
                                     if (isset($_GET['id'])) {
                                         if ($_GET['id'] == $number) {
                                             echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
@@ -439,7 +433,7 @@ if (!empty($courses)) {
                                 echo '<a href="?id='.($_GET['id']+1).'" class="textLiDashboard">next&nbsp;&nbsp;&nbsp;</a>';
                             }
                         }else {
-                            if ($_GET['id']<=10) {
+                            if ($_GET['id']>1) {
                                 echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
                             }
                             foreach (range(1, $pagination_number) as $number) {
@@ -1070,7 +1064,6 @@ $(document).ready(function () {
 });
 //# sourceURL=pen.js
 </script>
-
 <script>
     $("#playlist-youtube").click((e)=>{
         $.ajax({
@@ -1093,9 +1086,7 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                $('#loader').attr('hidden',true);
-                $('#select_field').attr('hidden',false);
-                //location.reload();
+                location.reload();
             },
         });
     })
