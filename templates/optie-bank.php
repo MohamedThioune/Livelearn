@@ -8,6 +8,9 @@ $table = $wpdb->prefix . 'databank';
 extract($_POST);
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
+$origin_id = $course->org;
+$feedid = $course->course_id;
+
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
     if(!$course->image_xml)
@@ -70,6 +73,7 @@ if($optie == "✔"){
             array_push($youtube_videos, $youtube_video);
         }
 
+        update_field('origin_id', $origin_id, $id_post);
         update_field('course_type', 'video', $id_post);
         update_field('youtube_videos', $youtube_videos, $id_post);
     }
@@ -81,6 +85,7 @@ if($optie == "✔"){
             'post_status' => 'publish',
             'post_title'  => $course->titel
         );
+
         $id_post = wp_insert_post($args, true);
         //var_dump($course->podcasts);
         $podcasts = explode('|', $course->podcasts);
@@ -98,6 +103,7 @@ if($optie == "✔"){
             $podcasts_playlists [] = $podcasts_playlist;
         }
 
+        update_field('origin_id', $feedid, $id_post);
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post);
     }
