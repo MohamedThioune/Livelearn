@@ -280,7 +280,7 @@ $urls =
                                     <td class="textTh tdCenter textTh-center"> <?php if($course->author_id) echo ''; else echo 'author';  ?> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
                                     <td class="textTh tdCenter textTh-center"> <?php if(!empty($company)) echo ''; else echo 'company';  ?> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
                                     <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
-                                </tr>
+                                </tr> 
                             <?php
                                 }
                             }else{
