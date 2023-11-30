@@ -54,7 +54,7 @@
     'competence-factory-20231102.0027.xml',
     'faculty-of-skills-20231101.1430.xml',
     'frankwatching-20231102.0033.xml',
-    'growth-tribe-20231101.1422.xml',
+    'growth-tribe-20231101.1422.xml', 
     'horizon-20231102.0028.xml',
     'hr-academy-20231102.0028.xml',
     'kenneth-smit-20231102.0028.xml',

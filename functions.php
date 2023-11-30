@@ -7,6 +7,7 @@ include "custom-endpoints.php";
 include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
+include "liggeey-endpoints.php";
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -1732,6 +1733,20 @@ add_action( 'rest_api_init', function () {
     'callback' => 'related_topics_subtopics',
   ));
 
+  register_rest_route( 'custom/v1', '/category/(?P<category_id>\d+)/courses', array(
+    'methods' => 'GET',
+    'callback' => 'get_related_course_by_category',
+  ));
+
+  register_rest_route( 'custom/v1', 'user/recommended/courses', array(
+    'methods' => 'GET',
+    'callback' => 'course_recommendation_by_follow',
+  ));
+
+  
+
+  
+
   register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
     'methods' => 'GET',
     'callback' => 'get_course_image',
@@ -1884,6 +1899,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'update_user_progression_course',
   ));
 
+  register_rest_route ('custom/v1', '/user/cart/signups', array(
+    'methods' => 'GET',
+    'callback' => 'get_user_signups',
+  ));
+  register_rest_route ('custom/v1', '/user/signup', array(
+    'methods' => 'POST',
+    'callback' => 'reserve_course',
+  ));
+  
+
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
@@ -1914,9 +1939,18 @@ add_action( 'rest_api_init', function () {
     'callback' => 'matchin_topics'
   ));
 
+  register_rest_route ('custom/v1', '/matching-child-course', array(
+    'methods' => 'GET',
+    'callback' => 'matchin_child_topics'
+  ));
+
   register_rest_route ('custom/v1', '/register/company', array(
     'methods' => 'POST',
     'callback' => 'register_company'
   ));
 
+    register_rest_route ('custom/v1', '/update-youtube', array(
+        'methods' => 'GET',
+        'callback' => 'updateYoutube'
+    ));
 });

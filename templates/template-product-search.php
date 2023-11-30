@@ -31,7 +31,7 @@ if (!isset($experties))
     $experties = array();
 
 $args = array(
-    'post_type' => array('post','course'),
+    'post_type' => array('post','course', 'learnpath', 'assessment'),
     'post_status' => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
@@ -53,14 +53,15 @@ elseif($filter):
     $order_type = searching_course_by_type($global_posts, $filter)['order_type'];
     $expertise = searching_course_by_type($global_posts, $filter)['experts'];    
     $no_filter = false;
+    $leervom[] = $filter;
+    // var_dump($courses);
+    // die();
+
 endif;
 
 /* * Group by type * */
 $main_courses = array();
 $start_courses = (!empty($courses)) ? $courses : $global_posts;
-// $category_input = 216;
-// $user_input = 3;
-// $companie_input = 1435;
 
 if(isset($category_input) || isset($user_input) || isset($companie_input))
     $no_filter = false;
@@ -97,10 +98,15 @@ if(isset($filter_args)):
     $args['online'] = (isset($online)) ? 1 : null;
     $args['experties'] = (!empty($experties)) ? $experties : null;
   
+    $courses = (empty($courses)) ? $global_posts : $courses;
     //Apply filter 
     $courses = searching_course_with_filter($courses, $args)['courses']; 
     $order_type = searching_course_with_filter($courses, $args)['order_type'];
     $expertise = searching_course_with_filter($courses, $args)['experts'];
+
+    // var_dump($courses);
+    // die();
+
     /* * End search by * */
 endif;
 
@@ -108,6 +114,7 @@ endif;
 $courses = ($no_filter) ? $global_posts : $courses;
 
 $courses = array_slice($courses, 0, 500);
+
 ?>
 
 <div class="content-community-overview bg-gray">
@@ -356,7 +363,6 @@ $courses = array_slice($courses, 0, 500);
                         if(!$post)
                             continue;
                         
-
                         $hidden = true;
                         $hidden = visibility($post, $visibility_company);
                         if(!$hidden)

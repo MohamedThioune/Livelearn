@@ -8,20 +8,11 @@ $table = $wpdb->prefix . 'databank';
 extract($_POST);
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
+$origin_id = $course->org;
+$feedid = $course->course_id;
+
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
-    if(!$course->image_xml)
-    {
-        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-        $course->image_xml = $image;
-        $wpdb->update($table,$course->image_xml,$where);
-    }
-    if(!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id){
-        echo '<pre>value null</pre>';
-        // var_dump($course);
-        http_response_code(500);
-        return 0;
-    }
     //Insert some other course type
     $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Podcast'];
     $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar','podcast'=>'Podcast'];
@@ -38,6 +29,11 @@ if($optie == "✔"){
         $id_post = wp_insert_post($args, true);
         //Custom
 
+        if($course->image_xml==null)
+        {
+            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+            update_field('image_xml', $image, $id_post);
+        }
         update_field('course_type', 'article', $id_post);
         update_field('article_itself', nl2br($course->long_description), $id_post);        
     }
@@ -70,6 +66,7 @@ if($optie == "✔"){
             array_push($youtube_videos, $youtube_video);
         }
 
+        update_field('origin_id', $origin_id, $id_post);
         update_field('course_type', 'video', $id_post);
         update_field('youtube_videos', $youtube_videos, $id_post);
     }
@@ -81,23 +78,26 @@ if($optie == "✔"){
             'post_status' => 'publish',
             'post_title'  => $course->titel
         );
+
         $id_post = wp_insert_post($args, true);
-        //var_dump($course->podcasts);
         $podcasts = explode('|', $course->podcasts);
         $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
         foreach ($podcasts as $item) {
+            if (!$item)
+                continue;
             $podcasts_playlist = [];
             $podcast = explode('~', $item);
             $podcasts_playlist['podcast_url'] = $podcast[0];
-            $podcasts_playlist['podcast_title'] = $podcast[1];
-            $podcasts_playlist['podcast_description'] = $podcast[2];
-            $podcasts_playlist['podcast_date'] = $podcast[3];
-            $podcasts_playlist['podcast_image'] = $podcast[4];
+            $podcasts_playlist['podcast_title'] = $podcast[1] ? : $course->titel;
+            $podcasts_playlist['podcast_description'] = $podcast[2] ? : $course->short_description;
+            $podcasts_playlist['podcast_date'] = $podcast[3] ? : date('Y-m-d H:i:s');
+            $podcasts_playlist['podcast_image'] = $podcast[4] ? : $course->image_xml;
 
             $podcasts_playlists [] = $podcasts_playlist;
         }
 
+        update_field('origin_id', $feedid, $id_post);
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post);
     }
@@ -128,16 +128,7 @@ if($optie == "✔"){
         // echo "post-id : " . $id_post;
         echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
     }
-    $main_onderwerpen = explode(',', $course->onderwerpen);
-    $onderwerpen = array();
-    if(!empty($main_onderwerpen))
-        foreach($main_onderwerpen as $key => $value):
-            if(!$value)
-                continue;
-            if(!in_array($value, $onderwerpen))
-                array_push($onderwerpen, $value);
-        endforeach;
-
+    $onderwerpen = explode(',', $course->onderwerpen);
     /*
     ** UPDATE COMMON FIELDS
     */
@@ -150,7 +141,7 @@ if($optie == "✔"){
             
     //Categories
     if(isset($onderwerpen[0]))
-        if($onderwerpen[0])
+        if($onderwerpen[0] && $onderwerpen[0] != "" && $onderwerpen[0] != " " )
             update_field('categories', $onderwerpen, $id_post);
     
     update_field('short_description', nl2br($course->short_description), $id_post);
@@ -168,17 +159,11 @@ if($optie == "✔"){
         if(isset($data_locaties[0]))
             if($data_locaties[0] && $data_locaties[0] != "" && $data_locaties[0] != " " )
                 update_field('data_locaties_xml', $data_locaties, $id_post);
-
-    //Prijs
-    $course->prijs = ($course->prijs) ? intval($course->prijs) : 0;
-    $prijs = ($course->prijs > 0) ? $course->prijs : 0;
-    update_field('price', $prijs, $id_post);
-
     /*
     ** END
     */
     
-    // $data = [ 'course_id' =:> $id_post]; // NULL value.
+    // $data = [ 'course_id' => $id_post]; // NULL value.
     // $wpdb->update( $table, $data, $where );
 }     
 else if($optie == "❌"){
@@ -194,13 +179,4 @@ else if($optie == "❌"){
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
 return $updated;
-
-// if($updated){
-//     return true;
-// }
-// else {
-//     return false;
-// }
-
-?>
 

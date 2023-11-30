@@ -1,12 +1,77 @@
 <?php
 
+function control($post, $offline){
+    $user_id = get_current_user_id();
+    $company_visibility = get_field('company',  'user_' . $user_id);
+    $visibility_company = (!empty($company_visibility)) ? $company_visibility[0]->post_title : null;
+
+    if(!$post)
+        return false;
+    $hidden = true;
+    $hidden = visibility($post, $visibility_company);
+    if(!$hidden)
+        return false;
+
+    //Date and Location
+    $data = null;
+    $count_data = 0;
+    $data_locaties = get_field('data_locaties', $post->ID);
+    $data_locaties_xml = get_field('data_locaties_xml', $post->ID);
+    $location = 'Online';
+    if(!empty($data_locaties)):
+        $count_data = count($data_locaties) - 1;
+        $data = $data_locaties[$count_data]['data'][0]['start_date'];
+        $location = $data_locaties[0]['data'][0]['location'];
+    elseif(!empty($data_locaties_xml)):
+        $count_data = count($data_locaties_xml) - 1;
+        if($data_locaties_xml):
+            if(isset($data_locaties_xml[intval($count_data)]['value']))
+                $element = $data_locaties_xml[intval($count_data)]['value'];
+            if(isset($data_locaties_xml[0]['value'])){
+                $data_first = explode('-', $datum[0]['value']);
+                $location = $data_first[2];
+            }
+        endif;
+
+        if(!isset($element))
+            return false;
+
+        $datas = explode('-', $element);
+        $data = $datas[0];
+    endif;
+
+    if( empty($data) || !in_array($course_type, $offline) )
+        null;
+    elseif( !empty($data) )
+        if($data){
+            $date_now = strtotime(date('Y-m-d'));
+            $data = strtotime(str_replace('/', '.', $data));
+            if($data < $date_now)
+                return false;
+        }
+
+    return true;
+}
+
 function searching_course($search, $search_type, $global_posts){
     $infos = array();
     $courses = array();
     $experts = array();
     $order_type = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'E-learning' => 0, 'Event' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0, 'Podcast' => 0, 'Webinar' => 0, 'Lezing' => 0, 'Cursus' => 0);
+    $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 
-    foreach($global_posts as $post)
+    $user_id = get_current_user_id();
+    $company_visibility = get_field('company',  'user_' . $user_id);
+    $visibility_company = (!empty($company_visibility)) ? $company_visibility[0]->post_title : null;
+
+    foreach($global_posts as $post):
+       /** Control ... **/
+       $controllin = null;
+       $controllin = control($post, $offline);
+       if(!$controllin)
+           continue;
+       /** End of control **/
+
         if(stristr($post->post_title, $search)):
             $course_type = get_field('course_type', $post->ID);
             $bool = 0;
@@ -33,10 +98,10 @@ function searching_course($search, $search_type, $global_posts){
                     foreach($expertis as $experto)
                         if(!in_array($experto, $experts))
                             array_push($experts, $experto);
-            endif;
-
+                endif;
             endif;
         endif;
+    endforeach;
 
     //Fill up the information
     $infos['courses'] = $courses;
@@ -51,10 +116,17 @@ function searching_course_by_type($global_posts, $filter){
     $courses = array();
     $experts = array();
     $order_type = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'E-learning' => 0, 'Event' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0, 'Podcast' => 0, 'Webinar' => 0, 'Lezing' => 0, 'Cursus' => 0);
+    $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 
     if($filter):
 
         foreach($global_posts as $post):
+            /** Control ... **/
+            $controllin = null;
+            $controllin = control($post, $offline);
+            if(!$controllin)
+                continue;
+            /** End of control **/
             $course_type = get_field('course_type', $post->ID);
 
             if($course_type == $filter):
@@ -77,6 +149,9 @@ function searching_course_by_type($global_posts, $filter){
 
     endif;
 
+    // var_dump($courses);
+    // die();
+
     //Fill up the information
     $infos['courses'] = $courses;
     $infos['order_type'] = $order_type;
@@ -91,8 +166,15 @@ function searching_course_by_group($global_posts, $group, $value){
     $courses_in = array();
     $experts = array();
     $order_type = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'E-learning' => 0, 'Event' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0, 'Podcast' => 0, 'Webinar' => 0, 'Lezing' => 0, 'Cursus' => 0);
+    $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 
     foreach($global_posts as $post):
+        /** Control ... **/
+        $controllin = null;
+        $controllin = control($post, $offline);
+        if(!$controllin)
+            continue;
+        /** End of control **/
         $course_type = get_field('course_type', $post->ID);
 
         switch ($group) {
@@ -186,10 +268,12 @@ function searching_course_by_group($global_posts, $group, $value){
                 $courses = get_posts($args);
 
                 /* * End Companies * */
-                break;
+                break;   
         }
-
     endforeach;
+
+    // var_dump($experts);
+    // die();
 
     //Fill up the information
     $infos['courses'] = $courses;
@@ -210,7 +294,8 @@ function searching_course_with_filter($global_posts, $args){
 
     $experts = array();
     $order_type = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'E-learning' => 0, 'Event' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0, 'Podcast' => 0, 'Webinar' => 0, 'Lezing' => 0, 'Cursus' => 0);
-    
+    $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
+
     //Convert args values 
     $leervom = $args['leervom'];
     $min = intval($args['min']);
@@ -222,6 +307,12 @@ function searching_course_with_filter($global_posts, $args){
     // var_dump($args); die();
 
     foreach ($global_posts as $course):
+        /** Control ... **/
+        $controllin = null;
+        $controllin = control($course, $offline);
+        if(!$controllin)
+            continue;
+        /** End of control **/
         //Get comparison values
         $price = intval(get_field('price', $course->ID));
         $data = get_field('data_locaties', $course->ID);    
