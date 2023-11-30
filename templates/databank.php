@@ -429,7 +429,7 @@ if (!empty($courses)) {
                                     }
                                 }
                             }
-                            if($_GET['id'] < $pagination_number){
+                            if($_GET['id'] < $pagination_number){ 
                                 echo '<a href="?id='.($_GET['id']+1).'" class="textLiDashboard">next&nbsp;&nbsp;&nbsp;</a>';
                             }
                         }else {
