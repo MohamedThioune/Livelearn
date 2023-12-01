@@ -164,7 +164,7 @@
         }
 
         $image_author = get_field('profile_img',  'user_' . $user->ID);
-        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png'; 
         //$logo_livelearn = get_stylesheet_directory_uri() . '/img/logoMobil.png';
         $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
         $close_menu = get_stylesheet_directory_uri() . '/img/X.png';
@@ -380,11 +380,13 @@
         </div>
 
         <form action="/dashboard/user/" method="POST">
+            <input type='hidden' name='filter_args' value='1'>
             <input type="hidden" name="meta_value" value="<?php echo $_GET['id']; ?>" id="">
             <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
             <input type="hidden" name="meta_key" value="expert" id="">
             <div>
             <?php
+            
             if($user_id != 0 && $user_id != $_GET['id'] )
             {
                 $experts= get_user_meta($user_id, 'expert');
@@ -475,7 +477,9 @@
         <!-- ------------------------------------ Start Slide bar ---------------------------------------- -->
         <div class="col-md-3 pr-md-3">
             <div class="sousProductTest Mobelement pr-4" style="background: #F4F7F6;color: #043356;">
-                <form action="/product-search/" method="POST">
+                <form action="/product-search/" method="GET">
+                    <input type='hidden' name='filter_args' value='1'>
+                    <input type="hidden" name="user_input" value="<?php echo $_GET['id'] ?>">
                     <div class="LeerBlock pl-4" style="">
                         <div class="leerv">
                             <p class="sousProduct1Title pt-1" style="color: #043356">LEERVORM</p>
@@ -483,9 +487,8 @@
                                 <i class="bi bi-x text-dark" style="font-size: 35px"></i>
                             </button>
                         </div>
-                        <input type="hidden" name="user" value="<?php echo $user->ID ?>">
                         <div class="checkFilter">
-                            <label class="contModifeCheck">Opleiding
+                            <label class="contModifeCheck">Opleidingen
                                 <input style="color:red;" type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
@@ -511,6 +514,18 @@
                         <div class="checkFilter">
                             <label class="contModifeCheck">Event
                                 <input type="checkbox" id="event" name="leervom[]" value="Event">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Lezing
+                                <input type="checkbox" id="lezing" name="leervom[]" value="Lezing">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Podcast
+                                <input type="checkbox" id="podcast" name="leervom[]" value="Podcast">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>

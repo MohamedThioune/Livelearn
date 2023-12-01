@@ -7,6 +7,7 @@ include "custom-endpoints.php";
 include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
+include "liggeey-endpoints.php";
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -564,6 +565,50 @@ function custom_post_type() {
     );
 
     register_post_type( 'badge', $badge_args );
+
+    //To Do's with
+    $todo = array(
+        'name'                => _x( 'Todos', 'Todos', 'todo' ),
+        'singular_name'       => _x( 'Todos', 'Todo', 'todo' ),
+        'menu_name'           => __( 'Todos', 'todo' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All todos', 'todo' ),
+        'view_item'           => __( 'View todo', 'view_todo' ),
+        'add_new_item'        => __( 'New todo', 'add_new_todo' ),
+        'add_new'             => __( 'New todo', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $todo_args = array(
+        'label'               => __( 'todo', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $todo,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'todo'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+    register_post_type( 'todo', $todo_args );
+
 
 }
 add_action( 'init', 'custom_post_type', 0 );
@@ -1667,12 +1712,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCourses',
   ));
 
-   register_rest_route('custom/v1', '/articles', array(
-     'methods' => 'GET',
-     'callback' => 'allArticles',
-   ));
-           
-           
+  register_rest_route('custom/v1', '/articles', array(
+    'methods' => 'GET',
+    'callback' => 'allArticles',
+  ));
+
+  register_rest_route('custom/v1', '/offline/courses', array(
+    'methods' => 'GET',
+    'callback' => 'getOfflineCourse',
+  ));
+  
 
   register_rest_route('custom/v1', '/authors', array(
     'methods' => 'GET',
@@ -1683,6 +1732,20 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
   ));
+
+  register_rest_route( 'custom/v1', '/category/(?P<category_id>\d+)/courses', array(
+    'methods' => 'GET',
+    'callback' => 'get_related_course_by_category',
+  ));
+
+  register_rest_route( 'custom/v1', 'user/recommended/courses', array(
+    'methods' => 'GET',
+    'callback' => 'course_recommendation_by_follow',
+  ));
+
+  
+
+  
 
   register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
     'methods' => 'GET',
@@ -1816,20 +1879,75 @@ add_action( 'rest_api_init', function () {
     'callback' => 'save_user_views',
   ));
 
+  register_rest_route ('custom/v1', '/user/badges', array(
+    'methods' => 'GET',
+    'callback' => 'get_user_badges',
+  ));
+
+  register_rest_route ('custom/v1', '/user/smartphone_token/', array(
+    'methods' => 'PUT',
+    'callback' => 'update_user_smartphone_token',
+  ));
+
+  register_rest_route ('custom/v1', '/user/progression/(?P<course_title>[-\w]+)', array(
+    'methods' => 'POST',
+    'callback' => 'get_user_course_progression',
+  ));
+
+  register_rest_route ('custom/v1', '/user/progression/(?P<course_title>[-\w]+)', array(
+    'methods' => 'PUT',
+    'callback' => 'update_user_progression_course',
+  ));
+
+  register_rest_route ('custom/v1', '/user/cart/signups', array(
+    'methods' => 'GET',
+    'callback' => 'get_user_signups',
+  ));
+  register_rest_route ('custom/v1', '/user/signup', array(
+    'methods' => 'POST',
+    'callback' => 'reserve_course',
+  ));
+  
+
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
      'callback' => 'Artikel_From_Company'
   ));
 
-  register_rest_route ('custom/v1', '/xml', array(
+  register_rest_route ('custom/v1', '/xml/(?P<id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'xmlParse'
- ));
+  ));
 
-    register_rest_route ('custom/v1', '/podcast', array(
-        'methods' => 'GET',
-        'callback' => 'crontab_podcast'
-    ));
+  register_rest_route ('custom/v1', '/podcast', array(
+    'methods' => 'GET',
+    'callback' => 'crontab_podcast'
+  ));
+
+  register_rest_route ('custom/v1', '/youtube', array(
+    'methods' => 'GET',
+    'callback' => 'youtubeEndpoint'
+  ));
+
+  register_rest_route ('custom/v1', '/update-youtube', array(
+    'methods' => 'GET',
+    'callback' => 'updateYoutube'
+  ));
+
+  register_rest_route ('custom/v1', '/matching-topic-course', array(
+    'methods' => 'GET',
+    'callback' => 'matchin_topics'
+  ));
+
+  register_rest_route ('custom/v1', '/matching-child-course', array(
+    'methods' => 'GET',
+    'callback' => 'matchin_child_topics'
+  ));
+
+  register_rest_route ('custom/v1', '/register/company', array(
+    'methods' => 'POST',
+    'callback' => 'register_company'
+  ));
 
     register_rest_route ('custom/v1', '/update-youtube', array(
         'methods' => 'GET',

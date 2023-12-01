@@ -72,7 +72,7 @@ if (isset($selectedValues)) {
         $span = $website . "wp-json/wp/v2/posts/";
         $artikels = json_decode(file_get_contents($span), true);
         foreach ($artikels as $article) {
-            //         // $onderwerpen = trim($onderwerpen);
+            // $onderwerpen = trim($onderwerpen);
 
             if ($article != null) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
@@ -80,18 +80,18 @@ if (isset($selectedValues)) {
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
-                    $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
-                    $result_image = $wpdb->get_results($sql_image);
+                    // $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
+                    // $result_image = $wpdb->get_results($sql_image);
 
-                    if (!isset($result_image[0]) && !isset($result_title[0])) {
+                    if (/*!isset($result_image[0]) && */!isset($result_title[0])) {
                         if (!isset($images['data']['status'])) {
                             $status = 'extern';
                             $datas = array(
                                 'titel' => $article['title']['rendered'],
                                 'type' => 'Artikel',
                                 'videos' => null,
-                                'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
-                                'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                                'short_description' => strip_html_tags($article['excerpt']['rendered']),
+                                'long_description' => $article['content']['rendered'],
                                 'duration' => null,
                                 'prijs' => 0,
                                 'prijs_vat' => 0,
@@ -110,8 +110,8 @@ if (isset($selectedValues)) {
                             'titel' => $article['title']['rendered'],
                             'type' => 'Artikel',
                             'videos' => null,
-                            'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
-                            'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                            'short_description' => strip_html_tags($article['excerpt']['rendered']),
+                            'long_description' => $article['content']['rendered'],
                             'duration' => null,
                             'prijs' => 0,
                             'prijs_vat' => 0,
@@ -125,7 +125,7 @@ if (isset($selectedValues)) {
                             'status' => $status,
                         );
                     }
-                }
+                }else continue;
             } else {
                 if (!isset($result_title[0])) {
                     $status = 'extern';
@@ -133,8 +133,8 @@ if (isset($selectedValues)) {
                         'titel' => $article['title']['rendered'],
                         'type' => 'Artikel',
                         'videos' => null,
-                        'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
-                        'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
+                        'short_description' => strip_html_tags($article['excerpt']['rendered']),
+                        'long_description' => $article['content']['rendered'],
                         'duration' => null,
                         'prijs' => 0,
                         'prijs_vat' => 0,
@@ -165,3 +165,4 @@ if (isset($selectedValues)) {
 }
 // header("location:/livelearn/databank");
 ?>
+

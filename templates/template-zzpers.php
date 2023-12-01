@@ -239,7 +239,7 @@ require($page);
                     <p class="krijgText">
                         Waarschijnlijk ben jij al druk genoeg met het draaiend houden van je bedrijf. Daarom zorgen wij als LiveLearn dat jij alle trends en ontwikkelingen direct in je eigen ontwikkelomgeving ontvangt.
                     </p>
-                    <div>
+                    <div class="d-flex flex-wrap">
                         <a href="/voor-organisaties/" class="btn btn-al-vanaf">
                             Al vanaf €4,95
                         </a>
@@ -288,7 +288,7 @@ require($page);
             </div>
         </div>
     </section>
-    <section class="cardCoursZzpers">
+    <section class="cardCoursZzpers sectionArtikelZZpers">
         <div class="container-fluid">
             <h3>Artikelen voor ZZP'ers</h3>
 
@@ -388,7 +388,7 @@ require($page);
                         <p class="text-description-jij">Een mobiele app</p>
                     </div>
                     <div class="d-flex align-items-center mt-4">
-                        <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
+                        <a href="/voor-organisaties/" class="btn btnStratAlVoor">Start al voor €4,95</a>
                     </div>
                 </div>
                 <div class="second-block-binnen">
@@ -464,7 +464,7 @@ require($page);
     $('.owl-carousel').owlCarousel({
         loop:true,
         margin:13,
-        items:2.8,
+        items:3.4,
         lazyLoad:true,
         dots:false,
         responsiveClass:true,
@@ -482,7 +482,7 @@ require($page);
                 nav:false
             },
             1000:{
-                items:2.8,
+                items:3.2,
                 nav:true,
                 loop:false
             }

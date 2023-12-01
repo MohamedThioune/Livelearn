@@ -169,7 +169,7 @@ if(!empty($enrolled))
                         <td scope="row"><?= $i; ?></td>
                         <td class="textTh elementOnder text-left"><a style="color:#212529;font-weight:bold" href="/dashboard/teacher/signups/?parse=<?= $course->ID; ?>"> <?php echo $course->post_title; ?> </a></td>
                         <td class="textTh"><?php echo $price; ?></td>
-                        <td class="textTh "><?php echo $category; ?></td>
+                        <td id= "<?php echo $course->ID; ?>" class="textTh onderwerpen"><?php echo $category; ?></td>
                         <td class="textTh"><?php echo $day; ?></td>
                         <td class="textTh">
                             <div class="dropdown text-white">
@@ -198,7 +198,110 @@ if(!empty($enrolled))
     </div>
 </div>
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <!-- <div id="modal-content"> -->
+    <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
+        <div class="modal-header mx-4">
+            <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
+                <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        <div class="row d-flex text-center justify-content-center align-items-center h-50">
+            <div class="col-md-11  p-4">
+                <div class="form-group display-subtopics">
+                
+                </div> 
+                <div id="modal-content">
+
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button id="save_subtopics" type="button" class="btn text-white" style="background: #023356;">
+                        <strong>Save</strong> 
+                    </button>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+    </div>
+</div> 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+    var id_course;
+    $('.onderwerpen').click(function(e){
+        alert('Please enter');
+        id_course = e.target.id;
+
+        $.ajax({
+
+            url:"/fetch-subtopics-course",
+            method:"post",
+            data:
+            {
+                id_course:id_course,
+                action:'get_course_subtopics'
+            },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                //console.log(data)
+                var modal = document.getElementById("myModal");
+                $('.display-subtopics').html(data)
+                // Get the button that opens the modal
+
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on the button, open the modal
+
+                    modal.style.display = "block";
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                    modal.style.display = "none";
+                    }
+                }
+            }
+            });
+
+        });
+    
+    $('#save_subtopics').click(function(){
+      var subtopics = $('#selected_subtopics').val();
+
+      $.ajax({
+        url:"/fetch-subtopics-course",
+        method:"post",
+        data:
+            {
+            add_subtopics:subtopics,
+            id_course:id_course,
+            action:'add_subtopics'
+            },
+        dataType:"text",
+        success: function(data){
+            
+            let modal=$('#myModal');
+            modal.attr('style', { display: "none" });
+            //modal.style.display = "none";
+            $('#'+id_course).html(data)
+            //console.log(data)
+        }
+        });
+
+    });
+</script>
 
 <script type="text/javascript">
     $(".remove_opleidingen").click(function(){

@@ -82,9 +82,18 @@ $table_prefix = 'wpe7_';
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
 
+// Enable WP_DEBUG mode
+define( 'WP_DEBUG', true );
+
+// Enable Debug logging to the /wp-content/debug.log file
+define( 'WP_DEBUG_LOG', true );
+// define( 'WP_DEBUG_LOG', '/logs/errors.log' );
+
+// Disable display of errors and warnings
+define( 'WP_DEBUG_DISPLAY', false );
+@ini_set( 'display_errors', 1 );
+
 /* Add any custom values between this line and the "stop editing" line. */
-
-
 
 /* That's all, stop editing! Happy publishing. */
 

@@ -221,17 +221,18 @@ if(!isset($_COOKIE["cookie_consent"])):
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 <script id="rendered-js" >
-    $(document).ready(function () {
-        //Chosen
-        $(".multipleChosen").chosen({
-            placeholder_text_multiple: "Maak een keuze" //placeholder
-        });
-        //Select2
-        $(".multipleSelect2").select2({
-            placeholder: "Maak een keuze" //placeholder
-        });
-    });
-    //# sourceURL=pen.j
+    function changeLanguage(lang) {
+        console.log("Langue changée en : " + lang);
+        updateFlags(lang);
+    }
+
+    function updateFlags(lang) {
+        var flags = document.getElementsByClassName('flag');
+        for (var i = 0; i < flags.length; i++) {
+            flags[i].classList.remove('active');
+        }
+        document.getElementById('flag-' + lang).classList.add('active');
+    }
 </script>
 
 <script>
@@ -616,11 +617,25 @@ $site_url = get_site_url() . "/apply-cookie";
         }
     });
 </script>
+    <script>
+        const btnShowSidebar = document.querySelector(".btn-show-sidbar");
+        const btnCloseSidebar = document.querySelector(".btn-close-sidbar");
+        const themeSideMenu = document.querySelector(".theme-side-menu");
+
+        btnShowSidebar.addEventListener("click", function() {
+            themeSideMenu.classList.add("show-sidbar");
+        });
+
+        btnCloseSidebar.addEventListener("click", function() {
+            themeSideMenu.classList.remove("show-sidbar");
+        });
+
+    </script>
 
 <?php if ( !is_user_logged_in() ) : ?>
 <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
 <!-- End of HubSpot Embed Code -->
-<?php endif; ?> 
+<?php endif; ?>
 
 </footer>  
