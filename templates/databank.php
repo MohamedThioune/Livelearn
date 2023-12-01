@@ -786,7 +786,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
-                    // location.reload();
+                    location.reload();
                     // alert("Record applied successfully");  
                 }
             });
@@ -932,7 +932,6 @@ $(document).ready(function () {
 });
 //# sourceURL=pen.js 
 </script>
-
 <script>
     $("#playlist-youtube").click((e)=>{
         $.ajax({

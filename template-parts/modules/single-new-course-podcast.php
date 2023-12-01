@@ -35,13 +35,13 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
-if ($user_id==0){
-    $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
-    $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
-}else {
+// if (!$user_id){
+//     $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
+//     $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
+// }else {
     $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
     $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-}
+// }
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -120,7 +120,7 @@ endif;
                                                     echo  '<li>
                                                                 <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                 <a href="/category-overview?category=' . $tag->ID . '" class="text-tabs">' . $tag->name . '</a>
-                                                            </li>';  
+                                                           </li>';  
                                             else{
                                                 $read_category = array();
                                                 if(!empty($category_default))
@@ -133,7 +133,6 @@ endif;
                                                                             <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
                                                                         </li>';  
                                                             }
-
                                                 else if(!empty($category_xml))
                                                     foreach($category_xml as $item)
                                                         if($item)
@@ -161,6 +160,8 @@ endif;
                                     <div class="list-content-podcast">
                                         <?php
                                         foreach($podcasts as $key => $podcast) {
+                                            if(!$podcast)
+                                                continue;
                                             $style = "";
                                             if(isset($lesson))
                                                 if($lesson == $key)
@@ -178,7 +179,7 @@ endif;
 
                                             $lecture_index = $key + 1;
                                             ?>
-                                        <div class="elemnt-list-podcast">
+                                        <div class="elemnt-list-podcast visible">
                                             <div class="detail-block-podcast">
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex">
@@ -187,7 +188,7 @@ endif;
                                                         </div>
                                                         <p class="title-podcast"><?= $podcast['course_podcast_title'] ?></p>
                                                     </div>
-                                                    <p class="date-added-playlist">10/15/22</p>
+                                                    <p class="date-added-playlist">xx/xx/xxxx</p>
                                                 </div>
                                                 <div class="audio">
                                                     <div class="cp-audioquote">
@@ -211,6 +212,9 @@ endif;
                                             <img class="status-icon" src="<?= $status_icon ?>" alt="">
                                         </div>
                                         <?php } ?>
+                                        <div class="pagination-container">
+                                            <!-- Les boutons de pagination seront ajoutés ici -->
+                                        </div>
                                     </div>
                                 </ul>
                             <?php
@@ -219,27 +223,29 @@ endif;
                                <ul id="Course">
                                    <div class="list-content-podcast">
                                        <?php
-                                       foreach($podcast_index as $key => $podcast) {
-                                       $style = "";
-                                       if(isset($lesson))
-                                           if($lesson == $key)
-                                               $style = "color:#F79403";
-                                       $link = '#';
-                                       $reading = "#";
-                                       $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                       if($bool_link || $key == 0){
-                                           $reading = $podcast['podcast_url'];
-                                           $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
-                                       }
-                                       $date_podcast = $podcast['podcast_date'];
-                                       //$date_podcast = !empty($date_podcast) ? date("d-m-Y H:i:s", strtotime($date_podcast)) : "";
-                                       $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
-                                       $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
-                                       $lecture_index = $key + 1;
-                                       $description_podcast = $podcast['podcast_description'] ? : $short_description ;
+                                        foreach($podcast_index as $key => $podcast) {
+                                        if(!$podcast)
+                                            continue;
+                                        $style = "";
+                                        if(isset($lesson))
+                                            if($lesson == $key)
+                                                $style = "color:#F79403";
+                                        $link = '#';
+                                        $reading = "#";
+                                        $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                        if($bool_link || $key == 0){
+                                            $reading = $podcast['podcast_url'];
+                                            $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                        }
+                                        $date_podcast = $podcast['podcast_date'];
+                                        //$date_podcast = !empty($date_podcast) ? date("d-m-Y H:i:s", strtotime($date_podcast)) : "";
+                                        $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
+                                        $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
+                                        $lecture_index = $key + 1;
+                                        $description_podcast = $podcast['podcast_description'] ? : $short_description ;
 
-                                           ?>
-                                       <div class="elemnt-list-podcast">
+                                        ?>
+                                       <div class="elemnt-list-podcast visible">
                                            <div class="detail-block-podcast">
                                                <div class="d-flex align-items-center justify-content-between">
                                                    <div class="d-flex">
@@ -272,6 +278,9 @@ endif;
                                            </div>
                                        </div>
                                        <?php } ?>
+                                       <div class="pagination-container">
+                                           <!-- Les boutons de pagination seront ajoutés ici -->
+                                       </div>
                                    </div>
                                </ul>
                             <?php 
@@ -727,6 +736,82 @@ endif;
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+
+<script>
+    const itemsPerPage = 6;
+    const blockList = document.querySelector('.list-content-podcast');
+    const blocks = blockList.querySelectorAll('.elemnt-list-podcast');
+    const paginationContainer = document.querySelector('.pagination-container');
+
+    function displayPage(pageNumber) {
+        const start = (pageNumber - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        blocks.forEach((block, index) => {
+            if (index >= start && index < end) {
+                block.style.display = 'flex';
+                block.classList.add('visible');
+            } else {
+                block.style.display = 'none';
+                block.classList.remove('visible');
+            }
+        });
+
+        const containerHeight = blockList.offsetHeight;
+
+        setTimeout(() => {
+            blockList.style.height = containerHeight + 'px';
+        }, 10);
+        setTimeout(() => {
+            blockList.style.height = '';
+        }, 300);
+    }
+
+    function createPaginationButtons() {
+        const pageCount = Math.ceil(blocks.length / itemsPerPage);
+
+        if (pageCount <= 1) {
+            return;
+        }
+
+        let firstButtonAdded = false; // Keep track of whether the first button is added
+
+        for (let i = 1; i <= pageCount; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add('pagination-button');
+            button.addEventListener('click', () => {
+                scrollToTop(); // Scroll to the top when a button is clicked
+                displayPage(i);
+
+                // Remove the .active class from all buttons
+                const buttons = document.querySelectorAll('.pagination-button');
+                buttons.forEach((btn) => {
+                    btn.classList.remove('active');
+                });
+
+                // Add the .active class to the clicked button
+                button.classList.add('active');
+            });
+            paginationContainer.appendChild(button);
+
+            // Add the .active class to the first button
+            if (!firstButtonAdded) {
+                button.classList.add('active');
+                firstButtonAdded = true;
+            }
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    displayPage(1);
+    createPaginationButtons();
+
+
+</script>
 
 <script>
     $('.owl-carousel').owlCarousel({
