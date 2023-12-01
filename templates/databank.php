@@ -1051,7 +1051,6 @@ if (!empty($courses)) {
             }
         });
     });
-
 </script>
 
 <script defer id="rendered-js" >
@@ -1064,6 +1063,7 @@ $(document).ready(function () {
 });
 //# sourceURL=pen.js
 </script>
+
 <script>
     $("#playlist-youtube").click((e)=>{
         $.ajax({
@@ -1091,5 +1091,6 @@ $(document).ready(function () {
         });
     })
 </script>
+
 <?php get_footer();?>
 <?php wp_footer();?>
