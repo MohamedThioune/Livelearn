@@ -59,7 +59,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Midden en Klein bedrijf</h3>
                         <p class="descriptionCardVoorOrganisatie">Wel personeel, maar nog geen speciale afdeling voor talent management en leren & ontwikkelen. Tot een organisatie van 250 man nemen wij alle taken over, van borging van skills tot het aanbieden van een gestroomlijnde onboarding. </p>
-                        <a href="/mkb" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer voor MKB</a>
+                        <a href="/sme/" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer voor MKB</a>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Grootbedrijf</h3>
                         <p class="descriptionCardVoorOrganisatie">Een corporate organisatie, wellicht met meerdere locaties over de wereld. Borg je kennis in één dashboard, houd bij waar de ontwikkelkansen liggen met HR-analytics en geef managers de handvatten om hun teams optimaal te laten presteren </p>
-                        <a href="/grootbedrijf" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer voor Corporates</a>
+                        <a href="/corporate/" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer voor Corporates</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
             </div>
             <div class="second-block">
                 <img class="lees-mer-img" src="<?php echo get_stylesheet_directory_uri();?>/img/leer-meer.png" alt="">
-                <a href="" class="btn btn-Lees-meer">Lees meer</a>
+                <a href="/HR-dienstverlening/ " class="btn btn-Lees-meer">Lees meer</a>
             </div>
         </div>
     </div>

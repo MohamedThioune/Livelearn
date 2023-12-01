@@ -1,14 +1,12 @@
 <?php /** Template Name: new-artikel */ ?>
-<body>
-<?php wp_head(); ?>
+
 <?php 
+wp_head(); 
 get_header(); 
 
 $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
-
-view($post,$user_visibility);
 
 ?>
 
@@ -19,6 +17,8 @@ view($post,$user_visibility);
 global $post;
 global $wp;
 global $wpdb;
+
+view($post);
 
 if(!visibility($post, $visibility_company))
     header('location: /'); 
@@ -554,6 +554,3 @@ foreach($reactions as $value)
 
 
 </script>
-
-</body>
-</html>

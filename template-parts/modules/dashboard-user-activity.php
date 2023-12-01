@@ -352,6 +352,7 @@ foreach ($users as $element) {
                                 <tbody>
                                 <?php
                                 $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
+                                $i = 0;
                                 foreach($mandatories as $key => $value) :
                                     $course = get_page_by_path($value->post_title, OBJECT, 'course');
                                     if(!$course)
@@ -390,9 +391,6 @@ foreach ($users as $element) {
                                             $typo_course['Video']++;
                                             break;
                                     }
-
-                                    if($key >= 4)
-                                        continue;
 
                                     //Legend image
                                     $image_course = get_field('preview', $course->ID)['url'];
@@ -460,6 +458,9 @@ foreach ($users as $element) {
                                         </td>
                                     </tr>
                                 <?php
+                                $i += 1; 
+                                if($i >= 4)
+                                    break;
                                 endforeach;
                                 ?>
                                 </tbody>

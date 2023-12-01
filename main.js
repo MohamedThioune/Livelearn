@@ -29,6 +29,7 @@ jQuery(function($) {
     $('#modalForApp .close').click(function() {
         $('#modalForApp').hide();
     });
+    // script to show sidebar on mobile
 
 /*  //  pour cokkies et modal
 
@@ -195,10 +196,42 @@ jQuery(function($) {
     });
 
 
+    // for modal add to do
+    $(".element-trigger").click(function() {
+        var targetClass = $(this).data("target");
+        $(".content-block-bg").hide();
+        $(".modal-header").hide();
+        $(".detail-content-modal").hide();
+        $(".content-" + targetClass).show();
+    });
 
+    $(".btn-back-frist-element").click(function() {
+        $(".content-block-bg").show();
+        $(".modal-header").show();
+        $(".detail-content-modal").hide();
+    });
 
+    $(".nav-three").click(function() {
+        $("#All").addClass("active");
+    });
+    $(".nav-four").click(function() {
+        $("#Badges").addClass("active");
+    });
+    $(".nav-feedback").click(function() {
+        $("#AllFeddback").addClass("active");
+    });
 
+    //for close notification
 
+    var buttonInsideModal = $(".buttonInsideModal");
+
+    var modal = $("#ModalNotification");
+    buttonInsideModal.click(function(event) {
+        event.stopPropagation();
+    });
+
+    modal.click(function() {
+    });
 
 
 

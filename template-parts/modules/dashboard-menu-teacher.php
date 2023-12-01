@@ -74,6 +74,9 @@
 
 ?>
 <section class="sidBarDashboard sidBarDashboardIndividual" name="section1">
+    <button class="btn btn-close-sidbar">
+        <i class="fa fa-close"></i>
+    </button>
     <ul class="">
         <li class="elementTextDashboard">
             <a href="/dashboard/teacher/" class="d-flex">

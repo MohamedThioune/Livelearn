@@ -10,7 +10,7 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
-view($post,$user_visibility);
+view($post);
 
 $course_type = get_field('course_type', $post->ID);
 

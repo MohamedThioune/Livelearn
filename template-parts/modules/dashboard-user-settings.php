@@ -596,7 +596,7 @@ if(!empty($bunch)){
                                         <div class="contentEducationCandidat">
                                             <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
                                             <p class="textDetailCategorie"><?php echo $value[1]; ?> </p>
-                                            <a href="" class="seeProject">See project</a>
+                                            <a href="#" class="seeProject">See project</a>
                                             <form action="" method="POST">
                                                 <input type="hidden" name="id" value="<?php echo $key; ?>">
                                                 <button class="btn btn-danger" style="color:white" name="delete_portfolio" type="submit"><i class="fa fa-trash"></i></button>

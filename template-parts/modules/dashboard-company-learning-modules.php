@@ -204,7 +204,7 @@ $orders = wc_get_orders($order_args);
                     ?>
                 </tbody>
             </table>
-        </div>
+        </div> 
     </div> 
     -->
 
@@ -395,7 +395,9 @@ $orders = wc_get_orders($order_args);
                         <td class="textTh text-left"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
-                        <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics" >
+                        <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics row<?php echo $course->ID; ?>">
+                        <!-- <td id= "<?php echo $course->ID; ?>" class="textTh onderwerpen row<?php echo $course->ID; ?>"><?php echo $category ?></td> -->
+
                             <?php
                                 $course_subtopics = get_field('categories', $course->ID);
                                 $field = '';
@@ -403,8 +405,17 @@ $orders = wc_get_orders($order_args);
                                 if($course_subtopics != null){
                                     if (is_array($course_subtopics) || is_object($course_subtopics)){
                                         foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if(!$course_subtopic)
+                                                continue;
+                                            if(!is_int($course_subtopic['value']))
+                                                continue;
+
+                                            $topic_category = get_the_category_by_ID($course_subtopic['value']);
+                                            if(is_wp_error($topic_category))
+                                                continue;
+
                                             if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
-                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                $field .= (String)$topic_category . ',';
                                                 array_push($read_topis, intval($course_subtopic['value']));
                                             }
                                         }
@@ -492,18 +503,20 @@ $orders = wc_get_orders($order_args);
         });
 </script>
 
-<!-- <script>
+<script>
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
+
         $.ajax({
-                url:"/fetch-subtopics-course",
-                method:"post",
-                data:
-                {
-                    id_course:id_course,
-                    action:'get_course_subtopics'
-                },
+
+            url:"/fetch-subtopics-course",
+            method:"post",
+            data:
+            {
+                id_course:id_course,
+                action:'get_course_subtopics'
+            },
             dataType:"text",
             success: function(data){
                 // Get the modal
@@ -531,13 +544,14 @@ $orders = wc_get_orders($order_args);
                     modal.style.display = "none";
                     }
                 }
-                        
             }
             });
+
         });
     
     $('#save_subtopics').click(()=>{
-      var subtopics = $('#selected_subtopics').val()
+      var subtopics = $('#selected_subtopics').val();
+
       $.ajax({
         url:"/fetch-subtopics-course",
         method:"post",
@@ -553,12 +567,13 @@ $orders = wc_get_orders($order_args);
             let modal=$('#myModal');
             modal.attr('style', { display: "none" });
             //modal.style.display = "none";
-            $('#'+id_course).html(data)
+            $('.row' + id_course).html(data)
             //console.log(data)
         }
-        })
+        });
+
     });
-</script> -->
+</script>
 
 <script type="text/javascript">
     $(".remove_opleidingen").click(function(){

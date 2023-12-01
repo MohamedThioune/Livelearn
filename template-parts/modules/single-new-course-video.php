@@ -45,15 +45,14 @@ else if(!empty($youtube_videos))
 if(!$read_video)
     $read_video = "<img class='blockImgCour' src='" . $thumbnail . "' alt='preview image'>";
 
-// else
+//Start or Buy
+// if (!$user_id)
+//     $startorbuy ='<button type="button" class="btn btn-buy-now" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal">Start Now</button>';
+// else {
+    $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+    $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
+// }
 
-    //Start or Buy
-    if ($user_id==0)
-        $startorbuy ='<button class="btn btn-buy-now" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal">Start Now</button>';
-    else {
-        $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-        $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-    }
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -62,6 +61,7 @@ if(!empty($counting_rate)):
     $star_review[4] = ($star_review[4] / $counting_rate) * 100;
     $star_review[5] = ($star_review[5] / $counting_rate) * 100;
 endif;
+
 ?>
 <body>
 <div class="content-new-Courses video-content-course">
@@ -192,10 +192,12 @@ endif;
                 
                                         <?php
                                         if(!empty($courses) && !empty($youtube_videos) )
-                                            echo '<div class="element-playlist-course">
-                                                    <div class="d-flex align-items-center group-element">
-                                                        <p class="lecture-text"> 0 <span>lesson founds</span></p>
-                                                        <p class="text-playlist-element">No lesson soon available</p>
+                                            echo '<div class="element-playlist-course visible">
+                                                    <div class="block-playlist-course d-flex">
+                                                        <div class="d-flex align-items-center group-element">
+                                                            <p class="lecture-text"> 0 <span>lesson founds</span></p>
+                                                            <p class="text-playlist-element">No lesson soon available</p>
+                                                        </div>
                                                     </div>
                                                 </div>';
                                         else if(!empty($courses))
@@ -216,13 +218,15 @@ endif;
 
                                                 $lecture_index = $key + 1;
                                                 echo 
-                                                    '<div class="element-playlist-course">
-                                                        <div class="d-flex align-items-center group-element">'
-                                                            .  $read_status_icon . '
+                                                    '<div class="element-playlist-course visible">
+                                                        <div class="block-playlist-course d-flex">
+                                                            <div class="d-flex align-items-center group-element">'
+                                                    .  $read_status_icon . '
                                                             <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
                                                             <a href="' . $link . '" class class="text-playlist-element ' . $style . '">' . $video['course_lesson_title'] . '</a>
                                                         </div>
                                                         <img class="status-icon" src="' . $status_icon . '" alt="">
+                                                        </div>
                                                     </div>';
                                             }
                                         else if(!empty($youtube_videos))
@@ -237,18 +241,26 @@ endif;
 
                                                 $lecture_index = $key + 1;
                                                 echo 
-                                                    '<div class="element-playlist-course">
-                                                        <div class="d-flex align-items-center group-element">
+                                                    '<div class="element-playlist-course visible">
+                                                         <div class="block-playlist-course d-flex">
+                                                            <div class="d-flex align-items-center group-element">
                                                             <img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">
                                                             <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
                                                             <a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['title'] . '</a>
                                                         </div>
                                                         <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
+                                                         </div>
                                                     </div>';
                                             }                                                
                                         
-                                        ?>                                       
+                                        ?>
+
+                                        <div class="pagination-container">
+                                            <!-- Les boutons de pagination seront ajoutés ici -->
+                                        </div>
+
                                     </div>
+
                                 </div>
                             </ul>
 
@@ -742,6 +754,83 @@ endif;
         $("#tab-url1").organicTabs();
 
     });
+</script>
+
+
+<script>
+    const itemsPerPage = 8;
+    const blockList = document.querySelector('.playlist-course-block');
+    const blocks = blockList.querySelectorAll('.element-playlist-course');
+    const paginationContainer = document.querySelector('.pagination-container');
+
+    function displayPage(pageNumber) {
+        const start = (pageNumber - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        blocks.forEach((block, index) => {
+            if (index >= start && index < end) {
+                block.style.display = 'block';
+                block.classList.add('visible');
+            } else {
+                block.style.display = 'none';
+                block.classList.remove('visible');
+            }
+        });
+
+        const containerHeight = blockList.offsetHeight;
+
+        setTimeout(() => {
+            blockList.style.height = containerHeight + 'px';
+        }, 10);
+        setTimeout(() => {
+            blockList.style.height = '';
+        }, 300);
+    }
+
+    function createPaginationButtons() {
+        const pageCount = Math.ceil(blocks.length / itemsPerPage);
+
+        if (pageCount <= 1) {
+            return;
+        }
+
+        let firstButtonAdded = false; // Keep track of whether the first button is added
+
+        for (let i = 1; i <= pageCount; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add('pagination-button');
+            button.addEventListener('click', () => {
+                scrollToTop(); // Scroll to the top when a button is clicked
+                displayPage(i);
+
+                // Remove the .active class from all buttons
+                const buttons = document.querySelectorAll('.pagination-button');
+                buttons.forEach((btn) => {
+                    btn.classList.remove('active');
+                });
+
+                // Add the .active class to the clicked button
+                button.classList.add('active');
+            });
+            paginationContainer.appendChild(button);
+
+            // Add the .active class to the first button
+            if (!firstButtonAdded) {
+                button.classList.add('active');
+                firstButtonAdded = true;
+            }
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    displayPage(1);
+    createPaginationButtons();
+
+
 </script>
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>

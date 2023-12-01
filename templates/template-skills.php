@@ -92,43 +92,63 @@
             <h2>Het LiveLearn Team</h2>
             <div class="team-block">
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Fadel.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Fadel.png" class="" alt="">
+                    </div>
                     <p class="name">FADEL</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice.png" class="" alt="">
+                    </div>
                     <p class="name">MAURICE</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Seydou.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Seydou.png" class="" alt="">
+                    </div>
                     <p class="name">SEYDOU</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Daniel-van-der.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Daniel-van-der.png" class="" alt="">
+                    </div>
                     <p class="name">DANIEL</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Mamadou.png" class="" alt="">
-                    <p class="name">MAMADOU</p>
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/khadim.jpg" class="" alt="">
+                    </div>
+                    <p class="name">KHADIM</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Xander.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Xander.png" class="" alt="">
+                    </div>
                     <p class="name">XANDER</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/inco.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/MOHAMED.png" class="" alt="">
+                    </div>
                     <p class="name">MOHAMED</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/inco.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Oumou.png" class="" alt="">
+                    </div>
                     <p class="name">OUMOU</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ibrahima.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ibrahima.png" class="" alt="">
+                    </div>
                     <p class="name">IBRAHIMA</p>
                 </div>
                 <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/You-next.png" class="" alt="">
+                    <div class="block-img-team">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/You-next.png" class="" alt="">
+                    </div>
                     <p class="name">YOU?</p>
                 </div>
             </div>
