@@ -770,7 +770,7 @@ function xmlParse($data)
                     $message = 'field on change detected and applied<br><br>';
 
                     if ($post['type'] != $course->type) {
-                        $data = ['type' => $post['type']]; // NULL value.
+                        $datas ['type' => $post['type']]; // NULL value.
                         $where = ['id' => $course->id];
                         $updated = $wpdb->update($table, $data, $where);
 
@@ -779,7 +779,7 @@ function xmlParse($data)
                     }
 
                     if ($post['author_id'] != $course->author_id) {
-                        $data = ['author_id' => $author_id]; // NULL value.
+                        $datas ['author_id' => $author_id]; // NULL value.
                         $where = ['id' => $course->id];
                         $updated = $wpdb->update($table, $data, $where);
 
@@ -788,7 +788,7 @@ function xmlParse($data)
                     }
 
                     if ($post['company_id'] != $course->company_id) {
-                        $data = ['company_id' => $company_id]; // NULL value.
+                        $datas ['company_id' => $company_id]; // NULL value.
                         $where = ['id' => $course->id];
                         $updated = $wpdb->update($table, $data, $where);
 
