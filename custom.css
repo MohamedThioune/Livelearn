@@ -22394,6 +22394,9 @@ figure ul li {
 .headerdashboard {
     height: 65px !important;
 }
+.element-btn-load .loading_more{
+    width: fit-content !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
