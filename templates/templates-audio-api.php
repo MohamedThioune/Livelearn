@@ -215,7 +215,6 @@ if ($audio_search){
             'author_id' => $user_id,
             'status' => 'extern'
         );
-        //var_dump($data);die();
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
@@ -224,4 +223,3 @@ if ($audio_search){
     }
     echo $message;
 }
-
