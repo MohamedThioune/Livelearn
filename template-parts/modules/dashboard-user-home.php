@@ -450,7 +450,7 @@ $user_post_view = get_posts(
         'post_status' => 'publish',
         'order' => 'DESC',
         'include' => $id_courses_viewed,
-        'posts_per_page' => -1
+        'posts_per_page' => 1000
     )
 )[0];
 

@@ -3,6 +3,7 @@
 <body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <?php
 $page = 'check_visibility.php';
 require($page);
@@ -16,16 +17,18 @@ $expertise = array();
 
 //Get ID Category
 $category_input = ($_GET['category']) ?: 0;
+$name = get_the_category_by_ID($category_input);
+$error_content = '<h1 class="wordDeBestText2">Category Not Found ❌</h1>';
+if($name):
+    echo $error_content;
+    die();
+endif;
 
 //Get User ID
 $user_id = get_current_user_id();
-// var_dump($user_id);
-// die();
 
-// if (!isset($leervom))
-//     $leervom = array();
-// if (!isset($experties))
-//     $experties = array();
+//Track view
+view_topic($category_input);
 
 //Global posts
 $args = array(
@@ -43,7 +46,6 @@ $order_type = searching_course_by_group($global_posts, 'category', $category_inp
 $expertise = searching_course_by_group($global_posts, 'category', $category_input)['experts'];
 
 //Category information
-$name = get_the_category_by_ID($category_input);
 $genuine_category = get_categories(array('taxonomy' => 'course_category', 'orderby' => 'name', 'hide_empty' => 0, 'include' => (int)$category_input) )[0];
 if(is_wp_error($name) || is_wp_error($genuine_category))
     header('Location: /');
@@ -76,8 +78,6 @@ if(isset($_GET['filter_typo'])):
 endif;
 
 ?>
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
-
 
 <div class="content-community-overview bg-gray">
     <section class="boxOne3-1">
