@@ -1953,4 +1953,9 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'updateYoutube'
     ));
+
+    register_rest_route ('custom/v1', '/clean-video', array(
+        'methods' => 'GET',
+        'callback' => 'cleanVideoCourse'
+    ));
 });
