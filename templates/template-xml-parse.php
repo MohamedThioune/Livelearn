@@ -40,10 +40,6 @@
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
   
   if (isset($fileValues)) {
-    echo "<pre>";
-    echo $fileValues;
-    echo "</pre>";
-    die();
     foreach ($fileValues as $option) {
         $website = $option['value'];
     //Get the URL content
