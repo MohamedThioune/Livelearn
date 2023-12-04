@@ -792,13 +792,16 @@ if (!empty($courses)) {
                 data:{fileValues: fileValues},
                 success:function(data){
                     alert("success");
+                    document.getElementById('content-back-topics').innerHTML = data;
                     $("#loader").css('display','none');
                     $('#select_field').show(1500);
                 },
                 error:function(error){
                     console.log("Error");
+                    document.getElementById('content-back-topics').innerHTML = error;
                 },
                 complete:function(response){
+                    document.getElementById('content-back-topics').innerHTML = response;
                     console.log(response);
                     // location.reload();
                 }
