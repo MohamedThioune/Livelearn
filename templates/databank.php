@@ -285,7 +285,7 @@ if (isset($_GET["message"])) {
                         <br>
                         <div class="col-md-6">
                             Articles:
-                            <select name="companies[]" class="multipleSelect2 form form-control col-md-9" multiple="true" id="select_company">
+                            <select name="companies[]" class="multipleSelect2 form form-control col-md-7" multiple="true" id="select_company">
                                 <!-- <option name="default">Choose companies</option> -->
                                 <?php
                                     foreach ($urls as $key => $url) {
@@ -299,7 +299,7 @@ if (isset($_GET["message"])) {
                         </div>
                         <div class="col-md-6 offset-md-1">
                             Courses:
-                            <select name="XMLFILE[]" class="multipleSelect2 form form-control col-md-9" multiple="true" id="select_file">
+                            <select name="XMLFILE[]" class="multipleSelect2 form form-control col-md-7" multiple="true" id="select_file">
                                     <!-- <option name="default">Choose companies</option> -->
                                     <?php
                                         foreach ($file_xml as $key => $xml) {
