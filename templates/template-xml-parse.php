@@ -76,7 +76,7 @@
       $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum->programDescriptions->programName));
 
       if($image != "")
-        $check_image = $wpdb->get_results($sql_image);
+        $check_image = $wpdb->get_results($sql_image); 
       else
         $check_image = 1;
 
