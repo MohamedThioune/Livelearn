@@ -283,7 +283,7 @@ if (isset($_GET["message"])) {
                 <div class="container contentCardListeCourse">
                     <div class="row">
                         <br>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             Articles:
                             <select name="companies[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_company">
                                 <!-- <option name="default">Choose companies</option> -->
