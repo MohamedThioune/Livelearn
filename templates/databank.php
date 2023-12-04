@@ -780,7 +780,7 @@ if (!empty($courses)) {
 
             selectFile.each(function(){
                 var filename = $(this).val();
-                fileValues.push({value: value});
+                fileValues.push({value: filename});
             });
             $('#select_field').hide(true,2000);
             $('#loader').attr('hidden',false);
