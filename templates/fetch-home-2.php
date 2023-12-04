@@ -261,6 +261,7 @@ if(isset($topic_search)) {
         if ($num == 12)
            break;
 
+
         if (!in_array($user->ID, $teachers))
             continue;
         //get pricing from price of course
