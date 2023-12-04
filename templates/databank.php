@@ -800,7 +800,7 @@ if (!empty($courses)) {
                 },
                 complete:function(response){
                     console.log(response);
-                    location.reload();
+                    // location.reload();
                 }
             });
         });
