@@ -2117,6 +2117,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-period').html(complete_period);
             $.ajax({
                 url:"/fetch-ajax-home2",
+
                 method:"post",
                 data:{
                     period: period,
