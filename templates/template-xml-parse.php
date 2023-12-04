@@ -42,6 +42,7 @@
   if (isset($fileValues)) {
     foreach ($fileValues as $option) {
         $website = $option['value'];
+        var_dump($website);
     //Get the URL content
     $file = get_stylesheet_directory_uri() . "/" . $website ;
     $xml = simplexml_load_file($file);
