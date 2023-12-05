@@ -785,6 +785,123 @@ function get_course_image($data)
 
 // }
 
+function allArticlesOptimized ($data)
+{
+    $current_user_id = $GLOBALS['user_id'];
+    $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+    $course_type = ucfirst(strtolower($_GET['course_type']));
+    $outcome_courses = array();
+    $tags = array();
+    $experts = array();
+    $args = array(
+      'post_type' => array('post'),
+      'post_status' => 'publish',
+      'posts_per_page' => 20,
+      'order' => 'DESC' ,
+      'paged' => $data['page'] ?? 1
+    );
+    $results = new WP_Query($args);
+    //return $results->posts;
+    // $courses = array();
+    $i = 0;
+    $courses = $results->posts;
+    if ($results->have_posts()) :  while ($results->have_posts()) : $results->the_post();
+         $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
+         $author = get_user_by( 'ID', $courses[$i] -> post_author  );
+         $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+          if ($courses[$i]->visibility != []) 
+            if ($author_company != $current_user_company)
+              continue;
+              $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              $courses[$i]->experts = array();
+              $experts = get_field('experts',$courses[$i]->ID);
+              if(!empty($experts))
+                foreach ($experts as $key => $expert) {
+                  $expert = get_user_by( 'ID', $expert );
+                  $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                  array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+                  }
+              //return $courses;    
+             $courses[$i]-> author = new Expert ($author , $author_img);
+             $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+             $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+             $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+            // Image - article
+             $image = get_field('preview', $courses[$i]->ID)['url'];
+             if(!$image){
+                 $image = get_the_post_thumbnail_url($courses[$i]->ID);
+                 if(!$image)
+                     $image = get_field('url_image_xml', $courses[$i]->ID);
+                         if(!$image)
+                             $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+             }
+             $courses[$i]->pathImage = $image;
+             $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+             $courses[$i]->youtubeVideos =  []  ;
+             $courses[$i]->podcasts = [];
+             $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
+             $tags = get_field('categories',$courses[$i]->ID) ?? [];
+             $courses[$i]->tags= array();
+             if($tags)
+               if (!empty($tags))
+                 foreach ($tags as $key => $category) 
+                   if(isset($category['value'])){
+                     $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                     array_push($courses[$i]->tags,$tag);
+                   }
+  
+                 /**
+                  * Handle Image exception
+                  */
+                //  $handle = curl_init($courses[$i]->pathImage);
+                //  curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+  
+                 /* Get the HTML or whatever is linked in $url. */
+                 //$response = curl_exec($handle);
+  
+                 /* Check for 200 (file ok). */
+                //  $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                //  if($httpCode != 200) {
+                //      /* Handle 404 here. */
+                //      $courses[$i]->pathImage = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+                //    }
+                //  curl_close($handle);
+                
+             $new_course = new Course($courses[$i]);
+             array_push($outcome_courses, $new_course);
+              $i++;
+  endwhile;
+endif;
+shuffle($outcome_courses);
+return ['courses' => $outcome_courses, "codeStatus" => 200];
+    //   if (!$courses)
+  //     return ["courses" => [],'message' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
+      
+  //   if (!isset ($data['page'])) 
+  //     $page = 1;  
+  //   else   
+  //     $page = $data['page'];
+  //   if(!empty($courses))
+  //     $number_of_post = count($courses);
+  // $results_per_page = 20;
+  // $start = ($page-1) * $results_per_page ;
+  // $end = ( ($page) * $results_per_page ) > $number_of_post ? $number_of_post : ($page) * $results_per_page   ;
+
+  // $number_of_page = ceil($number_of_post / $results_per_page);
+
+  // if($number_of_page < $data['page'])
+  //   return ["courses" => [],'message' => "Page doesn't exist ! ","codeStatus" => 400];  
+  
+  // foreach(
+  //   $courses as $i => $course
+  //  // $i=$start; $i < $end ;  $i++
+  //   ) 
+  // {
+  //     
+  //   shuffle($outcome_courses);
+  //  return ['courses' => $outcome_courses, "codeStatus" => 200];
+}
+
 function allArticles ($data)
 {
     $current_user_id = $GLOBALS['user_id'];
@@ -889,6 +1006,7 @@ function allArticles ($data)
     shuffle($outcome_courses);
    return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
+
 
 function get_saved_course()
 {
@@ -2629,7 +2747,7 @@ function save_user_views(WP_REST_Request $request)
         foreach($child_topics_id as $categoriee){
           if($merge_categories_id)
             if(in_array($categoriee, $merge_categories_id)){
-                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}matchin_topics WHERE topic_id = %d AND post_id = %d", array($categoriee, $blog->ID));
+                $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}matchin_topics WHERE topic_id = %d AND post_id = %d", array($topic->cat_ID, $blog->ID));
                 $iteration = $wpdb->get_results( $sql )[0];
             
                 if($iteration)
@@ -2638,7 +2756,7 @@ function save_user_views(WP_REST_Request $request)
                 
                 // Insert matching course to each course record 
                 $table_matching = $wpdb->prefix . 'matchin_topics';
-                $data = ['topic_id' => $categoriee, 'post_id' => $blog->ID];
+                $data = ['topic_id' => $topic->cat_ID, 'post_id' => $blog->ID];
                 $wpdb->insert($table_matching, $data);
                 // $born = true;
 
