@@ -776,12 +776,12 @@ if (!empty($courses)) {
     $(document).ready(function(){
         $('#xmlparse').on('click', function(){
             var selectedOptions = $('#select_file').find('option:selected');
-            var selectedValues = [];
+            var selectedxmlValues = [];
 
             selectedOptions.each(function() {
             var value = $(this).val();
             var text = $(this).text();
-            selectedValues.push({value: value, text: text});
+            selectedxmlValues.push({value: value, text: text});
             });
             $('#select_field').hide(true,2000);
             $('#loader').attr('hidden',false);
@@ -790,7 +790,7 @@ if (!empty($courses)) {
             $.ajax({
                 type: "POST",
                 url: "/xml-parse",
-                data: { selectedValues: selectedValues },
+                data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
                     document.getElementById('content-back-topics').innerHTML = response;
