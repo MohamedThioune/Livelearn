@@ -794,7 +794,7 @@ if (!empty($courses)) {
                 success: function(response) {
                     console.log(response);
                     document.getElementById('content-back-topics').innerHTML = response;
-                    window.location.href('/xml-parse');
+                    window.location.href='/xml-parse';
                 },error:function() {
                     console.log('error');
                 },
