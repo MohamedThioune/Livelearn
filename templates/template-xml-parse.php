@@ -39,8 +39,8 @@
   //Start inserting course 
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
   
-  if (isset($fileValues)) {
-    foreach ($fileValues as $option) {
+  if (isset($selectValues)) {
+    foreach ($selectValues as $option) {
         $website = $option['value'];
         
         var_dump($website);
