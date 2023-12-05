@@ -450,7 +450,7 @@ $user_post_view = get_posts(
         'post_status' => 'publish',
         'order' => 'DESC',
         'include' => $id_courses_viewed,
-        'posts_per_page' => -1
+        'posts_per_page' => 1000
     )
 )[0];
 
@@ -936,7 +936,7 @@ if(isset($_GET['message']))
                 </ul>
 
                 <ul id="Artikel" class="hide">
-                    <div class="block-new-card-course" id="autocomplete_recommendation_Artikel">
+                    <div class="block-new-card-course grid" id="autocomplete_recommendation_Artikel">
                         <center>
                         <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                         </center>
@@ -1085,7 +1085,7 @@ if(isset($_GET['message']))
                 </ul>
 
                 <ul id="Podcast" class="hide" >
-                    <div class="block-new-card-course" id="autocomplete_recommendation_Podcast">
+                    <div class="block-new-card-course grid" id="autocomplete_recommendation_Podcast">
                         <center>
                         <div hidden="true" id="loader_recommendation_Podcast" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                         </center>
@@ -1234,7 +1234,7 @@ if(isset($_GET['message']))
                 </ul>
 
                 <ul id="Opleidingen" class="hide">
-                    <div class="block-new-card-course" id="autocomplete_recommendation_Opleidingen">
+                    <div class="block-new-card-course grid" id="autocomplete_recommendation_Opleidingen">
                         <center>
                         <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                         </center>
@@ -1383,7 +1383,7 @@ if(isset($_GET['message']))
                 </ul>
 
                 <ul id="Video" class="hide">
-                    <div class="block-new-card-course" id="autocomplete_recommendation_Video">
+                    <div class="block-new-card-course grid" id="autocomplete_recommendation_Video">
                         <center>
                         <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                         </center>
@@ -1532,7 +1532,7 @@ if(isset($_GET['message']))
                 </ul>
 
                 <ul id="Trends" class="hide">
-                    <div class="block-new-card-course">
+                    <div class="block-new-card-course grid">
                         <?php
                         $courses = (!empty($courses)) ? $courses : $global_courses;
                         $courses = (!empty($courses)) ? $courses : $more_global_courses;

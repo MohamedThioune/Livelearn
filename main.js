@@ -29,6 +29,7 @@ jQuery(function($) {
     $('#modalForApp .close').click(function() {
         $('#modalForApp').hide();
     });
+    // script to show sidebar on mobile
 
 /*  //  pour cokkies et modal
 

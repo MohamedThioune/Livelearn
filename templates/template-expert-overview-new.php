@@ -1,26 +1,108 @@
-<?php /** Template Name: overview user */ ?>
+<?php /** Template Name: Expert overview */ ?>
 
 <body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <?php
 $page = 'check_visibility.php';
 require($page);
-?>
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+// Modules
+require_once('search-module.php'); 
 
+$courses = array();
+$order_type = array();
+$expertise = array();
+
+//Get ID Expert
+$expert_input_id = ($_GET['id']) ?: 0;
+$expert_input = get_user_by('ID', $expert_input_id);
+
+$error_content = '<h1 class="wordDeBestText2">Expert Not Found ❌</h1>';
+if(!$expert_input):
+    echo $error_content;
+    die();
+endif;
+
+//Track view
+view_user($expert_input->ID);
+
+//Get User ID
+$user_id = get_current_user_id();
+
+//Global posts
+$args = array(
+    'post_type' => array('post','course'),
+    'post_status' => 'publish',
+    'orderby' => 'date',
+    'order'   => 'DESC',
+    'posts_per_page' => -1,
+);
+$global_posts = get_posts($args);
+
+// Category post 
+$courses = searching_course_by_group($global_posts, 'expert', $expert_input_id)['courses'];
+// $order_type = searching_course_by_group($global_posts, 'expert', $expert_input_id)['order_type'];
+$expertise = searching_course_by_group($global_posts, 'expert', $expert_input_id)['experts'];
+
+//Experts followed
+$experts_followed = get_user_meta($user_id, 'expert');
+
+// Expert information //
+// $genuine_category = get_categories(array('taxonomy' => 'course_category', 'orderby' => 'name', 'hide_empty' => 0, 'include' => (int)$category_input) )[0];
+// if(is_wp_error($name) || is_wp_error($genuine_category))
+//     header('Location: /');
+$name = ($expertie->last_name) ? $expert_input->first_name : $expert_input->display_name;
+$image_expert = get_field('profile_img',  'user_' . $expert_input->ID);
+$image_expert = $image_expert ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+$company_expert = get_field('company',  'user_' . $expert_input->ID);
+// $company_id = isset($company[0]->ID) ? $company[0]->ID : [0];
+$company_name = isset($company_expert[0]->post_title) ? $company_expert[0]->post_title : 'None';
+
+//Portfolio
+$experiences = get_field('work',  'user_' . $expert_input_id);
+$default_content_bio = "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br> 
+                        Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+$biographical_info = get_field('biographical_info', 'user_' . $expert_input_id) ?: $default_content_bio;
+$country = get_field('country',  'user_' . $expert_input_id) ?: 'Netherlands';
+$phone = get_field('telnr',  'user_' . $expert_input_id) ?: '(xxx) xxxx xx';
+$email = $expert_input->user_email;
+?>
 
 <div class="content-community-overview bg-gray">
     <section class="boxOne3-1">
+
         <div class="container">
             <div class="BaangerichteBlock">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/profil-user.png" class="img-head-about" alt="">
-                <h1 class="wordDeBestText2">Jenny Wilson</h1>
-                <h2 class="name-company">Starbucks</h2>
-                <button class="btn btn-follown" type="button">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/follow-icon.svg" class="img-follown" alt="">
-                    Follow
-                </button>
+                <img src="<?= $image_expert ?>" class="img-head-about" alt="">
+                <h1 class="wordDeBestText2"><?= $name ?></h1>
+                <h2 class="name-company"><?= $company_name ?></h2>
+                <form action="../dashboard/user/" method="POST">
+                    <input type='hidden' name='filter_args' value='1'>
+                    <input type="hidden" name="meta_value" value="<?= $expert_input_id ?>" id="">
+                    <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                    <?php
+                    $follow = '
+                    <button class="btn btn-follown" type="submit" name="interest_push">
+                        <img src="' . get_stylesheet_directory_uri() . '/img/follow-icon.svg" class="img-follown" alt="">
+                        Follow
+                    </button>';
+                    $unfollow = '
+                    <button class="btn btn-follown" type="submit" name="delete">
+                        <img src="' . get_stylesheet_directory_uri() . '/img/follow-icon.svg" class="img-follown" alt="">
+                        UnFollow
+                    </button>';
+
+                    if($user_id)
+                        if (in_array($expert_input_id, $experts_followed)):
+                            echo '<input type="hidden" name="meta_key" value="expert" id="">';
+                            echo $unfollow;
+                        else:
+                            echo '<input type="hidden" name="meta_key" value="expert" id="">';
+                            echo $follow;
+                        endif;
+                    ?>
+                </form>
              </div>
     </section>
     <section class="content-product-search content-company-overview">
@@ -39,22 +121,19 @@ require($page);
                             <ul id="Overview">
                                 <div class="card-overview-profil">
                                     <p class="title-overview-profil">About</p>
-                                    <p class="description-overview-profil">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                        <br>
-                                        t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident,
-                                        sometimes on purpose (injected humour and the like).</p>
+                                    <p class="description-overview-profil"><?= $biographical_info ?></p>
                                     <div class="d-flex group-other-info flex-wrap">
                                         <div class="d-flex element-content-other-info">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_baseline-phone.svg" alt="">
-                                            <p>(123)33 123 234</p>
+                                            <p><?= $phone ?></p>
                                         </div>
                                         <div class="d-flex element-content-other-info">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_baseline-email.svg" alt="">
-                                            <p>user@email.domain</p>
+                                            <p><?= $email ?></p>
                                         </div>
                                         <div class="d-flex element-content-other-info">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/bxs_map.svg" alt="">
-                                            <p>50 rue Rambuteau à Paris 3e – 6 salles</p>
+                                            <p><?= $country ?></p>
                                         </div>
                                     </div>
                                 </div>

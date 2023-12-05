@@ -1430,7 +1430,7 @@ ul.sub-menu li a {
 .sidBarDashboardIndividual {
     width: 300px;
     position: fixed;
-    padding: 100px 5px 15px 20px;
+    padding: 150px 5px 15px 20px;
     overflow-y: auto;
     max-height: 100vh;
     left: 0;
@@ -1440,7 +1440,7 @@ ul.sub-menu li a {
     padding-top: 0px !important;
 }
 .theme-learning {
-    padding-top: 55px;
+    padding-top: 115px;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
@@ -2672,7 +2672,7 @@ input:focus-visible {
 
 .content-head-ecosystem {
     margin: 0 auto;
-    padding: 60px 100px 68px;
+    padding: 115px 100px 68px;
 }
 
 .content-head-ecosystem h1 {
@@ -3140,7 +3140,7 @@ input:focus-visible {
 
 .testimonialBlock {
     background: linear-gradient(104.04deg, #043356 0.23%, #1967D2 100.23%);
-    padding: 60px 0;
+    padding: 115px 0;
 }
 
 .TitleTestimonial {
@@ -4043,7 +4043,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .headerdashboard {
-    height: 60px;
+    height: 115px;
     position: fixed;
 }
 
@@ -5041,7 +5041,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .contentCart #emptyImgCart {
-    margin: 60px auto 16px;
+    margin: 115px auto 16px;
 }
 
 .contentCart p {
@@ -7069,6 +7069,7 @@ input:checked~.assassment {
     margin-top: 1px;
     position: absolute;
     left: 24px;
+    bottom: 11px;
 }
 
 .logoDashboard {
@@ -9685,7 +9686,7 @@ ul#tabs-nav li.active a {
 }
 
 .bodyOntwikkeladvies {
-    padding-top: 60px;
+    padding-top: 115px;
 }
 
 .elkeVolgendeTitle {
@@ -10252,6 +10253,7 @@ select {
     border-bottom: 0;
     padding: 0;
     margin-bottom: 15px;
+    margin-top: 115px;
 }
 
 .contentListeCourseDataBank .table thead th {
@@ -10936,7 +10938,7 @@ select {
 }
 
 .canhas .liveOverBlock {
-    padding-top: 60px;
+    padding-top: 115px;
 }
 
 .liveOverBlock2 {
@@ -13066,7 +13068,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     padding: 30px 30px 40px;
     border: 1px solid rgba(48,146,85,0.2);
     border-radius: 10px;
-    margin-top: 60px;
+    margin-top: 115px;
 }
 .widget-information .info-list {
     display: flex;
@@ -13231,7 +13233,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-home2 .voorBlock {
     margin-bottom: 0;
     margin-top: 0;
-    padding-top: 85px;
+    padding-top: 50px;
 }
 .content-home2 .boxOne3{
     display: block;
@@ -13316,8 +13318,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .logo-parteners-left{
     position: absolute;
     left: 30px;
-    top: 150px;
+    top: 104px;
     height: 400px;
+
+
 }
 .logo-parteners-right{
     position: absolute;
@@ -13846,7 +13850,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin-bottom: 75px;
 }
 .content-home2 .contentSix {
-    margin-bottom: 60px;
+    margin-bottom: 115px;
 }
 .content-voor-2 .blockForm2 {
     width: 100%;
@@ -14537,7 +14541,7 @@ background: #FFFFFF !important;
 .content-detail-community .second-section-community{
     background: #E0EFF4;
     border-top: 1px solid white;
-    padding-top: 60px;
+    padding-top: 115px;
 }
 .second-section-community .cours-block{
     display: flex;
@@ -14705,7 +14709,7 @@ background: #FFFFFF !important;
 }
 .content-cards-credit-details{
     background: #deeef3;
-    padding: 60px 0 80px;
+    padding: 115px 0 80px;
 }
 .content-cards-credit-details .contentFormSubscription {
     width: 70%;
@@ -15915,14 +15919,16 @@ background: #FFFFFF !important;
     width: 100% !important;
 }
 .ur-frontend-form .ur-form-row input {
-    color: #023356;
-    font-size: 14px;
-    padding: 10px 21px !important;
-    margin-bottom: 15px !important;
-    background: #FFFFFF !important;
     border-radius: 8px !important;
-    border: unset !important;
-    width: 100% !important;
+    color: #023356 !important;
+    font-size: 15px;
+    padding: 13px 21px !important;
+    margin-bottom: 20px !important;
+    background: #FFFFFF !important;
+    border: 1px solid rgb(4 51 86 / 27%) !important;
+}
+.ur-frontend-form .ur-form-row input::placeholder {
+    color: #023356 !important;
 }
 .btn-remove-assessments{
     color: red;
@@ -16818,7 +16824,7 @@ background: #FFFFFF !important;
     z-index: 99;
     position: fixed;
     width: 100%;
-    top: 60px;
+    top: 115px;
 }
 .content-start-course .headBlock a{
     font-weight: 400;
@@ -18943,7 +18949,7 @@ background: #FFFFFF !important;
 }
 .content-new-Courses .body-content{
     background: #F5F5F5;
-    padding: 60px 0;
+    padding: 115px 0;
 }
 .content-new-Courses .body-content ul:first-child{
     display: flex;
@@ -19368,7 +19374,8 @@ background: #FFFFFF !important;
     font-size: 15px;
     line-height: 21px;
     margin-bottom: 0;
-    margin-right: 20px;
+    margin-right: 18px;
+    min-width: 75px;
 }
 .element-playlist-course .group-element {
     width: 96%;
@@ -19501,7 +19508,7 @@ background: #FFFFFF !important;
 }
 .content-course-podcast .body-content {
     background: unset;
-    padding: 60px 0;
+    padding: 115px 0;
 }
 .content-course-podcast #tab-url1 .nav li .current {
     color: #ffffff !important;
@@ -20235,7 +20242,7 @@ background: #FFFFFF !important;
     z-index: 999;
     height: auto;
     left: 270px;
-    top: 60px;
+    top: 115px;
 }
 .upskilling-block .blockdropdownnHeader ul:first-child {
     width: 30%;
@@ -20613,7 +20620,7 @@ background: #FFFFFF !important;
     margin-bottom: 0;
 }
 .customize-support .content-detail-assessment{
-    padding-top: 60px;
+    padding-top: 115px;
 }
 .content-detail-assessment .customTabs {
     margin-top: 45px;
@@ -21510,11 +21517,16 @@ background: #FFFFFF !important;
 .dropdownNotificationWeb .content-tab .contentBlockSetting {
     border: none;
 }
+
 .content-new-user .grid .loader-course{
     width: 48%;
     margin-bottom: 25px;
 }
-.content-new-user .grid .new-card-course {
+.content-new-user .grid .new-card-course{
+    width: 48%;
+    margin-bottom: 25px;
+}
+.content-new-user .grid .loader-course .new-card-course {
     width: 100%;
     display: block;
     margin-bottom: 0;
@@ -22356,6 +22368,37 @@ figure ul li {
     width: 33%;
     padding: 0 15px;
 }
+.sectionArtikelZZpers .owl-item .new-card-course {
+    max-height: 440px !important;
+}
+.btn-show-sidbar, .btn-close-sidbar{
+    display: none;
+}
+.playlist-course-block .pagination-container , .list-content-podcast .pagination-container, .section-tabs .pagination-container {
+    padding: 20px 0 25px !important;
+}
+.playlist-course-block .pagination-container button , .list-content-podcast .pagination-container button, .section-tabs .pagination-container button {
+    padding: 2px 9px !important;
+}
+.flag-img-nav {
+    height: 15px;
+    display: none;
+}
+.flag .active {
+    display: inline;
+}
+.language-selectorCustom{
+    display: flex;
+    align-items: center;
+}
+.language-selector-custom .active{
+    display: block;
+}
+#language-selector{
+    display: none !important;
+}
+
+
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -22806,10 +22849,13 @@ figure ul li {
         overflow: scroll;
         width: 100%;
     }
-    .cardPeople {
+    .cardPeopleModife {
         background: white;
         border-radius: 8px;
-        margin: 0 0px 5px 0px;
+        margin: 40px 15px 0px;
+    }
+    .blockManageTeam {
+        margin: 0 15px !important;
     }
     .JouwOpleid {
         font-size: 15px;
@@ -22855,6 +22901,7 @@ figure ul li {
     .contentPageManager {
         padding-top: 0px;
         overflow-x: hidden;
+        margin-top: 30px;
     }
     .logoModife {
         width: 44px !important;
@@ -22992,7 +23039,7 @@ figure ul li {
     }
     .content-head-ecosystem {
         margin: 0 auto;
-        padding: 60px 100px 68px;
+        padding: 115px 100px 68px;
     }
     .content-head-ecosystem h1 {
         font-size: 28px;
@@ -25336,7 +25383,7 @@ figure ul li {
     }
     .content-community-overview .frist-block-about .Ons-verhaal-block {
         width: 100%;
-        padding: 0 18px;
+        padding: 0 15px;
     }
     .content-community-overview .frist-block-about .block-img-about {
         width: 100%;
@@ -25640,11 +25687,14 @@ figure ul li {
         min-width: 134px;
         font-size: 14px;
         margin-bottom: 20px;
+        width: 55%;
     }
     .btn-Functionaliteiten {
         padding: 9px 20px !important;
         min-width: 165px;
         font-size: 14px;
+        width: 70%;
+        margin-bottom: 50px;
     }
     .img-zzpers {
         width: 100%;
@@ -25701,7 +25751,7 @@ figure ul li {
         font-size: 27px;
     }
     .block-functionaliteiten {
-        padding: 0px;
+        padding: 0 15px;
     }
     .card-functionaliteiten {
         width: 100%;
@@ -26711,7 +26761,8 @@ figure ul li {
         padding-top: 0px;
     }
     .group-btn-corporate{
-        display: block;
+        display: flex;
+        flex-wrap: wrap;
     }
     .group-btn-corporate .btn-Functionaliteiten{
         margin-top: 10px;
@@ -26974,6 +27025,62 @@ figure ul li {
     }
     .section-revolutionnaire:first-child .row {
         flex-direction: column;
+    }
+    .right-block-detail-course {
+        margin-top: 0;
+    }
+    .content-new-user .grid .loader-course{
+        width: 100%;
+        margin-bottom: 25px;
+    }
+    .content-new-user .grid .new-card-course{
+        width: 100%;
+        margin-bottom: 25px;
+    }
+    .first-section-dashboard #tab-url1 {
+        padding: 0;
+    }
+     .learningDatabankContent.cardOverviewCours {
+        margin: 60px 15px 15px;
+    }
+    .btn-show-sidbar{
+        display: block;
+        margin: 50px 15px 0;
+        width: 93%;
+        border: 1px solid #00a89d;
+        padding: 13px 5px;
+        border-radius: 15px;
+        color: #043356;
+    }
+    .btn-show-sidbar:hover{
+        background: #00a89d;
+        color: #FFFFFF;
+    }
+    .header-user {
+        background: #e1eff5;
+    }
+    .show-sidbar{
+        display: block;
+    }
+    .show-sidbar #sectionDashboard1 {
+        display: block;
+        top: 5px;
+        margin-left: 15px;
+        width: 95%;
+        box-shadow: none;
+    }
+    .btn-close-sidbar {
+        display: block;
+        position: absolute;
+        right: 0;
+    }
+    .btn-close-sidbar .fa-close:before {
+        color: rgb(15,15,15);
+        font-size: 22px;
+    }
+    .sidBarDashboardIndividual {
+        width: 100%;
+        box-shadow: unset;
     }
 
 
@@ -27719,7 +27826,7 @@ figure ul li {
     .card-communities {
         background: white;
         width: 48%;
-        margin-right: 14px;
+        margin-right: 0px;
         margin-bottom: 20px;
     }
     .tabs-search-block .head {
@@ -27876,7 +27983,7 @@ figure ul li {
         width: 100%;
     }
     .card-pub-course {
-        margin: 10px 15px 0;
+        margin: 10px 0px 0;
         max-width: 100%;
     }
     .content-sub-topic .block-filter {
@@ -27897,6 +28004,9 @@ figure ul li {
         min-width: 120px;
         width: fit-content;
         margin: 35px auto 0;
+    }
+    .block-reverse .carousel-indicators {
+        bottom: 0px !important;
     }
 
 

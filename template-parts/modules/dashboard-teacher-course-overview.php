@@ -21,8 +21,7 @@ $assessment_single = "Assessment";
 $podcast_single = "Podcast";
 
 ?>
-<div class="contentListeCourse"> 
-
+<div class="contentListeCourse">
     <div class="cardOverviewCours">
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -191,7 +190,6 @@ $podcast_single = "Podcast";
                     <?php
                     }
                     ?>
-
                 </tbody>
             </table>
         </div>

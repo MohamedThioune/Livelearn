@@ -285,6 +285,39 @@ $url = home_url( $wp->request );
 
         <div class="contentOne">
             <nav class="navbar navWeb navbar-expand-lg navbar-dark navModife">
+                <div class="sub-navbar sub-nab-base w-100">
+                    <div class="container-fluid">
+                        <div class="content-sub-nabar w-100 d-flex justify-content-between align-items-center">
+                            <div class="frist-block-subnav d-flex">
+                                <img class="check-subnnav" src="<?php echo get_stylesheet_directory_uri();?>/img/check-subnnav.png" alt="">
+                                <p class="mb-0">Wij zijn compleet onafhankelijk van alle opleiders, experts en aangesloten organisaties </p>
+                            </div>
+                            <div class="second-block-subnavbar d-flex align-items-center">
+                                <a href="/contact" class="btn-contact-sales">Contact Sales / demo?</a>
+                                <div class="block-rating-subnav d-flex">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                </div>
+                                <p class="mb-0 number-rating-header">9,3 / 2412</p>
+                                <img class="iconSubnav" src="<?php echo get_stylesheet_directory_uri();?>/img/iconSubnav.png" alt="">
+
+                                <div id="language-selector" class="d-flex language-selector-custom">
+                                    <select id="language-select" onchange="changeLanguage(this.value)">
+                                        <option value="fr">Français</option>
+                                        <option value="en">English</option>
+                                        <!-- Ajoutez d'autres langues au besoin -->
+                                    </select>
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-fr.jpg" alt="French Flag" class="flag flag-img-nav active" id="flag-fr">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-en.jpg" alt="English Flag" class="flag flag-img-nav " id="flag-en">
+                                    <!-- Ajoutez d'autres drapeaux au besoin -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="container-fluid">
                     <a class="navbar-brand navBrand" href="/">
                         <div class="logoModife">
@@ -547,7 +580,7 @@ $url = home_url( $wp->request );
                                 </ul>
                                 <ul class="secondUlModal ">
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Opleidingen">
+                                        <a href="/product-search?filter=Opleidingen">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleidingen-Header.jpg" alt="">
                                             </div>
@@ -557,7 +590,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=E-learning">
+                                        <a href="/product-search?filter=E-learning">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/E-learning-header.jpg" alt="">
                                             </div>
@@ -567,7 +600,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Lezing">
+                                        <a href="/product-search?filter=Lezing">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Lezingen-header.jpg" alt="">
                                             </div>
@@ -577,7 +610,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Training">
+                                        <a href="/product-search?filter=Training">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
                                             </div>
@@ -587,7 +620,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Video">
+                                        <a href="/product-search?filter=Video">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Video's-header.jpg" alt="">
                                             </div>
@@ -597,7 +630,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Event">
+                                        <a href="/product-search?filter=Event">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Evens-header.jpg" alt="">
                                             </div>
@@ -607,7 +640,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Workshop">
+                                        <a href="/product-search?filter=Workshop">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/workshop.jpg" alt="">
                                             </div>
@@ -617,7 +650,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Artikel">
+                                        <a href="/product-search?filter=Artikel">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Artikelen-header.jpg" alt="">
                                             </div>
@@ -627,7 +660,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Webinar">
+                                        <a href="/product-search?filter=Webinar">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/webinar-header.jpg" alt="">
                                             </div>
@@ -637,7 +670,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Masterclass">
+                                        <a href="/product-search?filter=Masterclass">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Masterclasses-header.jpg" alt="">
                                             </div>
@@ -647,7 +680,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Assessment">
+                                        <a href="/product-search?filter=Assessment">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Assessments-header.jpg" alt="">
                                             </div>
@@ -657,7 +690,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Podcast">
+                                        <a href="/product-search?filter=Podcast">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcasts-header.jpg" alt="">
                                             </div>

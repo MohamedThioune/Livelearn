@@ -320,7 +320,6 @@ foreach ($author_courses as $key => $course) {
     if($initial == 6)
         break;
 } 
-
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-new-course-multi-date.php');
 else if($course_type == 'Video')
