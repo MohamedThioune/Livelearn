@@ -775,34 +775,32 @@ if (!empty($courses)) {
 
     $(document).ready(function(){
         $('#xmlparse').on('click', function(){
-            var selectFile= $('#select_file').find('option:selected');
-            var fileValues= []; 
+            var selectedOptions = $('#select_file').find('option:selected');
+            var selectedValues = [];
 
-            selectFile.each(function(){
-                var filename = $(this).val();
-                fileValues.push({value: filename});
+            selectedOptions.each(function() {
+            var value = $(this).val();
+            var text = $(this).text();
+            selectedValues.push({value: value, text: text});
             });
             $('#select_field').hide(true,2000);
             $('#loader').attr('hidden',false);
 
-            //send fileValues array via AJA to php file
+            // Send selectedValues array via AJAX to PHP file
             $.ajax({
-                type:"POST",
-                url:"/xml-parse",
-                data:{fileValues: fileValues},
-                success:function(data){
-                    alert("success");
-                    document.getElementById('content-back-topics').innerHTML = data;
-                    $("#loader").css('display','none');
-                    $('#select_field').show(1500);
-                },
-                error:function(error){
-                    console.log("Error");
-                    document.getElementById('content-back-topics').innerHTML = error;
+                type: "POST",
+                url: "/xml-parse",
+                data: { selectedValues: selectedValues },
+                success: function(response) {
+                    console.log(response);
+                    // document.getElementById('content-back-topics').innerHTML = response;
+                    location.reload();
+                },error:function() {
+                    console.log('error');
                 },
                 complete:function(response){
-                    document.getElementById('content-back-topics').innerHTML = response;
-                    console.log(response);
+                    $('#select_field').hide(false,2000);
+                    $('#loader').attr('hidden',true);
                     // location.reload();
                 }
             });
