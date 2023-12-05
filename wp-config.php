@@ -83,7 +83,7 @@ $table_prefix = 'wpe7_';
  */
 
 // Enable WP_DEBUG mode
-define( 'WP_DEBUG', true );
+define( 'WP_DEBUG', false );
 
 // Enable Debug logging to the /wp-content/debug.log file
 define( 'WP_DEBUG_LOG', true );

@@ -1012,7 +1012,7 @@ $saved = get_user_meta($user_id, 'course');
 
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
-                <form action="/product-search" class="position-relative newFormSarchBar" method="GET">
+                <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
                         foreach($type_course as $type)
@@ -1377,9 +1377,8 @@ $saved = get_user_meta($user_id, 'course');
             <?php
             $num = 1;
             if(!empty($most_active_members)){
-                for($i = count($most_active_members); $i>0; $i--) {
-                    $user = $most_active_members[$i];
-
+                //for($i = count($most_active_members); $i>0; $i--) {
+                  foreach ($most_active_members as $index => $user) {
                     if ($num == 13)
                             break;
 
@@ -1464,10 +1463,9 @@ $saved = get_user_meta($user_id, 'course');
                     /* get price from post doing by user for free course */
 
                     /**
-                    * Put points on object user
-                    */
-                    if($user)
-                        $user->pricing = $pricing;
+                     * put points on object user
+                     */
+                    $user->pricing = $pricing;
                     /**
                      * Get purchantages (courses courent year)/(courses last year)
                      */
@@ -1702,7 +1700,7 @@ $saved = get_user_meta($user_id, 'course');
                     <p class="textAlloOP">Alle opleidingen</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/waarom-skills/" class="cardBoxSix">
+                <a href="/skills-passport/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
                     <p class="textAlloOP">Skills paspoort</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
@@ -2087,6 +2085,9 @@ $saved = get_user_meta($user_id, 'course');
                     console.log('elt : ',data);
                     $('#autocomplete_categorieen').html(data);
                 },
+                error: function (err) {
+                    console.log('error : ',err);
+                },
                 complete:function (complete) {
                     $('#loader').addClass('d-none');
                 }
@@ -2115,8 +2116,12 @@ $saved = get_user_meta($user_id, 'course');
                     console.log('elt');
                     $('#autocomplete_categorieen').html(data);
                 },
+                error: function (error) {
+                    console.log('error : ',error);
+                },
                 complete:function (complete) {
                     $('#loader').addClass('d-none');
+                    console.log(complete)
                 }
             });
         });
