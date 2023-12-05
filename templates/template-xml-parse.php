@@ -40,6 +40,7 @@
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
   
   if (isset($selectValues)) {
+    var_dump('ici');
     foreach ($selectValues as $option) {
         $website = $option['value'];
         
