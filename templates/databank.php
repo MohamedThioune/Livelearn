@@ -775,7 +775,7 @@ if (!empty($courses)) {
 
     $(document).ready(function(){
         $('#xmlparse').on('click', function(){
-            var selectFile= $('#select_xml').find('option:selected');
+            var selectFile= $('#select_file').find('option:selected');
             var fileValues= []; 
 
             selectFile.each(function(){
