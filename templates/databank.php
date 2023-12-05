@@ -299,7 +299,7 @@ if (isset($_GET["message"])) {
                         </div>
                         <div class="col-md-6 offset-md-1">
                             Courses:
-                            <select name="XMLFILE[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_file">
+                            <select name="xmlfile[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_file">
                                     <!-- <option name="default">Choose companies</option> -->
                                     <?php
                                         foreach ($file_xml as $key => $xml) {
@@ -794,7 +794,7 @@ if (!empty($courses)) {
                 success: function(response) {
                     console.log(response);
                     // document.getElementById('content-back-topics').innerHTML = response;
-                    location.reload();
+                    // location.reload();
                 },error:function() {
                     console.log('error');
                 },
