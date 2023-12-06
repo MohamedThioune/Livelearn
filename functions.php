@@ -1949,13 +1949,18 @@ add_action( 'rest_api_init', function () {
     'callback' => 'register_company'
   ));
 
-    register_rest_route ('custom/v1', '/update-youtube', array(
-        'methods' => 'GET',
-        'callback' => 'updateYoutube'
-    ));
+  register_rest_route ('custom/v1', '/update-youtube', array(
+    'methods' => 'GET',
+    'callback' => 'updateYoutube'
+  ));
 
-    register_rest_route ('custom/v1', '/clean-video', array(
-        'methods' => 'GET',
-        'callback' => 'cleanVideoCourse'
-    ));
+  register_rest_route ('custom/v1', '/clean-video', array(
+    'methods' => 'GET',
+    'callback' => 'cleanVideoCourse'
+  ));
+
+  register_rest_route ('custom/v1', '/homepage', array(
+    'methods' => 'GET',
+    'callback' => 'homepage'
+  ));
 });
