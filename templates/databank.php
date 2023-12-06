@@ -198,6 +198,43 @@ $urls =
     'The Violin Channel' => 'https://www.theviolinchannel.com/',
     'Carey Nieuwhof' => 'https://careynieuwhof.com/',
 ];
+
+$file_xml = [
+    '112BHV'=>'112bhv-20231101.1430.xml',
+    '2xplain'=>'2xplain-b.v-20230925.0140.xml', 
+    'agile scrum group'=>'agile-scrum-group-20230922.1323.xml', 
+    'Anker Kompas'=>'anker-kompas-20230922.1323.xml', 
+    'Aeres Tech'=>'aeres-tech-20230925.0141.xml',
+    'Edumia'=>'edumia-20231024.1105.xml',
+    'Arbeidsmarktcommunicatie'=>'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml',
+    'Beeckestijn'=>'beeckestijn-20231101.2250.xml',
+    'berenschot'=>'berenschot-20231101.1421.xml',
+    'bhv.nl'=>'bhv.nl-20231102.0032.xml',
+    'BIT Academy'=>'bit-academy-20231101.1430.xml',
+    'BLOM'=>'blom-20231102.0026.xml',
+    'Bureau-Vris'=>'bureau-vris-20231101.1431.xml',
+    'Buro Brand'=>'buro-brand-20231101.1422.xml',
+    'CM Partners'=>'cm-partners-20231102.0033.xml',
+    'Comenius'=>'comenius-20231101.1422.xml',
+    'Competence Factory'=>'competence-factory-20231102.0027.xml',
+    'Faculty of Skills'=>'faculty-of-skills-20231101.1430.xml',
+    'Frankwatching'=>'frankwatching-20231102.0033.xml',
+    'Growth Tribe'=>'growth-tribe-20231101.1422.xml', 
+    'Horizon'=>'horizon-20231102.0028.xml',
+    'HR Academy'=>'hr-academy-20231102.0028.xml',
+    'Kenneth Smit'=>'kenneth-smit-20231102.0028.xml',
+    'Kenneth Smit Direct'=>'kenneth-smit-direct-20231102.0028.xml',
+    'Possible'=>'possible-20231102.0028.xml',
+    'Saxion Parttime School'=>'saxion-parttime-school-20231101.1423.xml',
+    'Scheidegger'=>'scheidegger-20231102.0027.xml',
+    'Schouten Nelissen'=>'schouten-nelissen-20231102.0028.xml',
+    'Start2Move'=>'start2move-20231101.1423.xml',
+    'TekkieWorden'=>'tekkieworden-20231101.1423.xml',
+    'TVVL'=>'tvvl-20231101.1423.xml',
+    'Vijfhart'=>'vijfhart-20231102.0028.xml',
+    'Winc Academy'=>'winc-academy-20231101.1423.xml',
+    'Yearth Academy'=>'yearth-academy-20231102.0029.xml'
+  ];
 ?>
 
 <?php wp_head();?>
@@ -219,10 +256,10 @@ if (isset($_GET["message"])) {
 ?>
                <div class="headListeCourse">
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
-                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse" title="load course from youtube"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
-                       &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" title="load course from XML" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" title="load subtopics"><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
-                       &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" title="load course from youtube via file"><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button>
+                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
+                       <!-- &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?//=get_stylesheet_directory_uri();?>/img/xml-orange.jpg" alt="xml image"></a> -->
+                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
+                       &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button>
                        <!--<button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
                        </button>-->
@@ -243,10 +280,12 @@ if (isset($_GET["message"])) {
                         </button>
                     </div>
                 </div>
-                <div class="contentCardListeCourse">
-                    <center class="col-md-4 offset-md-4" style="justify-content:center;align-content:center;">
+                <div class="container contentCardListeCourse">
+                    <div class="row">
                         <br>
-                            <select name="companies[]" class="multipleSelect2 form form-control col-md-9" multiple="true" id="select_company">
+                        <div class="col-md-5">
+                            Articles:
+                            <select name="companies[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_company">
                                 <!-- <option name="default">Choose companies</option> -->
                                 <?php
                                     foreach ($urls as $key => $url) {
@@ -257,8 +296,23 @@ if (isset($_GET["message"])) {
                                 ?>
                             </select>
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
+                        </div>
+                        <div class="col-md-6 offset-md-1">
+                            Courses:
+                            <select name="xmlfile[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_file">
+                                    <!-- <option name="default">Choose companies</option> -->
+                                    <?php
+                                        foreach ($file_xml as $key => $xml) {
+                                        ?>
+                                        <option class="options"  value="<?=$xml?>" selected="" ><?=$key?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+                                &nbsp;&nbsp;<a id="xmlparse">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
+                        </div>
                         <br>
-                    </center>
+                    </div>
                     <br>
                     <br>
                     <form action="#" method="post"> 
@@ -719,6 +773,40 @@ if (!empty($courses)) {
         // console.log(ids);
     }
 
+    $(document).ready(function(){
+        $('#xmlparse').on('click', function(){
+            var selectedOptions = $('#select_file').find('option:selected');
+            var selectedxmlValues = [];
+
+            selectedOptions.each(function() {
+            var value = $(this).val();
+            var text = $(this).text();
+            selectedxmlValues.push({value: value, text: text});
+            });
+            $('#select_field').hide(true,2000);
+            $('#loader').attr('hidden',false);
+
+            // Send selectedValues array via AJAX to PHP file
+            $.ajax({
+                type: "POST",
+                url: "/xml-parse",
+                data: { selectedxmlValues: selectedxmlValues },
+                success: function(response) {
+                    console.log(response);
+                    document.getElementById('content-back-topics').innerHTML = response;
+                    window.location.href='/xml-parse';
+                },error:function() {
+                    console.log('error');
+                },
+                complete:function(response){
+                    $('#select_field').hide(false,2000);
+                    $('#loader').attr('hidden',true);
+                    // location.reload();
+                }
+            });
+        });
+    });
+
     $(document).ready(function() {
         $('#bouddha').on('click', function() {
             var selectedOptions = $('#select_company').find('option:selected');
@@ -919,8 +1007,6 @@ if (!empty($courses)) {
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
                     location.reload();
-                    // alert("Record applied successfully");  
-                    location.reload();
                     // alert("Record applied successfully");
                 }
             });
@@ -1053,6 +1139,7 @@ if (!empty($courses)) {
             }
         });
     });
+
 </script>
 
 <script defer id="rendered-js" >
@@ -1092,6 +1179,5 @@ $(document).ready(function () {
         });
     })
 </script>
-
 <?php get_footer();?>
 <?php wp_footer();?>
