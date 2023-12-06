@@ -1717,12 +1717,15 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allArticles',
   ));
 
+  register_rest_route('custom/v2', '/courses', array(
+    'methods' => 'GET',
+    'callback' => 'allCoursesOptimized',
+  ));
+
   register_rest_route('custom/v2', '/articles', array(
     'methods' => 'GET',
     'callback' => 'allArticlesOptimized',
   ));
-
-  
 
   register_rest_route('custom/v1', '/offline/courses', array(
     'methods' => 'GET',
@@ -1749,10 +1752,6 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'course_recommendation_by_follow',
   ));
-
-  
-
-  
 
   register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
     'methods' => 'GET',
@@ -1956,13 +1955,18 @@ add_action( 'rest_api_init', function () {
     'callback' => 'register_company'
   ));
 
-    register_rest_route ('custom/v1', '/update-youtube', array(
-        'methods' => 'GET',
-        'callback' => 'updateYoutube'
-    ));
+  register_rest_route ('custom/v1', '/update-youtube', array(
+    'methods' => 'GET',
+    'callback' => 'updateYoutube'
+  ));
 
-    register_rest_route ('custom/v1', '/clean-video', array(
-        'methods' => 'GET',
-        'callback' => 'cleanVideoCourse'
-    ));
+  register_rest_route ('custom/v1', '/clean-video', array(
+    'methods' => 'GET',
+    'callback' => 'cleanVideoCourse'
+  ));
+
+  register_rest_route ('custom/v1', '/homepage', array(
+    'methods' => 'GET',
+    'callback' => 'homepage'
+  ));
 });
