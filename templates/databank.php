@@ -298,7 +298,7 @@ if (isset($_GET["message"])) {
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         </div>
                         <div class="col-md-6 offset-md-1">
-                            Courses:
+                            Coursess:
                             <select name="xmlfile[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_file">
                                     <!-- <option name="default">Choose companies</option> -->
                                     <?php

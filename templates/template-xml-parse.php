@@ -18,7 +18,7 @@
   /** Template Name: xml parse */ 
 
   global $wpdb;
-  
+
   extract($_POST);
 
   function RandomString(){
@@ -42,11 +42,10 @@
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
   
   if (isset($selectedxmlValues)) {
-    var_dump('ici');
+    
     foreach ($selectedxmlValues as $option) {
         $website = $option['value']; 
         
-        var_dump($website);
         $author_id = NULL;
     //Get the URL content
     $file = get_stylesheet_directory_uri() . "/" . $website ;
@@ -67,6 +66,8 @@
       $course_type = "Opleidingen";
       $image = "";
       
+      var_dump('ici');
+
       /*
       Get the url media image
       */
