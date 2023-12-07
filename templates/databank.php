@@ -793,7 +793,7 @@ if (!empty($courses)) {
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
-                    document.getElementById('content-back-topics').innerHTML = response;
+                    // document.getElementById('content-back-topics').innerHTML = response;
                     // window.location.href='/xml-parse';
                 },error:function() {
                     console.log('error');
@@ -801,7 +801,7 @@ if (!empty($courses)) {
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    // location.reload();
+                    location.reload();
                 }
             });
         });
