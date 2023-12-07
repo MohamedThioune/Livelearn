@@ -1,4 +1,4 @@
-²<?php /** Template Name: Edit Databank */ ?>
+<?php /** Template Name: Edit Databank */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -495,10 +495,3 @@ $(document).ready(function () {
 <script src="<?php echo get_stylesheet_directory_uri();?>/customSurmmote.js"></script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
-
-
-
-
-
-
-
