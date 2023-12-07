@@ -284,7 +284,7 @@ $url = home_url( $wp->request );
         </div>
 
         <div class="contentOne">
-            <nav class="navbar navWeb navbar-expand-lg navbar-dark navModife">
+            <nav class="navbar navWeb navbar-expand-lg navbar-dark navModife" id="nav-with-top-bar">
                 <div class="sub-navbar sub-nab-base w-100">
                     <div class="container-fluid">
                         <div class="content-sub-nabar w-100 d-flex justify-content-between align-items-center">
@@ -293,7 +293,7 @@ $url = home_url( $wp->request );
                                 <p class="mb-0">Wij zijn compleet onafhankelijk van alle opleiders, experts en aangesloten organisaties </p>
                             </div>
                             <div class="second-block-subnavbar d-flex align-items-center">
-                                <a href="/contact" class="btn-contact-sales">Contact Sales / demo?</a>
+                                <a href="" class="btn-contact-sales">Contact Sales / demo?</a>
                                 <div class="block-rating-subnav d-flex">
                                     <span class="fa fa-star checked"></span>
                                     <span class="fa fa-star checked"></span>
@@ -314,6 +314,8 @@ $url = home_url( $wp->request );
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-en.jpg" alt="English Flag" class="flag flag-img-nav " id="flag-en">
                                     <!-- Ajoutez d'autres drapeaux au besoin -->
                                 </div>
+
+
                             </div>
                         </div>
                     </div>

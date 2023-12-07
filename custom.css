@@ -1430,7 +1430,7 @@ ul.sub-menu li a {
 .sidBarDashboardIndividual {
     width: 300px;
     position: fixed;
-    padding: 150px 5px 15px 20px;
+    padding: 107px 5px 15px 20px;
     overflow-y: auto;
     max-height: 100vh;
     left: 0;
@@ -1440,7 +1440,7 @@ ul.sub-menu li a {
     padding-top: 0px !important;
 }
 .theme-learning {
-    padding-top: 115px;
+    padding-top: 50px;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
@@ -6027,7 +6027,7 @@ nav .show {
 }
 
 .rate:not(:checked)>label:before {
-    content: '★ ';
+    content: 'â˜… ';
 }
 
 .rate>input:checked~label {
@@ -8140,7 +8140,7 @@ tbody {
             height: 27px;
         }
         .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
-             margin-top: 0px !important;
+            margin-top: 0px !important;
         }
         .cardKraam2 {
             height: fit-content !important;
@@ -8180,10 +8180,10 @@ tbody {
             position: relative;
             display: -webkit-inline-box;
         }
-       .body-content-view-statistic .subTopics-usage-block .subTopics-card {
-           height: initial !important;
-           overflow: scroll;
-       }
+        .body-content-view-statistic .subTopics-usage-block .subTopics-card {
+            height: initial !important;
+            overflow: scroll;
+        }
         .individualContent .subTopics-usage-block .subTopics-card {
             height: 357px !important;
             overflow: scroll;
@@ -10253,7 +10253,6 @@ select {
     border-bottom: 0;
     padding: 0;
     margin-bottom: 15px;
-    margin-top: 115px;
 }
 
 .contentListeCourseDataBank .table thead th {
@@ -10512,13 +10511,13 @@ select {
 }
 
 .block2evensTabs @keyframes open {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
+                     0% {
+                         opacity: 0;
+                     }
+                     100% {
+                         opacity: 1;
+                     }
+                 }
 
 .block2evensTabs details summary::-webkit-details-marker {
     display: none !important;
@@ -13233,7 +13232,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-home2 .voorBlock {
     margin-bottom: 0;
     margin-top: 0;
-    padding-top: 50px;
+    padding-top: 85px;
 }
 .content-home2 .boxOne3{
     display: block;
@@ -13318,10 +13317,8 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .logo-parteners-left{
     position: absolute;
     left: 30px;
-    top: 104px;
+    top: 150px;
     height: 400px;
-
-
 }
 .logo-parteners-right{
     position: absolute;
@@ -14194,7 +14191,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     padding: 0 30px;
 }
 .head-content-subscription .element-detail-cart{
-   display: flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
@@ -14428,12 +14425,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
     align-items: center;
 }
 .first-section-community .block-first-selection .first-col{
-   width: 45%;
-   margin: 0 auto;
+    width: 45%;
+    margin: 0 auto;
 }
 .first-section-community .block-first-selection .second-col{
-   width: 33%;
-   margin: 0 auto;
+    width: 33%;
+    margin: 0 auto;
 }
 .first-section-community .card-detail-element{
     box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px;
@@ -14533,7 +14530,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 16px;
 }
 .skills-mesure .bg-gris-Skills{
-background: #FFFFFF !important;
+    background: #FFFFFF !important;
 }
 .skills-mesure .skillbars .progress {
     background: #00A89D;
@@ -16367,7 +16364,7 @@ background: #FFFFFF !important;
     margin-bottom: 0;
 }
 .card-all-certificat{
-   background: #FFFFFF;
+    background: #FFFFFF;
 }
 .card-all-certificat table th, .table td {
     text-align: center !important;
@@ -16675,7 +16672,7 @@ background: #FFFFFF !important;
     overflow: hidden;
 }
 .imgUserElement img{
-   width: 100%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
 }
@@ -22394,12 +22391,12 @@ figure ul li {
 .language-selector-custom .active{
     display: block;
 }
-#language-selector{
-    display: none !important;
+.headerdashboard {
+    height: 65px !important;
 }
-
-
-
+.element-btn-load .loading_more{
+    width: fit-content !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -24931,7 +24928,7 @@ figure ul li {
     .modal-topics-expert .head .position-relative {
         width: 100%;
     }
-   #bedrijfsprofiel_modal .nav-pills{
+    #bedrijfsprofiel_modal .nav-pills{
         height: 34px;
         display: flex;
         flex-wrap: wrap;
@@ -25043,7 +25040,7 @@ figure ul li {
         height: 100%;
         object-fit: contain;
     }
-   .text-Probeer {
+    .text-Probeer {
         margin-bottom: 0;
         font-size: 12px;
     }
@@ -27040,7 +27037,7 @@ figure ul li {
     .first-section-dashboard #tab-url1 {
         padding: 0;
     }
-     .learningDatabankContent.cardOverviewCours {
+    .learningDatabankContent.cardOverviewCours {
         margin: 60px 15px 15px;
     }
     .btn-show-sidbar{
