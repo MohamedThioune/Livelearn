@@ -19,7 +19,7 @@ $expertise = array();
 $category_input = ($_GET['category']) ?: 0;
 $name = get_the_category_by_ID($category_input);
 $error_content = '<h1 class="wordDeBestText2">Category Not Found ❌</h1>';
-if($name):
+if(!$name):
     echo $error_content;
     die();
 endif;
@@ -86,6 +86,7 @@ endif;
                 <img src="<?= $image_category ?>" class="img-head-about" alt="">
                 <h1 class="wordDeBestText2"><?= $name ?></h1>
                 <form action="../dashboard/user/" method="POST">
+                    <input type="hidden" name="category" value="1" id="">
                     <input type="hidden" name="meta_value" value="<?= $category_input ?>" id="">
                     <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
                     <?php
@@ -129,7 +130,7 @@ endif;
                     <div class="block-subTocis d-flex flex-wrap">
                         <?php
                             foreach ($typo_course as $typo) 
-                                echo '<a href="?category='. $category_input .'&filter_typo='.$typo.'" class="btn btn-subTopics">' . $typo . ' - '.$order_type[$typo].' </a>';
+                                echo '<a href="?category='. $category_input .'&filter_typo='.$typo.'" class="btn btn-subTopics">' . $typo . '</a>';
                         ?>
                        
                     </div>
@@ -167,8 +168,7 @@ endif;
                     '<div class="block-new-card-course grid" id="autocomplete_recommendation">';
                         foreach($courses as $post):
                             if(!$post)
-                            continue;
-                        
+                                continue;
 
                             $hidden = true;
                             $hidden = visibility($post, $visibility_company);
@@ -177,26 +177,8 @@ endif;
 
                             /* Displaying information */
 
-                            //Tags information
-                            $category = " ";
-                            $category_id = 0;
-                            $id_category = 0;
-                            if($tag == ' '){
-                                $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
-                                $category_xml = intval(get_field('category_xml', $post->ID)[0]['value']);
-                                if($category_xml)
-                                    if($category_xml != 0){
-                                        $id_category = $category_xml;
-                                        $category = (String)get_the_category_by_ID($category_xml);
-                                    }
-                                if($category_id)
-                                    if($category_id != 0){
-                                        $id_category = $category_id;
-                                        $category = (String)get_the_category_by_ID($category_id);
-                                    }
-                            }
-
                             $course_type = get_field('course_type', $post->ID);
+                            
                             //Image information
                             $thumbnail = get_field('preview', $post->ID)['url'];
                             if(!$thumbnail){
@@ -340,8 +322,7 @@ endif;
                     if(!empty($expertise)):
                         echo '
                         <div class="sub-section">
-                            <p class="description-sub-section">Expert</p>
-                        ';
+                            <p class="description-sub-section">Expert</p>';
                             $i = 0;
                             foreach($expertise as $id):
                                 $expertie = get_user_by('ID', $id);
