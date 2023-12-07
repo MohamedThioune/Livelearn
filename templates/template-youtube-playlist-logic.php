@@ -328,6 +328,5 @@ if ($playlist_youtube) {
         echo '<h3>No news playlists found</h3>';
 
   //Empty youtube channels after parse
- 
  //update_field('youtube_playlists', null , 'user_'. $author_id);
 }

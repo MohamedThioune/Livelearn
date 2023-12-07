@@ -403,7 +403,7 @@ if (!$is_first_login && get_current_user_id() != 0 )
 
 <?php
 
-$void_content ='<center>
+$void_content ='<center> 
                 <h2>No content found !</h2> 
                 <img src="' . get_stylesheet_directory_uri() . '/img' . '/void-content.gif" alt="content image requirements">
                 </center>';

@@ -350,6 +350,8 @@ if (isset($_GET["message"])) {
                             </tr>
                             </thead>
                             <tbody>
+
+
                             <?php
 if (!empty($courses)) {
     foreach ($courses as $course) {

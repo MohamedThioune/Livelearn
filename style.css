@@ -9,13 +9,9 @@ Version:      1.0.0
 Tags:         custom child
 Text Domain:  fluidify-child
 */
-body {
-    overflow-x: hidden;
-    font-family: "Ubuntu";
-}
-
 body, html {
     overflow-x: hidden;
+    font-family: "Ubuntu";
 }
 .ccn_context_frontend header.ccnHeader1.header-nav.menu_style_home_one {
     display: none !important;

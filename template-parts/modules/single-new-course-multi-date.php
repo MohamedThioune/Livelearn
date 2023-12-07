@@ -40,6 +40,7 @@ endif;
 ?>
 
 <body>
+
 <div class="content-new-Courses">
     <div class="content-head">
         <div class="container-fluid">
