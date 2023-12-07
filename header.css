@@ -511,8 +511,6 @@ form {
     .navWeb {
         display: none !important;
     }
-
-
 }
 
 @media screen and (max-width: 1079px) and (min-width: 768px){

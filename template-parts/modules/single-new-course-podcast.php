@@ -774,7 +774,6 @@ endif;
         }, 300);
     }
 
-
     function createPaginationButtons() {
         const pageCount = Math.ceil(blocks.length / itemsPerPage);
 

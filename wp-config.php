@@ -20,6 +20,7 @@ define( 'WP_CACHE', false ); // Added by WP Rocket
  * @package WordPress
  */
 
+
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'influid_wp161' );
