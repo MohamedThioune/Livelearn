@@ -2,7 +2,7 @@
 
 /* * Liggeey * */
 
-//Home page
+//Home page [GET]
 function homepage(){
   $categories = [];
   $artikels = [];
@@ -44,7 +44,7 @@ function homepage(){
     'post_type' => 'post',
     'post_status' => 'publish',
     'order' => 'DESC',
-    'posts_per_page' => 3,
+    'posts_per_page' => -1,
   );
   $posts = get_posts($args);
 
@@ -90,10 +90,10 @@ function homepage(){
 
     $sample = (Object)$sample;
     array_push($artikels, $sample);
-    
+
+    $i += 1;
     if($i >= $limit_post)
       break;
-    $i += 1;
 
   endforeach;
   $infos['artikels'] = $artikels;
@@ -121,9 +121,9 @@ function homepage(){
 
     array_push($candidates, $sample);
 
+    $i += 1; 
     if($i >= $limit_candidate)
       break;
-    $i++;
 
   }
   $infos['candidates'] = $candidates;
