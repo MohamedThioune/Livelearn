@@ -57,3 +57,30 @@ function updateYoutube(){
         echo "<h1 class='textOpleidRight'> $number_of_episodes episodes are added in the course : $course->ID  </h1>";
     }
 }
+
+function cleanVideoCourse(){
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'ordevalue' => 'podcast',
+        'order' => 'DESC' ,
+        'meta_key'   => 'course_type',
+        'meta_value' => "video"
+    );
+    $videos  = get_posts($args);
+
+    $correct_videos = array();
+    foreach ($videos as  $course) {
+        $youtube_playlists = get_field('youtube_videos', $course->ID);
+        if (!$youtube_playlists)
+            continue;
+        foreach ($youtube_playlists as $youtube_playlist) {
+            if ($youtube_playlist['id'] && $youtube_playlist['title'] && $youtube_playlist['thumbnail_url'])
+                $correct_videos [] = $youtube_playlist;
+        }
+        update_field('youtube_videos', null, $course->ID);
+        update_field('youtube_videos', $correct_videos, $course->ID);
+        echo "<h1 class='textOpleidRight'>the course  $course->ID is updating...</h1>";
+    }
+}

@@ -1700,7 +1700,7 @@ $saved = get_user_meta($user_id, 'course');
                     <p class="textAlloOP">Alle opleidingen</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/skills-passport/" class="cardBoxSix">
+                <a href="/waarom-skills/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
                     <p class="textAlloOP">Skills paspoort</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
@@ -2071,7 +2071,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-categorien').html(complete_categorieen);
 
             $.ajax({
-                url:"/livelearn/fetch-ajax-home2",
+                url:"/fetch-ajax-home2",
                 method:"post",
                 data:{
                     topic_search: topic_search,
@@ -2102,7 +2102,7 @@ $saved = get_user_meta($user_id, 'course');
             var complete_period = selectedOptions.text;
             $('#complete-period').html(complete_period);
             $.ajax({
-                url:"/livelearn/fetch-ajax-home2",
+                url:"/fetch-ajax-home2",
                 method:"post",
                 data:{
                     period: period,

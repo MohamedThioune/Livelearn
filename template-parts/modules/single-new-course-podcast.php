@@ -533,6 +533,7 @@ endif;
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="right-block-detail-course">
                         <div class="card-detail-course">
@@ -606,6 +607,7 @@ endif;
                         </div>
                     </div>
                 </div>
+
             </div>
             <?php
             if(!empty($similar_course)):
@@ -757,6 +759,11 @@ endif;
             }
         });
 
+        const specificBlock = blockList.querySelector('#tab-url1');
+        if (specificBlock) {
+            specificBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        alert("ok");
         const containerHeight = blockList.offsetHeight;
 
         setTimeout(() => {
@@ -766,6 +773,7 @@ endif;
             blockList.style.height = '';
         }, 300);
     }
+
 
     function createPaginationButtons() {
         const pageCount = Math.ceil(blocks.length / itemsPerPage);

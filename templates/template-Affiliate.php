@@ -74,7 +74,7 @@
                 <p class="description">Ontketen de kracht van levenslang leren! Doe mee met ons affiliate programma en bouw mee aan een wereld waarin educatie voor iedereen toegankelijk is. </p>
                 <p class="description">Samen streven we ernaar om professionele ontwikkeling te stimuleren en vaardigheden naar nieuwe hoogten te tillen. Ons LiveLearn-platform biedt innovatieve leermogelijkheden en tools die succes en groei mogelijk maken. Door samen te werken, kunnen we een positieve impact creëren en de toekomst vormgeven.</p>
                 <p class="description">Word vandaag nog onze partner en versterk je inkomsten terwijl je anderen helpt hun potentieel te verwezenlijken. Sluit je aan bij ons affiliate programma en bouw mee aan een leven lang leren voor iedereen!</p>
-                <a href="/template-form/" class="btn btn-wordt">Wordt Affiliate</a>
+                <a href="/template-form/" class="btn btn-wordt">Word Affiliate</a>
             </section>
         </div>
         <section class="section-Hoe-affiliate">
