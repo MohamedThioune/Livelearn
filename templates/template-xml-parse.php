@@ -19,6 +19,8 @@
 
   global $wpdb;
 
+  extract($_POST);
+
   function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randstring = '';
@@ -39,18 +41,18 @@
   //Start inserting course 
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
   
-  if (isset($selectxmlValues)) {
-    var_dump('ici');
-    foreach ($selectxmlValues as $option) {
-        $website = $option['value'];
+  if (isset($selectedxmlValues)) {
+    
+    foreach ($selectedxmlValues as $option) {
+        $website = $option['value']; 
         
-        var_dump($website);
+        $author_id = NULL;
     //Get the URL content
     $file = get_stylesheet_directory_uri() . "/" . $website ;
     $xml = simplexml_load_file($file);
     $data_xml = $xml->program;
+    // var_dump($xml->program);
 
-    $author_id = NULL;
 
     echo "<h3>".$data_xml[0]->programClassification->orgUnitId." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
 
@@ -64,7 +66,7 @@
       $status = 'extern';
       $course_type = "Opleidingen";
       $image = "";
-      
+
       /*
       Get the url media image
       */
