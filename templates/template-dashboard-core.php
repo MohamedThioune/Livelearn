@@ -749,26 +749,35 @@ else if(isset($interest_push)){
                 wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
             }
             add_user_meta($user_id, $meta_key, $meta_value);
+
             // Badges
             topic_expert_badges();
-            if(isset($artikel)){
-                $path = get_permalink($artikel) . "/?message=Succesvol followed";
-                header("location: " . $path);
-            }
-            else{
-                $message = "Succesvol toegevoegd";
-                header("location: ../../dashboard/user/?message=" . $message);
-            }
             
+            //Redirect to 
+            $message = "Succesvol followed";
+            if(isset($artikel))
+                $path = "location: " . get_permalink($artikel) . "/?message=" . $message;
+            else if(isset($category))
+                $path = "location: /category-overview/?category=" . $meta_value  . "&message=" . $message;
+            else if(isset($expert))
+                $path = "location: /user-overview/?id=" . $meta_value  . "&message=" . $message;
+            else
+                $path = "location: /dashboard/user/?message=" . $message;
+
+            header($path);
         }else{
-            if(isset($artikel)){
-                $path = get_permalink($artikel) . "/?message=Reeds aanwezig in jouw favorieten";
-                header("location: " .$path);
-            }
-            else{
-                $message = "Reeds aanwezig in jouw favorieten";
-                header("location: ../../dashboard/user/?message=".$message);
-            }
+            //Redirect to 
+            $message = "Reeds aanwezig in jouw favorieten";
+            if(isset($artikel))
+                $path = "location: " . get_permalink($artikel) . "/?message=" . $message;
+            else if(isset($category))
+                $path = "location: /category-overview/?category=" . $meta_value  . "&message=" . $message;
+            else if(isset($expert))
+                $path = "location: /user-overview/?id=" . $meta_value  . "&message=" . $message;
+            else
+                $path = "location: /dashboard/user/?message=" . $message;
+            
+            header($path);
         }
     }
 }
@@ -785,21 +794,22 @@ else if(isset($interest_push)){
 else if(isset($delete)){
     if($meta_value != null){
         if(delete_user_meta($user_id, $meta_key, $meta_value)){
-            if(isset($artikel)){
-                $path = get_permalink($artikel) . "/?message=Succesvol unfollowed";
-                header("location: " .$path);
+            $message = "Succesvol unfollowed";
+            $user_connected = get_current_user_id();
+
+            if(isset($artikel))
+                $path = "location: " . get_permalink($artikel) . "/?message=" . $message;
+            else if(isset($category))
+                $path = "location: /category-overview/?category=" . $meta_value  . "&message=" . $message;
+            else if(isset($expert))
+                $path = "location: /user-overview/?id=" . $meta_value  . "&message=" . $message;
+            elseif($meta_key == "topic" || $meta_key == "topic_affiliate")
+                $path = "location: /dashboard/user/?message=" . $message;
+            else
+                $path = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
+
+            header($path);
             }
-            else{
-                $message = "Met succes verwijderd";
-                if($meta_key == "topic" || $meta_key == "topic_affiliate")
-                    header("location: /dashboard/user/?message=".$message);
-                else{
-                    $user_connected = get_current_user_id();
-                    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
-                    header("location: ".$content);
-                }
-            }
-        }
     }
 }
 
@@ -914,8 +924,8 @@ else if(isset($road_course_add)){
     header("Location: ". $message);
 } 
 
-else if(isset($review_post)){        
-    $reviews = get_field('reviews', $course_id);
+else if(isset($review_post) || isset($review_expert)){        
+    $reviews = (isset($review_post)) ? get_field('reviews', $course_id) : get_field('user_reviews', 'user_' . $expert_id);
     $review = array();
     $review['user'] = wp_get_current_user();
     $review['rating'] = $rating;
@@ -926,15 +936,23 @@ else if(isset($review_post)){
 
         array_push($reviews,$review);
 
-        update_field('reviews',$reviews, $course_id);
+        if(isset($review_post))
+            update_field('reviews', $reviews, $course_id);
+        elseif(isset($review_expert))
+            update_field('user_reviews', $reviews, 'user_' . $expert_id);
+
         if($post_type == 'community')
             $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
+        elseif(isset($review_expert))
+            $message = '/user-overview/?id=' . $expert_id . '&message=Your review added successfully !'; 
         else 
             $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
     }
     else
         if($post_type == 'community')
             $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
+        elseif(isset($review_expert))
+            $message = '/user-overview/?id=' . $expert_id . '&message=Your review added successfully !'; 
         else 
             $message = get_permalink($course_id) . '/?message=User not find ...';        
 
