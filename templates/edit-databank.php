@@ -371,7 +371,7 @@ $companies = get_posts($args);
                         <div class="groupInputDate">
                             <div class="input-group">
                                 <label for="">End date</label>
-                                <input type="date" name="end_date[]" value="<?= $data_last ?>"  required> 
+                                <input type="date" name="end_date[]" value="<?= $data_last ?>"  required>
                             </div>
                         </div>
                         <div class="input-group-course">
@@ -388,7 +388,7 @@ $companies = get_posts($args);
                     else{
                     ?>
                         <div class="">
-                            <div class="groupInputDate"> 
+                            <div class="groupInputDate">
                                 <div class="input-group form-group colM">
                                     <label for="">Start date</label>
                                     <input type="date" name="start_date[]">
