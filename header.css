@@ -508,6 +508,9 @@ form {
     .navbar {
         height: 63px;
     }
+    .navWeb {
+        display: none !important;
+    }
 
 
 }

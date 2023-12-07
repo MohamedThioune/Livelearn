@@ -450,7 +450,7 @@ $user_post_view = get_posts(
         'post_status' => 'publish',
         'order' => 'DESC',
         'include' => $id_courses_viewed,
-        'posts_per_page' => -1
+        'posts_per_page' => 1000
     )
 )[0];
 
@@ -928,14 +928,14 @@ if(isset($_GET['message']))
                                 <button class="btn btnNext loading_more">Load all</button><br>
                                 <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                             </div>
-                        </div>
+                    </div>
                 </ul>
 
                 <ul id="Artikel" class="hide">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Artikel">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                             <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 
@@ -1080,9 +1080,9 @@ if(isset($_GET['message']))
 
                 <ul id="Podcast" class="hide" >
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Podcast">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Podcast" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                            <div hidden="true" id="loader_recommendation_Podcast" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 
@@ -1227,9 +1227,9 @@ if(isset($_GET['message']))
 
                 <ul id="Opleidingen" class="hide">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Opleidingen">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                             <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 
@@ -1374,9 +1374,9 @@ if(isset($_GET['message']))
 
                 <ul id="Video" class="hide">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Video">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                            <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 

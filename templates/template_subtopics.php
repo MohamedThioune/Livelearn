@@ -74,7 +74,7 @@
                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                 'parent'  => $categories[2],
                 'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ) 
+            )
         );
                 
         $categorys = array(); 
