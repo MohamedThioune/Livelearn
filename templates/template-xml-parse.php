@@ -51,6 +51,7 @@
     $file = get_stylesheet_directory_uri() . "/" . $website ;
     $xml = simplexml_load_file($file);
     $data_xml = $xml->program;
+    var_dump($data_xml);
 
 
     echo "<h3>".$data_xml[0]->programClassification->orgUnitId." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
@@ -65,8 +66,6 @@
       $status = 'extern';
       $course_type = "Opleidingen";
       $image = "";
-      
-      var_dump('ici');
 
       /*
       Get the url media image
