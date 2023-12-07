@@ -42,7 +42,7 @@
   if (isset($selectedxmlValues)) {
     var_dump('ici');
     foreach ($selectedxmlValues as $option) {
-        $website = $option['value'];
+        $website = $option['value']; 
         
         var_dump($website);
         $author_id = NULL;
