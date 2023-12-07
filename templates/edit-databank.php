@@ -388,7 +388,7 @@ $companies = get_posts($args);
                     else{
                     ?>
                         <div class="">
-                            <div class="groupInputDate">
+                            <div class="groupInputDate"> 
                                 <div class="input-group form-group colM">
                                     <label for="">Start date</label>
                                     <input type="date" name="start_date[]">
