@@ -495,3 +495,10 @@ $(document).ready(function () {
 <script src="<?php echo get_stylesheet_directory_uri();?>/customSurmmote.js"></script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
+
+
+
+
+
+
