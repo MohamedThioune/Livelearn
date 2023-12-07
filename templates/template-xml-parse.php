@@ -18,6 +18,8 @@
   /** Template Name: xml parse */ 
 
   global $wpdb;
+  
+  extract($_POST);
 
   function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
