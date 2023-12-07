@@ -18,25 +18,6 @@ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $i
 
 $course = $wpdb->get_results( $sql )[0];
 
-/**
- * Strip Tags
- */
-
- function strip_html_tags($text) {
-    $allowed_tags = ['h2', 'br', 'strong', 'em', 'u', 'blockquote', 'ul', 'ol', 'li', 'img', 'mark'];
-    $text = preg_replace("/\n{1,}/", "\n", $text); 
-    $text = str_replace("\n","<br>",$text);
-    $text = str_replace("&lt;","<",$text); 
-    $text = str_replace("&gt;",">",$text);
-    $text = str_replace("&#8216;","'",$text);
-    $text = str_replace("&#8217;","'",$text);
-    $text = str_replace("&#8220;","\"",$text);
-    $text = str_replace("&#8221;","\"",$text); 
-    $text = str_replace("&#8230;","...",$text); 
-    $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
-    $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
-    return preg_replace($pattern, '', $text);
-  } 
 
 /*
 * * Tags *
