@@ -1427,7 +1427,7 @@ ul.sub-menu li a {
     padding-top: 0px !important;
 }
 .theme-learning {
-    padding-top: 50px ;
+    padding-top: 50px !important;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
