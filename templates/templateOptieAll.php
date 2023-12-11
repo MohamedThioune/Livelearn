@@ -128,7 +128,7 @@ if (isset($ids)) {
                 $coursetype = "";
                 foreach ($typos as $key => $typo) {
                     if ($course->type == $key) {
-                        $coursetype == $typo;
+                        $coursetype == $typo; 
                     }
                 }
                 update_field('course_type', $typos[$course->type], $id_post);
