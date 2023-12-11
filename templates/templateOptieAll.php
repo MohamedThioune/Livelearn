@@ -183,6 +183,15 @@ if (isset($ids)) {
              ** END
              */
 
+            //Prijs
+            $course->prijs = ($course->prijs) ? intval($course->prijs) : 0;
+            $prijs = ($course->prijs > 0) ? $course->prijs : 0;
+            update_field('price', $prijs, $id_post);
+
+            /*
+            ** END
+            */
+
             // $data = [ 'course_id' => $id_post]; // NULL value.
             // $wpdb->update( $table, $data, $where );
         } else if ($optie == "❌") {
