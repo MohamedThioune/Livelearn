@@ -3,13 +3,14 @@
 <?php
 
 global $wpdb;
-
-$table = $wpdb->prefix . 'databank'; 
+$table = $wpdb->prefix . 'databank';
 extract($_POST);
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
 $origin_id = $course->org;
 $feedid = $course->course_id;
+$users = get_users();
+$user_connected = wp_get_current_user();
 
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
@@ -20,10 +21,26 @@ if($optie == "✔"){
         $course->image_xml=$image;
         $wpdb->update($table,$course->image_xml,$where);
     }
+    if (strval($course->type) == "Podcast" || strval($course->type) == "Video"){
+        if(!$course->company_id) {
+            foreach ($users as $user) {
+                $company_user = get_field('company', 'user_' . $user->ID);
+                if ($course->author_id) {
+                    if ($course->author_id == $user->ID) {
+                        $company = $company_user[0];
+                        $course->company_id = $company_user[0]->ID;
+                    }
+                }
+            }
+        }elseif (!$course->short_description){
+            $course->short_description = "no short description !";
+        }
+    }
+    if (strval($course->type) == "Video")
+        $course->author_id = $user_connected->ID;
 
     if(!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id){
         echo '<pre>value null</pre>';
-        // var_dump($course);
         http_response_code(500);
         return 0;
     }
@@ -93,7 +110,6 @@ if($optie == "✔"){
             'post_status' => 'publish',
             'post_title'  => $course->titel
         );
-
         $id_post = wp_insert_post($args, true);
         $podcasts = explode('|', $course->podcasts);
         $podcasts = array_reverse($podcasts);

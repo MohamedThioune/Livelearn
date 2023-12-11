@@ -3,6 +3,13 @@
 <?php
 global $wpdb;
 $table = $wpdb->prefix . 'databank';
+$users = get_users();
+$args = array(
+    'post_type' => 'company',
+    'posts_per_page' => -1,
+);
+// var_dump($selectedValues);
+$companies = get_posts($args);
 
 //good keys from daniel account
 $apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
@@ -25,7 +32,6 @@ extract($_POST);
 //var_dump($_POST);
 $staticImg = get_stylesheet_directory_uri() . '/img/Image-79.png';
 if ($audio_search){
-
     //$url = 'https://api.podcastindex.org/api/1.0/search/byperson?q=' .$audio_search;
     $url = 'https://api.podcastindex.org/api/1.0/search/bytitle?q=' .$audio_search;
     $ch = curl_init();
@@ -170,8 +176,19 @@ if ($audio_search){
     }
 
 }elseif ($playlist_audio){
-    $user_connected = wp_get_current_user();
+    $user_connected = wp_get_current_user();// id user connected
     $user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
+    $company_id = 0;
+        foreach ($users as $user) {
+            $company_user = get_field('company', 'user_' . $user->ID);
+            if ($user_connected) {
+                if ($user_id == $user->ID ) {
+                    $company = $company_user[0];
+                    $company_id = $company_user[0]->ID;
+                }
+            }
+        }
+
     $message = "";
     extract($playlist_audio);
     $cat = json_decode($categories[0],true);
@@ -213,7 +230,8 @@ if ($audio_search){
             'date_multiple' => null,
             'course_id' => $id,
             'author_id' => $user_id,
-            'status' => 'extern'
+            'status' => 'extern',
+            'company_id' => $company_id,
         );
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
