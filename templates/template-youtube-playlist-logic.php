@@ -62,8 +62,6 @@ if ($playlist_youtube) {
     }
     array_shift($playlists_id);
 
-    // var_dump($onderwerpen);
-
     $i = 1;
     if ($playlists_id || !empty($playlists_id)) {
         foreach ($playlists_id as $key => $playlist_id) {
