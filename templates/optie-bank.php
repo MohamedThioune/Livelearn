@@ -13,6 +13,21 @@ $feedid = $course->course_id;
 
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
+
+    if($course->image_xml==null)
+    {
+        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        $course->image_xml=$image;
+        $wpdb->update($table,$course->image_xml,$where);
+    }
+
+    if(!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id){
+        echo '<pre>value null</pre>';
+        // var_dump($course);
+        http_response_code(500);
+        return 0;
+    }
+
     //Insert some other course type
     $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Podcast'];
     $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar','podcast'=>'Podcast'];
@@ -159,6 +174,15 @@ if($optie == "✔"){
         if(isset($data_locaties[0]))
             if($data_locaties[0] && $data_locaties[0] != "" && $data_locaties[0] != " " )
                 update_field('data_locaties_xml', $data_locaties, $id_post);
+    /*
+    ** END
+    */
+
+    //Prijs
+    $course->prijs = ($course->prijs) ? intval($course->prijs) : 0;
+    $prijs = ($course->prijs > 0) ? $course->prijs : 0;
+    update_field('price', $prijs, $id_post); 
+
     /*
     ** END
     */

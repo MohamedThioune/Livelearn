@@ -168,6 +168,25 @@ function searching_course_by_group($global_posts, $group, $value){
     $order_type = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'E-learning' => 0, 'Event' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0, 'Podcast' => 0, 'Webinar' => 0, 'Lezing' => 0, 'Cursus' => 0);
     $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 
+    //Specially if it's type 'company'
+    if($group == 'company'):
+        $args = array(
+            'post_type' => 'company',
+            'posts_per_page' => 1,
+            'include' => $value
+        );
+        $company = get_posts($args)[0];
+
+        $users = get_users();
+        $users_company = array();
+        foreach($users as $user) {
+            $company_user = get_field('company',  'user_' . $user->ID);
+            if(!empty($company_user) && !empty($company))
+                if($company_user[0]->ID == $company->ID)
+                    array_push($users_company, $user->ID);
+        }
+    endif;
+
     foreach($global_posts as $post):
         /** Control ... **/
         $controllin = null;
@@ -242,21 +261,6 @@ function searching_course_by_group($global_posts, $group, $value){
                 break;
             case 'company':
                 /* * Post of this company * */
-                $args = array(
-                    'post_type' => 'company',
-                    'posts_per_page' => 1,
-                    'include' => $value
-                );
-                $company = get_posts($args)[0];
-
-                $users = get_users();
-                $users_company = array();
-                foreach($users as $user) {
-                    $company_user = get_field('company',  'user_' . $user->ID);
-                    if(!empty($company_user) && !empty($company))
-                        if($company_user[0]->ID == $company->ID)
-                            array_push($users_company, $user->ID);
-                }
 
                 $args = array(
                     'post_type' => array('post','course'),

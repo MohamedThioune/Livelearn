@@ -2,11 +2,145 @@
 
 /* * Liggeey * */
 
+//Home page [GET]
+function homepage(){
+  $categories = [];
+  $artikels = [];
+  $candidates = [];
+  $infos = array('categories' => $categories, 'artikels' => $artikels, 'candidates' => $candidates);
+
+  $errors = ['errors' => '', 'error_data' => ''];
+  $limit_post = 3;
+  $limit_candidate = 20;
+
+  //Error message 
+  // if(1):
+  //   $errors['errors'] = "";
+  //   $errors = (Object)$errors;
+  //   $response = new WP_REST_Response($errors); 
+  //   $response->set_status(400);
+  //   return $response;
+  // endif;
+
+  //Category [Block]
+  $categories = array();
+  $sample_categories = array(
+                'Digital Marketing', 'Digital Project Manager', 'Community Manager', 'Social Media Manager', 
+                'Webdesigner', '3D Illustrator', 'UX Designer',
+                'Data Analyst', 'Salesforce', 'Google', 'Web Project Manager', 'COMMCARE', 'DHIS2', 'DRUPAL', 
+                'Wordpress', 'Webflow', 'Odoo', 'Prestashop'); 
+  foreach ($sample_categories as $key => $category){
+    $sample = array();
+    $sample['cat_ID'] = $key;
+    $sample['cat_name'] = $category;
+    $sample = (Object)$sample;
+
+    array_push($categories, $sample);
+  }
+  $infos['categories'] = $categories;
+
+  //Article [Block]
+  $args = array(
+    'post_type' => 'post',
+    'post_status' => 'publish',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+  );
+  $posts = get_posts($args);
+
+  $i = 0;
+  foreach($posts as $post):
+    $sample = array();
+
+    //Hidden post
+    $hidden = get_field('visibility', $post->ID);
+    if($hidden)
+      continue;
+
+    //Generic informations
+    $sample['permalink'] = get_permalink($post->ID);
+    $sample['post_title'] = $post->post_title;
+    $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
+    $sample['long_description'] = get_field('long_description', $post->ID) ?: 'Empty till far ...';
+  
+    $course_type = get_field('course_type', $post->ID);
+    //Image information
+    $thumbnail = get_field('preview', $post->ID)['url'];
+    if(!$thumbnail){
+        $thumbnail = get_the_post_thumbnail_url($post->ID);
+        if(!$thumbnail)
+            $thumbnail = get_field('url_image_xml', $post->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+    }
+    $sample['image'] = $thumbnail;
+
+    //Author information
+    // $author = get_user_by('ID', $post->post_author);
+    // $name_author = ($author) ? $author->display_name : 'None';
+    // $user_id = get_current_user_id();
+    // if($author->ID != $user_id)
+    //     $name = ($author->last_name) ? $author->first_name : $author->display_name;
+    // else
+    //     $name = "Ikzelf";
+
+    // $image_author = get_field('profile_img',  'user_' . $post->post_author);
+    // if(!$image_author)
+    //     $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+
+    $sample = (Object)$sample;
+    array_push($artikels, $sample);
+
+    $i += 1;
+    if($i >= $limit_post)
+      break;
+
+  endforeach;
+  $infos['artikels'] = $artikels;
+
+  $users = get_users();
+  //Featured candidates [Block]
+  $i = 0;
+  foreach ($users as $key => $value) {
+    $sample = array();
+
+    //Is Liggeey User
+    $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
+    if(!$is_liggeey || !$value->first_name)
+      continue;
+    
+    $sample['permalink'] = get_site_url() . '/user-overview/?id=' . $value->ID; 
+    $sample['first_name'] = $value->first_name;
+    $sample['last_name'] = $value->last_name;
+    $sample['display_name'] = $value->display_name;
+
+    $sample['image'] = get_field('profile_img',  'user_' . $value->ID) ?: get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+    $sample['work_as'] = get_field('role',  'user_' . $value->ID) ?: "Free agent";
+    $sample['country'] = get_field('country',  'user_' . $value->ID) ?: "International";
+    $sample = (Object)$sample;
+
+    array_push($candidates, $sample);
+
+    $i += 1; 
+    if($i >= $limit_candidate)
+      break;
+
+  }
+  $infos['candidates'] = $candidates;
+
+  //Response
+  $response = new WP_REST_Response($infos);
+  $response->set_status(200);
+  return $response;
+
+}
+
 // Register the company chief
 function register_company(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
   $required_parameters = ['first_name', 'last_name', 'email', 'bedrijf', 'phone', 'password', 'password_confirmation'];
   //country ?
+
   //Check required parameters register
   foreach ($required_parameters as $required):
 
@@ -81,6 +215,9 @@ function register_company(WP_REST_Request $request){
 
   //Affect the company to the user 
   update_field('company', $company, 'user_' . $user_id);
+
+  //Is from liggeey
+  update_field('is_liggeey', true, 'user_' . $user_id);
 
   $company = array($company);
 

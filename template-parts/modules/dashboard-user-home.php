@@ -450,7 +450,7 @@ $user_post_view = get_posts(
         'post_status' => 'publish',
         'order' => 'DESC',
         'include' => $id_courses_viewed,
-        'posts_per_page' => -1
+        'posts_per_page' => 1000
     )
 )[0];
 
@@ -780,9 +780,7 @@ if(isset($_GET['message']))
             <div class="list-wrap">
                 <ul id="All">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation">
-                        <div class="loader-block" id="GifLoad">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/loader-course.gif" alt="">
-                        </div>
+
                         <?php
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
@@ -870,57 +868,55 @@ if(isset($_GET['message']))
 
                                 $find = true;
                                 ?>
-                                <div class="loader-course">
-                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
-                                        <div class="head">
-                                            <?php
-                                            if($youtube_videos && $course_type == 'Video')
-                                                echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                                            else
-                                                echo '<img src="' . $thumbnail .'" alt="">';
-                                            ?>
-                                        </div>
-                                        <div class="details-card-course">
-                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                <p class="title-course"><?= $course->post_title ?></p>
-                                                <button>
-                                                    <?php
-                                                    if (in_array($course->ID, $saved))
-                                                    {
-                                                        ?>
-                                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
-                                                        <?php
-                                                    }
-                                                    else{
-                                                        ?>
-                                                        <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                                        <?php
-                                                    }
+                                <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                    <div class="head">
+                                        <?php
+                                        if($youtube_videos && $course_type == 'Video')
+                                            echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                        else
+                                            echo '<img src="' . $thumbnail .'" alt="">';
+                                        ?>
+                                    </div>
+                                    <div class="details-card-course">
+                                        <div class="title-favorite d-flex justify-content-between align-items-center">
+                                            <p class="title-course"><?= $course->post_title ?></p>
+                                            <button>
+                                                <?php
+                                                if (in_array($course->ID, $saved))
+                                                {
                                                     ?>
-                                                </button>
+                                                    <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                    <?php
+                                                }
+                                                else{
+                                                    ?>
+                                                    <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                    <?php
+                                                }
+                                                ?>
+                                            </button>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                            <div class="blockOpein d-flex align-items-center">
+                                                <i class="fas fa-graduation-cap"></i>
+                                                <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                             </div>
-                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                <div class="blockOpein d-flex align-items-center">
-                                                    <i class="fas fa-graduation-cap"></i>
-                                                    <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
-                                                </div>
-                                                <div class="blockOpein">
-                                                    <i class="fas fa-map-marker-alt"></i>
-                                                    <p class="lieuAm"><?= $location ?></p>
-                                                </div>
-                                            </div>
-                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="blockImgUser">
-                                                        <img src="<?= $author_image ?>" class="" alt="">
-                                                    </div>
-                                                    <p class="autor"><?= $author_name ?></p>
-                                                </div>
-                                                <p class="price"><?= $price ?></p>
+                                            <div class="blockOpein">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <p class="lieuAm"><?= $location ?></p>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
+                                        <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgUser">
+                                                    <img src="<?= $author_image ?>" class="" alt="">
+                                                </div>
+                                                <p class="autor"><?= $author_name ?></p>
+                                            </div>
+                                            <p class="price"><?= $price ?></p>
+                                        </div>
+                                    </div>
+                                </a>
                                 <?php
                                 // if($key == 11)
                                 //     break;
@@ -928,10 +924,10 @@ if(isset($_GET['message']))
                             else
                                 echo $void_content;
                             ?>
-                            <center>
-                                <button class="btn btnNext loading_more loader-course">Load all</button><br>
+                            <div class="element-btn-load w-100">
+                                <button class="btn btnNext loading_more">Load all</button><br>
                                 <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                            </center>
+                            </div>
                         </div>
                 </ul>
 
@@ -1026,57 +1022,55 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <div class="loader-course">
-                                        <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
-                                            <div class="head">
-                                                <?php
-                                                if($youtube_videos && $course_type == 'Video')
-                                                    echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                                                else
-                                                    echo '<img src="' . $thumbnail .'" alt="">';
-                                                ?>
-                                            </div>
-                                            <div class="details-card-course">
-                                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                    <p class="title-course"><?= $course->post_title ?></p>
-                                                    <button>
-                                                        <?php
-                                                        if (in_array($course->ID, $saved))
-                                                        {
-                                                            ?>
-                                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
-                                                            <?php
-                                                        }
-                                                        else{
-                                                            ?>
-                                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                                            <?php
-                                                        }
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                        <div class="head">
+                                            <?php
+                                            if($youtube_videos && $course_type == 'Video')
+                                                echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                            else
+                                                echo '<img src="' . $thumbnail .'" alt="">';
+                                            ?>
+                                        </div>
+                                        <div class="details-card-course">
+                                            <div class="title-favorite d-flex justify-content-between align-items-center">
+                                                <p class="title-course"><?= $course->post_title ?></p>
+                                                <button>
+                                                    <?php
+                                                    if (in_array($course->ID, $saved))
+                                                    {
                                                         ?>
-                                                    </button>
+                                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </button>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                                <div class="blockOpein d-flex align-items-center">
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                    <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                                 </div>
-                                                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                    <div class="blockOpein d-flex align-items-center">
-                                                        <i class="fas fa-graduation-cap"></i>
-                                                        <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
-                                                    </div>
-                                                    <div class="blockOpein">
-                                                        <i class="fas fa-map-marker-alt"></i>
-                                                        <p class="lieuAm"><?php echo $location?></p>
-                                                    </div>
-                                                </div>
-                                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgUser">
-                                                            <img src="<?= $author_image ?>" class="" alt="">
-                                                        </div>
-                                                        <p class="autor"><?= $author_name ?></p>
-                                                    </div>
-                                                    <p class="price"><?= $price ?></p>
+                                                <div class="blockOpein">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    <p class="lieuAm"><?php echo $location?></p>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
+                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgUser">
+                                                        <img src="<?= $author_image ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="autor"><?= $author_name ?></p>
+                                                </div>
+                                                <p class="price"><?= $price ?></p>
+                                            </div>
+                                        </div>
+                                    </a>
 
                                     <?php
                                 }
@@ -1175,57 +1169,55 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <div class="loader-course">
-                                        <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
-                                            <div class="head">
-                                                <?php
-                                                if($youtube_videos && $course_type == 'Video')
-                                                    echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                                                else
-                                                    echo '<img src="' . $thumbnail .'" alt="">';
-                                                ?>
-                                            </div>
-                                            <div class="details-card-course">
-                                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                    <p class="title-course"><?= $course->post_title ?></p>
-                                                    <button>
-                                                        <?php
-                                                        if (in_array($course->ID, $saved))
-                                                        {
-                                                            ?>
-                                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
-                                                            <?php
-                                                        }
-                                                        else{
-                                                            ?>
-                                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                                            <?php
-                                                        }
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                        <div class="head">
+                                            <?php
+                                            if($youtube_videos && $course_type == 'Video')
+                                                echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                            else
+                                                echo '<img src="' . $thumbnail .'" alt="">';
+                                            ?>
+                                        </div>
+                                        <div class="details-card-course">
+                                            <div class="title-favorite d-flex justify-content-between align-items-center">
+                                                <p class="title-course"><?= $course->post_title ?></p>
+                                                <button>
+                                                    <?php
+                                                    if (in_array($course->ID, $saved))
+                                                    {
                                                         ?>
-                                                    </button>
+                                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </button>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                                <div class="blockOpein d-flex align-items-center">
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                    <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                                 </div>
-                                                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                    <div class="blockOpein d-flex align-items-center">
-                                                        <i class="fas fa-graduation-cap"></i>
-                                                        <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
-                                                    </div>
-                                                    <div class="blockOpein">
-                                                        <i class="fas fa-map-marker-alt"></i>
-                                                        <p class="lieuAm"><?php echo $location?></p>
-                                                    </div>
-                                                </div>
-                                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgUser">
-                                                            <img src="<?= $author_image ?>" class="" alt="">
-                                                        </div>
-                                                        <p class="autor"><?= $author_name ?></p>
-                                                    </div>
-                                                    <p class="price"><?= $price ?></p>
+                                                <div class="blockOpein">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    <p class="lieuAm"><?php echo $location?></p>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
+                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgUser">
+                                                        <img src="<?= $author_image ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="autor"><?= $author_name ?></p>
+                                                </div>
+                                                <p class="price"><?= $price ?></p>
+                                            </div>
+                                        </div>
+                                    </a>
 
                                     <?php
                                 }
@@ -1324,57 +1316,55 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <div class="loader-course">
-                                        <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
-                                            <div class="head">
-                                                <?php
-                                                if($youtube_videos && $course_type == 'Video')
-                                                    echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                                                else
-                                                    echo '<img src="' . $thumbnail .'" alt="">';
-                                                ?>
-                                            </div>
-                                            <div class="details-card-course">
-                                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                    <p class="title-course"><?= $course->post_title ?></p>
-                                                    <button>
-                                                        <?php
-                                                        if (in_array($course->ID, $saved))
-                                                        {
-                                                            ?>
-                                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
-                                                            <?php
-                                                        }
-                                                        else{
-                                                            ?>
-                                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                                            <?php
-                                                        }
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                        <div class="head">
+                                            <?php
+                                            if($youtube_videos && $course_type == 'Video')
+                                                echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                            else
+                                                echo '<img src="' . $thumbnail .'" alt="">';
+                                            ?>
+                                        </div>
+                                        <div class="details-card-course">
+                                            <div class="title-favorite d-flex justify-content-between align-items-center">
+                                                <p class="title-course"><?= $course->post_title ?></p>
+                                                <button>
+                                                    <?php
+                                                    if (in_array($course->ID, $saved))
+                                                    {
                                                         ?>
-                                                    </button>
+                                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </button>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                                <div class="blockOpein d-flex align-items-center">
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                    <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                                 </div>
-                                                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                    <div class="blockOpein d-flex align-items-center">
-                                                        <i class="fas fa-graduation-cap"></i>
-                                                        <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
-                                                    </div>
-                                                    <div class="blockOpein">
-                                                        <i class="fas fa-map-marker-alt"></i>
-                                                        <p class="lieuAm"><?php echo $location?></p>
-                                                    </div>
-                                                </div>
-                                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgUser">
-                                                            <img src="<?= $author_image ?>" class="" alt="">
-                                                        </div>
-                                                        <p class="autor"><?= $author_name ?></p>
-                                                    </div>
-                                                    <p class="price"><?= $price ?></p>
+                                                <div class="blockOpein">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    <p class="lieuAm"><?php echo $location?></p>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
+                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgUser">
+                                                        <img src="<?= $author_image ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="autor"><?= $author_name ?></p>
+                                                </div>
+                                                <p class="price"><?= $price ?></p>
+                                            </div>
+                                        </div>
+                                    </a>
 
                                     <?php
                                 }
@@ -1473,57 +1463,55 @@ if(isset($_GET['message']))
 
                                     $find = true;
                                     ?>
-                                    <div class="loader-course">
-                                        <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
-                                            <div class="head">
-                                                <?php
-                                                if($youtube_videos && $course_type == 'Video')
-                                                    echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                                                else
-                                                    echo '<img src="' . $thumbnail .'" alt="">';
-                                                ?>
-                                            </div>
-                                            <div class="details-card-course">
-                                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                    <p class="title-course"><?= $course->post_title ?></p>
-                                                    <button>
-                                                        <?php
-                                                        if (in_array($course->ID, $saved))
-                                                        {
-                                                            ?>
-                                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
-                                                            <?php
-                                                        }
-                                                        else{
-                                                            ?>
-                                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                                            <?php
-                                                        }
+                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                        <div class="head">
+                                            <?php
+                                            if($youtube_videos && $course_type == 'Video')
+                                                echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                            else
+                                                echo '<img src="' . $thumbnail .'" alt="">';
+                                            ?>
+                                        </div>
+                                        <div class="details-card-course">
+                                            <div class="title-favorite d-flex justify-content-between align-items-center">
+                                                <p class="title-course"><?= $course->post_title ?></p>
+                                                <button>
+                                                    <?php
+                                                    if (in_array($course->ID, $saved))
+                                                    {
                                                         ?>
-                                                    </button>
+                                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </button>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                                <div class="blockOpein d-flex align-items-center">
+                                                    <i class="fas fa-graduation-cap"></i>
+                                                    <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                                 </div>
-                                                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                    <div class="blockOpein d-flex align-items-center">
-                                                        <i class="fas fa-graduation-cap"></i>
-                                                        <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
-                                                    </div>
-                                                    <div class="blockOpein">
-                                                        <i class="fas fa-map-marker-alt"></i>
-                                                        <p class="lieuAm"><?php echo $location?></p>
-                                                    </div>
-                                                </div>
-                                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="blockImgUser">
-                                                            <img src="<?= $author_image ?>" class="" alt="">
-                                                        </div>
-                                                        <p class="autor"><?= $author_name ?></p>
-                                                    </div>
-                                                    <p class="price"><?= $price ?></p>
+                                                <div class="blockOpein">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    <p class="lieuAm"><?php echo $location?></p>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
+                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgUser">
+                                                        <img src="<?= $author_image ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="autor"><?= $author_name ?></p>
+                                                </div>
+                                                <p class="price"><?= $price ?></p>
+                                            </div>
+                                        </div>
+                                    </a>
 
                                     <?php
                                 }
@@ -1616,57 +1604,55 @@ if(isset($_GET['message']))
 
                                 $find = true;
                                 ?>
-                                <div class="loader-course">
-                                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
-                                        <div class="head">
-                                            <?php
-                                            if($youtube_videos && $course_type == 'Video')
-                                                echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                                            else
-                                                echo '<img src="' . $thumbnail .'" alt="">';
-                                            ?>
-                                        </div>
-                                        <div class="details-card-course">
-                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                <p class="title-course"><?= $course->post_title ?></p>
-                                                <button>
-                                                    <?php
-                                                    if (in_array($course->ID, $saved))
-                                                    {
-                                                        ?>
-                                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
-                                                        <?php
-                                                    }
-                                                    else{
-                                                        ?>
-                                                        <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                                        <?php
-                                                    }
+                                <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                                    <div class="head">
+                                        <?php
+                                        if($youtube_videos && $course_type == 'Video')
+                                            echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                        else
+                                            echo '<img src="' . $thumbnail .'" alt="">';
+                                        ?>
+                                    </div>
+                                    <div class="details-card-course">
+                                        <div class="title-favorite d-flex justify-content-between align-items-center">
+                                            <p class="title-course"><?= $course->post_title ?></p>
+                                            <button>
+                                                <?php
+                                                if (in_array($course->ID, $saved))
+                                                {
                                                     ?>
-                                                </button>
+                                                    <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                    <?php
+                                                }
+                                                else{
+                                                    ?>
+                                                    <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                    <?php
+                                                }
+                                                ?>
+                                            </button>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                            <div class="blockOpein d-flex align-items-center">
+                                                <i class="fas fa-graduation-cap"></i>
+                                                <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                             </div>
-                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                <div class="blockOpein d-flex align-items-center">
-                                                    <i class="fas fa-graduation-cap"></i>
-                                                    <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
-                                                </div>
-                                                <div class="blockOpein">
-                                                    <i class="fas fa-map-marker-alt"></i>
-                                                    <p class="lieuAm"><?php echo $location?></p>
-                                                </div>
-                                            </div>
-                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="blockImgUser">
-                                                        <img src="<?= $author_image ?>" class="" alt="">
-                                                    </div>
-                                                    <p class="autor"><?= $author_name ?></p>
-                                                </div>
-                                                <p class="price"><?= $price ?></p>
+                                            <div class="blockOpein">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <p class="lieuAm"><?php echo $location?></p>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
+                                        <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgUser">
+                                                    <img src="<?= $author_image ?>" class="" alt="">
+                                                </div>
+                                                <p class="autor"><?= $author_name ?></p>
+                                            </div>
+                                            <p class="price"><?= $price ?></p>
+                                        </div>
+                                    </div>
+                                </a>
 
                                 <?php
                             }
@@ -2018,7 +2004,7 @@ $(".load_content_type").click((e)=>
         }
     })
 </script>
-<script>
+<!--<script>
     window.addEventListener('load', function() {
         document.querySelectorAll('.loader-course').forEach(function(element) {
             element.style.display = 'block';
@@ -2031,5 +2017,5 @@ $(".load_content_type").click((e)=>
         }
     });
 
-</script>
+</script>-->
 

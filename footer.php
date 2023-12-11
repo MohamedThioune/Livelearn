@@ -220,6 +220,19 @@ if(!isset($_COOKIE["cookie_consent"])):
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var bodyHasCustomClass = document.body.classList.contains('body-custom');
+
+            if (bodyHasCustomClass) {
+                var navbar = document.getElementById('votre-navbar-id');
+                if (navbar) {
+                    navbar.style.height = '115px';
+                }
+            }
+        });
+
+    </script>
 <script id="rendered-js" >
     function changeLanguage(lang) {
         console.log("Langue changée en : " + lang);
