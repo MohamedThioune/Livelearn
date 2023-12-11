@@ -1,4 +1,4 @@
-<?php /** Template Name: opleider courses */ ?>
+<?php /** Template Name: opleider courses */ ?> 
 <style>
      .checkmarkUpdated{
         background-color: white !important;
@@ -64,7 +64,8 @@
     if($_GET["companie"]){
 
         $args = array(
-            'post_type' => 'company', 
+            'post_type' => 'company',
+            'post_status' => 'publish',
             'posts_per_page' => 1,
             'include' => $_GET['companie'] 
         );
