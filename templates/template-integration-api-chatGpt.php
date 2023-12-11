@@ -12,7 +12,7 @@ $api_key = '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';
 //$model = 'gpt-3.5-turbo';
 $model = 'text-davinci-003';
 echo "
-    <form method='post' action='/livelearn/chatgpt-api/'>
+    <form method='post' action='/chatgpt-api/'>
         <input type='text' name='question' placeholder='question'>
         <input type='submit' name='submit' value='submit'>
     </form>
