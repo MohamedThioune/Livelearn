@@ -331,8 +331,12 @@
 
             if(substr($infos, -1) == ';')
               $infos = rtrim($infos, ';');
-
-            array_push($data_locaties_xml, $infos);  
+            
+            if(!empty($infos))
+              array_push($data_locaties_xml, $infos); 
+            else {
+              continue;
+            } 
           }
 
           $data_locaties = join('~', $data_locaties_xml);
