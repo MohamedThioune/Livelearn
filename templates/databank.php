@@ -830,7 +830,7 @@ if (!empty($courses)) {
                     // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 },error:function() {
-                    console.log('error');
+                    console.log('error'); 
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
