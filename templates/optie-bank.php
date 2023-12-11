@@ -36,6 +36,7 @@ if($optie == "✔"){
             $course->short_description = "no short description !";
         }
     }
+
     if (strval($course->type) == "Video")
         $course->author_id = $user_connected->ID;
 
