@@ -4,14 +4,15 @@ global $wpdb;
 extract($_POST);
 // var_dump($class, $ids, $optie);
 $table = $wpdb->prefix . 'databank';
-
+$user_connected = wp_get_current_user();
 if (isset($ids)) {
     foreach ($ids as $key => $obj) {
         $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $obj);
         $course = $wpdb->get_results($sql)[0];
         $where = ['id' => $obj];
+        $origin_id = $course->org;
+        $feedid = $course->course_id;
         if ($optie == "✔") {
-
             if ($course->image_xml == null) {
                 $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                 $course->image_xml = $image;
@@ -33,6 +34,41 @@ if (isset($ids)) {
                     $course->short_description = "no short description !";
                 }
             }
+
+            if (strval($course->type) == "Podcast" || strval($course->type) == "Video"){
+                if(!$course->company_id) {
+                    foreach ($users as $user) {
+                        $company_user = get_field('company', 'user_' . $user->ID);
+                        if ($course->author_id) {
+                            if ($course->author_id == $user->ID) {
+                                $company = $company_user[0];
+                                $course->company_id = $company_user[0]->ID;
+                            }
+                        }
+                    }
+                }elseif (!$course->short_description){
+                    $course->short_description = "no short description !";
+                }
+            }
+
+            if (strval($course->type) == "Podcast" || strval($course->type) == "Video"){
+                if(!$course->company_id) {
+                    foreach ($users as $user) {
+                        $company_user = get_field('company', 'user_' . $user->ID);
+                        if ($course->author_id) {
+                            if ($course->author_id == $user->ID) {
+                                $company = $company_user[0];
+                                $course->company_id = $company_user[0]->ID;
+                            }
+                        }
+                    }
+                }elseif (!$course->short_description){
+                    $course->short_description = "no short description !";
+                }
+            }
+
+            if ( $course->author_id == '0' || $course->author_id == null )
+                    $course->author_id = $user_connected->ID;
 
             if (!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id) {
                 echo '<pre>value null</pre>';
