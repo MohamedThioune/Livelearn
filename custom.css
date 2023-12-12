@@ -22387,6 +22387,19 @@ figure ul li {
 .blockDateEvens{
     margin-bottom: 7px;
 }
+.language-selector-gtTranslate{
+    min-width: 130px;
+}
+.language-selector-gtTranslate .gtTranslateBlock{
+    position: absolute;
+    top: -19px;
+}
+.language-selector-gtTranslate .gt_selected a {
+    padding: 5px 6px 4px !important;
+}
+.language-selector-gtTranslate .gt_container--h80brv .gt_switcher, .language-selector-gtTranslate .gt_container--h80brv .gt_switcher .gt_selected, .language-selector-gtTranslate .gt_container--h80brv .gt_switcher .gt_option {
+    width: 130px;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
