@@ -15,7 +15,6 @@ $maxResults = 45;
 $users = get_users();
 
 $author_id = wp_get_current_user();// id user connected
-
 $args = array(
     'post_type' => 'company',
     'posts_per_page' => -1,
@@ -24,7 +23,7 @@ $companies = get_posts($args);
 
 //youtube-playlist from excel
 $user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
-$author_id = 0;
+$author_id = $author_id->ID;
 $company_id = 0;
 foreach ($users as $user) {
     $company_user = get_field('company', 'user_' . $user->ID);
@@ -77,7 +76,6 @@ if ($playlist_youtube) {
             }
 
             foreach ($playlists['items'] as $playlist) {
-
                 //tags
                 $tags = array();
                 $onderwerpen = "";
@@ -214,14 +212,15 @@ if ($playlist_youtube) {
                     }
 
                     $status = 'extern';
+                    $description = $playlist['snippet']['description'] ? : $playlist['snippet']['title'];
 
                     //Data to create the course
                     $data = array(
                         'titel' => $playlist['snippet']['title'],
                         'type' => $type,
                         'videos' => $youtube_videos,
-                        'short_description' => $playlist['snippet']['description'],
-                        'long_description' => $playlist['snippet']['description'],
+                        'short_description' => $description,
+                        'long_description' => $description,
                         'duration' => null,
                         'prijs' => 0,
                         'prijs_vat' => 0,
