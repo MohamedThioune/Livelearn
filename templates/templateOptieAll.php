@@ -18,6 +18,7 @@ if (isset($ids)) {
                 $course->image_xml = $image;
                 $wpdb->update($table, $course->image_xml, $where);
             }
+
             if (strval($course->type) == "Podcast" || strval($course->type) == "Video"){
                 if(!$course->company_id) {
                     foreach ($users as $user) {
