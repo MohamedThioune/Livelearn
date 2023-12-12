@@ -234,7 +234,6 @@ if ($playlist_youtube) {
                         'status' => $status,
                         'org'=>$playlist['id'],
                     );
-
                     $wpdb->insert($table, $data);
                     $post_id = $wpdb->insert_id;
 
