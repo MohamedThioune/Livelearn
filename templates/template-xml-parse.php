@@ -85,6 +85,9 @@
       else
         $check_image = 1;
 
+      if(substr($image,-5,1)=='/')
+        $image="";
+
       $check_title = $wpdb->get_results($sql_title);
       
       $post = array(
