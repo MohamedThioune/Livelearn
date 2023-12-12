@@ -85,6 +85,9 @@
       else
         $check_image = 1;
 
+      if(substr($image,-5,1)=='/')
+        $image=null;
+
       $check_title = $wpdb->get_results($sql_title);
       
       $post = array(
@@ -331,8 +334,12 @@
 
             if(substr($infos, -1) == ';')
               $infos = rtrim($infos, ';');
-
-            array_push($data_locaties_xml, $infos);  
+            
+            if(!empty($infos))
+              array_push($data_locaties_xml, $infos); 
+            else {
+              continue;
+            } 
           }
 
           $data_locaties = join('~', $data_locaties_xml);
