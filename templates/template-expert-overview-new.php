@@ -18,7 +18,7 @@ $expertise = array();
 $expert_input_id = ($_GET['id']) ?: 0;
 $expert_input = get_user_by('ID', $expert_input_id);
 
-$error_content = '<h1 class="wordDeBestText2">Expert Not Found ❌</h1>';
+$error_content = '<h1 class="wordDeBestText2">Expert Not Found ❗️</h1>';
 if(!$expert_input):
     // var_dump($expert_input);
     echo $error_content;
@@ -32,12 +32,13 @@ view_user($expert_input->ID);
 $user_id = get_current_user_id();
 
 //Global posts
+$max_input = 1000;
 $args = array(
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => -1,
+    'posts_per_page' => $max_input,
 );
 $global_posts = get_posts($args);
 
