@@ -22400,6 +22400,7 @@ figure ul li {
 .language-selector-gtTranslate .gt_container--h80brv .gt_switcher, .language-selector-gtTranslate .gt_container--h80brv .gt_switcher .gt_selected, .language-selector-gtTranslate .gt_container--h80brv .gt_switcher .gt_option {
     width: 130px;
 }
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{

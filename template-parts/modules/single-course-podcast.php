@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
+
     <!-- -----------------------------------Start Modal Direct contact & Voor wie ----------------------------------------------- -->
     <div class="modal fade" id="direct-contact" tabindex="-1" role="dialog" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-course">
