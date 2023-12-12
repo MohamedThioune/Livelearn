@@ -202,6 +202,7 @@ if ($playlist_youtube) {
 
                     $detail_playlist = json_decode(file_get_contents($url_playlist, true));
                     $youtube_videos = '';
+
                     foreach ($detail_playlist->items as $key => $video) {
                         $youtube_video = '';
                         $youtube_video .= $video->snippet->resourceId->videoId;
@@ -233,6 +234,7 @@ if ($playlist_youtube) {
                         'status' => $status,
                         'org'=>$playlist['id'],
                     );
+
                     $wpdb->insert($table, $data);
                     $post_id = $wpdb->insert_id;
 
