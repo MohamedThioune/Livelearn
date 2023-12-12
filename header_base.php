@@ -114,6 +114,11 @@ $url = home_url( $wp->request );
     gtag('config', 'AW-625166739');
     </script>
     <!-- End Google tag (gtag.js) -->
+    <style>
+        .language-selector-gtTranslate .gt_switcher_wrapper{
+            display: block;
+        }
+    </style>
 
     <body class="body">
         <?php if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) { gtm4wp_the_gtm_tag(); } ?>
@@ -304,15 +309,10 @@ $url = home_url( $wp->request );
                                 <p class="mb-0 number-rating-header">9,3 / 2412</p>
                                 <img class="iconSubnav" src="<?php echo get_stylesheet_directory_uri();?>/img/iconSubnav.png" alt="">
 
-                                <div id="language-selector" class="d-flex language-selector-custom">
-                                    <select id="language-select" onchange="changeLanguage(this.value)">
-                                        <option value="fr">Français</option>
-                                        <option value="en">English</option>
-                                        <!-- Ajoutez d'autres langues au besoin -->
-                                    </select>
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-fr.jpg" alt="French Flag" class="flag flag-img-nav active" id="flag-fr">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/flag-en.jpg" alt="English Flag" class="flag flag-img-nav " id="flag-en">
-                                    <!-- Ajoutez d'autres drapeaux au besoin -->
+                                <div class="position-relative language-selector-gtTranslate">
+                                    <div class="gtTranslateBlock">
+                                        <?php echo do_shortcode('[gtranslate]'); ?>
+                                    </div>
                                 </div>
 
 

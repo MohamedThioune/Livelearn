@@ -1385,7 +1385,7 @@ if(isset($_GET['message']))
                                 foreach($recommended_courses as $course){
                                     //Date and Location
                                     $location = 'Online';
-                                
+
                                     $data = get_field('data_locaties', $course->ID);
                                     if($data){
                                         $date = $data[0]['data'][0]['start_date'];
@@ -1781,10 +1781,12 @@ if(isset($_GET['message']))
 
             if(!$i)
                 echo "<div class='upcoming-group'>
-                      <div class='element-upcoming-block'>
-                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-shedule.png'>
-                          <p>Zoek je eerste event</p>
-                      </div>
+                           <a href='/product-search' class='d-block'>
+                                <div class='element-upcoming-block'>
+                                  <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-shedule.png'>
+                                  <p>Zoek je eerste event</p>
+                              </div>
+                           </a>
                   </div>";
             ?>
             <!-- <a href="/" class="btn btn-more-events">More Events</a> -->
@@ -1844,12 +1846,14 @@ if(isset($_GET['message']))
             <?php
             }
 
-            if(empty($communities))
+            if(!empty($communities))
                 echo "<div class='upcoming-group'>
-                        <div class='element-upcoming-block'>
-                            <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
-                            <p>Join je eerste community</p>
-                        </div>
+                        <a class='d-block' href='/dashboard/user/communities/'>
+                            <div class='element-upcoming-block'>
+                                <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
+                                <p>Join je eerste community</p>
+                            </div>
+                        </a>
                      </div>";
             ?>
         </div>
@@ -1977,33 +1981,10 @@ $(".load_content_type").click((e)=>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autorefresh.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
-
-
 <script>
-    $('.owl-carousel').owlCarousel({
-        loop:true,
-        margin:30,
-        nav:false,
-        lazyLoad:true,
-        dots: false,
-        responsive:{
-            0:{
-                items:1.3
-            },
-            600:{
-                items:1.3
-            },
-            1000:{
-                items:3
-            }
-        }
-    })
+    if ($('div.mydivclass').length)
 </script>
+
 <!--<script>
     window.addEventListener('load', function() {
         document.querySelectorAll('.loader-course').forEach(function(element) {
