@@ -18,6 +18,22 @@ if (isset($ids)) {
                 $wpdb->update($table, $course->image_xml, $where);
             }
 
+            if (strval($course->type) == "Podcast" || strval($course->type) == "Video"){
+                if(!$course->company_id) {
+                    foreach ($users as $user) {
+                        $company_user = get_field('company', 'user_' . $user->ID);
+                        if ($course->author_id) {
+                            if ($course->author_id == $user->ID) {
+                                $company = $company_user[0];
+                                $course->company_id = $company_user[0]->ID;
+                            }
+                        }
+                    }
+                }elseif (!$course->short_description){
+                    $course->short_description = "no short description !";
+                }
+            }
+
             if (!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id) {
                 echo '<pre>value null</pre>';
                 // var_dump($course);
