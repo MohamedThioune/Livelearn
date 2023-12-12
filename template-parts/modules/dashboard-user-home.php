@@ -1847,7 +1847,7 @@ if(isset($_GET['message']))
             <?php
             }
 
-            if(!empty($communities))
+            if(empty($communities))
                 echo "<div class='upcoming-group'>
                         <a class='d-block' href='/dashboard/user/communities/'>
                             <div class='element-upcoming-block'>
