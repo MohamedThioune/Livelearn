@@ -56,7 +56,6 @@ elseif($filter):
     $leervom[] = $filter;
     // var_dump($courses);
     // die();
-
 endif;
 
 /* * Group by type * */
