@@ -36,6 +36,7 @@ if($optie == "✔"){
             $course->short_description = "no short description !";
         }
     }
+
     if ($course->author_id == '0')
         $course->author_id = $user_connected->ID;
 
