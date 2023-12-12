@@ -789,7 +789,7 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/xml-parse",
+                url: "/xml-parse",
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
@@ -846,7 +846,7 @@ if (!empty($courses)) {
     {
         let website= $('#select_field').val();
         $.ajax({
-            url: '/livelearn/scrapping',
+            url: '/scrapping',
             type: 'POST',
             data: {
                 'website': website ,
@@ -890,7 +890,7 @@ if (!empty($courses)) {
             console.log(objetIds);
             console.log('data submitted',objetIds);
             $.ajax({
-                url: '/livelearn/subtopics',
+                url: '/subtopics',
                 type: 'POST',
                 data: objetIds,
                 beforeSend:function(){
