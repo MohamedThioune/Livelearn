@@ -128,7 +128,7 @@ if (isset($ids)) {
                 $coursetype = "";
                 foreach ($typos as $key => $typo) {
                     if ($course->type == $key) {
-                        $coursetype == $typo;
+                        $coursetype == $typo; 
                     }
                 }
                 update_field('course_type', $typos[$course->type], $id_post);
@@ -182,6 +182,15 @@ if (isset($ids)) {
             /*
              ** END
              */
+
+            //Prijs
+            $course->prijs = ($course->prijs) ? intval($course->prijs) : 0;
+            $prijs = ($course->prijs > 0) ? $course->prijs : 0;
+            update_field('price', $prijs, $id_post);
+
+            /*
+            ** END
+            */
 
             // $data = [ 'course_id' => $id_post]; // NULL value.
             // $wpdb->update( $table, $data, $where );

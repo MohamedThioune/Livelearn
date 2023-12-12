@@ -18,7 +18,7 @@ $expertise = array();
 //Get ID Category
 $category_input = ($_GET['category']) ?: 0;
 $name = get_the_category_by_ID($category_input);
-$error_content = '<h1 class="wordDeBestText2">Category Not Found ❌</h1>';
+$error_content = '<h1 class="wordDeBestText2">Category Not Found ❗️</h1>';
 if(!$name):
     echo $error_content;
     die();
@@ -31,12 +31,13 @@ $user_id = get_current_user_id();
 view_topic($category_input);
 
 //Global posts
+$max_input = 1000;
 $args = array(
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => -1,
+    'posts_per_page' => $max_input,
 );
 $global_posts = get_posts($args);
 

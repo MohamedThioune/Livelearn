@@ -46,12 +46,13 @@ $user_id = get_current_user_id();
 //Track view
 
 //Global posts
+$max_input = 1000;
 $args = array(
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => -1,
+    'posts_per_page' => $max_input,
 );
 $global_posts = get_posts($args);
 
