@@ -4,6 +4,7 @@ if(isset($lesson))
     if(!$bool_link)
         header('Location: ' . get_permalink($post->ID));
 ?>
+
 <style>
     .swiper {
         width: 600px;

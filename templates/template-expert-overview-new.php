@@ -701,6 +701,7 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
 
 
 
+
 <!--script pagination-->
 
 <script>

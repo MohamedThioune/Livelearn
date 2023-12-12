@@ -704,6 +704,7 @@ if(isset($_GET['message']))
 
 ?>
 
+
 <div class="content-new-user d-flex">
     <section class="first-section-dashboard">
         <div class="head-block d-flex justify-content-between mb-50">
