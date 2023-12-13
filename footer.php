@@ -216,10 +216,23 @@ if(!isset($_COOKIE["cookie_consent"])):
     <!-- end /.footer-big -->
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script> 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
+    <script id="rendered-js" >
+        $(document).ready(function () {
+            //Chosen
+            $(".multipleChosen").chosen({
+                placeholder_text_multiple: "Maak een keuze" //placeholder
+            });
+            //Select2
+            $(".multipleSelect2").select2({
+                placeholder: "Maak een keuze" //placeholder
+            });
+        });
+        //# sourceURL=pen.j
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var bodyHasCustomClass = document.body.classList.contains('body-custom');
