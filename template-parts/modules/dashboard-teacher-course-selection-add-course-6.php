@@ -55,8 +55,8 @@
 
                     </form>
 
-                    //New Flow Invitation 
-                    <!-- 
+
+                    <!--    //New Flow Invitation
                     <div class="acf-field">
                         <label for="locate">Benoem andere externe experts voor deze cursus:</label><br>
                         <div class="form-group formModifeChoose" >
