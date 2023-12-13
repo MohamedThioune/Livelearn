@@ -15,7 +15,7 @@
 <body>
 
   <?php
-  /** Template Name: xml parse */ 
+  /** Template Name: xml parse */  
 
   global $wpdb;
 
