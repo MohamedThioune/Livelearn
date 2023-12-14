@@ -17,7 +17,7 @@ if($optie == "✔"){
 
     if($course->image_xml==null)
     {
-        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
         $course->image_xml=$image;
         $wpdb->update($table,$course->image_xml,$where);
     }
