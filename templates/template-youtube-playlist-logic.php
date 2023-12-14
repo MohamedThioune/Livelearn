@@ -55,7 +55,7 @@ if ($playlist_youtube) {
         }
 
         fclose($file);
-        array_shift($keywords);
+        array_shift($playlists_id);
         var_dump($keywords);
         die();
     } else {
