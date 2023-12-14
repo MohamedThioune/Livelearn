@@ -60,7 +60,8 @@ if ($playlist_youtube) {
         echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
     }
     array_shift($playlists_id);
-
+    var_dump($playlists_id);
+    die();
     $i = 1;
     if ($playlists_id || !empty($playlists_id)) {
         foreach ($playlists_id as $key => $playlist_id) {
