@@ -37,9 +37,10 @@ foreach ($users as $user) {
 }
 extract($_POST);
 if ($playlist_youtube) {
-    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
-    //$fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
+    // $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
+    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
     $file = fopen($fileName, 'r');
+    // var_dump($file);
     if ($file) {
         $playlists_id = array();
         $urlPlaylist = [];
