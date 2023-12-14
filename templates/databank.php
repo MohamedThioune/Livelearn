@@ -1175,7 +1175,7 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                // location.reload();
+                location.reload();
             },
         });
     })
