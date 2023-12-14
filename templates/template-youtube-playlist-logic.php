@@ -195,7 +195,7 @@ if ($playlist_youtube) {
 
                 if (sizeof($tags) < 20) {
                     $onderwerpen = join(',', $tags);
-                } else {
+                } else { 
                     $onderwerpen = "";
                 }
 
