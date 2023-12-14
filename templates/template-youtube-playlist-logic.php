@@ -14,7 +14,7 @@ $maxResults = 45;
 
 $users = get_users();
 
-$author_id = wp_get_current_user();// id user connected
+// $author_id = wp_get_current_user();// id user connected
 $args = array(
     'post_type' => 'company',
     'posts_per_page' => -1,
@@ -22,18 +22,18 @@ $args = array(
 $companies = get_posts($args);
 
 //youtube-playlist from excel
-$user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
-$author_id = $author_id->ID;
+// $user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
+$author_id = 0;
 $company_id = 0;
-foreach ($users as $user) {
-    $company_user = get_field('company', 'user_' . $user->ID);
-    if ($user_connected) {
-        if ($user_id == $user->ID ) {
-            $company = $company_user[0];
-            $company_id = $company_user[0]->ID;
-        }
-    }
-}
+// foreach ($users as $user) {
+//     $company_user = get_field('company', 'user_' . $user->ID);
+//     if ($user_connected) {
+//         if ($user_id == $user->ID ) {
+//             $company = $company_user[0];
+//             $company_id = $company_user[0]->ID;
+//         }
+//     }
+// }
 extract($_POST);
 if ($playlist_youtube) {
     // $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
@@ -68,6 +68,19 @@ if ($playlist_youtube) {
             $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist[0] . "&key=" . $api_key;
             $playlists = json_decode(file_get_contents($url_playlist), true);
             $author = array_keys($playlist_id);
+
+            foreach ($users as $user) {
+                $company_user = get_field('company', 'user_' . $user->ID);
+                if (isset($company_user[0]->post_title)) {
+                    if (strtolower($user->display_name) == strtolower($author[0])) {
+                        $author_id = $user->ID;
+                        $company = $company_user[0];
+                        $company_id = $company_user[0]->ID;
+                        // continue;
+                    }
+                }
+
+            }
 
 
             // Accord the author a company
