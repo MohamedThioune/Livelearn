@@ -50,7 +50,7 @@ if ($playlist_youtube) {
             if (strtoupper(substr($row[2],0,2)) === 'PL')
                 $playlists_id[][$row[4]] = $row[2];
             echo $row[2];
-            die;
+            // die;
             $subtopics = $row[6];
             array_push($keywords,$subtopics);
         }
