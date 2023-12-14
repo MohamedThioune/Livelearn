@@ -49,15 +49,16 @@ if ($playlist_youtube) {
             $row = explode(';',$line[0]);
             if (strtoupper(substr($row[2],0,2)) === 'PL')
                 $playlists_id[][$row[4]] = $row[2];
-
+            echo $row[2];
+            die;
             $subtopics = $row[6];
             array_push($keywords,$subtopics);
         }
 
         fclose($file);
         array_shift($playlists_id);
-        var_dump($keywords);
-        die();
+        // var_dump($keywords);
+        // die();
     } else {
         echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
     }
