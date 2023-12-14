@@ -74,17 +74,26 @@ if ($playlist_youtube) {
             $playlists = json_decode(file_get_contents($url_playlist), true);
             $author = array_keys($playlist_id);
 
-            foreach ($users as $user) {
-                $company_user = get_field('company', 'user_' . $user->ID);
-                if (isset($company_user[0]->post_title)) {
-                    if (strtolower($user->display_name) == strtolower($author[0])) {
-                        $author_id = $user->ID;
-                        $company = $company_user[0];
-                        $company_id = $company_user[0]->ID;
-                        // continue;
-                    }
+            foreach ($companies as $companie) {
+                if (strtolower($companie->post_title) == strtolower($key)) {
+                    $company = $companie;
+                } else {
+                    continue;
                 }
-
+    
+                foreach ($users as $user) {
+                    $company_user = get_field('company', 'user_' . $user->ID);
+    
+                    if (isset($company_user[0]->post_title)) {
+                        if (strtolower($company_user[0]->post_title) == strtolower($companie->post_title)) {
+                            $author_id = $user->ID;
+                            $company = $company_user[0];
+                            $company_id = $company_user[0]->ID;
+                        }
+                    }
+    
+                }
+                // var_dump($author_id);
             }
 
 
