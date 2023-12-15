@@ -97,8 +97,8 @@ if (isset($ids)) {
                 $id_post = wp_insert_post($args, true);
                 //Custom
 
-                if ($course->image_xml == null) {
-                    $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                if ($course->image_xml) {
+                    $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
                     update_field('image_xml', $image, $id_post);
                 }
                 update_field('course_type', 'article', $id_post);
