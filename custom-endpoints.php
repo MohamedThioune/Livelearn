@@ -2670,7 +2670,7 @@ function save_user_views(WP_REST_Request $request)
 
   /**
    * User's Progression 
-   */
+  */
 
   function get_user_course_progression($request)
   {
@@ -2693,7 +2693,7 @@ function save_user_views(WP_REST_Request $request)
       
       //Get read by user 
       //Get posts searching by title
-    $args = array(
+      $args = array(
       'post_type' => 'progression', 
       'title' => $course_title,
       'post_status' => 'publish',
