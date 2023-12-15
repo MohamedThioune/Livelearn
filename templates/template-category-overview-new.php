@@ -8,6 +8,7 @@
 $page = 'check_visibility.php';
 require($page);
 
+
 // Modules
 require_once('search-module.php'); 
 
@@ -339,9 +340,9 @@ endif;
                                 if($expertie->first_name == "")
                                     continue;
 
-                                $i += 1;    
-                                if($i == 4)
+                                if($i >= 4)
                                     break;
+                                $i += 1;    
 
                                 echo '
                                 <a href="/user-overview/?id=' . $expertie->ID . '" class="profil-expert d-flex align-items-center">
@@ -350,7 +351,6 @@ endif;
                                     </div>
                                     <p>'. $name .'</p>
                                 </a>';
-                                $i += 1; 
                             endforeach;
                         echo '
                         </div>';
@@ -367,6 +367,7 @@ endif;
         </div>
     </section>
 </div>
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

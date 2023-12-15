@@ -35,7 +35,6 @@ $messages = [];
 //    $all_titles .='"'.$cours->post_title.'" , ';
 //}
 
-
 $about_livelearn = "
 LiveLearn, founded in 2019 by Daniel van der Kolk, aims to democratize learning and development.
 Recognizing the challenges faced by organizations, especially small and medium-sized businesses, 
@@ -139,5 +138,6 @@ if (isset($question)) {
                     echo $message;
                 }
             }
+
 }
 

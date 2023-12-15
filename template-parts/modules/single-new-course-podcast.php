@@ -6,6 +6,7 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
+
 <?php
 //$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
 //$url = "https://anchor.fm/s/878cadd4/podcast/rss";
@@ -533,6 +534,7 @@ endif;
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-4">
                     <div class="right-block-detail-course">
                         <div class="card-detail-course">
@@ -606,6 +608,7 @@ endif;
                         </div>
                     </div>
                 </div>
+
             </div>
             <?php
             if(!empty($similar_course)):
@@ -757,6 +760,11 @@ endif;
             }
         });
 
+        const specificBlock = blockList.querySelector('#tab-url1');
+        if (specificBlock) {
+            specificBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        alert("ok");
         const containerHeight = blockList.offsetHeight;
 
         setTimeout(() => {

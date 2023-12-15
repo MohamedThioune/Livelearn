@@ -116,6 +116,7 @@ $courses = array_slice($courses, 0, 500);
 
 ?>
 
+
 <div class="content-community-overview bg-gray">
     <section class="boxOne3-1">
         <div class="container">

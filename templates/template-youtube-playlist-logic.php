@@ -62,7 +62,7 @@ if ($playlist_youtube) {
     array_shift($playlists_id);
 
     $i = 1;
-    if ($playlists_id || !empty($playlists_id)) {
+    if ($playlists_id || !empty($playlists_id)) 
         foreach ($playlists_id as $key => $playlist_id) {
             $id_playlist = array_values($playlist_id);
             $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist[0] . "&key=" . $api_key;
@@ -242,10 +242,8 @@ if ($playlist_youtube) {
             }
             $i++;
         }
-
-    } else {
+    else 
         echo '<h3>No news playlists found</h3>';
-    }
 
     //Empty youtube channels after parse
 

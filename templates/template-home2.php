@@ -129,8 +129,6 @@ $type_course = array(
     "Leerpad",
     "Podcast"
 );
-
-
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -1700,7 +1698,7 @@ $saved = get_user_meta($user_id, 'course');
                     <p class="textAlloOP">Alle opleidingen</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/skills-passport/" class="cardBoxSix">
+                <a href="/waarom-skills/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
                     <p class="textAlloOP">Skills paspoort</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">

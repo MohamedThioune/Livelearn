@@ -1,4 +1,4 @@
-<?php /** Template Name: community overview */ ?>
+<?php /** Template Name: Community overview */ ?>
 
 <body>
 <?php wp_head(); ?>
@@ -113,6 +113,7 @@ $args = array(
 $communities = get_posts($args);
 
 ?>
+
 
 <div class="content-community-overview">
     <section class="boxOne3-1">

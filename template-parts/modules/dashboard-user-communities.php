@@ -4,7 +4,8 @@ $users = get_users();
 $args = array(
     'post_type' => 'community',
     'post_status' => 'publish',
-    'posts_per_page' => -1);
+    'posts_per_page' => -1
+);
 
 $communities = get_posts($args);
 

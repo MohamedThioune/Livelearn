@@ -297,8 +297,8 @@ endforeach;
 
 endif;
 
-$canva_data_you_read = join(',', $data_you_read);
-$canva_data_member_read = join(',', $data_member_read);
+$canva_data_you_read = is_array($data_you_read) ? join(',', $data_you_read) : '';
+$canva_data_member_read = is_array($data_member_read) ? join(',', $data_member_read) : '';
 ?>
 <!-- Latest BS-Select compiled and minified CSS/JS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
