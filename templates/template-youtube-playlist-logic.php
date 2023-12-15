@@ -25,7 +25,7 @@ $companies = get_posts($args);
 
 extract($_POST);
 if ($playlist_youtube) {
-    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
+    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
     $file = fopen($fileName, 'r');
     if ($file) {
         $playlists_id = array();
