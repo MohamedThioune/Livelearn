@@ -1346,9 +1346,8 @@ $no_content = "<div class='upcoming-group'>
                 <div class="tab-communities">
                     <div class="content-card-communities-activity d-flex flex-wrap">
                         <?php
-                        if(empty($communities))
-                            echo $no_content;
 
+                        $i = 0;
                         foreach($communities as $key => $value):
                             if(!$value)
                                 continue;
@@ -1380,6 +1379,9 @@ $no_content = "<div class='upcoming-group'>
                                 continue;
                             else
                                 $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
+
+                            $i+=1;
+
                             ?>
                             <a href="<?= $access_community?>" class="card-communities-activity">
                                 <div class="block-img">
@@ -1392,6 +1394,9 @@ $no_content = "<div class='upcoming-group'>
                             </a>
                         <?php
                         endforeach;
+
+                        if(!$i)
+                            echo $no_content;
                         ?>
                     </div>
                 </div>
