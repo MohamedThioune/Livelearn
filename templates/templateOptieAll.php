@@ -13,10 +13,14 @@ if (isset($ids)) {
         $origin_id = $course->org;
         $feedid = $course->course_id;
         if ($optie == "✔") {
-            if ($course->image_xml == null) {
-                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                $course->image_xml = $image;
-                $wpdb->update($table, $course->image_xml, $where);
+            if($course->image_xml==null)
+            {
+                if($course->type)
+                    $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
+                else
+                    $image = get_stylesheet_directory_uri() . '/img' . '/opleidingen.jpg';
+                $course->image_xml=$image;
+                $wpdb->update($table,$course->image_xml,$where);
             }
 
             if (strval($course->type) == "Podcast" || strval($course->type) == "Video"){
