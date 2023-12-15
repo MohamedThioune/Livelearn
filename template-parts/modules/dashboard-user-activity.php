@@ -1181,7 +1181,7 @@ $no_content = "<div class='upcoming-group'>
                             </div>
                             <div class="second-content-analitycs">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/analytics-detail.png" class="" alt="">
-                            </div>
+                            </div> 
                         </div>
                         <div class="other-analytics">
                             <div class="d-flex justify-content-center">
