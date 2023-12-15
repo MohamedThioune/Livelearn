@@ -42,7 +42,7 @@ if ($playlist_youtube) {
             array_push($keywords, $subtopics);
         }
         fclose($file);
-        array_shift($keywords);
+        array_shift($keywords); 
         // var_dump($keywords);
         // die();
     } else {
