@@ -198,7 +198,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                 <a href="https://www.facebook.com/LiveLearnHQ" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/facebook.png" alt="">
                 </a>
-                <a href="https://www.instagram.com/livelearn.nl/ " target="_blank">
+                <a href="https://www.instagram.com/livelearn.app/" target="_blank">
                     <img class="insta" src="<?php echo get_stylesheet_directory_uri();?>/img/insta.png" alt="">
                 </a>
             </div>
