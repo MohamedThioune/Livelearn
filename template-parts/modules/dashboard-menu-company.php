@@ -139,9 +139,14 @@
     }
 
 ?>
+<style>
+    .btn-show-sidbar{
+        margin-bottom: 20px;
+    }
+</style>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
-    <button class="btn btn-close-sidbar">
+    <button  class="btn btn-close-sidbar">
         <i class="fa fa-close"></i>
     </button>
     <div class="row">

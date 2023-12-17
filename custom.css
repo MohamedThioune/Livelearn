@@ -216,6 +216,9 @@ ul.sub-menu li a {
     justify-content: space-between;
     position: relative;
 }
+.cardCoursManager:hover{
+    box-shadow: 2px 2px 4px 4px #efefef;
+}
 
 .cardCoursManager small {
     position: absolute;
@@ -12880,6 +12883,7 @@ select {
     background: #47A99E !important;
     padding: 11px 30px;
     margin-top: 20px;
+    width: fit-content !important;
 }
 .modal-topics-expert .styled-checkbox + label:before {
     border-radius: 20% !important;
@@ -15269,7 +15273,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-communities .head-community{
     background: url("img/communities-head.png") no-repeat;
-    margin: -28px;
+    margin: -60px -28px 50px;
     padding: 35px 25px;
     height: 190px;
     background-size: cover;
@@ -18722,7 +18726,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .body-content-view-statistic .card-user-team .actif{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
 .body-content-view-statistic .bg-2yellow-c{
     background: #FFDC5D !important;
@@ -22357,6 +22361,7 @@ figure ul li {
 }
 .btn-show-sidbar, .btn-close-sidbar{
     display: none;
+    z-index: 99;
 }
 .playlist-course-block .pagination-container , .list-content-podcast .pagination-container, .section-tabs .pagination-container {
     padding: 20px 0 25px !important;
@@ -22400,7 +22405,23 @@ figure ul li {
 .language-selector-gtTranslate .gt_container--h80brv .gt_switcher, .language-selector-gtTranslate .gt_container--h80brv .gt_switcher .gt_selected, .language-selector-gtTranslate .gt_container--h80brv .gt_switcher .gt_option {
     width: 130px;
 }
-
+.tableNotification tbody .descriptionNotification p{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-align: left;
+    text-transform: capitalize;
+}
+.body-content-view-statistic table th {
+    text-align: left !important;
+}
+.body-content-view-statistic table td p, .body-content-view-statistic table td {
+    text-align: left !important;
+}
+.w-40 {
+    width: 46%;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -27082,6 +27103,23 @@ figure ul li {
     .sidBarDashboardIndividual {
         width: 100%;
         box-shadow: unset;
+    }
+    .usage-block-card-team {
+        width: 100%;
+    }
+    .usage-block-card-team iframe {
+        display: block;
+        height: 260px !important;
+        width: 100% !important;
+    }
+    .body-content-view-statistic .card-course, .card-user-team {
+        overflow-y: scroll;
+    }
+    .body-content-view-statistic .block-individual-element {
+        width: 100%;
+    }
+    .block-individual-element .group-card-head .card-element-company {
+        width: 100%;
     }
 
 
