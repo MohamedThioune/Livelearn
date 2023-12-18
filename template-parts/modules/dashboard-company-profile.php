@@ -530,8 +530,6 @@ if($statikien_bool):
     endif;
 
 endif;
-
-
 ?>
 <div class="theme-content">
     <div class="theme-side-menu">

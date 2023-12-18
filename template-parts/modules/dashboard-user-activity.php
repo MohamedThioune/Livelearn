@@ -184,16 +184,18 @@ foreach ($users as $element) {
                 }
 }
 //Placeholder content
-$no_content = "<div class='upcoming-group'>
+$no_content = "<div class='emty-block-activity'>
                             <a class='d-block' href='#/'>
                                 <div class='element-upcoming-block'>
-                                    <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
+                                    <img src='" . get_stylesheet_directory_uri() . "/img/empty-badge.png'>
                                     <p></p>
                                 </div>
                             </a>
                         </div>";
 ?>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+
 
 <body>
 <div class="content-activity2">

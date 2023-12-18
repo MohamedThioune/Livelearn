@@ -124,7 +124,6 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
 ?>
 
 
-
 <div class="content-community-overview bg-gray">
     <section class="boxOne3-1">
 
