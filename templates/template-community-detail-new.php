@@ -1,4 +1,4 @@
-<?php /** Template Name: community detail new */ ?>
+<?php /** Template Name: Community detail */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -123,6 +123,16 @@ $no_content =  '
                 <span style="color:#033256"> This community not found ! </span> 
                 </p>
                 ';
+$no_content_follower =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256">No follower yet ! </span> 
+                </p>
+                ';
+$no_content_event =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256">No coming event ! </span> 
+                </p>
+                ';
 // $users = get_users();
 // $authors = array();
 
@@ -130,7 +140,7 @@ $community = array();
 if(isset($_GET['mu']))
     $community = get_post($_GET['mu']);
 
-if(!empty($community)):
+if(empty($community)):
     echo $no_content;
     die();
 endif;
@@ -188,7 +198,7 @@ if($visibility_community){
         <div class="container">
             <div class="BaangerichteBlock">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
-                <h1 class="wordDeBestText2">Community</h1>
+                <h1 class="wordDeBestText2"><?= "Community | Detail"?></h1>
             </div>
     </section>
     <section class="section-detail-community">
@@ -212,7 +222,10 @@ if($visibility_community){
                             <p class="others-group">Others Community</p>
                             <div class="block-others-group">
                                 <?php
+                                $i = 0;
                                 foreach($communities as $value):
+                                    if ($value->post_title == $community->post_title)
+                                        continue;
                                     $company = get_field('company_author', $value->ID);
                                     $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
                                     $community_image = get_field('image_community', $value->ID) ?: $company_image;
@@ -224,6 +237,27 @@ if($visibility_community){
                                     $date = $community->post_date;
                                     $days = explode(' ', $date)[0];
                                     $year = explode('-', $days)[0];
+                                    $month = $month = date("M",strtotime($date));
+                                    $day = explode('-', $days)[2];
+
+                                    //Private community
+                                    $private = get_field('password_community', $value->ID);
+                                    $private_field = ($private) ? "<input type='text' class='form-control search' name='password' placeholder='Please fill community password !' required>" : ''; 
+                                    $type_groups = ($private_field == '') ? 'Public Groups' : 'Private Groups';
+
+                                    //Intern community
+                                    $company_user = get_field('company',  'user_' . $user_id);
+                                    $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+                                    $visibility_community = get_field('visibility_community', $value->ID); 
+                                    if($visibility_community)
+                                        $type_groups = ($type_groups == 'Private Groups') ? 'Private|Intern Groups' : 'Intern Groups';
+
+                                    if($type_groups == 'Private Groups' || $type_groups == 'Intern Groups' || $type_groups == 'Private|Intern Groups')
+                                        continue;
+
+                                    if($i >= 4)
+                                        break;
+                                    $i+=1;
                                 ?>
                                 <div class="oneGroup d-flex">
                                     <div class="block-img">
@@ -233,7 +267,7 @@ if($visibility_community){
                                         <p class="name-group"><?= $value->post_title ?></p>
                                         <p class="date-added">
                                             <!-- 2 years ago -->
-                                            <?= $years ?>
+                                            <span><?= $month . ' ' . $day . ', ' . $year; ?></span>
                                         </p>
                                     </div>
                                 </div>
@@ -251,454 +285,205 @@ if($visibility_community){
                                 <div class="head">
                                     <ul class="filters">
                                         <li class="item active"><i class="fa fa-tasks"></i><span>Activity</span></li>
-                                        <li class="item position-relative"><i class="fa fa-group"></i><span>Members 30</span></li>
-                                        <li class="item item-question position-relative"><i class="fa fa-calendar"></i><span>Event 15</span></li>
+                                        <li class="item position-relative"><i class="fa fa-group"></i><span>Members</span></li>
+                                        <li class="item item-question position-relative"><i class="fa fa-calendar"></i><span>Events</span></li>
                                     </ul>
                                 </div>
                                 <div class="">
                                     <div class="tabs__list">
                                         <div class="tab tab-one active">
+                                            <?php
+                                            $events = array();
+                                            if(!empty($courses)):
+                                            ?>
                                             <div class="block-new-card-course grid" id="autocomplete_recommendation">
-                                                <a href="" class="new-card-course visible">
+                                                <?php
+                                                foreach($courses as $course):
+                                                // course-type
+                                                $course_type = get_field('course_type', $course->ID);
+                                                if($course_type == 'Event'){
+                                                    array_push($events, $course);
+                                                    continue;
+                                                }
+                                                $i++;
+
+                                                if($i == 9)
+                                                    continue;
+                                                
+                                                // image
+                                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                                if(!$thumbnail)
+                                                    $thumbnail = get_field('url_image_xml', $course->ID);
+                                                if(!$thumbnail)
+                                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+
+                                                // price
+                                                $price_noformat = get_field('price', $course->ID) ?: 'Gratis';
+                                                if($price_noformat != "Gratis")
+                                                    $price = '€' . number_format($price_noformat, 2, '.', ',');
+                                                else
+                                                    $price = 'Gratis';
+
+                                                //Category
+                                                $category = null;
+                                                $category_id = 0;
+                                                $id_category = 0;
+                                                $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                                                $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
+                                                if($category_xml)
+                                                    if($category_xml != 0){
+                                                        $id_category = $category_xml;
+                                                        $category = (String)get_the_category_by_ID($category_xml);
+                                                    }
+                                                if($category_id)
+                                                    if($category_id != 0){
+                                                        $id_category = $category_id;
+                                                        $category = (String)get_the_category_by_ID($category_id);
+                                                    }
+
+                                                // author
+                                                $author = get_user_by('id', $course->post_author);
+                                                $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
+                                                $author_image = get_field('profile_img',  'user_' . $course->post_author);
+                                                $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                
+                                                // link
+                                                $link = get_permalink($course->ID);
+                                                
+                                                ?>
+                                                <a href="<?= $link ?>" class="new-card-course visible">
                                                     <div class="content-course-block">
                                                         <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
+                                                            <img src="<?= $thumbnail ?>" alt="">
                                                         </div>
                                                         <div class="details-card-course">
                                                             <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
+                                                                <p class="title-course"><?= $course->post_title ?></p>
                                                             </div>
                                                             <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
                                                                 <div class="blockOpein d-flex align-items-center">
                                                                     <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
+                                                                    <p class="lieuAm"><?= $course_type ?></p>
                                                                 </div>
                                                                 <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
+                                                                    <?= 
+                                                                        $category ? '<i class="fas fa-map-marker-alt"></i>
+                                                                                    <p class="lieuAm">' . $category . '</p>' : '' 
+                                                                    ?>
                                                                 </div>
                                                             </div>
                                                             <div class="autor-price-block d-flex justify-content-between align-items-center">
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
+                                                                        <img src="<?= $author_image ?>" alt="">
                                                                     </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
+                                                                    <p class="autor"><?= $author_name ?></p>
                                                                 </div>
-                                                                <p class="price">$ 400</p>
+                                                                <p class="price"><?= $price ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a href="" class="new-card-course visible">
-                                                    <div class="content-course-block">
-                                                        <div class="head">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/course-img.png" alt="">
-                                                        </div>
-                                                        <div class="details-card-course">
-                                                            <div class="title-favorite d-flex justify-content-between align-items-center">
-                                                                <p class="title-course">A course by daniel for Seydou and mohamed</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                                                <div class="blockOpein d-flex align-items-center">
-                                                                    <i class="fas fa-graduation-cap"></i>
-                                                                    <p class="lieuAm">UI design</p>
-                                                                </div>
-                                                                <div class="blockOpein">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <p class="lieuAm">Dakar Senegal</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="blockImgUser">
-                                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                                                    </div>
-                                                                    <p class="autor">Samanthan wiliams</p>
-                                                                </div>
-                                                                <p class="price">$ 400</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                                <?php
+                                                endforeach;
+                                                ?>
                                             </div>
+                                            <?php
+                                            endif;
+                                            ?>
                                             <div class="pagination-container">
                                                 <!-- Les boutons de pagination seront ajoutés ici -->
                                             </div>
                                         </div>
                                         <div class="tab">
                                             <div class="content-members d-flex flex-wrap">
-                                                <div class="card-members">
-                                                    <div class="block-img">
-                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                    </div>
-                                                    <p class="name">Cameron Williamson</p>
-                                                    <p class="profession">UX UI Designer</p>
-                                                </div>
-                                                <div class="card-members">
-                                                    <div class="block-img">
-                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                    </div>
-                                                    <p class="name">Cameron Williamson</p>
-                                                    <p class="profession">UX UI Designer</p>
-                                                </div>
-                                                <div class="card-members">
-                                                    <div class="block-img">
-                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                    </div>
-                                                    <p class="name">Cameron Williamson</p>
-                                                    <p class="profession">UX UI Designer</p>
-                                                </div>
-                                                <div class="card-members">
-                                                    <div class="block-img">
-                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                    </div>
-                                                    <p class="name">Cameron Williamson</p>
-                                                    <p class="profession">UX UI Designer</p>
-                                                </div>
-                                                <div class="card-members">
-                                                    <div class="block-img">
-                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                    </div>
-                                                    <p class="name">Cameron Williamson</p>
-                                                    <p class="profession">UX UI Designer</p>
-                                                </div>
-                                                <div class="card-members">
-                                                    <div class="block-img">
-                                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                    </div>
-                                                    <p class="name">Cameron Williamson</p>
-                                                    <p class="profession">UX UI Designer</p>
-                                                </div>
+                                                <?php
+                                                    // Get followers from company
+                                                    if(!empty($followers))
+                                                        foreach ($followers as $key => $value) {
+                                                            // $follower = get_user_by('ID', $value);
+                                                            $follower_name = ($value->last_name) ? $value->first_name . ' ' . $value->last_name : $value->display_name; 
+                                                            $follower_role = get_field('role',  'user_' . $value->ID) ?: "Free agent";
+                                                            if($key == 4)
+                                                                break;
+                                                            $portrait_image = get_field('profile_img',  'user_' . $value->ID);
+                                                            if (!$portrait_image)
+                                                                $portrait_image = $company_image;
+                                                            echo '<div class="card-members">
+                                                                        <div class="block-img">
+                                                                            <img src="' . $portrait_image . '" class="" alt="">
+                                                                        </div>
+                                                                        <p class="name">' . $follower_name . '</p>
+                                                                        <p class="profession">' . $follower_role . '</p>
+                                                                   </div>';
+                                                        }
+                                                    else
+                                                        echo $no_content_follower;
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="tab">
                                             <div class="d-flex flex-wrap">
-                                                <div class="card-Upcoming">
-                                                    <a href="">
-                                                        <p class="title">Web design</p>
-                                                        <div class="d-flex align-items-center">
-                                                            <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                            <p class="date">January 31, 2023</p>
-                                                            <hr>
-                                                            <p class="time">10 AM - Online</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
+                                                <?php
+                                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+                                                if(!empty($events)):
+                                                foreach($events as $key => $course):
+                                                    if($key == 8)
+                                                        break;
+
+                                                    $price = get_field('price', $course->ID) ?: 'Free';
+
+                                                    $day = "00";
+                                                    $month = "00";
+                                                    $year = "0000";                                                    
+                                                    $hours = "";
+                                                    $dates = get_field('dates', $course->ID);
+                                                    if($dates){
+                                                        $date = $dates[0]['date'];
+                                                        $days = explode(' ', $date)[0];
+                                                        $day = explode('-', $days)[2];
+                                                        $year = explode('-', $days)[0];
+                                                        $month = $calendar[explode('-', $date)[1]];
+                                                        $time = explode(' ', $date)[1];
+                                                        $hours = explode(':', $time)[0] . 'h' . explode(':', $time)[1];
+                                                    }
+
+                                                    // author
+                                                    $author = get_user_by('ID', $course->post_author);
+                                                    $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
+                                                    $portrait_image = get_field('profile_img',  'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                    
+                                                    // link
+                                                    $link = get_permalink($course->ID);
+                                                    
+                                                ?>
+                                                    <div class="card-Upcoming">
+                                                        <a href="<?= $link ?>">
+                                                            <p class="title"><?= $course->post_title ?></p>
                                                             <div class="d-flex align-items-center">
-                                                                <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                                <p class="nameAutor">Leslie Alexander</p>
+                                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
+                                                                <p class="date">
+                                                                    <!-- January 31, 2023 -->
+                                                                    <?= $month . ' ' . $day . ',  ' . $year ?>
+                                                                </p>
+                                                                <hr>
+                                                                <p class="time"><?= $hours ?> - Online</p>
                                                             </div>
-                                                            <p class="price">Free</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="card-Upcoming">
-                                                    <a href="">
-                                                        <p class="title">Web design</p>
-                                                        <div class="d-flex align-items-center">
-                                                            <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                            <p class="date">January 31, 2023</p>
-                                                            <hr>
-                                                            <p class="time">10 AM - Online</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                            <div class="d-flex align-items-center">
-                                                                <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                                <p class="nameAutor">Leslie Alexander</p>
+                                                            <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
+                                                                <div class="d-flex align-items-center">
+                                                                    <img class="imgAutor" src="<?= $portrait_image ?>" class="" alt="">
+                                                                    <p class="nameAutor"><?= $author_name ?></p>
+                                                                </div>
+                                                                <p class="price"><?= $price ?></p>
                                                             </div>
-                                                            <p class="price">Free</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="card-Upcoming">
-                                                    <a href="">
-                                                        <p class="title">Web design</p>
-                                                        <div class="d-flex align-items-center">
-                                                            <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                            <p class="date">January 31, 2023</p>
-                                                            <hr>
-                                                            <p class="time">10 AM - Online</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                            <div class="d-flex align-items-center">
-                                                                <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                                <p class="nameAutor">Leslie Alexander</p>
-                                                            </div>
-                                                            <p class="price">Free</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="card-Upcoming">
-                                                    <a href="">
-                                                        <p class="title">Web design</p>
-                                                        <div class="d-flex align-items-center">
-                                                            <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                            <p class="date">January 31, 2023</p>
-                                                            <hr>
-                                                            <p class="time">10 AM - Online</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                            <div class="d-flex align-items-center">
-                                                                <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                                <p class="nameAutor">Leslie Alexander</p>
-                                                            </div>
-                                                            <p class="price">Free</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="card-Upcoming">
-                                                    <a href="">
-                                                        <p class="title">Web design</p>
-                                                        <div class="d-flex align-items-center">
-                                                            <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                            <p class="date">January 31, 2023</p>
-                                                            <hr>
-                                                            <p class="time">10 AM - Online</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                            <div class="d-flex align-items-center">
-                                                                <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                                <p class="nameAutor">Leslie Alexander</p>
-                                                            </div>
-                                                            <p class="price">Free</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="card-Upcoming">
-                                                    <a href="">
-                                                        <p class="title">Web design</p>
-                                                        <div class="d-flex align-items-center">
-                                                            <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                            <p class="date">January 31, 2023</p>
-                                                            <hr>
-                                                            <p class="time">10 AM - Online</p>
-                                                        </div>
-                                                        <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                            <div class="d-flex align-items-center">
-                                                                <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                                                <p class="nameAutor">Leslie Alexander</p>
-                                                            </div>
-                                                            <p class="price">Free</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                                        </a>
+                                                    </div>
+                                                <?php
+                                                    endforeach;
+                                                else:
+                                                    echo $no_content_event;
+                                                endif;
+                                                ?>
                                             </div>
                                         </div>
 
