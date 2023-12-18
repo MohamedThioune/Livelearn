@@ -1795,9 +1795,7 @@ if(isset($_GET['message']))
         <div class="user-community-block">
             <?php
             $i = 0;
-            if(!empty($communities))
-                echo '<h2>Communities</h2>';
-
+            echo '<h2>Communities</h2>';
             foreach($communities as $key => $value){
 
                 if(!$value)
@@ -1847,7 +1845,7 @@ if(isset($_GET['message']))
             <?php
             }
 
-            if(empty($communities))
+            if(!$i)
                 echo "<div class='upcoming-group'>
                         <a class='d-block' href='/dashboard/user/communities/'>
                             <div class='element-upcoming-block'>

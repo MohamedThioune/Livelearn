@@ -41,7 +41,7 @@ $global_posts = get_posts($args);
 
 $no_filter = true;
 
-//Natural Search 
+//Natural Search  
 if(isset($search) && isset($search_type)):
     $courses = searching_course($search, $search_type, $global_posts)['courses'];
     $order_type = searching_course($search, $search_type, $global_posts)['order_type'];

@@ -25,7 +25,7 @@ $companies = get_posts($args);
 
 extract($_POST);
 if ($playlist_youtube) {
-    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
+    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
     $file = fopen($fileName, 'r');
     if ($file) {
         $playlists_id = array();
@@ -34,26 +34,20 @@ if ($playlist_youtube) {
         $keywords = array();
         while ($line = fgetcsv($file)) {
             $subtopics = "";
-            $row = explode(';',$line[0]);
-            if (strtoupper(substr($row[2],0,2)) === 'PL')
-                $playlists_id[][$row[4]] = $row[2];
-
+            $row = explode(';', $line[0]);
+            $playlists_id[][$row[4]] = $row[2];
             $subtopics = $row[6];
-            array_push($keywords,$subtopics);
+
+            // var_dump($onderwp);
+            array_push($keywords, $subtopics);
         }
         fclose($file);
-        array_shift($keywords);
+        array_shift($keywords); 
         // var_dump($keywords);
         // die();
     } else {
         echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
     }
-    array_shift($playlists_id); // remove the first element, the title of column
-    if($playlists_id){
-        foreach($playlists_id as $key=>$playlist_id){
-            $id_playlist = array_values($playlist_id);
-            $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist[0] . "&key=" . $api_key;
-            $playlists = json_decode(file_get_contents($url_playlist),true);
     array_shift($playlists_id);
 
     // var_dump($onderwerpen);
@@ -80,73 +74,6 @@ if ($playlist_youtube) {
             }
 
             // Accord the author a company
-            if(!is_wp_error($author_id))
-              //  update_field('company', $company, 'user_' . $author_id);
-
-            foreach($playlists['items'] as $playlist){
-            $sql = $wpdb->prepare("SELECT * FROM $table WHERE org = %s ", array($playlist['id']));
-            $result = $wpdb->get_results($sql);
-            if($result)
-                continue; // that's mean this playlist is already in the plateform!
-
-            //tags
-            $tags = array();
-            $onderwerpen = "";
-            $categories = array();
-            $cats = get_categories(
-                array(
-                    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                    'orderby'    => 'name',
-                    'exclude' => 'Uncategorized',
-                    'parent'     => 0,
-                    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-                )
-            );
-
-            foreach($cats as $item){
-                $cat_id = $item->cat_ID;
-                array_push($categories, $cat_id);
-            }
-
-            $categorys = array(); 
-            foreach($categories as $categ){
-                //Topics
-                $topics = get_categories(
-                    array(
-                    'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                    'parent'  => $categ,
-                    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-                    ) 
-                );
-                // var_dump($topics);
-                foreach ($topics as $value) {
-                    $tag = get_categories(
-                        array(
-                        'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                        'parent'  => $value->cat_ID,
-                        'hide_empty' => 0,
-                        )
-                    );
-                    $categorys = array_merge($categorys, $tag);      
-                }
-            }
-            $words_not_goods=[];
-            foreach($categorys as $cat){
-                // var_dump($cat->cat_name);
-                if(str_contains($cat->cat_name,' ')){
-                    $words_not_goods[]=$cat->cat_name;
-                }
-            }
-            // $occurrence = array_count_values(array_map('strtolower', $keywords));
-            foreach($keywords as $searchword){
-                $searchword = trim(strtolower(strval($searchword)));
-                foreach($categorys as $category){
-                    $cat_slug = $category->slug;
-                    $cat_name = $category->cat_name; 
-                    if(strpos(strtolower($keywords[$key]), strtolower($cat_slug)) !== false || trim(strtolower($keywords[$key])) == trim(strtolower($cat_name)))
-                        if(!in_array($category->cat_ID, $tags))
-                            array_push($tags, $category->cat_ID);
-                }
             if (!is_wp_error($author_id)) {
                 update_field('company', $company, 'user_' . $author_id);
             }
@@ -271,12 +198,6 @@ if ($playlist_youtube) {
                 $type = 'Video';
 
                 //Get the url media image to display on front
-                $image = ( isset($playlist['snippet']['thumbnails']['maxres']) ) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
-                $sql_image = $wpdb->prepare("SELECT * FROM $table WHERE image_xml = %s AND type = %s", array($images, $type));
-                $result_image = $wpdb->get_results($sql_image);
-                $sql_title = $wpdb->prepare("SELECT * FROM $table where titel=%s and type=%s",array($playlist['snippet']['title'],$type));
-                $result_title = $wpdb->get_results($sql_title);
-                if(!isset($result_title[0]) && !isset($result_image[0])){
                 $image = (isset($playlist['snippet']['thumbnails']['maxres'])) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
                 $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images, $type));
                 $result_image = $wpdb->get_results($sql_image);
@@ -296,6 +217,7 @@ if ($playlist_youtube) {
 
                         $youtube_videos .= ';' . $youtube_video;
                     }
+
                     $status = 'extern';
 
                     //Data to create the course
@@ -313,20 +235,27 @@ if ($playlist_youtube) {
                         'date_multiple' => null,
                         'course_id' => null,
                         'author_id' => $author_id,
-                        'company_id' =>  $company_id,
+                        'company_id' => $company_id,
                         'status' => $status,
-                        'org'=>$playlist['id'],
                     );
-                    $wpdb->insert($table,$data);
+                    // // var_dump($data);
+                    $wpdb->insert($table, $data);
                     $post_id = $wpdb->insert_id;
 
                     echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
+                } else {
+                    continue;
                 }
-            }
-        }
-    }else
-        echo '<h3>No news playlists found</h3>';
 
-  //Empty youtube channels after parse
- //update_field('youtube_playlists', null , 'user_'. $author_id);
+            }
+            $i++;
+        }
+
+    } else {
+        echo '<h3>No news playlists found</h3>';
+    }
+
+    //Empty youtube channels after parse
+
+    update_field('youtube_playlists', null, 'user_' . $author_id);
 }

@@ -183,6 +183,15 @@ foreach ($users as $element) {
                     array_push($redundance_profile, $element->ID);
                 }
 }
+//Placeholder content
+$no_content = "<div class='emty-block-activity'>
+                            <a class='d-block' href='#/'>
+                                <div class='element-upcoming-block'>
+                                    <img src='" . get_stylesheet_directory_uri() . "/img/empty-badge.png'>
+                                    <p></p>
+                                </div>
+                            </a>
+                        </div>";
 ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
@@ -233,113 +242,136 @@ foreach ($users as $element) {
                         <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                             <p class="title">Courses</p>
                             <a href="?tab=Course" class="d-flex align-items-center">
-                                <p class="seeAllText">See All</p>
+                                <?php
+                                if(!empty($courses))
+                                    echo '<p class="seeAllText">See All</p>';
+                                ?>
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
                             </a>
                         </div>
-                        <div class="card-course-activity">
-                            <table class="table table-responsive">
-                                <thead>
-                                <tr>
-                                    <th scope="col courseTitle">Course Title</th>
-                                    <th scope="col">Duration</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Instructor</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
-                                foreach($enrolled_courses as $key => $course) :
-                                    $bool = true;
-                                    $bool = visibility($course, $visibility_company);
-                                    if(!$bool)
-                                        continue;
-
-                                    //Course Type
-                                    $course_type = get_field('course_type', $course->ID);
-                                    
-                                    //Checkout URL
-                                    if(in_array($course_type, $offline))
-                                        $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name;
-                                    else if($course_type == 'Video')
-                                        $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name;
-                                    else if($course_type == 'Podcast')
-                                        $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name;
-                                    else
-                                        $href_checkout = "#";
-
-                                    // Analytics
-                                    switch ($course_type) {
-                                        case 'Artikel':
-                                            $typo_course['Artikel']++;
-                                            break;
-                                        case 'Opleidingen':
-                                            $typo_course['Opleidingen']++;
-                                            break;
-                                        case 'Podcast':
-                                            $typo_course['Podcast']++;
-                                            break;
-                                        case 'Video':
-                                            $typo_course['Video']++;
-                                            break;
-                                    }
-
-                                    if($key >= 4)
-                                        continue;
-
-                                    //Legend image
-                                    $image_course = get_field('preview', $course->ID)['url'];
-                                    if(!$image_course){
-                                        $image_course = get_the_post_thumbnail_url($course->ID);
-                                        if(!$image_course)
-                                            $image_course = get_field('url_image_xml', $course->ID);
-                                        if(!$image_course)
-                                            $image_course = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                                    }
-
-                                    //Author
-                                    $author = get_user_by('ID', $course->post_author);
-                                    $author_name = $author->first_name ?: $author->display_name;
-                                    $author_image = get_field('profile_img',  'user_' . $author->ID);
-                                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-
-                                    //Clock duration
-                                    $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
-
-                                    ?>
+                        <?php
+                        if(!empty($courses)):
+                        ?>    
+                            <div class="card-course-activity">
+                                <table class="table table-responsive">
+                                    <thead>
                                     <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgCourse">
-                                                    <img src="<?= $image_course ?>" class="" alt="">
-                                                </div>
-                                                <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title; ?></a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="name-element"><?= $duration_day ?></p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element"><?= $course_type ?></p>
-                                        </td>
-                                        <td class=" r-1">
-                                            <div class="d-flex align-items-center">
-                                                <div class="blockImgUser">
-                                                    <img src="<?= $author_image ?>" class="" alt="">
-                                                </div>
-                                                <p class="name-element"><?= $author_name ?></p>
-                                            </div>
-
-                                        </td>
+                                        <th scope="col courseTitle">Course Title</th>
+                                        <th scope="col">Duration</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Instructor</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
+                                    foreach($enrolled_courses as $key => $course) :
+                                        $bool = true;
+                                        $bool = visibility($course, $visibility_company);
+                                        if(!$bool)
+                                            continue;
+
+                                        //Course Type
+                                        $course_type = get_field('course_type', $course->ID);
+                                        
+                                        //Checkout URL
+                                        if(in_array($course_type, $offline))
+                                            $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name;
+                                        else if($course_type == 'Video')
+                                            $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name;
+                                        else if($course_type == 'Podcast')
+                                            $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name;
+                                        else
+                                            $href_checkout = "#";
+
+                                        // Analytics
+                                        switch ($course_type) {
+                                            case 'Artikel':
+                                                $typo_course['Artikel']++;
+                                                break;
+                                            case 'Opleidingen':
+                                                $typo_course['Opleidingen']++;
+                                                break;
+                                            case 'Podcast':
+                                                $typo_course['Podcast']++;
+                                                break;
+                                            case 'Video':
+                                                $typo_course['Video']++;
+                                                break;
+                                        }
+
+                                        if($key >= 4)
+                                            continue;
+
+                                        //Legend image
+                                        $image_course = get_field('preview', $course->ID)['url'];
+                                        if(!$image_course){
+                                            $image_course = get_the_post_thumbnail_url($course->ID);
+                                            if(!$image_course)
+                                                $image_course = get_field('url_image_xml', $course->ID);
+                                            if(!$image_course)
+                                                $image_course = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                        }
+
+                                        //Author
+                                        $author = get_user_by('ID', $course->post_author);
+                                        $author_name = $author->first_name ?: $author->display_name;
+                                        $author_image = get_field('profile_img',  'user_' . $author->ID);
+                                        $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                                        //Clock duration
+                                        $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
+
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgCourse">
+                                                        <img src="<?= $image_course ?>" class="" alt="">
+                                                    </div>
+                                                    <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title; ?></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="name-element"><?= $duration_day ?></p>
+                                            </td>
+                                            <td>
+                                                <p class="name-element"><?= $course_type ?></p>
+                                            </td>
+                                            <td class=" r-1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgUser">
+                                                        <img src="<?= $author_image ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="name-element"><?= $author_name ?></p>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php
+                        else: 
+                            echo $no_content;
+                        endif;
+                        ?>
+                        <!-- <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
+                            <p class="title">Mandatories</p>
+                            <a href="?tab=Course" class="d-flex align-items-center">
                                 <?php
-                                endforeach;
+                                if(!empty($mandatories))
+                                    echo '<p class="seeAllText">See All</p>';
                                 ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br><br><br>
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
+                            </a>
+                        </div> -->
+                        <?php
+                        if(!empty($mandatories)):
+                        if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br><br><br>
                         <div class="card-course-activity">
                             <table class="table table-responsive">
                                 <thead>
@@ -466,13 +498,24 @@ foreach ($users as $element) {
                                 </tbody>
                             </table>
                         </div>
+                        <?php
+                        else: 
+                            echo $no_content;
+                        endif;
+                        ?>
                     </div>
                     <div class="blockItemCourse notificationCourseCard">
                         <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                             <p class="title">Notifications</p>
                             <a href="?tab=Notifications" class="d-flex align-items-center">
-                                <p class="seeAllText">See All</p>
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
+                                <?php 
+                                    if(!empty($notifications)) :
+                                ?>
+                                    <p class="seeAllText">See All</p>
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
+                                <?php
+                                endif;
+                                ?>
                             </a>
                         </div>
                         <div class="contentActivity">
@@ -482,75 +525,83 @@ foreach ($users as $element) {
                                     <!-- <input type="search" placeholder="search" class="inputSearchCourse" id="search_activity_notification"> -->
                                     <input id="search_activity_notification" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Search" aria-label="Search" >
                                 </div>
-                                <div class="contentCardListeCourse">
-                                    <table class="table table-responsive table-responsive tableNotification">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col-4">Alert </th>
-                                            <th scope="col">By</th>
-                                            <!-- <th scope="col">Optie</th> -->
-                                        </tr>
-                                        </thead>
-                                        <tbody id="autocomplete_activity_notification">
-                                        <?php
-
-                                        foreach($todos as $key => $todo) {
-
-                                            $type = get_field('type_feedback', $todo->ID);
-                                            $manager_id = get_field('manager_feedback', $todo->ID);
-                                            if($manager_id){
-                                                $manager = get_user_by('ID', $manager_id);
-                                                $image = get_field('profile_img',  'user_' . $manager->ID);
-                                                $manager_display = $manager->display_name;
-                                            }else{
-                                                $manager_display = 'A manager';
-                                                $image = 0;
-                                            }
-                                            if($key >= 4)
-                                                continue;
-
-                                            if(!$image)
-                                                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-
-                                            if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
-                                                $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
-                                            else if($type == "Persoonlijk ontwikkelplan")
-                                                $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
-                                            else if($type == "Beoordeling Gesprek")
-                                                $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
-
-                                            ?>
+                                <?php
+                                if(!empty($todos)):
+                                ?>
+                                    <div class="contentCardListeCourse">
+                                        <table class="table table-responsive table-responsive tableNotification">
+                                            <thead>
                                             <tr>
-                                                <td scope="row"><?= $key; ?></td>
-                                                <td class="content-title-notification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
-                                                <td><?=$type?></td>
-                                                <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
-                                                <td><?= $manager_display; ?></td>
-                                                <!--
-                                                <td class="textTh">
-                                                    <div class="dropdown text-white">
-                                                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                                            <img  style="width:20px"
-                                                                  src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                                        </p>
-                                                        <ul class="dropdown-menu">
-                                                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
-                                                            <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                                -->
+                                                <th scope="col">#</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col-4">Alert </th>
+                                                <th scope="col">By</th>
+                                                <!-- <th scope="col">Optie</th> -->
                                             </tr>
+                                            </thead>
+                                            <tbody id="autocomplete_activity_notification">
                                             <?php
-                                        }
-                                        ?>
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            foreach($todos as $key => $todo) {
+
+                                                $type = get_field('type_feedback', $todo->ID);
+                                                $manager_id = get_field('manager_feedback', $todo->ID);
+                                                if($manager_id){
+                                                    $manager = get_user_by('ID', $manager_id);
+                                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                                    $manager_display = $manager->display_name;
+                                                }else{
+                                                    $manager_display = 'A manager';
+                                                    $image = 0;
+                                                }
+                                                if($key >= 4)
+                                                    continue;
+
+                                                if(!$image)
+                                                    $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+                                                if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
+                                                    $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                                                else if($type == "Persoonlijk ontwikkelplan")
+                                                    $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                                                else if($type == "Beoordeling Gesprek")
+                                                    $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+
+                                                ?>
+                                                <tr>
+                                                    <td scope="row"><?= $key; ?></td>
+                                                    <td class="content-title-notification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
+                                                    <td><?=$type?></td>
+                                                    <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
+                                                    <td><?= $manager_display; ?></td>
+                                                    <!--
+                                                    <td class="textTh">
+                                                        <div class="dropdown text-white">
+                                                            <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                                                <img  style="width:20px"
+                                                                    src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                            </p>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
+                                                                <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                    -->
+                                                </tr>
+                                                <?php
+                                            }
+                                            ?>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php
+                                else: 
+                                    echo $no_content;
+                                endif;
+                                ?>
                             </div>
 
                         </div>
@@ -809,26 +860,14 @@ foreach ($users as $element) {
                     </div>
                     <div class="content-card-communities-activity">
                         <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
-                            <?php
-                            $i = 0;
-                            if(!empty($communities)){
-                                echo '<p class="title">Communities </p>';
-                                echo '<a href="?tab=Communities " class="d-flex align-items-center">
-                                                <p class="seeAllText">See All</p>
-                                                <img src="' . get_stylesheet_directory_uri() . '/img/seeAllIcon.png" class="" alt="">
-                                        </a>';
-                            }
-                            ?>
+                            <p class="title">Communities</p>
                         </div>
                         <div class="content-card-communities-activity d-flex flex-wrap">
                             <?php
+                            $i = 0;
                             foreach($communities as $key => $value):
                                 if(!$value)
                                     continue;
-
-                                if($i == 6)
-                                    break;
-                                $i++;
 
                                 $company = get_field('company_author', $value->ID);
                                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
@@ -858,6 +897,10 @@ foreach ($users as $element) {
                                 else
                                     $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
 
+                                if($i == 6)
+                                    break;
+                                $i++;
+
                                 ?>
                                 <a href="<?= $access_community?>"  class="card-communities-activity">
                                     <div class="block-img">
@@ -870,6 +913,8 @@ foreach ($users as $element) {
                                 </a>
                             <?php
                             endforeach;
+                            if(!$i)
+                                echo $no_content;
                             ?>
                         </div>
                     </div>
@@ -879,18 +924,12 @@ foreach ($users as $element) {
             <ul id="Course" class="hide">
                 <div class="tab-course">
                     <div class="blockItemCourse">
+                        <?php
+                        if(!empty($enrolled_courses)):
+                        ?>
                         <div class="card-course-activity">
                             <div class="head-card d-flex justify-content-between align-items-center">
                                 <input id="search_activity_course" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
-                                <!-- <div class="filterInputBlock">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/filtering.svg" class="" alt="">
-                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                            <option selected>Filter</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div> -->
                             </div>
                             <table class="table table-responsive text-left">
                                 <thead>
@@ -1015,6 +1054,11 @@ foreach ($users as $element) {
                                 </tbody>
                             </table>
                         </div>
+                        <?php
+                        else: 
+                            echo $no_content;
+                        endif;
+                        ?>
                     </div>
                 </div>
             </ul>
@@ -1027,6 +1071,9 @@ foreach ($users as $element) {
                                 <h2>My Alerts</h2>
                                 <input type="search" placeholder="search" class="inputSearchCourse">
                             </div>
+                            <?php
+                            if(!empty($todos)):
+                            ?>
                             <div class="contentCardListeCourse">
                                 <table class="table table-responsive table-responsive tableNotification">
                                     <thead>
@@ -1094,6 +1141,11 @@ foreach ($users as $element) {
                                     </tbody>
                                 </table>
                             </div>
+                            <?php
+                            else: 
+                                echo $no_content;
+                            endif;
+                            ?>
                         </div>
 
                     </div>
@@ -1129,7 +1181,7 @@ foreach ($users as $element) {
                             </div>
                             <div class="second-content-analitycs">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/analytics-detail.png" class="" alt="">
-                            </div>
+                            </div> 
                         </div>
                         <div class="other-analytics">
                             <div class="d-flex justify-content-center">
@@ -1294,6 +1346,8 @@ foreach ($users as $element) {
                 <div class="tab-communities">
                     <div class="content-card-communities-activity d-flex flex-wrap">
                         <?php
+
+                        $i = 0;
                         foreach($communities as $key => $value):
                             if(!$value)
                                 continue;
@@ -1325,6 +1379,9 @@ foreach ($users as $element) {
                                 continue;
                             else
                                 $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
+
+                            $i+=1;
+
                             ?>
                             <a href="<?= $access_community?>" class="card-communities-activity">
                                 <div class="block-img">
@@ -1337,6 +1394,9 @@ foreach ($users as $element) {
                             </a>
                         <?php
                         endforeach;
+
+                        if(!$i)
+                            echo $no_content;
                         ?>
                     </div>
                 </div>
@@ -1346,6 +1406,9 @@ foreach ($users as $element) {
                 <div class="tab-skills">
                     <div class="group-input-settings">
                         <div class="skills-activity-block">
+                            <?php
+                            if(!empty($topics)):
+                            ?>
                             <div class="content-card-skills">
                                 <?php
                                 foreach($topics as $key=>$value){
@@ -1384,9 +1447,12 @@ foreach ($users as $element) {
                                     $i++;
                                 }
                                 ?>
-
                             </div>
-
+                            <?php
+                            else: 
+                                echo $no_content;
+                            endif;
+                            ?>
                             <!-- Start add skills-->
                             <div class="modal text-left modalEdu fade" id="exampleModalAddSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">

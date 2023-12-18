@@ -399,7 +399,7 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
 <!--script pagination-->
 
 <script>
-    const itemsPerPage = 9;
+    const itemsPerPage = 15;
     const blockList = document.querySelector('.block-new-card-course');
     const blocks = blockList.querySelectorAll('.new-card-course');
     const paginationContainer = document.querySelector('.pagination-container');
