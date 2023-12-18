@@ -8,7 +8,6 @@
 $page = 'check_visibility.php';
 require($page);
 
-
 // Modules
 require_once('search-module.php'); 
 

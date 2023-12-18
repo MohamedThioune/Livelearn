@@ -9,6 +9,7 @@ include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
 
+
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_directory_uri().'/style-main.css' );

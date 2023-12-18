@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
 <body>
+
 <div class="block-zzpers block-sme theme-skills theme-new-element corporate-theme">
     <section class="head-section-theme">
         <div class="img-theme-skills">

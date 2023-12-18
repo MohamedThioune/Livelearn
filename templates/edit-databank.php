@@ -23,6 +23,7 @@ $course = $wpdb->get_results( $sql )[0];
 * * Tags *
 */ 
 
+
 $tags = array();
 $categories = array(); 
 
