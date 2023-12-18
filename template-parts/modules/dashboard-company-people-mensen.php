@@ -162,7 +162,6 @@ else if(isset($multiple_add_people)){
 
 <div class="contentPageManager managerOverviewMensen">
     <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?>
-    <br><br>
     <div class="contentOverviewMensen">
         <div class="blockOverviewMensen">
             <h2 class="titleBlockOverviewMensen">Toevoegen</h2>
