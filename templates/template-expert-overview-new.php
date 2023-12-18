@@ -18,10 +18,13 @@ $expertise = array();
 $expert_input_id = ($_GET['id']) ?: 0;
 $expert_input = get_user_by('ID', $expert_input_id);
 
-$error_content = '<h1 class="wordDeBestText2">Expert Not Found ❗️</h1>';
+$no_content =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256"> This expert not found ❗️</span> 
+                </p>
+                ';
 if(!$expert_input):
-    // var_dump($expert_input);
-    echo $error_content;
+    echo $no_content;
     die();
 endif;
 

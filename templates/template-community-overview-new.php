@@ -163,12 +163,14 @@ $communities = get_posts($args);
                         $private  = get_field('password_community', $community->ID);
 
                         $type_groups = "";
-                        $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
+                        // $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
 
                         //Since year
                         $date = $community->post_date;
                         $days = explode(' ', $date)[0];
                         $year = explode('-', $days)[0];
+                        $month = date("M",strtotime($date));
+                        $day = explode('-', $days)[2];
 
                         //Courses comin through custom field 
                         $courses = get_field('course_community', $community->ID); 
@@ -196,11 +198,8 @@ $communities = get_posts($args);
                         $company_user = get_field('company',  'user_' . $user_id);
                         $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
                         $visibility_community = get_field('visibility_community', $community->ID); 
-                        if($visibility_community){
+                        if($visibility_community)
                             $type_groups = ($type_groups == 'Private Groups') ? 'Private|Intern Groups' : 'Intern Groups';
-                            // if($company->post_title != $company_title_user)
-                            //     $button_join = "<button type='button' class='btn btn-join-group' name='follow_community' data-toggle='tooltip' data-placement='top' title='Intern community, only for member of the " . $company->post_title . " company' disabled>Join group</button>";
-                        }
 
                         if($type_groups == 'Private Groups' || $type_groups == 'Intern Groups' || $type_groups == 'Private|Intern Groups')
                             continue;
@@ -236,7 +235,7 @@ $communities = get_posts($args);
                                             $max_user = count($followers);
                                         if($max_user > 4){
                                             $plus_user = $max_user - 4;
-                                            echo '+' . $plus_user . 'Members';
+                                            echo '+' . $plus_user . ' Members';
                                         }
                                     ?>
                                 </p>
@@ -244,7 +243,7 @@ $communities = get_posts($args);
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="date-added">Since 
                                     <!-- <span>April 16, 2022</span> -->
-                                    <span><?= $year; ?></span>
+                                    <span><?= $month . ' ' . $day . ', ' . $year; ?></span>
                                 </p>
                                 <a href="/community-detail/?mu=<?= $community->ID ?>" class="btn btn-discover">Discover</a>
                             </div>
