@@ -1157,7 +1157,7 @@ $(document).ready(function () {
 
     $("#playlist-youtube").click((e)=>{
         $.ajax({
-            url:"/youtube-playlist/",
+            url:"/livelearn/youtube-playlist/",
             method:"POST",
             data:{
                 playlist_youtube:"youtube"
@@ -1176,7 +1176,7 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                location.reload();
+                // location.reload();
             },
         });
     })
