@@ -106,7 +106,7 @@ if(!empty($numbers_count))
         $i++;
         $value = get_user_by('ID', $element['id']);
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
-        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
         array_push($most_active_members, $value);
     }
 
@@ -1010,7 +1010,7 @@ $saved = get_user_meta($user_id, 'course');
 
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
-                <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
+                <form action="/product-search" class="position-relative newFormSarchBar" method="GET">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
                         foreach($type_course as $type)
@@ -1047,8 +1047,8 @@ $saved = get_user_meta($user_id, 'course');
                                 </div>
                                 <div class="modal-body">
                                     <video width="560" height="315" id="videoFrame" controls>
-                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
-                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/Livelearn.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/Livelearn.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
                                     </video>
                                 </div>
                                 <div class="modal-footer">
@@ -1502,7 +1502,7 @@ $saved = get_user_meta($user_id, 'course');
                     $purcent = $purchantage_on_bottop ? number_format(( $purchantage_on_top/$purchantage_on_bottop )*100  , 2, '.', ',') : $purchantage_on_top;
 
                     $image_user = get_field('profile_img',  'user_' . $user->ID);
-                    $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
 
                     $company = get_field('company',  'user_' . $user->ID);
                     $company_title = $company[0]->post_title;
@@ -1613,7 +1613,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </a>
             <div class="blockGroupText">
-                <p class="titleGroupText">Opleiden richting een baan </p>
+                <a href="" class="titleGroupText">Opleiden richting een baan </a>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1626,7 +1626,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-                <p class="titleGroupText">Groeien binnen je functie </p>
+                <a href="" class="titleGroupText">Groeien binnen je functie </a>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1639,7 +1639,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-                <p class="titleGroupText">Relevante skills ontwikkelen:</p>
+                <a href="" class="titleGroupText">Relevante skills ontwikkelen:</a>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1652,7 +1652,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-                <p class="titleGroupText">Persoonlijke interesses & vrije tijd</p>
+                <a href="" class="titleGroupText">Persoonlijke interesses & vrije tijd</a>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1818,7 +1818,7 @@ $saved = get_user_meta($user_id, 'course');
                     $author = get_user_by('ID', $course->post_author);
                     $author_name = $author->display_name ?: $author->first_name;
                     $author_image = get_field('profile_img',  'user_' . $author_object->ID);
-                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
 
                     //Clock duration
                     $duration_day = get_field('duration_day', $post->ID) ? : '-';
@@ -1889,7 +1889,6 @@ $saved = get_user_meta($user_id, 'course');
     <?php get_footer(); ?>
     <?php wp_footer(); ?>
 
-    <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
@@ -1977,8 +1976,6 @@ $saved = get_user_meta($user_id, 'course');
 
         });
     </script>
-
-    <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 
     <script>
 

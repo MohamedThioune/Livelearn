@@ -4484,7 +4484,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     height: 53px;
     object-fit: cover;
     margin-right: 15px;
-    border: 1px solid #7b7b7b6b;
+    border: 1px solid #7b7b7b1c;
     border-radius: 100%;
     overflow: hidden;
 }
@@ -20429,11 +20429,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .BaangerichteBlock a{
     text-align: center;
-    background: #023356;
+    background: #3dbca8;
     font-size: 16px;
     color: #FFFFFF !important;
     font-weight: 500;
     border-radius: 8px;
+    width: fit-content;
 }
 #v-pills-tabContent{
     display: block !important;
@@ -22028,6 +22029,12 @@ figure ul li {
     font-size: 16px;
     font-weight: 500;
 }
+.content-card-topics .new-card-topics a {
+    color: #043356 !important;
+}
+.content-card-topics .new-card-topics a:hover {
+    color: #47A99E !important;
+}
 .content-card-topics .card-topics ul li{
     list-style: none;
     width: 20%;
@@ -22421,6 +22428,69 @@ figure ul li {
 }
 .w-40 {
     width: 46%;
+}
+.emty-block-activity {
+    background: white;
+    padding: 50px;
+    width: 100%;
+}
+.emty-block-activity .element-upcoming-block{
+    width: fit-content;
+    margin: 0 auto;
+}
+.addCourseStep .btnNext {
+    width: fit-content !important;
+}
+.addCourseStep .btnSkipCourse {
+    color: #47a99e;
+}
+#nextPersonal {
+    margin-left: auto;
+    width: fit-content !important;
+    display: block;
+}
+.img-store-footer {
+    display: block;
+    width: 129px;
+    margin-top: 10px;
+}
+.img-store-footer img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.footer-logo{
+    width: 140px;
+}
+.footer-logo img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.term-and-condition{
+    width: 60%;
+    justify-content: center;
+}
+.term-and-condition a{
+    color: white !important;
+    margin: 0 10px;
+}
+.social-link a{
+    color: white !important;
+    width: 45px;
+    height: 45px;
+    border: 1px solid white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}
+.social-link i{
+    font-size: 15px;
+}
+.sub-footer-block {
+    margin-top: 15px;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {

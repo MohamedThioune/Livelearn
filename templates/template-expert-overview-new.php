@@ -578,13 +578,13 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
                                 <p class="description">Courses</p>
                             </div>
                         </div>
-                        <div class="element-sub-section d-flex">
+                        <!-- <div class="element-sub-section d-flex">
                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/members-icon.svg" alt="">
                             <div class="detail">
                                 <p class="number">?</p>
                                 <p class="description">Members</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <?php
                     if(!empty($expertise)):
@@ -603,7 +603,7 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
 
                                 $name = ($expertie->last_name) ? $expertie->first_name : $expertie->display_name;
 
-                                if($i >= 6)
+                                if($i >= 4)
                                     break;
                                 $i += 1;    
 

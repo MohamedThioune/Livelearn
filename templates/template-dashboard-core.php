@@ -1,6 +1,12 @@
 <?php /** Template Name: dashboard core */ ?>
 <?php
 
+$user_main = get_current_user_id();
+$site_url = get_site_url();
+if(!$user_main):
+    header('Location: ' . $site_url);
+endif;
+
 $page = 'check_visibility.php';
 require($page); 
 require('module-subscribe.php'); 
@@ -16,7 +22,6 @@ require('module-subscribe.php');
 //     'version' => 'wc/v3', // WooCommerce WP REST API version
 // ]
 // );
-
 
 
 $mail_notification_invitation = '/mail-notification-invitation.php';

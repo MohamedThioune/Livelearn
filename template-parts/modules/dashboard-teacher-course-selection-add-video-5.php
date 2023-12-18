@@ -344,7 +344,10 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                         ?>
                                     </div>
 
-                                    <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button type="button" class="btn btnSkipCourse" id="btnSkipTopics1">Skip</button>
+                                        <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -370,7 +373,10 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                             echo $row_functies;
                                         ?>
                                     </div>
-                                    <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <button type="button" class="btn btnSkipCourse" id="btnSkipTopics2">Skip</button>
+                                        <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -398,7 +404,10 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                             echo $row_skills;
                                         ?>
                                     </div>
-                                    <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button type="button" class="btn btnSkipCourse" id="btnSkipTopics3">Skip</button>
+                                        <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                                    </div>
                                 </div>
                             </div>
 

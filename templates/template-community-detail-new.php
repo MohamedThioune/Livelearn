@@ -107,6 +107,81 @@
 
 </style>
 
+<?php
+//current user
+$user_id = get_current_user_id();
+$args = array(
+    'post_type' => 'community',
+    'post_status' => 'publish',
+    'order' => 'DESC',
+    'posts_per_page' => -1
+);
+$communities = get_posts($args);
+
+$no_content =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256"> This community not found ! </span> 
+                </p>
+                ';
+// $users = get_users();
+// $authors = array();
+
+$community = array();
+if(isset($_GET['mu']))
+    $community = get_post($_GET['mu']);
+
+if(!empty($community)):
+    echo $no_content;
+    die();
+endif;
+
+$company = get_field('company_author', $community->ID);
+$company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+$community_image = get_field('image_community', $community->ID) ?: $company_image;
+
+// $level = get_field('range', $community->ID);
+$private = get_field('password_community', $community->ID);
+
+$type_groups = "";
+$button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
+
+//Since year
+$date = $community->post_date;
+$days = explode(' ', $date)[0];
+$year = explode('-', $days)[0];
+
+//Courses comin through custom field 
+$courses = get_field('course_community', $community->ID); 
+$max_course = 0;
+if(!empty($courses))
+    $max_course = count($courses);
+
+//Followers
+$max_follower = 0;
+$followers = get_field('follower_community', $community->ID);
+if(!empty($followers))
+    $max_follower = count($followers);
+$bool = false;
+foreach ($followers as $key => $value)
+    if($value->ID == $user_id){
+        $bool = true;
+        break;
+    }
+
+//Private community
+$private_field = ($private) ? "<input type='text' class='form-control search' name='password' placeholder='Please fill community password !' required>" : ''; 
+$type_groups = ($private_field == '') ? 'Public Groups' : 'Private Groups';
+
+//Intern community
+$company_user = get_field('company',  'user_' . $user_id);
+$company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+$visibility_community = get_field('visibility_community', $community->ID); 
+if($visibility_community){
+    $type_groups = ($type_groups == 'Private Groups') ? 'Private|Intern Groups' : 'Intern Groups';
+    if($company->post_title != $company_title_user)
+        $button_join = "<button type='button' class='btn btn-join-group' name='follow_community' data-toggle='tooltip' data-placement='top' title='Intern community, only for member of the " . $company->post_title . " company' disabled>Join group</button>";
+}
+?>
 
 <div class="content-community-overview bg-gray detail-community-section">
     <section class="boxOne3-1">
@@ -124,63 +199,47 @@
                     <div class="first-block-detail">
                         <div class="card-detail-community">
                             <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg" class="img-head-about" alt="">
+                                <img src="<?= $community_image ?>" class="img-head-about" alt="">
                             </div>
-                            <p class="name-group">VirtualClassroom Community</p>
+                            <p class="name-group"><?= $community->post_title; ?></p>
                             <div class="d-flex">
                                 <i class="fa fa-group"></i>
-                                <p class="type-group">Public Group</p>
+                                <p class="type-group"><?= $type_groups ?></p>
                             </div>
-                            <p class="description-group">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, </p>
+                            <p class="description-group"><?= $community->post_excerpt; ?></p>
                         </div>
                         <div class="cardOtherGroups">
-                            <p class="others-group">Others Group</p>
+                            <p class="others-group">Others Community</p>
                             <div class="block-others-group">
+                                <?php
+                                foreach($communities as $value):
+                                    $company = get_field('company_author', $value->ID);
+                                    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                                    $community_image = get_field('image_community', $value->ID) ?: $company_image;
+                        
+                                    $type_groups = "";
+                                    $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
+            
+                                    //Since year
+                                    $date = $community->post_date;
+                                    $days = explode(' ', $date)[0];
+                                    $year = explode('-', $days)[0];
+                                ?>
                                 <div class="oneGroup d-flex">
                                     <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
+                                        <img src="<?= $community_image ?>" class="img-head-about" alt="">
                                     </div>
                                     <div>
-                                        <p class="name-group">VirtualClassroom Community</p>
-                                        <p class="date-added">2 years ago</p>
+                                        <p class="name-group"><?= $value->post_title ?></p>
+                                        <p class="date-added">
+                                            <!-- 2 years ago -->
+                                            <?= $years ?>
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="oneGroup d-flex">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-group">VirtualClassroom Community</p>
-                                        <p class="date-added">2 years ago</p>
-                                    </div>
-                                </div>
-                                <div class="oneGroup d-flex">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-group">VirtualClassroom Community</p>
-                                        <p class="date-added">2 years ago</p>
-                                    </div>
-                                </div>
-                                <div class="oneGroup d-flex">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-group">VirtualClassroom Community</p>
-                                        <p class="date-added">2 years ago</p>
-                                    </div>
-                                </div>
-                                <div class="oneGroup d-flex">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-group">VirtualClassroom Community</p>
-                                        <p class="date-added">2 years ago</p>
-                                    </div>
-                                </div>
+                                <?php
+                                endforeach;
+                                ?>
                             </div>
                         </div>
                     </div>

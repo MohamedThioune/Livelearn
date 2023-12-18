@@ -340,9 +340,9 @@ endif;
                                 if($expertie->first_name == "")
                                     continue;
 
-                                $i += 1;    
-                                if($i == 4)
+                                if($i >= 4)
                                     break;
+                                $i += 1;    
 
                                 echo '
                                 <a href="/user-overview/?id=' . $expertie->ID . '" class="profil-expert d-flex align-items-center">
@@ -351,7 +351,6 @@ endif;
                                     </div>
                                     <p>'. $name .'</p>
                                 </a>';
-                                $i += 1; 
                             endforeach;
                         echo '
                         </div>';
