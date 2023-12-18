@@ -1,6 +1,5 @@
 <?php
 
-
 /** 
  *  Handling adding tags to courses v2
 */

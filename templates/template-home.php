@@ -132,13 +132,13 @@ $type_course = array(
 
 
 ?>
-
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js" />
 <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
 <style>
     body{
         background: #F5FAFD;

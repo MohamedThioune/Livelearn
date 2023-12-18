@@ -17,6 +17,7 @@ if (isset($_GET['edit']))
     
 }
 
+
 if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
     {
         $already_linked_tags = array();
