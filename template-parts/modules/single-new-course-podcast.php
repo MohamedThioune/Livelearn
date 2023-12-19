@@ -764,7 +764,6 @@ endif;
         if (specificBlock) {
             specificBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        alert("ok");
         const containerHeight = blockList.offsetHeight;
 
         setTimeout(() => {

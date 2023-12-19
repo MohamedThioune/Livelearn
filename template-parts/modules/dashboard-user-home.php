@@ -277,6 +277,7 @@ $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
 if (!$is_first_login && get_current_user_id() != 0 )
 {
 ?>
+
 <!-- Modal First Connection -->
 <div class="contentModalFirst"²>
     <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">

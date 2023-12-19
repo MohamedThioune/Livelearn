@@ -4,7 +4,6 @@
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
-
     <body>
     <div class="block-sme mt-90 theme-skills theme-new-element creeren-theme">
         <section>
