@@ -16810,7 +16810,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     z-index: 99;
     position: fixed;
     width: 100%;
-    top: 115px;
+    top: 63px;
 }
 .content-start-course .headBlock a{
     font-weight: 400;
@@ -22404,7 +22404,7 @@ figure ul li {
 }
 .language-selector-gtTranslate .gtTranslateBlock{
     position: absolute;
-    top: -19px;
+    top: -12px;
 }
 .language-selector-gtTranslate .gt_selected a {
     padding: 5px 6px 4px !important;
@@ -22492,7 +22492,12 @@ figure ul li {
 .sub-footer-block {
     margin-top: 15px;
 }
-
+.table .pagination-container {
+    padding: 40px 0 50px;
+}
+.scrolled .frist-block-subnav p {
+    color: #ffffff !important;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -27192,6 +27197,9 @@ figure ul li {
     }
     .block-individual-element .group-card-head .card-element-company {
         width: 100%;
+    }
+    .sub-footer-block {
+        display: none !important;
     }
 
 

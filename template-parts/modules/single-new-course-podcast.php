@@ -534,7 +534,6 @@ endif;
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4">
                     <div class="right-block-detail-course">
                         <div class="card-detail-course">
@@ -608,7 +607,6 @@ endif;
                         </div>
                     </div>
                 </div>
-
             </div>
             <?php
             if(!empty($similar_course)):
@@ -1003,6 +1001,19 @@ endif;
 
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('strong').each(function() {
+            var content = $(this).html();
+            $(this).replaceWith(content);
+        });
+    });
+
+
+</script>
+
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 </body>
