@@ -2,6 +2,7 @@
 
 /* * Liggeey * */
 
+
 //Home page [GET]
 function homepage(){
   $categories = [];

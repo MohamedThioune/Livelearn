@@ -1,4 +1,5 @@
-<?php /** Template Name: opleider courses */ ?> 
+<?php /** Template Name: opleider courses */ ?>
+
 <style>
      .checkmarkUpdated{
         background-color: white !important;

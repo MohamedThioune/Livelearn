@@ -259,18 +259,19 @@ if(!empty($bunch)){
         <div class="list-wrap">
 
             <ul id="General">
-                <div class="contentBlockSetting">
+                <div class="contentBlockSetting ">
                     <?php $options = array(
                         'post_id' => 'user_'. get_current_user_id(),
                         'form' => true,
                         'fields' => array('first_name','user_email', 'profile_img', 'function', 'telnr', 'experience', 'country', 'date_born', 'gender', 'education_level', 'language', 'biographical_info'),
                         'html_before_fields' => '',
                         'html_after_fields' => '',
-                        'html_updated_message'  => '<div id="message" class="alert alert-success updated">Informations user updated<p></p></div>',
+                        'html_updated_message'  => '<div id="message" class="alert alert-success updated">Informations user updated<p> </p></div>',
 
                         'submit_value' => 'SAVE'
                     );
-                    acf_form( $options );
+                     acf_form( $options );
+
                     ?>
                 </div>
             </ul>
@@ -433,7 +434,7 @@ if(!empty($bunch)){
 
                     <div class="group-input-settings">
                         <label for="">Work Experience</label>
-                        <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalWork"> Add Work Experience
+                        <button class="btn btnAddEdu" data-toggle="modal" data-target="#ModalWork"> Add Work Experience
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
                         </button>
 
@@ -524,13 +525,13 @@ if(!empty($bunch)){
                                     <?php } ?>
                         </div>
                         <div class="elementInputImgSetting">
-                            <!-- Modal Work Experience -->
-                            <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- Modal -->
+                            <div class="modal modalEdu fade" id="ModalWork" tabindex="-1" role="dialog" aria-labelledby="ModalWorkLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Add New Work & Experience</h5>
-                                            <button type="button" class="close"  aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -573,6 +574,22 @@ if(!empty($bunch)){
                                                 <button class="btn btnSaveSetting" name="add_work" >Save</button>
                                             </div>
                                         </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Modal Work Experience -->
+                            <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                            <button type="button" class="close"  aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
