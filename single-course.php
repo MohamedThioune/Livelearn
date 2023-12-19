@@ -12,6 +12,7 @@ require($page);
 
 view($post);
 
+
 $course_type = get_field('course_type', $post->ID);
 
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
@@ -105,7 +106,7 @@ $results = get_field('results', $post->ID);
 $category = " ";
 $category_id = 0;
 $id_category = 0;
-if($$tag == ' '){
+if($tag == ' '){
     $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
     $category_xml = intval(get_field('category_xml', $post->ID)[0]['value']);
     if($category_xml)

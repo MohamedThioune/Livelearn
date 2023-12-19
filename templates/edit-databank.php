@@ -23,6 +23,7 @@ $course = $wpdb->get_results( $sql )[0];
 * * Tags *
 */ 
 
+
 $tags = array();
 $categories = array(); 
 
@@ -119,8 +120,6 @@ $args = array(
 );
 $companies = get_posts($args);
 
-
-
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -163,7 +162,7 @@ $companies = get_posts($args);
         
                    <div class="groupInputDate">
                        <div class="input-group">
-                           <label for="">Price </label> 
+                           <label for="">Price </label>
                            <input type="number" name="prijs" value="<?= $course->prijs ?>" placeholder="Prijs ...">
                        </div>
                        <div class="input-group">

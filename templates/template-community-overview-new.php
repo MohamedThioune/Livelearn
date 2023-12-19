@@ -1,9 +1,10 @@
-<?php /** Template Name: community overview new */ ?>
+<?php /** Template Name: Community overview */ ?>
 
 <body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 <style>
     .headerdashboard,.navModife {
         background: #deeef3;
@@ -103,6 +104,20 @@
 
 </style>
 
+<?php
+$user_id = get_current_user_id();
+// $users = get_users();
+$args = array(
+    'post_type' => 'community',
+    'post_status' => 'publish',
+    'order' => 'DESC',
+    'posts_per_page' => -1
+);
+$communities = get_posts($args);
+
+// $your_communities = array();
+// $other_communities = array();
+?>
 
 <div class="content-community-overview bg-gray">
     <section class="boxOne3-1">
@@ -110,14 +125,16 @@
             <div class="BaangerichteBlock">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/company-logo.png" class="img-head-about" alt="">
                 <h1 class="wordDeBestText2">Community</h1>
+                <!-- 
                 <button class="btn btn-follown" type="button">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/follow-icon.svg" class="img-follown" alt="">
                     Follow
-                </button>
+                </button> -->
             </div>
     </section>
     <section class="section-all community">
         <div class="container-fluid">
+            <!-- 
             <form action="" class="d-flex align-items-center justify-content-between form-search-course-filter mb-0">
                 <div class="form-group position-relative mb-0">
                     <i class="fa fa-search"></i>
@@ -134,329 +151,108 @@
                     <i class="fa fa-filter"></i>
                 </span>
                 </div>
-            </form>
+            </form> -->
             <div class="block-all-community">
                 <div class="row">
+                    <?php
+                    foreach($communities as $community):
+                        $company = get_field('company_author', $community->ID);
+                        $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                        $community_image = get_field('image_community', $community->ID) ?: $company_image;
+
+                        // $level = get_field('range', $community->ID);
+                        $private  = get_field('password_community', $community->ID);
+
+                        $type_groups = "";
+                        // $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
+
+                        //Since year
+                        $date = $community->post_date;
+                        $days = explode(' ', $date)[0];
+                        $year = explode('-', $days)[0];
+                        $month = date("M",strtotime($date));
+                        $day = explode('-', $days)[2];
+
+                        //Courses comin through custom field 
+                        $courses = get_field('course_community', $community->ID); 
+                        $max_course = 0;
+                        if(!empty($courses))
+                            $max_course = count($courses);
+
+                        //Followers
+                        $max_follower = 0;
+                        $followers = get_field('follower_community', $community->ID);
+                        if(!empty($followers))
+                            $max_follower = count($followers);
+                        $bool = false;
+                        foreach ($followers as $key => $value)
+                            if($value->ID == $user_id){
+                                $bool = true;
+                                break;
+                            }
+
+                        //Private community
+                        $private_field = ($private) ? "<input type='text' class='form-control search' name='password' placeholder='Please fill community password !' required>" : ''; 
+                        $type_groups = ($private_field == '') ? 'Public Groups' : 'Private Groups';
+
+                        //Intern community
+                        $company_user = get_field('company',  'user_' . $user_id);
+                        $company_title_user = (!empty($company_user)) ? $company_user[0]->post_title : '';
+                        $visibility_community = get_field('visibility_community', $community->ID); 
+                        if($visibility_community)
+                            $type_groups = ($type_groups == 'Private Groups') ? 'Private|Intern Groups' : 'Intern Groups';
+
+                        if($type_groups == 'Private Groups' || $type_groups == 'Intern Groups' || $type_groups == 'Private|Intern Groups')
+                            continue;
+                    ?>
                     <div class="col-lg-4 col-md-6">
                         <div class="card-community">
                             <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="" alt="">
+                                <img src="<?= $community_image; ?>" class="" alt="">
                             </div>
-                            <p class="name-community">VirtualClassroom Community</p>
+                            <p class="name-community"><?= $community->post_title; ?></p>
                             <div class="d-flex align-items-center mb-4">
                                 <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
+                                    <?php
+                                        if(!empty($followers))
+                                        foreach($followers as $key => $value) {
+                                            if($key == 4)
+                                                break;
+                                            $portrait_image = get_field('profile_img',  'user_' . $value->ID);
+                                            if (!$portrait_image)
+                                                $portrait_image = $company_image;
+                                            echo 
+                                                '<div class="img-members">
+                                                    <img src="' . $portrait_image . '" class="" alt="">
+                                                </div>';
+                                        }
+                                    ?>
                                 </div>
-                                <p class="numbers-members">+ 300 Members</p>
+                                <p class="numbers-members">
+                                    <?php
+                                        $plus_user = 0;
+                                        $max_user = 0;
+                                        if(!empty($followers))
+                                            $max_user = count($followers);
+                                        if($max_user > 4){
+                                            $plus_user = $max_user - 4;
+                                            echo '+' . $plus_user . ' Members';
+                                        }
+                                    ?>
+                                </p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
+                                <p class="date-added">Since 
+                                    <!-- <span>April 16, 2022</span> -->
+                                    <span><?= $month . ' ' . $day . ', ' . $year; ?></span>
+                                </p>
+                                <a href="/community-detail/?mu=<?= $community->ID ?>" class="btn btn-discover">Discover</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/skills2.png" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/skills2.png" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/skills2.png" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card-community">
-                            <div class="block-img">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/skills2.png" class="" alt="">
-                            </div>
-                            <p class="name-community">VirtualClassroom Community</p>
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                    <div class="img-members">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" class="" alt="">
-                                    </div>
-                                </div>
-                                <p class="numbers-members">+ 300 Members</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="date-added">Since: <span>April 16, 2022</span></p>
-                                <a href="" class="btn btn-discover">Discover</a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    endforeach;
+                    ?>
                 </div>
                 <div class="pagination-container">
                     <!-- Les boutons de pagination seront ajoutés ici -->

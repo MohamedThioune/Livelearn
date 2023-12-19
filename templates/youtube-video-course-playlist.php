@@ -6,7 +6,6 @@ global $wpdb;
 $table = $wpdb->prefix . 'databank';
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

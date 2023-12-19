@@ -89,7 +89,7 @@
                         $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
                 
                         ?>
-                        <div class="card-topics d-flex">
+                        <div class="card-topics new-card-topics d-flex">
                             <div class="block-img">
                                 <img src="<?= $image_category ?>" class="img-head-about" alt="">
                             </div>
@@ -122,6 +122,7 @@
         </div>
     </section>
 </div>
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

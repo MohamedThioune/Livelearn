@@ -508,8 +508,9 @@ form {
     .navbar {
         height: 63px;
     }
-
-
+    .navWeb {
+        display: none !important;
+    }
 }
 
 @media screen and (max-width: 1079px) and (min-width: 768px){

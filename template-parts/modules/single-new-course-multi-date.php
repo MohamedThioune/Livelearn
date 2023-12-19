@@ -6,14 +6,15 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
+
 <?php
 
-//Long description             
+//Long description
 $long_description = ($long_description) ? : "No long description found for this course ";
 
 //Author
 $author = get_user_by('id', $post->post_author);
-$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
+$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
 $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 $author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
@@ -40,6 +41,7 @@ endif;
 ?>
 
 <body>
+
 <div class="content-new-Courses">
     <div class="content-head">
         <div class="container-fluid">
@@ -62,7 +64,7 @@ endif;
                         endif;
                         echo '<i class="fa fa-star"></i>';
                     endforeach;
-                    ?>                        
+                    ?>
                     <p class="reviews-text"><?= $count_reviews ?> Reviews</p>
                     </div>
                     <div class="d-flex align-items-center">
@@ -109,7 +111,7 @@ endif;
                                                 echo  '<li>
                                                             <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                             <a href="/category-overview?category=' . $tag->ID . '" class="text-tabs">' . $tag->name . '</a>
-                                                        </li>';  
+                                                        </li>';
                                         else{
                                             $read_category = array();
                                             if(!empty($category_default))
@@ -120,7 +122,7 @@ endif;
                                                             echo  '<li>
                                                                         <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                         <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
-                                                                    </li>';  
+                                                                    </li>';
                                                         }
 
                                             else if(!empty($category_xml))
@@ -131,12 +133,12 @@ endif;
                                                             echo  '<li>
                                                                         <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                         <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
-                                                                    </li>';                                      
+                                                                    </li>';
                                                         }
                                         }
                                     ?>
                                 </ul>
-                            </div> 
+                            </div>
                             <?php
                             endif;
                             ?>
@@ -212,8 +214,9 @@ endif;
                                                                     $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
                                                                     $hour = explode(' ', $date_start)[1];
                                                                     ?>
-                                                                    <div class="blockDateEvens">
-                                                                            <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                    <div class="blockDateEvens d-flex">
+                                                                        <input type="checkbox">
+                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                     </div>
                                                                     <?php
                                                                 }
@@ -242,7 +245,7 @@ endif;
                                                                 </table>
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
-                                                                    if($product):                                                                            
+                                                                    if($product):
                                                                     $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start . ', ' . $year_start;
 
                                                                     echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
@@ -267,7 +270,7 @@ endif;
                                                                         if($user_id == 0)
                                                                             echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                         else if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';    
+                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
 
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
@@ -305,7 +308,7 @@ endif;
                                             $timer_e = explode(':', $date_end[1]);
                                             $h_end =  $timer_e[0] . ':' . $timer_e[1];
 
-                                            $year_start = $d_start[2]; 
+                                            $year_start = $d_start[2];
                                             $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
                                             $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
 
@@ -345,9 +348,10 @@ endif;
                                                                 $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
                                                                 $location = explode('-',$date[2])[1];
                                                                 ?>
-                                                                <div class="blockDateEvens">
-                                                                    <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
-                                                                </div>
+                                                                    <div class="blockDateEvens d-flex">
+                                                                        <input type="checkbox">
+                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                    </div>
                                                                     <?php
                                                                     $x+=1;
                                                                 }
@@ -355,12 +359,12 @@ endif;
                                                             </div>
                                                             <div class="Course-chechkout">
                                                                 <h3>Boek training</h3>
-                                                                <!-- 
+                                                                <!--
                                                                 <select class="Course-people" name="" id="">
                                                                     <option value="1"> 1 persoon </option>
                                                                     <option value="2"> 2 persoon </option>
                                                                     <option value="3"> 3 persoon </option>
-                                                                </select> 
+                                                                </select>
                                                                 -->
                                                                 <table class="tablePrice">
                                                                     <tbody>
@@ -377,7 +381,7 @@ endif;
                                                                 </table>
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
-                                                                    if($product):                                                                            
+                                                                    if($product):
                                                                     $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start . ', ' . $year_start;
 
                                                                     //Reserveren action
@@ -403,16 +407,16 @@ endif;
                                                                         if($user_id == 0)
                                                                             echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                         else if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';    
+                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
 
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
                                                                     <?php
-                                                                    
-                                                                    do_action( 'woocommerce_after_add_to_cart_form' ); 
+
+                                                                    do_action( 'woocommerce_after_add_to_cart_form' );
                                                                     endif;
                                                                     ?>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -428,7 +432,7 @@ endif;
                                     else{
                                     $data = get_field('dates', $post->ID);
                                     if(!empty($data)){
-                                        foreach($data as $key => $datum){ 
+                                        foreach($data as $key => $datum){
                                             $number = count($data) - 1;
                                             $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
                                             $date_start = explode(' ', $datum['date']);
@@ -459,7 +463,8 @@ endif;
                                                         <div class="detailSummary">
                                                             <div class="Course-info">
                                                                 <h3>Cursus</h3>
-                                                                <div class="blockDateEvens">
+                                                                <div class="blockDateEvens d-flex">
+                                                                    <input type="checkbox">
                                                                     <p class="dateEvens"><?php echo $agenda_start . ', ' . $h_start ?></p>
                                                                 </div>
                                                             </div>
@@ -485,7 +490,7 @@ endif;
                                                                 </table>
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
-                                                                    if($product):                                                                            
+                                                                    if($product):
                                                                     $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start  . ', ' . $year_start;
 
                                                                     //Reserveren action
@@ -511,12 +516,12 @@ endif;
                                                                         if($user_id == 0)
                                                                             echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                         else if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';    
+                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
 
                                                                         do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                     </form>
                                                                     <?php
-                                                                    do_action( 'woocommerce_after_add_to_cart_form' ); 
+                                                                    do_action( 'woocommerce_after_add_to_cart_form' );
                                                                     endif;
                                                                     ?>
                                                                 </div>
@@ -524,8 +529,8 @@ endif;
                                                         </div>
                                                     </details>
                                                 </section>
-                                            </div> 
-                                        <?php 
+                                            </div>
+                                        <?php
                                             }
                                         }
                                     }
@@ -573,16 +578,16 @@ endif;
                                         <div class="rating-bying-course">
                                             <div class="rating-element2">
                                                 <div class="rating">
-                                                    <?php 
+                                                    <?php
                                                     foreach(range(5, 1) as $number):
                                                         if($average_star == $number ):
                                                             echo '<input type="radio" id="star' . $number . '-note" class="stars" checked name="rating-note" value="' . $number . '" />
-                                                                    <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';                      
+                                                                    <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';
                                                             continue;
                                                         endif;
 
                                                         echo '<input type="radio" id="star' . $number . '-note" class="stars" name="rating-note" value="' . $number . '" />
-                                                                <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';                      
+                                                                <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';
 
                                                     endforeach;
                                                     ?>
@@ -717,7 +722,7 @@ endif;
                                 if(!empty($reviews))
                                     foreach($reviews as $review):
                                         $user = $review['user'];
-                                        $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
+                                        $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
                                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
                                         $company = get_field('company',  'user_' . $user->ID);
@@ -744,7 +749,7 @@ endif;
                                     ?>
                                     <div class="comment-block">
                                         <h2>Write a Review</h2>
-                                        <form action="/dashboard/user" method="POST" id="review_vid"> 
+                                        <form action="/dashboard/user" method="POST" id="review_vid">
                                             <input type="hidden" name="course_id" value="<?= $post->ID; ?>" >
                                         </form>
                                         <div class="rating-element2">
@@ -801,11 +806,11 @@ endif;
                                     <p class="detail">3 weeks</p>
                                 </li>
                                 -->
-                                <!-- 
+                                <!--
                                 <li>
                                     <p class="name-element-detail">Lessons:</p>
                                     <p class="detail">Opleiders</p>
-                                </li> 
+                                </li>
                                 -->
                                 <li>
                                     <p class="name-element-detail">Enrolled</p>
@@ -818,7 +823,7 @@ endif;
                                         <p class="detail">' . $language . '</p>
                                       </li>';
                                 ?>
-                               
+
                                 <li>
                                     <p class="name-element-detail">Certificate:</p>
                                     <p class="detail">No</p>

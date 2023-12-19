@@ -28,8 +28,8 @@
                         <h1>Blijf je leven lang ontwikkelen</h1>
                         <p>Een leeromgeving die speciaal voor jou gemaakt is. Jij bepaalt de content die je te zien krijgt, de experts en opleiders die je volgt en de onderwerpen die je interessant vindt. Wij zorgen dat jij je ontwikkelt!</p>
                         <div class="groupBtnInloggenVoor d-flex">
-                            <a href="" class="btn btnLeesMeer">Lees meer</a>
-                            <a href="" class="btn btnBedrijven">LiveLearn voor bedrijven</a>
+                            <a href="/about" class="btn btnLeesMeer">Lees meer</a>
+                            <a href="/overview-organisaties/" class="btn btnBedrijven">LiveLearn voor bedrijven</a>
                         </div>
                     </div>
                     <p class="text-download">Of download onze gratis app:</p>
@@ -102,8 +102,6 @@
         </div>
     </section>
 </div>
-
-
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

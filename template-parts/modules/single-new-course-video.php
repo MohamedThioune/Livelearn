@@ -8,6 +8,7 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
+
 <?php
 extract($_GET);
 if(empty($youtube_videos))
@@ -756,9 +757,8 @@ endif;
     });
 </script>
 
-
 <script>
-    const itemsPerPage = 8;
+    const itemsPerPage = 6;
     const blockList = document.querySelector('.playlist-course-block');
     const blocks = blockList.querySelectorAll('.element-playlist-course');
     const paginationContainer = document.querySelector('.pagination-container');
@@ -801,21 +801,21 @@ endif;
             button.textContent = i;
             button.classList.add('pagination-button');
             button.addEventListener('click', () => {
-                scrollToTop(); // Scroll to the top when a button is clicked
+                scrollToStart(); // Scroll jusqu'au début du bloc de pagination
                 displayPage(i);
 
-                // Remove the .active class from all buttons
+                // Retire la classe .active de tous les boutons
                 const buttons = document.querySelectorAll('.pagination-button');
                 buttons.forEach((btn) => {
                     btn.classList.remove('active');
                 });
 
-                // Add the .active class to the clicked button
+                // Ajoute la classe .active au bouton cliqué
                 button.classList.add('active');
             });
             paginationContainer.appendChild(button);
 
-            // Add the .active class to the first button
+            // Ajoute la classe .active au premier bouton
             if (!firstButtonAdded) {
                 button.classList.add('active');
                 firstButtonAdded = true;
@@ -823,12 +823,14 @@ endif;
         }
     }
 
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    function scrollToStart() {
+        const blockForPagination = document.querySelector('#tab-url1');
+        blockForPagination.scrollIntoView({ behavior: 'smooth' });
     }
 
     displayPage(1);
     createPaginationButtons();
+
 
 
 </script>

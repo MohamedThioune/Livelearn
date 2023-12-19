@@ -9,7 +9,6 @@ require($page);
 ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
-
 <div class="content-community-overview bg-gray template-overview">
     <section class="boxOne3-1">
         <div class="container">

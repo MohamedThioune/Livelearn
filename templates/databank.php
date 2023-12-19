@@ -9,13 +9,11 @@ global $wpdb;
  */
 $pagination = 50;
 
-if (isset($_GET['id'])) {
+if (isset($_GET['id'])) 
     $page = intval($_GET['id']);
-}
 
-if ($page) {
+if ($page) 
     $offset = ($page - 1) * $pagination;
-}
 
 if (isset($_POST['type'])) {
     switch (strtolower($_POST['type'])) {
@@ -63,18 +61,19 @@ if (isset($_POST['type'])) {
             break;
 
     }
-} else {
+}
+else {
     $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
     $courses = $wpdb->get_results($sql);
     $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
     $count = $wpdb->get_results($sql_count);
     $count = intval($count[0]->{'COUNT(*)'});
 }
-if ($count % $pagination == 0) {
+
+if ($count % $pagination == 0) 
     $pagination_number = $count / $pagination;
-} else {
+else 
     $pagination_number = intval($count / $pagination) + 1;
-}
 
 $user = wp_get_current_user();
 // $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
@@ -234,11 +233,12 @@ $file_xml = [
     'Vijfhart'=>'vijfhart-20231102.0028.xml',
     'Winc Academy'=>'winc-academy-20231101.1423.xml',
     'Yearth Academy'=>'yearth-academy-20231102.0029.xml'
-  ];
+];
 ?>
 
 <?php wp_head();?>
 <?php get_header();?>
+
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/template.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
@@ -350,6 +350,8 @@ if (isset($_GET["message"])) {
                             </tr>
                             </thead>
                             <tbody>
+
+
                             <?php
 if (!empty($courses)) {
     foreach ($courses as $course) {
@@ -1175,10 +1177,10 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                location.reload();
+                // location.reload();
             },
         });
     })
 </script>
-<?php get_footer();?>
+<?php get_footer();?> 
 <?php wp_footer();?>

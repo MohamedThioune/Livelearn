@@ -12,10 +12,11 @@
   <title>Parse Course</title>
 </head>
 
+
 <body>
 
   <?php
-  /** Template Name: xml parse */ 
+  /** Template Name: xml parse */  
 
   global $wpdb;
 
@@ -84,6 +85,7 @@
         $check_image = $wpdb->get_results($sql_image); 
       else
         $check_image = 1;
+
 
       $check_title = $wpdb->get_results($sql_title);
       
@@ -331,8 +333,12 @@
 
             if(substr($infos, -1) == ';')
               $infos = rtrim($infos, ';');
-
-            array_push($data_locaties_xml, $infos);  
+            
+            if(!empty($infos))
+              array_push($data_locaties_xml, $infos); 
+            else {
+              continue;
+            } 
           }
 
           $data_locaties = join('~', $data_locaties_xml);

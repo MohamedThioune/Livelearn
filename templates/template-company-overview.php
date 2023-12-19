@@ -8,6 +8,7 @@
 $page = 'check_visibility.php';
 require($page);
 
+
 // Modules
 require_once('search-module.php'); 
 
@@ -31,6 +32,7 @@ if(empty($company_input)):
     die();
 endif;
 
+
 $count_members = 0;
 $users = get_users();
 foreach($users as $uValue):
@@ -46,12 +48,13 @@ $user_id = get_current_user_id();
 //Track view
 
 //Global posts
+$max_input = 1000;
 $args = array(
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => -1,
+    'posts_per_page' => $max_input,
 );
 $global_posts = get_posts($args);
 
@@ -397,7 +400,7 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
 <!--script pagination-->
 
 <script>
-    const itemsPerPage = 9;
+    const itemsPerPage = 15;
     const blockList = document.querySelector('.block-new-card-course');
     const blocks = blockList.querySelectorAll('.new-card-course');
     const paginationContainer = document.querySelector('.pagination-container');
