@@ -18,9 +18,13 @@ $expertise = array();
 //Get ID Category
 $category_input = ($_GET['category']) ?: 0;
 $name = get_the_category_by_ID($category_input);
-$error_content = '<h1 class="wordDeBestText2">Category Not Found ❌</h1>';
+$no_content =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256"> This category not found ❗️</span> 
+                </p>
+                ';
 if(!$name):
-    echo $error_content;
+    echo $no_content;
     die();
 endif;
 
@@ -31,12 +35,13 @@ $user_id = get_current_user_id();
 view_topic($category_input);
 
 //Global posts
+$max_input = 1000;
 $args = array(
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => -1,
+    'posts_per_page' => $max_input,
 );
 $global_posts = get_posts($args);
 
@@ -338,9 +343,9 @@ endif;
                                 if($expertie->first_name == "")
                                     continue;
 
-                                $i += 1;    
-                                if($i == 4)
+                                if($i >= 4)
                                     break;
+                                $i += 1;    
 
                                 echo '
                                 <a href="/user-overview/?id=' . $expertie->ID . '" class="profil-expert d-flex align-items-center">
@@ -349,7 +354,6 @@ endif;
                                     </div>
                                     <p>'. $name .'</p>
                                 </a>';
-                                $i += 1; 
                             endforeach;
                         echo '
                         </div>';
@@ -366,6 +370,7 @@ endif;
         </div>
     </section>
 </div>
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

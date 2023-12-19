@@ -9,6 +9,7 @@ include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
 
+
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_directory_uri().'/style-main.css' );
@@ -1731,6 +1732,11 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'getOfflineCourse',
   ));
+
+  register_rest_route('custom/v2', '/offline/courses', array(
+    'methods' => 'GET',
+    'callback' => 'allOfflineCoursesOptimized',
+  ));
   
 
   register_rest_route('custom/v1', '/authors', array(
@@ -1847,6 +1853,11 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/communities', array(
     'methods' => 'GET',
     'callback' => 'getCommunities',
+  ));
+
+  register_rest_route ('custom/v2', '/communities', array(
+    'methods' => 'GET',
+    'callback' => 'getCommunitiesOptimized',
   ));
 
   register_rest_route ('custom/v1', '/community/(?P<id>\d+)', array(

@@ -277,6 +277,7 @@ $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
 if (!$is_first_login && get_current_user_id() != 0 )
 {
 ?>
+
 <!-- Modal First Connection -->
 <div class="contentModalFirst"²>
     <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
@@ -403,7 +404,7 @@ if (!$is_first_login && get_current_user_id() != 0 )
 
 <?php
 
-$void_content ='<center>
+$void_content ='<center> 
                 <h2>No content found !</h2> 
                 <img src="' . get_stylesheet_directory_uri() . '/img' . '/void-content.gif" alt="content image requirements">
                 </center>';
@@ -704,6 +705,7 @@ if(isset($_GET['message']))
 
 ?>
 
+
 <div class="content-new-user d-flex">
     <section class="first-section-dashboard">
         <div class="head-block d-flex justify-content-between mb-50">
@@ -928,14 +930,14 @@ if(isset($_GET['message']))
                                 <button class="btn btnNext loading_more">Load all</button><br>
                                 <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                             </div>
-                        </div>
+                    </div>
                 </ul>
 
                 <ul id="Artikel" class="hide">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Artikel">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                             <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 
@@ -1080,9 +1082,9 @@ if(isset($_GET['message']))
 
                 <ul id="Podcast" class="hide" >
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Podcast">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Podcast" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                            <div hidden="true" id="loader_recommendation_Podcast" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 
@@ -1227,9 +1229,9 @@ if(isset($_GET['message']))
 
                 <ul id="Opleidingen" class="hide">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Opleidingen">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                             <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 
@@ -1374,9 +1376,9 @@ if(isset($_GET['message']))
 
                 <ul id="Video" class="hide">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation_Video">
-                        <center>
-                        <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                        </center>
+                        <div class="w-100">
+                            <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </div>
                         <?php
                         $find = false;
 
@@ -1385,7 +1387,7 @@ if(isset($_GET['message']))
                                 foreach($recommended_courses as $course){
                                     //Date and Location
                                     $location = 'Online';
-                                
+
                                     $data = get_field('data_locaties', $course->ID);
                                     if($data){
                                         $date = $data[0]['data'][0]['start_date'];
@@ -1781,10 +1783,12 @@ if(isset($_GET['message']))
 
             if(!$i)
                 echo "<div class='upcoming-group'>
-                      <div class='element-upcoming-block'>
-                          <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-shedule.png'>
-                          <p>Zoek je eerste event</p>
-                      </div>
+                           <a href='/product-search' class='d-block'>
+                                <div class='element-upcoming-block'>
+                                  <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-shedule.png'>
+                                  <p>Zoek je eerste event</p>
+                              </div>
+                           </a>
                   </div>";
             ?>
             <!-- <a href="/" class="btn btn-more-events">More Events</a> -->
@@ -1792,9 +1796,7 @@ if(isset($_GET['message']))
         <div class="user-community-block">
             <?php
             $i = 0;
-            if(!empty($communities))
-                echo '<h2>Communities</h2>';
-
+            echo '<h2>Communities</h2>';
             foreach($communities as $key => $value){
 
                 if(!$value)
@@ -1844,12 +1846,14 @@ if(isset($_GET['message']))
             <?php
             }
 
-            if(empty($communities))
+            if(!$i)
                 echo "<div class='upcoming-group'>
-                        <div class='element-upcoming-block'>
-                            <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
-                            <p>Join je eerste community</p>
-                        </div>
+                        <a class='d-block' href='/dashboard/user/communities/'>
+                            <div class='element-upcoming-block'>
+                                <img src='" . get_stylesheet_directory_uri() . "/img/upcoming-communities.png'>
+                                <p>Join je eerste community</p>
+                            </div>
+                        </a>
                      </div>";
             ?>
         </div>
@@ -1977,33 +1981,10 @@ $(".load_content_type").click((e)=>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autorefresh.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
-
-
 <script>
-    $('.owl-carousel').owlCarousel({
-        loop:true,
-        margin:30,
-        nav:false,
-        lazyLoad:true,
-        dots: false,
-        responsive:{
-            0:{
-                items:1.3
-            },
-            600:{
-                items:1.3
-            },
-            1000:{
-                items:3
-            }
-        }
-    })
+    if ($('div.mydivclass').length)
 </script>
+
 <!--<script>
     window.addEventListener('load', function() {
         document.querySelectorAll('.loader-course').forEach(function(element) {

@@ -18,10 +18,13 @@ $expertise = array();
 $expert_input_id = ($_GET['id']) ?: 0;
 $expert_input = get_user_by('ID', $expert_input_id);
 
-$error_content = '<h1 class="wordDeBestText2">Expert Not Found ❌</h1>';
+$no_content =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256"> This expert not found ❗️</span> 
+                </p>
+                ';
 if(!$expert_input):
-    // var_dump($expert_input);
-    echo $error_content;
+    echo $no_content;
     die();
 endif;
 
@@ -32,12 +35,13 @@ view_user($expert_input->ID);
 $user_id = get_current_user_id();
 
 //Global posts
+$max_input = 1000;
 $args = array(
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'orderby' => 'date',
     'order'   => 'DESC',
-    'posts_per_page' => -1,
+    'posts_per_page' => $max_input,
 );
 $global_posts = get_posts($args);
 
@@ -118,6 +122,7 @@ $average_star_nor_format = intval($average_star_nor);
 $count_courses = (!empty($courses)) ? count($courses) : 0;
 
 ?>
+
 
 <div class="content-community-overview bg-gray">
     <section class="boxOne3-1">
@@ -575,13 +580,13 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
                                 <p class="description">Courses</p>
                             </div>
                         </div>
-                        <div class="element-sub-section d-flex">
+                        <!-- <div class="element-sub-section d-flex">
                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/members-icon.svg" alt="">
                             <div class="detail">
                                 <p class="number">?</p>
                                 <p class="description">Members</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <?php
                     if(!empty($expertise)):
@@ -600,7 +605,7 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
 
                                 $name = ($expertie->last_name) ? $expertie->first_name : $expertie->display_name;
 
-                                if($i >= 6)
+                                if($i >= 4)
                                     break;
                                 $i += 1;    
 
@@ -695,6 +700,7 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
     });
 
 </script>
+
 
 
 

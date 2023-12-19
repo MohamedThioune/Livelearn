@@ -2,6 +2,7 @@
 
 /* * Liggeey * */
 
+
 //Home page [GET]
 function homepage(){
   $categories = [];
@@ -106,7 +107,9 @@ function homepage(){
 
     //Is Liggeey User
     $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
-    if(!$is_liggeey || !$value->first_name)
+    // if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
+    //   continue;
+    if(!$value->first_name)
       continue;
     
     $sample['permalink'] = get_site_url() . '/user-overview/?id=' . $value->ID; 
@@ -239,5 +242,36 @@ function register_company(WP_REST_Request $request){
   return $response;
 
 }
+
+//Detail candidate
+function detail_candidate($data){
+  $param_user_id = $data['id'];
+
+  $user = get_user_by('ID', $param_user_id);
+  // if(empty($user))
+  //   return 0;
+
+  //Get further information about candidate
+  $user->profile_img = get_field('profile_img', 'user_' . $user->ID);
+
+  return $user;
+}
+
+//Detail artikel
+function detail_artikel($data){
+  $param_post_id = $data['id'];
+  
+  $post = get_post($param_user_id);
+  
+  //Get further information about artikel
+  $content = get_field('content', $post->ID);
+  $reviews = get_field('reviews', $post->ID);
+  $author_id = $post->post_author;
+  $title = $post->post_title;
+
+  return $post;
+}
+  
+
 
 /* * End Liggeey * */

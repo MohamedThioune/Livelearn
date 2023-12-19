@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <div>
+
     <div class="contentOne">
         <div class="contentTwo">
             <div class="container-fluid">

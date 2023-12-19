@@ -365,8 +365,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                 <table class="table table-responsive">
                     <thead>
                     <tr>
-                        <th scope="col courseTitle"></th>
-                        <th scope="col courseTitle">Name</th>
+                        <th scope="col courseTitle w-40">Name</th>
                         <th scope="col">Department</th>
                         <th scope="col">Status</th>
                         <th scope="col">Persoonsgebonden Budget</th>
@@ -400,11 +399,6 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                                 <div class="userImg">
                                     <img src="<?= $image_user ?>" alt="">
                                 </div>
-                            </td>
-                            <td class="d-flex align-items-center">
-                                <!-- <div class="userImg">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-1.png" alt="">
-                                </div> -->
                                 <a href="<?= $link ?>" class="name-element"><?= $full_name_user ?></a>
                             </td>
                             <td>
