@@ -245,11 +245,9 @@ function register_company(WP_REST_Request $request){
 //Detail candidate
 function detail_candidate($data){
   $param_user_id = $data['id'];
-
   $user = get_user_by('ID', $param_user_id);
-  // if(empty($user))
-  //   return 0;
-
+   if(empty($user))
+     return 0;
   //Get further information about candidate
   $user->profile_img = get_field('profile_img', 'user_' . $user->ID);
 
@@ -259,18 +257,20 @@ function detail_candidate($data){
 //Detail artikel
 function detail_artikel($data){
   $param_post_id = $data['id'];
-  
-  $post = get_post($param_user_id);
+  $post = get_post($param_post_id);
   
   //Get further information about artikel
   $content = get_field('content', $post->ID);
-  $reviews = get_field('reviews', $post->ID);
-  $author_id = $post->post_author;
+
+ $reviews = get_field('reviews', $post->ID);
+ $author_id = $post->post_author;
+
   $title = $post->post_title;
 
   return $post;
 }
   
+
 
 
 /* * End Liggeey * */
