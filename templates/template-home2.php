@@ -1497,8 +1497,8 @@ $saved = get_user_meta($user_id, 'course');
                     $purcent = $purchantage_on_bottop ? number_format(( $purchantage_on_top/$purchantage_on_bottop )*100  , 2, '.', ',') : $purchantage_on_top;
 
                     $image_user = get_field('profile_img',  'user_' . $user->ID);
-                    var_dump($image_user);
-                    die();
+                    // var_dump($image_user);
+                    // die();
                     $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
 
                     $company = get_field('company',  'user_' . $user->ID);
@@ -2118,5 +2118,3 @@ $saved = get_user_meta($user_id, 'course');
             });
         });
     </script>
-
-
