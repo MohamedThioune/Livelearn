@@ -26,7 +26,6 @@ if(empty($podcast_index))
 //Long description
 $long_description = strip_tags($long_description);
 $long_description = ($long_description) ? : "No long description found for this course ";
-
 //Author
 $author = get_user_by('id', $post->post_author);
 $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
