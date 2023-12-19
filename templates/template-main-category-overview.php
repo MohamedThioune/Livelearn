@@ -20,11 +20,13 @@
         'parent'     => 0,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
+
     foreach($cats as $category){
         $cat_id = strval($category->cat_ID);
         $category = intval($cat_id);
         array_push($categories, $category);
     }
+    $categories[4] = $categories[0];
 
     $id_main_category = $categories[$main_category];
     // var_dump($id_main_category);
