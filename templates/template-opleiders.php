@@ -11,6 +11,7 @@ extract($_POST);
 
 $args = array(
     'post_type' => 'company', 
+    'post_status' => 'publish',
     'posts_per_page' => -1,
 );
 

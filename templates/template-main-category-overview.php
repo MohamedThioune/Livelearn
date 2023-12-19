@@ -20,11 +20,13 @@
         'parent'     => 0,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
+
     foreach($cats as $category){
         $cat_id = strval($category->cat_ID);
         $category = intval($cat_id);
         array_push($categories, $category);
     }
+    $categories[4] = $categories[0];
 
     $id_main_category = $categories[$main_category];
     // var_dump($id_main_category);
@@ -89,7 +91,7 @@
                         $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
                 
                         ?>
-                        <div class="card-topics d-flex">
+                        <div class="card-topics new-card-topics d-flex">
                             <div class="block-img">
                                 <img src="<?= $image_category ?>" class="img-head-about" alt="">
                             </div>
@@ -122,6 +124,7 @@
         </div>
     </section>
 </div>
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

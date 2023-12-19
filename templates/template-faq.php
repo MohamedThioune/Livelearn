@@ -62,6 +62,8 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
     .headerdashboard,.navModife {
         background: #deeef3;
@@ -167,13 +169,14 @@
 
 </style>
 
+
 <div class="content-community-overview">
     <section class="boxOne3-1">
         <div class="container">
             <div class="BaangerichteBlock">
                 <h1 class="wordDeBestText2">Vragen? Dan ben je hier goed.</h1>
                 <p class="description">Staat het antwoord er niet bij? Plan dan direct een afspraak met ons in.</p>
-                <a href="" class="btn btn-kies">Kies een datum</a>
+                <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
             </div>
         </div>
     </section>

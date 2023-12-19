@@ -12,6 +12,7 @@ $communities = get_posts($args);
 $your_communities = array();
 $other_communities = array();
 ?>
+
 <div class="content-communities">
     <div class="head-community">
         <h1>Communities</h1>

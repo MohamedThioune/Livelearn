@@ -199,7 +199,7 @@ if ($playlist_youtube) {
 
                 //Get the url media image to display on front
                 $image = (isset($playlist['snippet']['thumbnails']['maxres'])) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
-                $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images, $type));
+                $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($image, $type));
                 $result_image = $wpdb->get_results($sql_image);
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($playlist['snippet']['title'], $type));
                 $result_title = $wpdb->get_results($sql_title);

@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
-
 <?php   
     
     $categories = array();
