@@ -2,7 +2,8 @@
  <?php
 echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
-?> 
+?>
+
 <!-- 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -33,19 +34,6 @@ if(!isset($_COOKIE["cookie_consent"])):
             <div class="blockFooter desktopFooter">
                 <div class="sousBlockFooter">
                     <div class="footer-widget">
-                        <div class="widget-about">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="" class="img-fluid">
-                            <ul class="contact-details">
-                                <li>
-                                    <a href="mailto:contact@livelearn.nl">contact@livelearn.nl</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <div class="sousBlockFooter">
-                    <div class="footer-widget">
                         <div class="footer-menu footer-menu--1">
                             <h4 class="footer-widget-title">Voor organisaties</h4>
                             <ul>
@@ -60,6 +48,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                     </div>
                     <!-- Ends: .footer-widget -->
                 </div>
+
                 <div class="sousBlockFooter">
                     <div class="footer-widget">
                         <div class="footer-menu">
@@ -103,6 +92,41 @@ if(!isset($_COOKIE["cookie_consent"])):
                             </ul>
                         </div>
                     </div>
+                </div>
+
+                <div class="sousBlockFooter">
+                    <div class="footer-widget">
+                        <div class="footer-menu no-padding">
+                            <h4 class="footer-widget-title">Mobile App</h4>
+                            <ul>
+                                <li>Probeer onze gratis leer-app
+                                    En start meteen met jezelf te ontwikkelen</li>
+                                <li> <a class="img-store-footer" href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&pcampaignid=web_share"><img src="<?php echo get_stylesheet_directory_uri();?>/img/play-store.png" alt=""> </a></li>
+                                <li> <a class="img-store-footer" href="https://apps.apple.com/in/app/livelearn/id1666976386?platform=iphone"><img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sub-footer-block d-flex justify-content-center align-items-center">
+                <a href="" class="footer-logo">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
+                </a>
+                <div class="d-flex term-and-condition">
+                    <a href="">Terms</a>
+                    <a href="">Privacy</a>
+                    <a href="">Cookies</a>
+                </div>
+                <div class="d-flex social-link">
+                    <a href="">
+                        <i class='fab fa-linkedin'></i>
+                    </a>
+                    <a href="">
+                        <i class='fab fa-instagram'></i>
+                    </a>
+                    <a href="">
+                        <i class='fab fa-facebook-f'></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -198,7 +222,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                 <a href="https://www.facebook.com/LiveLearnHQ" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/facebook.png" alt="">
                 </a>
-                <a href="https://www.instagram.com/livelearn.nl/ " target="_blank">
+                <a href="https://www.instagram.com/livelearn.app/" target="_blank">
                     <img class="insta" src="<?php echo get_stylesheet_directory_uri();?>/img/insta.png" alt="">
                 </a>
             </div>

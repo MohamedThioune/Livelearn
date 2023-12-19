@@ -8,7 +8,6 @@
 $page = 'check_visibility.php';
 require($page);
 
-
 // Modules
 require_once('search-module.php'); 
 
@@ -19,9 +18,13 @@ $expertise = array();
 //Get ID Category
 $category_input = ($_GET['category']) ?: 0;
 $name = get_the_category_by_ID($category_input);
-$error_content = '<h1 class="wordDeBestText2">Category Not Found ❗️</h1>';
+$no_content =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256"> This category not found ❗️</span> 
+                </p>
+                ';
 if(!$name):
-    echo $error_content;
+    echo $no_content;
     die();
 endif;
 

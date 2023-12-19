@@ -34,24 +34,24 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/LiveLearn_leerdatabank.png" alt="">
                     </div>
                 </a>
-                <a href="#" class="cardCoursManager">
+               <!-- <a href="#" class="cardCoursManager">
                     <small>Coming soon!</small>
                     <p class="contentText">Overzicht<br>
                         <b>Leerbudget</b>
                     </p>
                     <div class="blockImgcardCoursManagerGlobal">
-                        <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image_35.png" alt="">
+                        <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/Image_35.png" alt="">
                     </div>
-                </a>
-                <a href="#" class="cardCoursManager">
+                </a>-->
+              <!--  <a href="#" class="cardCoursManager">
                     <small>Coming soon!</small>
                     <p class="contentText">Communicatie<br>
                         <b>Berichten</b>
                     </p>
                     <div class="blockImgcardCoursManagerGlobal">
-                        <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image32.png" alt="">
+                        <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/Image32.png" alt="">
                     </div>
-                </a>
+                </a>-->
                 <a href="/dashboard/company/statistic" class="cardCoursManager">
                     <p class="contentText">Inzicht <br>
                         <b>statistieken</b>

@@ -9,6 +9,7 @@
         scroll-behavior: smooth;
     }
 </style>
+
 <section class="contentgatisCarriere">
     <div class="container">
         <h1>Gratis carrière begeleiding</h1>
