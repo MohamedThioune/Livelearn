@@ -997,6 +997,19 @@ endif;
 
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('strong').each(function() {
+            var content = $(this).html();
+            $(this).replaceWith(content);
+        });
+    });
+
+
+</script>
+
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 </body>

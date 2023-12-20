@@ -59,6 +59,7 @@
     require($page); 
 
     $user_id = get_current_user_id();
+    $courses = array();
 
     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
@@ -82,13 +83,15 @@
                     array_push($users_companie, $user->ID);
         }
 
-        $args = array(
-            'post_type' => array('course', 'post'),
-            'posts_per_page' => -1,
-            'author__in' => $users_companie,  
-        );
 
-        $courses = get_posts($args);
+        if(!empty($users_companie)):
+            $args = array(
+                'post_type' => array('course', 'post'),
+                'posts_per_page' => -1,
+                'author__in' => $users_companie,  
+            );
+            $courses = get_posts($args);
+        endif;
 
         $opleidingen = array();
         $workshops = array();
