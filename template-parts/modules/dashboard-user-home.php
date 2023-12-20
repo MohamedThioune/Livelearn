@@ -410,8 +410,7 @@ $void_content ='<center>
                 </center>';
 
 // Saved courses
-$saved = get_user_meta($user, 'course');
-
+$saved = is_array(get_user_meta($user, 'course')) ? get_user_meta($user, 'course') : array();
 /*
 * Get interests courses
 */
