@@ -1979,4 +1979,14 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'homepage'
   ));
+
+  register_rest_route ('custom/v1', '/detail_candidate', array(
+    'methods' => 'GET',
+    'callback' => 'detail_candidate'
+  ));
+
+  register_rest_route ('custom/v1', '/detail_artikel', array(
+    'methods' => 'GET',
+    'callback' => 'detail_artikel'
+  ));
 });
