@@ -18596,12 +18596,15 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin-right: 10px;
     border-radius: 7px;
 }
+.subTopics-usage-block {
+    margin-bottom: 20px;
+}
 .body-content-view-statistic .subTopics-usage-block .subTopics-card {
     background: #FFFFFF;
     box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
     border-radius: 5px;
     padding: 20px 20px 15px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     width: 35%;
     max-height: 430px;
     overflow: scroll;
@@ -18683,7 +18686,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 #team .group-card-head {
     padding-top: 30px;
-    margin-bottom: 40px;
 }
 #team .card-course .userImg{
     width: 40px;
@@ -18738,7 +18740,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 48%;
 }
 .body-content-view-statistic .subTopics-usage-block .subTopics-card {
-    height: -webkit-fill-available;
+    height: auto;
     overflow: scroll;
 }
 .body-content-view-statistic .usage-block-card {
@@ -22497,6 +22499,12 @@ figure ul li {
 }
 .scrolled .frist-block-subnav p {
     color: #ffffff !important;
+}
+.contentListeCourse .pagination-container {
+    padding: 40px 0 30px;
+}
+.contentListeCourse .pagination-container button{
+    font-size: 12px;
 }
 
 /*responsive mobile*/
@@ -27200,6 +27208,10 @@ figure ul li {
     }
     .sub-footer-block {
         display: none !important;
+    }
+    .inputSearch2 {
+        width: 100% !important;
+        margin-bottom: 20px;
     }
 
 
