@@ -12,7 +12,7 @@ $api_key = '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'; //paid by Dani
 $model = 'text-davinci-003';
 
 echo "
-    <form method='post' action='/livelearn/chatgpt-api/'> 
+    <form method='post' action='/chatgpt-api/'> 
         <input type='text' name='question' placeholder='question'>
         <input type='submit' name='submit' value='submit'>
     </form> ";
@@ -41,7 +41,7 @@ $prompts = 'interact as assistant based on this. about livelearn :'.$about_livel
 if (isset($question)) {
 
     $except = [
-        ";",",","I","a","am","I'm","looking","and","for","course","can","you",
+        ";",",","I","a","am","I'm","looking","and","for","can","you",
         "about","looking","hello","hi","hola","good","morning","great",
         "salut","hi","hey","there",
     ];
@@ -86,8 +86,8 @@ if (isset($question)) {
     $prompts.=$tittles;
     $prompts = $tittles ? $prompts : "";
 
-    echo "<h1>" . strlen($prompts) . "</h1>";
-    print_r($prompts);die;
+    //echo "<h1>" . strlen($prompts) . "</h1>";
+    //print_r($prompts);die;
         $data = array(
             'model' => 'gpt-3.5-turbo-0613',
             'messages'=> array(

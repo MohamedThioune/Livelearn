@@ -1980,13 +1980,13 @@ add_action( 'rest_api_init', function () {
     'callback' => 'homepage'
   ));
 
-  register_rest_route ('custom/v1', '/detail_candidate', array(
-    'methods' => 'GET',
-    'callback' => 'detail_candidate'
+  register_rest_route ('custom/v1', '/candidate/detail', array(
+    'methods' => 'POST',
+    'callback' => 'candidateDetail',
   ));
 
-  register_rest_route ('custom/v1', '/detail_artikel', array(
-    'methods' => 'GET',
-    'callback' => 'detail_artikel'
+  register_rest_route ('custom/v1', '/artikel/detail', array(
+    'methods' => 'POST',
+    'callback' => 'artikelDetail'
   ));
 });
