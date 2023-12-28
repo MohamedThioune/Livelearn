@@ -259,7 +259,7 @@ if (isset($_GET["message"])) {
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
                        <!-- &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?//=get_stylesheet_directory_uri();?>/img/xml-orange.jpg" alt="xml image"></a> -->
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
-                       &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button>
+                       <!-- &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button> -->
                        <!--<button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
                        </button>-->
@@ -283,7 +283,7 @@ if (isset($_GET["message"])) {
                 <div class="container contentCardListeCourse">
                     <div class="row">
                         <br>
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             Articles:
                             <select name="companies[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_company">
                                 <!-- <option name="default">Choose companies</option> -->
@@ -297,7 +297,64 @@ if (isset($_GET["message"])) {
                             </select>
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         </div>
-                        <div class="col-md-6 offset-md-1">
+
+                        <?php
+                        ##youtube Script
+                        $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
+                        $file = fopen($fileName, 'r');
+                        if ($file) {
+                            $playlists_id = array();
+                            $ptitle = ""; 
+                            $urlPlaylist = [];
+                            $parameter='';
+                            $playlist_title= [];
+                            $youtube_parameter=array();
+                            $onderwp = '';
+                            $keywords = array();
+                            $indice=0;
+                            while ($line = fgetcsv($file)) {
+                                $subtopics = "";
+                                $row = explode(';', $line[0]);
+                                $playlists_id[][$row[5]] = $row[3];
+                                $ptitle= $row[0];
+                                $subtopics = $row[7];
+                                if($subtopics=="")
+                                    $subtopics="";
+                                $parameter=array_keys($playlists_id[$indice])[0].','.array_values($playlists_id[$indice])[0].','.$subtopics;
+                                array_push($youtube_parameter,$parameter);
+                                // array_shift($youtube_parameter);
+                                array_push($keywords, $subtopics);
+                                array_push($playlist_title,$ptitle);
+                                $indice++;
+                            }
+                            array_shift($youtube_parameter);
+                            // var_dump($youtube_parameter);
+                            fclose($file);
+                            array_shift($keywords); 
+                        } else {
+                            echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
+                        }
+                        array_shift($playlists_id);
+                        array_shift($playlist_title);
+                        ##END.
+                        ?>
+
+                        <div class="col-md-5 offset-md-1">
+                            Youtube:
+                            <select name="Youtube[]" class="multipleSelect3 form form-control col-md-6" multiple="true" id="selected_playlist">
+                                <!-- <option name="default">Choose companies</option> -->
+                                <?php
+                                foreach ($youtube_parameter as $key=>$param) {
+                                    ?>
+                                    <option class="options" value="<?=$param?>" selected="" ><?=$playlist_title[$key]?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                            &nbsp;&nbsp;<a id="playlist-youtube">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
+                        </div>
+
+                        <div class="col-md-3">
                             Courses:
                             <select name="xmlfile[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_file">
                                     <!-- <option name="default">Choose companies</option> -->
@@ -640,6 +697,22 @@ if (!empty($courses)) {
         });
 
     });
+
+    window.onload = $(".multipleSelect3").val("");
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect3").val([]);
+        $(".multipleSelect3").select2({
+            placeholder: "Youtube playlist",
+            maximumSelectionLength: 4000,
+            minimumSelectionLength: 3,
+        }).on("change", function () {
+            if ($(this).val() && $(this).val().length >= 4000) {
+                $(this).prop("disabled", true);
+            }
+        });
+
+    });
     //# sourceURL=pen.js
 </script>
 <!--begin traitement playlist podcast -->
@@ -806,6 +879,12 @@ if (!empty($courses)) {
                     location.reload();
                 }
             });
+        });
+    });
+
+    $(document).ready(function(){
+        $('#youtube').on('click',function(){
+            
         });
     });
 
@@ -1057,6 +1136,8 @@ if (!empty($courses)) {
         });
     });
 
+    $('.youtube_button')
+
     $('.author').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var key = tr_element.id;
@@ -1145,23 +1226,34 @@ if (!empty($courses)) {
 </script>
 
 <script defer id="rendered-js" >
-$(document).ready(function () {
-    //Select2
-    $(".multipleSelect2").select2({
-        placeholder: "Maak uw keuze.",
-         //placeholder
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect2").select2({
+            placeholder: "Maak uw keuze.",
+            //placeholder
+        });
     });
-});
-//# sourceURL=pen.js
+    //# sourceURL=pen.js
 </script>
 <script>
 
     $("#playlist-youtube").click((e)=>{
+        var selectedYoutubeOption = $("#selected_playlist").find('option:selected');
+        var playlistId = [];
+
+        selectedYoutubeOption.each(function(){
+            var values = $(this).val();
+            playlistId.push(values);
+        });
+
+        $('#select_field').hide(true,2000);
+         $('#loader').attr('hidden',false);
+
         $.ajax({
-            url:"/youtube-playlist/",
+            url:"/livelearn/youtube-playlist/",
             method:"POST",
             data:{
-                playlist_youtube:"youtube"
+                playlist_youtube: playlistId
             },
             beforeSend:function(){
                 $('#loader').attr('hidden',false);
@@ -1177,7 +1269,9 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                // location.reload();
+                $('#loader').attr('hidden',true);
+                $('#select_field').attr('hidden',false);
+                location.reload();
             },
         });
     })
