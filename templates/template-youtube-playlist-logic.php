@@ -25,40 +25,25 @@ $companies = get_posts($args);
 
 extract($_POST);
 if ($playlist_youtube) {
-    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
-    $file = fopen($fileName, 'r');
-    if ($file) {
-        $playlists_id = array();
-        $urlPlaylist = [];
-        $onderwp = '';
-        $keywords = array();
-        while ($line = fgetcsv($file)) {
-            $subtopics = "";
-            $row = explode(';', $line[0]);
-            $playlists_id[][$row[4]] = $row[2];
-            $subtopics = $row[6];
-
-            // var_dump($onderwp);
-            array_push($keywords, $subtopics);
-        }
-        fclose($file);
-        array_shift($keywords); 
-        // var_dump($keywords);
-        // die();
-    } else {
-        echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
+    $playlists_id = array();
+    $keywords = array();
+    $authors = array();
+    foreach($playlist_youtube as $playlist_element){
+        $id=explode(',',$playlist_element);
+        // var_dump($id);
+        array_push($playlists_id,$id[1]);
+        array_push($keywords,$id[2]);
+        array_push($authors,$id[0]);
     }
-    array_shift($playlists_id);
-
-    // var_dump($onderwerpen);
+    // var_dump($author);
 
     $i = 1;
     if ($playlists_id || !empty($playlists_id)) {
         foreach ($playlists_id as $key => $playlist_id) {
-            $id_playlist = array_values($playlist_id);
-            $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist[0] . "&key=" . $api_key;
+            $id_playlist = $playlist_id;
+            $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist . "&key=" . $api_key;
             $playlists = json_decode(file_get_contents($url_playlist), true);
-            $author = array_keys($playlist_id);
+            $author = $authors[$key];
             $author_id = 0;
             foreach ($users as $user) {
                 $company_user = get_field('company', 'user_' . $user->ID);
@@ -257,5 +242,5 @@ if ($playlist_youtube) {
 
     //Empty youtube channels after parse
 
-    update_field('youtube_playlists', null, 'user_' . $author_id);
+    // update_field('youtube_playlists', null, 'user_' . $author_id);
 }
