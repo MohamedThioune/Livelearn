@@ -90,9 +90,9 @@ $todos = get_posts($args);
                     ?>
                     <tr>
                         <td scope="row"><?= $key; ?></td>
-                        <td><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
+                        <td><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
                         <td><?=$type?></td>
-                        <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
+                        <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
                         <td><?= $manager_display; ?></td>
                         <td class="textTh">
                             <div class="dropdown text-white">

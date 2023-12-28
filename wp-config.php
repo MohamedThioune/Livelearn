@@ -87,12 +87,12 @@ $table_prefix = 'wpe7_';
 define( 'WP_DEBUG', false );
 
 // Enable Debug logging to the /wp-content/debug.log file
-define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_LOG', false );
 // define( 'WP_DEBUG_LOG', '/logs/errors.log' );
 
 // Disable display of errors and warnings
 define( 'WP_DEBUG_DISPLAY', false );
-@ini_set( 'display_errors', 1 );
+@ini_set( 'display_errors', 0 );
 
 /* Add any custom values between this line and the "stop editing" line. */
 

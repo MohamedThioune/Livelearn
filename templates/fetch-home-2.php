@@ -996,3 +996,4 @@ if(isset($topic_search)){
         echo $data['content'];
     }
 }
+

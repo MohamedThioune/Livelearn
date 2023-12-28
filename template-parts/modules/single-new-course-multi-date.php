@@ -167,12 +167,12 @@ endif;
                                                 if($date_start)
                                                     if(count($datum['data']) >= 1){
                                                         $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
-                                                        $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                                                        $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]] . ' ' . explode('/', explode(' ', $date_start)[0])[2];
                                                         $hour_start = explode(' ', $date_start)[1];
                                                         $year_start = explode('/', explode(' ', $date_start)[0])[2];
                                                         $location_start = $datum['data'][0]['location'];
                                                         if($date_end)
-                                                            $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
+                                                            $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]] . ' ' . explode('/', explode(' ', $date_end)[0])[2];
                                                     }
                                             }
 
@@ -309,8 +309,9 @@ endif;
                                             $h_end =  $timer_e[0] . ':' . $timer_e[1];
 
                                             $year_start = $d_start[2];
-                                            $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
-                                            $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
+                                            $year_end = $d_end[2];
+                                            $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]] . ' ' . $year_start;
+                                            $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]] . ' ' . $year_end;
 
                                             ?>
                                             <a id="bookdates" name="bookdates"></a>
@@ -442,7 +443,7 @@ endif;
                                             $h_start = $timer_s[0] . ':' . $timer_s[1];
 
                                             $year_start = $d_start[0];
-                                            $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
+                                            $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]] . ' ' . $year_start;
                                             $location_start = 'Virtual';
                                         ?>
                                             <a id="bookdates" name="bookdates"></a>

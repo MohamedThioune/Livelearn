@@ -207,6 +207,7 @@
                     </tr>
                 </thead>
                 <tbody id="autocomplete_company_people">
+
                     <?php
                     foreach($members as $keyP => $user){
                         $image_user = get_field('profile_img',  'user_' . $user->ID);
@@ -222,7 +223,7 @@
 
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected;
                     ?>
-                        <tr id="<?php echo $user->ID; ?>" >
+                        <tr class="pagination-element-block" id="<?php echo $user->ID; ?>" >
                             <td scope="row"><?= $keyP + 1; ?></td>
                             <td class="textTh thModife az">
                                 <div class="ImgUser">
@@ -258,9 +259,9 @@
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                     </thead>
-                                                    
+
                                                     <tbody  class="back-list-of-user-manager">
-                                                    
+
                                                     </tbody>
                                                 </table>
                                                     <div class="text-center loader-manager" role="status">
@@ -272,9 +273,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                </div>
-                            </td>
+                                </div></td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
@@ -349,8 +348,12 @@
                     ?>
                 </tbody>
             </table>
+            <div class="pagination-container">
+                <!-- Les boutons de pagination seront ajoutés ici -->
+            </div>
         </div>
     </div>
+
 <?php
     }
     else
@@ -562,6 +565,61 @@
             });
         }
     });
+</script>
+
+<script>
+    const itemsPerPage = 7;
+    const rows = document.querySelectorAll('.pagination-element-block');
+    const pageCount = Math.ceil(rows.length / itemsPerPage);
+
+    function showPage(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        rows.forEach((row, index) => {
+            if (index >= startIndex && index < endIndex) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function createPaginationButtons() {
+        const paginationContainer = document.querySelector('.pagination-container');
+        let firstButtonAdded = false;
+
+        if (pageCount <= 1) {
+            paginationContainer.style.display = 'none';
+            return;
+        }
+
+        for (let i = 1; i <= pageCount; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.addEventListener('click', function() {
+                showPage(i);
+
+                const buttons = document.querySelectorAll('.pagination-container button');
+                buttons.forEach((btn) => {
+                    btn.classList.remove('active');
+                });
+
+                this.classList.add('active');
+            });
+
+            if (!firstButtonAdded) {
+                button.classList.add('active');
+                firstButtonAdded = true;
+            }
+
+            paginationContainer.appendChild(button);
+        }
+    }
+
+    showPage(1);
+    createPaginationButtons();
+
 </script>
 
 <script>

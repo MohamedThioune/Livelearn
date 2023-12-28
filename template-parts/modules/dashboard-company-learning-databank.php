@@ -321,29 +321,18 @@
                             if(!$bool)
                                 continue;   
 
-                            $category = ' ';
-
-                            /*
-                            * Categories
-                            */
-                            $category = ' ';
-                            $category_id = 0;
-                            $category_str = 0;
-                            if($category == ' '){
-                                $one_category = get_field('categories',  $course->ID);
-                                if(isset($one_category[0]['value']))
-                                    $category_str = intval(explode(',', $one_category[0]['value'])[0]);
-                                else{
-                                    $one_category = get_field('category_xml',  $course->ID);
-                                    if(isset($one_category[0]['value']))
-                                        $category_id = intval($one_category[0]['value']);
-                                }
-
-                                if($category_str != 0)
-                                    $category = (String)get_the_category_by_ID($category_str);
-                                else if($category_id != 0)
+                            //Categories
+                            $category = " ";
+                            $id_category = 0;
+                            $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                            $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
+                            if($category_xml)
+                                if($category_xml != 0)
+                                    $category = (String)get_the_category_by_ID($category_xml);
+                                
+                            if($category_id)
+                                if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
-                            }
 
                             /*
                             * Price 
@@ -368,8 +357,11 @@
                             }
                             else{
                                 $dates = get_field('dates', $course->ID);
-                                if($dates)
-                                    $day = explode(' ', $dates[0]['date'])[0];
+                                if($dates){
+                                    $post_date = explode(' ', $dates[0]['date'])[0];
+                                    $date_immu = new DateTimeImmutable($post_date);
+                                    $day = $date_immu->format('d/m/Y');  
+                                }                              
                                 else{
                                     $data = get_field('data_locaties_xml', $course->ID);
                                     if(isset($data[0]['value'])){
@@ -443,8 +435,9 @@
                             <?php
                             if (in_array('administrator', $user_in->roles ) ) {
                             ?>
-                            <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
-                            <?php
+                                <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
+                                <?= $category ?>
+                                <?php
                                 $course_subtopics = get_field('categories', $course->ID);
                                 $field='';
                                 $read_topis = array();
@@ -474,6 +467,7 @@
                             {
                             ?>
                             <td class="textTh ">
+                                <?= $category ?>
                                 <?php
                                 $course_subtopics = get_field('categories', $course->ID);
                                 $field='';

@@ -26,9 +26,13 @@ $args = array(
 );
 
 $company_input = get_posts($args)[0];
-$error_content = '<h1 class="wordDeBestText2">Company Not Found ❌</h1>';
+$no_content =  '
+                <p class="dePaterneText theme-card-description"> 
+                <span style="color:#033256"> This company not exist ❗️</span> 
+                </p>
+                ';
 if(empty($company_input)):
-    echo $error_content;
+    echo $no_content;
     die();
 endif;
 
