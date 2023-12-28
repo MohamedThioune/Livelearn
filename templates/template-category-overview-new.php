@@ -52,8 +52,10 @@ $expertise = searching_course_by_group($global_posts, 'category', $category_inpu
 
 //Category information
 $genuine_category = get_categories(array('taxonomy' => 'course_category', 'orderby' => 'name', 'hide_empty' => 0, 'include' => (int)$category_input) )[0];
-if(is_wp_error($name) || is_wp_error($genuine_category))
-    header('Location: /');
+if(is_wp_error($name) || is_wp_error($genuine_category)):
+    echo $no_content;
+    die();
+endif;
 
 $image_category = get_field('image', 'category_'. $category_input);
 $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';

@@ -256,7 +256,7 @@ if($this_date <= $date_now && !$is_finish)
                     }
                 ?>
                 <div class="content">
-                    <div id="countdown-timer">
+                    <!-- <div id="countdown-timer">
                         <div class="element-contdown">
                             <strong id="days" class="bold-number"><?= $countdown_day ?> </strong> <span class="slim-countdown-text">D<span class="hide-words">ays</span><span class="timer"></span></span>
                         </div>
@@ -269,7 +269,7 @@ if($this_date <= $date_now && !$is_finish)
                         <div class="element-contdown">
                             <strong id="seconds" class="bold-number"> <?= $countdown_second ?>  </strong> <span class="slim-countdown-text">S<span class="hide-words">econds</span></span><span class="timer"></span></span>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="block-element-detail">
                         <div class="sub-detail-circle">
                             <i class="fas fa-user-circle"></i>

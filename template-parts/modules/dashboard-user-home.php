@@ -410,8 +410,7 @@ $void_content ='<center>
                 </center>';
 
 // Saved courses
-$saved = get_user_meta($user, 'course');
-
+$saved = is_array(get_user_meta($user, 'course')) ? get_user_meta($user, 'course') : array();
 /*
 * Get interests courses
 */
@@ -759,10 +758,14 @@ if(isset($_GET['message']))
         </div> 
         -->
         <div class="d-flex w-100 flex-wrap">
-            <a href="/onderwerpen/" class="explore-more-btn">
+            <button type="button" class="explore-more-btn" data-toggle="modal" data-target="#exampleModal">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/more-icon.png" alt="">
                 <span>Explore new topics!</span>
-            </a>
+            </button>
+            <!-- <a href="#" class="explore-more-btn">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/more-icon.png" alt="">
+                <span>Explore new topics!</span>
+            </a> -->
             <div class="btn-group-layouts">
                 <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
                 <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>

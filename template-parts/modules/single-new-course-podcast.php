@@ -6,7 +6,6 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
-
 <?php
 //$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
 //$url = "https://anchor.fm/s/878cadd4/podcast/rss";
@@ -61,7 +60,7 @@ endif;
            </div>
             <div class="block-detail-podcast">
                 <h1><?= $post->post_title ?></h1>
-                <p class="description"><?= $short_description ?></p>
+                <p class="description"><?= strip_tags($short_description) ?></p>
                 <div class="d-flex">
                     <div class="block-sub-detail">
                         <p class="category-text-title">Categories</p>
@@ -187,7 +186,7 @@ endif;
                                                         <div class="playlist-img">
                                                             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" alt="">
                                                         </div>
-                                                        <p class="title-podcast"><?= $podcast['course_podcast_title'] ?></p>
+                                                        <p class="title-podcast"><?= strip_tags($podcast['course_podcast_title']) ?></p>
                                                     </div>
                                                     <p class="date-added-playlist">xx/xx/xxxx</p>
                                                 </div>
@@ -196,7 +195,7 @@ endif;
                                                         <div class="cp-audioquote__player">
                                                             <!-- src -->
                                                             <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
-                                                                <p><?= $podcast['course_podcast_intro'] ?></p>
+                                                                <p><?= strip_tags($podcast['course_podcast_intro']) ?></p>
                                                             </audio>
                                                             <div class="cp-audioquote__player--playBtn"></div>
                                                             <div class="cp-audioquote__player--display">
@@ -243,7 +242,8 @@ endif;
                                         $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
                                         $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
                                         $lecture_index = $key + 1;
-                                        $description_podcast = $podcast['podcast_description'] ? : $short_description ;
+                                        $description_podcast = strip_tags($podcast['podcast_description']);
+                                        $description_podcast = $description_podcast ? : $short_description ;
 
                                         ?>
                                        <div class="elemnt-list-podcast visible">
@@ -251,9 +251,9 @@ endif;
                                                <div class="d-flex align-items-center justify-content-between">
                                                    <div class="d-flex">
                                                        <div class="playlist-img">
-                                                           <img src="<?= $image_podcast ?>" alt="<?= $podcast['podcast_title'] ?>">
+                                                           <img src="<?= $image_podcast ?>" alt="<?= strip_tags($podcast['podcast_title']) ?>">
                                                        </div>
-                                                       <p class="title-podcast"><?= $podcast['podcast_title'] ?></p>
+                                                       <p class="title-podcast"><?= strip_tags($podcast['podcast_title']) ?></p>
                                                    </div>
                                                    <p class="date-added-playlist"><?=$date_podcast?></p>
                                                </div>
@@ -262,7 +262,7 @@ endif;
                                                        <div class="cp-audioquote__player">
                                                            <!-- src -->
                                                            <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
-                                                               <p><?= $podcast['podcast_description'] ?></p>
+                                                               <p><?= strip_tags($podcast['podcast_description']) ?></p>
                                                            </audio>
                                                            <div class="cp-audioquote__player--playBtn"></div>
                                                            <div class="cp-audioquote__player--display">
@@ -534,7 +534,6 @@ endif;
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4">
                     <div class="right-block-detail-course">
                         <div class="card-detail-course">
@@ -608,7 +607,6 @@ endif;
                         </div>
                     </div>
                 </div>
-
             </div>
             <?php
             if(!empty($similar_course)):
@@ -760,10 +758,6 @@ endif;
             }
         });
 
-        const specificBlock = blockList.querySelector('#tab-url1');
-        if (specificBlock) {
-            specificBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
         const containerHeight = blockList.offsetHeight;
 
         setTimeout(() => {
@@ -1003,6 +997,20 @@ endif;
 
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('strong').each(function() {
+            var content = $(this).html();
+            $(this).replaceWith(content);
+        });
+    });
+
+
+</script>
+
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 </body>
+

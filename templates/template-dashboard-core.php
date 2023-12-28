@@ -1,44 +1,36 @@
 <?php /** Template Name: dashboard core */ ?>
 <?php
 
-$user_main = get_current_user_id();
-$site_url = get_site_url();
-if(!$user_main):
-    header('Location: ' . $site_url);
-endif;
-
 $page = 'check_visibility.php';
 require($page); 
 require('module-subscribe.php'); 
-
-
-// require __DIR__ . '/../vendor/autoload.php';
-// use Automattic\WooCommerce\Client;
-
-// $woocommerce = new Client(
-// 'https:www.livelearn.nl/',
-// 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-// 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-// [
-//     'version' => 'wc/v3', // WooCommerce WP REST API version
-// ]
-// );
-
 
 $mail_notification_invitation = '/mail-notification-invitation.php';
 require(__DIR__ . $mail_notification_invitation); 
 
 global $wpdb;
-
-$table = $wpdb->prefix . 'databank'; 
+global $wp;
 
 if(is_user_logged_in()){
     acf_form_head();
 } 
 
+$table = $wpdb->prefix . 'databank';
+
+// Forgot page request 
+$is_forgot_page = false;
+$url_base = $wp->request;
+$option_menu = explode('/', $url_base);
+if(isset($option_menu[2]))
+        if($option_menu[2] == 'forgot-password' || $option_menu[2] == 'lost-password')
+            $is_forgot_page = true;
+// var_dump($option_menu);
+// die();
+
 $user_connected = get_current_user_id();
 $user_data = wp_get_current_user();
 
+// if(!$user_connected && !$is_forgot_page)
 if(!$user_connected)
     header('Location: /');
 

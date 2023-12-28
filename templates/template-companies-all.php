@@ -102,7 +102,7 @@ $companies = get_posts($args);
                             <p class="name-company"><?= $name ?></p>
                             <p class="date-added">Since : <?= $year ?></p>
                             <div class="d-flex justify-content-between">
-                                <p class="number-course"><?= $count_courses ?> Courses</p>
+                                <p class="number-course"><?= !$count_courses ?: $count_courses - 1 ?> Courses</p>
                                 <p class="number-expert"><?= $count_experts ?> Experts</p>
                             </div>
                         </div>

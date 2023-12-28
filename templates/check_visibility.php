@@ -1,6 +1,7 @@
 <?php
-    $user_visibility = wp_get_current_user();
-    $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
+    $visibility_company = null;
+    $user_visibility = get_current_user();
+    $company_visibility = get_field('company',  'user_' . $user_visibility);
 
     if(!empty($company_visibility))
         $visibility_company = $company_visibility[0]->post_title;
@@ -14,8 +15,16 @@
         if(!empty($company))
             $company_title = $company[0]->post_title;
 
-        if($invisibility && $visibility_company != $company_title )
+        if($invisibility && $visibility_company != $company_title ):
+            // var_dump($course->post_title);
+            // die();
             $bool = false;
+        endif;
+
+        // if($course->ID == 3377):
+        //     var_dump($company_title, $visibility_company, $bool);
+        //     die();
+        // endif;
 
         return $bool;
     }

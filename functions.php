@@ -1744,6 +1744,13 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthors',
   ));
 
+  register_rest_route('custom/v2', '/authors', array(
+    'methods' => 'GET',
+    'callback' => 'allAuthorsOptimized',
+  ));
+
+  
+
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
@@ -1772,6 +1779,11 @@ add_action( 'rest_api_init', function () {
   register_rest_route('custom/v1', '/expert/(?P<id>\d+)/courses', array(
     'methods' => 'GET',
     'callback' => 'get_expert_courses',
+  ));
+
+  register_rest_route('custom/v2', '/expert/(?P<id>\d+)/courses', array(
+    'methods' => 'GET',
+    'callback' => 'getExpertCourseOptimized',
   ));
 
   register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
@@ -1978,5 +1990,15 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/homepage', array(
     'methods' => 'GET',
     'callback' => 'homepage'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/detail', array(
+    'methods' => 'POST',
+    'callback' => 'candidateDetail',
+  ));
+
+  register_rest_route ('custom/v1', '/artikel/detail', array(
+    'methods' => 'POST',
+    'callback' => 'artikelDetail'
   ));
 });

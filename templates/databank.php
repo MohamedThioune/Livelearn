@@ -1250,7 +1250,7 @@ if (!empty($courses)) {
          $('#loader').attr('hidden',false);
 
         $.ajax({
-            url:"/livelearn/youtube-playlist/",
+            url:"/youtube-playlist/",
             method:"POST",
             data:{
                 playlist_youtube: playlistId

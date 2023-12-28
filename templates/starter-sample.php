@@ -16,7 +16,8 @@ $information = [
     'phone' => $phone,
     'is_trial' => $is_trial,    
 ];
-
+ 
 // Start a subscription
 $subscription = woocommmerce_subscribe_api($information, true);
+// var_dump($subscription);
 ?>

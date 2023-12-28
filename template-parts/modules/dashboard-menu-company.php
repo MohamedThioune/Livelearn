@@ -146,9 +146,9 @@
 </style>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
-    <button  class="btn btn-close-sidbar">
+    <!-- <button  class="btn btn-close-sidbar">
         <i class="fa fa-close"></i>
-    </button>
+    </button> -->
     <div class="row">
         <div class="col">
             <div class="theme-side-menu__list" style="color:#212529">
