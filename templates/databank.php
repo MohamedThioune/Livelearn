@@ -456,7 +456,7 @@ if (!empty($courses)) {
 
             }
             $tab = array_unique($tab);
-            foreach ($tab as $key => $value2) {
+            foreach ($tab as $value2) {
                 if ($value2) {
                     echo $value2 . ',';
                 }

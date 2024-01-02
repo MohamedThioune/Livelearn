@@ -21,19 +21,19 @@ $args = array(
 );
 $companies = get_posts($args);
 
-//youtube-playlist from excel
-$user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
-$author_id = $author_id->ID;
-$company_id = 0;
-foreach ($users as $user) {
-    $company_user = get_field('company', 'user_' . $user->ID);
-    if ($user_connected) {
-        if ($user_id == $user->ID ) {
-            $company = $company_user[0];
-            $company_id = $company_user[0]->ID;
-        }
-    }
-}
+// //youtube-playlist from excel
+// $user_id = (isset($user_connected->ID)) ? $user_connected->ID : 0;
+// $author_id = $author_id->ID;
+// $company_id = 0;
+// foreach ($users as $user) {
+//     $company_user = get_field('company', 'user_' . $user->ID);
+//     if ($user_connected) {
+//         if ($user_id == $user->ID ) {
+//             $company = $company_user[0];
+//             $company_id = $company_user[0]->ID;
+//         }
+//     }
+// }
 extract($_POST);
 if ($playlist_youtube) {
     $playlists_id = array();
@@ -46,7 +46,8 @@ if ($playlist_youtube) {
         array_push($keywords,$id[2]);
         array_push($authors,$id[0]);
     }
-    // var_dump($author);
+    // var_dump($authors);
+    // die;
 
     $i = 1;
     if ($playlists_id || !empty($playlists_id)) {
@@ -55,11 +56,12 @@ if ($playlist_youtube) {
             $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist . "&key=" . $api_key;
             $playlists = json_decode(file_get_contents($url_playlist), true);
             $author = $authors[$key];
+            // var_dump($author);
             $author_id = 0;
             foreach ($users as $user) {
                 $company_user = get_field('company', 'user_' . $user->ID);
                 if (isset($company_user[0]->post_title)) {
-                    if (strtolower($user->display_name) == strtolower($author[0])) {
+                    if (strtolower($user->display_name) == strtolower($author)) {
                         $author_id = $user->ID;
                         $company = $company_user[0];
                         $company_id = $company_user[0]->ID;
