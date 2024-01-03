@@ -2002,5 +2002,10 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'artikelDetail'
   ));
-  //End Liggeey
+
+  register_rest_route ('custom/v1', '/company/detail', array(
+    'methods' => 'POST',
+    'callback' => 'companyDetail'
+  ));
+
 });
