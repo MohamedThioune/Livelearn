@@ -38,7 +38,7 @@ if (isset($_POST['type'])) {
             $count = $wpdb->get_results($sql_count);
             $count = intval($count[0]->{'COUNT(*)'});
             break;
-        case 'videos':
+        case 'videos': 
             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
             $courses = $wpdb->get_results($sql);
             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
