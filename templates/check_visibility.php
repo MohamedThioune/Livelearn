@@ -15,16 +15,8 @@
         if(!empty($company))
             $company_title = $company[0]->post_title;
 
-        if($invisibility && $visibility_company != $company_title ):
-            // var_dump($course->post_title);
-            // die();
+        if($invisibility && $visibility_company != $company_title )
             $bool = false;
-        endif;
-
-        // if($course->ID == 3377):
-        //     var_dump($company_title, $visibility_company, $bool);
-        //     die();
-        // endif;
 
         return $bool;
     }
