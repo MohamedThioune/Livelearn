@@ -69,7 +69,7 @@ if ($playlist_youtube) {
                     }
                 }
 
-            }
+            } 
 
             // Accord the author a company
             if (!is_wp_error($author_id)) {
