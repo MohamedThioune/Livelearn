@@ -136,6 +136,7 @@ if($optie == "✔"){
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post);
     }
+
     //Insert Others
     else if (in_array(strval($course->type), $type) ) {
         //Creation course

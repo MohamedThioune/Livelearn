@@ -234,7 +234,6 @@ if ($audio_search){
             'status' => 'extern',
             'company_id' => $company_id,
         );
-
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
