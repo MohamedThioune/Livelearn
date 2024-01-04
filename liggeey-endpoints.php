@@ -347,7 +347,7 @@ function candidateDetail(WP_REST_Request $request){
   $sample['experiences'] = $experiences;
 
   $sample = (Object)$sample;
-
+ 
   //Response
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -402,7 +402,36 @@ function artikelDetail(WP_REST_Request $request){
   return $response;  
 }
   
+//Detail company
 
+function companyDetail(WP_REST_Request $request){
 
+  $param_post_id = $request['id'] ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  //var_dump($post);
+
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
+  $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
+  $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
+  $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
+
+  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
+  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
+
+  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
+
+  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
+  $sample['logo'] = get_field('company_logo', $post->company_logo)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response; 
+
+}
 
 /* * End Liggeey * */
