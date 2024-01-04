@@ -327,6 +327,13 @@ if (isset($_GET["message"])) {
                                 array_push($playlist_title,$ptitle);
                                 $indice++;
                             }
+                            array_shift($playlists_id);
+                            // foreach($playlists_id as $pid){
+                            //     echo "<pre>";
+                            //     var_dump($pid);
+                            //     echo "</pre><br>";
+                            // }
+
                             array_shift($youtube_parameter);
                             // var_dump($youtube_parameter);
                             fclose($file);
@@ -346,6 +353,8 @@ if (isset($_GET["message"])) {
                                 <?php
                                 foreach ($youtube_parameter as $key=>$param) {
                                     $parameters= explode(",",$param);
+                                    if(substr($parameters[1],0,2)!="PL")
+                                        continue;
                                     ?>
                                     <option class="options" value="<?=$param?>" selected="" ><?=$parameters[1]?></option>
                                 <?php
