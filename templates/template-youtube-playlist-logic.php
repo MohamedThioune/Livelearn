@@ -198,7 +198,7 @@ if ($playlist_youtube) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($playlist['snippet']['title'], $type));
                 $result_title = $wpdb->get_results($sql_title);
 
-                //if (!isset($result_title[0]) && !isset($result_image[0])) {
+                if (!isset($result_title[0]) && !isset($result_image[0])) {
                     $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $playlist['id'] . "&maxResults=" . $maxResults . "&key=" . $api_key;
 
                     $detail_playlist = json_decode(file_get_contents($url_playlist, true));
@@ -239,7 +239,7 @@ if ($playlist_youtube) {
                     $post_id = $wpdb->insert_id;
 
                     echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
-                //}
+                }
             }
             $i++;
         }
