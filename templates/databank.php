@@ -345,8 +345,9 @@ if (isset($_GET["message"])) {
                                 <!-- <option name="default">Choose companies</option> -->
                                 <?php
                                 foreach ($youtube_parameter as $key=>$param) {
+                                    $parameters= explode(",",$param);
                                     ?>
-                                    <option class="options" value="<?=$param?>" selected="" ><?=$playlist_title[$key]?></option>
+                                    <option class="options" value="<?=$param?>" selected="" ><?=$parameters[1]?></option>
                                 <?php
                                 }
                                 ?>
