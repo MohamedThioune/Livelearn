@@ -1987,6 +1987,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'cleanVideoCourse'
   ));
 
+  //Liggeey
   register_rest_route ('custom/v1', '/homepage', array(
     'methods' => 'GET',
     'callback' => 'homepage'
@@ -2001,4 +2002,10 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'artikelDetail'
   ));
+
+  register_rest_route ('custom/v1', '/company/detail', array(
+    'methods' => 'POST',
+    'callback' => 'companyDetail'
+  ));
+
 });
