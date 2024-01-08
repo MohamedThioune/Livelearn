@@ -431,7 +431,6 @@ function companyDetail(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response; 
-
 }
 
 /* * End Liggeey * */
