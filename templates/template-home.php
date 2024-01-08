@@ -1,4 +1,4 @@
-<?php /** Template Name: Home */ ?>
+<?php /** Template Name: Homew */ ?>
 
 <?php get_header(); ?>
 <?php

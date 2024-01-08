@@ -1,4 +1,5 @@
 <?php
+// require __DIR__ . '/../../templates/recommendation-module.php';
 $like_src = get_stylesheet_directory_uri()."/img/love.png";
 $dislike_src = get_stylesheet_directory_uri()."/img/heart-like.png";
 
@@ -272,12 +273,28 @@ foreach($enrolled_courses as $key => $course) :
 
 endforeach;
 
+$void_content ='<center> 
+                <h2>No content found !</h2> 
+                <img src="' . get_stylesheet_directory_uri() . '/img' . '/void-content.gif" alt="content image requirements">
+                </center>';
+
+//Recommendation courses
+$infos = recommendation($user, 500, 12);
+
+$recommended_courses = $infos['recommended'];
+$teachers = $infos['teachers'];
+
+//Saved courses
+$saved = is_array(get_user_meta($user, 'course')) ? get_user_meta($user, 'course') : array();
+
+if(isset($_GET['message']))
+    if($_GET['message'])
+        echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
 
 $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
 if (!$is_first_login && get_current_user_id() != 0 )
 {
 ?>
-
 <!-- Modal First Connection -->
 <div class="contentModalFirst"²>
     <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
@@ -401,309 +418,6 @@ if (!$is_first_login && get_current_user_id() != 0 )
  * End modal first login - tags
 **/
 ?>
-
-<?php
-
-$void_content ='<center> 
-                <h2>No content found !</h2> 
-                <img src="' . get_stylesheet_directory_uri() . '/img' . '/void-content.gif" alt="content image requirements">
-                </center>';
-
-// Saved courses
-$saved = is_array(get_user_meta($user, 'course')) ? get_user_meta($user, 'course') : array();
-/*
-* Get interests courses
-*/
-
-//Topics
-$topics_external = get_user_meta($user, 'topic');
-$topics_internal = get_user_meta($user, 'topic_affiliate');
-$topics = array();
-if(!empty($topics_external))
-    $topics = $topics_external;
-if(!empty($topics_internal))
-    foreach($topics_internal as $value)
-        array_push($topics, $value);
-
-
-/** 
-* Views beginning      
-*/
-
-/** 
- * New way of getting Views from database
-*/ 
-
-// View table name
-$table_tracker_views = $wpdb->prefix . 'tracker_views';
-// Get id of courses viewed from db
-$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'course' ");
-$all_user_views = $wpdb->get_results($sql_request);
-$id_courses_viewed = array_column($all_user_views,'data_id');
-
-/** 
- *  Get courses viewed from db
- */
-$user_post_view = get_posts( 
-    array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'order' => 'DESC',
-        'include' => $id_courses_viewed,
-        'posts_per_page' => 1000
-    )
-)[0];
-
-//Experts
-$postAuthorSearch = array();
-$experts = array();
-$experts = get_user_meta($user, 'expert');
-$postAuthorSearch = $experts;
-$teachers = array();
-
-// Get id of experts viewed from db
-$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'expert'");
-$all_expert_viewed = $wpdb->get_results($sql_request);
-
-//truncate $postAuthorSearch to avoid
-if (!empty($user_post_view) || !empty($postAuthorSearch))
-    $postAuthorSearch = (empty($all_expert_viewed)) ? $postAuthorSearch : array_merge(array_column($all_expert_viewed, 'data_id'), $postAuthorSearch);
-
-// Get the courses of experts viewed from db 
-$args = array(
-    'post_type' => array('course', 'post'),
-    'post_status' => 'publish',
-    'author__in' => $postAuthorSearch, 
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'posts_per_page' => 500
-);
-$global_courses = get_posts($args);
-shuffle($global_courses);
-
-$more_global_courses = array();
-if(empty($global_courses)){
-    $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'posts_per_page' => 300
-    );
-    $more_global_courses = get_posts($args);
-    shuffle($more_global_courses);
-
-    $global_courses = $more_global_courses;
-}
-
-foreach ($global_courses as $key => $course) {
-    //Control visibility
-    $bool = true;
-    $bool = visibility($course, $visibility_company);
-    if(!$bool)
-        continue;
-
-    // Date and Location
-    $data = array();
-
-    $datas = get_field('data_locaties', $course->ID);
-
-    if($datas)
-        $data = $datas[0]['data'][0]['start_date'];
-    else{
-        $datum = get_field('data_locaties_xml', $course->ID);
-
-        if($datum)
-            if(isset($datum[0]['value']))
-                $element = $datum[0]['value'];
-        if(!isset($element))
-            continue;
-        $datas = explode('-', $element);
-        $data = $datas[0];
-    }
-
-    //Course Type
-    $course_type = get_field('course_type', $course->ID);
-
-    if(empty($data))
-        null;
-    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
-        if($data){
-            $date_now = strtotime(date('Y-m-d'));
-            $data = strtotime(str_replace('/', '.', $data));
-            if($data < $date_now)
-                continue;
-        }
-
-    //Preferences categories
-    $category_default = get_field('categories', $course->ID);
-    $category_xml = get_field('category_xml', $course->ID);
-    $read_category = array();
-    if(!empty($category_default))
-        foreach($category_default as $item)
-            if($item)
-                if(!in_array($item['value'],$read_category))
-                    array_push($read_category,$item['value']);
-
-    else if(!empty($category_xml))
-        foreach($category_xml as $item)
-            if($item)
-                if(!in_array($item['value'],$read_category))
-                    array_push($read_category,$item['value']);
-
-    foreach($topics as $topic_value){
-        if($read_category)
-            if(in_array($topic_value, $read_category) ){
-                if(!in_array($course->ID, $course_id)){
-                    array_push($course_id, $course->ID);
-                    array_push($courses, $course);
-                    break;
-                }
-        }
-    }
-
-    //Preference author
-    if($experts)
-        if(in_array($course->post_author, $experts)){
-            if(!in_array($course->ID, $course_id)){
-                array_push($course_id, $course->ID);
-                array_push($courses, $course);
-            }
-        }
-
-    //Preference expert
-    $experties = get_field('experts', $course->ID);
-    if($experties && $experts)
-        foreach($experties as $topic_expert){
-            if(in_array($topic_expert, $experts)){
-                if(!in_array($course->ID, $course_id)){
-                    array_push($course_id, $course->ID);
-                    array_push($courses, $course);
-                    break;
-                }
-            }
-        }
-}
-
-// $user_informations
-// Views credential
-$is_view = false;
-$recommended_courses = array();
-if (!empty($user_post_view))
-{
-    $courses_id = array();
-    $is_view = true;
-    $max_points = 10;
-
-    // browse the array os post type as courses obtain via database views
-    foreach($user_post_view as $key => $post_viewed) {
-        if(!$post_viewed)
-            continue;
-
-        foreach ($courses as $key => $course) {
-            $points = 0;
-
-            //Read category viewed - get categories from course view
-            $read_category_view = array();
-            $category_default = get_field('categories', $post_viewed->ID);
-            $category_xml = get_field('category_xml', $post_viewed->ID);
-            if(!empty($category_default))
-                foreach($category_default as $item)
-                    if($item)
-                        if(!in_array($item['value'],$read_category_view))
-                            array_push($read_category_view, $item['value']);
-
-            else if(!empty($category_xml))
-                foreach($category_xml as $item)
-                    if($item)
-                        if(!in_array($item['value'],$read_category_view))
-                            array_push($read_category_view, $item['value']);
-
-
-            //Read category course - get categories from course
-            $read_category_course = array();
-            $category_default = get_field('categories', $course->ID);
-            $category_xml = get_field('category_xml', $course->ID);
-            if(!empty($category_default))
-                foreach($category_default as $item)
-                    if($item)
-                        if(!in_array($item['value'],$read_category_course))
-                            array_push($read_category_course, $item['value']);
-
-            else if(!empty($category_xml))
-                foreach($category_xml as $item)
-                    if($item)
-                        if(!in_array($item['value'],$read_category_course))
-                            array_push($read_category_course, $item['value']);
-
-            //Price view
-            $view_prijs = get_field('price', $post_viewed->ID);
-
-            foreach($read_category_view as $value){
-                if($points == 6)
-                    break;
-                if(in_array($value, $read_category_course))
-                    $points += 3;
-            }
-            if ($post_viewed->post_author == $course->post_author)
-                $points += 3;
-            if ($view_prijs <= $course->price)
-                $points += 1;
-
-            $percent = abs(($points/$max_points) * 100);
-            if ($percent >= 50)
-                if(!in_array($course->ID, $random_id)){
-                    if(get_field('course_type', $course->ID))
-                        $count[get_field('course_type', $course->ID)]++;
-                    array_push($random_id, $course->ID);
-                    array_push($recommended_courses, $course);
-
-                    if(!in_array($course->post_author, $teachers))
-                        array_push($teachers, $course->post_author);
-                }
-
-            $count_recommended_course = count($recommended_courses);
-            if($count_recommended_course == 12)
-                break;
-        }
-    }
-}
-
-//Must be the end
-
-arsort($count);
-$count_trend = array_slice($count, 5, 4, true);
-$count = array_slice($count, 0, 4, true);
-
-$count_trend_keys = array_keys($count_trend);
-
-$keys = array_keys($count);
-shuffle($keys);
-$count = array_merge(array_flip($keys), $count);
-
-$bool = false;
-
-if (empty($recommended_courses)){
-    $courses_id = array();
-    $recommended_courses = (!empty($courses)) ? $courses : $global_courses;
-    $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $more_global_courses;
-    $bool = true;
-}
-
-//Activitien
-shuffle($recommended_courses);
-$recommended_courses = array_slice($recommended_courses, 0, 12, true);
-
-/*
-* *
-*/
-
-if(isset($_GET['message']))
-    if($_GET['message'])
-        echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
-
-?>
-
 
 <div class="content-new-user d-flex">
     <section class="first-section-dashboard">
