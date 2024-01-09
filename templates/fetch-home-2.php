@@ -25,17 +25,6 @@ $table_tracker_views = $wpdb->prefix . 'tracker_views';
 $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $current_user ");
 $all_user_views = $wpdb->get_results($sql_request);
 $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
-$expert_from_database = array();
-/**
- * get experts doing the course by database
- */
-foreach ($id_courses_viewed as $id_course) {
-    $course = get_post($id_course);
-    $expert_id = $course->post_author;
-    //if ($expert_id)
-        $expert_from_database[] = $expert_id;
-}
-$expert_from_database = array_unique($expert_from_database);
 
 foreach ($users as $user) {
     $topic_by_user = array();
@@ -264,7 +253,7 @@ if(isset($topic_search)) {
                 //Get woo orders from user
                 $id_course = intval($item->get_product_id()) - 1;
                 $course = get_post($id_course);
-                $prijs = get_field('price', $id_course);
+                $prijs = intval(get_field('price', $id_course));
                 $favorited = get_field('favorited', $id_course);
                 $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                 $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
@@ -299,7 +288,7 @@ if(isset($topic_search)) {
         $courses_doing_by_this_user = get_posts($args);
         foreach ($courses_doing_by_this_user as $course) {
             $course_type = get_field('course_type', $course->ID);
-            $prijs = get_field('price', $course->ID);
+            $prijs = intval(get_field('price', $course->ID));
             $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
             $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
             if (!$number_of_this_is_looking)
@@ -362,7 +351,7 @@ if(isset($topic_search)) {
         if (!empty($courses_current_year))
             foreach ($courses_current_year as $course) {
                 $course_type = get_field('course_type', $course->ID);
-                $prijs = get_field('price', $course->ID);
+                $prijs = intval(get_field('price', $course->ID));
                 $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                 $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                 $tracker_views = intval($number_of_this_is_looking) ?  : 0;
@@ -404,7 +393,7 @@ if(isset($topic_search)) {
         if (!empty($courses_last_year))
             foreach ($courses_last_year as $course) {
                 $course_type = get_field('course_type', $course->ID);
-                $prijs = get_field('price', $course->ID);
+                $prijs = intval(get_field('price', $course->ID));
                 $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                 $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                 $tracker_views = intval($number_of_this_is_looking) ?: 0;
@@ -604,7 +593,7 @@ if(isset($topic_search)) {
             if (!empty($courses_last_year))
                 foreach ($courses_last_year as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?: 0;
@@ -646,7 +635,7 @@ if(isset($topic_search)) {
             if (!empty($courses_since_today))
                 foreach ($courses_since_today as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?  : 0;
@@ -657,12 +646,13 @@ if(isset($topic_search)) {
                     //get pricing from type of course: course free
                     if ($course_type == 'Artikel') {
                         $pricing_since_today = $pricing_since_today + 50;
-                        if ($tracker_views !=0) {
+
+                        if ($tracker_views !=0)
                             $pricing_since_today = $pricing_since_today + $tracker_views * 1.25; //views+click
-                        }
-                        if ($favorited){
+
+                        if ($favorited)
                             $pricing_since_today = $pricing_since_today + 5;
-                        }
+
                     }
                     else if ($course_type == 'Podcast') {
                         $pricing_since_today = $pricing_since_today + 100;
@@ -707,10 +697,7 @@ if(isset($topic_search)) {
 
             if (!$purcent)
                 continue;
-            if ($purcent>100) {
-                //  $purcent = (string)$purcent;
-                //  $purcent = substr($purcent, 0, 2);
-            }
+
             $purcent = number_format($purcent, 2, '.', ',');
 
             if ($pricing_since_today > $pricing_last_year)
@@ -790,7 +777,7 @@ if(isset($topic_search)) {
             if (!empty($courses_last_month))
                 foreach ($courses_last_month as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?: 0;
@@ -831,7 +818,7 @@ if(isset($topic_search)) {
             if (!empty($courses_since_today))
                 foreach ($courses_since_today as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?  : 0;
@@ -976,7 +963,7 @@ if(isset($topic_search)) {
             if (!empty($courses_last_week))
                 foreach ($courses_last_week as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?: 0;
@@ -1017,7 +1004,7 @@ if(isset($topic_search)) {
             if (!empty($courses_since_today))
                 foreach ($courses_since_today as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?  : 0;
@@ -1174,7 +1161,7 @@ if(isset($topic_search)) {
             if (!empty($courses_since_today))
                 foreach ($courses_since_today as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?  : 0;
@@ -1217,7 +1204,7 @@ if(isset($topic_search)) {
             if (!empty($courses_last_year))
                 foreach ($courses_last_year as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?: 0;
@@ -1258,7 +1245,7 @@ if(isset($topic_search)) {
             if (!empty($courses_last_two_year))
                 foreach ($courses_last_two_year as $course) {
                     $course_type = get_field('course_type', $course->ID);
-                    $prijs = get_field('price', $course->ID);
+                    $prijs = intval(get_field('price', $course->ID));
                     $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
                     $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                     $tracker_views = intval($number_of_this_is_looking) ?: 0;

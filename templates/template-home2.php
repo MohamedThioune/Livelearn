@@ -17,20 +17,7 @@ $table_tracker_views = $wpdb->prefix . 'tracker_views';
 $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
 $all_user_views = $wpdb->get_results($sql_request);
 $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
-$expert_from_database = array();
-/**
- * get experts doing the course by database
- */
-$pricing = 0;
-$purchantage_on_top = 0;
-$purchantage_on_bottop = 0;
-foreach ($id_courses_viewed as $id_course) {
-    $course = get_post($id_course);
-    $expert_id = $course->post_author;
-    //if ($expert_id)
-    $expert_from_database[] = $expert_id;
-}
-$expert_from_database = array_unique($expert_from_database);
+
 // if($user_connected_id))
 //     header('Location: /dashboard/user/');
 
@@ -1407,7 +1394,7 @@ $saved = get_user_meta($user_id, 'course');
                 if (!empty($courses_last_year))
                     foreach ($courses_last_year as $course) {
                         $course_type = get_field('course_type', $course->ID);
-                        $prijs = get_field('price', $course->ID);
+                        $prijs = intval(get_field('price', $course->ID));
                         $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
                         $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                         $tracker_views = intval($number_of_this_is_looking) ?: 0;
@@ -1418,30 +1405,30 @@ $saved = get_user_meta($user_id, 'course');
                         //get pricing from type of course: course free
                         if ($course_type == 'Artikel') {
                             $pricing_last_year = $pricing_last_year + 50;
-                            if ($tracker_views != 0) {
+                            if ($tracker_views != 0)
                                 $pricing_last_year = $pricing_last_year + $tracker_views * 1.25; //views+click
-                            }
-                            if ($favorited) {
+
+                            if ($favorited)
                                 $pricing_last_year = $pricing_last_year + 5;
-                            }
+
                         } else if ($course_type == 'Podcast') {
                             $pricing_last_year = $pricing_last_year + 100;
-                            if ($favorited) {
+                            if ($favorited)
                                 $pricing_last_year = $pricing_last_year + 10;
-                            }
+
                         } else if ($course_type == 'Video') {
                             $pricing_last_year = $pricing_last_year + 75;
-                            if ($tracker_views != 0) {
+                            if ($tracker_views != 0)
                                 $pricing_last_year = $pricing_last_year + $tracker_views * 3.5; //views+click+
-                            }
+
                         } else {
                             $pricing_last_year = $pricing_last_year + 100;
-                            if ($favorited) {
+                            if ($favorited)
                                 $pricing_last_year = $pricing_last_year + 20;
-                            }
-                            if ($tracker_views != 0) {
+
+                            if ($tracker_views != 0)
                                 $pricing_last_year = $pricing_last_year + $tracker_views * 10;
-                            }
+
                         }
                     }
 
@@ -1449,7 +1436,7 @@ $saved = get_user_meta($user_id, 'course');
                 if (!empty($courses_since_today))
                     foreach ($courses_since_today as $course) {
                         $course_type = get_field('course_type', $course->ID);
-                        $prijs = get_field('price', $course->ID);
+                        $prijs = intval(get_field('price', $course->ID));
                         $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
                         $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                         $tracker_views = intval($number_of_this_is_looking) ?  : 0;
@@ -1460,32 +1447,30 @@ $saved = get_user_meta($user_id, 'course');
                         //get pricing from type of course: course free
                         if ($course_type == 'Artikel') {
                             $pricing_since_today = $pricing_since_today + 50;
-                            if ($tracker_views !=0) {
+                            if ($tracker_views !=0)
                                 $pricing_since_today = $pricing_since_today + $tracker_views * 1.25; //views+click
-                            }
-                            if ($favorited){
+
+                            if ($favorited)
                                 $pricing_since_today = $pricing_since_today + 5;
-                            }
-                        }
-                        else if ($course_type == 'Podcast') {
+
+                        } else if ($course_type == 'Podcast') {
                             $pricing_since_today = $pricing_since_today + 100;
-                            if ($favorited){
+                            if ($favorited)
                                 $pricing_since_today = $pricing_since_today + 10;
-                            }
-                        }
-                        else if ($course_type == 'Video') {
+
+                        } else if ($course_type == 'Video') {
                             $pricing_since_today = $pricing_since_today + 75;
-                            if ($tracker_views !=0) {
+                            if ($tracker_views !=0)
                                 $pricing_since_today = $pricing_since_today + $tracker_views * 3.5; //views+click+
-                            }
-                        }else {
+
+                        } else {
                             $pricing_since_today = $pricing_since_today + 100;
-                            if ($favorited){
+                            if ($favorited)
                                 $pricing_since_today = $pricing_since_today + 20;
-                            }
-                            if ($tracker_views !=0) {
+
+                            if ($tracker_views !=0)
                                 $pricing_since_today = $pricing_since_today + $tracker_views * 10;
-                            }
+
                         }
                     }
 
@@ -1510,16 +1495,14 @@ $saved = get_user_meta($user_id, 'course');
 
                 if (!$purcent)
                     continue;
-                if ($purcent>100) {
-                    //  $purcent = (string)$purcent;
-                    //  $purcent = substr($purcent, 0, 2);
-                }
+
                 $purcent = number_format($purcent, 2, '.', ',');
 
                 if ($pricing_since_today > $pricing_last_year)
                     $user->pricing = $pricing_since_today;
                 else
                     $user->pricing = $pricing_last_year;
+
                 $user->display_name = $display_name;
                 $user->purcent = $purcent;
                 $user->image_user = $image_user;
