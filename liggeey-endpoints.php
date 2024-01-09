@@ -347,11 +347,7 @@ function candidateDetail(WP_REST_Request $request){
   $sample['experiences'] = $experiences;
 
   $sample = (Object)$sample;
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 1c426aff60371ae3e22d9987527593a322a6954e
   //Response
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -415,22 +411,20 @@ function companyDetail(WP_REST_Request $request){
   $post = get_post($param_post_id);
 
   //var_dump($post);
-
+//assigner les champs
   $sample['ID'] = $post->ID;
   $sample['post_title'] = $post->post_title;
-  $sample['company_address'] = $post->company_address;
-  $sample['company_place'] = $post->company_place;
-  $sample['company_country'] = $post->company_country;
-  $sample['company_bio'] = $post->company_bio;
-
-  $sample['company_website'] = empty($sample['company_website']) ? 'www.livelearn.nl' : $sample['company_website'];
-  $sample['company_size'] = $post->company_size;
-
-  $sample['company_email'] = empty($sample['company_email']) ? 'contact@livelearn.nl' : $sample['company_email'];
-
-  $sample['ccompany_sector'] = $post->company_sector;
-  $sample['company_logo'] = get_field('company_logo',  'company_' . $post->company_logo)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-  
+  //Recuperer la valeur des champs
+  $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
+  $sample['place'] = get_field('company_place', $post->ID)?: 'xxxx xxx';
+  $sample['contry'] = get_field('company_country', $post->ID)?: 'xxxx';
+  $sample['biography'] = get_field('company_bio', $post->ID)?: ' ';
+  $sample['website'] = get_field('company_website', $post->ID)?: 'www.livelearn.nl';
+  $sample['size'] = get_field('company_size', $post->ID)?: 'xx';
+  $sample['email'] = get_field('company_email', $post->ID)?: 'contact@livelearn.nl';
+  $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
+  $sample['company_logo'] = get_field('company_logo',  $post->company_logo)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+ 
  $response = new WP_REST_Response($sample);
  $response->set_status(200);
 
@@ -438,7 +432,38 @@ function companyDetail(WP_REST_Request $request){
 
 }
 
-function companyDetail(WP_REST_Request $request){
+function allCompanies(WP_REST_Request $request){
+   
+  $args = array(
+      'post_type' => 'company',  
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $company_posts = get_posts($args);
+  $companies = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($company_posts as $post) {
+    $sample = array();
+      //setup_postdata($post);
+      // Affichez ici le contenu de chaque élément
+      $sample['ID'] = $post->ID;
+      $sample['post_title'] = $post->post_title;
+      $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
+      $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
+      $sample['company_logo'] = get_field('company_logo',  $post->company_logo)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+     
+      $sample = (Object)$sample;
+      array_push($companies, $sample);
+    }
+
+ 
+
+  $response = new WP_REST_Response($companies);
+  $response->set_status(200);
+  return $response;
+
+      
   
 }
 

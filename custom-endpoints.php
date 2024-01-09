@@ -2228,9 +2228,7 @@ function getCommunitiesOptimized()
       if ($author_community ->ID != $author_company->ID)
         continue;
     }
-    
-  
-    
+        
     $community-> author_company = array();
     if(is_object($author_community))
       array_push($community->author_company,$author_community);
@@ -2387,7 +2385,6 @@ function getCommunityById($data)
 
               /* Get the HTML or whatever is linked in $url. */
               $response = curl_exec($handle);
-
               /* Check for 404 (file not found). */
               $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
               if($httpCode != 200) {
