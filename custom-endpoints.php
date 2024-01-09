@@ -3386,4 +3386,109 @@ function save_user_views(WP_REST_Request $request)
     return $infos['following_topics'];
   }
     
+  //* Max Bird *//
+  function recommendedWeekly()
+  {
+    //Get all users 
+    $users = get_users();
+
+    //Iterate users platform for recommendation
+    foreach($users as $user):
+      
+      // if($user->ID == 3):
+
+      //Recommendation courses
+      $infos = recommendation($user->ID, 300, 7);
+      $recommended_courses = $infos['recommended'];
+
+      //Mailing
+      $first_name = $user->first_name ?: $user->display_name;
+      $email = $user->user_email;
+      $subject = 'Hello '. $first_name .' this week , some courses for you !';
+      $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+
+      $content_course = null;
+      foreach($recommended_courses as $post):
+        $course_type = get_field('course_type', $post->ID);
+        $thumbnail = get_field('preview', $post->ID)['url'];
+        if(!$thumbnail):
+          $thumbnail = get_the_post_thumbnail_url($post->ID);
+          if(!$thumbnail)
+            $thumbnail = get_field('url_image_xml', $post->ID);
+          if(!$thumbnail)
+            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        endif;
+        $title = $post->post_title;
+        $short_description = get_field('short_description', $post->ID) ?: 'xxxxxxxx';
+
+        $content_course .= ' 
+        <tr>
+          <td
+            style="direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-left:0px;padding-right:0px;text-align:center;">
+            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:150px;" ><![endif]-->
+            <div class="mj-column-per-25 mj-outlook-group-fix"
+              style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                width="100%">
+                <tbody>
+                  <tr>
+                    <td align="center"
+                      style="font-size:0px;padding:10px 25px 10px 25px;padding-right:25px;padding-left:25px;word-break:break-word;">
+                      <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                        style="border-collapse:collapse;border-spacing:0px;">
+                        <tbody>
+                          <tr>
+                            <td style="width:100px;"><img alt="" height="auto"
+                                src="' . $thumbnail . '"
+                                style="border:none;border-radius:25px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                width="100"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div><!--[if mso | IE]></td><td class="" style="vertical-align:top;width:450px;" ><![endif]-->
+            <div class="mj-column-per-75 mj-outlook-group-fix"
+              style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                width="100%">
+                <tbody>
+                
+                  <tr>
+                    <td align="left"
+                      style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
+                      <div
+                        style="font-family:Arial, sans-serif;font-size:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;">
+                        <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
+                          style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $title . '</b></span></p>
+                        <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
+                          style="margin: 10px 0; margin-bottom: 10px;"><span style="font-family:Arial;">' . $short_description . '</span></p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div><!--[if mso | IE]></td></tr></table><![endif]-->
+          </td>
+        </tr>';
+        
+      endforeach;
+
+      require __DIR__ . "/templates/mail-weekly-recommendation.php";
+      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      
+      // break;
+      // endif;
+
+    endforeach;
+    //End Iterate recommendation 
+
+    $statusResponse = "OK | Recommended Weekly";
+    $response = new WP_REST_Response($statusResponse);
+    $response->set_status(200);
+    return $response;
+  }
+
 
