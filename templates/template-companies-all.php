@@ -129,7 +129,7 @@ $companies = get_posts($args);
 <!--script pagination-->
 
 <script>
-    const itemsPerPage = 9;
+    const itemsPerPage = 12;
     const blockList = document.querySelector('.content-all-company');
     const blocks = blockList.querySelectorAll('.card-all-company');
     const paginationContainer = document.querySelector('.pagination-container');
