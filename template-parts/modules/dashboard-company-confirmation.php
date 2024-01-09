@@ -97,6 +97,8 @@
 
             <tbody>
                 <?php 
+                var_dump($abonnement->invoices);
+                die();
                 foreach($abonnement->invoices as $order):
                 $order_date_created = $order['date_created'];
                 $order_date_created = explode('T', $order_date_created);
