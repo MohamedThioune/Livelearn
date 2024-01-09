@@ -1665,4 +1665,9 @@ add_action( 'rest_api_init', function () {
     'callback' => 'companyDetail'
   ));
 
+  register_rest_route ('custom/v1', '/companies', array(
+    'methods' => 'GET',
+    'callback' => 'allCompanies'
+  ));
+
 });

@@ -16,8 +16,7 @@ $information = [
 
 //Start the credit card subscription
 $mollie_subscription = mollie_card_subscribe($information, true);
-// var_dump($mollie_subscription);
 
 echo($mollie_subscription);
 
-?>
+?> 
