@@ -573,9 +573,9 @@ $no_content = "<div class='emty-block-activity'>
                                                 ?>
                                                 <tr>
                                                     <td scope="row"><?= $key; ?></td>
-                                                    <td class="content-title-notification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
+                                                    <td class="content-title-notification"><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
                                                     <td><?=$type?></td>
-                                                    <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
+                                                    <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
                                                     <td><?= $manager_display; ?></td>
                                                     <!--
                                                     <td class="textTh">
@@ -585,7 +585,7 @@ $no_content = "<div class='emty-block-activity'>
                                                                     src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                                             </p>
                                                             <ul class="dropdown-menu">
-                                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
+                                                                <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>">Bekijk</a></li>
                                                                 <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                                             </ul>
                                                         </div>
@@ -1117,9 +1117,9 @@ $no_content = "<div class='emty-block-activity'>
                                         ?>
                                         <tr>
                                             <td scope="row"><?= $key; ?></td>
-                                            <td class="content-title-notification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
+                                            <td class="content-title-notification"><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
                                             <td><?=$type?></td>
-                                            <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
+                                            <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
                                             <td><?= $manager_display; ?></td>
                                             <!--
                                                 <td class="textTh">
@@ -1129,7 +1129,7 @@ $no_content = "<div class='emty-block-activity'>
                                                                   src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                                         </p>
                                                         <ul class="dropdown-menu">
-                                                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
+                                                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?do=<?php echo $todo->ID; ?>">Bekijk</a></li>
                                                             <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                                         </ul>
                                                     </div>

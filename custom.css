@@ -22506,7 +22506,12 @@ figure ul li {
 .contentListeCourse .pagination-container button{
     font-size: 12px;
 }
-
+.content-artikel figure {
+    width: 100% !important;
+}
+.content-new-user .group-tab-element .list-wrap{
+    height: fit-content !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{

@@ -352,17 +352,16 @@ $courses = array_slice($courses, 0, 500);
 
                     <div class="block-new-card-course grid" id="autocomplete_recommendation">
                         <?php
+                        
                         $user_id = get_current_user_id();
                         $company_visibility = get_field('company',  'user_' . $user_id);
                         $visibility_company = (!empty($company_visibility)) ? $company_visibility[0]->post_title : null;
-                        
+                        // var_dump($visibility_company);
+                        // die();
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
                         foreach($courses as $post):
-                        
-                        if(!$post)
-                            continue;
-                        
-                        $hidden = true;
+
+                        $hidden = 0;
                         $hidden = visibility($post, $visibility_company);
                         if(!$hidden)
                             continue;

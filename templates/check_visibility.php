@@ -1,6 +1,7 @@
 <?php
-    $user_visibility = wp_get_current_user();
-    $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
+    $visibility_company = null;
+    $user_visibility = get_current_user();
+    $company_visibility = get_field('company',  'user_' . $user_visibility);
 
     if(!empty($company_visibility))
         $visibility_company = $company_visibility[0]->post_title;

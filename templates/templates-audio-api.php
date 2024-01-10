@@ -211,7 +211,7 @@ if ($audio_search){
                 $date =(string)$pod->pubDate;
                 $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
 
-                $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio|";
+                $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio^";
             }
         }
         //wich table will I do the request to show the list of podcast ?
@@ -234,7 +234,6 @@ if ($audio_search){
             'status' => 'extern',
             'company_id' => $company_id,
         );
-
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {

@@ -7,6 +7,7 @@ function control($post, $offline){
 
     if(!$post)
         return false;
+    
     $hidden = true;
     $hidden = visibility($post, $visibility_company);
     if(!$hidden)
@@ -262,14 +263,16 @@ function searching_course_by_group($global_posts, $group, $value){
             case 'company':
                 /* * Post of this company * */
 
-                $args = array(
-                    'post_type' => array('post','course'),
-                    'posts_per_page' => -1,
-                    'orderby' => 'date',
-                    'order'   => 'DESC',
-                    'author__in' => $users_company,
-                );
-                $courses = get_posts($args);
+                if(!empty($users_company)):
+                    $args = array(
+                        'post_type' => array('post','course'),
+                        'posts_per_page' => -1,
+                        'orderby' => 'date',
+                        'order'   => 'DESC',
+                        'author__in' => $users_company,
+                    );
+                    $courses = get_posts($args);
+                endif;
 
                 /* * End Companies * */
                 break;   
