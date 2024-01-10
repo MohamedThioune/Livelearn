@@ -314,268 +314,266 @@
 </style>
 
 <?php
+    $page = 'check_visibility.php';
+    require($page);
+    global $wpdb;
 
-$page = 'check_visibility.php';
-require($page);
-global $wpdb;
+    $user_connected_id = get_current_user_id();
+    $user_connected_head = wp_get_current_user();
 
-$user_connected_id = get_current_user_id();
-$user_connected_head = wp_get_current_user();
+    // View table name
 
-// View table name
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    // Get id of courses viewed from db
+    $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
+    $all_user_views = $wpdb->get_results($sql_request);
+    $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
+    $expert_from_database = array();
+    /**
+     * get experts doing the course by database
+     */
+    $pricing = 0;
+    $purchantage_on_top = 0;
+    $purchantage_on_bottop = 0;
+    foreach ($id_courses_viewed as $id_course) {
+        $course = get_post($id_course);
+        $expert_id = $course->post_author;
+        //if ($expert_id)
+        $expert_from_database[] = $expert_id;
+    }
+    $expert_from_database = array_unique($expert_from_database);
 
-$table_tracker_views = $wpdb->prefix . 'tracker_views';
-// Get id of courses viewed from db
-$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
-$all_user_views = $wpdb->get_results($sql_request);
-$id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
-$expert_from_database = array();
-/**
- * get experts doing the course by database
- */
-$pricing = 0;
-$purchantage_on_top = 0;
-$purchantage_on_bottop = 0;
-foreach ($id_courses_viewed as $id_course) {
-    $course = get_post($id_course);
-    $expert_id = $course->post_author;
-    //if ($expert_id)
-    $expert_from_database[] = $expert_id;
-}
-$expert_from_database = array_unique($expert_from_database);
-// if($user_connected_id))
-//     header('Location: /dashboard/user/');
+    if(!isset($visibility_company))
+        $visibility_company = "";
+    
+    /*
+    * Check statistic by user *
+    */
+    $users = get_users();
+    $numbers = array();
+    $members = array();
+    $numbers_count = array();
+    $topic_views = array();
+    $topic_followed = array();
+    $stats_by_user = array();
 
-if(!isset($visibility_company))
-    $visibility_company = "";
-/*
-* Check statistic by user *
-*/
+    foreach ($users as $user) {
+        $topic_by_user = array();
+        $course_by_user = array();
 
-$users = get_users();
-$numbers = array();
-$members = array();
-$numbers_count = array();
-$topic_views = array();
-$topic_followed = array();
-$stats_by_user = array();
+        //Object & ID member
+        array_push($numbers, $user->ID);
+        array_push($members, $user);
 
-foreach ($users as $user) {
-    $topic_by_user = array();
-    $course_by_user = array();
+        //Views topic
+        $args = array(
+            'post_type' => 'view',
+            'post_status' => 'publish',
+            'author' => $user->ID,
+        );
+        $views_stat_user = get_posts($args);
+        $stat_id = 0;
+        if(!empty($views_stat_user))
+            $stat_id = $views_stat_user[0]->ID;
+        $view_topic = get_field('views_topic', $stat_id);
+        if($view_topic)
+            array_push($topic_views, $view_topic);
 
-    //Object & ID member
-    array_push($numbers, $user->ID);
-    array_push($members, $user);
+        $view_user = get_field('views_user', $stat_id);
+        $number_count['id'] = $user->ID;
+        $number_count['digit'] = 0;
+        if(!empty($view_user))
+            $number_count['digit'] = count($view_user);
+        if($number_count)
+            array_push($numbers_count, $number_count);
 
-    //Views topic
-    $args = array(
-        'post_type' => 'view',
-        'post_status' => 'publish',
-        'author' => $user->ID,
+        $view_course = get_field('views', $stat_id);
+
+        //Followed topic
+        $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+        $topics_external = get_user_meta($user->ID, 'topic');
+        $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
+
+        //Stats engagement
+        $stat_by_user['user'] = $view_user;
+        $stat_by_user['topic'] = $view_topic;
+        $stat_by_user['course'] = $view_course;
+        array_push($stats_by_user, $stat_by_user);
+    }
+
+    $topic_views_sorting = $topic_views[5];
+    if(!$topic_views_sorting)
+        $topic_views_sorting = array();
+    $topic_views_id = array_column($topic_views_sorting, 'view_id');
+    $keys = array_column($numbers_count, 'digit');
+    array_multisort($keys, SORT_DESC, $numbers_count);
+
+    $most_active_members = array();
+    $i = 0;
+    if(!empty($numbers_count))
+        foreach ($numbers_count as $element) {
+            $i++;
+            $value = get_user_by('ID', $element['id']);
+            $value->image_author = get_field('profile_img',  'user_' . $value->ID);
+            $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
+            array_push($most_active_members, $value);
+        }
+
+    //Alles coursetype
+
+    $type_course = array(
+        "Alles",
+        "Opleidingen",
+        "Training",
+        "Workshop",
+        "Masterclass",
+        "E-learning",
+        "Video",
+        "Artikel",
+        "Assessment",
+        "Cursus",
+        "Lezing",
+        "Event",
+        "Webinar",
+        "Leerpad",
+        "Podcast"
     );
-    $views_stat_user = get_posts($args);
-    $stat_id = 0;
-    if(!empty($views_stat_user))
-        $stat_id = $views_stat_user[0]->ID;
-    $view_topic = get_field('views_topic', $stat_id);
-    if($view_topic)
-        array_push($topic_views, $view_topic);
 
-    $view_user = get_field('views_user', $stat_id);
-    $number_count['id'] = $user->ID;
-    $number_count['digit'] = 0;
-    if(!empty($view_user))
-        $number_count['digit'] = count($view_user);
-    if($number_count)
-        array_push($numbers_count, $number_count);
+    $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
 
-    $view_course = get_field('views', $stat_id);
-
-    //Followed topic
-    $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
-    $topics_external = get_user_meta($user->ID, 'topic');
-    $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
-
-    //Stats engagement
-    $stat_by_user['user'] = $view_user;
-    $stat_by_user['topic'] = $view_topic;
-    $stat_by_user['course'] = $view_course;
-    array_push($stats_by_user, $stat_by_user);
-}
-
-$topic_views_sorting = $topic_views[5];
-if(!$topic_views_sorting)
-    $topic_views_sorting = array();
-$topic_views_id = array_column($topic_views_sorting, 'view_id');
-$keys = array_column($numbers_count, 'digit');
-array_multisort($keys, SORT_DESC, $numbers_count);
-
-$most_active_members = array();
-$i = 0;
-if(!empty($numbers_count))
-    foreach ($numbers_count as $element) {
-        $i++;
-        $value = get_user_by('ID', $element['id']);
-        $value->image_author = get_field('profile_img',  'user_' . $value->ID);
-        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
-        array_push($most_active_members, $value);
+    function RandomString()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randstring = '';
+        for ($i = 0; $i < 10; $i++) {
+            $rand = $characters[rand(0, strlen($characters))];
+            $randstring .= $rand;
+        }
+        return $randstring;
     }
 
-//Alles coursetype
+    if (isset($_POST))
+    {
 
-$type_course = array(
-    "Alles",
-    "Opleidingen",
-    "Training",
-    "Workshop",
-    "Masterclass",
-    "E-learning",
-    "Video",
-    "Artikel",
-    "Assessment",
-    "Cursus",
-    "Lezing",
-    "Event",
-    "Webinar",
-    "Leerpad",
-    "Podcast"
-);
+    extract($_POST);
+    if(isset($email)){
 
-$topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
+            if($email != null)
+            {
+                $args = array(
+                    'post_type' => 'company',
+                    'post_status' => 'publish',
+                    'posts_per_page' => -1,
+                    'order' => 'DESC',
+                );
 
-function RandomString()
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randstring = '';
-    for ($i = 0; $i < 10; $i++) {
-        $rand = $characters[rand(0, strlen($characters))];
-        $randstring .= $rand;
-    }
-    return $randstring;
-}
+                $companies = get_posts($args);
 
-if (isset($_POST))
-{
-
-extract($_POST);
-if(isset($email)){
-
-        if($email != null)
-        {
-             $args = array(
-                 'post_type' => 'company',
-                 'post_status' => 'publish',
-                 'posts_per_page' => -1,
-                 'order' => 'DESC',
-             );
-
-             $companies = get_posts($args);
-
-             foreach($companies as $company){
-                 if($company->post_title == $company){
-                     $companie = $company;
-                     break;
-                 }
-             }
-
-            if($first_name == null)
-                $first_name = "ANONYM";
-
-            if($last_name == null)
-                $last_name = "ANONYM";
-
-                $login = RandomString();
-                $password = RandomString();
-
-
-            $userdata = array(
-                'user_pass' => $password,
-                'user_login' => $login,
-                'user_email' => $email,
-                'user_url' => 'https://livelearn.nl/inloggen/',
-                'display_name' => $first_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'role' => 'subscriber'
-            );
-
-            $user_id = wp_insert_user(wp_slash($userdata));
-             if(is_wp_error($user_id)){
-                 $danger = $user_id->get_error_message();
-                 ?>
-                  <script>
-                     window.location.replace("/?message=".$danger);
-                  </script>
-                  <?php
-                  echo ("<span class='alert alert-info'>" .  $danger . "</span>");
-              }else
-                  {
-                      $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                      $body = "
-                      Bedankt voor je inschrijving<br>
-                      <h1>Hello " . $first_name  . "</h1>,<br> 
-                      Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                      <h4>Inloggen:</h4><br>
-                      <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
-                      ";
-
-                      $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-                      wp_mail($email, $subject, $body, $headers, array( '' )) ;
-
-                      update_field('telnr', $telefoonnummer, 'user_' . $user_id);
-                      update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
-                      update_field('company', $companie, 'user_'.$user_id);
-                      update_field('work', $work, 'user_'.$user_id);
-                      update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
-                      update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
-                      update_field('country', $prive, 'user_'.$user_id);
-                      $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-                    foreach ($bangerichtsChoice as $key => $topic) {
-                        if (!empty($topic))
-                        {
-                            if (!(in_array($topic, $subtopics_already_selected)))
-                            {
-                                add_user_meta(get_current_user_id(),'topic',$topic);
-                            }
-
-                        }
+                foreach($companies as $company){
+                    if($company->post_title == $company){
+                        $companie = $company;
+                        break;
                     }
+                }
 
-                      header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
-                  ?>
+                if($first_name == null)
+                    $first_name = "ANONYM";
 
-             <?php
+                if($last_name == null)
+                    $last_name = "ANONYM";
 
-             }
-         }
-     }
-     }
+                    $login = RandomString();
+                    $password = RandomString();
 
-/**
- * Skills Passport
-*/
 
-$degrees=[
-    'n.v.t'=> 'NVT',
-    'mbo1' => 'MBO1',
-    'mbo2' => 'MBO2',
-    'mbo3' => 'MBO3',
-    'mbo4' => 'MBO4',
-    'hbo' => 'HBO',
-    'university' => 'Universiteit',
-];
+                $userdata = array(
+                    'user_pass' => $password,
+                    'user_login' => $login,
+                    'user_email' => $email,
+                    'user_url' => 'https://livelearn.nl/inloggen/',
+                    'display_name' => $first_name,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'role' => 'subscriber'
+                );
 
-  foreach ($degrees as $key => $value) {
-    $input_degrees= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
-  }
+                $user_id = wp_insert_user(wp_slash($userdata));
+                if(is_wp_error($user_id)){
+                    $danger = $user_id->get_error_message();
+                    ?>
+                    <script>
+                        window.location.replace("/?message=".$danger);
+                    </script>
+                    <?php
+                    echo ("<span class='alert alert-info'>" .  $danger . "</span>");
+                }else
+                    {
+                        $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+                        $body = "
+                        Bedankt voor je inschrijving<br>
+                        <h1>Hello " . $first_name  . "</h1>,<br> 
+                        Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
+                        <h4>Inloggen:</h4><br>
+                        <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
+                        ";
 
-  $generaties=[
-    'Generatie BabyBoom (1940-1960)' => 'BabyBoom',
-    'Generatie X (1961-1980)' => 'X',
-    'Millenials (1981-1995)' => 'Millennials',
-    'Generatie Z (1996-nu)' => 'Z',
-];
+                        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+                        wp_mail($email, $subject, $body, $headers, array( '' )) ;
+
+                        update_field('telnr', $telefoonnummer, 'user_' . $user_id);
+                        update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
+                        update_field('company', $companie, 'user_'.$user_id);
+                        update_field('work', $work, 'user_'.$user_id);
+                        update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
+                        update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
+                        update_field('country', $prive, 'user_'.$user_id);
+                        $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+                        foreach ($bangerichtsChoice as $key => $topic) {
+                            if (!empty($topic))
+                            {
+                                if (!(in_array($topic, $subtopics_already_selected)))
+                                {
+                                    add_user_meta(get_current_user_id(),'topic',$topic);
+                                }
+
+                            }
+                        }
+
+                        header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
+                    ?>
+
+                <?php
+
+                }
+            }
+        }
+        }
+
+    /**
+     * Skills Passport
+    */
+
+    $degrees=[
+        'n.v.t'=> 'NVT',
+        'mbo1' => 'MBO1',
+        'mbo2' => 'MBO2',
+        'mbo3' => 'MBO3',
+        'mbo4' => 'MBO4',
+        'hbo' => 'HBO',
+        'university' => 'Universiteit',
+    ];
+
+    foreach ($degrees as $key => $value) {
+        $input_degrees= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
+    }
+
+    $generaties=[
+        'Generatie BabyBoom (1940-1960)' => 'BabyBoom',
+        'Generatie X (1961-1980)' => 'X',
+        'Millenials (1981-1995)' => 'Millennials',
+        'Generatie Z (1996-nu)' => 'Z',
+    ];
+
     foreach ($generaties as $key => $value) {
         $input_generaties= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
     }
@@ -588,9 +586,9 @@ $degrees=[
         </div>';
 
     }
-/**
- * Skills Passport
-*/
+    /*
+    * Skills Passport
+    */
     $args = array(
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
@@ -773,7 +771,6 @@ $degrees=[
     $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
     if (!$is_first_login && get_current_user_id() !=0 )
     {
-
     ?>
     <!-- Modal First Connection -->
     <div class="contentModalFirst"²>
@@ -906,91 +903,90 @@ $degrees=[
     <?php
     }
 
+    // for onze exoert block
+    $global_blogs = get_posts($args);
 
-// for onze exoert block
-$global_blogs = get_posts($args);
+    $blogs = array();
+    $blogs_id = array();
+    $others = array();
+    $teachers = array();
+    $teachers_all = array();
 
-$blogs = array();
-$blogs_id = array();
-$others = array();
-$teachers = array();
-$teachers_all = array();
+    $categoriees = array();
 
-$categoriees = array();
+    if(isset($categories_topic))
+        foreach($categories_topic as $category)
+            array_push($categoriees, $category->cat_ID);
 
-if(isset($categories_topic))
-    foreach($categories_topic as $category)
-        array_push($categoriees, $category->cat_ID);
+    foreach($global_blogs as $blog)
+    {
+        /*
+        * Categories
+        */
 
-foreach($global_blogs as $blog)
-{
-    /*
-    * Categories
-    */
+        $category_id = 0;
+        $experts = get_field('experts', $blog->ID);
 
-    $category_id = 0;
-    $experts = get_field('experts', $blog->ID);
+        $category_default = get_field('categories',  $blog->ID);
+        $categories_xml = get_field('category_xml',  $blog->ID);
+        $categories = array();
 
-    $category_default = get_field('categories',  $blog->ID);
-    $categories_xml = get_field('category_xml',  $blog->ID);
-    $categories = array();
+        /*
+        * Merge categories from customize and xml
+        */
+        if(!empty($category_default))
+            foreach($category_default as $item)
+                if($item)
+                    if($item['value'])
+                        if(!in_array($item['value'], $categories))
+                            array_push($categories,$item['value']);
 
-    /*
-    * Merge categories from customize and xml
-    */
-    if(!empty($category_default))
-        foreach($category_default as $item)
-            if($item)
-                if($item['value'])
-                    if(!in_array($item['value'], $categories))
-                        array_push($categories,$item['value']);
+                        else if(!empty($category_xml))
+                            foreach($category_xml as $item)
+                                if($item)
+                                    if($item['value'])
+                                        if(!in_array($item['value'], $categories))
+                                            array_push($categories,$item['value']);
 
-                    else if(!empty($category_xml))
-                        foreach($category_xml as $item)
-                            if($item)
-                                if($item['value'])
-                                    if(!in_array($item['value'], $categories))
-                                        array_push($categories,$item['value']);
+        $born = false;
+        foreach($categoriees as $categoriee){
+            if($categories)
+                if(in_array($categoriee, $categories)){
+                    array_push($blogs, $blog);
+                    array_push($blogs_id, $blog->ID);
 
-    $born = false;
-    foreach($categoriees as $categoriee){
-        if($categories)
-            if(in_array($categoriee, $categories)){
-                array_push($blogs, $blog);
-                array_push($blogs_id, $blog->ID);
+                    $born = true;
+                    /*
+                    ** Push experts
+                    */
+                    if(!in_array($blog->post_author, $teachers))
+                        array_push($teachers, $blog->post_author);
 
-                $born = true;
-                /*
-                 ** Push experts
-                */
-                if(!in_array($blog->post_author, $teachers))
-                    array_push($teachers, $blog->post_author);
+                    foreach($experts as $expertie)
+                        if(!in_array($expertie, $teachers))
+                            array_push($teachers, $expertie);
+                    /*
+                    **
+                    */
+                    break;
+                }
+        }
+        if(!$born){
+            array_push($others, $blog);
+            if(!in_array($blog->post_author, $teachers_all))
+                array_push($teachers_all, $blog->post_author);
 
-                foreach($experts as $expertie)
-                    if(!in_array($expertie, $teachers))
-                        array_push($teachers, $expertie);
-                /*
-                 **
-                */
-                break;
-            }
+        }
+        /*
+        **
+        */
     }
-    if(!$born){
-        array_push($others, $blog);
-        if(!in_array($blog->post_author, $teachers_all))
-            array_push($teachers_all, $blog->post_author);
 
-    }
-    /*
-     **
-    */
-}
+    //The user
+    $user_id = get_current_user_id();
 
-//The user
-$user_id = get_current_user_id();
-
-//Saved courses
-$saved = get_user_meta($user_id, 'course');
+    //Saved courses
+    $saved = get_user_meta($user_id, 'course');
 
 
 ?>
@@ -1292,6 +1288,7 @@ $saved = get_user_meta($user_id, 'course');
         </div>
     </div>
 </div>
+
 <div class="container-fluid">
     <div class="img-block-illustration">
         <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.png"  alt="">
@@ -1327,6 +1324,7 @@ $saved = get_user_meta($user_id, 'course');
     </div>
 
 </div>
+
 <div class="onze-expert-block">
     <div class="container-fluid">
         <div class="headCollections">
@@ -1599,6 +1597,7 @@ $saved = get_user_meta($user_id, 'course');
         </div>
     </div>
 </div>
+
 <div class="block9">
     <div class="block9">
         <div class="container-fluid">

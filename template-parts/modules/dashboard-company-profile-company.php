@@ -208,7 +208,6 @@ else
                         $('#loader').attr('hidden',false)
                     },
                     success: function(data){
-                        // console.log(data);
                         window.location.href = data;
                         //$('#output').html(data);
                     },

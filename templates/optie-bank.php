@@ -17,10 +17,7 @@ if($optie == "✔"){
 
     if($course->image_xml==null)
     {
-        if($course->type)
-            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
-        else
-            $image = get_stylesheet_directory_uri() . '/img' . '/opleidingen.jpg';
+        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
         $course->image_xml=$image;
         $wpdb->update($table,$course->image_xml,$where);
     }
@@ -115,7 +112,7 @@ if($optie == "✔"){
             'post_title'  => $course->titel
         );
         $id_post = wp_insert_post($args, true);
-        $podcasts = explode('|', $course->podcasts);
+        $podcasts = explode('^', $course->podcasts);
         $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
         foreach ($podcasts as $item) {
@@ -136,6 +133,7 @@ if($optie == "✔"){
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post);
     }
+
     //Insert Others
     else if (in_array(strval($course->type), $type) ) {
         //Creation course

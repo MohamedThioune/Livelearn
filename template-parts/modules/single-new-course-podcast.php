@@ -6,7 +6,6 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
-
 <?php
 //$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
 //$url = "https://anchor.fm/s/878cadd4/podcast/rss";
@@ -23,9 +22,9 @@ if(empty($podcast_index))
             if($lesson != 0)
                 header('Location: ' . get_permalink($post->ID));
 
-//Long description
-$long_description = strip_tags($long_description);
+//Long description             
 $long_description = ($long_description) ? : "No long description found for this course ";
+
 //Author
 $author = get_user_by('id', $post->post_author);
 $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
@@ -759,10 +758,6 @@ endif;
             }
         });
 
-        const specificBlock = blockList.querySelector('#tab-url1');
-        if (specificBlock) {
-            specificBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
         const containerHeight = blockList.offsetHeight;
 
         setTimeout(() => {
