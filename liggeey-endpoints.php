@@ -411,7 +411,7 @@ function companyDetail(WP_REST_Request $request){
   $post = get_post($param_post_id);
 
   //var_dump($post);
-
+//assigner les champs
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
   $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
@@ -425,12 +425,47 @@ function companyDetail(WP_REST_Request $request){
   $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
 
   $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
-  $sample['logo'] = get_field('company_logo', $post->company_logo)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
 
   return $response; 
 }
+
+function allCompanies(WP_REST_Request $request){
+   
+  $args = array(
+      'post_type' => 'company',  
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $company_posts = get_posts($args);
+  $companies = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($company_posts as $post):
+
+    $sample = array();
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['post_title'] = $post->post_title;
+    $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
+    $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
+    //Just check more by testing but otherwis that a "Good Job !"
+    // $sample['company_logo'] = get_field('company_logo',  $post->company_logo) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $sample['company_logo'] = get_field('company_logo',  $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+    $sample = (Object)$sample;
+    array_push($companies, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($companies);
+  $response->set_status(200);
+  return $response;
+  
+}
+
 
 /* * End Liggeey * */

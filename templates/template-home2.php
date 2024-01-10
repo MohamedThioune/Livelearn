@@ -342,15 +342,13 @@
         $expert_from_database[] = $expert_id;
     }
     $expert_from_database = array_unique($expert_from_database);
-    // if($user_connected_id))
-    //     header('Location: /dashboard/user/');
 
     if(!isset($visibility_company))
         $visibility_company = "";
+    
     /*
     * Check statistic by user *
     */
-
     $users = get_users();
     $numbers = array();
     $members = array();
