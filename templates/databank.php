@@ -1036,7 +1036,7 @@ if (!empty($courses)) {
         console.log(ids);
     });
 
-    $('#subtopics').on('click', function()
+    $('#subtopics').on('click', function() 
     {
         console.log('click');
         if(ids.length==0){
