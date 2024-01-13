@@ -1310,10 +1310,8 @@ function get_user_company($data) {
 add_action( 'rest_api_init', function () {
 
   register_rest_field('user', 'company', array(
-    'get_callback'    => 'get_user_company',
-    'update_callback' => null,
-    'schema'          => null,
-  ));
+    'callback'    => 'get_user_company',
+    ));
 
   register_rest_route( 'custom/v1', '/tags', array(
     'methods' => 'GET',
