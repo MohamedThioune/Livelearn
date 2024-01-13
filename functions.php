@@ -1302,8 +1302,19 @@ function following(){
         return $infos;
 }
 
+function get_user_company($user) {
+  return get_user_meta($user['id'], 'company', true);
+}
+
 //Callbacks 
 add_action( 'rest_api_init', function () {
+
+  register_rest_field('user', 'company', array(
+    'get_callback'    => 'get_user_company',
+    'update_callback' => null,
+    'schema'          => null,
+  ));
+
   register_rest_route( 'custom/v1', '/tags', array(
     'methods' => 'GET',
     'callback' => 'seperate_tags',
@@ -1671,17 +1682,3 @@ add_action( 'rest_api_init', function () {
   ));
 
 });
-
-function register_custom_user_fields() {
-  register_rest_field('user', 'company', array(
-      'get_callback'    => 'get_user_company',
-      'update_callback' => null,
-      'schema'          => null,
-  ));
-}
-
-function get_user_company($user) {
-  return get_user_meta($user['id'], 'company', true);
-}
-
-add_action('rest_api_init', 'register_custom_user_fields');
