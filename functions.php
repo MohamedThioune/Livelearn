@@ -1302,8 +1302,8 @@ function following(){
         return $infos;
 }
 
-function get_user_company($user) {
-  return get_user_meta($user['id'], 'company', true);
+function get_user_company($data) {
+  return get_user_meta($data['id'], 'company', true);
 }
 
 //Callbacks 
