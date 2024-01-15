@@ -83,6 +83,7 @@ if (isset($selectedValues)) {
                         $article['excerpt']['rendered'] = $firstSentence[0];
                     }
                 }else
+                    var_dump('No content');
                     continue;
                 
                 var_dump($article['excerpt']['rendered']);
