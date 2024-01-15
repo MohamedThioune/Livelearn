@@ -82,7 +82,9 @@ if (isset($selectedValues)) {
                         $firstSentence = explode('.',$article['content']['rendered']);
                         $article['excerpt']['rendered'] = $firstSentence[0];
                     }
-                }
+                }else
+                    continue;
+                
                 var_dump($article['excerpt']['rendered']);
                 die;
                 if ($article['featured_media'] != 0) {
