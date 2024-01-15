@@ -86,7 +86,7 @@ if (isset($selectedValues)) {
                     continue;
                 
                 var_dump($article['excerpt']['rendered']);
-                die;
+                // die;
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
