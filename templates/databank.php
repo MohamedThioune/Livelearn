@@ -952,15 +952,14 @@ if (!empty($courses)) {
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
-                    location.reload();
+                    document.getElementById('content-back-topics').innerHTML = response;
                 },error:function() {
                     console.log('error'); 
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    // location.reload();
+                    location.reload();
                 }
             });
         });
