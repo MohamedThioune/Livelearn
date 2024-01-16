@@ -953,7 +953,7 @@ if (!empty($courses)) {
                 success: function(response) {
                     console.log(response);
                     document.getElementById('content-back-topics').innerHTML = response;
-                    // location.reload();
+                    location.reload();
                 },error:function() {
                     console.log('error'); 
                 },
