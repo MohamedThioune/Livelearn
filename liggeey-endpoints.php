@@ -59,6 +59,7 @@ function homepage(){
       continue;
 
     //Generic informations
+    $sample['ID'] = $post->ID;
     $sample['permalink'] = get_permalink($post->ID);
     $sample['post_title'] = $post->post_title;
     $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
@@ -107,11 +108,12 @@ function homepage(){
 
     //Is Liggeey User
     $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
-    // if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
-    //   continue;
-    if(!$value->first_name)
+    if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
       continue;
-    
+    // if(!$value->first_name)
+    //   continue;
+
+    $sample['ID'] = $value->ID;
     $sample['permalink'] = get_site_url() . '/user-overview/?id=' . $value->ID; 
     $sample['first_name'] = $value->first_name;
     $sample['last_name'] = $value->last_name;
@@ -244,34 +246,226 @@ function register_company(WP_REST_Request $request){
 }
 
 //Detail candidate
-function detail_candidate($data){
-  $param_user_id = $data['id'];
+function candidateDetail(WP_REST_Request $request){
 
+  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
+
+  $sample = array();
   $user = get_user_by('ID', $param_user_id);
-  // if(empty($user))
-  //   return 0;
 
-  //Get further information about candidate
-  $user->profile_img = get_field('profile_img', 'user_' . $user->ID);
+  $sample['ID'] = $user->ID;
+  $sample['first_name'] = $user->first_name;
+  $sample['last_name'] = $user->last_name;
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['last_name'] = $user->last_name;
+  $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
-  return $user;
+  $member_since = new DateTimeImmutable($user->user_registered_at);
+  $sample['member_since'] = $member_since->format('M d, Y');
+  
+  $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
+
+  $date_born = get_field('date_born',  'user_' . $user->ID);
+  if(!$date_born)
+      $age = "No birth";
+  else{
+      //explode the date to get month, day and year
+      $birthDate = explode("/", $date_born);
+      //get age from date or birthdate
+      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+          ? ((date("Y") - $birthDate[2]) - 1)
+          : (date("Y") - $birthDate[2]));
+      $age .= ' Years';
+  } 
+  $sample['age'] = $age;
+
+  $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
+  $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array(); 
+  $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array(); 
+  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '';
+  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '';
+  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : ''; 
+  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '';
+  $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? : 
+  "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br> 
+  Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+
+  //Education Information
+  $main_education = get_field('education',  'user_' . $user->ID);
+  $educations = array();
+  foreach($main_education as $value):
+
+    $education = array();
+    if(!$value)
+      continue;
+
+    $explosion = explode(";", $value);
+
+    $year = ""; 
+    if(isset($explosion[2]))
+        $year = explode("-", $explosion[2])[0];
+
+    if(isset($explosion[3]))
+        if(intval($explosion[2]) != intval($explosion[3]))
+            $year = $year . "-" .  explode("-", $explosion[3])[0];
+
+    $education['diploma'] = $explosion[1];
+    $education['year'] = $year;
+    $education['school'] = $explosion[0];
+    $education['description'] = $explosion[4];
+    $educations[] = $education;
+
+  endforeach; 
+  $sample['educations'] = $educations;
+  
+  //Work & Experience Information
+  $main_experience = get_field('work',  'user_' . $user->ID);
+  $experiences = array();
+  foreach($main_experience as $value):
+
+    $experience = array();
+    if(!$value)
+      continue;
+
+    $explosion = explode(";", $value);
+
+    $year = ""; 
+    if(isset($explosion[2]))
+        $year = explode("-", $explosion[2])[0];
+
+    if(isset($explosion[3]))
+        if(intval($explosion[2]) != intval($explosion[3]))
+            $year = $year . "-" .  explode("-", $explosion[3])[0];
+
+    $experience['company'] = $explosion[1];
+    $experience['year'] = $year;
+    $experience['job'] = $explosion[0];
+    $experience['description'] = $explosion[4];
+    $experiences[] = $experience;
+
+  endforeach; 
+  $sample['experiences'] = $experiences;
+
+  $sample = (Object)$sample;
+ 
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response;
+
 }
 
 //Detail artikel
-function detail_artikel($data){
-  $param_post_id = $data['id'];
-  
-  $post = get_post($param_user_id);
-  
-  //Get further information about artikel
-  $content = get_field('content', $post->ID);
-  $reviews = get_field('reviews', $post->ID);
-  $author_id = $post->post_author;
-  $title = $post->post_title;
+function artikelDetail(WP_REST_Request $request){
 
-  return $post;
+  $param_post_id = $request['id'] ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['author_name'] = $user->first_name . ' ' . $user->last_name;
+  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $post_date = new DateTimeImmutable($post->post_date);
+  $sample['post_date'] = $post_date->format('M d, Y');
+  $reviews = get_field('reviews', $post->ID);
+  $sample['number_comments'] = (!empty($reviews)) ? count($reviews) : 0;
+  $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
+  
+  //Reviews | Comments
+  $comments = array();
+  $main_reviews = get_field('reviews', $post->ID);
+  foreach($main_reviews as $review):
+    $user = $review['user'];
+    $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
+    $image_author = get_field('profile_img',  'user_' . $user->ID);
+    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+    $company = get_field('company',  'user_' . $user->ID);
+    $title = $company[0]->post_title;
+
+    $comment = array();
+    $comment['comment_author_name'] = $author_name ;
+    $comment['comment_author_image'] = $image_author;
+    $comment['rating'] = $review['rating'];
+
+    $comments[] = $comment;
+  endforeach;
+  $sample['comments'] = $comments;
+
+  $sample = (Object)$sample;
+
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response;  
 }
   
+//Detail company
+
+function companyDetail(WP_REST_Request $request){
+
+  $param_post_id = $request['id'] ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  //var_dump($post);
+//assigner les champs
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
+  $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
+  $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
+  $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
+
+  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
+  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
+
+  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
+
+  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
+  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response; 
+}
+
+function allCompanies(WP_REST_Request $request){
+   
+  $args = array(
+      'post_type' => 'company',  
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $company_posts = get_posts($args);
+  $companies = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($company_posts as $post):
+
+    $sample = array();
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['post_title'] = $post->post_title;
+    $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
+    $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
+    //Just check more by testing but otherwis that a "Good Job !"
+    // $sample['company_logo'] = get_field('company_logo',  $post->company_logo) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $sample['company_logo'] = get_field('company_logo',  $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+    $sample = (Object)$sample;
+    array_push($companies, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($companies);
+  $response->set_status(200);
+  return $response;
+  
+}
 
 
 /* * End Liggeey * */

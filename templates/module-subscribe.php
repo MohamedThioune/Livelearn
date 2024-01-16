@@ -94,7 +94,7 @@ function woocommmerce_subscribe($information, $active){
 
 function mollie_card_subscribe($information, $active){
     $base_url = get_site_url();
-    $global_mollie_key = "live_cntSF2RxdDCUK7wudptq2sVqRWHE3c";
+    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
     $global_price = 5;
     $mollie = new \Mollie\Api\MollieApiClient();
     $mollie->setApiKey($global_mollie_key);
@@ -139,6 +139,9 @@ function mollie_card_subscribe($information, $active){
     ];
     // 'woo_subscription_id' => $subscription->id,
     $payment = $mollie->customers->get($customer_id)->createPayment($data_payment);
+    // var_dump($payment);
+    // return $payment;
+    
     if (!isset($payment->_links->checkout->href)) {
         echo $base_url . "/?message='Error occurred on transaction !'";
         http_response_code(500);
@@ -185,7 +188,7 @@ function makeApiCallMollie($endpoint, $params, $type) {
 
 function makeApiCallWoocommerce($url, $type, $data = null) {
     // credentials
-    $params = array( // login url params required to direct user to facebook and promt them with a login dialog
+    $params = array( // 
         'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
         'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
     );
@@ -208,10 +211,12 @@ function makeApiCallWoocommerce($url, $type, $data = null) {
 
     // get response
     $response = curl_exec( $ch );
+    // var_dump($response);
+
     if ($response === false) {
         $response = curl_error($ch);
         $error = true;
-        echo stripslashes($response);
+        // return stripslashes($response);
         return false;
     }
 
@@ -271,7 +276,7 @@ function woocommmerce_subscribe_api($information, $active){
         'billing_period'    => 'month',
         'billing_interval'  =>  1,
         'start_date'        => $date_now,
-        'trial_end_date'    => $trial_end_date,
+        // 'trial_end_date'    => $trial_end_date,
         'next_payment_date' => $next_payment_date,
         'payment_method'    => 'mollie',
         'prices_include_tax'=> true,
@@ -298,6 +303,7 @@ function woocommmerce_subscribe_api($information, $active){
         'shipping_lines' => [],
         'meta_data' => [],
     ];
+
     // $subscription = $woocommerce->post('subscriptions', $data);
     $endpoint = "https://livelearn.nl/wp-json/wc/v3/subscriptions/";
     $subscription = makeApiCallWoocommerce($endpoint, 'POST', $data);

@@ -1,4 +1,4 @@
-<?php /** Template Name: Home 2 */ ?>
+<?php /** Template Name: Homew */ ?>
 
 <?php get_header(); ?>
 <?php
@@ -20,7 +20,7 @@ $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewin
 $expert_from_database = array();
 /**
  * get experts doing the course by database
-*/
+ */
 $pricing = 0;
 $purchantage_on_top = 0;
 $purchantage_on_bottop = 0;
@@ -106,7 +106,7 @@ if(!empty($numbers_count))
         $i++;
         $value = get_user_by('ID', $element['id']);
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
-        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
+        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         array_push($most_active_members, $value);
     }
 
@@ -132,13 +132,13 @@ $type_course = array(
 
 
 ?>
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js" />
 <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-
 <style>
     body{
         background: #F5FAFD;
@@ -253,16 +253,6 @@ $type_course = array(
     }
     #modalVideo .modal-dialog {
         width: 50% !important;
-    }
-    .headerdashboard .frist-block-subnav p {
-        color: #033356 !important;
-    }
-    .headerdashboard .language-selector-custom select {
-        color: #043356 !important;
-    }
-    .frist-block-subnav p {
-        color: #033357 !important;
-
     }
     @media (min-width: 300px) and (max-width: 767px){
         .titleSubscription {
@@ -1022,7 +1012,7 @@ $saved = get_user_meta($user_id, 'course');
 
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
-                <form action="/product-search" class="position-relative newFormSarchBar" method="GET">
+                <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
                         foreach($type_course as $type)
@@ -1059,8 +1049,8 @@ $saved = get_user_meta($user_id, 'course');
                                 </div>
                                 <div class="modal-body">
                                     <video width="560" height="315" id="videoFrame" controls>
-                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/Livelearn.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
-                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/Livelearn.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
                                     </video>
                                 </div>
                                 <div class="modal-footer">
@@ -1497,8 +1487,37 @@ $saved = get_user_meta($user_id, 'course');
 
 
 
-                    $image_user = get_field('profile_img',  'user_' . $user->ID);
-                    $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
+                        //get pricing from type of course: course free
+                        if ($course_type == 'Artikel') {
+                            $pricing_since_today = $pricing_since_today + 50;
+                            if ($tracker_views !=0) {
+                                $pricing_since_today = $pricing_since_today + $tracker_views * 1.25; //views+click
+                            }
+                            if ($favorited){
+                                $pricing_since_today = $pricing_since_today + 5;
+                            }
+                        }
+                        else if ($course_type == 'Podcast') {
+                            $pricing_since_today = $pricing_since_today + 100;
+                            if ($favorited){
+                                $pricing_since_today = $pricing_since_today + 10;
+                            }
+                        }
+                        else if ($course_type == 'Video') {
+                            $pricing_since_today = $pricing_since_today + 75;
+                            if ($tracker_views !=0) {
+                                $pricing_since_today = $pricing_since_today + $tracker_views * 3.5; //views+click+
+                            }
+                        }else {
+                            $pricing_since_today = $pricing_since_today + 100;
+                            if ($favorited){
+                                $pricing_since_today = $pricing_since_today + 20;
+                            }
+                            if ($tracker_views !=0) {
+                                $pricing_since_today = $pricing_since_today + $tracker_views * 10;
+                            }
+                        }
+                    }
 
                     $company = get_field('company',  'user_' . $user->ID);
                     $company_title = $company[0]->post_title;
@@ -1608,7 +1627,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </a>
             <div class="blockGroupText">
-                <a href="" class="titleGroupText">Opleiden richting een baan </a>
+                <p class="titleGroupText">Opleiden richting een baan </p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1621,7 +1640,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-                <a href="" class="titleGroupText">Groeien binnen je functie </a>
+                <p class="titleGroupText">Groeien binnen je functie </p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1634,7 +1653,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-                <a href="" class="titleGroupText">Relevante skills ontwikkelen:</a>
+                <p class="titleGroupText">Relevante skills ontwikkelen:</p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1647,7 +1666,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-                <a href="" class="titleGroupText">Persoonlijke interesses & vrije tijd</a>
+                <p class="titleGroupText">Persoonlijke interesses & vrije tijd</p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1672,7 +1691,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
-            <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;"onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
+            <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
         </div>
     </div>
     <div class="blockCardBleu3">
@@ -1693,7 +1712,7 @@ $saved = get_user_meta($user_id, 'course');
                     <p class="textAlloOP">Alle opleidingen</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/waarom-skills/" class="cardBoxSix">
+                <a href="/skills-passport/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
                     <p class="textAlloOP">Skills paspoort</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
@@ -1813,7 +1832,7 @@ $saved = get_user_meta($user_id, 'course');
                     $author = get_user_by('ID', $course->post_author);
                     $author_name = $author->display_name ?: $author->first_name;
                     $author_image = get_field('profile_img',  'user_' . $author_object->ID);
-                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
+                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                     //Clock duration
                     $duration_day = get_field('duration_day', $post->ID) ? : '-';
@@ -2078,6 +2097,9 @@ $saved = get_user_meta($user_id, 'course');
                     console.log('elt : ',data);
                     $('#autocomplete_categorieen').html(data);
                 },
+                error: function (err) {
+                    console.log('error : ',err);
+                },
                 complete:function (complete) {
                     $('#loader').addClass('d-none');
                 }
@@ -2093,6 +2115,7 @@ $saved = get_user_meta($user_id, 'course');
             $('#complete-period').html(complete_period);
             $.ajax({
                 url:"/fetch-ajax-home2",
+
                 method:"post",
                 data:{
                     period: period,
@@ -2106,8 +2129,12 @@ $saved = get_user_meta($user_id, 'course');
                     console.log('elt');
                     $('#autocomplete_categorieen').html(data);
                 },
+                error: function (error) {
+                    console.log('error : ',error);
+                },
                 complete:function (complete) {
                     $('#loader').addClass('d-none');
+                    console.log(complete)
                 }
             });
         });
