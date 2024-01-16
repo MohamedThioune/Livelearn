@@ -9,6 +9,7 @@ include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
 include __DIR__ . '/templates/recommendation-module.php';
+require __DIR__ . '/templates/search-module.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -374,7 +375,7 @@ function custom_post_type() {
         'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
         'labels'              => $company,
         'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt' ),
-        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'taxonomies'          => array('course_category'),
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
@@ -610,6 +611,48 @@ function custom_post_type() {
 
     register_post_type( 'todo', $todo_args );
 
+    //To Do's with
+    $job = array(
+        'name'                => _x( 'Jobs', 'Jobs', 'job' ),
+        'singular_name'       => _x( 'Jobs', 'Job', 'job' ),
+        'menu_name'           => __( 'Jobs', 'job' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All jobs', 'job' ),
+        'view_item'           => __( 'View job', 'view_job' ),
+        'add_new_item'        => __( 'New job', 'add_new_job' ),
+        'add_new'             => __( 'New job', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $job_args = array(
+        'label'               => __( 'job', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $job,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        'taxonomies'          => array('course_category'),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'job'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+    register_post_type( 'job', $job_args );
 
 }
 add_action( 'init', 'custom_post_type', 0 );
@@ -1650,6 +1693,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'homepage'
   ));
 
+  register_rest_route ('custom/v1', '/category/detail', array(
+    'methods' => 'POST',
+    'callback' => 'categoryDetail'
+  ));
+  
   register_rest_route ('custom/v1', '/candidate/detail', array(
     'methods' => 'POST',
     'callback' => 'candidateDetail',
@@ -1668,6 +1716,16 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/companies', array(
     'methods' => 'GET',
     'callback' => 'allCompanies'
+  ));
+
+  register_rest_route ('custom/v1', '/jobs', array(
+    'methods' => 'GET',
+    'callback' => 'allJobs'
+  ));
+
+  register_rest_route ('custom/v1', '/job', array(
+    'methods' => 'POST',
+    'callback' => 'jobDetail'
   ));
 
 });
