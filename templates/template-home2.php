@@ -126,7 +126,6 @@ $type_course = array(
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-
 <style>
     body{
         background: #F5FAFD;
@@ -206,7 +205,7 @@ $type_course = array(
         display: block;
     }
     .scrolled .fa-angle-down-bleu {
-       display: none;
+        display: none;
     }
     .scrolled .inputSearch {
         background: #FFFFFF !important;
@@ -430,362 +429,259 @@ $type_course = array(
         }
     }
 
+
 </style>
-
 <?php
-    $page = 'check_visibility.php';
-    require($page);
-    global $wpdb;
+$topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
 
-    $user_connected_id = get_current_user_id();
-    $user_connected_head = wp_get_current_user();
-
-    // View table name
-
-    $table_tracker_views = $wpdb->prefix . 'tracker_views';
-    // Get id of courses viewed from db
-    $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
-    $all_user_views = $wpdb->get_results($sql_request);
-    $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
-    $expert_from_database = array();
-    /**
-     * get experts doing the course by database
-     */
-    $pricing = 0;
-    $purchantage_on_top = 0;
-    $purchantage_on_bottop = 0;
-    foreach ($id_courses_viewed as $id_course) {
-        $course = get_post($id_course);
-        $expert_id = $course->post_author;
-        //if ($expert_id)
-        $expert_from_database[] = $expert_id;
+function RandomString()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;
     }
-    $expert_from_database = array_unique($expert_from_database);
+    return $randstring;
+}
 
-    if(!isset($visibility_company))
-        $visibility_company = "";
-    
-    /*
-    * Check statistic by user *
-    */
-    $users = get_users();
-    $numbers = array();
-    $members = array();
-    $numbers_count = array();
-    $topic_views = array();
-    $topic_followed = array();
-    $stats_by_user = array();
-
-    foreach ($users as $user) {
-        $topic_by_user = array();
-        $course_by_user = array();
-
-        //Object & ID member
-        array_push($numbers, $user->ID);
-        array_push($members, $user);
-
-        //Views topic
-        $args = array(
-            'post_type' => 'view',
-            'post_status' => 'publish',
-            'author' => $user->ID,
-        );
-        $views_stat_user = get_posts($args);
-        $stat_id = 0;
-        if(!empty($views_stat_user))
-            $stat_id = $views_stat_user[0]->ID;
-        $view_topic = get_field('views_topic', $stat_id);
-        if($view_topic)
-            array_push($topic_views, $view_topic);
-
-        $view_user = get_field('views_user', $stat_id);
-        $number_count['id'] = $user->ID;
-        $number_count['digit'] = 0;
-        if(!empty($view_user))
-            $number_count['digit'] = count($view_user);
-        if($number_count)
-            array_push($numbers_count, $number_count);
-
-        $view_course = get_field('views', $stat_id);
-
-        //Followed topic
-        $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
-        $topics_external = get_user_meta($user->ID, 'topic');
-        $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
-
-        //Stats engagement
-        $stat_by_user['user'] = $view_user;
-        $stat_by_user['topic'] = $view_topic;
-        $stat_by_user['course'] = $view_course;
-        array_push($stats_by_user, $stat_by_user);
-    }
-
-    $topic_views_sorting = $topic_views[5];
-    if(!$topic_views_sorting)
-        $topic_views_sorting = array();
-    $topic_views_id = array_column($topic_views_sorting, 'view_id');
-    $keys = array_column($numbers_count, 'digit');
-    array_multisort($keys, SORT_DESC, $numbers_count);
-
-    $most_active_members = array();
-    $i = 0;
-    if(!empty($numbers_count))
-        foreach ($numbers_count as $element) {
-            $i++;
-            $value = get_user_by('ID', $element['id']);
-            $value->image_author = get_field('profile_img',  'user_' . $value->ID);
-            $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
-            array_push($most_active_members, $value);
-        }
-
-    //Alles coursetype
-
-    $type_course = array(
-        "Alles",
-        "Opleidingen",
-        "Training",
-        "Workshop",
-        "Masterclass",
-        "E-learning",
-        "Video",
-        "Artikel",
-        "Assessment",
-        "Cursus",
-        "Lezing",
-        "Event",
-        "Webinar",
-        "Leerpad",
-        "Podcast"
-    );
-
-    $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
-
-    function RandomString()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randstring = '';
-        for ($i = 0; $i < 10; $i++) {
-            $rand = $characters[rand(0, strlen($characters))];
-            $randstring .= $rand;
-        }
-        return $randstring;
-    }
-
-    if (isset($_POST))
-    {
+if (isset($_POST))
+{
 
     extract($_POST);
     if(isset($email)){
 
-            if($email != null)
+        if($email != null)
+        {
+            $args = array(
+                'post_type' => 'company',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'order' => 'DESC',
+            );
+
+            $companies = get_posts($args);
+
+            foreach($companies as $company){
+                if($company->post_title == $company){
+                    $companie = $company;
+                    break;
+                }
+            }
+
+            if($first_name == null)
+                $first_name = "ANONYM";
+
+            if($last_name == null)
+                $last_name = "ANONYM";
+
+            $login = RandomString();
+            $password = RandomString();
+
+
+            $userdata = array(
+                'user_pass' => $password,
+                'user_login' => $login,
+                'user_email' => $email,
+                'user_url' => 'https://livelearn.nl/inloggen/',
+                'display_name' => $first_name,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'role' => 'subscriber'
+            );
+
+            $user_id = wp_insert_user(wp_slash($userdata));
+            if(is_wp_error($user_id)){
+                $danger = $user_id->get_error_message();
+                ?>
+                <script>
+                    window.location.replace("/?message=".$danger);
+                </script>
+                <?php
+                echo ("<span class='alert alert-info'>" .  $danger . "</span>");
+            }else
             {
-                $args = array(
-                    'post_type' => 'company',
-                    'post_status' => 'publish',
-                    'posts_per_page' => -1,
-                    'order' => 'DESC',
-                );
+                $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+                $body = "
+                      Bedankt voor je inschrijving<br>
+                      <h1>Hello " . $first_name  . "</h1>,<br> 
+                      Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
+                      <h4>Inloggen:</h4><br>
+                      <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
+                      ";
 
-                $companies = get_posts($args);
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+                wp_mail($email, $subject, $body, $headers, array( '' )) ;
 
-                foreach($companies as $company){
-                    if($company->post_title == $company){
-                        $companie = $company;
-                        break;
+                update_field('telnr', $telefoonnummer, 'user_' . $user_id);
+                update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
+                update_field('company', $companie, 'user_'.$user_id);
+                update_field('work', $work, 'user_'.$user_id);
+                update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
+                update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
+                update_field('country', $prive, 'user_'.$user_id);
+                $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+                foreach ($bangerichtsChoice as $key => $topic) {
+                    if (!empty($topic))
+                    {
+                        if (!(in_array($topic, $subtopics_already_selected)))
+                        {
+                            add_user_meta(get_current_user_id(),'topic',$topic);
+                        }
+
                     }
                 }
 
-                if($first_name == null)
-                    $first_name = "ANONYM";
-
-                if($last_name == null)
-                    $last_name = "ANONYM";
-
-                    $login = RandomString();
-                    $password = RandomString();
-
-
-                $userdata = array(
-                    'user_pass' => $password,
-                    'user_login' => $login,
-                    'user_email' => $email,
-                    'user_url' => 'https://livelearn.nl/inloggen/',
-                    'display_name' => $first_name,
-                    'first_name' => $first_name,
-                    'last_name' => $last_name,
-                    'role' => 'subscriber'
-                );
-
-                $user_id = wp_insert_user(wp_slash($userdata));
-                if(is_wp_error($user_id)){
-                    $danger = $user_id->get_error_message();
-                    ?>
-                    <script>
-                        window.location.replace("/?message=".$danger);
-                    </script>
-                    <?php
-                    echo ("<span class='alert alert-info'>" .  $danger . "</span>");
-                }else
-                    {
-                        $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                        $body = "
-                        Bedankt voor je inschrijving<br>
-                        <h1>Hello " . $first_name  . "</h1>,<br> 
-                        Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                        <h4>Inloggen:</h4><br>
-                        <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
-                        ";
-
-                        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-                        wp_mail($email, $subject, $body, $headers, array( '' )) ;
-
-                        update_field('telnr', $telefoonnummer, 'user_' . $user_id);
-                        update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
-                        update_field('company', $companie, 'user_'.$user_id);
-                        update_field('work', $work, 'user_'.$user_id);
-                        update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
-                        update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
-                        update_field('country', $prive, 'user_'.$user_id);
-                        $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-                        foreach ($bangerichtsChoice as $key => $topic) {
-                            if (!empty($topic))
-                            {
-                                if (!(in_array($topic, $subtopics_already_selected)))
-                                {
-                                    add_user_meta(get_current_user_id(),'topic',$topic);
-                                }
-
-                            }
-                        }
-
-                        header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
-                    ?>
+                header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
+                ?>
 
                 <?php
 
-                }
             }
         }
-        }
-
-    /**
-     * Skills Passport
-    */
-
-    $degrees=[
-        'n.v.t'=> 'NVT',
-        'mbo1' => 'MBO1',
-        'mbo2' => 'MBO2',
-        'mbo3' => 'MBO3',
-        'mbo4' => 'MBO4',
-        'hbo' => 'HBO',
-        'university' => 'Universiteit',
-    ];
-
-    foreach ($degrees as $key => $value) {
-        $input_degrees= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
     }
+}
 
-    $generaties=[
-        'Generatie BabyBoom (1940-1960)' => 'BabyBoom',
-        'Generatie X (1961-1980)' => 'X',
-        'Millenials (1981-1995)' => 'Millennials',
-        'Generatie Z (1996-nu)' => 'Z',
-    ];
+/**
+ * Skills Passport
+ */
 
-    foreach ($generaties as $key => $value) {
-        $input_generaties= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
-    }
+$degrees=[
+    'n.v.t'=> 'NVT',
+    'mbo1' => 'MBO1',
+    'mbo2' => 'MBO2',
+    'mbo3' => 'MBO3',
+    'mbo4' => 'MBO4',
+    'hbo' => 'HBO',
+    'university' => 'Universiteit',
+];
 
-    $course_type = ['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
-    foreach ($course_type as $key => $value) {
-        $input_course_type = '
+foreach ($degrees as $key => $value) {
+    $input_degrees= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
+}
+
+$generaties=[
+    'Generatie BabyBoom (1940-1960)' => 'BabyBoom',
+    'Generatie X (1961-1980)' => 'X',
+    'Millenials (1981-1995)' => 'Millennials',
+    'Generatie Z (1996-nu)' => 'Z',
+];
+foreach ($generaties as $key => $value) {
+    $input_generaties= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
+}
+
+$course_type = ['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
+foreach ($course_type as $key => $value) {
+    $input_course_type = '
         <div class="blockInputCheck">
              <input type="checkbox" name="choiceCourseType[]" value='.$value.' id="courseType'.$key.'"/><label class="labelChoose btnBaangerichte" for="courseType'.$key.'">'.$value.'</label>
         </div>';
 
-    }
-    /*
-    * Skills Passport
-    */
-    $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-        );
+}
+/**
+ * Skills Passport
+ */
+$args = array(
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC',
+);
 
-    $courses = get_posts($args);
+$courses = get_posts($args);
 
-    /*
-    ** Categories - all  *
-    */
+/*
+** Categories - all  *
+*/
 
-    $categories = array();
+$categories = array();
 
-    $cats = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'orderby'    => 'name',
-        'exclude' => 'Uncategorized',
-        'parent'     => 0,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+$cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
 
-    foreach($cats as $category){
-        $cat_id = strval($category->cat_ID);
-        $category = intval($cat_id);
-        array_push($categories, $category);
-    }
+foreach($cats as $category){
+    $cat_id = strval($category->cat_ID);
+    $category = intval($cat_id);
+    array_push($categories, $category);
+}
 
-    //Categories
-    $bangerichts = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[1],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+//Categories
+$bangerichts = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[1],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
 
-    $functies = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[0],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+$functies = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[0],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
 
-    $skills = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[3],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+$skills = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[3],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
 
-    $interesses = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[2],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+$interesses = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[2],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+?>
 
-    $subtopics = array();
-    $topics = array();
-    foreach($categories as $categ){
-        //Topics
-        $topicss = get_categories(
-            array(
+<?php
+
+
+$subtopics = array();
+$topics = array();
+foreach($categories as $categ){
+    //Topics
+    $topicss = get_categories(
+        array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categ,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        )
+    );
+    $topics = array_merge($topics, $topicss);
+
+    foreach ($topicss as  $value) {
+        $subtopic = get_categories(
+            array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
+                //  change to 1 to hide categores not having a single post
             )
         );
-        $topics = array_merge($topics, $topicss);
+        $subtopics = array_merge($subtopics, $subtopic);
+    }
+}
 
-        foreach ($topicss as  $value) {
-            $subtopic = get_categories(
-                 array(
-                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                 'parent'  => $value->cat_ID,
-                 'hide_empty' => 0,
-                  //  change to 1 to hide categores not having a single post
-                )
-            );
-            $subtopics = array_merge($subtopics, $subtopic);
+foreach($bangerichts as $key1=>$tag){
+
+    //Topics
+    $cats_bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => $tag->cat_ID,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ));
+    if (count($cats_bangerichts)!=0)
+    {
+        $row_bangrichts='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_bangerichts as $key => $value)
+        {
+            $row_bangrichts = '
+                <input type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
         }
+        $row_bangrichts= '</div>';
     }
 
 }
@@ -799,40 +695,17 @@ foreach($functies as $key1 =>$tag)
             'parent' => $tag->cat_ID,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         ));
-        if (count($cats_bangerichts)!=0)
-        {
-            $row_bangrichts='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
-            foreach($cats_bangerichts as $key => $value)
-            {
-                $row_bangrichts = '
-                <input type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
-            }
-            $row_bangrichts= '</div>';
-        }
-
-    }
-
-    foreach($functies as $key1 =>$tag)
+    if (count($cats_functies)!=0)
     {
-
-        //Topics
-        $cats_functies = get_categories(
-            array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent' => $tag->cat_ID,
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ));
-        if (count($cats_functies)!=0)
+        $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_functies as $key => $value)
         {
-            $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
-            foreach($cats_functies as $key => $value)
-            {
             $row_functies .= '
             <input type="checkbox" name="choice_functies_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_funct_'.($value->cat_ID).'" /><label class="labelChoose" for="cb_funct_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
-            }
-            $row_functies.= '</div>';
         }
+        $row_functies.= '</div>';
     }
+}
 
 $row_skills = "";
 foreach($skills as $key1=>$tag){
@@ -847,15 +720,10 @@ foreach($skills as $key1=>$tag){
         $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
         foreach($cats_skills as $key => $value)
         {
-            $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
-            foreach($cats_skills as $key => $value)
-            {
-                    $row_skills .= '
+            $row_skills .= '
                     <input type="checkbox" name="choice_skills'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_skills_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_skills_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
-            }
-            $row_skills.= '</div>';
         }
-
+        $row_skills.= '</div>';
     }
 
 }
@@ -872,36 +740,34 @@ foreach($interesses as $key1=>$tag){
         $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
         foreach($cats_interesses as $key => $value)
         {
-            $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
-            foreach($cats_interesses as $key => $value)
-            {
             $row_interesses .= '
             <input type="checkbox" name="choice_interesses_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_interesses_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_interesses_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
-            }
-            $row_interesses.= '</div>';
         }
-
+        $row_interesses.= '</div>';
     }
 
-    if (isset($_POST["subtopics_first_login"])){
-        unset($_POST["subtopics_first_login"]);
-        $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-        foreach ($_POST as $key => $subtopics) {
-            if (isset($_POST[$key]))
+}
+
+if (isset($_POST["subtopics_first_login"])){
+    unset($_POST["subtopics_first_login"]);
+    $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+    foreach ($_POST as $key => $subtopics) {
+        if (isset($_POST[$key]))
+        {
+            if (!(in_array($_POST[$key], $subtopics_already_selected)))
             {
-                if (!(in_array($_POST[$key], $subtopics_already_selected)))
-                {
-                    add_user_meta(get_current_user_id(),'topic',$_POST[$key]);
-                }
-
+                add_user_meta(get_current_user_id(),'topic',$_POST[$key]);
             }
-        }
-        update_field('is_first_login', true, 'user_'.get_current_user_id());
-    }
 
-    $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
-    if (!$is_first_login && get_current_user_id() !=0 )
-    {
+        }
+    }
+    update_field('is_first_login', true, 'user_'.get_current_user_id());
+}
+
+$is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
+if (!$is_first_login && get_current_user_id() !=0 )
+{
+
     ?>
     <!-- Modal First Connection -->
     <div class="contentModalFirst"²>
@@ -913,211 +779,212 @@ foreach($interesses as $key1=>$tag){
                         <p class="pickText">Pick your favorite topics to set up your feeds</p>
                     </div>
                     <div class="modal-body">
-                      <form method="post" name="first_login_form">
-                        <div class="blockBaangerichte">
-                            <h1 class="titleSubTopic">Baangerichte</h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <?php
-                                    foreach($bangerichts as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
-
-                                </div>
-                            </div>
-                            <div class="subtopicBaangerichte">
-
+                        <form method="post" name="first_login_form">
+                            <div class="blockBaangerichte">
+                                <h1 class="titleSubTopic">Baangerichte</h1>
                                 <div class="hiddenCB">
+                                    <div>
+                                        <?php
+                                        foreach($bangerichts as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
+
+                                    </div>
+                                </div>
+                                <div class="subtopicBaangerichte">
+
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                        echo $row_bangrichts;
+                                        ?>
+                                    </div>
+                                    <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                                </div>
+                                <button type="button" class="btn btnSkipTopics" id="btnSkipTopics1">Skip</button>
+                            </div>
+
+                            <div class="blockfunctiegericht">
+                                <h1 class="titleSubTopic">functiegericht</h1>
+                                <div class="hiddenCB">
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
+                                        <?php
+                                        foreach($functies as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="subtopicFunctiegericht">
                                     <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
-                                    echo $row_bangrichts;
-                                    ?>
-                                </div>
-                                <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
-                            </div>
-                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics1">Skip</button>
-                        </div>
-
-                        <div class="blockfunctiegericht">
-                            <h1 class="titleSubTopic">functiegericht</h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
-                                    <?php
-                                    foreach($functies as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="subtopicFunctiegericht">
-                                <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                <div class="hiddenCB">
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
+                                    <div class="hiddenCB">
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
                                         echo $row_functies;
-                                    ?>
+                                        ?>
+                                    </div>
+                                    <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
                                 </div>
-                                <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                                <button type="button" class="btn btnSkipTopics" id="btnSkipTopics2">Skip</button>
                             </div>
-                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics2">Skip</button>
-                        </div>
 
-                        <div class="blockSkills">
-                            <h1 class="titleSubTopic">Skills</h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
-
-                                    <?php
-                                    foreach($skills as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
-
-                                </div>
-                            </div>
-                            <div class="subtopicSkills">
+                            <div class="blockSkills">
+                                <h1 class="titleSubTopic">Skills</h1>
                                 <div class="hiddenCB">
-                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
+
+                                        <?php
+                                        foreach($skills as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+
+                                    </div>
+                                </div>
+                                <div class="subtopicSkills">
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
                                         echo $row_skills;
-                                    ?>
-                                </div>
-                                <button type="button" class="btn btnNext" id="nextSkills">Next</button>
-                            </div>
-                        </div>
-
-                        <div class="blockPersonal">
-                            <h1 class="titleSubTopic">Personal interest </h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
-
-                                    <?php
-                                    foreach($interesses as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
-
+                                        ?>
+                                    </div>
+                                    <button type="button" class="btn btnNext" id="nextSkills">Next</button>
                                 </div>
                             </div>
-                            <div class="subtopicPersonal">
+
+                            <div class="blockPersonal">
+                                <h1 class="titleSubTopic">Personal interest </h1>
                                 <div class="hiddenCB">
-                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
-                                        echo $row_interesses;
-                                    ?>
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
+
+                                        <?php
+                                        foreach($interesses as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+
+                                    </div>
                                 </div>
-                                <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
+                                <div class="subtopicPersonal">
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                        echo $row_interesses;
+                                        ?>
+                                    </div>
+                                    <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <?php
+}
+
+
+// for onze exoert block
+$global_blogs = get_posts($args);
+
+$blogs = array();
+$blogs_id = array();
+$others = array();
+$teachers = array();
+$teachers_all = array();
+
+$categoriees = array();
+
+if(isset($categories_topic))
+    foreach($categories_topic as $category)
+        array_push($categoriees, $category->cat_ID);
+
+foreach($global_blogs as $blog)
+{
+    /*
+    * Categories
+    */
+
+    $category_id = 0;
+    $experts = get_field('experts', $blog->ID);
+
+    $category_default = get_field('categories',  $blog->ID);
+    $categories_xml = get_field('category_xml',  $blog->ID);
+    $categories = array();
+
+    /*
+    * Merge categories from customize and xml
+    */
+    if(!empty($category_default))
+        foreach($category_default as $item)
+            if($item)
+                if($item['value'])
+                    if(!in_array($item['value'], $categories))
+                        array_push($categories,$item['value']);
+
+                    else if(!empty($category_xml))
+                        foreach($category_xml as $item)
+                            if($item)
+                                if($item['value'])
+                                    if(!in_array($item['value'], $categories))
+                                        array_push($categories,$item['value']);
+
+    $born = false;
+    foreach($categoriees as $categoriee){
+        if($categories)
+            if(in_array($categoriee, $categories)){
+                array_push($blogs, $blog);
+                array_push($blogs_id, $blog->ID);
+
+                $born = true;
+                /*
+                 ** Push experts
+                */
+                if(!in_array($blog->post_author, $teachers))
+                    array_push($teachers, $blog->post_author);
+
+                foreach($experts as $expertie)
+                    if(!in_array($expertie, $teachers))
+                        array_push($teachers, $expertie);
+                /*
+                 **
+                */
+                break;
+            }
     }
+    if(!$born){
+        array_push($others, $blog);
+        if(!in_array($blog->post_author, $teachers_all))
+            array_push($teachers_all, $blog->post_author);
 
-    // for onze exoert block
-    $global_blogs = get_posts($args);
-
-    $blogs = array();
-    $blogs_id = array();
-    $others = array();
-    $teachers = array();
-    $teachers_all = array();
-
-    $categoriees = array();
-
-    if(isset($categories_topic))
-        foreach($categories_topic as $category)
-            array_push($categoriees, $category->cat_ID);
-
-    foreach($global_blogs as $blog)
-    {
-        /*
-        * Categories
-        */
-
-        $category_id = 0;
-        $experts = get_field('experts', $blog->ID);
-
-        $category_default = get_field('categories',  $blog->ID);
-        $categories_xml = get_field('category_xml',  $blog->ID);
-        $categories = array();
-
-        /*
-        * Merge categories from customize and xml
-        */
-        if(!empty($category_default))
-            foreach($category_default as $item)
-                if($item)
-                    if($item['value'])
-                        if(!in_array($item['value'], $categories))
-                            array_push($categories,$item['value']);
-
-                        else if(!empty($category_xml))
-                            foreach($category_xml as $item)
-                                if($item)
-                                    if($item['value'])
-                                        if(!in_array($item['value'], $categories))
-                                            array_push($categories,$item['value']);
-
-        $born = false;
-        foreach($categoriees as $categoriee){
-            if($categories)
-                if(in_array($categoriee, $categories)){
-                    array_push($blogs, $blog);
-                    array_push($blogs_id, $blog->ID);
-
-                    $born = true;
-                    /*
-                    ** Push experts
-                    */
-                    if(!in_array($blog->post_author, $teachers))
-                        array_push($teachers, $blog->post_author);
-
-                    foreach($experts as $expertie)
-                        if(!in_array($expertie, $teachers))
-                            array_push($teachers, $expertie);
-                    /*
-                    **
-                    */
-                    break;
-                }
-        }
-        if(!$born){
-            array_push($others, $blog);
-            if(!in_array($blog->post_author, $teachers_all))
-                array_push($teachers_all, $blog->post_author);
-
-        }
-        /*
-        **
-        */
     }
+    /*
+     **
+    */
+}
 
-    //The user
-    $user_id = get_current_user_id();
+//The user
+$user_id = get_current_user_id();
 
-    //Saved courses
-    $saved = get_user_meta($user_id, 'course');
+//Saved courses
+$saved = get_user_meta($user_id, 'course');
 
 
 ?>
@@ -1132,7 +999,7 @@ foreach($interesses as $key1=>$tag){
 
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
-                <form action="/product-search" class="position-relative newFormSarchBar" method="GET">
+                <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
                         foreach($type_course as $type)
@@ -1169,12 +1036,12 @@ foreach($interesses as $key1=>$tag){
                                 </div>
                                 <div class="modal-body">
                                     <video width="560" height="315" id="videoFrame" controls>
-                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/Livelearn.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
-                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/Livelearn.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
                                     </video>
                                 </div>
                                 <div class="modal-footer">
-                                    <!--  <a href="/registreren/" class="btn btn-registreren">Register for free</a>     -->
+                                    <!--                                    <a href="/registreren/" class="btn btn-registreren">Register for free</a>-->
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -1419,7 +1286,6 @@ foreach($interesses as $key1=>$tag){
         </div>
     </div>
 </div>
-
 <div class="container-fluid">
     <div class="img-block-illustration">
         <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.png"  alt="">
@@ -1455,7 +1321,6 @@ foreach($interesses as $key1=>$tag){
     </div>
 
 </div>
-
 <div class="onze-expert-block">
     <div class="container-fluid">
         <div class="headCollections">
@@ -1497,55 +1362,39 @@ foreach($interesses as $key1=>$tag){
         </div>
         <div class="row" id="autocomplete_categorieen">
             <?php
-            $num = 1;
-            if(!empty($most_active_members)){
-                //for($i = count($most_active_members); $i>0; $i--) {
-                  foreach ($most_active_members as $index => $user) {
-                    if ($num == 13)
-                            break;
+            $today = new DateTime();
+            $lastYearTeample = $today->sub(new DateInterval('P1Y'));
+            $lastYear = $lastYearTeample->format('Y-m-d');
 
-                        //get pricing from price of course
-                        foreach ($bunch_orders as $order) {
-                            foreach ($order->get_items() as $item) {
-                                //Get woo orders from user
-                                $id_course = intval($item->get_product_id()) - 1;
-                                $course = get_post($id_course);
-                                $prijs = get_field('price', $id_course);
-                                $favorited = get_field('favorited', $id_course); // BD
-                                $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
-                                $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
-                                $tracker_views = intval($number_of_this_is_looking) ?: 0;
+            $active_members = array();
+            foreach ($most_active_members as $index => $user) {
+                $pricing_last_year = 0;
+                $pricing_since_today = 0;
 
-                                //var_dump($prijs); //also null usualy
-                                if ($course->ID) {
-                                    if ($course->post_author == $user->ID) { // $user->ID = expert
-                                        if ($prijs) {
-                                            $pricing = $pricing + $prijs * 20;
-                                        }
-                                        if ($favorited)
-                                            $pricing = $pricing + 40;
-                                        if ($tracker_views)
-                                            $pricing = $pricing + 15 + 1; // views and click
-                                    }
-                                    $pricing = $pricing + 100;
-                                }
-                            }
-                        }
-                    //get pricing from price of course
+                $args_since_today = array(
+                    'post_type' => array('post', 'course'),
+                    'order' => 'DESC',
+                    'limit' => -1,
+                    'author' => $user->ID,
+                );
+                $courses_since_today = get_posts($args_since_today);
+                // args to get artikel of last year
+                $args_last_year = array(
+                    'post_type' => 'post',
+                    'posts_per_page' => -1,
+                    'author' => $user->ID,
+                    'date_query' => array(
+                        'year' => $lastYear,
+                        'inclusive' => true,
+                    ),
+                );
+                $courses_last_year = get_posts($args_last_year);
 
-                    /* get price from post doing by user for free course */
-                    $args = array(
-                        'post_type' => array('course', 'post'),
-                        'author' => $user->ID,
-                        'post_status' => 'publish',
-                        'posts_per_page' => -1,
-                        'order' => 'DESC',
-                        //'date'=>get_the_date('Y-m-d'),
-                    );
-                    $courses_doing_by_this_user = get_posts($args);
-                    foreach ($courses_doing_by_this_user as $course) {
+                //var_dump(count($courses_last_year));
+                if (!empty($courses_last_year))
+                    foreach ($courses_last_year as $course) {
                         $course_type = get_field('course_type', $course->ID);
-                        $prijs = get_field('price', $course->ID) ? intval(get_field('price', $course->ID)) : 0;
+                        $prijs = intval(get_field('price', $course->ID));
                         $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
                         $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                         $tracker_views = intval($number_of_this_is_looking) ?: 0;
@@ -1585,7 +1434,6 @@ foreach($interesses as $key1=>$tag){
 
                         }
                     }
-                    /* get price from post doing by user for free course */
 
                 /* get price from post doing by user for free course */
                 if (!empty($courses_since_today))
@@ -1596,38 +1444,8 @@ foreach($interesses as $key1=>$tag){
                         $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                         $tracker_views = intval($number_of_this_is_looking) ?  : 0;
 
-                    // args to get artikel of current year
-                    $args_current_year = array(
-                        'post_type' =>'post',// array('post', 'course'),
-                        'post_status' => array('wc-processing', 'wc-completed'),
-                        'orderby' => 'date',
-                        'order' => 'DESC',
-                        'limit' => -1,
-                        'author' => $user->ID,
-                        'date_query'=>array(
-                            array(
-                                'after' => $start_of_current_year,
-                                'before' => $start_of_last_year,
-                                'inclusive' => true,
-                            ),
-                        ),
-                    );
-                    $courses_current_year = get_posts($args_current_year);
-                    // args to get artikel of last year
-                    $args_last_year = array(
-                        'date_query' => array(
-                            'after'     => $start_of_last_year,
-                            'before'    => $current_year . '-01-01',
-                            'inclusive' => true,
-                        ),
-                        'author' => $user->ID,
-                        'post_type'      => 'post',
-                        'posts_per_page' => -1, // Récupérer tous les articles de l'année passée
-                    );
-                    $courses_last_year = get_posts($args_last_year);
-                    $purchantage_on_top = $purchantage_on_top + count($courses_last_year);
-                    $purchantage_on_bottop = $purchantage_on_bottop + count($courses_current_year);
-                    $purcent = $purchantage_on_bottop ? number_format(( $purchantage_on_top/$purchantage_on_bottop )*100  , 2, '.', ',') : $purchantage_on_top;
+                        $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
+                        //$reaction = get_field('reaction', $course->ID);
 
                         //get pricing from type of course: course free
                         if ($course_type == 'Artikel') {
@@ -1659,14 +1477,14 @@ foreach($interesses as $key1=>$tag){
                         }
                     }
 
-                    $company = get_field('company',  'user_' . $user->ID);
-                    $company_title = $company[0]->post_title;
-                    $company_logo = get_field('company_logo', $company[0]->ID);
+                $image_user = get_field('profile_img',  'user_' . $user->ID);
+                $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
-                    if(isset($user->first_name) || isset($user->last_name))
-                        $display_name = $user->first_name . ' ' . $user->last_name;
-                    else
-                        $display_name = $user->display_name;
+                $company = get_field('company',  'user_' . $user->ID);
+                $company_title = $company[0]->post_title;
+                $company_logo = get_field('company_logo', $company[0]->ID);
+                if (!$company_logo || !$company_title)
+                    continue;
 
                 $display_name = "";
                 if(isset($user->first_name) && isset($user->last_name))
@@ -1716,29 +1534,19 @@ foreach($interesses as $key1=>$tag){
                                 <img src="' . $user->company_logo . '" alt="">
                                 <p>' . $user->company_title. '</p>
                             </div>
-                            <div class="secondBlockElementCollection">
-                                <p class="nameListeCollection"><?= $display_name ?></p>
-                                <!-- <div class="iconeTextListCollection">
-                                       <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/ethereum.png" alt="">
-                                       <p><?php /*echo number_format(rand(0,100000), 2, '.', ','); */?></p>
-                                   </div>-->
-                                <div class="blockDetailCollection">
-                                    <div class="iconeTextListCollection">
-                                        <img src="<?= $company_logo ?>" alt="">
-                                        <p><?= $company_title; ?></p>
-                                    </div>
-                                    <div class="iconeTextListCollection">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
-                                        <p class="number-brain"><?=number_format($user->pricing, 2, '.', ',')?></p>
-                                    </div>
-                                </div>
+                            <div class="iconeTextListCollection">
+                                <img src="' . get_stylesheet_directory_uri() . '/img/awesome-brain.png" alt="">
+                               <p class="number-brain">'.number_format($user->pricing,2,".",",").'</p>
                             </div>
-                            <p class="pourcentageCollection"><?= $purcent ?>%</p>
                         </div>
-                    </a>
-                <?php }
-            }else
-                echo '<p class="verkop"> Geen deskundigen beschikbaar </p>';
+
+                    </div>
+                    <p class="pourcentageCollection">' . $user->purcent . '%</p>
+                </div>
+            </a>';
+                if ($index == 12)
+                    break;
+            }
             ?>
         </div>
     </div>
@@ -1796,7 +1604,6 @@ foreach($interesses as $key1=>$tag){
         </div>
     </div>
 </div>
-
 <div class="block9">
     <div class="block9">
         <div class="container-fluid">
@@ -1808,7 +1615,7 @@ foreach($interesses as $key1=>$tag){
                 </div>
             </a>
             <div class="blockGroupText">
-                <a href="/main-category-overview/?main=1" class="titleGroupText">Opleiden richting een baan </a>
+                <p class="titleGroupText">Opleiden richting een baan </p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1821,7 +1628,7 @@ foreach($interesses as $key1=>$tag){
                 </div>
             </div>
             <div class="blockGroupText">
-                <a href="/main-category-overview/?main=4" class="titleGroupText">Groeien binnen je functie </a>
+                <p class="titleGroupText">Groeien binnen je functie </p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1834,7 +1641,7 @@ foreach($interesses as $key1=>$tag){
                 </div>
             </div>
             <div class="blockGroupText">
-                <a href="/main-category-overview/?main=3" class="titleGroupText">Relevante skills ontwikkelen:</a>
+                <p class="titleGroupText">Relevante skills ontwikkelen:</p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1847,7 +1654,7 @@ foreach($interesses as $key1=>$tag){
                 </div>
             </div>
             <div class="blockGroupText">
-                <a href="/main-category-overview/?main=2" class="titleGroupText">Persoonlijke interesses & vrije tijd</a>
+                <p class="titleGroupText">Persoonlijke interesses & vrije tijd</p>
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1893,7 +1700,7 @@ foreach($interesses as $key1=>$tag){
                     <p class="textAlloOP">Alle opleidingen</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
                 </a>
-                <a href="/waarom-skills/" class="cardBoxSix">
+                <a href="/skills-passport/" class="cardBoxSix">
                     <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
                     <p class="textAlloOP">Skills paspoort</p>
                     <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
@@ -2013,7 +1820,7 @@ foreach($interesses as $key1=>$tag){
                     $author = get_user_by('ID', $course->post_author);
                     $author_name = $author->display_name ?: $author->first_name;
                     $author_image = get_field('profile_img',  'user_' . $author_object->ID);
-                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
+                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                     //Clock duration
                     $duration_day = get_field('duration_day', $post->ID) ? : '-';
@@ -2084,6 +1891,7 @@ foreach($interesses as $key1=>$tag){
     <?php get_footer(); ?>
     <?php wp_footer(); ?>
 
+    <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
@@ -2171,6 +1979,8 @@ foreach($interesses as $key1=>$tag){
 
         });
     </script>
+
+    <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 
     <script>
 
@@ -2293,6 +2103,7 @@ foreach($interesses as $key1=>$tag){
             $('#complete-period').html(complete_period);
             $.ajax({
                 url:"/fetch-ajax-home2",
+
                 method:"post",
                 data:{
                     period: period,
