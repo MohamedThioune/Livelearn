@@ -258,6 +258,7 @@ endif;
                                                    </div>
                                                    <p class="date-added-playlist"><?=$date_podcast?></p>
                                                </div>
+                                               <?php if ($user_id): ?>
                                                <div class="audio">
                                                    <div class="cp-audioquote">
                                                        <div class="cp-audioquote__player">
@@ -276,6 +277,34 @@ endif;
                                                        </div>
                                                    </div>
                                                </div>
+                                            <?php endif; ?>
+                                            <?php
+                                            if (!$user_id):
+                                                $button = '<div class="cp-audioquote__player--playBtn"></div>';
+                                                if ( $key>0 ) {
+                                                    $reading = "#";
+                                                    $button = '<button class="btn cp-audioquote__player--playBtn" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"></button>';
+                                                }
+                                                ?>
+                                               <div class="audio">
+                                                   <div class="cp-audioquote">
+                                                       <div class="cp-audioquote__player">
+                                                           <!-- src -->
+                                                           <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                               <p><?= strip_tags($podcast['podcast_description']) ?></p>
+                                                           </audio>
+                                                           <?= $button ?>
+                                                           <div class="cp-audioquote__player--display">
+                                                               <div class="cp-audioquote__player--progress">
+                                                                   <span class="cp-audioquote__player--track"></span>
+                                                                   <span class="cp-audioquote__player--playhead"></span>
+                                                               </div>
+                                                               <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                            <?php endif; ?>
                                                <p class="description-one-element-playlist"><?= substr($description_podcast,0,100).' ...'  ?></p>
                                            </div>
                                        </div>
@@ -283,6 +312,7 @@ endif;
                                        <div class="pagination-container">
                                            <!-- Les boutons de pagination seront ajoutés ici -->
                                        </div>
+
                                    </div>
                                </ul>
                             <?php 
@@ -631,7 +661,8 @@ endif;
                             $price = 'Gratis';
 
                         //Legend image
-                        $thumbnail = get_field('preview', $course->ID)['url'];
+                        $thumbnail ="";
+                        //$thumbnail = get_field('preview', $course->ID)['url'];
                         if(!$thumbnail){
                             $thumbnail = get_the_post_thumbnail_url($course->ID);
                             if(!$thumbnail)
