@@ -476,6 +476,31 @@ foreach($reactions as $value)
 </div>
 
 
+<!-- modal register / login -->
+<div class="modal fade" id="modal-redirect" tabindex="-1" role="dialog" aria-labelledby="modal-redirectTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body create-account-block">
+                <p class="title-modal">Continue reading on</p>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="d-flex">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="img-for-modal-redirect" alt="">
+                        <p class="name-for-redirect">The mobile App</p>
+                    </div>
+                    <a href="" class="btn btn-for-redirect">Open</a>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="img-for-modal-redirect" alt="">
+                        <p class="name-for-redirect">Your Browser</p>
+                    </div>
+                    <a href="" class="btn btn-for-redirect">Continue</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
@@ -484,7 +509,12 @@ foreach($reactions as $value)
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
-
+<script>
+    $(document).ready(function () {
+        // Sélectionner le modal par son identifiant et l'afficher
+        $("#modal-redirect").modal('show');
+    });
+</script>
 <script>
     // partners slides
     $('.logo_slide').slick({
