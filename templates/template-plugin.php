@@ -84,10 +84,10 @@ if (isset($selectedValues)) {
                     }
                 }else
                     var_dump('No content');
-                    continue;
                 
-                var_dump($article['excerpt']['rendered']);
+                // var_dump($article['excerpt']['rendered']);
                 // die;
+            if (!$article['content']['excerpt']) {
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
@@ -115,7 +115,30 @@ if (isset($selectedValues)) {
                                 'contributors' => null,
                                 'status' => $status,
                             );
-                } else {
+                        }else{
+                            $status = 'extern';
+                            $datas = array(
+                                'titel' => $article['title']['rendered'],
+                                'type' => 'Artikel',
+                                'videos' => null,
+                                'short_description' => strip_html_tags($article['excerpt']['rendered']),
+                                'long_description' => $article['content']['rendered'],
+                                'duration' => null,
+                                'prijs' => 0,
+                                'prijs_vat' => 0,
+                                'image_xml' => null,
+                                'onderwerpen' => $onderwerpen,
+                                'date_multiple' => null,
+                                'course_id' => null,
+                                'author_id' => $author_id,
+                                'company_id' => $company_id,
+                                'contributors' => null,
+                                'status' => $status,
+                            );
+                        }
+                    }else continue;
+                }else{
+                    if (!isset($result_title[0])) {
                         $status = 'extern';
                         $datas = array(
                             'titel' => $article['title']['rendered'],
@@ -136,29 +159,9 @@ if (isset($selectedValues)) {
                             'status' => $status,
                         );
                     }
-                }else continue;
-            } else {
-                if (!isset($result_title[0])) {
-                    $status = 'extern';
-                    $datas = array(
-                        'titel' => $article['title']['rendered'],
-                        'type' => 'Artikel',
-                        'videos' => null,
-                        'short_description' => strip_html_tags($article['excerpt']['rendered']),
-                        'long_description' => $article['content']['rendered'],
-                        'duration' => null,
-                        'prijs' => 0,
-                        'prijs_vat' => 0,
-                        'image_xml' => null,
-                        'onderwerpen' => $onderwerpen,
-                        'date_multiple' => null,
-                        'course_id' => null,
-                        'author_id' => $author_id,
-                        'company_id' => $company_id,
-                        'contributors' => null,
-                        'status' => $status,
-                    );
                 }
+            }else{
+                continue;
             }
             // echo "Selected option: $text (value=$value)<br>";
             try
