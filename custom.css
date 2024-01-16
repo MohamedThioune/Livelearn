@@ -22512,6 +22512,102 @@ figure ul li {
 .content-new-user .group-tab-element .list-wrap{
     height: fit-content !important;
 }
+#modal-login-with-podcast .modal-dialog {
+    position: absolute !important;
+    max-width: 400px !important;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 20%;
+}
+#modal-login-with-podcast .group-btn-connection {
+    border: 1px solid #c2c2c2;
+    border-radius: 8px;
+    justify-content: center;
+}
+#modal-login-with-podcast .group-btn-connection img {
+    width: 23px;
+    height: 23px;
+    margin-right: 5px;
+}
+#modal-login-with-podcast .hr-block hr {
+    border-top: 1px solid black;
+    width: 45%;
+}
+#modal-login-with-podcast .hr-block p{
+    margin-bottom: 0;
+    margin-top: 4px;
+    z-index: 99;
+    width: 9%;
+    text-align: center;
+}
+#modal-login-with-podcast .hr-block{
+    margin-bottom: 20px;
+}
+#modal-login-with-podcast form button{
+    width: 95%;
+    background: #00A89D !important;
+    color: white !important;
+    border-radius: 10px;
+    margin: 30px auto 5px !important;
+    display: block;
+}
+#modal-login-with-podcast .form-control {
+    padding: 1.275rem 0.75rem !important;
+}
+#modal-login-with-podcast .title-modal {
+    text-align: center;
+    color: #033357;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+#modal-login-with-podcast .description-modal{
+    text-align: center;
+    color: #033357;
+    font-size: 15px;
+}
+.btn-audio-blocked{
+    position: absolute;
+    left: 0;
+    z-index: 99;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: red;
+    border-radius: 100%;
+    color: white;
+}
+.btn-switch-login {
+    background: unset !important;
+    color: dimgrey !important;
+    padding: 0 !important;
+    margin-left: auto !important;
+    text-align: right;
+    font-size: 14px;
+    width: 100%;
+}
+.register-block{
+    display: none;
+}
+.btn-audio-blocked .fa {
+    margin-left: 3px;
+}
+.btn-audio-blocked .fa:hover {
+    margin-left: 3px;
+    color: white !important;
+}
+.block-for-login{
+    cursor: pointer;
+}
+.second-step-modal{
+    display: none;
+}
+#modal-login-with-podcast{
+    background: #000000ad !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -27218,6 +27314,16 @@ figure ul li {
         width: 100% !important;
         margin-bottom: 20px;
     }
+    #modal-login-with-podcast .modal-dialog {
+        position: absolute !important;
+        max-width: 100% !important;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 20%;
+        margin: 0 auto;
+        width: 88% !important;
+    }
 
 
 
@@ -27264,7 +27370,27 @@ figure ul li {
 .content-voor-teacher-2 .firstSection{
     background: linear-gradient(180deg, hsla(176, 100%, 33%, 1) 60%, hsla(205, 95%, 17%, 1) 100%);
 }
-
+#modal-redirect {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    transform: translateY(100%) !important;
+    transition: transform 0.5s ease-in-out !important;
+    background: #00000063;
+}
+#modal-redirect .modal-dialog{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    width: 100% !important;
+    border-radius: 40px 40px 0px 0px;
+}
+#modal-redirect.show {
+    transform: translateY(0) !important;
+}
 
 
 @media all and (max-width: 640px) {
