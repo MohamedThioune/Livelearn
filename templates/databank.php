@@ -38,7 +38,7 @@ if (isset($_POST['type'])) {
             $count = $wpdb->get_results($sql_count);
             $count = intval($count[0]->{'COUNT(*)'});
             break;
-        case 'videos':
+        case 'videos': 
             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
             $courses = $wpdb->get_results($sql);
             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
@@ -81,122 +81,154 @@ $websites = ['smartwp', 'fmn', 'duurzaamgebouwd', 'adformatie', 'morethandrinks'
 
 $urls =
     [
-    'WorkPlace Academy' => 'https://workplaceacademy.nl/',
-    'Ynno' => 'https://www.ynno.com/',
-    // 'DeZZP'=>'https://www.dezzp.nl/',
-    'Aestate' => 'https://www.aestate.nl/',
-    'Alba Concepts' => 'https://albaconcepts.nl/',
-    'AM' => 'https://www.am.nl/',
-    'Limoonworks' => 'https://limoonworks.nl/',
-    'DWA' => 'https://www.dwa.nl/',
-    'Van Spaendonck' => 'https://www.vanspaendonck.nl/',
-    'PTG-advies' => 'https://ptg-advies.nl/',
-    'Rever' => 'https://rever.nl/',
-    'Reworc' => 'https://www.reworc.com/',
-    'Sweco' => 'https://www.sweco.nl/',
-    'Co-pilot' => 'https://www.copilot.nl/',
-    'Agile Scrum Group' => 'https://agilescrumgroup.nl/',
-    'Horizon' => 'https://horizontraining.nl/',
-    'Kenneth Smit' => 'https://www.kennethsmit.com/',
-    'Autoblog' => 'https://www.autoblog.nl/',
-    'Crypto university' => 'https://www.cryptouniversity.nl/',
-    'WineLife' => 'https://www.winelife.nl/',
-    'Perswijn' => 'https://perswijn.nl/',
-    'Koken met Kennis' => 'https://www.kokenmetkennis.nl/',
-    'Minkowski' => 'https://minkowski.org/',
-    'KIT publishers' => 'https://kitpublishers.nl/',
-    'BeByBeta' => 'https://www.betastoelen.nl/',
-    'Zooi' => 'https://zooi.nl/',
-    'Growth Factory' => 'https://www.growthfactory.nl/',
-    'Influid' => 'https://influid.nl/',
-    'MediaTest' => 'https://mediatest.nl/',
-    'MeMo2' => 'https://memo2.nl/',
-    'Impact Investor' => 'https://impact-investor.com/',
-    'Equalture' => 'https://www.equalture.com/',
-    'Zorgmasters' => 'https://zorgmasters.nl/',
-    'AdSysco' => 'https://adsysco.nl/',
-    'Transport en Logistiek Nederland' => 'https://www.tln.nl/',
-    'Financieel Fit' => 'https://www.financieelfit.nl/',
-    'Business Insider' => 'https://www.businessinsider.nl/',
-    'Frankwatching' => 'https://www.frankwatching.com/',
-    'MarTech' => 'https://martech.org/',
-    'Search Engine Journal' => 'https://www.searchenginejournal.com/',
-    'Search Engine Land' => 'https://searchengineland.com/',
-    'TechCrunch' => 'https://techcrunch.com/',
-    'The Bruno Effect' => 'https://magazine.thebrunoeffect.com/',
-    'Crypto Insiders' => 'https://www.crypto-insiders.nl/',
-    'HappyHealth' => 'https://happyhealthy.nl/',
-    'Focus' => 'https://focusmagazine.nl/',
-    'Chip Foto Magazine' => 'https://www.chipfotomagazine.nl/',
-    'Vogue' => 'https://www.vogue.nl/',
-    'TrendyStyle' => 'https://www.trendystyle.net/',
-    'WWD' => 'https://wwd.com/',
-    'Purse Blog' => 'https://www.purseblog.com/',
-    'Coursera' => 'https://blog.coursera.org/',
-    'Udemy' => 'https://blog.udemy.com/',
-    'CheckPoint' => 'https://blog.checkpoint.com/',
-    'De laatste meter' => 'https://www.delaatstemeter.nl/',
-    'ManagementSite' => 'https://www.managementpro.nl/',
-    '1 Minute Manager' => 'https://www.1minutemanager.nl/',
-    'De Strafschop' => 'https://www.strafschop.nl/',
-    'JongeBazen' => 'https://www.jongebazen.nl/',
-    'Expeditie Duurzaam' => 'https://www.expeditieduurzaam.nl/',
-    'Pure Luxe' => 'https://pureluxe.nl/',
-    'WatchTime' => 'https://www.watchtime.com/',
-    'Monochrome' => 'https://monochrome-watches.com/',
-    'Literair Nederland' => 'https://www.literairnederland.nl/',
-    'Tzum' => 'https://www.tzum.info/',
-    'Developer' => 'https://www.developer-tech.com/',
-    'SD Times' => 'https://sdtimes.com/',
-    'GoDaddy' => 'https://www.godaddy.com/garage/',
-    'Bouw Wereld' => 'https://www.bouwwereld.nl/',
-    'Vastgoed actueel' => 'https://vastgoedactueel.nl/',
-    'The Real Deal' => 'https://therealdeal.com/',
-    'HousingWire' => 'https://www.housingwire.com/',
-    'AfterSales' => 'https://aftersalesmagazine.nl/',
-    'CRS Consulting' => 'https://crsconsultants.nl/',
-    'Commercial Construction & Renovation' => 'https://www.ccr-mag.com/',
-    'Training Magazine' => 'https://www.trainingmag.com/',
-    'MedCity News' => 'https://www.medcitynews.com/',
-    'Cocktail Enthusiast' => 'https://www.cocktailenthusiast.com/',
-    'Mr. Online' => 'https://www.mronline.nl/',
-    'Cash' => 'https://www.cash.nl/',
-    'Kookles thuis' => 'https://www.kooklesthuis.com/',
-    'Mediabistro' => 'https://www.mediabistro.com/',
-    'ProBlogger' => 'https://problogger.com/',
-    'Media Shift' => 'https://www.mediashift.org/',
-    'Warehouse Totaal' => 'https://www.warehousetotaal.nl/',
-    'CS digital' => 'https://csdm.online/',
-    'Analytics Insight' => 'https://www.analyticsinsight.net/',
-    'Wissenraet' => 'https://www.vanspaendonck-wispa.nl/',
-    '9to5Mac' => 'https://9to5mac.com/',
-    'Invest International' => 'https://investinternational.nl/',
-    'Racefiets Blog' => 'https://racefietsblog.nl/',
-    'Darts actueel' => 'https://www.dartsactueel.nl/',
-    'Hockey.nl' => 'https://hockey.nl/',
-    'Hockeykrant' => 'https://hockeykrant.nl/',
-    'Tata Nexarc' => 'https://blog.tatanexarc.com/',
-    'Incodocs' => 'https://incodocs.com/blog/',
-    'Recruitement Tech' => 'https://www.recruitmenttech.nl/',
-    'Healthcare Weekly' => 'https://healthcareweekly.com/',
-    'Wellness Mama' => 'https://wellnessmama.com/',
-    'Logistics Business' => 'https://www.logisticsbusiness.com/',
-    '20Cube' => 'https://www.20cube.com/',
-    'Outside' => 'https://velo.outsideonline.com/',
-    'Trainer Road' => 'https://www.trainerroad.com/blog/',
-    'AllOver Media' => 'https://allovermedia.com/',
-    'The Partially Examined Life' => 'https://partiallyexaminedlife.com/',
-    'The Future Organization' => 'https://thefutureorganization.com/',
-    'Arts en Auto' => 'https://www.artsenauto.nl/',
-    'Discutafel' => 'https://discutafel.nl/',
-    'SBVO' => 'https://sbvo.nl/',
-    'Your EDM' => 'https://www.youredm.com/',
-    'Metal Injection' => 'https://metalinjection.net/',
-    'Classical Music' => 'https://www.classical-music.com/',
-    'Slipped Disc' => 'https://slippedisc.com/',
-    'The Violin Channel' => 'https://www.theviolinchannel.com/',
-    'Carey Nieuwhof' => 'https://careynieuwhof.com/',
-];
+        'WorkPlace Academy' => 'https://workplaceacademy.nl/',
+        'Ynno' => 'https://www.ynno.com/',
+        // 'DeZZP'=>'https://www.dezzp.nl/',
+        'Aestate' => 'https://www.aestate.nl/',
+        'Alba Concepts' => 'https://albaconcepts.nl/',
+        'AM' => 'https://www.am.nl/',
+        'Limoonworks' => 'https://limoonworks.nl/',
+        'DWA' => 'https://www.dwa.nl/',
+        'Van Spaendonck' => 'https://www.vanspaendonck.nl/',
+        'PTG-advies' => 'https://ptg-advies.nl/',
+        'Rever' => 'https://rever.nl/',
+        'Reworc' => 'https://www.reworc.com/',
+        'Sweco' => 'https://www.sweco.nl/',
+        'Co-pilot' => 'https://www.copilot.nl/',
+        'Agile Scrum Group' => 'https://agilescrumgroup.nl/',
+        'Horizon' => 'https://horizontraining.nl/',
+        'Kenneth Smit' => 'https://www.kennethsmit.com/',
+        'Autoblog' => 'https://www.autoblog.nl/',
+        'Crypto university' => 'https://www.cryptouniversity.nl/',
+        'WineLife' => 'https://www.winelife.nl/',
+        'Perswijn' => 'https://perswijn.nl/',
+        'Koken met Kennis' => 'https://www.kokenmetkennis.nl/',
+        'Minkowski' => 'https://minkowski.org/',
+        'KIT publishers' => 'https://kitpublishers.nl/',
+        'BeByBeta' => 'https://www.betastoelen.nl/',
+        'Zooi' => 'https://zooi.nl/',
+        'Growth Factory' => 'https://www.growthfactory.nl/',
+        'Influid' => 'https://influid.nl/',
+        'MediaTest' => 'https://mediatest.nl/',
+        'MeMo2' => 'https://memo2.nl/',
+        'Impact Investor' => 'https://impact-investor.com/',
+        'Equalture' => 'https://www.equalture.com/',
+        'Zorgmasters' => 'https://zorgmasters.nl/',
+        'AdSysco' => 'https://adsysco.nl/',
+        'Transport en Logistiek Nederland' => 'https://www.tln.nl/',
+        'Financieel Fit' => 'https://www.financieelfit.nl/',
+        'Business Insider' => 'https://www.businessinsider.nl/',
+        'Frankwatching' => 'https://www.frankwatching.com/',
+        'MarTech' => 'https://martech.org/',
+        'Search Engine Journal' => 'https://www.searchenginejournal.com/',
+        'Search Engine Land' => 'https://searchengineland.com/',
+        'TechCrunch' => 'https://techcrunch.com/',
+        'The Bruno Effect' => 'https://magazine.thebrunoeffect.com/',
+        'Crypto Insiders' => 'https://www.crypto-insiders.nl/',
+        'HappyHealth' => 'https://happyhealthy.nl/',
+        'Focus' => 'https://focusmagazine.nl/',
+        'Chip Foto Magazine' => 'https://www.chipfotomagazine.nl/',
+        'Vogue' => 'https://www.vogue.nl/',
+        'TrendyStyle' => 'https://www.trendystyle.net/',
+        'WWD' => 'https://wwd.com/',
+        'Purse Blog' => 'https://www.purseblog.com/',
+        'Coursera' => 'https://blog.coursera.org/',
+        'Udemy' => 'https://blog.udemy.com/',
+        'CheckPoint' => 'https://blog.checkpoint.com/',
+        'De laatste meter' => 'https://www.delaatstemeter.nl/',
+        'ManagementSite' => 'https://www.managementpro.nl/',
+        '1 Minute Manager' => 'https://www.1minutemanager.nl/',
+        'De Strafschop' => 'https://www.strafschop.nl/',
+        'JongeBazen' => 'https://www.jongebazen.nl/',
+        'Expeditie Duurzaam' => 'https://www.expeditieduurzaam.nl/',
+        'Pure Luxe' => 'https://pureluxe.nl/',
+        'WatchTime' => 'https://www.watchtime.com/',
+        'Monochrome' => 'https://monochrome-watches.com/',
+        'Literair Nederland' => 'https://www.literairnederland.nl/',
+        'Tzum' => 'https://www.tzum.info/',
+        'Developer' => 'https://www.developer-tech.com/',
+        'SD Times' => 'https://sdtimes.com/',
+        'GoDaddy' => 'https://www.godaddy.com/garage/',
+        'Bouw Wereld' => 'https://www.bouwwereld.nl/',
+        'Vastgoed actueel' => 'https://vastgoedactueel.nl/',
+        'The Real Deal' => 'https://therealdeal.com/',
+        'HousingWire' => 'https://www.housingwire.com/',
+        'AfterSales' => 'https://aftersalesmagazine.nl/',
+        'CRS Consulting' => 'https://crsconsultants.nl/',
+        'Commercial Construction & Renovation' => 'https://www.ccr-mag.com/',
+        'Training Magazine' => 'https://www.trainingmag.com/',
+        'MedCity News' => 'https://www.medcitynews.com/',
+        'Cocktail Enthusiast' => 'https://www.cocktailenthusiast.com/',
+        'Mr. Online' => 'https://www.mronline.nl/',
+        'Cash' => 'https://www.cash.nl/',
+        'Kookles thuis' => 'https://www.kooklesthuis.com/',
+        'Mediabistro' => 'https://www.mediabistro.com/',
+        'ProBlogger' => 'https://problogger.com/',
+        'Media Shift' => 'https://www.mediashift.org/',
+        'Warehouse Totaal' => 'https://www.warehousetotaal.nl/',
+        'CS digital' => 'https://csdm.online/',
+        'Analytics Insight' => 'https://www.analyticsinsight.net/',
+        'Wissenraet' => 'https://www.vanspaendonck-wispa.nl/',
+        '9to5Mac' => 'https://9to5mac.com/',
+        'Invest International' => 'https://investinternational.nl/',
+        'Racefiets Blog' => 'https://racefietsblog.nl/',
+        'Darts actueel' => 'https://www.dartsactueel.nl/',
+        'Hockey.nl' => 'https://hockey.nl/',
+        'Hockeykrant' => 'https://hockeykrant.nl/',
+        'Tata Nexarc' => 'https://blog.tatanexarc.com/',
+        'Incodocs' => 'https://incodocs.com/blog/',
+        'Recruitement Tech' => 'https://www.recruitmenttech.nl/',
+        'Healthcare Weekly' => 'https://healthcareweekly.com/',
+        'Wellness Mama' => 'https://wellnessmama.com/',
+        'Logistics Business' => 'https://www.logisticsbusiness.com/',
+        '20Cube' => 'https://www.20cube.com/',
+        'Outside' => 'https://velo.outsideonline.com/',
+        'Trainer Road' => 'https://www.trainerroad.com/blog/',
+        'AllOver Media' => 'https://allovermedia.com/',
+        'The Partially Examined Life' => 'https://partiallyexaminedlife.com/',
+        'The Future Organization' => 'https://thefutureorganization.com/',
+        'Arts en Auto' => 'https://www.artsenauto.nl/',
+        'Discutafel' => 'https://discutafel.nl/',
+        'SBVO' => 'https://sbvo.nl/',
+        'Your EDM' => 'https://www.youredm.com/',
+        'Metal Injection' => 'https://metalinjection.net/',
+        'Classical Music' => 'https://www.classical-music.com/',
+        'Slipped Disc' => 'https://slippedisc.com/',
+        'The Violin Channel' => 'https://www.theviolinchannel.com/',
+        'Carey Nieuwhof' => 'https://careynieuwhof.com/','Fresh'=>'https://www.stichtingfresh.nl/',
+        'Werf&'=>'https://www.werf-en.nl/',
+        'Monday.com'=>'https://monday.com/blog',
+        'HR Knowledge'=>'https://www.hrknowledge.com/',
+        'HRcommunity'=>'https://hrcommunity.nl/',
+        'Leeuwendaal'=>'https://www.leeuwendaal.nl/',
+        '&Samhoud'=>'https://www.samhoudconsultancy.com/',
+        'Incontext'=>'https://incontext.nl/',
+        'Successday'=>'https://successday.nl/',
+        'Hospitality Group'=>'https://www.hospitality-group.nl/',
+        'AllChiefs'=>'https://allchiefs.nl/',
+        'BTS'=>'https://bts.com/',
+        'Fakton'=>'https://www.fakton.com/',
+        'bbn'=>'https://bbn.nl/',
+        'Over morgen'=>'https://overmorgen.nl/',
+        'Beaufort'=>'https://www.beaufortconsulting.nl/',
+        'Redept'=>'https://redept.nl/',
+        'Akro'=>'https://akroconsult.nl/',
+        'AT osborne'=>'https://atosborne.nl/',
+        'Brink'=>'https://www.brink.nl/',
+        'Magnus Digital'=>'https://www.magnus.nl/',
+        'Lybrae'=>'https://lybrae.nl/',
+        'HKA'=>'https://www.hka.com/',
+        'Flux Partners'=>'https://flux.partners/',
+        'TWST'=>'https://www.twst.nl/',
+        'Contakt'=>'https://contakt.nl/',
+        'Group Mapping'=>'https://groupmapping.org/',
+        'Newcraft'=>'https://thom.eu/',
+        'PPMC'=>'https://newcraftgroup.com/',
+        'Skim'=>'https://ppmc.nl/',
+        'MLC'=>'https://thenextorganization.com/',
+        'Salveos'=>'https://m-lc.nl/',
+        'The house of Marketing'=>'https://www.artefact.com/'
+    ];
 
 $file_xml = [
     '112BHV'=>'112bhv-20231101.1430.xml',
@@ -259,7 +291,7 @@ if (isset($_GET["message"])) {
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
                        <!-- &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?//=get_stylesheet_directory_uri();?>/img/xml-orange.jpg" alt="xml image"></a> -->
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
-                       &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button>
+                       <!-- &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button> -->
                        <!--<button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
                        </button>-->
@@ -283,7 +315,7 @@ if (isset($_GET["message"])) {
                 <div class="container contentCardListeCourse">
                     <div class="row">
                         <br>
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             Articles:
                             <select name="companies[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_company">
                                 <!-- <option name="default">Choose companies</option> -->
@@ -297,7 +329,74 @@ if (isset($_GET["message"])) {
                             </select>
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         </div>
-                        <div class="col-md-6 offset-md-1">
+
+                        <?php
+                        ##youtube Script
+                        $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
+                        $file = fopen($fileName, 'r');
+                        if ($file) {
+                            $playlists_id = array();
+                            $ptitle = ""; 
+                            $urlPlaylist = [];
+                            $parameter='';
+                            $playlist_title= [];
+                            $youtube_parameter=array();
+                            $onderwp = '';
+                            $keywords = array();
+                            $indice=0;
+                            while ($line = fgetcsv($file)) {
+                                $subtopics = "";
+                                $row = explode(';', $line[0]);
+                                $playlists_id[][$row[5]] = $row[3];
+                                $ptitle= $row[0];
+                                $subtopics = $row[7];
+                                if($subtopics=="")
+                                    $subtopics="";
+                                $parameter=array_keys($playlists_id[$indice])[0].','.array_values($playlists_id[$indice])[0].','.$subtopics;
+                                array_push($youtube_parameter,$parameter);
+                                // array_shift($youtube_parameter);
+                                array_push($keywords, $subtopics);
+                                array_push($playlist_title,$ptitle);
+                                $indice++;
+                            }
+                            array_shift($playlists_id);
+                            // foreach($playlists_id as $pid){
+                            //     echo "<pre>";
+                            //     var_dump($pid);
+                            //     echo "</pre><br>";
+                            // }
+
+                            array_shift($youtube_parameter);
+                            // var_dump($youtube_parameter);
+                            fclose($file);
+                            array_shift($keywords); 
+                        } else {
+                            echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
+                        }
+                        array_shift($playlists_id);
+                        array_shift($playlist_title);
+                        ##END.
+                        ?>
+
+                        <div class="col-md-5 offset-md-1">
+                            Youtube:
+                            <select name="Youtube[]" class="multipleSelect3 form form-control col-md-6" multiple="true" id="selected_playlist">
+                                <!-- <option name="default">Choose companies</option> -->
+                                <?php
+                                foreach ($youtube_parameter as $key=>$param) {
+                                    $parameters= explode(",",$param);
+                                    if(substr($parameters[1],0,2)!="PL")
+                                        continue;
+                                    ?>
+                                    <option class="options" value="<?=$param?>" selected="" ><?=$parameters[1]?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                            &nbsp;&nbsp;<a id="playlist-youtube">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
+                        </div>
+
+                        <div class="col-md-3">
                             Courses:
                             <select name="xmlfile[]" class="multipleSelect2 form form-control col-md-6" multiple="true" id="select_file">
                                     <!-- <option name="default">Choose companies</option> -->
@@ -399,7 +498,7 @@ if (!empty($courses)) {
 
             }
             $tab = array_unique($tab);
-            foreach ($tab as $key => $value2) {
+            foreach ($tab as $value2) {
                 if ($value2) {
                     echo $value2 . ',';
                 }
@@ -640,6 +739,22 @@ if (!empty($courses)) {
         });
 
     });
+
+    window.onload = $(".multipleSelect3").val("");
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect3").val([]);
+        $(".multipleSelect3").select2({
+            placeholder: "Youtube playlist",
+            maximumSelectionLength: 4000,
+            minimumSelectionLength: 3,
+        }).on("change", function () {
+            if ($(this).val() && $(this).val().length >= 4000) {
+                $(this).prop("disabled", true);
+            }
+        });
+
+    });
     //# sourceURL=pen.js
 </script>
 <!--begin traitement playlist podcast -->
@@ -806,6 +921,12 @@ if (!empty($courses)) {
                     location.reload();
                 }
             });
+        });
+    });
+
+    $(document).ready(function(){
+        $('#youtube').on('click',function(){
+            
         });
     });
 
@@ -1057,6 +1178,8 @@ if (!empty($courses)) {
         });
     });
 
+    $('.youtube_button')
+
     $('.author').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var key = tr_element.id;
@@ -1145,23 +1268,34 @@ if (!empty($courses)) {
 </script>
 
 <script defer id="rendered-js" >
-$(document).ready(function () {
-    //Select2
-    $(".multipleSelect2").select2({
-        placeholder: "Maak uw keuze.",
-         //placeholder
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect2").select2({
+            placeholder: "Maak uw keuze.",
+            //placeholder
+        });
     });
-});
-//# sourceURL=pen.js
+    //# sourceURL=pen.js
 </script>
 <script>
 
     $("#playlist-youtube").click((e)=>{
+        var selectedYoutubeOption = $("#selected_playlist").find('option:selected');
+        var playlistId = [];
+
+        selectedYoutubeOption.each(function(){
+            var values = $(this).val();
+            playlistId.push(values);
+        });
+
+        $('#select_field').hide(true,2000);
+         $('#loader').attr('hidden',false);
+
         $.ajax({
             url:"/youtube-playlist/",
             method:"POST",
             data:{
-                playlist_youtube:"youtube"
+                playlist_youtube: playlistId
             },
             beforeSend:function(){
                 $('#loader').attr('hidden',false);
@@ -1177,7 +1311,9 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                // location.reload();
+                $('#loader').attr('hidden',true);
+                $('#select_field').attr('hidden',false);
+                location.reload();
             },
         });
     })

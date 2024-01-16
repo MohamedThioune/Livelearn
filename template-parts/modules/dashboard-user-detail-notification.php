@@ -14,7 +14,7 @@
 
     $todos = get_posts($args);
     if(isset($_GET['do']))
-    $_GET['todo'] = $_GET['do'];
+        $_GET['todo'] = $_GET['do'];
 
     if($_GET['todo'] > 0 ){ 
 

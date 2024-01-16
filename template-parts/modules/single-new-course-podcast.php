@@ -6,7 +6,6 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
-
 <?php
 //$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
 //$url = "https://anchor.fm/s/878cadd4/podcast/rss";
@@ -23,9 +22,9 @@ if(empty($podcast_index))
             if($lesson != 0)
                 header('Location: ' . get_permalink($post->ID));
 
-//Long description
-$long_description = strip_tags($long_description);
+//Long description             
 $long_description = ($long_description) ? : "No long description found for this course ";
+
 //Author
 $author = get_user_by('id', $post->post_author);
 $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
@@ -191,7 +190,10 @@ endif;
                                                     </div>
                                                     <p class="date-added-playlist">xx/xx/xxxx</p>
                                                 </div>
-                                                <div class="audio">
+                                                <div class="audio position-relative">
+                                                    <button class="btn btn-audio-blocked" data-toggle="modal" data-target="#modal-login-with-podcast">
+                                                        <i class="fa fa-play"></i>
+                                                    </button>
                                                     <div class="cp-audioquote">
                                                         <div class="cp-audioquote__player">
                                                             <!-- src -->
@@ -210,7 +212,9 @@ endif;
                                                     </div>
                                                 </div>
                                             </div>
-                                            <img class="status-icon" src="<?= $status_icon ?>" alt="">
+                                           <div>
+                                               <img class="status-icon" src="<?= $status_icon ?>" alt="">
+                                           </div>
                                         </div>
                                         <?php } ?>
                                         <div class="pagination-container">
@@ -565,7 +569,6 @@ endif;
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4">
                     <div class="right-block-detail-course">
                         <div class="card-detail-course">
@@ -639,7 +642,6 @@ endif;
                         </div>
                     </div>
                 </div>
-
             </div>
             <?php
             if(!empty($similar_course)):
@@ -722,6 +724,95 @@ endif;
 </div>
 
 
+<!-- modal register / login -->
+<div class="modal fade" id="modal-login-with-podcast" tabindex="-1" role="dialog" aria-labelledby="modal-login-with-podcastTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body create-account-block">
+                <p class="title-modal">Welcome !</p>
+                <p class="description-modal">Please, Create an account to continue</p>
+                <div class="group-btn-connection">
+                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                        Continue with Google
+                    </a>
+                </div>
+                <div class="d-flex hr-block">
+                    <hr>
+                    <p>Or</p>
+                    <hr>
+                </div>
+                <div class="form-input">
+                    <form action="">
+
+                        <div class="first-step-modal">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
+                            </div>
+                            <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
+                        </div>
+
+                        <div class="second-step-modal">
+                            <div class="form-group">
+                                <label for="First-name">First name</label>
+                                <input type="text" class="form-control" id="First-name" aria-describedby="First-name" placeholder="Enter your First name">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last name</label>
+                                <input type="text" class="form-control" id="last-name" aria-describedby="last-name" placeholder="Enter your last name">
+                            </div>
+                            <div class="form-group">
+                                <label for="Company">Company</label>
+                                <input type="text" class="form-control" id="Company" aria-describedby="Company" placeholder="Enter your Company name">
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" class="form-control" id="Password" aria-describedby="Password" placeholder="Enter your Password">
+                            </div>
+                            <button type="submit" class="btn btn-coneection">Create Acccount</button>
+                        </div>
+
+                    </form>
+                    <button class="btn btn-switch-login">You already have a account ? Login</button>
+                </div>
+            </div>
+            <div class="modal-body register-block">
+                <p class="title-modal">Welcome !</p>
+                <p class="description-modal">Please, Register to continue</p>
+                <div class="group-btn-connection">
+                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                        Continue with Google
+                    </a>
+                </div>
+                <div class="d-flex hr-block">
+                    <hr>
+                    <p>Or</p>
+                    <hr>
+                </div>
+                <div class="form-input">
+                    <form action="">
+                        <div class="form-group">
+                            <label for="exampleInputEmail">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwoord">Passwoord</label>
+                            <input type="password" class="form-control" id="passwoord" placeholder="">
+                        </div>
+                        <button type="submit" class="btn btn-coneection">Sign Up</button>
+                    </form>
+                    <button class="btn btn-switch-login btn-Sign-Up">You don't have a account ? Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <script>
     var sections = $('.section-tabs')
         , nav = $('.content-tabs-scroll')
@@ -766,6 +857,22 @@ endif;
     });
 </script>
 
+<script>
+    $("#create-account-step").click(function() {
+        $(".first-step-modal").hide();
+        $(".second-step-modal").show();
+    });
+    $(".btn-switch-login").click(function() {
+        $(".create-account-block").hide();
+        $(".register-block").show();
+    });
+    $(".btn-Sign-Up").click(function() {
+        $(".register-block").hide();
+        $(".create-account-block").show();
+    });
+
+</script>
+
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
@@ -792,10 +899,6 @@ endif;
             }
         });
 
-        const specificBlock = blockList.querySelector('#tab-url1');
-        if (specificBlock) {
-            specificBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
         const containerHeight = blockList.offsetHeight;
 
         setTimeout(() => {
@@ -1035,6 +1138,19 @@ endif;
 
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('strong').each(function() {
+            var content = $(this).html();
+            $(this).replaceWith(content);
+        });
+    });
+
+
+</script>
+
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 </body>

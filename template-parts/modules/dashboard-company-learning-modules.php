@@ -16,7 +16,7 @@ foreach($users as $user) {
 
 $args = array(
     'post_type' => array('course','post','leerpad','assessment'),
-    'posts_per_page' => -1,
+    'posts_per_page' => 1000,
     'author__in' => $users_companie,  
 );
 
@@ -306,29 +306,22 @@ $orders = wc_get_orders($order_args);
                     <?php 
                     foreach($courses as $key => $course){
                         if(!visibility($course, $visibility_company))
-                            continue;                
-                            
-                        /*
-                        * Categories
-                        */
-                        $category = ' ';
-                        $category_id = 0;
-                        $category_str = 0;
-                        if($category == ' '){
-                            $one_category = get_field('categories',  $course->ID);
-                            if(isset($one_category[0]['value']))
-                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
-                            else{
-                                $one_category = get_field('category_xml',  $course->ID);
-                                if(isset($one_category[0]['value']))
-                                    $category_id = intval($one_category[0]['value']);
-                            }
+                            continue;
 
-                            if($category_str != 0)
-                                $category = (String)get_the_category_by_ID($category_str);
-                            else if($category_id != 0)
+                        //Categories
+                        $category = " ";
+                        $id_category = 0;
+                        $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                        $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
+                        if($category_xml)
+                            if($category_xml != 0)
+                                $category = (String)get_the_category_by_ID($category_xml);
+                            
+                        if($category_id)
+                            if($category_id != 0)
                                 $category = (String)get_the_category_by_ID($category_id);
-                        }
+                            
+                        
 
                         /*
                         *  Date and Location
@@ -344,8 +337,11 @@ $orders = wc_get_orders($order_args);
                         }
                         else{
                             $dates = get_field('dates', $course->ID);
-                            if($dates)
-                                $day = explode(' ', $dates[0]['date'])[0];
+                            if($dates){
+                                $post_date = explode(' ', $dates[0]['date'])[0];
+                                $date_immu = new DateTimeImmutable($post_date);
+                                $day = $date_immu->format('d/m/Y');
+                            }
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
@@ -389,15 +385,14 @@ $orders = wc_get_orders($order_args);
                         if(!$course_type)
                             $course_type = 'Artikel';
                     ?>
-                    <tr id="<?php echo $course->ID; ?>">
+                    <tr class="pagination-element-block" id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>                        
                         <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))) echo 'nee'; else echo 'ja'; ?></td>
                         <td class="textTh text-left"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics row<?php echo $course->ID; ?>">
-                        <!-- <td id= "<?php echo $course->ID; ?>" class="textTh onderwerpen row<?php echo $course->ID; ?>"><?php echo $category ?></td> -->
-
+                            <?= $category ?>
                             <?php
                                 $course_subtopics = get_field('categories', $course->ID);
                                 $field = '';
@@ -450,7 +445,9 @@ $orders = wc_get_orders($order_args);
                     ?>
                 </tbody>
             </table>
-
+            <div class="pagination-container">
+                <!-- Les boutons de pagination seront ajoutés ici -->
+            </div>
         </div>
     </div>
 </div>
@@ -458,6 +455,58 @@ $orders = wc_get_orders($order_args);
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const itemsPerPage = 10;
+        const $rows = $('.pagination-element-block');
+        const pageCount = Math.ceil($rows.length / itemsPerPage);
+
+        function showPage(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            $rows.each(function(index, row) {
+                if (index >= startIndex && index < endIndex) {
+                    $(row).css('display', 'table-row');
+                } else {
+                    $(row).css('display', 'none');
+                }
+            });
+        }
+
+        function createPaginationButtons() {
+            const $paginationContainer = $('.pagination-container');
+            let firstButtonAdded = false;
+
+            if (pageCount <= 1) {
+                $paginationContainer.css('display', 'none');
+                return;
+            }
+
+            for (let i = 1; i <= pageCount; i++) {
+                const $button = $('<button></button>').text(i);
+                $button.on('click', function() {
+                    showPage(i);
+
+                    $('.pagination-container button').removeClass('active');
+                    $(this).addClass('active');
+                });
+
+                if (!firstButtonAdded) {
+                    $button.addClass('active');
+                    firstButtonAdded = true;
+                }
+
+                $paginationContainer.append($button);
+            }
+        }
+
+        showPage(1);
+        createPaginationButtons();
+    });
+</script>
+
+
 <script>
     var id_course;
     $('.rent').click((e)=>{

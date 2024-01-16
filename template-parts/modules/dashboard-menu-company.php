@@ -2,7 +2,7 @@
     global $wp;
     $global_product_id = 9873;
     $global_price = 5;
-    $global_mollie_key = "live_cntSF2RxdDCUK7wudptq2sVqRWHE3c";
+    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
 
     $url = $wp->request;
     
@@ -29,7 +29,7 @@
                 $team += 1;
         }
     }
-
+    $instrument = null;
     /** Woocommerce API client for php - list subscriptions **/
     $endpoint = "subscriptions";
     $subscriptions = makeApiCallWoocommerce('https://livelearn.nl/wp-json/wc/v3/subscriptions', 'GET');
@@ -44,26 +44,29 @@
             if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
                 $access_granted = 1;
                 $abonnement = (Object)$row;
-                break;                
+                $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id . "/orders";
+                $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');        
+                break;  
+
             } 
         }
     }
 
     if(!$access_granted){
-        $instrument = 'card';
         $mollie_subscriptions = $mollie->subscriptions->page();
         if($mollie_subscriptions)
             foreach($mollie_subscriptions as $row)
                 if($row->metadata->company == $company_connected && $row->status == 'active'){
                     $access_granted = 1;
                     $abonnement = $row;
+                    $instrument = 'card';
                     // var_dump($row);
+                    // die();
                     //Payment subs
                     $customer = $mollie->customers->get($row->customerId);
                     $abonnement->cards = $customer->getSubscription($abonnement->id)->payments();
                     break;                
-                } 
-            
+                }      
     }
     
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
@@ -75,10 +78,9 @@
 
     if (in_array( 'administrator', $user->roles ))
         $access_granted = 1;
-        // header('Location: /dashboard/company/profile-company');
 
-    // if (!$access_granted)
-    //     header('Location: /dashboard/company/profile-company');
+    if (!$access_granted)
+        header('Location: /dashboard/company/profile-company');
 
     //Pricing changes
     $price = $global_price * $team;
@@ -132,12 +134,6 @@
         }
     }
 
-    if($abonnement){
-        //Invoice orders
-        $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id . "/orders";
-        $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');
-    }
-
 ?>
 <style>
     .btn-show-sidbar{
@@ -146,9 +142,9 @@
 </style>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
-    <button  class="btn btn-close-sidbar">
+    <!-- <button  class="btn btn-close-sidbar">
         <i class="fa fa-close"></i>
-    </button>
+    </button> -->
     <div class="row">
         <div class="col">
             <div class="theme-side-menu__list" style="color:#212529">

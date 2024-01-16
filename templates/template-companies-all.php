@@ -102,7 +102,7 @@ $companies = get_posts($args);
                             <p class="name-company"><?= $name ?></p>
                             <p class="date-added">Since : <?= $year ?></p>
                             <div class="d-flex justify-content-between">
-                                <p class="number-course"><?= $count_courses ?> Courses</p>
+                                <p class="number-course"><?= !$count_courses ?: $count_courses - 1 ?> Courses</p>
                                 <p class="number-expert"><?= $count_experts ?> Experts</p>
                             </div>
                         </div>
@@ -129,7 +129,7 @@ $companies = get_posts($args);
 <!--script pagination-->
 
 <script>
-    const itemsPerPage = 9;
+    const itemsPerPage = 15;
     const blockList = document.querySelector('.content-all-company');
     const blocks = blockList.querySelectorAll('.card-all-company');
     const paginationContainer = document.querySelector('.pagination-container');
