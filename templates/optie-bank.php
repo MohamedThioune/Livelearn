@@ -71,7 +71,7 @@ if($optie == "✔"){
             update_field('image_xml', $image, $id_post);
         }
         update_field('course_type', 'article', $id_post);
-        update_field('article_itself', nl2br($course->long_description), $id_post);        
+        update_field('article_itself', nl2br($course->long_description), $id_post); //Korte beschrijving
     }
     //Insert YouTube
     else if (strval($course->type) == "Video"){

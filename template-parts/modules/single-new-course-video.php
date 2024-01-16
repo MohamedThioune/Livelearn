@@ -241,6 +241,7 @@ endif;
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
 
                                                 $lecture_index = $key + 1;
+                                                if ($user_id)
                                                 echo 
                                                     '<div class="element-playlist-course visible">
                                                          <div class="block-playlist-course d-flex">
@@ -252,6 +253,22 @@ endif;
                                                         <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
                                                          </div>
                                                     </div>';
+                                                else {
+                                                    $button = '<a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['title'] . '</a>';
+                                                    if ($key>0)
+                                                        $button = '<button data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="btn text-playlist-element ' . $style . '">' . $video['title'] . '</button>';
+                                                    echo
+                                                        '<div class="element-playlist-course visible">
+                                                         <div class="block-playlist-course d-flex">
+                                                            <div class="d-flex align-items-center group-element">
+                                                            <img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">
+                                                            <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
+                                                            ' . $button . '
+                                                        </div>
+                                                        <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
+                                                         </div>
+                                                    </div>';
+                                                }
                                             }                                                
                                         
                                         ?>
@@ -259,7 +276,6 @@ endif;
                                         <div class="pagination-container">
                                             <!-- Les boutons de pagination seront ajoutés ici -->
                                         </div>
-
                                     </div>
 
                                 </div>
@@ -653,8 +669,9 @@ endif;
                         else
                             $price = 'Gratis';
 
-                        //Legend image
-                        $thumbnail = get_field('preview', $course->ID)['url'];
+                        //Legend image*
+                        $thumbnail = "";
+                        //$thumbnail = get_field('preview', $course->ID)['url'];
                         if(!$thumbnail){
                             $thumbnail = get_the_post_thumbnail_url($course->ID);
                             if(!$thumbnail)

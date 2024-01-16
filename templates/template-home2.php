@@ -685,10 +685,9 @@ foreach($bangerichts as $key1=>$tag){
     }
 
 }
-
+$row_functies = "";
 foreach($functies as $key1 =>$tag)
 {
-
     //Topics
     $cats_functies = get_categories(
         array(
@@ -708,6 +707,7 @@ foreach($functies as $key1 =>$tag)
     }
 }
 
+$row_skills = "";
 foreach($skills as $key1=>$tag){
     //Topics
     $cats_skills = get_categories( array(
@@ -727,7 +727,7 @@ foreach($skills as $key1=>$tag){
     }
 
 }
-
+$row_interesses ="";
 foreach($interesses as $key1=>$tag){
     //Topics
     $cats_interesses = get_categories( array(
@@ -1398,6 +1398,9 @@ $saved = get_user_meta($user_id, 'course');
                         $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
                         $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
                         $tracker_views = intval($number_of_this_is_looking) ?: 0;
+                        //$tracker_views = 23;
+                        //var_dump($tracker_views);
+
 
                         $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
                         //$reaction = get_field('reaction', $course->ID);
