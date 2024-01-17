@@ -88,8 +88,8 @@ if (isset($selectedValues)) {
                 if ($article['excerpt']['rendered']){
                     $firstSentence = explode('.',$article['content']['rendered']);
                     $article['excerpt']['rendered'] = $firstSentence[0];
-                    var_dump($article['excerpt']['rendered']);
                 }
+                var_dump($article['excerpt']['rendered']);
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
