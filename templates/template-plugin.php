@@ -80,8 +80,8 @@ if (isset($selectedValues)) {
                 
                 // var_dump($article['excerpt']['rendered']);
                 // die;
-            if (!$article['content']['rendered']) {
-                if ($article['excerpt']['rendered']){
+            if ($article['content']['rendered']=='') {
+                if ($article['excerpt']['rendered']==''){
                     $firstSentence = explode('.',$article['content']['rendered']);
                     $article['excerpt']['rendered'] = $firstSentence[0];
                 }
@@ -159,7 +159,7 @@ if (isset($selectedValues)) {
                     }
                 }
             }else{
-                var_dump('no content');
+                var_dump('no content ici');
                 continue;
             }
             // echo "Selected option: $text (value=$value)<br>";
