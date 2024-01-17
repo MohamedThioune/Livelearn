@@ -80,12 +80,12 @@ if (isset($selectedValues)) {
                 
                 // var_dump($article['excerpt']['rendered']);
                 // die;
-            if ($article['content']['rendered']=='') {
+            if ($article['content']['rendered']!='') {
                 if ($article['excerpt']['rendered']==''){
                     $firstSentence = explode('.',$article['content']['rendered']);
                     $article['excerpt']['rendered'] = $firstSentence[0];
                 }
-                var_dump($article['excerpt']['rendered']);
+                // var_dump($article['excerpt']['rendered']);
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
@@ -159,7 +159,7 @@ if (isset($selectedValues)) {
                     }
                 }
             }else{
-                var_dump('no content ici');
+                var_dump('no content');
                 continue;
             }
             // echo "Selected option: $text (value=$value)<br>";
