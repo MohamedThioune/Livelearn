@@ -17,12 +17,12 @@ if(empty($youtube_videos))
             if($lesson != 0)
                 header('Location: ' . get_permalink($post->ID));
 
-//Long description             
+//Long description
 $long_description = ($long_description) ? : "No long description found for this course ";
 
 //Author
 $author = get_user_by('id', $post->post_author);
-$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
+$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
 $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 $author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
@@ -50,8 +50,8 @@ if(!$read_video)
 // if (!$user_id)
 //     $startorbuy ='<button type="button" class="btn btn-buy-now" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal">Start Now</button>';
 // else {
-    $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-    $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
+$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 // }
 
 //Review pourcentage
@@ -71,15 +71,15 @@ endif;
             <div class="d-flex align-items-center justify-content-center">
                 <p class="reviews-text"><?= $enrolled_member ?> Students</p>
                 <div class="d-flex">
-                <?php
-                foreach(range(1,5) as $number):
-                    if($average_star >= $number ):
-                        echo '<i class="fa fa-star checked"></i>';
-                        continue;
-                    endif;
-                    echo '<i class="fa fa-star"></i>';
-                endforeach;
-                ?>
+                    <?php
+                    foreach(range(1,5) as $number):
+                        if($average_star >= $number ):
+                            echo '<i class="fa fa-star checked"></i>';
+                            continue;
+                        endif;
+                        echo '<i class="fa fa-star"></i>';
+                    endforeach;
+                    ?>
                 </div>
                 <p class="reviews-text"><?= $average_star ?> (<?= $count_reviews ?> reviews)</p>
             </div>
@@ -97,11 +97,11 @@ endif;
                 </div>
                 <?php
                 if($language):
-                ?>
-                <div class="d-flex align-items-center">
-                    <i class='fa fa-language' aria-hidden="true"></i>
-                    <p class="date"><?= $language ?></p>
-                </div>
+                    ?>
+                    <div class="d-flex align-items-center">
+                        <i class='fa fa-language' aria-hidden="true"></i>
+                        <p class="date"><?= $language ?></p>
+                    </div>
                 <?php
                 endif;
                 ?>
@@ -115,8 +115,8 @@ endif;
     <div class="body-content">
         <div class="container-fluid">
             <div class="course-content-video-intro">
-                <?php 
-                    echo $read_video;
+                <?php
+                echo $read_video;
                 ?>
             </div>
             <div class="row">
@@ -141,17 +141,17 @@ endif;
                                     </div>
                                     <?php
                                     if(!empty($posttags) || !empty($category_default) || !empty($category_default)):
-                                    ?>
-                                    <div class="section-tabs" >
-                                        <h2>What You'll Learn</h2>
-                                        <ul class="d-flex flex-wrap list what-you-learn">
-                                            <?php
+                                        ?>
+                                        <div class="section-tabs" >
+                                            <h2>What You'll Learn</h2>
+                                            <ul class="d-flex flex-wrap list what-you-learn">
+                                                <?php
                                                 if ($posttags)
                                                     foreach($posttags as $tag)
                                                         echo  '<li>
                                                                     <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                     <a href="/category-overview?category=' . $tag->ID . '" class="text-tabs">' . $tag->name . '</a>
-                                                               </li>';  
+                                                               </li>';
                                                 else{
                                                     $read_category = array();
                                                     if(!empty($category_default))
@@ -162,23 +162,23 @@ endif;
                                                                     echo  '<li>
                                                                                 <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                                 <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
-                                                                           </li>';  
+                                                                           </li>';
                                                                 }
 
-                                                    else if(!empty($category_xml))
-                                                        foreach($category_xml as $item)
-                                                            if($item)
-                                                                if(!in_array($item,$read_category)){
-                                                                    array_push($read_category,$item);
-                                                                    echo  '<li>
+                                                                else if(!empty($category_xml))
+                                                                    foreach($category_xml as $item)
+                                                                        if($item)
+                                                                            if(!in_array($item,$read_category)){
+                                                                                array_push($read_category,$item);
+                                                                                echo  '<li>
                                                                                 <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                                 <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
-                                                                           </li>';                                      
-                                                                }
+                                                                           </li>';
+                                                                            }
                                                 }
-                                            ?>
-                                        </ul>
-                                    </div> 
+                                                ?>
+                                            </ul>
+                                        </div>
                                     <?php
                                     endif;
                                     ?>
@@ -190,7 +190,7 @@ endif;
                                     <p class="title"><?= $post->post_title ?> (<span><?= $count_videos ?> Videos</span>) </p>
                                     <p class="description"><?= $short_description ?></p>
                                     <div class="playlist-course-block">
-                
+
                                         <?php
                                         if(!empty($courses) && !empty($youtube_videos) )
                                             echo '<div class="element-playlist-course visible">
@@ -218,7 +218,7 @@ endif;
                                                 }
 
                                                 $lecture_index = $key + 1;
-                                                echo 
+                                                echo
                                                     '<div class="element-playlist-course visible">
                                                         <div class="block-playlist-course d-flex">
                                                             <div class="d-flex align-items-center group-element">'
@@ -241,8 +241,7 @@ endif;
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
 
                                                 $lecture_index = $key + 1;
-                                                if ($user_id)
-                                                echo 
+                                                echo
                                                     '<div class="element-playlist-course visible">
                                                          <div class="block-playlist-course d-flex">
                                                             <div class="d-flex align-items-center group-element">
@@ -253,29 +252,14 @@ endif;
                                                         <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
                                                          </div>
                                                     </div>';
-                                                else {
-                                                    $button = '<a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['title'] . '</a>';
-                                                    if ($key>0)
-                                                        $button = '<button data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="btn text-playlist-element ' . $style . '">' . $video['title'] . '</button>';
-                                                    echo
-                                                        '<div class="element-playlist-course visible">
-                                                         <div class="block-playlist-course d-flex">
-                                                            <div class="d-flex align-items-center group-element">
-                                                            <img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">
-                                                            <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
-                                                            ' . $button . '
-                                                        </div>
-                                                        <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
-                                                         </div>
-                                                    </div>';
-                                                }
-                                            }                                                
-                                        
+                                            }
+
                                         ?>
 
                                         <div class="pagination-container">
                                             <!-- Les boutons de pagination seront ajoutés ici -->
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -313,16 +297,16 @@ endif;
                                             <div class="rating-bying-course">
                                                 <div class="rating-element2">
                                                     <div class="rating">
-                                                        <?php 
+                                                        <?php
                                                         foreach(range(5, 1) as $number):
                                                             if($average_star == $number ):
                                                                 echo '<input type="radio" id="star' . $number . '-note" class="stars" checked name="rating-note" value="' . $number . '" />
-                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';                      
+                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';
                                                                 continue;
                                                             endif;
 
                                                             echo '<input type="radio" id="star' . $number . '-note" class="stars" name="rating-note" value="' . $number . '" />
-                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';                      
+                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';
 
                                                         endforeach;
                                                         ?>
@@ -456,7 +440,7 @@ endif;
                                     if(!empty($reviews))
                                         foreach($reviews as $review):
                                             $user = $review['user'];
-                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
+                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
                                             $image_author = get_field('profile_img',  'user_' . $user->ID);
                                             $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
                                             $company = get_field('company',  'user_' . $user->ID);
@@ -471,7 +455,7 @@ endif;
                                                     <div>
                                                         <div class="d-flex align-items-center">
                                                             <p class="name-autors-comment">' . $author_name . '</p> ' . //<p class="timing-comment">3 days ago </p>
-                                                        '</div>
+                                                '</div>
                                                         <p class="title-comment">' . $title . '</p>
                                                     </div>
                                                 </div>
@@ -479,11 +463,11 @@ endif;
                                             </div>';
                                         endforeach;
 
-                                        if(!$my_review_bool && $user_id):
+                                    if(!$my_review_bool && $user_id):
                                         ?>
                                         <div class="comment-block">
                                             <h2>Write a Review</h2>
-                                            <form action="/dashboard/user" method="POST" id="review_vid"> 
+                                            <form action="/dashboard/user" method="POST" id="review_vid">
                                                 <input type="hidden" name="course_id" value="<?= $post->ID; ?>" >
                                             </form>
                                             <div class="rating-element2">
@@ -504,11 +488,11 @@ endif;
                                             <textarea name="feedback_content" id="feedback" rows="10" form="review_vid" required></textarea>
                                             <div class="position-relative">
                                                 <!-- <input type="button" class='btn btn-send' id='btn_review' name='review_post' value='Send'> -->
-                                            <?php if ($user_id==0) :?>
-                                                <button type="button" class='btn btn-send' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Send</button>
-                                            <?php else : ?>
-                                                <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
-                                            <?php endif; ?>
+                                                <?php if ($user_id==0) :?>
+                                                    <button type="button" class='btn btn-send' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal'>Send</button>
+                                                <?php else : ?>
+                                                    <button type="submit" class='btn btn-send' id='btn_review' name='review_post' form="review_vid">Send</button>
+                                                <?php endif; ?>
                                             </div>
                                             </form>
                                         </div>
@@ -528,11 +512,11 @@ endif;
                             <?php
                             $saves_expert = get_user_meta($user_id, 'expert');
                             foreach($experts as $value):
-                                if(!$value) 
+                                if(!$value)
                                     continue;
 
                                 $expert = get_user_by('id', $value);
-                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name; 
+                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name;
                                 $image = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                                 $company = get_field('company',  'user_' . $expert->ID);
@@ -544,9 +528,9 @@ endif;
                                     </div>
                                     <p class="name-expert"><?= $expert_name ?></p>
                                     <p class="poste-expert"><?= $title ?></p>
-                                </a>    
-                               
-                                <!-- 
+                                </a>
+
+                                <!--
                                 <form action="/dashboard/user/" method="POST">
                                     <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
                                     <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
@@ -554,24 +538,24 @@ endif;
                                     <input type="hidden" name="meta_key" value="expert" id="">
                                     <div>
                                     <?php
-                                    if(empty($saves_expert) && $user_id != 0)
-                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
-                                    else if($user_id != 0)
-                                        if($user_id != $expert->ID){
-                                            if (in_array($expert->ID, $saves_expert))
-                                                echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
-                                            else
-                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
-                                        }
-                                    ?>
+                                if(empty($saves_expert) && $user_id != 0)
+                                    echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                else if($user_id != 0)
+                                    if($user_id != $expert->ID){
+                                        if (in_array($expert->ID, $saves_expert))
+                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                        else
+                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                    }
+                                ?>
                                     </div>
                                 </form>
                                 -->
-                                <?php
+                            <?php
                                 // if($user_id == 0)
-                                //     echo "                                
-                                //         <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
-                                //             Follow                                            
+                                //     echo "
+                                //         <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'>
+                                //             Follow
                                 //         </button>";
                             endforeach;
                             ?>
@@ -594,11 +578,11 @@ endif;
                                     <p class="name-element-detail">Instructor:</p>
                                     <p class="detail"><?= $author_name ?></p>
                                 </li>
-                                <!-- 
+                                <!--
                                 <li>
                                     <p class="name-element-detail">Duration:</p>
                                     <p class="detail">3 weeks</p>
-                                </li> 
+                                </li>
                                 -->
                                 <li>
                                     <p class="name-element-detail">Lessons:</p>
@@ -652,45 +636,45 @@ endif;
             </div>
             <?php
             if(!empty($similar_course)):
-            ?>
-            <div class="similar-course-block">
-                <h2>Similar Course</h2>
-                <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
-                    <?php
-                    foreach($similar_course as $course):
-                        //Location
-                        $location = 'Online';
+                ?>
+                <div class="similar-course-block">
+                    <h2>Similar Course</h2>
+                    <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
+                        <?php
+                        foreach($similar_course as $course):
+                            //Location
+                            $location = 'Online';
 
-                        //Price
-                        $price_noformat = " ";
-                        $price_noformat = get_field('price', $course->ID);
-                        if($price_noformat != "0")
-                            $price = '€' . number_format($price_noformat, 2, '.', ',');
-                        else
-                            $price = 'Gratis';
+                            //Price
+                            $price_noformat = " ";
+                            $price_noformat = get_field('price', $course->ID);
+                            if($price_noformat != "0")
+                                $price = '€' . number_format($price_noformat, 2, '.', ',');
+                            else
+                                $price = 'Gratis';
 
-                        //Legend image*
-                        $thumbnail = "";
-                        //$thumbnail = get_field('preview', $course->ID)['url'];
-                        if(!$thumbnail){
-                            $thumbnail = get_the_post_thumbnail_url($course->ID);
-                            if(!$thumbnail)
-                                $thumbnail = get_field('url_image_xml', $course->ID);
-                            if(!$thumbnail)
-                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                        }
+                            //Legend image
+                            //$thumbnail = get_field('preview', $course->ID)['url'];
+                            $thumbnail = "";
+                            if(!$thumbnail){
+                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                            }
 
-                        //Author
-                        $author = get_user_by('ID', $course->post_author);
-                        $author_name = $author->display_name ?: $author->first_name;
-                        $author_image = get_field('profile_img',  'user_' . $course->post_author);
-                        $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            //Author
+                            $author = get_user_by('ID', $course->post_author);
+                            $author_name = $author->display_name ?: $author->first_name;
+                            $author_image = get_field('profile_img',  'user_' . $course->post_author);
+                            $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
-                        //Course Type
-                        $course_type = get_field('course_type', $course->ID);
-                        
-                        echo 
-                        '<a href="' . get_permalink($course->ID) . '" class="new-card-course">
+                            //Course Type
+                            $course_type = get_field('course_type', $course->ID);
+
+                            echo
+                                '<a href="' . get_permalink($course->ID) . '" class="new-card-course">
                             <div class="head">
                                 <img src="' . $thumbnail . '" alt="">
                             </div>
@@ -717,10 +701,10 @@ endif;
                                 <p class="price">'. $price .'</p>
                             </div>
                         </a>';
-                    endforeach;
-                    ?>
+                        endforeach;
+                        ?>
+                    </div>
                 </div>
-            </div>
             <?php
             endif;
             ?>
