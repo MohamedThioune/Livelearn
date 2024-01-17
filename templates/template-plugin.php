@@ -78,17 +78,18 @@ if (isset($selectedValues)) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
                 $result_title = $wpdb->get_results($sql_title);
                 if(!$article['content']['rendered']){
-                    if ($article['excerpt']['rendered']==''){
-                        $firstSentence = explode('.',$article['content']['rendered']);
-                        $article['excerpt']['rendered'] = $firstSentence[0];
-                    }
+                    
                 }else
                     var_dump('No content');
                 
                 // var_dump($article['excerpt']['rendered']);
                 // die;
             if (!$article['content']['excerpt']) {
-                var_dump($article['short_description']);
+                if ($article['excerpt']['rendered']){
+                    $firstSentence = explode('.',$article['content']['rendered']);
+                    $article['excerpt']['rendered'] = $firstSentence[0];
+                }
+                var_dump($article['excerpt']['rendered']);
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
