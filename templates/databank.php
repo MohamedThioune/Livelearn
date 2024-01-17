@@ -952,7 +952,7 @@ if (!empty($courses)) {
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    document.getElementById('content-back-topics').innerHTML = response;
+                    // document.getElementById('content-back-topics').innerHTML = response;
                 },error:function() {
                     console.log('error'); 
                 },
