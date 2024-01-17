@@ -85,7 +85,7 @@ if (isset($selectedValues)) {
                 // var_dump($article['excerpt']['rendered']);
                 // die;
             if (!$article['content']['rendered']) {
-                if ($article['excerpt']['rendered']){
+                if ($article['excerpt']['rendered']==''){
                     $firstSentence = explode('.',$article['content']['rendered']);
                     $article['excerpt']['rendered'] = $firstSentence[0];
                 }
