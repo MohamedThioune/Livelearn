@@ -77,6 +77,10 @@ if (isset($selectedValues)) {
             if ($article != null) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
                 $result_title = $wpdb->get_results($sql_title);
+                if(!$article['content']['rendered']){
+                    
+                }else
+                    var_dump('No content');
                 
                 // var_dump($article['excerpt']['rendered']);
                 // die;
