@@ -210,7 +210,7 @@ endif;
 
                                                 $link = '#';
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                                $read_status_icon = '<img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/Instellingen.png" alt="">';
+                                                $read_status_icon = '<img data-toggle="modal" data-target="#modal-login-with-podcast" class="playlistImg  block-for-login" src="' . get_stylesheet_directory_uri() . '/img/Instellingen.png" alt="">';
                                                 if($bool_link || $key == 0){
                                                     $link = '?topic=0&lesson=' . $key;
                                                     $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
@@ -224,7 +224,7 @@ endif;
                                                             <div class="d-flex align-items-center group-element">'
                                                     .  $read_status_icon . '
                                                             <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
-                                                            <a href="' . $link . '" class class="text-playlist-element ' . $style . '">' . $video['course_lesson_title'] . '</a>
+                                                            <a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['course_lesson_title'] . '</a>
                                                         </div>
                                                         <img class="status-icon" src="' . $status_icon . '" alt="">
                                                         </div>
@@ -241,6 +241,7 @@ endif;
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
 
                                                 $lecture_index = $key + 1;
+                                                if ($user_id)
                                                 echo 
                                                     '<div class="element-playlist-course visible">
                                                          <div class="block-playlist-course d-flex">
@@ -252,6 +253,22 @@ endif;
                                                         <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
                                                          </div>
                                                     </div>';
+                                                else {
+                                                    $button = '<a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['title'] . '</a>';
+                                                    if ($key>0)
+                                                        $button = '<button data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="btn text-playlist-element ' . $style . '">' . $video['title'] . '</button>';
+                                                    echo
+                                                        '<div class="element-playlist-course visible">
+                                                         <div class="block-playlist-course d-flex">
+                                                            <div class="d-flex align-items-center group-element">
+                                                            <img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">
+                                                            <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
+                                                            ' . $button . '
+                                                        </div>
+                                                        <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
+                                                         </div>
+                                                    </div>';
+                                                }
                                             }                                                
                                         
                                         ?>
@@ -259,7 +276,6 @@ endif;
                                         <div class="pagination-container">
                                             <!-- Les boutons de pagination seront ajoutés ici -->
                                         </div>
-
                                     </div>
 
                                 </div>
@@ -653,8 +669,9 @@ endif;
                         else
                             $price = 'Gratis';
 
-                        //Legend image
-                        $thumbnail = get_field('preview', $course->ID)['url'];
+                        //Legend image*
+                        $thumbnail = "";
+                        //$thumbnail = get_field('preview', $course->ID)['url'];
                         if(!$thumbnail){
                             $thumbnail = get_the_post_thumbnail_url($course->ID);
                             if(!$thumbnail)
@@ -713,6 +730,94 @@ endif;
     </div>
 </div>
 
+
+<!-- modal register / login -->
+<div class="modal fade" id="modal-login-with-podcast" tabindex="-1" role="dialog" aria-labelledby="modal-login-with-podcastTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body create-account-block">
+                <p class="title-modal">Welcome !</p>
+                <p class="description-modal">Please, Create an account to continue</p>
+                <div class="group-btn-connection">
+                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                        Continue with Google
+                    </a>
+                </div>
+                <div class="d-flex hr-block">
+                    <hr>
+                    <p>Or</p>
+                    <hr>
+                </div>
+                <div class="form-input">
+                    <form action="">
+
+                        <div class="first-step-modal">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
+                            </div>
+                            <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
+                        </div>
+
+                        <div class="second-step-modal">
+                            <div class="form-group">
+                                <label for="First-name">First name</label>
+                                <input type="text" class="form-control" id="First-name" aria-describedby="First-name" placeholder="Enter your First name">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last name</label>
+                                <input type="text" class="form-control" id="last-name" aria-describedby="last-name" placeholder="Enter your last name">
+                            </div>
+                            <div class="form-group">
+                                <label for="Company">Company</label>
+                                <input type="text" class="form-control" id="Company" aria-describedby="Company" placeholder="Enter your Company name">
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" class="form-control" id="Password" aria-describedby="Password" placeholder="Enter your Password">
+                            </div>
+                            <button type="submit" class="btn btn-coneection">Create Acccount</button>
+                        </div>
+
+                    </form>
+                    <button class="btn btn-switch-login">You already have a account ? Login</button>
+                </div>
+            </div>
+            <div class="modal-body register-block">
+                <p class="title-modal">Welcome !</p>
+                <p class="description-modal">Please, Register to continue</p>
+                <div class="group-btn-connection">
+                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                        Continue with Google
+                    </a>
+                </div>
+                <div class="d-flex hr-block">
+                    <hr>
+                    <p>Or</p>
+                    <hr>
+                </div>
+                <div class="form-input">
+                    <form action="">
+                        <div class="form-group">
+                            <label for="exampleInputEmail">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwoord">Passwoord</label>
+                            <input type="password" class="form-control" id="passwoord" placeholder="">
+                        </div>
+                        <button type="submit" class="btn btn-coneection">Sign Up</button>
+                    </form>
+                    <button class="btn btn-switch-login btn-Sign-Up">You don't have a account ? Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     var sections = $('.section-tabs')
         , nav = $('.content-tabs-scroll')
@@ -756,7 +861,21 @@ endif;
 
     });
 </script>
+<script>
+    $("#create-account-step").click(function() {
+        $(".first-step-modal").hide();
+        $(".second-step-modal").show();
+    });
+    $(".btn-switch-login").click(function() {
+        $(".create-account-block").hide();
+        $(".register-block").show();
+    });
+    $(".btn-Sign-Up").click(function() {
+        $(".register-block").hide();
+        $(".create-account-block").show();
+    });
 
+</script>
 <script>
     const itemsPerPage = 6;
     const blockList = document.querySelector('.playlist-course-block');

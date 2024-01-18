@@ -18,9 +18,10 @@ $course_type = get_field('course_type', $post->ID);
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 $online = ['Video', 'Webinar','Podcast', 'E-learning'];
 
-//Redirection - visibility 
-if(!visibility($post, $visibility_company))
-    header('location: /');
+//Redirection - visibility
+if (isset($visibility_company))
+    if(!visibility($post, $visibility_company))
+        header('location: /');
 
 //Redirection - type
 if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel' && $course_type != 'Leerpad')
@@ -64,7 +65,7 @@ if(!isset($xml_parse)){
                 for($i = 0; $i < count($datum['data']); $i++)
                     array_push($dagdeel, $datum['data'][$i]['start_date']);
 }else{
-    if($data[0])
+    if(isset($data) && $data[0])
         foreach($data as $datum){
             $infos = explode(';', $datum['value']);
             if(!empty($infos))
@@ -96,7 +97,7 @@ else
 
 $prijsvat = get_field('prijsvat', $post->ID);
 $btw = get_field('btw-klasse', $post->ID); 
-if(!$prijsvat) 
+if(!$prijsvat && isset($prijs))
     $prijsvat = (get_field('price', $post->ID) * $btw/100) - $prijs;
 
 $agenda = get_field('agenda', $post->ID);
@@ -124,7 +125,10 @@ $category_default = get_field('categories', $post->ID);
 $category_xml = get_field('category_xml', $post->ID);
 
 $user_id = get_current_user_id();
-
+//$podcast_index_for_not_connected [] = $podcast_index[0];
+//$youtube_videos_for_not_connected [] = $youtube_videos[0];
+//$podcast_index = $user_id ? $podcast_index : $podcast_index_for_not_connected;
+//$youtube_videos = $user_id ? $youtube_videos : $youtube_videos_for_not_connected;
 /*
 * User informations
 */
@@ -143,6 +147,8 @@ $user_choose = $post->post_author;
 
 foreach($users as $user) {
     $company_user = get_field('company',  'user_' . $user->ID);
+    if (!$company_user)
+        continue;
     if(!empty($company_connected) && !empty($company_user))
         if($company_user[0]->post_title == $company_connected[0]->post_title) 
             array_push($users_company, $user->ID);
@@ -192,7 +198,8 @@ else
 /*
 * Image
 */
-$thumbnail = get_field('preview', $post->ID)['url'];
+$thumbnail = "";
+//$thumbnail = get_field('preview', $post->ID)['url'];
 if(!$thumbnail){
     $thumbnail = get_the_post_thumbnail_url($post->ID);
     if(!$thumbnail)
@@ -200,7 +207,6 @@ if(!$thumbnail){
             if(!$thumbnail)
                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
-
 /*
 * Others
 */ 
@@ -216,34 +222,35 @@ $average_star = 0;
 $average_star_nor = 0;
 $my_review_bool = false;
 $counting_rate = 0;
-foreach ($reviews as $review):
-    if($review['user']->ID == $user_id)
-        $my_review_bool = true;
+if ($reviews)
+    foreach ($reviews as $review):
+        if($review['user']->ID == $user_id)
+            $my_review_bool = true;
 
-    //Star by number
-    switch ($review['rating']) {
-        case 1:
-            $star_review[1] += 1;
-            break;
-        case 2:
-            $star_review[2] += 1;
-            break;
-        case 3:
-            $star_review[3] += 1;
-            break;
-        case 4:
-            $star_review[4] += 1;
-            break;
-        case 5:
-            $star_review[5] += 1;
-            break;
-    }
+        //Star by number
+        switch ($review['rating']) {
+            case 1:
+                $star_review[1] += 1;
+                break;
+            case 2:
+                $star_review[2] += 1;
+                break;
+            case 3:
+                $star_review[3] += 1;
+                break;
+            case 4:
+                $star_review[4] += 1;
+                break;
+            case 5:
+                $star_review[5] += 1;
+                break;
+        }
 
-    if($review['rating']){
-        $average_star += intval($review['rating']); 
-        $counting_rate += 1;
-    }
-endforeach;
+        if($review['rating']){
+            $average_star += intval($review['rating']);
+            $counting_rate += 1;
+        }
+    endforeach;
 if ($counting_rate > 0 )
     $average_star_nor = $average_star / $counting_rate;
 $average_star_format = number_format($average_star_nor, 1, '.', ',');
@@ -333,8 +340,8 @@ else if($course_type == 'Assessment')
     include_once('template-parts/modules/single-new-course-assessment.php');
 
 
-?>  
- 
+?>
+
 <?php
 
 get_footer();

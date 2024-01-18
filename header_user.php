@@ -777,7 +777,7 @@ $see_experts = get_users(
                             $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                             ?>
-                            <form id="multiple_form" method="POST" action="">
+                            <form id="multiple_form" class="element-form-expert" method="POST" action="">
                                 <input type="hidden" id="user_id" name="user_id" form="multiple_form" value="<?= $user->ID ?>" id="">
                                 <input type="hidden" name="meta_key" form="multiple_form" value="expert" id="">
                                 <div class="expert-element rows2">
@@ -817,6 +817,9 @@ $see_experts = get_users(
                             <?php
                         }
                         ?>
+                        <div class="pagination-container">
+                            <!-- Les boutons de pagination seront ajoutés ici -->
+                        </div>
                        
                     </div>
                 </div>

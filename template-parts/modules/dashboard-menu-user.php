@@ -196,4 +196,80 @@ style="overflow-x: hidden !important;">
         </li>
     </ul>
 </section>
+<script>
+
+    const itemsPerPage = 10;
+    const blockList = document.querySelector('.content-expert');
+    const blocks = blockList.querySelectorAll('.element-form-expert');
+    const paginationContainer = document.querySelector('.pagination-container');
+
+    function displayPage(pageNumber) {
+        const start = (pageNumber - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        blocks.forEach((block, index) => {
+            if (index >= start && index < end) {
+                block.style.display = 'block';
+                block.classList.add('visible');
+            } else {
+                block.style.display = 'none';
+                block.classList.remove('visible');
+            }
+        });
+
+        const containerHeight = blockList.offsetHeight;
+
+        setTimeout(() => {
+            blockList.style.height = containerHeight + 'px';
+        }, 10);
+        setTimeout(() => {
+            blockList.style.height = '';
+        }, 300);
+    }
+
+    function createPaginationButtons() {
+        const pageCount = Math.ceil(blocks.length / itemsPerPage);
+
+        if (pageCount <= 1) {
+            return;
+        }
+
+        let firstButtonAdded = false; // Keep track of whether the first button is added
+
+        for (let i = 1; i <= pageCount; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add('pagination-button');
+            button.addEventListener('click', () => {
+                scrollToStart(); // Scroll jusqu'au début du bloc de pagination
+                displayPage(i);
+
+                // Retire la classe .active de tous les boutons
+                const buttons = document.querySelectorAll('.pagination-button');
+                buttons.forEach((btn) => {
+                    btn.classList.remove('active');
+                });
+
+                // Ajoute la classe .active au bouton cliqué
+                button.classList.add('active');
+            });
+            paginationContainer.appendChild(button);
+
+            // Ajoute la classe .active au premier bouton
+            if (!firstButtonAdded) {
+                button.classList.add('active');
+                firstButtonAdded = true;
+            }
+        }
+    }
+
+    function scrollToStart() {
+        const blockForPagination = document.querySelector('.content-expert');
+        blockForPagination.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    displayPage(1);
+    createPaginationButtons();
+
+</script>
 
