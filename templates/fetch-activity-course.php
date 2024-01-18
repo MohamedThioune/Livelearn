@@ -7,8 +7,8 @@ extract($_POST);
 $user = get_user_by('ID', get_current_user_id());
 
 $row_activity_course = " ";
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 
 //Saved
 $saved = get_user_meta($user->ID, 'course');

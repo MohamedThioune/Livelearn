@@ -4,8 +4,8 @@
 
 extract($_POST);
 
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 
 /*
 * Check statistic by user *

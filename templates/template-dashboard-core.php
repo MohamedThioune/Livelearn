@@ -1,8 +1,8 @@
 <?php /** Template Name: dashboard core */ ?>
 <?php
 
-$page = 'check_visibility.php';
-require($page); 
+//$page = 'check_visibility.php';
+//require($page); 
 require('module-subscribe.php'); 
 
 $mail_notification_invitation = '/mail-notification-invitation.php';
