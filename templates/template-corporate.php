@@ -1,6 +1,7 @@
 <?php /** Template Name: corporate template */ ?>
-<?php $page = 'check_visibility.php'; 
-require($page);
+<?php 
+//$page = 'check_visibility.php'; 
+//require($page);
 ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>

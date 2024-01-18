@@ -3,8 +3,8 @@
 
 global $wp;
 
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 
 $url = home_url( $wp->request );
 
