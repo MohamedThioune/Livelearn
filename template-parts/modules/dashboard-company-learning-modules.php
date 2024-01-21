@@ -385,7 +385,7 @@ $orders = wc_get_orders($order_args);
                         if(!$course_type)
                             $course_type = 'Artikel';
                     ?>
-                    <tr id="<?php echo $course->ID; ?>">
+                    <tr class="pagination-element-block" id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>                        
                         <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))) echo 'nee'; else echo 'ja'; ?></td>
                         <td class="textTh text-left"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
@@ -445,7 +445,9 @@ $orders = wc_get_orders($order_args);
                     ?>
                 </tbody>
             </table>
-
+            <div class="pagination-container">
+                <!-- Les boutons de pagination seront ajoutés ici -->
+            </div>
         </div>
     </div>
 </div>
@@ -453,6 +455,58 @@ $orders = wc_get_orders($order_args);
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const itemsPerPage = 10;
+        const $rows = $('.pagination-element-block');
+        const pageCount = Math.ceil($rows.length / itemsPerPage);
+
+        function showPage(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            $rows.each(function(index, row) {
+                if (index >= startIndex && index < endIndex) {
+                    $(row).css('display', 'table-row');
+                } else {
+                    $(row).css('display', 'none');
+                }
+            });
+        }
+
+        function createPaginationButtons() {
+            const $paginationContainer = $('.pagination-container');
+            let firstButtonAdded = false;
+
+            if (pageCount <= 1) {
+                $paginationContainer.css('display', 'none');
+                return;
+            }
+
+            for (let i = 1; i <= pageCount; i++) {
+                const $button = $('<button></button>').text(i);
+                $button.on('click', function() {
+                    showPage(i);
+
+                    $('.pagination-container button').removeClass('active');
+                    $(this).addClass('active');
+                });
+
+                if (!firstButtonAdded) {
+                    $button.addClass('active');
+                    firstButtonAdded = true;
+                }
+
+                $paginationContainer.append($button);
+            }
+        }
+
+        showPage(1);
+        createPaginationButtons();
+    });
+</script>
+
+
 <script>
     var id_course;
     $('.rent').click((e)=>{

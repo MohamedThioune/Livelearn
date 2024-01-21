@@ -3,8 +3,8 @@
 <?php get_header(); ?>
 <?php
 
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 global $wpdb;
 
 $user_connected_id = get_current_user_id();
@@ -1375,87 +1375,117 @@ $saved = get_user_meta($user_id, 'course');
         </div>
         <div class="row" id="autocomplete_categorieen">
             <?php
-            $today = new DateTime();
             $lastYearTeample = $today->sub(new DateInterval('P1Y'));
             $lastYear = $lastYearTeample->format('Y-m-d');
 
+            $num = 1;
+            $args = array(
+                'post_status' => array('wc-processing', 'wc-completed'),
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'limit' => -1,
+            );
+            $bunch_orders = wc_get_orders($args);
             $active_members = array();
-            foreach ($most_active_members as $index => $user) {
-                $pricing_last_year = 0;
-                $pricing_since_today = 0;
+            if(!empty($most_active_members)){
+                foreach ($most_active_members as $index => $user) {
+                    $pricing_last_year = 0;
+                    $pricing_since_today = 0;
 
-                $args_since_today = array(
-                    'post_type' => array('post', 'course'),
-                    'order' => 'DESC',
-                    'limit' => -1,
-                    'author' => $user->ID,
-                );
-                $courses_since_today = get_posts($args_since_today);
-                // args to get artikel of last year
-                $args_last_year = array(
-                    'post_type' => 'post',
-                    'posts_per_page' => -1,
-                    'author' => $user->ID,
-                    'date_query' => array(
-                        'year' => $lastYear,
-                        'inclusive' => true,
-                    ),
-                );
-                $courses_last_year = get_posts($args_last_year);
+                   // if ($num == 13)
+                   //         break;
+                        //get pricing from price of course
+//                        foreach ($bunch_orders as $order) {
+//                            foreach ($order->get_items() as $item) {
+//                                //Get woo orders from user
+//                                $id_course = intval($item->get_product_id()) - 1;
+//                                $course = get_post($id_course);
+//                                $prijs = intval(get_field('price', $id_course));
+//                                $favorited = get_field('favorited', $id_course); // BD
+//                                $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
+//                                $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+//                                $tracker_views = intval($number_of_this_is_looking) ?: 0;
+//
+//                                //var_dump($prijs); //also null usualy
+//                                if ($course->ID) {
+//                                    if ($course->post_author == $user->ID) { // $user->ID = expert
+//                                        if ($prijs) {
+//                                            $pricing = $pricing + $prijs * 20;
+//                                        }
+//                                        if ($favorited)
+//                                            $pricing = $pricing + 40;
+//                                        if ($tracker_views)
+//                                            $pricing = $pricing + 15 + 1; // views and click
+//                                    }
+//                                    $pricing = $pricing + 100;
+//                                }
+//                            }
+//                        }
+                    //get pricing from price of course
 
-                //var_dump(count($courses_last_year));
-                if (!empty($courses_last_year))
-                    foreach ($courses_last_year as $course) {
-                        $course_type = get_field('course_type', $course->ID);
-                        $prijs = get_field('price', $course->ID);
-                        $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
-                        $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
-                        $tracker_views = intval($number_of_this_is_looking) ?: 0;
+                    /* get price from post doing by user for free course */
+                    $args_since_today = array(
+                        'post_type' => array('course', 'post'),
+                        'author' => $user->ID,
+                        'post_status' => 'publish',
+                        'posts_per_page' => -1,
+                        'order' => 'DESC',
+                        //'date'=>get_the_date('Y-m-d'),
+                    );
+                    $courses_since_today = get_posts($args_since_today);
+                    // args to get artikel of last year
+                    $args_last_year = array(
+                        'post_type' => 'post',
+                        'posts_per_page' => -1,
+                        'author' => $user->ID,
+                        'date_query' => array(
+                            'year' => $lastYear,
+                            'inclusive' => true,
+                        ),
+                    );
+                    $courses_last_year = get_posts($args_last_year);
+                    if (!empty($courses_last_year))
+                        foreach ($courses_last_year as $course) {
+                            $course_type = get_field('course_type', $course->ID);
+                            $prijs = intval(get_field('price', $course->ID));
+                            $sql_request = $wpdb->prepare("SELECT occurence FROM $table_tracker_views  WHERE  data_id = $course->ID");
+                            $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
+                            $tracker_views = intval($number_of_this_is_looking) ?: 0;
 
-                        $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
-                        //$reaction = get_field('reaction', $course->ID);
+                            $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
+                            //$reaction = get_field('reaction', $course->ID);
 
-                        //get pricing from type of course: course free
-                        if ($course_type == 'Artikel') {
-                            $pricing_last_year = $pricing_last_year + 50;
-                            if ($tracker_views != 0) {
-                                $pricing_last_year = $pricing_last_year + $tracker_views * 1.25; //views+click
-                            }
-                            if ($favorited) {
-                                $pricing_last_year = $pricing_last_year + 5;
-                            }
-                        } else if ($course_type == 'Podcast') {
-                            $pricing_last_year = $pricing_last_year + 100;
-                            if ($favorited) {
-                                $pricing_last_year = $pricing_last_year + 10;
-                            }
-                        } else if ($course_type == 'Video') {
-                            $pricing_last_year = $pricing_last_year + 75;
-                            if ($tracker_views != 0) {
-                                $pricing_last_year = $pricing_last_year + $tracker_views * 3.5; //views+click+
-                            }
-                        } else {
-                            $pricing_last_year = $pricing_last_year + 100;
-                            if ($favorited) {
-                                $pricing_last_year = $pricing_last_year + 20;
-                            }
-                            if ($tracker_views != 0) {
-                                $pricing_last_year = $pricing_last_year + $tracker_views * 10;
+                            //get pricing from type of course: course free
+                            if ($course_type == 'Artikel') {
+                                $pricing_last_year = $pricing_last_year + 50;
+                                if ($tracker_views != 0) {
+                                    $pricing_last_year = $pricing_last_year + $tracker_views * 1.25; //views+click
+                                }
+                                if ($favorited) {
+                                    $pricing_last_year = $pricing_last_year + 5;
+                                }
+                            } else if ($course_type == 'Podcast') {
+                                $pricing_last_year = $pricing_last_year + 100;
+                                if ($favorited)
+                                    $pricing_last_year = $pricing_last_year + 10;
+
+                            } else if ($course_type == 'Video') {
+                                $pricing_last_year = $pricing_last_year + 75;
+                                if ($tracker_views != 0)
+                                    $pricing_last_year = $pricing_last_year + $tracker_views * 3.5; //views+click+
+
+                            } else {
+                                $pricing_last_year = $pricing_last_year + 100;
+                                if ($favorited) {
+                                    $pricing_last_year = $pricing_last_year + 20;
+                                }
+                                if ($tracker_views != 0) {
+                                    $pricing_last_year = $pricing_last_year + $tracker_views * 10;
+                                }
                             }
                         }
-                    }
 
-                /* get price from post doing by user for free course */
-                if (!empty($courses_since_today))
-                    foreach ($courses_since_today as $course) {
-                        $course_type = get_field('course_type', $course->ID);
-                        $prijs = get_field('price', $course->ID);
-                        $sql_request = $wpdb->prepare("SELECT occurence  FROM $table_tracker_views  WHERE  data_id = $course->ID");
-                        $number_of_this_is_looking = $wpdb->get_results($sql_request)[0]->occurence;
-                        $tracker_views = intval($number_of_this_is_looking) ?  : 0;
 
-                        $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
-                        //$reaction = get_field('reaction', $course->ID);
 
                         //get pricing from type of course: course free
                         if ($course_type == 'Artikel') {
@@ -1489,78 +1519,46 @@ $saved = get_user_meta($user_id, 'course');
                         }
                     }
 
-                $image_user = get_field('profile_img',  'user_' . $user->ID);
-                $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    $company = get_field('company',  'user_' . $user->ID);
+                    $company_title = $company[0]->post_title;
+                    $company_logo = get_field('company_logo', $company[0]->ID);
+                    if (!$company_logo || !$company_title)
+                        continue;
 
-                $company = get_field('company',  'user_' . $user->ID);
-                $company_title = $company[0]->post_title;
-                $company_logo = get_field('company_logo', $company[0]->ID);
-                if (!$company_logo || !$company_title)
-                    continue;
+                    if(isset($user->first_name) && isset($user->last_name))
+                        $display_name = $user->first_name . ' ' . $user->last_name;
+                    else
+                        $display_name = $user->display_name;
+                    $purcent = abs($pricing_since_today-$pricing_last_year);
+                    $purcent = $pricing_last_year ? ($purcent/$pricing_last_year) : $purcent;
+                    $purcent = $purcent >= 100 ? $purcent : $purcent * 100;
 
-                $display_name = "";
-                if(isset($user->first_name) && isset($user->last_name))
-                    $display_name = $user->first_name . ' ' . $user->last_name;
-                else
-                    $display_name =  $user->display_name;
+                    if (!$purcent)
+                        continue;
 
-                $purcent = abs($pricing_since_today-$pricing_last_year);
-                $purcent = $pricing_last_year ? ($purcent/$pricing_last_year) : $purcent;
-                $purcent = $purcent >= 100 ? $purcent : $purcent * 100;
+                    $purcent = number_format($purcent, 2, '.', ',');
 
-                if (!$purcent)
-                    continue;
-                if ($purcent>100) {
-                    //  $purcent = (string)$purcent;
-                    //  $purcent = substr($purcent, 0, 2);
+                    if ($pricing_since_today > $pricing_last_year)
+                        $user->pricing = $pricing_since_today;
+                    else
+                        $user->pricing = $pricing_last_year;
+
+                    $user->display_name = $display_name;
+                    $user->purcent = $purcent;
+                    $user->image_user = $image_user;
+                    $user->company_title = $company_title;
+                    $user->company_logo = $company_logo;
+
+                    $active_members [] = $user;
                 }
-                $purcent = number_format($purcent, 2, '.', ',');
+                $pricing_members = array_column($active_members, 'pricing');
+                array_multisort($pricing_members, SORT_DESC, $active_members);
+                var_dump($active_members);
+                ?>
 
-                if ($pricing_since_today > $pricing_last_year)
-                    $user->pricing = $pricing_since_today;
-                else
-                    $user->pricing = $pricing_last_year;
-                $user->display_name = $display_name;
-                $user->purcent = $purcent;
-                $user->image_user = $image_user;
-                $user->company_title = $company_title;
-                $user->company_logo = $company_logo;
-
-                $active_members [] = $user;
-            }
-
-            $pricing_members = array_column($active_members, 'pricing');
-            array_multisort($pricing_members, SORT_DESC, $active_members);
-
-            foreach ($active_members as $index => $user){
-                echo '
-            <a href="user-overview?id=' . $user->ID .'" class="col-md-4">
-                <div class="boxCollections">
-                    <p class="numberList">' . ++$index .'</p>
-                    <div class="circleImgCollection">
-                        <img src="' . $user->image_user . '" alt="">
-                    </div>
-                    <div class="secondBlockElementCollection">
-                        <p class="nameListeCollection">'. $user->display_name . '</p>
-
-                        <div class="blockDetailCollection">
-                            <div class="iconeTextListCollection">
-                                <img src="' . $user->company_logo . '" alt="">
-                                <p>' . $user->company_title. '</p>
-                            </div>
-                            <div class="iconeTextListCollection">
-                                <img src="' . get_stylesheet_directory_uri() . '/img/awesome-brain.png" alt="">
-                               <p class="number-brain">'.number_format($user->pricing,2,".",",").'</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <p class="pourcentageCollection">' . $user->purcent . '%</p>
-                </div>
-            </a>';
-                if ($index == 12)
-                    break;
-            }
+                <?php
+            }else
+                echo '<p class="verkop"> Geen deskundigen beschikbaar </p>';
             ?>
         </div>
     </div>

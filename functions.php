@@ -3,12 +3,13 @@ add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 
 $GLOBALS['id_user'] = get_current_user_id();
 
+require __DIR__ . '/templates/check_visibility.php';
 include "custom-endpoints.php";
 include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
-include __DIR__ . '/templates/recommendation-module.php';
+require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
 
 function enqueue_parent_styles() {

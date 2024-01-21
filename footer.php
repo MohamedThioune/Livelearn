@@ -1,7 +1,9 @@
 <!-- Modal -->
  <?php
+ /*
 echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
+ */
 ?>
 
 <!-- 
@@ -25,7 +27,7 @@ if(!isset($_COOKIE["cookie_consent"])):
 </div>
 </div> 
 -->
-<?php endif; ?> 
+<?php //endif; ?>
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
@@ -681,6 +683,7 @@ $site_url = get_site_url() . "/apply-cookie";
         });
 
     </script>
+
 
 <?php if ( !is_user_logged_in() ) : ?>
 <!-- Start of HubSpot Embed Code -->
