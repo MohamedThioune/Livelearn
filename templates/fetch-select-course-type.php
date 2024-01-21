@@ -4,8 +4,8 @@
 
 extract($_POST);
 
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 
 $users = get_users();
 $data_user = wp_get_current_user();

@@ -6,8 +6,8 @@
 
     $url = home_url( $wp->request );
 
-    $page = 'check_visibility.php';
-    require($page);
+    //$page = 'check_visibility.php';
+    //require($page);
 
     $user = ($_GET['id']) ? get_userdata($_GET['id'])->data : ' ';
     $user_id = get_current_user_id();
