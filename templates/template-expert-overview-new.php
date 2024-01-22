@@ -437,7 +437,7 @@ $count_courses = (!empty($courses)) ? count($courses) : 0;
                                         <div class="review-info-card">
                                             <div class="review-user-mini-profile">
                                                 <div class="user-photo">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri(); ?>/img/expert1.png" alt="">
+                                                    <img class="" src="<?= $image_author ?>" alt="">
                                                 </div>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div class="block-infos">
