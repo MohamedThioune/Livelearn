@@ -6,7 +6,7 @@ global $wp;
 
 $url = home_url( $wp->request );
 
-// $page = dirname(__FILE__) . '/templates/check_visibility.php';
+// $page = dirname(__FILE__) . '/templates/check_visibility.php'; 
 // require($page); 
 
 view($post);
