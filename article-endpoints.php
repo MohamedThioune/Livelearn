@@ -219,7 +219,7 @@ function Artikel_From_Company($data)
             'MLC'=>'https://m-lc.nl/',
             'Artefact'=>'https://www.artefact.com/'
         ]
-    ];
+    ]; 
 
     $args = array(
         'post_type' => 'company',
