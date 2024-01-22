@@ -9,7 +9,7 @@ function updateYoutube(){
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue' => 'podcast',
+        'ordevalue' => 'video',
         'order' => 'DESC' ,
         'meta_key'   => 'course_type',
         'meta_value' => "video"
@@ -64,7 +64,7 @@ function cleanVideoCourse(){
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue' => 'podcast',
+        'ordevalue' => 'video',
         'order' => 'DESC' ,
         'meta_key'   => 'course_type',
         'meta_value' => "video"

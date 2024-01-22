@@ -226,7 +226,7 @@ function Artikel_From_Company($data)
         'posts_per_page' => -1,
     );
     $groups = $data['id'];
-    $list = $list_company[$groups];
+    $list = $list_company[$groups]; 
     // var_dump($list);
     $companies = get_posts($args);
     foreach ($list as $key => $website) {
