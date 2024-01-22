@@ -179,10 +179,47 @@ function Artikel_From_Company($data)
         [
             'Carey Nieuwhof' => 'https://careynieuwhof.com/',
             'Fresh' => 'https://www.stichtingfresh.nl/',
-            'Werf&' => 'https://www.werf-en.nl/',
-            'Monday,com' => 'https://monday.com/blog/',
+            'Werf' => 'https://www.werf-en.nl/',
+            'Monday.com' => 'https://monday.com/blog/',
+            'HR Knowledge'=>'https://www.hrknowledge.com/',
+            'HRcommunity'=>'https://hrcommunity.nl/',
+            'Leeuwendaal'=>'https://www.leeuwendaal.nl/',
+            'Samhoud'=>'https://www.samhoudconsultancy.com/',
+            'Incontext'=>'https://incontext.nl/',
+            'Successday'=>'https://successday.nl/'
         ],
-    ];
+        [
+            'Hospitality Group'=>'https://www.hospitality-group.nl/',
+            'AllChiefs'=>'https://allchiefs.nl/',
+            'BTS'=>'https://bts.com/',
+            'Fakton'=>'https://www.fakton.com/',
+            'bbn'=>'https://bbn.nl/',
+            'Over morgen'=>'https://overmorgen.nl/',
+            'Beaufort'=>'https://www.beaufortconsulting.nl/',
+            'Redept'=>'https://redept.nl/',
+            'Akro'=>'https://akroconsult.nl/',
+            'AT osborne'=>'https://atosborne.nl/'
+        ],
+        [
+            'Brink'=>'https://www.brink.nl/',
+            'Magnus Digital'=>'https://www.magnus.nl/',
+            'Lybrae'=>'https://lybrae.nl/',
+            'HKA'=>'https://www.hka.com/',
+            'Flux Partners'=>'https://flux.partners/',
+            'TWST'=>'https://www.twst.nl/',
+            'Contakt'=>'https://contakt.nl/',
+            'Group Mapping'=>'https://groupmapping.org/',
+            'The house of Marketing'=>'https://thom.eu/',
+            'PPMC'=>'https://ppmc.nl/'
+        ],
+        [
+            'Newcraft'=>'https://newcraftgroup.com/',
+            'The Next Organization'=>'https://thenextorganization.com/',
+            'Salveos'=>'https://salveos.nl/',
+            'MLC'=>'https://m-lc.nl/',
+            'Artefact'=>'https://www.artefact.com/'
+        ]
+    ]; 
 
     $args = array(
         'post_type' => 'company',

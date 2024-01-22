@@ -77,6 +77,15 @@ if (isset($selectedValues)) {
             if ($article != null) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
                 $result_title = $wpdb->get_results($sql_title);
+                
+                // var_dump($article['excerpt']['rendered']);
+                // die;
+            if ($article['content']['rendered']!='') {
+                if ($article['excerpt']['rendered']==''){
+                    $firstSentence = explode('.',$article['content']['rendered']);
+                    $article['excerpt']['rendered'] = $firstSentence[0];
+                }
+                // var_dump($article['excerpt']['rendered']);
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
@@ -104,7 +113,30 @@ if (isset($selectedValues)) {
                                 'contributors' => null,
                                 'status' => $status,
                             );
-                } else {
+                        }else{
+                            $status = 'extern';
+                            $datas = array(
+                                'titel' => $article['title']['rendered'],
+                                'type' => 'Artikel',
+                                'videos' => null,
+                                'short_description' => strip_html_tags($article['excerpt']['rendered']),
+                                'long_description' => $article['content']['rendered'],
+                                'duration' => null,
+                                'prijs' => 0,
+                                'prijs_vat' => 0,
+                                'image_xml' => null,
+                                'onderwerpen' => $onderwerpen,
+                                'date_multiple' => null,
+                                'course_id' => null,
+                                'author_id' => $author_id,
+                                'company_id' => $company_id,
+                                'contributors' => null,
+                                'status' => $status,
+                            );
+                        }
+                    }else continue;
+                }else{
+                    if (!isset($result_title[0])) {
                         $status = 'extern';
                         $datas = array(
                             'titel' => $article['title']['rendered'],
@@ -125,29 +157,10 @@ if (isset($selectedValues)) {
                             'status' => $status,
                         );
                     }
-                }else continue;
-            } else {
-                if (!isset($result_title[0])) {
-                    $status = 'extern';
-                    $datas = array(
-                        'titel' => $article['title']['rendered'],
-                        'type' => 'Artikel',
-                        'videos' => null,
-                        'short_description' => strip_html_tags($article['excerpt']['rendered']),
-                        'long_description' => $article['content']['rendered'],
-                        'duration' => null,
-                        'prijs' => 0,
-                        'prijs_vat' => 0,
-                        'image_xml' => null,
-                        'onderwerpen' => $onderwerpen,
-                        'date_multiple' => null,
-                        'course_id' => null,
-                        'author_id' => $author_id,
-                        'company_id' => $company_id,
-                        'contributors' => null,
-                        'status' => $status,
-                    );
                 }
+            }else{
+                var_dump('no content');
+                continue;
             }
             // echo "Selected option: $text (value=$value)<br>";
             try
