@@ -990,8 +990,6 @@ function get_course_image($data)
             
 }
 
-
-
 function allArticlesOptimized ($data)
 {
     $current_user_id = $GLOBALS['user_id'];
