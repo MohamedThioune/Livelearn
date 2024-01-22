@@ -47,7 +47,7 @@ function artikel($id){
   $sample['number_comments'] = (!empty($reviews)) ? count($reviews) : 0;
   $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
   $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
-  
+
   //Reviews | Comments
   $comments = array();
   $main_reviews = get_field('reviews', $post->ID);
@@ -582,7 +582,7 @@ function allCompanies(WP_REST_Request $request){
 function allJobs(WP_REST_Request $request){
    
   $args = array(
-      'post_type' => 'job',  
+      'post_type' => array('post', 'course'),  
       'post_status' => 'publish',
       'posts_per_page' => -1,
   );
