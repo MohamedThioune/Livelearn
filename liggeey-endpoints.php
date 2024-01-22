@@ -2,6 +2,139 @@
 
 /* * Liggeey * */
 
+// Function
+
+// function visibility($course, $visibility_company){
+//   $bool = true;
+
+//   $invisibility = get_field('visibility', $course->ID);
+//   $company = get_field('company',  'user_' . $course->post_author);
+//   if(!empty($company))
+//       $company_title = $company[0]->post_title;
+
+//   if($invisibility && $visibility_company != $company_title )
+//       $bool = false;
+
+//   return $bool;
+// }
+
+function artikel($id){
+
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+  $course_type = get_field('course_type', $post->ID);
+
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  //Image information
+  $thumbnail = get_field('preview', $post->ID)['url'];
+  if(!$thumbnail){
+      $thumbnail = get_the_post_thumbnail_url($post->ID);
+      if(!$thumbnail)
+          $thumbnail = get_field('url_image_xml', $post->ID);
+              if(!$thumbnail)
+                  $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
+  }
+  $sample['image'] = $thumbnail;
+  $author = get_user_by('ID', $post->post_author);
+  $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
+  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $post_date = new DateTimeImmutable($post->post_date);
+  $sample['post_date'] = $post_date->format('M d, Y');
+  $reviews = get_field('reviews', $post->ID);
+  $sample['number_comments'] = (!empty($reviews)) ? count($reviews) : 0;
+  $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
+  $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
+  
+  //Reviews | Comments
+  $comments = array();
+  $main_reviews = get_field('reviews', $post->ID);
+
+  foreach($main_reviews as $review):
+    $user = $review['user'];
+    $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
+    $image_author = get_field('profile_img',  'user_' . $user->ID);
+    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+    $company = get_field('company',  'user_' . $user->ID);
+    $title = $company[0]->post_title;
+
+    $comment = array();
+    $comment['comment_author_name'] = $author_name ;
+    $comment['comment_author_image'] = $image_author;
+    $comment['rating'] = $review['rating'];
+
+    $comments[] = $comment;
+  endforeach;
+  $sample['comments'] = $comments;
+  $sample = (Object)$sample;
+
+  return $sample;  
+}
+
+//Detail job
+function job($id){
+
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['posted_at'] = $post->post_date;
+  $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
+  $sample['description'] = get_field('job_description', $post->ID);
+  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID);
+  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID);
+
+  $company = get_field('job_company', $post->ID);
+  $main_company = array();
+  $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
+  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
+  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
+  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : 'xxxx';
+  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : 'xxxx';
+  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : 'xxxx';
+  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : 'xxxx';
+  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : 'xxxx';
+  $sample['company'] = (Object)$main_company;
+
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+
+  $sample = (Object)$sample;
+  return $sample;  
+}
+
+//Detail company
+function company($id){
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  //var_dump($post);
+  //assigner les champs
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
+  $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
+  $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
+  $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
+
+  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
+  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
+
+  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
+
+  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
+  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  
+  $sample = (Object)$sample;
+
+  return $sample; 
+}
+
+//end function
 
 //Home page [GET]
 function homepage(){
@@ -14,26 +147,38 @@ function homepage(){
   $limit_post = 3;
   $limit_candidate = 20;
 
-  //Error message 
-  // if(1):
-  //   $errors['errors'] = "";
-  //   $errors = (Object)$errors;
-  //   $response = new WP_REST_Response($errors); 
-  //   $response->set_status(400);
-  //   return $response;
-  // endif;
-
   //Category [Block]
   $categories = array();
-  $sample_categories = array(
-                'Digital Marketing', 'Digital Project Manager', 'Community Manager', 'Social Media Manager', 
-                'Webdesigner', '3D Illustrator', 'UX Designer',
-                'Data Analyst', 'Salesforce', 'Google', 'Web Project Manager', 'COMMCARE', 'DHIS2', 'DRUPAL', 
-                'Wordpress', 'Webflow', 'Odoo', 'Prestashop'); 
+  // $sample_categories = array(
+  //   'Digital Marketing', 'Digital Project Manager', 'Community Manager', 'Social Media Manager', 
+  //   'Webdesigner', '3D Illustrator', 'UX Designer',
+  //   'Data Analyst', 'Salesforce', 'Google', 'Web Project Manager', 'COMMCARE', 'DHIS2', 'DRUPAL', 
+  //   'Wordpress', 'Webflow', 'Odoo', 'Prestashop'); 
+
+  //Category information
+  $no_content = "Some information missing !";
+  $digital_category = get_categories(array('taxonomy' => 'course_category', 'slug' => 'digital', 'hide_empty' => 0) )[0];
+  if(is_wp_error($digital_category)):
+      echo $no_content;
+      return $infos;
+  endif;
+
+  $sample_categories = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'parent'     => $digital_category->cat_ID,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );  
+  
   foreach ($sample_categories as $key => $category){
+    if(!$category)
+      continue;
     $sample = array();
-    $sample['cat_ID'] = $key;
-    $sample['cat_name'] = $category;
+    $sample['cat_ID'] = $category->cat_ID;
+    $sample['cat_name'] = $category->cat_name;
+    $image_category = get_field('image', 'category_'. $category->cat_ID);
+    $sample['cat_image'] = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
+
     $sample = (Object)$sample;
 
     array_push($categories, $sample);
@@ -112,7 +257,6 @@ function homepage(){
       continue;
     // if(!$value->first_name)
     //   continue;
-
     $sample['ID'] = $value->ID;
     $sample['permalink'] = get_site_url() . '/user-overview/?id=' . $value->ID; 
     $sample['first_name'] = $value->first_name;
@@ -122,8 +266,8 @@ function homepage(){
     $sample['image'] = get_field('profile_img',  'user_' . $value->ID) ?: get_stylesheet_directory_uri() ."/img/placeholder_user.png";
     $sample['work_as'] = get_field('role',  'user_' . $value->ID) ?: "Free agent";
     $sample['country'] = get_field('country',  'user_' . $value->ID) ?: "International";
-    $sample = (Object)$sample;
 
+    $sample = (Object)$sample;
     array_push($candidates, $sample);
 
     $i += 1; 
@@ -360,40 +504,7 @@ function candidateDetail(WP_REST_Request $request){
 function artikelDetail(WP_REST_Request $request){
 
   $param_post_id = $request['id'] ?? 0;
-  $sample = array();
-  $post = get_post($param_post_id);
-
-  $sample['ID'] = $post->ID;
-  $sample['title'] = $post->post_title;
-  $sample['author_name'] = $user->first_name . ' ' . $user->last_name;
-  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-  $post_date = new DateTimeImmutable($post->post_date);
-  $sample['post_date'] = $post_date->format('M d, Y');
-  $reviews = get_field('reviews', $post->ID);
-  $sample['number_comments'] = (!empty($reviews)) ? count($reviews) : 0;
-  $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
-  
-  //Reviews | Comments
-  $comments = array();
-  $main_reviews = get_field('reviews', $post->ID);
-  foreach($main_reviews as $review):
-    $user = $review['user'];
-    $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
-    $image_author = get_field('profile_img',  'user_' . $user->ID);
-    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-    $company = get_field('company',  'user_' . $user->ID);
-    $title = $company[0]->post_title;
-
-    $comment = array();
-    $comment['comment_author_name'] = $author_name ;
-    $comment['comment_author_image'] = $image_author;
-    $comment['rating'] = $review['rating'];
-
-    $comments[] = $comment;
-  endforeach;
-  $sample['comments'] = $comments;
-
-  $sample = (Object)$sample;
+  $sample = artikel($param_post_id);
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -401,39 +512,38 @@ function artikelDetail(WP_REST_Request $request){
 
   return $response;  
 }
-  
+
 //Detail company
-
 function companyDetail(WP_REST_Request $request){
-
   $param_post_id = $request['id'] ?? 0;
   $sample = array();
   $post = get_post($param_post_id);
 
   //var_dump($post);
-//assigner les champs
+  //assigner les champs
   $sample['ID'] = $post->ID;
-  $sample['post_title'] = $post->post_title;
-  //Recuperer la valeur des champs
-  $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
-  $sample['place'] = get_field('company_place', $post->ID)?: 'xxxx xxx';
-  $sample['contry'] = get_field('company_country', $post->ID)?: 'xxxx';
-  $sample['biography'] = get_field('company_bio', $post->ID)?: ' ';
-  $sample['website'] = get_field('company_website', $post->ID)?: 'www.livelearn.nl';
-  $sample['size'] = get_field('company_size', $post->ID)?: 'xx';
-  $sample['email'] = get_field('company_email', $post->ID)?: 'contact@livelearn.nl';
-  $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
-  $sample['company_logo'] = get_field('company_logo',  $post->company_logo)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
- 
- $response = new WP_REST_Response($sample);
- $response->set_status(200);
+  $sample['title'] = $post->post_title;
+  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
+  $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
+  $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
+  $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
+
+  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
+  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
+
+  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
+
+  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
+  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
 
   return $response; 
-
 }
 
 function allCompanies(WP_REST_Request $request){
-   
+
   $args = array(
       'post_type' => 'company',  
       'post_status' => 'publish',
@@ -443,29 +553,191 @@ function allCompanies(WP_REST_Request $request){
   $companies = array();
 
   // Boucle pour afficher les résultats
-  foreach ($company_posts as $post) {
-    $sample = array();
-      //setup_postdata($post);
-      // Affichez ici le contenu de chaque élément
-      $sample['ID'] = $post->ID;
-      $sample['post_title'] = $post->post_title;
-      $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
-      $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
-      $sample['company_logo'] = get_field('company_logo',  $post->company_logo)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-     
-      $sample = (Object)$sample;
-      array_push($companies, $sample);
-    }
+  foreach ($company_posts as $post):
 
- 
+    $sample = array();
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['post_title'] = $post->post_title;
+    $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
+    $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
+
+    //Just check more by testing but otherwis that a "Good Job !"
+    $sample['company_logo'] = get_field('company_logo',  $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+    $sample = (Object)$sample;
+    array_push($companies, $sample);
+
+  endforeach;
 
   $response = new WP_REST_Response($companies);
   $response->set_status(200);
   return $response;
+}
 
-      
+function allJobs(WP_REST_Request $request){
+   
+  $args = array(
+      'post_type' => 'job',  
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $job_posts = get_posts($args);
+  $jobs = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($job_posts as $post):
+    if(!$post)
+      continue;
+
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $sample = array('ID' => '0', 'title' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['title'] = $post->post_title;
+    $sample['posted_at'] = $post->post_date;
+    $company = get_field('job_company', $post->ID);
+
+    $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
+    $sample['image'] = !empty($company) ? get_field('company_logo',  $company->ID) : $sample['image'];
+    $sample['place'] = !empty($company) ? get_field('company_place',  $company->ID) : $sample['place'];
+    $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
+
+    $sample = (Object)$sample;
+    array_push($jobs, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($jobs);
+  $response->set_status(200);
+  return $response;
   
 }
+
+//Detail job
+function jobDetail(WP_REST_Request $request){
+  $param_post_id = $request['id'] ?? 0;
+    $sample = job($param_post_id);
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response;  
+}
+
+//Detail category 
+function categoryDetail(WP_REST_Request $request){
+  //Get ID Category
+  $sample = array();
+  $param_category_id = $request['id'] ?? 0;
+  $name = get_the_category_by_ID($param_category_id);
+  if(!$name)
+      return $sample;
+
+  //tax query
+  $tax_query = array(
+    array(
+      "taxonomy" => "course_category",
+      "field"    => "term_id",
+      "terms"    => [$param_category_id]
+    )
+  );
+
+  /** Global jobs **/
+  $jobs = array();
+  $args = array(
+    'post_type' => 'job',
+    'tax_query' => $tax_query
+  );
+  $query_jobs = new WP_Query( $args );
+  $global_jobs = isset($query_jobs->posts) ? $query_jobs->posts : array();
+  foreach ($global_jobs as $job)
+    $jobs[] = job($job->ID);
+  $sample['jobs'] = $jobs;
+
+
+  /** Global companies **/
+  $companies = array();
+  $args = array(
+    'post_type' => 'company',
+    'tax_query' => $tax_query
+  );
+  $query_companies = new WP_Query( $args );
+  $global_companies = isset($query_companies->posts) ? $query_companies->posts : array();
+  foreach ($global_companies as $company)
+    $companies[] = company($company->ID);
+  $sample['companies'] = $companies;
+  
+  /** Global posts **/
+  $args = array(
+      'post_type' => array('post'),
+      'post_status' => 'publish',
+      'orderby' => 'date',
+      'order'   => 'DESC',
+      'posts_per_page' => -1,
+  );
+  $global_posts = get_posts($args);
+  // Category post 
+  $sample['articles'] = searching_course_by_group($global_posts, 'category', $param_category_id)['courses'];
+
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $sample;
+}
+
+function allArtikels(WP_REST_Request $request){
+  $args = array(
+      'post_type' => 'post',
+      'post_status' => 'publish',
+      'orderby' => 'date',
+      'order'   => 'DESC',
+      'posts_per_page' => -1,
+  );
+    $global_posts = get_posts($args);
+    $artikels = array();
+        //var_dump($global_posts);
+     foreach ($global_posts as $post):
+        $sample = array();
+        // Affichez ici le contenu de chaque élément
+     $sample['ID'] = $post->ID;
+     $sample['post_title'] = $post->post_title;
+     $sample['permalink'] = get_permalink($post->ID);
+     $author = get_user_by('ID', $post->post_author);
+     $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
+     $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+     $post_date = new DateTimeImmutable($post->post_date);
+     $sample['post_date'] = $post_date->format('M d, Y');
+     $reviews = get_field('reviews', $post->ID);
+     $sample['number_comments'] = (!empty($reviews)) ? count($reviews) : 0;
+     $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
+     $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
+     $course_type = get_field('course_type', $post->ID);
+        //Image information
+        // $thumbnail = get_field('preview', $post->ID)['url'];
+         if(!$thumbnail){
+             $thumbnail = get_the_post_thumbnail_url($post->ID);
+             if(!$thumbnail)
+                 $thumbnail = get_field('url_image_xml', $post->ID);
+                     if(!$thumbnail)
+                         $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+         }
+         $sample['image'] = $thumbnail;
+
+  $sample = (Object)$sample;
+  array_push($artikels, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($artikels);
+  $response->set_status(200);
+
+  return $response;
+
+}
+
+
 
 
 /* * End Liggeey * */

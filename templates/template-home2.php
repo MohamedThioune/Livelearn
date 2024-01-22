@@ -1,151 +1,12 @@
 <?php /** Template Name: Home 2 */ ?>
 
 <?php get_header(); ?>
-<<<<<<< HEAD
-=======
-<?php
-
-$page = 'check_visibility.php';
-require($page);
-global $wpdb;
-
-$user_connected_id = get_current_user_id();
-$user_connected_head = wp_get_current_user();
-
-// View table name
-
-$table_tracker_views = $wpdb->prefix . 'tracker_views';
-// Get id of courses viewed from db
-$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
-$all_user_views = $wpdb->get_results($sql_request);
-$id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
-$expert_from_database = array();
-/**
- * get experts doing the course by database
- */
-$pricing = 0;
-$purchantage_on_top = 0;
-$purchantage_on_bottop = 0;
-foreach ($id_courses_viewed as $id_course) {
-    $course = get_post($id_course);
-    $expert_id = $course->post_author;
-    //if ($expert_id)
-    $expert_from_database[] = $expert_id;
-}
-$expert_from_database = array_unique($expert_from_database);
-// if($user_connected_id))
-//     header('Location: /dashboard/user/');
-
-if(!isset($visibility_company))
-    $visibility_company = "";
-/*
-* Check statistic by user *
-*/
-
-$users = get_users();
-$numbers = array();
-$members = array();
-$numbers_count = array();
-$topic_views = array();
-$topic_followed = array();
-$stats_by_user = array();
-
-foreach ($users as $user) {
-    $topic_by_user = array();
-    $course_by_user = array();
-
-    //Object & ID member
-    array_push($numbers, $user->ID);
-    array_push($members, $user);
-
-    //Views topic
-    $args = array(
-        'post_type' => 'view',
-        'post_status' => 'publish',
-        'author' => $user->ID,
-    );
-    $views_stat_user = get_posts($args);
-    $stat_id = 0;
-    if(!empty($views_stat_user))
-        $stat_id = $views_stat_user[0]->ID;
-    $view_topic = get_field('views_topic', $stat_id);
-    if($view_topic)
-        array_push($topic_views, $view_topic);
-
-    $view_user = get_field('views_user', $stat_id);
-    $number_count['id'] = $user->ID;
-    $number_count['digit'] = 0;
-    if(!empty($view_user))
-        $number_count['digit'] = count($view_user);
-    if($number_count)
-        array_push($numbers_count, $number_count);
-
-    $view_course = get_field('views', $stat_id);
-
-    //Followed topic
-    $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
-    $topics_external = get_user_meta($user->ID, 'topic');
-    $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
-
-    //Stats engagement
-    $stat_by_user['user'] = $view_user;
-    $stat_by_user['topic'] = $view_topic;
-    $stat_by_user['course'] = $view_course;
-    array_push($stats_by_user, $stat_by_user);
-}
-
-$topic_views_sorting = $topic_views[5];
-if(!$topic_views_sorting)
-    $topic_views_sorting = array();
-$topic_views_id = array_column($topic_views_sorting, 'view_id');
-$keys = array_column($numbers_count, 'digit');
-array_multisort($keys, SORT_DESC, $numbers_count);
-
-$most_active_members = array();
-$i = 0;
-if(!empty($numbers_count))
-    foreach ($numbers_count as $element) {
-        $i++;
-        $value = get_user_by('ID', $element['id']);
-        $value->image_author = get_field('profile_img',  'user_' . $value->ID);
-        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        array_push($most_active_members, $value);
-    }
-
-//Alles coursetype
-
-$type_course = array(
-    "Alles",
-    "Opleidingen",
-    "Training",
-    "Workshop",
-    "Masterclass",
-    "E-learning",
-    "Video",
-    "Artikel",
-    "Assessment",
-    "Cursus",
-    "Lezing",
-    "Event",
-    "Webinar",
-    "Leerpad",
-    "Podcast"
-);
-
-
-?>
-
->>>>>>> origin/Xadim
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js" />
 <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/Xadim
 <style>
     body{
         background: #F5FAFD;
@@ -777,7 +638,6 @@ $skills = get_categories( array(
     'hide_empty' => 0, // change to 1 to hide categores not having a single post
 ) );
 
-<<<<<<< HEAD
     $functies = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent'  => $categories[0],
@@ -795,17 +655,6 @@ $skills = get_categories( array(
         'parent'  => $categories[2],
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
-=======
-$interesses = get_categories( array(
-    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'parent'  => $categories[2],
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-) );
-?>
-
-<?php
-
->>>>>>> origin/Xadim
 
 $subtopics = array();
 $topics = array();
@@ -1209,11 +1058,7 @@ $saved = get_user_meta($user_id, 'course');
                                     </video>
                                 </div>
                                 <div class="modal-footer">
-<<<<<<< HEAD
                                     <!--  <a href="/registreren/" class="btn btn-registreren">Register for free</a>     -->
-=======
-                                    <!--                                    <a href="/registreren/" class="btn btn-registreren">Register for free</a>-->
->>>>>>> origin/Xadim
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -1616,44 +1461,10 @@ $saved = get_user_meta($user_id, 'course');
                         $favorited = get_field('favorited', $course->ID); // this means that if this course doing by this user is liked by a user
                         //$reaction = get_field('reaction', $course->ID);
 
-<<<<<<< HEAD
                     $image_user = get_field('profile_img',  'user_' . $user->ID);
                     // var_dump($image_user);
                     // die();
                     $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
-=======
-                        //get pricing from type of course: course free
-                        if ($course_type == 'Artikel') {
-                            $pricing_since_today = $pricing_since_today + 50;
-                            if ($tracker_views !=0) {
-                                $pricing_since_today = $pricing_since_today + $tracker_views * 1.25; //views+click
-                            }
-                            if ($favorited){
-                                $pricing_since_today = $pricing_since_today + 5;
-                            }
-                        }
-                        else if ($course_type == 'Podcast') {
-                            $pricing_since_today = $pricing_since_today + 100;
-                            if ($favorited){
-                                $pricing_since_today = $pricing_since_today + 10;
-                            }
-                        }
-                        else if ($course_type == 'Video') {
-                            $pricing_since_today = $pricing_since_today + 75;
-                            if ($tracker_views !=0) {
-                                $pricing_since_today = $pricing_since_today + $tracker_views * 3.5; //views+click+
-                            }
-                        }else {
-                            $pricing_since_today = $pricing_since_today + 100;
-                            if ($favorited){
-                                $pricing_since_today = $pricing_since_today + 20;
-                            }
-                            if ($tracker_views !=0) {
-                                $pricing_since_today = $pricing_since_today + $tracker_views * 10;
-                            }
-                        }
-                    }
->>>>>>> origin/Xadim
 
                 $image_user = get_field('profile_img',  'user_' . $user->ID);
                 $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -1795,11 +1606,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </a>
             <div class="blockGroupText">
-<<<<<<< HEAD
                 <a href="/main-category-overview/?main=1" class="titleGroupText">Opleiden richting een baan </a>
-=======
-                <p class="titleGroupText">Opleiden richting een baan </p>
->>>>>>> origin/Xadim
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1812,11 +1619,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-<<<<<<< HEAD
                 <a href="/main-category-overview/?main=4" class="titleGroupText">Groeien binnen je functie </a>
-=======
-                <p class="titleGroupText">Groeien binnen je functie </p>
->>>>>>> origin/Xadim
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1829,11 +1632,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-<<<<<<< HEAD
                 <a href="/main-category-overview/?main=3" class="titleGroupText">Relevante skills ontwikkelen:</a>
-=======
-                <p class="titleGroupText">Relevante skills ontwikkelen:</p>
->>>>>>> origin/Xadim
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -1846,11 +1645,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
             </div>
             <div class="blockGroupText">
-<<<<<<< HEAD
                 <a href="/main-category-overview/?main=2" class="titleGroupText">Persoonlijke interesses & vrije tijd</a>
-=======
-                <p class="titleGroupText">Persoonlijke interesses & vrije tijd</p>
->>>>>>> origin/Xadim
 
                 <div class="sousBlockGroupText">
                     <?php
@@ -2322,4 +2117,5 @@ $saved = get_user_meta($user_id, 'course');
                 }
             });
         });
+
     </script>
