@@ -1348,11 +1348,11 @@ function following(){
 
 //Callbacks 
 add_action( 'rest_api_init', function () {
+
   register_rest_route( 'custom/v1', '/tags', array(
     'methods' => 'GET',
     'callback' => 'seperate_tags',
   ) );
-
 
   register_rest_route( 'custom/v1', '/follow', array(
     'methods' => 'POST',
