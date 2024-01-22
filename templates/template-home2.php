@@ -314,16 +314,16 @@
 </style>
 
 <?php
-    $page = 'check_visibility.php';
-    require($page);
+    // $page = 'check_visibility.php';
+    // require($page);
     global $wpdb;
 
     $user_connected_id = get_current_user_id();
     $user_connected_head = wp_get_current_user();
 
     // View table name
-
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
+
     // Get id of courses viewed from db
     $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user_connected_id ");
     $all_user_views = $wpdb->get_results($sql_request);
@@ -331,7 +331,7 @@
     $expert_from_database = array();
     /**
      * get experts doing the course by database
-     */
+    */
     $pricing = 0;
     $purchantage_on_top = 0;
     $purchantage_on_bottop = 0;
