@@ -229,7 +229,7 @@ function Artikel_From_Company($data)
     $list = $list_company[$groups]; 
     // var_dump($list);
     $companies = get_posts($args);
-    foreach ($list as $key => $website) {
+    foreach ($list as $key => $website) { 
         $author_id = null;
         $company = null;
         foreach ($companies as $companie) {
