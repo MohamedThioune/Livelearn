@@ -703,12 +703,12 @@ function create_product_for_course($post_id){
     }else{
         //product does not exist yet, create one
         $post = array(
-            'post_author' => get_current_user_id(),
-            'post_content' => '',
-            'post_status' => 'publish',
-            'post_title' => get_the_title($post_id),
-            'post_parent' => '',
-            'post_type' => 'product',
+          'post_author' => get_current_user_id(),
+          'post_content' => '',
+          'post_status' => 'publish',
+          'post_title' => get_the_title($post_id),
+          'post_parent' => '',
+          'post_type' => 'product',
         );
 
         $product_id = wp_insert_post( $post );
