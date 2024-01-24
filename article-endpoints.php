@@ -228,13 +228,13 @@ function Artikel_From_Company($data)
         'posts_per_page' => -1,
     );
     
+    $company = null;
     $groups = $data['id'];
     $list = $list_company[$groups]; 
     // var_dump($list);
     $companies = get_posts($args);
     foreach ($list as $key => $website) { 
         $author_id = null;
-        $company = null;
         foreach ($companies as $companie) {
             if (strtolower($companie->post_title) == strtolower($key)) {
                 $company = $companie;
