@@ -43,6 +43,8 @@ function Artikel_From_Company($data)
     //Get all users
     $users = get_users();
 
+    $company = null;
+
     $list_company = [
         [
             'WorkPlace Academy' => 'https://workplaceacademy.nl/',
@@ -225,13 +227,15 @@ function Artikel_From_Company($data)
         'post_type' => 'company',
         'posts_per_page' => -1,
     );
+    
     $groups = $data['id'];
     $list = $list_company[$groups]; 
     // var_dump($list);
     $companies = get_posts($args);
     foreach ($list as $key => $website) { 
         $author_id = null;
-        $company = null;
+        
+        $author_id = null;
         foreach ($companies as $companie) {
             if (strtolower($companie->post_title) == strtolower($key)) {
                 $company = $companie;
