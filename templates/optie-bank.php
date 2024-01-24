@@ -37,7 +37,7 @@ if($optie == "✔"){
         }
     }
 
-    if ($course->author_id == '0')
+    if (strval($course->type) == "Video")
         $course->author_id = $user_connected->ID;
 
     if(!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id){
@@ -45,7 +45,6 @@ if($optie == "✔"){
         http_response_code(500);
         return 0;
     }
-
 
     //Insert some other course type
     $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Podcast'];
@@ -65,11 +64,11 @@ if($optie == "✔"){
 
         if($course->image_xml==null)
         {
-            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
             update_field('image_xml', $image, $id_post);
         }
         update_field('course_type', 'article', $id_post);
-        update_field('article_itself', nl2br($course->long_description), $id_post); //Korte beschrijving
+        update_field('article_itself', nl2br($course->long_description), $id_post);        
     }
     //Insert YouTube
     else if (strval($course->type) == "Video"){
@@ -113,7 +112,7 @@ if($optie == "✔"){
             'post_title'  => $course->titel
         );
         $id_post = wp_insert_post($args, true);
-        $podcasts = explode('^', $course->podcasts);
+        $podcasts = explode('|', $course->podcasts);
         $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
         foreach ($podcasts as $item) {
@@ -134,7 +133,6 @@ if($optie == "✔"){
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post);
     }
-
     //Insert Others
     else if (in_array(strval($course->type), $type) ) {
         //Creation course
