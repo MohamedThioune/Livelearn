@@ -43,7 +43,7 @@ function Artikel_From_Company($data)
     //Get all users
     $users = get_users();
 
-    $company = null;
+    
 
     $list_company = [
         [
@@ -234,13 +234,10 @@ function Artikel_From_Company($data)
     $companies = get_posts($args);
     foreach ($list as $key => $website) { 
         $author_id = null;
-        
-        $author_id = null;
+        $company = null;
         foreach ($companies as $companie) {
             if (strtolower($companie->post_title) == strtolower($key)) {
                 $company = $companie;
-            } else {
-                continue;
             }
 
             foreach ($users as $user) {
