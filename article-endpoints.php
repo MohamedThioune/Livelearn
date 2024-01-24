@@ -203,15 +203,15 @@ function Artikel_From_Company($data)
             'AT osborne'=>'https://atosborne.nl/'
         ],
         [
-            'Brink'=>'https://www.brink.nl/',
-            'Magnus Digital'=>'https://www.magnus.nl/',
-            'Lybrae'=>'https://lybrae.nl/',
+            // 'Brink'=>'https://www.brink.nl/',
+            // 'Magnus Digital'=>'https://www.magnus.nl/',
+            // 'Lybrae'=>'https://lybrae.nl/',
             'HKA'=>'https://www.hka.com/',
-            'Flux Partners'=>'https://flux.partners/',
-            'TWST'=>'https://www.twst.nl/',
-            'Contakt'=>'https://contakt.nl/',
-            'Group Mapping'=>'https://groupmapping.org/',
-            'The house of Marketing'=>'https://thom.eu/',
+            // 'Flux Partners'=>'https://flux.partners/',
+            // 'TWST'=>'https://www.twst.nl/',
+            // 'Contakt'=>'https://contakt.nl/',
+            // 'Group Mapping'=>'https://groupmapping.org/',
+            // 'The house of Marketing'=>'https://thom.eu/',
             'PPMC'=>'https://ppmc.nl/'
         ],
         [
@@ -235,10 +235,15 @@ function Artikel_From_Company($data)
     $companies = get_posts($args);
     foreach ($list as $key => $website) { 
         $author_id = null;
+
         foreach ($companies as $companie) {
             if (strtolower($companie->post_title) == strtolower($key)) {
                 $company = $companie;
+                
             }
+
+            var_dump($company->post_title);
+            die;
 
             foreach ($users as $user) {
                 $company_user = get_field('company', 'user_' . $user->ID);
