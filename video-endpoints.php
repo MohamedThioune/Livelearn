@@ -71,8 +71,8 @@ function cleanVideoCourse(){
     );
     $videos  = get_posts($args);
 
-    $correct_videos = array();
     foreach ($videos as  $course) {
+        $correct_videos = array();
         $youtube_playlists = get_field('youtube_videos', $course->ID);
         if (!$youtube_playlists)
             continue;
