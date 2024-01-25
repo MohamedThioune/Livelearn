@@ -32,10 +32,10 @@ function strip_html_tags($text)
 }
 
 function fetch_author($entityName){
-    // global $wpdb;
+    global $wpdb;
     $users = get_users();
-    $author_id = null;
-    $company = null;
+    global $author_id = 0;
+    global $company_id = 0;
 
     $args = array(
         'post_type' => 'company',
@@ -92,7 +92,7 @@ function fetch_author($entityName){
         );
 
         var_dump($company);
-        die;
+        // die;
 
         $author_id = wp_insert_user(wp_slash($userdata));
 
@@ -106,6 +106,8 @@ function fetch_author($entityName){
 function Artikel_From_Company($data)
 {
     global $wpdb;
+    $author_id=0;
+    $company_id=0;
     
     $list = array();
     $datas = array();
