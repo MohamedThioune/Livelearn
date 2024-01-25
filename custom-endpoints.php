@@ -2757,8 +2757,7 @@ function save_user_views(WP_REST_Request $request)
   * Firebase Push Notifications Endpoints
   */
 
-  function update_user_smartphone_token(WP_REST_Request $request)
-  {
+  function update_user_smartphone_token(WP_REST_Request $request){
     $user_id = $request['user_id'] ?? false;
     if (!$user_id)
     {
