@@ -1733,4 +1733,9 @@ add_action( 'rest_api_init', function () {
     'callback' => 'jobDetail'
   ));
 
+  register_rest_route ('custom/v1', '/job/user', array(
+      'methods' => 'POST',
+      'callback' => 'jobUser'
+    ));
+
 });

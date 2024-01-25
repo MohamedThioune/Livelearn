@@ -100,7 +100,7 @@ function job($id){
   $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : 'xxxx';
   $sample['company'] = (Object)$main_company;
 
-  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category');
 
   $sample = (Object)$sample;
   return $sample;  
@@ -120,10 +120,8 @@ function company($id){
   $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
   $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
   $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
-
   $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
   $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
-
   $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
 
   $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
@@ -202,7 +200,6 @@ function homepage(){
     $hidden = get_field('visibility', $post->ID);
     if($hidden)
       continue;
-
     //Generic informations
     $sample['ID'] = $post->ID;
     $sample['permalink'] = get_permalink($post->ID);
@@ -273,7 +270,6 @@ function homepage(){
     $i += 1; 
     if($i >= $limit_candidate)
       break;
-
   }
   $infos['candidates'] = $candidates;
 
@@ -393,7 +389,6 @@ function register_company(WP_REST_Request $request){
 function candidateDetail(WP_REST_Request $request){
 
   $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-
   $sample = array();
   $user = get_user_by('ID', $param_user_id);
 
@@ -502,7 +497,6 @@ function candidateDetail(WP_REST_Request $request){
 
 //Detail artikel
 function artikelDetail(WP_REST_Request $request){
-
   $param_post_id = $request['id'] ?? 0;
   $sample = artikel($param_post_id);
 
@@ -655,7 +649,6 @@ function categoryDetail(WP_REST_Request $request){
     $jobs[] = job($job->ID);
   $sample['jobs'] = $jobs;
 
-
   /** Global companies **/
   $companies = array();
   $args = array(
@@ -736,8 +729,74 @@ function allArtikels(WP_REST_Request $request){
   return $response;
 
 }
+function jobUser(WP_REST_Request $request){
+
+    $errors = ['errors' => '', 'error_data' => ''];
+
+    //Get inputs
+    $user_apply_id = isset($request['user_apply_id']) ? $request['user_apply_id'] : null;
+    $job_applied_id = isset($request['job_applied_id']) ? $request['job_applied_id'] : null;
+
+    $user_apply = get_user_by('ID', $user_apply_id);
+
+    //error missing
+    if(!$user_apply_id || !$job_applied_id || empty($user_apply)):
+      $errors['errors'] = "Please fill up all the fields correctly !";
+      $errors = (Object)$errors;
+      $response = new WP_REST_Response($errors);
+      $response->set_status(400);
+    endif;
+
+    //Get the appliants user
+    $user_appliants = get_field('job_appliants', $job_applied_id);
+     $user_appliants = array();
+    //Add the applying user
+    array_push($user_appliants, $user_apply);
+    //Update the 'job_appliants'
+    update_field('job_appliants', $user_appliants, $job_applied_id);
+
+    $status = "Job appliant with success !";
+    $response = new WP_REST_Response($status);
+    $response->set_status(200);
+
+    return $response;
+
+}
+
+/* function liggeeySave(WP_REST_Request $request){
+    $errors = ['errors' => '', 'error_data' => ''];
+    //Get inputs
+    $user_favorite_id = isset($request['user_favorite_id']) ? $request['user_favorite_id'] : null;
 
 
+    //error missing
+     if(!$user_favorite_id ):
+          $errors['errors'] = "Please fill up all the fields correctly !";
+          $errors = (Object)$errors;
+          $response = new WP_REST_Response($errors);
+          $response->set_status(400);
+        endif;
+
+    //Get the favorites user
+    $user_favorites = array();
+    $favorites = array();
+    $favorite_add = array();
+    $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
+
+    $favorite['type'] = 'job';
+    $favorite['id'] = $job_favorite_id;
+
+    $favorites = array($favorite);
+
+    //Update the 'job_appliants'
+    update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
+    //return
+       $status = "Job save with success !";
+        $response = new WP_REST_Response($status);
+        $response->set_status(200);
+
+        return $response;
+} */
 
 
 /* * End Liggeey * */
