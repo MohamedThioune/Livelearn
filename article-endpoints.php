@@ -31,11 +31,11 @@ function strip_html_tags($text)
     return preg_replace($pattern, '', $text);
 }
 
-function fetch_author($data){
+function fetch_author($entity){
     global $wpdb;
     $users = get_users();
-    global $author_id = 0;
-    global $company_id = 0;
+    global $author_id;
+    global $company_id;
 
     $args = array(
         'post_type' => 'company',
@@ -48,7 +48,7 @@ function fetch_author($data){
 
         //company exists
         if (isset($company_user->post_title)){
-            if (strtolower($company_user->post_title) == strtolower($data)) {
+            if (strtolower($company_user->post_title) == strtolower($entity)) {
                 $author_id = $user->ID;
                 $company = $company_user;
                 $company_id = $company_user->ID;
@@ -59,7 +59,7 @@ function fetch_author($data){
 
     if (!$author_id) {
         //Looking for company
-        $company = get_page_by_path($data, OBJECT, 'company');
+        $company = get_page_by_path($entity, OBJECT, 'company');
         // var_dump($company);
         // die();
 
@@ -67,7 +67,7 @@ function fetch_author($data){
             //Creating new company
             $argv = array(
                 "post_type" => "company",
-                "post_title" => $data,
+                "post_title" => $entity,
                 "post_status"=> "publish"
             );
             $company_id = wp_insert_post($argv);
@@ -76,9 +76,9 @@ function fetch_author($data){
         //Creating a new user
         $login = 'user' . random_int(0, 100000);
         $password = "pass" . random_int(0, 100000);
-        $email = "author_" . $data . "@" . 'livelearn' . ".nl";
-        $first_name = explode(' ', $data)[0];
-        $last_name = isset(explode(' ', $data)[1]) ? explode(' ', $data)[1] : '';
+        $email = "author_" . $entity . "@" . 'livelearn' . ".nl";
+        $first_name = explode(' ', $entity)[0];
+        $last_name = isset(explode(' ', $entity)[1]) ? explode(' ', $entity)[1] : '';
 
         $userdata = array(
             'user_pass' => $password,
@@ -91,7 +91,7 @@ function fetch_author($data){
             'role' => 'author',
         );
 
-        var_dump($company);
+        var_dump($company_id);
         // die;
 
         $author_id = wp_insert_user(wp_slash($userdata));
@@ -114,10 +114,6 @@ function Artikel_From_Company($data)
 
     //fix data table
     $table = $wpdb->prefix . 'databank';
-
-    
-
-    }
 
     $list_company = [
         [
