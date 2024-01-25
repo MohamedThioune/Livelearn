@@ -312,12 +312,11 @@ function Artikel_From_Company($data)
                 $argv = array(
                     "post_type" => "company",
                     "post_title" => $key,
+                    "post_author" => "Ibrahima FAYE",
                     "post_status"=> "publish"
                 );
                 $company_id = wp_insert_post($argv);
                 $company = get_post($company_id);
-                var_dump($company);
-                die;
             }
             //Creating a new user
             $login = 'user' . random_int(0, 100000);
@@ -336,6 +335,9 @@ function Artikel_From_Company($data)
                 'last_name' => $last_name,
                 'role' => 'author',
             );
+
+            var_dump($company);
+            die;
 
             //$author_id = wp_insert_user(wp_slash($userdata));
 
