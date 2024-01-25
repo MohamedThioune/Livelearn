@@ -31,7 +31,7 @@ function strip_html_tags($text)
     return preg_replace($pattern, '', $text);
 }
 
-function fetch_author($entityName){
+function fetch_author($data){
     global $wpdb;
     $users = get_users();
     global $author_id = 0;
@@ -48,7 +48,7 @@ function fetch_author($entityName){
 
         //company exists
         if (isset($company_user->post_title)){
-            if (strtolower($company_user->post_title) == strtolower($entityName)) {
+            if (strtolower($company_user->post_title) == strtolower($data)) {
                 $author_id = $user->ID;
                 $company = $company_user;
                 $company_id = $company_user->ID;
@@ -59,7 +59,7 @@ function fetch_author($entityName){
 
     if (!$author_id) {
         //Looking for company
-        $company = get_page_by_path($entityName, OBJECT, 'company');
+        $company = get_page_by_path($data, OBJECT, 'company');
         // var_dump($company);
         // die();
 
@@ -67,7 +67,7 @@ function fetch_author($entityName){
             //Creating new company
             $argv = array(
                 "post_type" => "company",
-                "post_title" => $entityName,
+                "post_title" => $data,
                 "post_status"=> "publish"
             );
             $company_id = wp_insert_post($argv);
@@ -76,9 +76,9 @@ function fetch_author($entityName){
         //Creating a new user
         $login = 'user' . random_int(0, 100000);
         $password = "pass" . random_int(0, 100000);
-        $email = "author_" . $entityName . "@" . 'livelearn' . ".nl";
-        $first_name = explode(' ', $entityName)[0];
-        $last_name = isset(explode(' ', $entityName)[1]) ? explode(' ', $entityName)[1] : '';
+        $email = "author_" . $data . "@" . 'livelearn' . ".nl";
+        $first_name = explode(' ', $data)[0];
+        $last_name = isset(explode(' ', $data)[1]) ? explode(' ', $data)[1] : '';
 
         $userdata = array(
             'user_pass' => $password,
