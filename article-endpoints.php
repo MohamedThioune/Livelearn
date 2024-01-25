@@ -35,7 +35,14 @@ function fetch_author($entityName){
     // global $wpdb;
     $users = get_users();
     $author_id = null;
+    $company = null;
 
+    $args = array(
+        'post_type' => 'company',
+        'posts_per_page' => -1,
+    );
+
+    $companies = get_posts($args);
     foreach ($users as $user){
         $company_user = get_field('company', 'user_' . $user->ID);
 
@@ -288,16 +295,9 @@ function Artikel_From_Company($data)
         ]
     ]; 
 
-    $args = array(
-        'post_type' => 'company',
-        'posts_per_page' => -1,
-    );
-    
-    $company = null;
     $groups = $data['id'];
     $list = $list_company[$groups]; 
     // var_dump($list);
-    $companies = get_posts($args);
     foreach ($list as $key => $website) { 
 
         fetch_author($key);
