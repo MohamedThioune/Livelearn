@@ -783,18 +783,13 @@ function jobUser(WP_REST_Request $request){
       }
 
       // Get the favorites user
-      $user_favorites = array();
-      $favorites = array();
-      $favorite_add = array();
-      $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
+    $favoris_jobs = get_field('favoris_jobs', 'user_' . $user_id) ?: array();
+    $favoris_jobs[] = $job_id;
+    update_field('favoris_jobs', $favoris_jobs, 'user_' . $user_id);
 
-      $favorite['type'] = ['job', 'company', 'candidate'];
-      $favorite['id'] = $job_favorite_id ?? $company_favorite_id ?? $candidate_favorite_id;
-
-      $favorites = array($favorite);
 
       // Update the 'job_appliants'
-      update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
+      //update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
 
       // Return
       $status = "Favorite saved with success!";
@@ -803,5 +798,12 @@ function jobUser(WP_REST_Request $request){
       return $response;
 
 }
+
+
+     function userJobs(WP_REST_Request $request){
+
+
+}
+
 
 /* * End Liggeey * */
