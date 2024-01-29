@@ -763,40 +763,45 @@ function jobUser(WP_REST_Request $request){
 
 }
 
-/* function liggeeySave(WP_REST_Request $request){
-    $errors = ['errors' => '', 'error_data' => ''];
-    //Get inputs
-    $user_favorite_id = isset($request['user_favorite_id']) ? $request['user_favorite_id'] : null;
+ function liggeeySave(WP_REST_Request $request){
 
+      $errors = ['errors' => '', 'error_data' => ''];
 
-    //error missing
-     if(!$user_favorite_id ):
-          $errors['errors'] = "Please fill up all the fields correctly !";
-          $errors = (Object)$errors;
+      // Get inputs
+      $user_favorite_id = isset($request['user_favorite_id']) ? $request['user_favorite_id'] : null;
+      $job_favorite_id = isset($request['job_favorite_id']) ? $request['job_favorite_id'] : null;
+      $company_favorite_id = isset($request['company_favorite_id']) ? $request['company_favorite_id'] : null;
+      $candidate_favorite_id = isset($request['candidate_favorite_id']) ? $request['candidate_favorite_id'] : null;
+
+      // Error missing
+      if (!$user_favorite_id) {
+          $errors['errors'] = "Please fill up all the fields correctly!";
+          $errors = (object) $errors;
           $response = new WP_REST_Response($errors);
           $response->set_status(400);
-        endif;
+          return $response;
+      }
 
-    //Get the favorites user
-    $user_favorites = array();
-    $favorites = array();
-    $favorite_add = array();
-    $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
+      // Get the favorites user
+      $user_favorites = array();
+      $favorites = array();
+      $favorite_add = array();
+      $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
 
-    $favorite['type'] = 'job';
-    $favorite['id'] = $job_favorite_id;
+      $favorite['type'] = ['job', 'company', 'candidate'];
+      $favorite['id'] = $job_favorite_id ?? $company_favorite_id ?? $candidate_favorite_id;
 
-    $favorites = array($favorite);
+      $favorites = array($favorite);
 
-    //Update the 'job_appliants'
-    update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
-    //return
-       $status = "Job save with success !";
-        $response = new WP_REST_Response($status);
-        $response->set_status(200);
+      // Update the 'job_appliants'
+      update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
 
-        return $response;
-} */
+      // Return
+      $status = "Favorite saved with success!";
+      $response = new WP_REST_Response($status);
+      $response->set_status(200);
+      return $response;
 
+}
 
 /* * End Liggeey * */
