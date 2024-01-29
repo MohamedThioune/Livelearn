@@ -584,23 +584,31 @@ function xmlParse($data)
             foreach ($users as $user) {
                 $company_user = get_field('company', 'user_' . $user->ID);
 
-                if (strtolower($company_user[0]->post_title) == strtolower(strval($post['org']))) {
-                    $author_id = $user->ID;
-                    $company = $company_user[0];
-                    $company_id = $company_user[0]->ID;
+                if (isset($company_user->post_title)){
+                    if (strtolower($company_user[0]->post_title) == strtolower(strval($post['org']))) {
+                        $author_id = $user->ID;
+                        $company = $company_user[0];
+                        $company_id = $company_user[0]->ID;
+                        break;
+                    }
                 }
             }
 
             if (!$author_id) {
-                
+                //Looking for company
+                $company = get_page_by_path(strval($post['org']), OBJECT, 'company');
 
-                $companies = get_posts($args);
-                foreach ($companies as $value) {
-                    if (strtolower($value->post_title) == strval($post['org'])) {
-                        $company = $value;
-                        $company_id = $value->ID;
-                        break;
-                    }
+                if(!$company){
+                    //Creating new company
+                    $argv = array(
+                        "post_type" => "company",
+                        "post_title" => $post['org'],
+                        "post_status"=> "publish"
+                    );
+                    $company_id = wp_insert_post($argv);
+                    $company = get_post($company_id);
+                }else {
+                    $company_id = $company->ID;
                 }
 
                 $login = RandomString();
