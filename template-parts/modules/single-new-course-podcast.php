@@ -169,6 +169,7 @@ endif;
 
                                             $link = '#';
                                             $reading = "#";
+                                            $date_podcast = date("m/d/Y", strtotime($post->post_date));
                                             $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
                                             $read_status_icon = '';
                                             if($bool_link || $key == 0){
@@ -188,12 +189,12 @@ endif;
                                                             </div>
                                                             <p class="title-podcast"><?= strip_tags($podcast['course_podcast_title']) ?></p>
                                                         </div>
-                                                        <p class="date-added-playlist">xx/xx/xxxx</p>
+                                                        <p class="date-added-playlist"><?=$date_podcast?></p>
                                                     </div>
                                                     <div class="audio position-relative">
-                                                        <button class="btn btn-audio-blocked" data-toggle="modal" data-target="#modal-login-with-podcast">
+                                                      <!--  <button class="btn btn-audio-blocked" data-toggle="modal" data-target="#modal-login-with-podcast">
                                                             <i class="fa fa-play"></i>
-                                                        </button>
+                                                        </button>-->
                                                         <div class="cp-audioquote">
                                                             <div class="cp-audioquote__player">
                                                                 <!-- src -->
@@ -262,6 +263,7 @@ endif;
                                                         </div>
                                                         <p class="date-added-playlist"><?=$date_podcast?></p>
                                                     </div>
+                                                    <?php if ($user_id): ?>
                                                     <div class="audio">
                                                         <div class="cp-audioquote">
                                                             <div class="cp-audioquote__player">
@@ -280,6 +282,34 @@ endif;
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <?php endif; ?>
+                                            <?php
+                                            if (!$user_id):
+                                                $button = '<div class="cp-audioquote__player--playBtn"></div>';
+                                                if ( $key>0 ) {
+                                                    $reading = "#";
+                                                    $button = '<button class="btn btn-audio-blocked cp-audioquote__player--playBtn" data-toggle="modal" data-target="#modal-login-with-podcast"></button>';
+                                                }
+                                                ?>
+                                                <div class="audio">
+                                                    <div class="cp-audioquote">
+                                                        <div class="cp-audioquote__player">
+                                                            <!-- src -->
+                                                            <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                                <p><?= strip_tags($podcast['podcast_description']) ?></p>
+                                                            </audio>
+                                                            <?= $button ?>
+                                                            <div class="cp-audioquote__player--display">
+                                                                <div class="cp-audioquote__player--progress">
+                                                                    <span class="cp-audioquote__player--track"></span>
+                                                                    <span class="cp-audioquote__player--playhead"></span>
+                                                                </div>
+                                                                <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
                                                     <p class="description-one-element-playlist"><?= substr($description_podcast,0,100).' ...'  ?></p>
                                                 </div>
                                             </div>
@@ -633,7 +663,8 @@ endif;
                                 $price = 'Gratis';
 
                             //Legend image
-                            $thumbnail = get_field('preview', $course->ID)['url'];
+                            //$thumbnail = get_field('preview', $course->ID)['url'];
+                            $thumbnail = "";
                             if(!$thumbnail){
                                 $thumbnail = get_the_post_thumbnail_url($course->ID);
                                 if(!$thumbnail)
@@ -693,95 +724,6 @@ endif;
 </div>
 
 
-<!-- modal register / login -->
-<div class="modal fade" id="modal-login-with-podcast" tabindex="-1" role="dialog" aria-labelledby="modal-login-with-podcastTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body create-account-block">
-                <p class="title-modal">Welcome !</p>
-                <p class="description-modal">Please, Create an account to continue</p>
-                <div class="group-btn-connection">
-                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
-                        Continue with Google
-                    </a>
-                </div>
-                <div class="d-flex hr-block">
-                    <hr>
-                    <p>Or</p>
-                    <hr>
-                </div>
-                <div class="form-input">
-                    <form action="">
-
-                        <div class="first-step-modal">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
-                            </div>
-                            <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
-                        </div>
-
-                        <div class="second-step-modal">
-                            <div class="form-group">
-                                <label for="First-name">First name</label>
-                                <input type="text" class="form-control" id="First-name" aria-describedby="First-name" placeholder="Enter your First name">
-                            </div>
-                            <div class="form-group">
-                                <label for="last-name">Last name</label>
-                                <input type="text" class="form-control" id="last-name" aria-describedby="last-name" placeholder="Enter your last name">
-                            </div>
-                            <div class="form-group">
-                                <label for="Company">Company</label>
-                                <input type="text" class="form-control" id="Company" aria-describedby="Company" placeholder="Enter your Company name">
-                            </div>
-                            <div class="form-group">
-                                <label for="Password">Password</label>
-                                <input type="password" class="form-control" id="Password" aria-describedby="Password" placeholder="Enter your Password">
-                            </div>
-                            <button type="submit" class="btn btn-coneection">Create Acccount</button>
-                        </div>
-
-                    </form>
-                    <button class="btn btn-switch-login">You already have a account ? Login</button>
-                </div>
-            </div>
-            <div class="modal-body register-block">
-                <p class="title-modal">Welcome !</p>
-                <p class="description-modal">Please, Register to continue</p>
-                <div class="group-btn-connection">
-                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
-                        Continue with Google
-                    </a>
-                </div>
-                <div class="d-flex hr-block">
-                    <hr>
-                    <p>Or</p>
-                    <hr>
-                </div>
-                <div class="form-input">
-                    <form action="">
-                        <div class="form-group">
-                            <label for="exampleInputEmail">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="passwoord">Passwoord</label>
-                            <input type="password" class="form-control" id="passwoord" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-coneection">Sign Up</button>
-                    </form>
-                    <button class="btn btn-switch-login btn-Sign-Up">You don't have a account ? Sign Up</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
 <script>
     var sections = $('.section-tabs')
         , nav = $('.content-tabs-scroll')
@@ -824,22 +766,6 @@ endif;
         $("#tab-url1").organicTabs();
 
     });
-</script>
-
-<script>
-    $("#create-account-step").click(function() {
-        $(".first-step-modal").hide();
-        $(".second-step-modal").show();
-    });
-    $(".btn-switch-login").click(function() {
-        $(".create-account-block").hide();
-        $(".register-block").show();
-    });
-    $(".btn-Sign-Up").click(function() {
-        $(".register-block").hide();
-        $(".create-account-block").show();
-    });
-
 </script>
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>

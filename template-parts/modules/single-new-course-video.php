@@ -209,26 +209,45 @@ endif;
                                                         $style = "color:#F79403";
 
                                                 $link = '#';
-                                                $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                                $read_status_icon = '<img data-toggle="modal" data-target="#modal-login-with-podcast" class="playlistImg  block-for-login" src="' . get_stylesheet_directory_uri() . '/img/Instellingen.png" alt="">';
-                                                if($bool_link || $key == 0){
-                                                    $link = '?topic=0&lesson=' . $key;
-                                                    $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
-                                                    $read_status_icon = '<img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">';
-                                                }
+                                                //$status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                                $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                                //$read_status_icon = '<img data-toggle="modal" data-target="#modal-login-with-podcast" class="playlistImg  block-for-login" src="' . get_stylesheet_directory_uri() . '/img/Instellingen.png" alt="">';
+                                                $read_status_icon = '<img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">';
+                                                $link = '?topic=0&lesson=' . $key;
 
                                                 $lecture_index = $key + 1;
-                                                echo
-                                                    '<div class="element-playlist-course visible">
-                                                        <div class="block-playlist-course d-flex">
-                                                            <div class="d-flex align-items-center group-element">'
-                                                    .  $read_status_icon . '
-                                                            <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
-                                                            <a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['course_lesson_title'] . '</a>
-                                                        </div>
-                                                        <img class="status-icon" src="' . $status_icon . '" alt="">
-                                                        </div>
-                                                    </div>';
+                                                if ($user_id)
+                                                    echo
+                                                        '<div class="element-playlist-course visible">
+                                                            <div class="block-playlist-course d-flex">
+                                                                <div class="d-flex align-items-center group-element">'
+                                                        .  $read_status_icon . '
+                                                                <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
+                                                                <a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['course_lesson_title'] . '</a>
+                                                            </div>
+                                                            <img class="status-icon" src="' . $status_icon . '" alt="">
+                                                            </div>
+                                                        </div>';
+                                                else{
+                                                    $button = '<a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['course_lesson_title'] . '</a>';
+                                                    if ($key>0) {
+                                                        //$button = '<button class="text-playlist-element btn btn-audio-blocked cp-audioquote__player--playBtn" data-toggle="modal" data-target="#modal-login-with-podcast">'.$video['course_lesson_title'].'</button>';
+                                                        $button = '<button class="text-playlist-element btn' . $style . '"data-toggle="modal" data-target="#modal-login-with-podcast">' . $video['course_lesson_title'] . '</a>';
+                                                        $read_status_icon = '<img data-toggle="modal" data-target="#modal-login-with-podcast" class="playlistImg  block-for-login" src="' . get_stylesheet_directory_uri() . '/img/Instellingen.png" alt="">';
+                                                        $status_icon = $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                                    }
+                                                    echo
+                                                        '<div class="element-playlist-course visible">
+                                                            <div class="block-playlist-course d-flex">
+                                                                <div class="d-flex align-items-center group-element">'
+                                                        .  $read_status_icon . '
+                                                                <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
+                                                                ' . $button . '
+                                                            </div>
+                                                            <img class="status-icon" src="' . $status_icon . '" alt="">
+                                                            </div>
+                                                        </div>';
+                                                }
                                             }
                                         else if(!empty($youtube_videos))
                                             foreach($youtube_videos as $key => $video){
@@ -241,6 +260,7 @@ endif;
                                                 $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
 
                                                 $lecture_index = $key + 1;
+                                                if ($user_id)
                                                 echo
                                                     '<div class="element-playlist-course visible">
                                                          <div class="block-playlist-course d-flex">
@@ -252,6 +272,26 @@ endif;
                                                         <img class="status-icon" src="' . get_stylesheet_directory_uri() . '/img/view-course.svg" alt="">
                                                          </div>
                                                     </div>';
+                                                else{
+                                                    $button = '<a href="' . $link . '" class="text-playlist-element ' . $style . '">' . $video['title'] . '</a>';
+                                                    $read_status_icon = '<img class="playlistImg" src="' . get_stylesheet_directory_uri() . '/img/light_play.svg" alt="">';
+                                                    if ($key>0) {
+                                                        $button = '<button class="text-playlist-element btn' . $style . '"data-toggle="modal" data-target="#modal-login-with-podcast">' . $video['title'] . '</a>';
+                                                        $read_status_icon = '<img data-toggle="modal" data-target="#modal-login-with-podcast" class="playlistImg  block-for-login" src="' . get_stylesheet_directory_uri() . '/img/Instellingen.png" alt="">';
+                                                        $status_icon = $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                                    }
+                                                    echo
+                                                        '<div class="element-playlist-course visible">
+                                                         <div class="block-playlist-course d-flex">
+                                                            <div class="d-flex align-items-center group-element">
+                                                            '.$read_status_icon.'
+                                                            <p class="lecture-text"> Lecture <span>' . $lecture_index . ' </span></p>
+                                                            '.$button.'
+                                                        </div>
+                                                            <img class="status-icon" src="' . $status_icon . '" alt="">
+                                                         </div>
+                                                    </div>';
+                                                }
                                             }
 
                                         ?>
@@ -716,6 +756,7 @@ endif;
 
 
 <!-- modal register / login -->
+<!--
 <div class="modal fade" id="modal-login-with-podcast" tabindex="-1" role="dialog" aria-labelledby="modal-login-with-podcastTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -800,7 +841,7 @@ endif;
         </div>
     </div>
 </div>
-
+-->
 
 <script>
     var sections = $('.section-tabs')
@@ -839,27 +880,11 @@ endif;
 <script src="<?php echo get_stylesheet_directory_uri();?>/organictabs.jquery.js"></script>
 <script>
     $(function() {
-
         // Calling the plugin
         $("#tab-url1").organicTabs();
-
     });
 </script>
-<script>
-    $("#create-account-step").click(function() {
-        $(".first-step-modal").hide();
-        $(".second-step-modal").show();
-    });
-    $(".btn-switch-login").click(function() {
-        $(".create-account-block").hide();
-        $(".register-block").show();
-    });
-    $(".btn-Sign-Up").click(function() {
-        $(".register-block").hide();
-        $(".create-account-block").show();
-    });
 
-</script>
 <script>
     const itemsPerPage = 6;
     const blockList = document.querySelector('.playlist-course-block');
