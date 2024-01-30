@@ -1738,7 +1738,7 @@ add_action( 'rest_api_init', function () {
       'callback' => 'jobUser'
     ));
 
-   register_rest_route ('custom/v1', '/liggeeySave/user', array(
+   register_rest_route ('custom/v1', '/user/liggeeySave', array(
         'methods' => 'POST',
         'callback' => 'liggeeySave'
       ));
