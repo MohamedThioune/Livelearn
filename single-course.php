@@ -12,7 +12,6 @@ require($page);
 
 view($post);
 
-
 $course_type = get_field('course_type', $post->ID);
 
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];

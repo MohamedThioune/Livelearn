@@ -223,3 +223,4 @@ else if($optie == "❌"){
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
 return $updated;
+
