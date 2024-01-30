@@ -34,7 +34,7 @@ function strip_html_tags($text)
 function Artikel_From_Company($data)
 {
     global $wpdb;
-    
+
     $list = array();
     $datas = array();
 
@@ -42,8 +42,6 @@ function Artikel_From_Company($data)
     $table = $wpdb->prefix . 'databank';
     //Get all users
     $users = get_users();
-
-    
 
     $list_company = [
         [
@@ -183,63 +181,63 @@ function Artikel_From_Company($data)
             'Fresh' => 'https://www.stichtingfresh.nl/',
             'Werf' => 'https://www.werf-en.nl/',
             'Monday.com' => 'https://monday.com/blog/',
-            'HR Knowledge'=>'https://www.hrknowledge.com/',
-            'HRcommunity'=>'https://hrcommunity.nl/',
-            'Leeuwendaal'=>'https://www.leeuwendaal.nl/',
-            'Samhoud'=>'https://www.samhoudconsultancy.com/',
-            'Incontext'=>'https://incontext.nl/',
-            'Successday'=>'https://successday.nl/'
+            'HR Knowledge' => 'https://www.hrknowledge.com/',
+            'HRcommunity' => 'https://hrcommunity.nl/',
+            'Leeuwendaal' => 'https://www.leeuwendaal.nl/',
+            'Samhoud' => 'https://www.samhoudconsultancy.com/',
+            'Incontext' => 'https://incontext.nl/',
+            'Successday' => 'https://successday.nl/',
         ],
         [
-            'Hospitality Group'=>'https://www.hospitality-group.nl/',
-            'AllChiefs'=>'https://allchiefs.nl/',
-            'BTS'=>'https://bts.com/',
-            'Fakton'=>'https://www.fakton.com/',
-            'bbn'=>'https://bbn.nl/',
-            'Over morgen'=>'https://overmorgen.nl/',
-            'Beaufort'=>'https://www.beaufortconsulting.nl/',
-            'Redept'=>'https://redept.nl/',
-            'Akro'=>'https://akroconsult.nl/',
-            'AT osborne'=>'https://atosborne.nl/'
+            'Hospitality Group' => 'https://www.hospitality-group.nl/',
+            'AllChiefs' => 'https://allchiefs.nl/',
+            'BTS' => 'https://bts.com/',
+            'Fakton' => 'https://www.fakton.com/',
+            'bbn' => 'https://bbn.nl/',
+            'Over morgen' => 'https://overmorgen.nl/',
+            'Beaufort' => 'https://www.beaufortconsulting.nl/',
+            'Redept' => 'https://redept.nl/',
+            'Akro' => 'https://akroconsult.nl/',
+            'AT osborne' => 'https://atosborne.nl/',
         ],
         [
-            'Brink'=>'https://www.brink.nl/',
-            'Magnus Digital'=>'https://www.magnus.nl/',
-            'Lybrae'=>'https://lybrae.nl/',
-            'HKA'=>'https://www.hka.com/',
-            'Flux Partners'=>'https://flux.partners/',
-            'TWST'=>'https://www.twst.nl/',
-            'Contakt'=>'https://contakt.nl/',
-            'Group Mapping'=>'https://groupmapping.org/',
-            'The house of Marketing'=>'https://thom.eu/',
-            'PPMC'=>'https://ppmc.nl/'
+            'Brink' => 'https://www.brink.nl/',
+            'Magnus Digital' => 'https://www.magnus.nl/',
+            'Lybrae' => 'https://lybrae.nl/',
+            'HKA' => 'https://www.hka.com/',
+            'Flux Partners' => 'https://flux.partners/',
+            'TWST' => 'https://www.twst.nl/',
+            'Contakt' => 'https://contakt.nl/',
+            'Group Mapping' => 'https://groupmapping.org/',
+            'The house of Marketing' => 'https://thom.eu/',
+            'PPMC' => 'https://ppmc.nl/',
         ],
         [
-            'Newcraft'=>'https://newcraftgroup.com/',
-            'The Next Organization'=>'https://thenextorganization.com/',
-            'Salveos'=>'https://salveos.nl/',
-            'MLC'=>'https://m-lc.nl/',
-            'Artefact'=>'https://www.artefact.com/'
-        ]
-    ]; 
+            'Newcraft' => 'https://newcraftgroup.com/',
+            'The Next Organization' => 'https://thenextorganization.com/',
+            'Salveos' => 'https://salveos.nl/',
+            'MLC' => 'https://m-lc.nl/',
+            'Artefact' => 'https://www.artefact.com/',
+        ],
+    ];
 
     $args = array(
         'post_type' => 'company',
         'posts_per_page' => -1,
     );
-    
+
     $company = null;
     $groups = $data['id'];
-    $list = $list_company[$groups]; 
+    $list = $list_company[$groups];
     // var_dump($list);
     $companies = get_posts($args);
-    foreach ($list as $key => $website) { 
+    foreach ($list as $key => $website) {
         $author_id = null;
 
         // foreach ($companies as $companie) {
         //     if (strtolower($companie->post_title) == strtolower($key)) {
         //         $company = $companie;
-                
+
         //     }
 
         //     foreach ($users as $user) {
@@ -287,12 +285,12 @@ function Artikel_From_Company($data)
 
         $company_id = 0;
         //* MaxBird was there *//
-        //Has to be done as a function 
-        foreach ($users as $user){
+        //Has to be done as a function
+        foreach ($users as $user) {
             $company_user = get_field('company', 'user_' . $user->ID);
 
             //company exists
-            if (isset($company_user->post_title)){
+            if (isset($company_user->post_title)) {
                 if (strtolower($company_user->post_title) == strtolower($key)) {
                     $author_id = $user->ID;
                     $company = $company_user;
@@ -306,16 +304,16 @@ function Artikel_From_Company($data)
             //Looking for company
             $company = get_page_by_path($key, OBJECT, 'company');
 
-            if(!$company){
+            if (!$company) {
                 //Creating new company
                 $argv = array(
                     "post_type" => "company",
                     "post_title" => $key,
-                    "post_status"=> "publish"
+                    "post_status" => "publish",
                 );
                 $company_id = wp_insert_post($argv);
                 $company = get_post($company_id);
-            }else {
+            } else {
                 $company_id = $company->ID;
             }
 
@@ -451,7 +449,7 @@ function xmlParse($data)
 {
     global $wpdb;
     $company = null;
-    $list = array();
+    $groups = array();
     $datas = array();
     //fix data table
     $table = $wpdb->prefix . 'databank';
@@ -517,7 +515,12 @@ function xmlParse($data)
     //Start inserting course
     echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
 
-    foreach ($website_urls[$data] as $website) {
+    $index = intval($data['id']);
+    $groups = $website_urls[$index];
+    // var_dump($index);
+    // die();
+
+    foreach ($groups as $website) {
         //Get the URL content
         $file = get_stylesheet_directory_uri() . "/" . $website;
         $xml = simplexml_load_file($file);
@@ -576,19 +579,19 @@ function xmlParse($data)
             /*
              ** -- Main fields --
              */
-
-            $company = null;
-            $users = get_users();
-
-            //Implement author of this course
+            $author_id = 0;
+            $company_id = 0;
+            //* MaxBird was there *//
+            //Has to be done as a function
             foreach ($users as $user) {
                 $company_user = get_field('company', 'user_' . $user->ID);
 
-                if (isset($company_user->post_title)){
-                    if (strtolower($company_user[0]->post_title) == strtolower(strval($post['org']))) {
+                //company exists
+                if (isset($company_user->post_title)) {
+                    if (strtolower($company_user->post_title) == strtolower($post['org'])) {
                         $author_id = $user->ID;
-                        $company = $company_user[0];
-                        $company_id = $company_user[0]->ID;
+                        $company = $company_user;
+                        $company_id = $company_user->ID;
                         break;
                     }
                 }
@@ -596,28 +599,28 @@ function xmlParse($data)
 
             if (!$author_id) {
                 //Looking for company
-                $company = get_page_by_path(strval($post['org']), OBJECT, 'company');
+                $company = get_page_by_path($post['org'], OBJECT, 'company');
 
-                if(!$company){
+                if (!$company) {
                     //Creating new company
                     $argv = array(
                         "post_type" => "company",
                         "post_title" => $post['org'],
-                        "post_status"=> "publish"
+                        "post_status" => "publish",
                     );
                     $company_id = wp_insert_post($argv);
                     $company = get_post($company_id);
-                }else {
+                } else {
                     $company_id = $company->ID;
                 }
 
-                $login = RandomString();
-                $password = RandomString();
-                $random = RandomString();
+                $login = RandomDoubleString();
+                $password = RandomDoubleString();
+                $random = RandomDoubleString();
                 $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
-                $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomString();
-                $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomString();
-                $display_name = ($first_name) ?? RandomString();
+                $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomDoubleString();
+                $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomDoubleString();
+                $display_name = ($first_name) ?? RandomDoubleString();
 
                 $userdata = array(
                     'user_pass' => $password,
@@ -861,6 +864,8 @@ function xmlParse($data)
             $updated = $wpdb->update($table, $post, $where);
 
             if (!isset($check_image[0]) && !isset($check_title[0])) {
+
+                // var_dump($post);
 
                 $wpdb->insert($table, $post);
                 $post_id = $wpdb->insert_id;
