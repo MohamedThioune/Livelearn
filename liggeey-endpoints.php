@@ -789,27 +789,13 @@ function jobUser(WP_REST_Request $request){
 
      $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
         //var_dump($user_favorites);
-
      // Create a favorite entry for a job
      $favorite['type'] = ['job', 'company', 'candidate'];
      $favorite['id'] = $job_favorite_id ?? $company_favorite_id ?? $candidate_favorite_id;
 
      // Add the favorite to the favorites array
      $favorites = array($favorite);
-     $favorites = array();  // Initialisation du tableau des favoris
-
-     // Ajout d'un favori au tableau
-     $favorite1 = array('type' => 'job', 'id' => 1);
-     $favorites[] = $favorite1;
-
-     // Ajout d'un autre favori au tableau
-     $favorite2 = array('type' => 'company', 'id' => 2);
-     $favorites[] = $favorite2;
-
-    // Ajout d'un autre favori au tableau
-     $favorite3 = array('type' => 'candidate', 'id' => 3);
-     $favorites[] = $favorite3;
-
+   // var_dump($favorites);
      // Update the 'job_appliants'
      update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
 
