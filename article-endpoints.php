@@ -868,7 +868,7 @@ function xmlParse($data)
                 // var_dump($post);
 
                 $wpdb->insert($table, $post);
-                $post_id = $wpdb->insert_id;
+                $post_id = $wpdb->insert_id; 
                 // $post_id = 1;
 
                 echo $wpdb->last_error;
