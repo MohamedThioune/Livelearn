@@ -9,7 +9,11 @@ include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
+<<<<<<< HEAD
 require __DIR__ . '/templates/recommendation-module.php';
+=======
+include __DIR__ . '/templates/recommendation-module.php';
+>>>>>>> origin/peinda
 require __DIR__ . '/templates/search-module.php';
 
 function enqueue_parent_styles() {
@@ -1709,6 +1713,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'artikelDetail'
   ));
 
+   register_rest_route ('custom/v1', '/artikels', array(
+      'methods' => 'POST',
+      'callback' => 'allArtikels'
+    ));
+
   register_rest_route ('custom/v1', '/company/detail', array(
     'methods' => 'POST',
     'callback' => 'companyDetail'
@@ -1729,4 +1738,23 @@ add_action( 'rest_api_init', function () {
     'callback' => 'jobDetail'
   ));
 
+<<<<<<< HEAD
+=======
+  register_rest_route ('custom/v1', '/job/user', array(
+      'methods' => 'POST',
+      'callback' => 'jobUser'
+    ));
+
+   register_rest_route ('custom/v1', '/user/liggeeySave', array(
+        'methods' => 'POST',
+        'callback' => 'liggeeySave'
+      ));
+
+      register_rest_route ('custom/v1', '/user/jobs', array(
+            'methods' => 'POST',
+            'callback' => 'userJobs'
+          ));
+
+
+>>>>>>> origin/peinda
 });

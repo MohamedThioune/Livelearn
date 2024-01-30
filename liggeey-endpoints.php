@@ -229,7 +229,6 @@ function homepage(){
     $hidden = get_field('visibility', $post->ID);
     if($hidden)
       continue;
-
     //Generic informations
     $sample['ID'] = $post->ID;
     $sample['permalink'] = get_permalink($post->ID);
@@ -282,7 +281,7 @@ function homepage(){
     $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
     if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
       continue;
-
+      
     $sample['ID'] = $value->ID;
     $sample['permalink'] = get_site_url() . '/user-overview/?id=' . $value->ID; 
     $sample['first_name'] = $value->first_name;
@@ -292,14 +291,13 @@ function homepage(){
     $sample['image'] = get_field('profile_img',  'user_' . $value->ID) ?: get_stylesheet_directory_uri() ."/img/placeholder_user.png";
     $sample['work_as'] = get_field('role',  'user_' . $value->ID) ?: "Free agent";
     $sample['country'] = get_field('country',  'user_' . $value->ID) ?: "International";
-    $sample = (Object)$sample;
 
+    $sample = (Object)$sample;
     array_push($candidates, $sample);
 
     $i += 1; 
     if($i >= $limit_candidate)
       break;
-
   }
   $infos['candidates'] = $candidates;
 
@@ -431,7 +429,6 @@ function register_company(WP_REST_Request $request){
 function candidateDetail(WP_REST_Request $request){
 
   $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-
   $sample = array();
   $user = get_user_by('ID', $param_user_id);
 
@@ -552,9 +549,7 @@ function candidateDetail(WP_REST_Request $request){
 
 //[POST]Detail artikel
 function artikelDetail(WP_REST_Request $request){
-
   $param_post_id = $request['id'] ?? 0;
-
   $sample = artikel($param_post_id);
 
   //Response
@@ -737,7 +732,6 @@ function categoryDetail(WP_REST_Request $request){
     $jobs[] = job($job->ID);
   $sample['jobs'] = $jobs;
 
-
   /** Global companies **/
   $companies = array();
   $args = array(
@@ -766,8 +760,135 @@ function categoryDetail(WP_REST_Request $request){
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
 
-  return $response;  
+  return $response;
+}
+
+function allArtikels(WP_REST_Request $request){
+  $args = array(
+      'post_type' => 'post',
+      'post_status' => 'publish',
+      'orderby' => 'date',
+      'order'   => 'DESC',
+      'posts_per_page' => -1,
+  );
+  $global_posts = get_posts($args);
+  $artikels = array();
+
+  foreach ($global_posts as $post):
+    $sample = array();
+
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['post_title'] = $post->post_title;
+    $sample['permalink'] = get_permalink($post->ID);
+    $author = get_user_by('ID', $post->post_author);
+    $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
+    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $post_date = new DateTimeImmutable($post->post_date);
+    $sample['post_date'] = $post_date->format('M d, Y');
+    $reviews = get_field('reviews', $post->ID);
+    $sample['number_comments'] = (!empty($reviews)) ? count($reviews) : 0;
+    $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
+    $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
+    $course_type = get_field('course_type', $post->ID);
+    //Image information
+    $thumbnail = get_field('preview', $post->ID)['url'];
+    if(!$thumbnail){
+        $thumbnail = get_the_post_thumbnail_url($post->ID);
+        if(!$thumbnail)
+            $thumbnail = get_field('url_image_xml', $post->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+    }
+    $sample['image'] = $thumbnail;
+
+    $sample = (Object)$sample;
+    array_push($artikels, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($artikels);
+  $response->set_status(200);
+
+  return $response;
 
 }
+function jobUser(WP_REST_Request $request){
+
+    $errors = ['errors' => '', 'error_data' => ''];
+
+    //Get inputs
+    $user_apply_id = isset($request['user_apply_id']) ? $request['user_apply_id'] : null;
+    $job_applied_id = isset($request['job_applied_id']) ? $request['job_applied_id'] : null;
+
+    $user_apply = get_user_by('ID', $user_apply_id);
+
+    //error missing
+    if(!$user_apply_id || !$job_applied_id || empty($user_apply)):
+      $errors['errors'] = "Please fill up all the fields correctly !";
+      $errors = (Object)$errors;
+      $response = new WP_REST_Response($errors);
+      $response->set_status(400);
+    endif;
+
+    //Get the appliants user
+    $user_appliants = get_field('job_appliants', $job_applied_id);
+    $user_appliants = array();
+
+    //Add the applying user
+    array_push($user_appliants, $user_apply);
+    //Update the 'job_appliants'
+    update_field('job_appliants', $user_appliants, $job_applied_id);
+
+    $status = "Job appliant with success !";
+    $response = new WP_REST_Response($status);
+    $response->set_status(200);
+
+    return $response;
+
+}
+
+ function liggeeySave(WP_REST_Request $request){
+
+   $errors = ['errors' => '', 'error_data' => ''];
+
+       // Get inputs
+       $user_favorite_id = isset($request['user_favorite_id']) ? $request['user_favorite_id'] : null;
+       $job_favorite_id = isset($request['job_favorite_id']) ? $request['job_favorite_id'] : null;
+       $company_favorite_id = isset($request['company_favorite_id']) ? $request['company_favorite_id'] : null;
+       $candidate_favorite_id = isset($request['candidate_favorite_id']) ? $request['candidate_favorite_id'] : null;
+      //error missing
+         if(!$user_favorite_id ):
+              $errors['errors'] = "Please fill up all the fields correctly !";
+              $errors = (Object)$errors;
+              $response = new WP_REST_Response($errors);
+              $response->set_status(400);
+            endif;
+
+    //Get the favorites user
+    $user_favorites = array();
+    $favorites = array();
+    $favorite_add = array();
+    $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
+
+    $favorite['type'] = 'job';
+    $favorite['id'] = $job_favorite_id;
+
+    $favorites = array($favorite);
+
+    //Update the 'job_appliants'
+    update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
+
+    $status = "Job save with success !";
+    $response = new WP_REST_Response($status);
+    $response->set_status(200);
+
+    return $response;
+}
+
+     function userJobs(WP_REST_Request $request){
+
+}
+
 
 /* * End Liggeey * */
