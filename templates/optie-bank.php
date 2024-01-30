@@ -17,9 +17,12 @@ if($optie == "✔"){
 
     if($course->image_xml==null)
     {
-        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
+        if($course->type)
+            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
+        else
+            $image = get_stylesheet_directory_uri() . '/img' . '/opleidingen.jpg';        
         $course->image_xml=$image;
-        $wpdb->update($table,$course->image_xml,$where);
+        $wpdb->update($table,$course->image_xml,$where); 
     }
     if (strval($course->type) == "Podcast" || strval($course->type) == "Video"){
         if(!$course->company_id) {
