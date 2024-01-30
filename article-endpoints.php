@@ -912,7 +912,7 @@ function xmlParse($data)
                         $where = ['id' => $course->id];
                         $updated = $wpdb->update($table, $data, $where);
 
-                        echo '****** Company - ' . $message;
+                        echo '****** Company - ' . $message; 
                         $change = true;
                     }
 
