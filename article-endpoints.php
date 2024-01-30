@@ -231,29 +231,55 @@ function Artikel_From_Company($data)
     $companies = get_posts($args);
     foreach ($list as $key => $website) {
         $author_id = null;
-        foreach ($companies as $companie) {
-            if (strtolower($companie->post_title) == strtolower($key)) {
-                $company = $companie;
-            } else {
-                continue;
-            }
+        // foreach ($companies as $companie) {
+        //     if (strtolower($companie->post_title) == strtolower($key)) {
+        //         $company = $companie;
+        //     } else {
+        //         continue;
+        //     }
 
-            foreach ($users as $user) {
-                $company_user = get_field('company', 'user_' . $user->ID);
+        //     foreach ($users as $user) {
+        //         $company_user = get_field('company', 'user_' . $user->ID);
 
-                if (isset($company_user[0]->post_title)) {
-                    if (strtolower($company_user[0]->post_title) == strtolower($key)) {
-                        $author_id = $user->ID;
-                        $company = $company_user[0];
-                        $company_id = $company_user[0]->ID;
-                    }
+        //         if (isset($company_user[0]->post_title)) {
+        //             if (strtolower($company_user[0]->post_title) == strtolower($key)) {
+        //                 $author_id = $user->ID;
+        //                 $company = $company_user[0];
+        //                 $company_id = $company_user[0]->ID;
+        //             }
+        //         }
+
+        //     }
+        //     // var_dump($author_id);
+        // }
+
+        //* MaxBird was there *//
+        //Has to be done as a function 
+        foreach ($users as $author_math) :
+            $company_user = get_field('company', 'user_' . $author_math->ID);
+
+            //company exists
+            if (isset($company_user->post_title)) 
+                if (strtolower($company_user->post_title) == strtolower($key)) {
+                    $author_id = $author_math->ID;
+                    $company = $company_user;
+                    $company_id = $company_user->ID;
+                    break;
                 }
-
-            }
-            // var_dump($author_id);
-        }
+        endforeach;
 
         if (!$author_id) {
+            //Looking for company
+            $company = get_page_by_path($key, OBJECT, 'company');
+            // var_dump($company);
+            // die();
+
+            if(!$company)
+                //Creating new company 
+                //$company_id = wp_insert_post($args : post_status - company) 
+                //: $company(Object)
+
+            //Creating a new user
             $login = 'user' . random_int(0, 100000);
             $password = "pass" . random_int(0, 100000);
             $email = "author_" . $key . "@" . 'livelearn' . ".nl";
@@ -272,11 +298,11 @@ function Artikel_From_Company($data)
             );
 
             $author_id = wp_insert_user(wp_slash($userdata));
-        }
 
-        //Accord the author a company
-        if (!is_wp_error($author_id)) {
-            update_field('company', $company, 'user_' . $author_id);
+            //Accord the author a company
+            if (!is_wp_error($author_id)) {
+                update_field('company', $company, 'user_' . $author_id);
+            }
         }
 
         $span = $website . "wp-json/wp/v2/posts/";
@@ -521,8 +547,7 @@ function xmlParse($data)
                 }
             }
 
-            if (!$author_id) {
-                
+            if (!$author_id) {     
 
                 $companies = get_posts($args);
                 foreach ($companies as $value) {
