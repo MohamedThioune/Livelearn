@@ -14,6 +14,8 @@ $user_connected = wp_get_current_user();
 
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
+    if (!$course->author_id)
+        $course->author_id = $user_connected->ID;
 
     if($course->image_xml==null)
     {
@@ -37,7 +39,7 @@ if($optie == "✔"){
         }
     }
 
-    if ($course->author_id == '0')
+    if ($course->author_id == '0' || $course->author_id==null)
         $course->author_id = $user_connected->ID;
 
     if(!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id){
