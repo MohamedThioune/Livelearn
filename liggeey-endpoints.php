@@ -763,7 +763,7 @@ function jobUser(WP_REST_Request $request){
 
 }
 
- function liggeeySave(WP_REST_Request $request){
+ function liggeeySave(WP_REST_Request $request ){
 
    $errors = ['errors' => '', 'error_data' => ''];
 
@@ -780,32 +780,38 @@ function jobUser(WP_REST_Request $request){
               $response->set_status(400);
             endif;
 
-    //Get the favorites user
-    $user_favorites = array();
-    $favorites = array();
-    $favorite_add = array();
-    $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
+     // Initialize arrays
+     $user_favorites = array();
+     $favorites = array();
+     $favorite_add = array();
 
-    $favorite['type'] = 'job';
-    $favorite['id'] = $job_favorite_id;
+     // Get existing user favorites
+     $user_favorites = get_field('save_liggeey', 'user_' . $user_favorite_id);
 
-    $favorites = array($favorite);
+     // Create a favorite entry for a job
+     $favorite['type'] = ['job', 'company', 'candidate'];
+     $favorite['id'] = $job_favorite_id ?? $company_favorite_id ?? $candidade_favorite_id;
 
-    //Update the 'job_appliants'
-    update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
-   /*  update_field('company_appliants', $favorites, 'user_' . $user_favorite_id);
-    update_field('candidate_appliants', $favorites, 'user_' . $user_favorite_id);
- */
+     // Add the favorite to the favorites array
+     $favorites = array($favorite);
 
-    //return
+     // Update the 'job_appliants'
+     update_field('job_appliants', $favorites, 'user_' . $user_favorite_id);
 
-       $status = "Job save with success !";
-        $response = new WP_REST_Response($status);
-        $response->set_status(200);
+     // Update the 'company_appliants'
+     update_field('company_appliants', $favorites, 'user_' . $user_favorite_id);
+
+     // Update the 'candidate_appliants'
+     update_field('candidate_appliants', $favorites, 'user_' . $user_favorite_id);
+
+       $status = "Favoris saved with success !";
+       $response = new WP_REST_Response($status);
+       $response->set_status(200);
 
         return $response;
+ }
 
-}
+
 
      function userJobs(WP_REST_Request $request){
 
