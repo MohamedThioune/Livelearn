@@ -20,7 +20,7 @@ if($optie == "✔"){
         if($course->type)
             $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->type) . '.jpg';
         else
-            $image = get_stylesheet_directory_uri() . '/img' . '/opleidingen.jpg';        
+            $image = get_stylesheet_directory_uri() . '/img' . '/opleidingen.jpg';       
         $course->image_xml=$image;
         $wpdb->update($table,$course->image_xml,$where); 
     }
