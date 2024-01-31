@@ -3,12 +3,13 @@ add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 
 $GLOBALS['id_user'] = get_current_user_id();
 
+require __DIR__ . '/templates/check_visibility.php';
 include "custom-endpoints.php";
 include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
-include __DIR__ . '/templates/recommendation-module.php';
+require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
 
 function enqueue_parent_styles() {
@@ -702,12 +703,12 @@ function create_product_for_course($post_id){
     }else{
         //product does not exist yet, create one
         $post = array(
-            'post_author' => get_current_user_id(),
-            'post_content' => '',
-            'post_status' => 'publish',
-            'post_title' => get_the_title($post_id),
-            'post_parent' => '',
-            'post_type' => 'product',
+          'post_author' => get_current_user_id(),
+          'post_content' => '',
+          'post_status' => 'publish',
+          'post_title' => get_the_title($post_id),
+          'post_parent' => '',
+          'post_type' => 'product',
         );
 
         $product_id = wp_insert_post( $post );
@@ -1347,11 +1348,11 @@ function following(){
 
 //Callbacks 
 add_action( 'rest_api_init', function () {
+
   register_rest_route( 'custom/v1', '/tags', array(
     'methods' => 'GET',
     'callback' => 'seperate_tags',
   ) );
-
 
   register_rest_route( 'custom/v1', '/follow', array(
     'methods' => 'POST',
@@ -1708,6 +1709,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'artikelDetail'
   ));
 
+   register_rest_route ('custom/v1', '/artikels', array(
+      'methods' => 'POST',
+      'callback' => 'allArtikels'
+    ));
+
   register_rest_route ('custom/v1', '/company/detail', array(
     'methods' => 'POST',
     'callback' => 'companyDetail'
@@ -1727,5 +1733,21 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'jobDetail'
   ));
+
+  register_rest_route ('custom/v1', '/apply', array(
+    'methods' => 'POST',
+    'callback' => 'jobUser'
+  ));
+
+  register_rest_route ('custom/v1', '/favorites', array(
+    'methods' => 'POST',
+    'callback' => 'liggeeySave'
+  ));
+
+  // register_rest_route ('custom/v1', '/user/jobs', array(
+  //   'methods' => 'POST',
+  //   'callback' => 'userJobs'
+  // ));
+
 
 });
