@@ -855,6 +855,21 @@ function liggeeySave(WP_REST_Request $request){
   $validated = validated($required_parameters, $request);
 
   //Check if typeApplyId ['job', 'company', 'candidate']
+  // Assume $typeApplyId is the variable to be checked
+  $typeApplyId = 'job'; // Replace this with your actual value
+
+  // Array of allowed values
+  $allowedValues = ['job', 'company', 'candidate'];
+
+  // Check if $typeApplyId is in the array of allowed values
+  if (in_array($typeApplyId, $allowedValues)) {
+      // $typeApplyId is one of the allowed values
+      echo "Valid typeApplyId";
+  } else {
+      // $typeApplyId is not in the allowed values
+      echo "Invalid typeApplyId";
+  }
+
 
   //Get inputs
   $user_apply_id = $request['userApplyId'];
