@@ -17,7 +17,7 @@ $job = new Job([
         uniqid()
     ),
     'http_target' => new HttpTarget([
-        "uri" => "localhost:8888/wp-json/custom/v1/databank"
+        "uri" => "livelearn.nl/wp-json/custom/v1/databank"
     ]),
     'schedule' => '* * * * *'
 ]);

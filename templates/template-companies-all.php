@@ -4,8 +4,8 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 
 $company_experts = ['' => ''];
 // Users should

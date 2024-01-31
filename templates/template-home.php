@@ -3,8 +3,8 @@
 <?php get_header(); ?>
 <?php
 
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 global $wpdb;
 
 $user_connected_id = get_current_user_id();

@@ -55,8 +55,8 @@
 <?php get_header(); ?>
 <?php 
 
-    $page = 'check_visibility.php';
-    require($page); 
+    //$page = 'check_visibility.php';
+    //require($page); 
 
     $user_id = get_current_user_id();
     $courses = array();
