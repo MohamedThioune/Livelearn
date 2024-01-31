@@ -203,6 +203,7 @@ endif;
                                                                     <p><?= strip_tags($podcast['course_podcast_intro']) ?></p>
                                                                 </audio>
                                                                 <?= $read_status_icon ?>
+
                                                                <!-- <div class="cp-audioquote__player--playBtn"></div> -->
                                                                 <div class="cp-audioquote__player--display">
                                                                     <div class="cp-audioquote__player--progress">
