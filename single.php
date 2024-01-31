@@ -482,19 +482,19 @@ foreach($reactions as $value)
         <div class="modal-content">
             <div class="modal-body create-account-block">
                 <p class="title-modal">Continue reading on</p>
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="d-flex">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="img-for-modal-redirect" alt="">
+                <div class="d-flex justify-content-between mb-2">
+                    <div class="d-flex  align-items-center">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/mobile-app-element.png" class="img-for-modal-redirect" alt="">
                         <p class="name-for-redirect">The mobile App</p>
                     </div>
                     <a href="" class="btn btn-for-redirect">Open</a>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="img-for-modal-redirect" alt="">
+                    <div class="d-flex  align-items-center">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/browser-logos.png" class="img-for-modal-redirect" alt="">
                         <p class="name-for-redirect">Your Browser</p>
                     </div>
-                    <a href="" class="btn btn-for-redirect">Continue</a>
+                    <a href="" class="btn btn-for-redirect-continue">Continue</a>
                 </div>
             </div>
         </div>
@@ -511,9 +511,20 @@ foreach($reactions as $value)
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Sélectionner le modal par son identifiant et l'afficher
-        $("#modal-redirect").modal('show');
+        function checkWindowWidth() {
+            var windowWidth = $(window).width();
+
+            if (windowWidth >= 300 && windowWidth <= 767) {
+                $("#modal-redirect").modal('show');
+            }
+        }
+        checkWindowWidth();
+
+        $(window).resize(function () {
+            checkWindowWidth();
+        });
     });
+
 </script>
 <script>
     // partners slides

@@ -1,6 +1,6 @@
 <?php
-    //Deactivated assessment
-    header('Location: /dashboard/user');
+
+     
 
     /* Get  seconds by given string time  */
     function timeToSeconds(string $time): int
@@ -12,6 +12,9 @@
         return (int)$time_array[1];
     }
 
+    if (get_current_user_id() === 0)
+        header('Location: /');
+
     $args = array(
         'post_type' => 'assessment',
         'post_status' => 'publish',
@@ -21,12 +24,11 @@
 
     // $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
     $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
-
-    if(!empty($assessments_validated))
-        foreach ($assessments as $key => $assessment) {
-            if (in_array($assessment,$assessments_validated))
-                unset($assessments[$key]);
-        }
+    // if(!empty($assessments_validated))
+    //     foreach ($assessments as $key => $assessment) {
+    //         if (in_array($assessment,$assessments_validated))
+    //             unset($assessments[$key]);
+    //     }
 ?>
 
 
@@ -41,8 +43,8 @@
             <div class="head">
                 <ul class="filters">
                     <li class="item active">All</li>
-                    <li class="item">Done</li>
-                    <!-- <li class="item">Other assessment</li> -->
+                    <li class="item validate">Validated</li>
+                    <li class="item failed">Failed</li>
                 </ul>
                 <!-- <input type="search" class="form-control search" placeholder="search"> -->
             </div>
@@ -63,7 +65,6 @@
                     $how_it_works = get_field('how_it_works', $assessment->ID);
                     $level = get_field('difficulty_assessment', $assessment->ID);
                     $language = get_field('language_assessment', $assessment->ID);
-
                     $timer = 0;
                     $questions = get_field('question',$assessment->ID);
                     $number_question = 0;
@@ -78,9 +79,14 @@
                     $timer = ceil($timer/60);
 
                     //Image
-                    $image = get_field('image_assessement', $assessment->ID)['url'];                  
+                    $image = get_field('image_assessement', $assessment->ID)['url'];
+                    if(!$image){
+                        $image = get_the_post_thumbnail_url($assessment->ID);
                         if(!$image)
-                            $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
+                            $image = get_field('url_image_xml', $assessment->ID);
+                                if(!$image)
+                                    $image = get_stylesheet_directory_uri().'/img/assessment-1.png';
+                    }
                     
 
                     //Tags !mportant 
@@ -113,10 +119,14 @@
                             </div>
                             <div class="footerCardSkillsssessment">
                                 <a href= <?= get_permalink($assessment->ID) ?> class="btn btnDetailsAssessment">Details</a>
+                                <?php 
+                                    if (!in_array($assessment,$assessments_validated)){
+                                ?>
                                 <form action="/dashboard/user/answer-assessment" method="post">
                                     <input type="hidden" name="assessment_id" value= <?= $assessment->ID; ?> >
                                     <button class="btn btnGetStartAssessment" data-target="" data-toggle="" id="">Get Started</button>
                                 </form>
+                                <?php } ?>
                             </div>
                         </div>
                         
@@ -137,14 +147,14 @@
                     /** Assessment done */
 
                 foreach($assessments_validated as $key => $assessment) {
-                    if ($assessment != null)
-                    { 
+                    
+                    if ($assessment != null && $assessment != "" &&  'publish' === get_post_status($assessment->ID))
+                    {
                         $assessment_title = $assessment->post_title;
                         $description = get_field('description_assessment',$assessment->ID);
                         $how_it_works = get_field('how_it_works', $assessment->ID);
                         $level = get_field('difficulty_assessment', $assessment->ID);
                         $language = get_field('language_assessment', $assessment->ID);
-
                         $timer = 0;
                         $questions = get_field('question',$assessment->ID);
                         $number_question = 0;
@@ -175,7 +185,8 @@
                             $category_default = get_field('categories', $assessment->ID);
                             $category_xml = get_field('category_xml', $assessment->ID);
                         }
-                }
+                    
+                    
 
             ?>
 
@@ -198,7 +209,7 @@
                                 </div>
                             </div>
                             <div class="footerCardSkillsssessment">
-                                <a href= <?= "/detail-assessment/?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
+                                <a href= <?= get_permalink($assessment->ID) ?> class="btn btnDetailsAssessment">Details</a>
                                 
                             </div>
                         </div>
@@ -206,10 +217,44 @@
 
                         <?php
                         }
+                    }
                         ?>
                 </div>
                 </div>
 
+                <div class="tab">
+
+                    <div class="contentCardAssessment">
+
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/training.jpg">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment">Theorie heftruck-diploma (25 vragen)</p>
+                                <p class="level">Difficult</p>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class='far fa-question-circle'></i>
+                                        <p class="text-element-detail">24/ 30</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <p class="text-element-detail score-assessment-card ">Score: <b>65 %</b></p>
+                                    </div>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-fill">
+                                        <span>65%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href=""  class="btn btnDetailsAssessment">Details</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -458,6 +503,22 @@
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>
+
+<script>
+    $(document).ready(function(){
+        $('.progress-fill span').each(function(){
+            var percentStr = $(this).text(); // Récupère le contenu texte du span (ex: "22%")
+            var percent = parseFloat(percentStr); // Convertit la chaîne en nombre flottant (ex: 22)
+            if (!isNaN(percent)) { // Vérifie si le pourcentage est un nombre valide
+                var progressBarWidth = $('.progress-track').width();
+                var fillWidth = progressBarWidth * (percent / 100);
+                $(this).parent().css('width', fillWidth);
+            }
+        });
+    });
+</script>
+
 <script>
     document.querySelectorAll(".filters .item").forEach(function (tab, index) {
         tab.addEventListener("click", function () {
