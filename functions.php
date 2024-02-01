@@ -1744,10 +1744,9 @@ add_action( 'rest_api_init', function () {
     'callback' => 'liggeeySave'
   ));
 
-  // register_rest_route ('custom/v1', '/user/jobs', array(
-  //   'methods' => 'POST',
-  //   'callback' => 'userJobs'
-  // ));
-
+ register_rest_route ('custom/v1', '/recentJob', array(
+    'methods' => 'POST',
+    'callback' => 'recentJobs'
+  ));
 
 });

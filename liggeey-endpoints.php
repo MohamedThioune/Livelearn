@@ -855,21 +855,15 @@ function liggeeySave(WP_REST_Request $request){
   $validated = validated($required_parameters, $request);
 
   //Check if typeApplyId ['job', 'company', 'candidate']
-  // Assume $typeApplyId is the variable to be checked
-  $typeApplyId = 'job'; // Replace this with your actual value
 
-  // Array of allowed values
-  $allowedValues = ['job', 'company', 'candidate'];
+    $allowedValues = ['job', 'company', 'candidate'];
 
-  // Check if $typeApplyId is in the array of allowed values
-  if (in_array($typeApplyId, $allowedValues)) {
-      // $typeApplyId is one of the allowed values
-      echo "Valid typeApplyId";
-  } else {
-      // $typeApplyId is not in the allowed values
-      echo "Invalid typeApplyId";
-  }
-
+    if (!in_array($typeApplyId, $allowedValues)) {
+        $errors['errors'] = "Please respect this type listed: job, company, candidate!";
+        $errors = (object)$errors;
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+    }
 
   //Get inputs
   $user_apply_id = $request['userApplyId'];
@@ -895,7 +889,7 @@ function liggeeySave(WP_REST_Request $request){
 
   // Update the save liggeey entries
   update_field('save_liggeey', $user_favorites, 'user_' . $user_apply_id);
-  
+
   $success = "Favoris saved with success !";
   $response = new WP_REST_Response($success);
   $response->set_status(200);
@@ -903,7 +897,43 @@ function liggeeySave(WP_REST_Request $request){
   return $response;
 }
 
-function userJobs(WP_REST_Request $request){
+//3 Related Jobs
+function recentJobs(WP_REST_Request $request){
+
+  $args = array(
+      'post_type' => 'job',
+      'posts_per_page' => 3,
+      'order' => 'DESC',
+  );
+  $job_posts = get_posts($args);
+  $jobs = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($job_posts as $post):
+    if(!$post)
+      continue;
+
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $sample = array('ID' => '0', 'title' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['title'] = $post->post_title;
+    $sample['posted_at'] = $post->post_date;
+    $company = get_field('job_company', $post->ID);
+
+    $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
+    $sample['image'] = !empty($company) ? get_field('company_logo',  $company->ID) : $sample['image'];
+    $sample['place'] = !empty($company) ? get_field('company_place',  $company->ID) : $sample['place'];
+    $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
+
+    $sample = (Object)$sample;
+    array_push($jobs, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($jobs);
+  $response->set_status(200);
+  return $response;
   
 }
 
