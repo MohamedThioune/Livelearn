@@ -138,9 +138,8 @@
                 </div>
 
                 <div class="tab">
-                    
-
                     <div class="contentCardAssessment">
+
 
             <?php
 
@@ -249,7 +248,7 @@
                                 </div>
                             </div>
                             <div class="footerCardSkillsssessment">
-                                <a href=""  class="btn btnDetailsAssessment">Details</a>
+                                <button class="btn btnDetailsAssessment" data-toggle="modal" data-target="#ModalAssessment">Restart</button>
                             </div>
                         </div>
 
@@ -261,98 +260,120 @@
     </div>
 
 
-<!--    <div class="contentAsessment">
-        <div class="contentCardAssessment">
-            <?php
-/*                foreach($assessments as $key => $assessment) {
-                   
-                    $description = get_field('description_assessment',$assessment->ID);
-                    $how_it_works = get_field('how_it_works', $assessment->ID);
-                    $level = get_field('difficulty_assessment', $assessment->ID);
-                    $language = get_field('language_assessment', $assessment->ID);
+    <div id="ModalAssessment" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <div class="icon-box">
+                        <span>!</span>
+                    </div>
+                    <h4 class="modal-title w-100">Failed Assessment</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Take some time to rest and think. Wait a few hours before trying again. Use this time to review your knowledge and prepare for a better performance on your next attempt.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK, I get it.</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    $timer = 0;
-                    $questions = get_field('question',$assessment->ID);
-                    $number_question = 0;
-                    if(!empty($questions))
-                        $number_question = count($questions);
-                    foreach ($questions as $question)
-                    {
-                        $question_time = $question['timer'];
-                        $timer += timeToSeconds($question_time);
-                    }
-                    // Get minutes by given string seconds
-                    $timer = ceil($timer/60);
 
-                    //Image
-                    $image = get_field('image_assessement', $assessment->ID)['url'];
-                    if(!$image){
-                        $image = get_the_post_thumbnail_url($assessment->ID);
-                        if(!$image)
-                            $image = get_field('url_image_xml', $assessment->ID);
-                                if(!$image)
-                                    $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
-                    }
 
-                    //Tags !mportant 
-                    $posttags = get_the_tags();
+    <!--    <div class="contentAsessment">
+            <div class="contentCardAssessment">
+                <?php
+    /*                foreach($assessments as $key => $assessment) {
 
-                    if(!$posttags){
-                        $category_default = get_field('categories', $assessment->ID);
-                        $category_xml = get_field('category_xml', $assessment->ID);
-                    }
+                        $description = get_field('description_assessment',$assessment->ID);
+                        $how_it_works = get_field('how_it_works', $assessment->ID);
+                        $level = get_field('difficulty_assessment', $assessment->ID);
+                        $language = get_field('language_assessment', $assessment->ID);
 
-            ?>
-                    <div class="cardAssessement" >
-                        <div class="bodyCardAssessment">
-                            <div class="contentImgAssessment">
-                                <img src="<?php /*= $image; */?>">
-                            </div>
-                            <div>
-                                <p class="textMutliSelect"><?php /*= $level */?></p>
-                                <p class="categoryCours"><?php /*= $assessment->post_title */?> </p>
-                                <p class="elementCategory">
-                                    <?php
-/*                                    if(!empty($posttags))
-                                        foreach($posttags as $posttag)
-                                            echo $posttag->name . ',';
-                                    else{
-                                        $read_category = array();
-                                        if(!empty($category_default))
-                                            foreach($category_default as $item)
-                                                if($item)
-                                                    if(!in_array($item['value'],$read_category)){
-                                                        array_push($read_category,$item['value']);
-                                                        echo (String)get_the_category_by_ID($item['value']) . ',';
-                                                    }
-                                        else if(!empty($category_xml))
-                                            foreach($category_xml as $item)
-                                                if($item)
-                                                    if(!in_array($item['value'],$read_category)){
-                                                        array_push($read_category,$item['value']);
-                                                        echo (String)get_the_category_by_ID($item['value']) . ',';
-                                                    }
-                                    }
-                                    */?>
-                                </p>
-                                <div class="d-flex align-items-center">
-                                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/mdi_timer-sand.png">
-                                    <p class="timeAssessement"><?php /*= $timer */?> Minutes</p>
+                        $timer = 0;
+                        $questions = get_field('question',$assessment->ID);
+                        $number_question = 0;
+                        if(!empty($questions))
+                            $number_question = count($questions);
+                        foreach ($questions as $question)
+                        {
+                            $question_time = $question['timer'];
+                            $timer += timeToSeconds($question_time);
+                        }
+                        // Get minutes by given string seconds
+                        $timer = ceil($timer/60);
+
+                        //Image
+                        $image = get_field('image_assessement', $assessment->ID)['url'];
+                        if(!$image){
+                            $image = get_the_post_thumbnail_url($assessment->ID);
+                            if(!$image)
+                                $image = get_field('url_image_xml', $assessment->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
+                        }
+
+                        //Tags !mportant
+                        $posttags = get_the_tags();
+
+                        if(!$posttags){
+                            $category_default = get_field('categories', $assessment->ID);
+                            $category_xml = get_field('category_xml', $assessment->ID);
+                        }
+
+                ?>
+                        <div class="cardAssessement" >
+                            <div class="bodyCardAssessment">
+                                <div class="contentImgAssessment">
+                                    <img src="<?php /*= $image; */?>">
+                                </div>
+                                <div>
+                                    <p class="textMutliSelect"><?php /*= $level */?></p>
+                                    <p class="categoryCours"><?php /*= $assessment->post_title */?> </p>
+                                    <p class="elementCategory">
+                                        <?php
+    /*                                    if(!empty($posttags))
+                                            foreach($posttags as $posttag)
+                                                echo $posttag->name . ',';
+                                        else{
+                                            $read_category = array();
+                                            if(!empty($category_default))
+                                                foreach($category_default as $item)
+                                                    if($item)
+                                                        if(!in_array($item['value'],$read_category)){
+                                                            array_push($read_category,$item['value']);
+                                                            echo (String)get_the_category_by_ID($item['value']) . ',';
+                                                        }
+                                            else if(!empty($category_xml))
+                                                foreach($category_xml as $item)
+                                                    if($item)
+                                                        if(!in_array($item['value'],$read_category)){
+                                                            array_push($read_category,$item['value']);
+                                                            echo (String)get_the_category_by_ID($item['value']) . ',';
+                                                        }
+                                        }
+                                        */?>
+                                    </p>
+                                    <div class="d-flex align-items-center">
+                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/mdi_timer-sand.png">
+                                        <p class="timeAssessement"><?php /*= $timer */?> Minutes</p>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href= <?php /*echo "/detail-assessment/?assessment_id=" . $assessment->ID; */?> class="btn btnDetailsAssessment">Details</a>
+                                <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id= <?php /*= $assessment->ID; */?> >Get Started</button>
+                            </div>
                         </div>
-                        <div class="footerCardSkillsssessment">
-                            <a href= <?php /*echo "/detail-assessment/?assessment_id=" . $assessment->ID; */?> class="btn btnDetailsAssessment">Details</a>
-                            <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id= <?php /*= $assessment->ID; */?> >Get Started</button>
-                        </div>
-                    </div>
-            <?php
-/*                }
-            */?>
-            
-          
-    </div>
-    </div>-->
+                <?php
+    /*                }
+                */?>
+
+
+        </div>
+        </div>-->
 
 
 <!--for backend-->
