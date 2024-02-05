@@ -118,15 +118,15 @@ require($page);
             <div class="BaangerichteBlock">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/logo-livelearn-slim.png" class="img-head-about2" alt="">
                 <h1 class="wordDeBestText2">SLIM-subsidie</h1>
-                <p class="description-Slim">Stimuleringsregeling voor Leren en Ontwikkelen in het MKB</p>
+                <p class="description-Slim">Boost je bedrijfsgroei met de SLIM subsidie! Meld je aan en investeer in de toekomst met financiële ondersteuning voor leren en ontwikkelen, versterk je team en vergroot je concurrentiekracht.</p>
             </div>
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/slim-img.png" class="slim-img" alt="">
         </div>
     </section>
     <div class="container-fluid">
         <section class="first-section-slim text-center content-template-form">
-            <p class="description-about">Bent u op zoek naar mogelijkheden om de groei van uw medewerkers en daarmee het bedrijf te bevorderen? Dan is de Stimuleringsregeling Leren en Ontwikkelen in het mkb (SLIM) iets wat u niet mag negeren. Via de SLIM-subsidie
-                streeft de overheid ernaar om leren en ontwikkelen binnen het mkb als vanzelfsprekend te beschouwen.</p>
+            <p class="description-about">Ben je op zoek naar mogelijkheden om de groei van je medewerkers en daarmee het bedrijf te verbeteren? Dan is de Stimuleringsregeling Leren en Ontwikkelen in het mkb (SLIM) iets wat jullie niet mogen missen. Via de SLIM-subsidie streeft de overheid ernaar om leren en ontwikkelen binnen het mkb als vanzelfsprekend te beschouwen. Meld je vrijblijvend aan via het
+                onderstaande formulier en dan kijken we samen hoe jouw organisatie hier het best gebruik van kan maken:</p>
             <div class="container-fluid">
                 <div class="form-block form-slim">
                     <!-- 
@@ -149,10 +149,9 @@ require($page);
         <section class="section-block-row">
             <div class="row flex-direction-modife">
                 <div class="col-md-6">
-                    <h2 class="title-section">Investeer in medewerker
-                        ontwikkeling in 2023</h2>
-                    <p class="description-section">Als u van plan bent om te investeren in de ontwikkeling van uw medewerkers en daarmee de groei van uw bedrijf, dan biedt de Stimuleringsregeling Leren en Ontwikkelen in het mkb (SLIM) een kans die u niet mag laten liggen. Het doel van de SLIM-subsidie is
-                        om leren en ontwikkelen binnen het mkb te bevorderen en tot een alledaagse praktijk te maken.</p>
+                    <h2 class="title-section">Investeer in medewerker ontwikkeling in 2024</h2>
+                    <p class="description-section">Wil jij in 2024 investeren in de ontwikkeling van je team en de groei van je bedrijf stimuleren? Grijp dan de kans met de Stimuleringsregeling Leren en Ontwikkelen in het mkb (SLIM). De SLIM-subsidie maakt leren
+                        en ontwikkelen een vanzelfsprekend onderdeel van jouw bedrijfspraktijk. Mis deze kans niet!</p>
                 </div>
                 <div class="col-md-6">
                     <div class="content-img-row-slim">
