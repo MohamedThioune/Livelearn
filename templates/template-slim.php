@@ -125,6 +125,10 @@ require($page);
     </section>
     <div class="container-fluid">
         <section class="first-section-slim text-center content-template-form">
+            <div class="block-following">
+                <script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                <script type="IN/FollowCompany" data-id="35716760" data-counter="bottom"></script>
+            </div>
             <p class="description-about">Ben je op zoek naar mogelijkheden om de groei van je medewerkers en daarmee het bedrijf te verbeteren? Dan is de Stimuleringsregeling Leren en Ontwikkelen in het mkb (SLIM) iets wat jullie niet mogen missen. Via de SLIM-subsidie streeft de overheid ernaar om leren en ontwikkelen binnen het mkb als vanzelfsprekend te beschouwen. Meld je vrijblijvend aan via het
                 onderstaande formulier en dan kijken we samen hoe jouw organisatie hier het best gebruik van kan maken:</p>
             <div class="container-fluid">

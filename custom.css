@@ -22720,6 +22720,9 @@ figure ul li {
     display: inline-block;
     margin: 100px auto;
 }
+.block-following {
+    margin-bottom: 35px;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
