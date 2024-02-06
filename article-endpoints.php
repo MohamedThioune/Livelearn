@@ -7,7 +7,7 @@ function RandomDoubleString()
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randstring = '';
     for ($i = 0; $i < 10; $i++) {
-        $rand = $characters[rand(0, strlen($characters))];
+        $rand = $characters[rand(0, strlen($characters))]; 
         $randstring .= $rand;
     }
     return $randstring;
