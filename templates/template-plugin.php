@@ -73,7 +73,7 @@ if (isset($selectedValues)) {
                 'role' => 'author',
             );
 
-            $author_id = wp_insert_user(wp_slash($userdata));
+            $author_id = wp_insert_user(wp_slash($userdata)); 
         }
 
         //var_dump($company_id);
