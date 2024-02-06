@@ -1764,4 +1764,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'FavoritesUser'
   ));
 
+  // register_rest_route ('custom/v1', '/recentJob', array(
+  //   'methods' => 'POST',
+  //   'callback' => 'recentJobs'
+  // ));
+
+  register_rest_route ('custom/v1', '/user/postJob', array(
+    'methods' => 'POST',
+    'callback' => 'postJobUser'
+  ));
+
 });
