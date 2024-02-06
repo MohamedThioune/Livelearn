@@ -848,7 +848,6 @@ function jobUser(WP_REST_Request $request){
 function liggeeySave(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
-
   $required_parameters = ['userApplyId', 'typeApplyId', 'ID'];
 
   //Check required parameters apply
@@ -858,7 +857,7 @@ function liggeeySave(WP_REST_Request $request){
 
     $allowedValues = ['job', 'company', 'candidate'];
 
-    if (!in_array($typeApplyId, $allowedValues)) {
+            if (!in_array($typeApplyId, $allowedValues)) {
         $errors['errors'] = "Please respect this type listed: job, company, candidate!";
         $errors = (object)$errors;
         $response = new WP_REST_Response($errors);
@@ -936,6 +935,40 @@ function recentJobs(WP_REST_Request $request){
   return $response;
   
 }
+
+  function postJobUser(WP_REST_Request $request){
+
+    // Get input
+    $user_apply_id = $request['userApplyId'];
+    $user_apply = get_user_by('ID', $user_apply_id);
+
+    // Insert post
+    $post_data = array(
+      'post_title' => $request['title'],
+      'post_author' => $user_apply->ID,
+      'post_type' => 'job',
+      'post_status' => 'publish'
+    );
+    // Insert the job post
+    $job_id = wp_insert_post($post_data);
+
+    // Check if the job post was successfully inserted
+    if (!is_wp_error($job_id)) {
+      // Add custom fields
+      update_field('job_contract', $request['job_contract'], $job_id);
+      update_field('job_level_of_experience', $request['job_level_of_experience'], $job_id);
+      update_field('job_langues', $request['job_langues'], $job_id);
+      update_field('job_application_deadline', $request['job_application_deadline'], $job_id);
+
+
+      return $job_id; 
+    } else {
+      return new WP_Error('job_insert_error', 'Failed to insert job post', array('status' => 500));
+    }
+  }
+
+
+
 
 
 /* * End Liggeey * */
