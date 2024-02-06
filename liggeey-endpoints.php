@@ -275,7 +275,6 @@ function validated($required_parameters, $request){
 
   return 1;
 }
-
 //end function
 
 //[GET]Home page
@@ -816,17 +815,25 @@ function jobUser(WP_REST_Request $request){
 function liggeeySave(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
-
   $required_parameters = ['userApplyId', 'typeApplyId', 'ID'];
   $permission_type = ['job', 'company', 'candidate'];
-
-  //Check required parameters apply
-  $validated = validated($required_parameters, $request);    
 
   //Get inputs
   $user_apply_id = $request['userApplyId'];
   $type_applied_id = $request['typeApplyId'];
   $id = $request['ID'];
+
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);    
+
+  $allowedValues = ['job', 'company', 'candidate'];
+
+  if (!in_array($typeApplyId, $allowedValues)) {
+      $errors['errors'] = "Please respect this type listed: job, company, candidate!";
+      $errors = (object)$errors;
+      $response = new WP_REST_Response($errors);
+      $response->set_status(400);
+  }
 
   //Check if typeApplyId ['job', 'company', 'candidate']
   if(!in_array($type_applied_id, $permission_type)): 
@@ -853,7 +860,7 @@ function liggeeySave(WP_REST_Request $request){
 
   // Update the save liggeey entries
   update_field('save_liggeey', $user_favorites, 'user_' . $user_apply_id);
-  
+
   $success = "Favoris saved with success !";
   $response = new WP_REST_Response($success);
   $response->set_status(200);
@@ -1051,6 +1058,103 @@ function FavoritesUser(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response;
+}
+
+//Recent job is not a endpoint but must be add to detail job endpoint
+function recentJobs(WP_REST_Request $request){
+
+  $args = array(
+      'post_type' => 'job',
+      'posts_per_page' => 3,
+      'order' => 'DESC',
+  );
+  $job_posts = get_posts($args);
+  $jobs = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($job_posts as $post):
+    if(!$post)
+      continue;
+
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $sample = array('ID' => '0', 'title' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['title'] = $post->post_title;
+    $sample['posted_at'] = $post->post_date;
+    $company = get_field('job_company', $post->ID);
+
+    $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
+    $sample['image'] = !empty($company) ? get_field('company_logo',  $company->ID) : $sample['image'];
+    $sample['place'] = !empty($company) ? get_field('company_place',  $company->ID) : $sample['place'];
+    $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
+
+    $sample = (Object)$sample;
+    array_push($jobs, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($jobs);
+  $response->set_status(200);
+  return $response;
+  
+}
+
+//Candidate a job
+function postJobUser(WP_REST_Request $request){
+
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);  
+
+  // Get input
+  $title = $request['title'];
+  $description = $request['description'];
+  $job_contract = ($request['job_contract']) ?: 'Full Time';
+  $job_level_experience = ($request['job_level_of_experience']) ?: '';
+  $job_language = ($request['job_langues']) ?: 'English';
+  $job_application_deadline = ($request['job_application_deadline']);
+  $user_apply_id = $request['userApplyId'];
+  $user_apply = get_user_by('ID', $user_apply_id);
+
+  //Find the user company
+  $company = get_field('company',  'user_' . $user_apply_id);
+
+  // Insert post
+  $post_data = array(
+    'post_title' => $title,
+    'post_author' => $user_apply->ID,
+    'post_type' => 'job',
+    'post_status' => 'publish'
+  );
+
+  // Insert the job post
+  $job_id = wp_insert_post($post_data);
+
+  //Check if there are no errors
+  if(is_wp_error($job_id)):
+    $errors['errors'] = $job_id;
+    $errors = (Object)$errors;
+    $response = new WP_REST_Response($errors); 
+    $response->set_status(400);
+    return $response;
+  endif; 
+
+  // Add custom fields
+  update_field('job_company', $company, $job_id);
+  // update_field('job_skills_experiences', $job_skills_experiences, $job_id);
+  update_field('description', $description, $job_id);
+  update_field('job_contract', $job_contract, $job_id);
+  update_field('job_level_of_experience', $job_level_experience, $job_id);
+  update_field('job_langues', $job_language, $job_id);
+  update_field('job_expiration_date', $job_application_deadline, $job_id);
+  
+  // Return the job
+  $job = job($job_id);
+  $response = new WP_REST_Response($job);
+  $response->set_status(200);
+
+  return $response;
+
 }
 
 /* * End Liggeey * */
