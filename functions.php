@@ -1744,10 +1744,24 @@ add_action( 'rest_api_init', function () {
     'callback' => 'liggeeySave'
   ));
 
-  // register_rest_route ('custom/v1', '/user/jobs', array(
-  //   'methods' => 'POST',
-  //   'callback' => 'userJobs'
-  // ));
+  register_rest_route ('custom/v1', '/user/home', array(
+    'methods' => 'POST',
+    'callback' => 'HomeUser'
+  ));
 
+  register_rest_route ('custom/v1', '/user/jobs', array(
+    'methods' => 'POST',
+    'callback' => 'JobsUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/applicants', array(
+    'methods' => 'POST',
+    'callback' => 'ApplicantsUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/favorites', array(
+    'methods' => 'POST',
+    'callback' => 'FavoritesUser'
+  ));
 
 });
