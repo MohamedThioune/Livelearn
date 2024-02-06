@@ -42,8 +42,6 @@ if ($playlist_youtube) {
     $companys = array();
     foreach($playlist_youtube as $playlist_element){
         $id=explode(',',$playlist_element);
-        var_dump($id);
-        die;
         array_push($playlists_id,$id[1]);
         array_push($keywords,$id[2]);
         array_push($authors,$id[0]);
@@ -68,7 +66,7 @@ if ($playlist_youtube) {
                         $author_id = $user->ID;
                         $company = $company_user[0];
                         $company_id = $company_user[0]->ID;
-                        // continue;
+                        break;
                     }
                 }
 
