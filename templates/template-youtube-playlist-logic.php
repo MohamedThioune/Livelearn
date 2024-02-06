@@ -39,12 +39,14 @@ if ($playlist_youtube) {
     $playlists_id = array();
     $keywords = array();
     $authors = array();
+    $companys = array();
     foreach($playlist_youtube as $playlist_element){
         $id=explode(',',$playlist_element);
-        // var_dump($id);
+        var_dump($id);
         array_push($playlists_id,$id[1]);
         array_push($keywords,$id[2]);
         array_push($authors,$id[0]);
+        //array_push($companys,$id[]);
     }
     // var_dump($authors);
     // die;
