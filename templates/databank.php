@@ -343,6 +343,7 @@ if (isset($_GET["message"])) {
                             $parameter='';
                             $playlist_title= [];
                             $youtube_parameter=array();
+                            $compani = '';
                             $onderwp = '';
                             $keywords = array();
                             $indice=0;
@@ -352,11 +353,11 @@ if (isset($_GET["message"])) {
                                 $playlists_id[][$row[5]] = $row[3];
                                 $ptitle= $row[0];
                                 $subtopics = $row[7];
+                                $compani = $row[6];
                                 if($subtopics=="")
                                     $subtopics="";
-                                $parameter=array_keys($playlists_id[$indice])[0].','.array_values($playlists_id[$indice])[0].','.$subtopics;
+                                $parameter=array_keys($playlists_id[$indice])[0].','.array_values($playlists_id[$indice])[0].','.$subtopics.','.$compani;
                                 array_push($youtube_parameter,$parameter);
-                                // array_shift($youtube_parameter);
                                 array_push($keywords, $subtopics);
                                 array_push($playlist_title,$ptitle);
                                 $indice++;
