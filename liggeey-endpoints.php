@@ -1102,6 +1102,7 @@ function recentJobs(WP_REST_Request $request){
 
 //Candidate a job
 function postJobUser(WP_REST_Request $request){
+  $errors = ['errors' => '', 'error_data' => ''];
 
   //Check required parameters apply
   $validated = validated($required_parameters, $request);  
@@ -1141,12 +1142,12 @@ function postJobUser(WP_REST_Request $request){
 
   // Add custom fields
   update_field('job_company', $company, $job_id);
-  // update_field('job_skills_experiences', $job_skills_experiences, $job_id);
   update_field('description', $description, $job_id);
   update_field('job_contract', $job_contract, $job_id);
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
   update_field('job_expiration_date', $job_application_deadline, $job_id);
+  // update_field('job_skills_experiences', $job_skills_experiences, $job_id);
   
   // Return the job
   $job = job($job_id);
