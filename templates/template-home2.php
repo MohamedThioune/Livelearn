@@ -7,10 +7,6 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/peinda
 <style>
     body{
         background: #F5FAFD;
@@ -531,21 +527,6 @@
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
-<<<<<<< HEAD
-=======
-$functies = get_categories( array(
-    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'parent'  => $categories[0],
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-) );
-
-$skills = get_categories( array(
-    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'parent'  => $categories[3],
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-) );
-
->>>>>>> origin/peinda
     $functies = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent'  => $categories[0],
@@ -564,21 +545,12 @@ $skills = get_categories( array(
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
-<<<<<<< HEAD
     $subtopics = array();
     $topics = array();
     foreach($categories as $categ){
         //Topics
         $topicss = get_categories(
             array(
-=======
-$subtopics = array();
-$topics = array();
-foreach($categories as $categ){
-    //Topics
-    $topicss = get_categories(
-        array(
->>>>>>> origin/peinda
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categ,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
