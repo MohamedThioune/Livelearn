@@ -45,10 +45,10 @@ if ($playlist_youtube) {
         array_push($playlists_id,$id[1]);
         array_push($keywords,$id[2]);
         array_push($authors,$id[0]);
-        //array_push($companys,$id[]);
+        array_push($companys,$id[3]);
     }
-    // var_dump($authors);
-    // die;
+    var_dump($companys);
+    die;
 
     $i = 1;
     if ($playlists_id || !empty($playlists_id)) {
