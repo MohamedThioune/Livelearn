@@ -1315,7 +1315,7 @@ if (!empty($courses)) {
             },complete: function(complete){
                 $('#loader').attr('hidden',true);
                 $('#select_field').attr('hidden',false);
-                location.reload();
+                //location.reload();
             },
         });
     })
