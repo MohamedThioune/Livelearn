@@ -5,7 +5,7 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
 
-$user_connected = wp_get_current_user();
+//$user_connected = wp_get_current_user();
 
 ?>
 <?php
@@ -14,7 +14,8 @@ $maxResults = 45;
 
 $users = get_users();
 
-$author_id = wp_get_current_user();// id user connected
+//$author_id = wp_get_current_user();// id user connected
+
 $args = array(
     'post_type' => 'company',
     'posts_per_page' => -1,
@@ -59,6 +60,7 @@ if ($playlist_youtube) {
             $author = $authors[$key];
             // var_dump($author);
             $company_id = 0;
+            $author_id=0;
             //* MaxBird was there *//
             //Has to be done as a function 
             foreach ($users as $user){
