@@ -7,6 +7,7 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
 <style>
     body{
         background: #F5FAFD;
@@ -268,9 +269,6 @@
         .productBlock3 {
             padding: 0 0 0 0px !important;
         }
-
-
-
 
     }
 
@@ -2018,5 +2016,4 @@
                 }
             });
         });
-
     </script>
