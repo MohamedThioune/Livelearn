@@ -115,8 +115,8 @@ if ($playlist_youtube) {
                 $author_id = wp_insert_user(wp_slash($userdata)); 
             }
 
-            var_dump($userdata);
-            die();
+            //var_dump($userdata);
+            //die();
 
             //Accord the author a company
             if (!is_wp_error($author_id)) {
