@@ -3390,7 +3390,7 @@ function save_user_views(WP_REST_Request $request)
     //Iterate users platform for recommendation
     foreach($users as $user):
       $i++;
-      if($i >= 50):
+      if($i >= 50)
         break;
 
       //Recommendation courses
