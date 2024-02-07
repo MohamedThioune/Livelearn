@@ -5,7 +5,7 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
 
-$user_connected = wp_get_current_user();
+//$user_connected = wp_get_current_user();
 
 ?>
 <?php
@@ -14,7 +14,8 @@ $maxResults = 45;
 
 $users = get_users();
 
-$author_id = wp_get_current_user();// id user connected
+//$author_id = wp_get_current_user();// id user connected
+
 $args = array(
     'post_type' => 'company',
     'posts_per_page' => -1,
@@ -39,15 +40,16 @@ if ($playlist_youtube) {
     $playlists_id = array();
     $keywords = array();
     $authors = array();
+    $companys = array();
     foreach($playlist_youtube as $playlist_element){
         $id=explode(',',$playlist_element);
-        // var_dump($id);
         array_push($playlists_id,$id[1]);
         array_push($keywords,$id[2]);
         array_push($authors,$id[0]);
+        array_push($companys,$id[3]);
     }
-    // var_dump($authors);
-    // die;
+    //var_dump($companys);
+    //die;
 
     $i = 1;
     if ($playlists_id || !empty($playlists_id)) {
@@ -57,24 +59,70 @@ if ($playlist_youtube) {
             $playlists = json_decode(file_get_contents($url_playlist), true);
             $author = $authors[$key];
             // var_dump($author);
-            $author_id = 0;
-            foreach ($users as $user) {
+            $company_id = 0;
+            $author_id=0;
+            //* MaxBird was there *//
+            //Has to be done as a function 
+            foreach ($users as $user){
                 $company_user = get_field('company', 'user_' . $user->ID);
-                if (isset($company_user[0]->post_title)) {
-                    if (strtolower($user->display_name) == strtolower($author)) {
+
+                //company exists
+                if (isset($company_user->post_title)){
+                    if (strtolower($company_user->post_title) == strtolower($companys[$key])) {
                         $author_id = $user->ID;
-                        $company = $company_user[0];
-                        $company_id = $company_user[0]->ID;
-                        // continue;
+                        $company = $company_user;
+                        $company_id = $company_user->ID;
+                        break;
                     }
                 }
+            }
 
-            } 
+            if (!$author_id) {
+                //Looking for company
+                $company = get_page_by_path($companys[$key], OBJECT, 'company');
 
-            // Accord the author a company
+                if(!$company){
+                    //Creating new company
+                    $argv = array(
+                        "post_type" => "company",
+                        "post_title" => $companys[$key],
+                        "post_status"=> "publish"
+                    );
+                    $company_id = wp_insert_post($argv);
+                    $company = get_post($company_id);
+                }else {
+                    $company_id = $company->ID;
+                }
+
+                //Creating a new user
+                $login = 'user' . random_int(0, 100000);
+                $password = "pass" . random_int(0, 100000);
+                $email = "author_" . $companys[$key] . random_int(0, 100000) . "@" . 'livelearn' . ".nl";
+                $first_name = explode(' ', $author)[0];
+                $last_name = isset(explode(' ', $author)[1]) ? explode(' ', $author)[1] : '';
+
+                $userdata = array(
+                    'user_pass' => $password,
+                    'user_login' => $login,
+                    'user_email' => $email,
+                    'user_url' => 'https://livelearn.nl/inloggen/',
+                    'display_name' => $first_name,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'role' => 'author',
+                );
+
+                $author_id = wp_insert_user(wp_slash($userdata)); 
+            }
+
+            //var_dump($userdata);
+            //die();
+
+            //Accord the author a company
             if (!is_wp_error($author_id)) {
                 update_field('company', $company, 'user_' . $author_id);
             }
+
 
             foreach ($playlists['items'] as $playlist) {
                 //tags
