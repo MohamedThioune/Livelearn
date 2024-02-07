@@ -109,7 +109,7 @@ if (isset($ids)) {
                 //Creation course
                 $args = array(
                     'post_type' => 'course',
-                    'post_author' => $course->author_id,
+                    'post_author' => $course->author_id, 
                     'post_status' => 'publish',
                     'post_title' => $course->titel,
                 );
