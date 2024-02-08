@@ -41,12 +41,9 @@ if($optie == "✔"){
             $course->short_description = "no short description !";
         }
     }
-
-<<<<<<< HEAD
+    
     if ($course->author_id == '0' || $course->author_id==null)
-=======
     if (strval($course->type) == "Video")
->>>>>>> origin/Megamind
         $course->author_id = $user_connected->ID;
 
     if(!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id){
