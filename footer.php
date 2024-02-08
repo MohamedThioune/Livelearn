@@ -108,7 +108,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                     </div>
                 </div>
             </div>
-            <div class="sub-footer-block d-flex justify-content-center align-items-center">
+            <div class="sub-footer-block justify-content-center align-items-center">
                 <a href="" class="footer-logo">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
                 </a>

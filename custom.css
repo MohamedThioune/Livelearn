@@ -22498,6 +22498,7 @@ figure ul li {
 }
 .sub-footer-block {
     margin-top: 15px;
+    display: flex;
 }
 .table .pagination-container {
     padding: 40px 0 50px;
@@ -22722,6 +22723,8 @@ figure ul li {
 }
 .block-following {
     margin-bottom: 35px;
+    z-index: 9999;
+    position: relative;
 }
 
 /*responsive mobile*/
@@ -27503,6 +27506,9 @@ figure ul li {
     }
     #modal-redirect.show {
         transform: translateY(0) !important;
+    }
+    .slim-img {
+        display: none;
     }
 
 
