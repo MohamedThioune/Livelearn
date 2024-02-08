@@ -116,7 +116,7 @@ require($page);
         <div class="container">
             <div class="BaangerichteBlock">
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/logo-livelearn-slim.png" class="img-head-about2" alt="">
-                <h1 class="wordDeBestText2">SLIM-subsidie</h1>
+                <h1 class="wordDeBestText2">SLIM-subsidie  </h1>
                 <p class="description-Slim">Boost je bedrijfsgroei met de SLIM subsidie! Meld je aan en investeer in de toekomst met financiële ondersteuning voor leren en ontwikkelen, versterk je team en vergroot je concurrentiekracht.</p>
             </div>
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/slim-img.png" class="slim-img" alt="">
