@@ -10,7 +10,7 @@ $course = $wpdb->get_results( $sql )[0];
 $origin_id = $course->org;
 $feedid = $course->course_id;
 $users = get_users();
-$user_connected = wp_get_current_user();
+$user_connected = wp_get_current_user(); 
 
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
