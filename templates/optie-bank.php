@@ -14,8 +14,6 @@ $user_connected = wp_get_current_user();
 
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "✔"){
-    if (!$course->author_id)
-        $course->author_id = $user_connected->ID;
 
     if($course->image_xml==null)
     {
@@ -42,11 +40,7 @@ if($optie == "✔"){
         }
     }
 
-<<<<<<< HEAD
-    if ($course->author_id == '0' || $course->author_id==null)
-=======
     if (strval($course->type) == "Video")
->>>>>>> origin/Megamind
         $course->author_id = $user_connected->ID;
 
     if(!$course->short_description || !$course->image_xml || !$course->titel || !$course->author_id || !$course->company_id){
@@ -226,6 +220,7 @@ else if($optie == "❌"){
         echo "<span class='alert alert-success'>deleted successfuly ✔️</span>";
     }
 }
+
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
 return $updated;

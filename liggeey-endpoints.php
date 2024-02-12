@@ -279,22 +279,38 @@ function validated($required_parameters, $request){
 
 //[GET]Home page
 function homepage(){
+  $jobs = [];
   $categories = [];
   $artikels = [];
   $candidates = [];
-  $infos = array('categories' => $categories, 'artikels' => $artikels, 'candidates' => $candidates);
+  $infos = array('jobs' => $jobs, 'categories' => $categories, 'artikels' => $artikels, 'candidates' => $candidates);
 
   $errors = ['errors' => '', 'error_data' => ''];
+  $limit_job = 6;
   $limit_post = 3;
   $limit_candidate = 20;
 
+  //Job [Block]
+  $args = array(
+    'post_type' => array('job'),  
+    'post_status' => 'publish',
+    'posts_per_page' => $limit_job,
+  );
+  $job_posts = get_posts($args);
+  $jobs = array();
+
+  foreach ($job_posts as $post):
+    if(!$post)
+      continue;
+
+    $sample = job($post->ID);
+    array_push($jobs, $sample);
+
+  endforeach;
+  $infos['jobs'] = $jobs;
+
   //Category [Block]
   $categories = array();
-  // $sample_categories = array(
-  //   'Digital Marketing', 'Digital Project Manager', 'Community Manager', 'Social Media Manager', 
-  //   'Webdesigner', '3D Illustrator', 'UX Designer',
-  //   'Data Analyst', 'Salesforce', 'Google', 'Web Project Manager', 'COMMCARE', 'DHIS2', 'DRUPAL', 
-  //   'Wordpress', 'Webflow', 'Odoo', 'Prestashop'); 
 
   //Category information
   $no_content = "Some information missing !";
