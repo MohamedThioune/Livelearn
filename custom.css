@@ -22728,7 +22728,26 @@ figure ul li {
     position: relative;
         text-align: center;
 }
-
+.gt_float_switcher {
+    font-size: 15px;
+    box-shadow: unset !important;
+}
+.gt_switcher img, .gt_float_switcher img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    display: inline;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0.8;
+}
+.gt-current-lang,.gt_float_switcher .gt_options a {
+    padding: 5px 6px 4px !important;
+}
+.gt_float_switcher .gt-selected .gt-current-lang span.gt_float_switcher-arrow {
+    float: right;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
