@@ -22721,11 +22721,12 @@ figure ul li {
     display: inline-block;
     margin: 100px auto;
 }
+
 .block-following {
     margin-bottom: 35px;
     z-index: 9999;
     position: relative;
-    text-align: center;
+        text-align: center;
 }
 
 /*responsive mobile*/
