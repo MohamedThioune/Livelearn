@@ -3385,11 +3385,13 @@ function save_user_views(WP_REST_Request $request)
   {
     //Get all users 
     $users = get_users();
+    $i = 0;
 
     //Iterate users platform for recommendation
     foreach($users as $user):
-      
-      // if($user->ID == 3):
+      $i++;
+      if($i >= 50)
+        break;
 
       //Recommendation courses
       $infos = recommendation($user->ID, 300, 7);

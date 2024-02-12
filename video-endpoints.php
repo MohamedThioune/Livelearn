@@ -70,7 +70,7 @@ function cleanVideoCourse(){
         'meta_key'   => 'course_type',
         'meta_value' => "video"
     );
-    $videos  = get_posts($args);
+    $videos  = get_posts($args); 
 
     foreach ($videos as  $course) {
     $correct_videos = array();

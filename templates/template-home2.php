@@ -269,9 +269,6 @@
             padding: 0 0 0 0px !important;
         }
 
-
-
-
     }
 
     @media not all and (min-resolution:.001dpcm) {
@@ -320,7 +317,6 @@
     $user_connected_id = get_current_user_id();
     $user_connected_head = wp_get_current_user();
     $pricing = 0;
-/**
     // View table name
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
 
@@ -329,10 +325,23 @@
     $all_user_views = $wpdb->get_results($sql_request);
     $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
     $expert_from_database = array();
-    
+
 
     $purchantage_on_top = 0;
     $purchantage_on_bottop = 0;
+$args = array(
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+);
+$bunch_orders = wc_get_orders($args);
+$today = new DateTime();
+$current_year = date('Y');
+$start_of_current_year = $current_year . '-01-01';
+$start_of_last_year = ($current_year - 1) . '-01-01';
+$current_date = current_time('Y-m-d');
+/**
     foreach ($id_courses_viewed as $id_course) {
         $course = get_post($id_course);
         $expert_id = $course->post_author;
@@ -493,7 +502,7 @@
     $args = array(
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
+        'posts_per_page' => 100,
         'order' => 'DESC',
         );
 
@@ -2017,5 +2026,4 @@ foreach($categories as $categ){
                 }
             });
         });
-
     </script>
