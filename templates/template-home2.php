@@ -7,10 +7,6 @@
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/peinda
 <style>
     body{
         background: #F5FAFD;
@@ -323,7 +319,8 @@
 
     $user_connected_id = get_current_user_id();
     $user_connected_head = wp_get_current_user();
-
+    $pricing = 0;
+/**
     // View table name
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
 
@@ -333,10 +330,7 @@
     $id_courses_viewed = array_column($all_user_views,'data_id'); //all cours viewing by this user.
     $expert_from_database = array();
     
-    /**
-     * get experts doing the course by database
-    */
-    $pricing = 0;
+
     $purchantage_on_top = 0;
     $purchantage_on_bottop = 0;
     foreach ($id_courses_viewed as $id_course) {
@@ -346,6 +340,7 @@
         $expert_from_database[] = $expert_id;
     }
     $expert_from_database = array_unique($expert_from_database);
+*/
 
     if(!isset($visibility_company))
         $visibility_company = "";
@@ -531,21 +526,6 @@
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
-<<<<<<< HEAD
-=======
-$functies = get_categories( array(
-    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'parent'  => $categories[0],
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-) );
-
-$skills = get_categories( array(
-    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'parent'  => $categories[3],
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-) );
-
->>>>>>> origin/peinda
     $functies = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent'  => $categories[0],
@@ -564,21 +544,12 @@ $skills = get_categories( array(
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
-<<<<<<< HEAD
-    $subtopics = array();
-    $topics = array();
-    foreach($categories as $categ){
-        //Topics
-        $topicss = get_categories(
-            array(
-=======
 $subtopics = array();
 $topics = array();
 foreach($categories as $categ){
     //Topics
     $topicss = get_categories(
         array(
->>>>>>> origin/peinda
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categ,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
