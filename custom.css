@@ -22725,6 +22725,7 @@ figure ul li {
     margin-bottom: 35px;
     z-index: 9999;
     position: relative;
+    text-align: center;
 }
 
 /*responsive mobile*/

@@ -103,7 +103,7 @@ require($page);
         display: none;
     }
     .nav-item .dropdown-toggle::after {
-        margin-left: 8px;
+        margin-left: 8px
         margin-top: 10px;
     }
     .content-community-overview .boxOne3-1 {
@@ -124,12 +124,6 @@ require($page);
     </section>
     <div class="container-fluid">
         <section class="first-section-slim text-center content-template-form">
-            <div class="block-following">
-                <a href="https://www.linkedin.com/company/35716760/admin/feed/posts/">
-                    <script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-                    <script type="IN/FollowCompany" data-id="35716760" data-counter="bottom"></script>
-                </a>
-            </div>
             <p class="description-about">Ben je op zoek naar mogelijkheden om de groei van je medewerkers en daarmee het bedrijf te verbeteren? Dan is de Stimuleringsregeling Leren en Ontwikkelen in het mkb (SLIM) iets wat jullie niet mogen missen. Via de SLIM-subsidie streeft de overheid ernaar om leren en ontwikkelen binnen het mkb als vanzelfsprekend te beschouwen. Meld je vrijblijvend aan via het
                 onderstaande formulier en dan kijken we samen hoe jouw organisatie hier het best gebruik van kan maken:</p>
             <div class="container-fluid">
@@ -217,6 +211,12 @@ require($page);
                     </div>
                 </div>
             </div>
+            <div class="block-following">
+                <a href="https://www.linkedin.com/company/35716760/admin/feed/posts/">
+                    <script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                    <script type="IN/FollowCompany" data-id="35716760" data-counter="bottom"></script>
+                </a>
+            </div>
         </section>
     </div>
     <section class="block-contact-calendy text-center">
@@ -234,6 +234,7 @@ require($page);
 
         </div>
     </section>
+
 
 </div>
 
