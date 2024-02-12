@@ -22,12 +22,12 @@ if(empty($podcast_index))
             if($lesson != 0)
                 header('Location: ' . get_permalink($post->ID));
 
-//Long description             
+//Long description
 $long_description = ($long_description) ? : "No long description found for this course ";
 
 //Author
 $author = get_user_by('id', $post->post_author);
-$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
+$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
 $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 $author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
@@ -39,8 +39,8 @@ $post_date = new DateTimeImmutable($post->post_date);
 //     $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
 //     $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
 // }else {
-    $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-    $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
+$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 // }
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -55,9 +55,9 @@ endif;
 <div class="content-new-Courses video-content-course content-course-podcast">
     <div class="container-fluid">
         <div class="content-head-podcast">
-           <div class="block-img">
-               <img src="<?= $thumbnail ?>" alt="">
-           </div>
+            <div class="block-img">
+                <img src="<?= $thumbnail ?>" alt="">
+            </div>
             <div class="block-detail-podcast">
                 <h1><?= $post->post_title ?></h1>
                 <p class="description"><?= strip_tags($short_description) ?></p>
@@ -110,52 +110,52 @@ endif;
                                     </div>
                                     <?php
                                     if(!empty($posttags) || !empty($category_default) || !empty($category_default)):
-                                    ?>
-                                    <div class="section-tabs" >
-                                        <h2>What You'll Learn</h2>
-                                        <ul class="d-flex flex-wrap list what-you-learn">
-                                            <?php
-                                            if ($posttags)
-                                                foreach($posttags as $tag)
-                                                    echo  '<li>
+                                        ?>
+                                        <div class="section-tabs" >
+                                            <h2>What You'll Learn</h2>
+                                            <ul class="d-flex flex-wrap list what-you-learn">
+                                                <?php
+                                                if ($posttags)
+                                                    foreach($posttags as $tag)
+                                                        echo  '<li>
                                                                 <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                 <a href="/category-overview?category=' . $tag->ID . '" class="text-tabs">' . $tag->name . '</a>
-                                                           </li>';  
-                                            else{
-                                                $read_category = array();
-                                                if(!empty($category_default))
-                                                    foreach($category_default as $item)
-                                                        if($item)
-                                                            if(!in_array($item,$read_category)){
-                                                                array_push($read_category,$item);
-                                                                echo  '<li>
+                                                           </li>';
+                                                else{
+                                                    $read_category = array();
+                                                    if(!empty($category_default))
+                                                        foreach($category_default as $item)
+                                                            if($item)
+                                                                if(!in_array($item,$read_category)){
+                                                                    array_push($read_category,$item);
+                                                                    echo  '<li>
                                                                             <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                             <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
-                                                                        </li>';  
-                                                            }
-                                                else if(!empty($category_xml))
-                                                    foreach($category_xml as $item)
-                                                        if($item)
-                                                            if(!in_array($item,$read_category)){
-                                                                array_push($read_category,$item);
-                                                                echo  '<li>
+                                                                        </li>';
+                                                                }
+                                                                else if(!empty($category_xml))
+                                                                    foreach($category_xml as $item)
+                                                                        if($item)
+                                                                            if(!in_array($item,$read_category)){
+                                                                                array_push($read_category,$item);
+                                                                                echo  '<li>
                                                                             <img src="' . get_stylesheet_directory_uri() . '/img/fa-check.svg" alt="">
                                                                             <a href="/category-overview?category=' . $item['value'] . '" class="text-tabs">' . (String)get_the_category_by_ID($item['value']) . '</a>
-                                                                        </li>';                                      
-                                                            }
-                                            }
-                                            ?>
-                                        </ul>
-                                    </div> 
+                                                                        </li>';
+                                                                            }
+                                                }
+                                                ?>
+                                            </ul>
+                                        </div>
                                     <?php
                                     endif;
                                     ?>
                                 </div>
                             </ul>
 
-                            <?php 
+                            <?php
                             if(!empty($podcasts)):
-                            ?>
+                                ?>
                                 <ul id="Course">
                                     <div class="list-content-podcast">
                                         <?php
@@ -169,6 +169,7 @@ endif;
 
                                             $link = '#';
                                             $reading = "#";
+                                            $date_podcast = date("m/d/Y", strtotime($post->post_date));
                                             $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
                                             $read_status_icon = '';
                                             if($bool_link || $key == 0){
@@ -179,28 +180,125 @@ endif;
 
                                             $lecture_index = $key + 1;
                                             ?>
-                                        <div class="elemnt-list-podcast visible">
-                                            <div class="detail-block-podcast">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="d-flex">
-                                                        <div class="playlist-img">
-                                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" alt="">
+                                            <div class="elemnt-list-podcast visible">
+                                                <div class="detail-block-podcast">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div class="d-flex">
+                                                            <div class="playlist-img">
+                                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" alt="">
+                                                            </div>
+                                                            <p class="title-podcast"><?= strip_tags($podcast['course_podcast_title']) ?></p>
                                                         </div>
-                                                        <p class="title-podcast"><?= strip_tags($podcast['course_podcast_title']) ?></p>
+                                                        <p class="date-added-playlist"><?=$date_podcast?></p>
                                                     </div>
-                                                    <p class="date-added-playlist">xx/xx/xxxx</p>
+                                                    <div class="audio position-relative">
+                                                      <!--  <button class="btn btn-audio-blocked" data-toggle="modal" data-target="#modal-login-with-podcast">
+                                                            <i class="fa fa-play"></i>
+                                                        </button>-->
+                                                        <div class="cp-audioquote">
+                                                            <div class="cp-audioquote__player">
+                                                                <!-- src -->
+                                                                <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                                    <p><?= strip_tags($podcast['course_podcast_intro']) ?></p>
+                                                                </audio>
+                                                                <div class="cp-audioquote__player--playBtn"></div>
+                                                                <div class="cp-audioquote__player--display">
+                                                                    <div class="cp-audioquote__player--progress">
+                                                                        <span class="cp-audioquote__player--track"></span>
+                                                                        <span class="cp-audioquote__player--playhead"></span>
+                                                                    </div>
+                                                                    <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="audio position-relative">
-                                                    <button class="btn btn-audio-blocked" data-toggle="modal" data-target="#modal-login-with-podcast">
-                                                        <i class="fa fa-play"></i>
-                                                    </button>
+                                                <div>
+                                                    <img class="status-icon" src="<?= $status_icon ?>" alt="">
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="pagination-container">
+                                            <!-- Les boutons de pagination seront ajoutés ici -->
+                                        </div>
+                                    </div>
+                                </ul>
+                            <?php
+                            elseif(!empty($podcast_index)):
+                                ?>
+                                <ul id="Course">
+                                    <div class="list-content-podcast">
+                                        <?php
+                                        foreach($podcast_index as $key => $podcast) {
+                                            if(!$podcast)
+                                                continue;
+                                            $style = "";
+                                            if(isset($lesson))
+                                                if($lesson == $key)
+                                                    $style = "color:#F79403";
+                                            $link = '#';
+                                            $reading = "#";
+                                            $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                            if($bool_link || $key == 0){
+                                                $reading = $podcast['podcast_url'];
+                                                $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                            }
+                                            $date_podcast = $podcast['podcast_date'];
+                                            //$date_podcast = !empty($date_podcast) ? date("d-m-Y H:i:s", strtotime($date_podcast)) : "";
+                                            $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
+                                            $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
+                                            $lecture_index = $key + 1;
+                                            $description_podcast = strip_tags($podcast['podcast_description']);
+                                            $description_podcast = $description_podcast ? : $short_description ;
+
+                                            ?>
+                                            <div class="elemnt-list-podcast visible">
+                                                <div class="detail-block-podcast">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div class="d-flex">
+                                                            <div class="playlist-img">
+                                                                <img src="<?= $image_podcast ?>" alt="<?= strip_tags($podcast['podcast_title']) ?>">
+                                                            </div>
+                                                            <p class="title-podcast"><?= strip_tags($podcast['podcast_title']) ?></p>
+                                                        </div>
+                                                        <p class="date-added-playlist"><?=$date_podcast?></p>
+                                                    </div>
+                                                    <?php if ($user_id): ?>
+                                                    <div class="audio">
+                                                        <div class="cp-audioquote">
+                                                            <div class="cp-audioquote__player">
+                                                                <!-- src -->
+                                                                <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
+                                                                    <p><?= strip_tags($podcast['podcast_description']) ?></p>
+                                                                </audio>
+                                                                <div class="cp-audioquote__player--playBtn"></div>
+                                                                <div class="cp-audioquote__player--display">
+                                                                    <div class="cp-audioquote__player--progress">
+                                                                        <span class="cp-audioquote__player--track"></span>
+                                                                        <span class="cp-audioquote__player--playhead"></span>
+                                                                    </div>
+                                                                    <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php endif; ?>
+                                            <?php
+                                            if (!$user_id):
+                                                $button = '<div class="cp-audioquote__player--playBtn"></div>';
+                                                if ( $key>0 ) {
+                                                    $reading = "#";
+                                                    $button = '<button class="btn btn-audio-blocked cp-audioquote__player--playBtn" data-toggle="modal" data-target="#modal-login-with-podcast"></button>';
+                                                }
+                                                ?>
+                                                <div class="audio">
                                                     <div class="cp-audioquote">
                                                         <div class="cp-audioquote__player">
                                                             <!-- src -->
                                                             <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
-                                                                <p><?= strip_tags($podcast['course_podcast_intro']) ?></p>
+                                                                <p><?= strip_tags($podcast['podcast_description']) ?></p>
                                                             </audio>
-                                                            <div class="cp-audioquote__player--playBtn"></div>
+                                                            <?= $button ?>
                                                             <div class="cp-audioquote__player--display">
                                                                 <div class="cp-audioquote__player--progress">
                                                                     <span class="cp-audioquote__player--track"></span>
@@ -211,11 +309,10 @@ endif;
                                                         </div>
                                                     </div>
                                                 </div>
+                                            <?php endif; ?>
+                                                    <p class="description-one-element-playlist"><?= substr($description_podcast,0,100).' ...'  ?></p>
+                                                </div>
                                             </div>
-                                           <div>
-                                               <img class="status-icon" src="<?= $status_icon ?>" alt="">
-                                           </div>
-                                        </div>
                                         <?php } ?>
                                         <div class="pagination-container">
                                             <!-- Les boutons de pagination seront ajoutés ici -->
@@ -223,73 +320,6 @@ endif;
                                     </div>
                                 </ul>
                             <?php
-                            elseif(!empty($podcast_index)):
-                            ?>
-                               <ul id="Course">
-                                   <div class="list-content-podcast">
-                                       <?php
-                                        foreach($podcast_index as $key => $podcast) {
-                                        if(!$podcast)
-                                            continue;
-                                        $style = "";
-                                        if(isset($lesson))
-                                            if($lesson == $key)
-                                                $style = "color:#F79403";
-                                        $link = '#';
-                                        $reading = "#";
-                                        $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                        if($bool_link || $key == 0){
-                                            $reading = $podcast['podcast_url'];
-                                            $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
-                                        }
-                                        $date_podcast = $podcast['podcast_date'];
-                                        //$date_podcast = !empty($date_podcast) ? date("d-m-Y H:i:s", strtotime($date_podcast)) : "";
-                                        $date_podcast = !empty($date_podcast) ? date("m/d/Y", strtotime($date_podcast)) : "";
-                                        $image_podcast = !empty($podcast['podcast_image']) ? $podcast['podcast_image'] :$thumbnail;
-                                        $lecture_index = $key + 1;
-                                        $description_podcast = strip_tags($podcast['podcast_description']);
-                                        $description_podcast = $description_podcast ? : $short_description ;
-
-                                        ?>
-                                       <div class="elemnt-list-podcast visible">
-                                           <div class="detail-block-podcast">
-                                               <div class="d-flex align-items-center justify-content-between">
-                                                   <div class="d-flex">
-                                                       <div class="playlist-img">
-                                                           <img src="<?= $image_podcast ?>" alt="<?= strip_tags($podcast['podcast_title']) ?>">
-                                                       </div>
-                                                       <p class="title-podcast"><?= strip_tags($podcast['podcast_title']) ?></p>
-                                                   </div>
-                                                   <p class="date-added-playlist"><?=$date_podcast?></p>
-                                               </div>
-                                               <div class="audio">
-                                                   <div class="cp-audioquote">
-                                                       <div class="cp-audioquote__player">
-                                                           <!-- src -->
-                                                           <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
-                                                               <p><?= strip_tags($podcast['podcast_description']) ?></p>
-                                                           </audio>
-                                                           <div class="cp-audioquote__player--playBtn"></div>
-                                                           <div class="cp-audioquote__player--display">
-                                                               <div class="cp-audioquote__player--progress">
-                                                                   <span class="cp-audioquote__player--track"></span>
-                                                                   <span class="cp-audioquote__player--playhead"></span>
-                                                               </div>
-                                                               <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
-                                                           </div>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                               <p class="description-one-element-playlist"><?= substr($description_podcast,0,100).' ...'  ?></p>
-                                           </div>
-                                       </div>
-                                       <?php } ?>
-                                       <div class="pagination-container">
-                                           <!-- Les boutons de pagination seront ajoutés ici -->
-                                       </div>
-                                   </div>
-                               </ul>
-                            <?php 
                             endif;
                             ?>
 
@@ -301,16 +331,16 @@ endif;
                                             <div class="rating-bying-course">
                                                 <div class="rating-element2">
                                                     <div class="rating">
-                                                        <?php 
+                                                        <?php
                                                         foreach(range(5, 1) as $number):
                                                             if($average_star == $number ):
                                                                 echo '<input type="radio" id="star' . $number . '-note" class="stars" checked name="rating-note" value="' . $number . '" />
-                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';                      
+                                                                      <label class="star" for="star' . $number . '-note" class="stars" title="" aria-hidden="true"></label>';
                                                                 continue;
                                                             endif;
 
                                                             echo '<input type="radio" id="star' . $number . '-note" class="stars" name="rating-note" value="' . $number . '" />
-                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';                      
+                                                                  <label class="star" for="star' . $number . '-note" title="" aria-hidden="true"></label>';
 
                                                         endforeach;
                                                         ?>
@@ -444,7 +474,7 @@ endif;
                                     if(!empty($reviews))
                                         foreach($reviews as $review):
                                             $user = $review['user'];
-                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; 
+                                            $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
                                             $image_author = get_field('profile_img',  'user_' . $user->ID);
                                             $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
                                             $company = get_field('company',  'user_' . $user->ID);
@@ -459,7 +489,7 @@ endif;
                                                     <div>
                                                         <div class="d-flex align-items-center">
                                                             <p class="name-autors-comment">' . $author_name . '</p> ' . //<p class="timing-comment">3 days ago </p>
-                                                        '</div>
+                                                '</div>
                                                         <p class="title-comment">' . $title . '</p>
                                                     </div>
                                                 </div>
@@ -467,11 +497,11 @@ endif;
                                             </div>';
                                         endforeach;
 
-                                        if(!$my_review_bool && $user_id):
+                                    if(!$my_review_bool && $user_id):
                                         ?>
                                         <div class="comment-block">
                                             <h2>Write a Review</h2>
-                                            <form action="/dashboard/user" method="POST" id="review_vid"> 
+                                            <form action="/dashboard/user" method="POST" id="review_vid">
                                                 <input type="hidden" name="course_id" value="<?= $post->ID; ?>" >
                                             </form>
                                             <div class="rating-element2">
@@ -499,9 +529,9 @@ endif;
                                             </div>
                                             </form>
                                         </div>
-                                        <?php
-                                        endif;
-                                        ?>
+                                    <?php
+                                    endif;
+                                    ?>
                                 </div>
                             </ul>
 
@@ -515,11 +545,11 @@ endif;
                             <?php
                             $saves_expert = get_user_meta($user_id, 'expert');
                             foreach($experts as $value):
-                                if(!$value) 
+                                if(!$value)
                                     continue;
 
                                 $expert = get_user_by('id', $value);
-                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name; 
+                                $expert_name = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name;
                                 $image = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                                 $company = get_field('company',  'user_' . $expert->ID);
@@ -531,8 +561,8 @@ endif;
                                     </div>
                                     <p class="name-expert"><?= $expert_name ?></p>
                                     <p class="poste-expert"><?= $title ?></p>
-                                </a>    
-                               
+                                </a>
+
                             <?php
                             endforeach;
                             ?>
@@ -555,30 +585,30 @@ endif;
                                     <p class="name-element-detail">Instructor:</p>
                                     <p class="detail"><?= $author_name ?></p>
                                 </li>
-                                <!-- 
+                                <!--
                                 <li>
                                     <p class="name-element-detail">Duration:</p>
                                     <p class="detail">3 weeks</p>
-                                </li> 
+                                </li>
                                 -->
                                 <li>
                                     <p class="name-element-detail">Lessons:</p>
                                     <p class="detail"><?= $count_audios ?></p>
                                 </li>
-                                
+
                                 <li>
                                     <p class="name-element-detail">Enrolled</p>
                                     <p class="detail"><?= $enrolled_member ?></p>
-                                </li> 
+                                </li>
 
                                 <?php
                                 if($language)
-                                echo '<li>
+                                    echo '<li>
                                         <p class="name-element-detail">Language:</p>
                                         <p class="detail">' . $language . '</p>
                                       </li>';
                                 ?>
-                               
+
                                 <li>
                                     <p class="name-element-detail">Certificate:</p>
                                     <p class="detail">No</p>
@@ -615,44 +645,45 @@ endif;
             </div>
             <?php
             if(!empty($similar_course)):
-            ?>
-            <div class="similar-course-block">
-                <h2>Similar Course</h2>
-                <div class="owl-carousel similarCourseCarousel owl-theme owl-carousel-card-course">
-                    <?php
-                    foreach($similar_course as $course):
-                        //Location
-                        $location = 'Online';
+                ?>
+                <div class="similar-course-block">
+                    <h2>Similar Course</h2>
+                    <div class="owl-carousel similarCourseCarousel owl-theme owl-carousel-card-course">
+                        <?php
+                        foreach($similar_course as $course):
+                            //Location
+                            $location = 'Online';
 
-                        //Price
-                        $price_noformat = " ";
-                        $price_noformat = get_field('price', $course->ID);
-                        if($price_noformat != "0")
-                            $price = '€' . number_format($price_noformat, 2, '.', ',');
-                        else
-                            $price = 'Gratis';
+                            //Price
+                            $price_noformat = " ";
+                            $price_noformat = get_field('price', $course->ID);
+                            if($price_noformat != "0")
+                                $price = '€' . number_format($price_noformat, 2, '.', ',');
+                            else
+                                $price = 'Gratis';
 
-                        //Legend image
-                        $thumbnail = get_field('preview', $course->ID)['url'];
-                        if(!$thumbnail){
-                            $thumbnail = get_the_post_thumbnail_url($course->ID);
-                            if(!$thumbnail)
-                                $thumbnail = get_field('url_image_xml', $course->ID);
-                            if(!$thumbnail)
-                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                        }
+                            //Legend image
+                            //$thumbnail = get_field('preview', $course->ID)['url'];
+                            $thumbnail = "";
+                            if(!$thumbnail){
+                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                            }
 
-                        //Author
-                        $author = get_user_by('ID', $course->post_author);
-                        $author_name = $author->display_name ?: $author->first_name;
-                        $author_image = get_field('profile_img',  'user_' . $course->post_author);
-                        $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            //Author
+                            $author = get_user_by('ID', $course->post_author);
+                            $author_name = $author->display_name ?: $author->first_name;
+                            $author_image = get_field('profile_img',  'user_' . $course->post_author);
+                            $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
-                        //Course Type
-                        $course_type = get_field('course_type', $course->ID);
-                        
-                        echo 
-                        '<a href="' . get_permalink($course->ID) . '" class="new-card-course">
+                            //Course Type
+                            $course_type = get_field('course_type', $course->ID);
+
+                            echo
+                                '<a href="' . get_permalink($course->ID) . '" class="new-card-course">
                             <div class="head">
                                 <img src="' . $thumbnail . '" alt="">
                             </div>
@@ -679,10 +710,10 @@ endif;
                                 <p class="price">'. $price .'</p>
                             </div>
                         </a>';
-                    endforeach;
-                    ?>
+                        endforeach;
+                        ?>
+                    </div>
                 </div>
-            </div>
             <?php
             endif;
             ?>
@@ -691,95 +722,6 @@ endif;
 
     </div>
 </div>
-
-
-<!-- modal register / login -->
-<div class="modal fade" id="modal-login-with-podcast" tabindex="-1" role="dialog" aria-labelledby="modal-login-with-podcastTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body create-account-block">
-                <p class="title-modal">Welcome !</p>
-                <p class="description-modal">Please, Create an account to continue</p>
-                <div class="group-btn-connection">
-                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
-                        Continue with Google
-                    </a>
-                </div>
-                <div class="d-flex hr-block">
-                    <hr>
-                    <p>Or</p>
-                    <hr>
-                </div>
-                <div class="form-input">
-                    <form action="">
-
-                        <div class="first-step-modal">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
-                            </div>
-                            <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
-                        </div>
-
-                        <div class="second-step-modal">
-                            <div class="form-group">
-                                <label for="First-name">First name</label>
-                                <input type="text" class="form-control" id="First-name" aria-describedby="First-name" placeholder="Enter your First name">
-                            </div>
-                            <div class="form-group">
-                                <label for="last-name">Last name</label>
-                                <input type="text" class="form-control" id="last-name" aria-describedby="last-name" placeholder="Enter your last name">
-                            </div>
-                            <div class="form-group">
-                                <label for="Company">Company</label>
-                                <input type="text" class="form-control" id="Company" aria-describedby="Company" placeholder="Enter your Company name">
-                            </div>
-                            <div class="form-group">
-                                <label for="Password">Password</label>
-                                <input type="password" class="form-control" id="Password" aria-describedby="Password" placeholder="Enter your Password">
-                            </div>
-                            <button type="submit" class="btn btn-coneection">Create Acccount</button>
-                        </div>
-
-                    </form>
-                    <button class="btn btn-switch-login">You already have a account ? Login</button>
-                </div>
-            </div>
-            <div class="modal-body register-block">
-                <p class="title-modal">Welcome !</p>
-                <p class="description-modal">Please, Register to continue</p>
-                <div class="group-btn-connection">
-                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
-                        Continue with Google
-                    </a>
-                </div>
-                <div class="d-flex hr-block">
-                    <hr>
-                    <p>Or</p>
-                    <hr>
-                </div>
-                <div class="form-input">
-                    <form action="">
-                        <div class="form-group">
-                            <label for="exampleInputEmail">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="passwoord">Passwoord</label>
-                            <input type="password" class="form-control" id="passwoord" placeholder="">
-                        </div>
-                        <button type="submit" class="btn btn-coneection">Sign Up</button>
-                    </form>
-                    <button class="btn btn-switch-login btn-Sign-Up">You don't have a account ? Sign Up</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 
 <script>
@@ -824,22 +766,6 @@ endif;
         $("#tab-url1").organicTabs();
 
     });
-</script>
-
-<script>
-    $("#create-account-step").click(function() {
-        $(".first-step-modal").hide();
-        $(".second-step-modal").show();
-    });
-    $(".btn-switch-login").click(function() {
-        $(".create-account-block").hide();
-        $(".register-block").show();
-    });
-    $(".btn-Sign-Up").click(function() {
-        $(".register-block").hide();
-        $(".create-account-block").show();
-    });
-
 </script>
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>

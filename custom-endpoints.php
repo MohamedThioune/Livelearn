@@ -990,8 +990,6 @@ function get_course_image($data)
             
 }
 
-
-
 function allArticlesOptimized ($data)
 {
     $current_user_id = $GLOBALS['user_id'];
@@ -2759,8 +2757,7 @@ function save_user_views(WP_REST_Request $request)
   * Firebase Push Notifications Endpoints
   */
 
-  function update_user_smartphone_token(WP_REST_Request $request)
-  {
+  function update_user_smartphone_token(WP_REST_Request $request){
     $user_id = $request['user_id'] ?? false;
     if (!$user_id)
     {
@@ -3388,11 +3385,13 @@ function save_user_views(WP_REST_Request $request)
   {
     //Get all users 
     $users = get_users();
+    $i = 0;
 
     //Iterate users platform for recommendation
     foreach($users as $user):
-      
-      // if($user->ID == 3):
+      $i++;
+      if($i >= 50)
+        break;
 
       //Recommendation courses
       $infos = recommendation($user->ID, 300, 7);

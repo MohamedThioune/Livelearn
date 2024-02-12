@@ -3,12 +3,14 @@ add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 
 $GLOBALS['id_user'] = get_current_user_id();
 
+require __DIR__ . '/templates/check_visibility.php';
 include "custom-endpoints.php";
 include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
-include __DIR__ . '/templates/recommendation-module.php';
+require __DIR__ . '/templates/recommendation-module.php';
+require __DIR__ . '/templates/search-module.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -310,47 +312,47 @@ function custom_post_type() {
 
     register_post_type( 'assign', $assign_args );
 
-    //Views
-    $view = array(
-        'name'                => _x( 'Views', 'Views', 'view' ),
-        'singular_name'       => _x( 'View', 'View', 'view' ),
-        'menu_name'           => __( 'Views', 'view' ),
-        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
-        'all_items'           => __( 'All views', 'view' ),
-        'view_item'           => __( 'Check a view', 'view_view' ),
-        'add_new_item'        => __( 'New view', 'add_new_view' ),
-        'add_new'             => __( 'New view', 'text_domain' ),
-        'edit_item'           => __( 'Edit Item', 'text_domain' ),
-        'update_item'         => __( 'Update Item', 'text_domain' ),
-        'search_items'        => __( 'Search Item', 'text_domain' ),
-        'not_found'           => __( 'Not found', 'text_domain' ),
-        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
-    );
+    // //Views
+    // $view = array(
+    //     'name'                => _x( 'Views', 'Views', 'view' ),
+    //     'singular_name'       => _x( 'View', 'View', 'view' ),
+    //     'menu_name'           => __( 'Views', 'view' ),
+    //     //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+    //     'all_items'           => __( 'All views', 'view' ),
+    //     'view_item'           => __( 'Check a view', 'view_view' ),
+    //     'add_new_item'        => __( 'New view', 'add_new_view' ),
+    //     'add_new'             => __( 'New view', 'text_domain' ),
+    //     'edit_item'           => __( 'Edit Item', 'text_domain' ),
+    //     'update_item'         => __( 'Update Item', 'text_domain' ),
+    //     'search_items'        => __( 'Search Item', 'text_domain' ),
+    //     'not_found'           => __( 'Not found', 'text_domain' ),
+    //     'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    // );
 
-    $view_args = array(
-        'label'               => __( 'view', 'text_domain' ),
-        'description'         => __( 'Post type for view payments', 'text_domain' ),
-        'labels'              => $view,
-        'supports'            => array('title', 'editor', 'author', 'custom-fields'),
-        //'taxonomies'          => array('category', 'post_tag'),
-        'hierarchical'        => false,
-        'public'              => true,
-        'show_ui'             => true,
-        'show_in_menu'        => true,
-        'show_in_nav_menus'   => true,
-        'show_in_admin_bar'   => true,
-        'menu_position'       => 99,
-        'menu_icon'           => '',
-        'can_export'          => true,
-        'rewrite'             => array('slug' => 'view'),
-        'has_archive'         => true,
-        'exclude_from_search' => false,
-        'publicly_queryable'  => true,
-        'capability_type'     => 'page',
+    // $view_args = array(
+    //     'label'               => __( 'view', 'text_domain' ),
+    //     'description'         => __( 'Post type for view payments', 'text_domain' ),
+    //     'labels'              => $view,
+    //     'supports'            => array('title', 'editor', 'author', 'custom-fields'),
+    //     //'taxonomies'          => array('category', 'post_tag'),
+    //     'hierarchical'        => false,
+    //     'public'              => true,
+    //     'show_ui'             => true,
+    //     'show_in_menu'        => true,
+    //     'show_in_nav_menus'   => true,
+    //     'show_in_admin_bar'   => true,
+    //     'menu_position'       => 99,
+    //     'menu_icon'           => '',
+    //     'can_export'          => true,
+    //     'rewrite'             => array('slug' => 'view'),
+    //     'has_archive'         => true,
+    //     'exclude_from_search' => false,
+    //     'publicly_queryable'  => true,
+    //     'capability_type'     => 'page',
 
-    );
+    // );
 
-    register_post_type( 'view', $view_args );
+    // register_post_type( 'view', $view_args );
 
     //Companies
     $company = array(
@@ -374,7 +376,7 @@ function custom_post_type() {
         'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
         'labels'              => $company,
         'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt' ),
-        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'taxonomies'          => array('course_category'),
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
@@ -610,6 +612,48 @@ function custom_post_type() {
 
     register_post_type( 'todo', $todo_args );
 
+    //To Do's with
+    $job = array(
+        'name'                => _x( 'Jobs', 'Jobs', 'job' ),
+        'singular_name'       => _x( 'Jobs', 'Job', 'job' ),
+        'menu_name'           => __( 'Jobs', 'job' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All jobs', 'job' ),
+        'view_item'           => __( 'View job', 'view_job' ),
+        'add_new_item'        => __( 'New job', 'add_new_job' ),
+        'add_new'             => __( 'New job', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $job_args = array(
+        'label'               => __( 'job', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $job,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        'taxonomies'          => array('course_category'),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'job'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+    register_post_type( 'job', $job_args );
 
 }
 add_action( 'init', 'custom_post_type', 0 );
@@ -659,12 +703,12 @@ function create_product_for_course($post_id){
     }else{
         //product does not exist yet, create one
         $post = array(
-            'post_author' => get_current_user_id(),
-            'post_content' => '',
-            'post_status' => 'publish',
-            'post_title' => get_the_title($post_id),
-            'post_parent' => '',
-            'post_type' => 'product',
+          'post_author' => get_current_user_id(),
+          'post_content' => '',
+          'post_status' => 'publish',
+          'post_title' => get_the_title($post_id),
+          'post_parent' => '',
+          'post_type' => 'product',
         );
 
         $product_id = wp_insert_post( $post );
@@ -1304,11 +1348,11 @@ function following(){
 
 //Callbacks 
 add_action( 'rest_api_init', function () {
+
   register_rest_route( 'custom/v1', '/tags', array(
     'methods' => 'GET',
     'callback' => 'seperate_tags',
   ) );
-
 
   register_rest_route( 'custom/v1', '/follow', array(
     'methods' => 'POST',
@@ -1650,6 +1694,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'homepage'
   ));
 
+  register_rest_route ('custom/v1', '/category/detail', array(
+    'methods' => 'POST',
+    'callback' => 'categoryDetail'
+  ));
+  
   register_rest_route ('custom/v1', '/candidate/detail', array(
     'methods' => 'POST',
     'callback' => 'candidateDetail',
@@ -1660,6 +1709,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'artikelDetail'
   ));
 
+   register_rest_route ('custom/v1', '/artikels', array(
+      'methods' => 'POST',
+      'callback' => 'allArtikels'
+    ));
+
   register_rest_route ('custom/v1', '/company/detail', array(
     'methods' => 'POST',
     'callback' => 'companyDetail'
@@ -1668,6 +1722,56 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/companies', array(
     'methods' => 'GET',
     'callback' => 'allCompanies'
+  ));
+
+  register_rest_route ('custom/v1', '/jobs', array(
+    'methods' => 'GET',
+    'callback' => 'allJobs'
+  ));
+
+  register_rest_route ('custom/v1', '/job', array(
+    'methods' => 'POST',
+    'callback' => 'jobDetail'
+  ));
+
+  register_rest_route ('custom/v1', '/apply', array(
+    'methods' => 'POST',
+    'callback' => 'jobUser'
+  ));
+
+  register_rest_route ('custom/v1', '/favorites', array(
+    'methods' => 'POST',
+    'callback' => 'liggeeySave'
+  ));
+
+  register_rest_route ('custom/v1', '/user/home', array(
+    'methods' => 'POST',
+    'callback' => 'HomeUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/jobs', array(
+    'methods' => 'POST',
+    'callback' => 'JobsUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/applicants', array(
+    'methods' => 'POST',
+    'callback' => 'ApplicantsUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/favorites', array(
+    'methods' => 'POST',
+    'callback' => 'FavoritesUser'
+  ));
+
+  // register_rest_route ('custom/v1', '/recentJob', array(
+  //   'methods' => 'POST',
+  //   'callback' => 'recentJobs'
+  // ));
+
+  register_rest_route ('custom/v1', '/user/postJob', array(
+    'methods' => 'POST',
+    'callback' => 'postJobUser'
   ));
 
 });

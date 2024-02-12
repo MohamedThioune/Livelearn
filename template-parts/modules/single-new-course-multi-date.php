@@ -8,7 +8,7 @@
 
 
 <?php
-
+$posttags=null;
 //Long description
 $long_description = ($long_description) ? : "No long description found for this course ";
 

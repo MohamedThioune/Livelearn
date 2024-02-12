@@ -4,9 +4,8 @@
 wp_head(); 
 get_header(); 
 
-$page = dirname(__FILE__) . '/templates/check_visibility.php';
- 
-require($page); 
+// $page = dirname(__FILE__) . '/templates/check_visibility.php';
+// require($page); 
 
 ?>
 
