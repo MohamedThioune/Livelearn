@@ -492,7 +492,7 @@
     $args = array(
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
+        'posts_per_page' => 100,
         'order' => 'DESC',
         );
 
