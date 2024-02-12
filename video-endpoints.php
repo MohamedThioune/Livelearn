@@ -9,7 +9,7 @@ function updateYoutube(){
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue' => 'podcast',
+        'ordevalue' => 'video',
         'order' => 'DESC' ,
         'meta_key'   => 'course_type',
         'meta_value' => "video"
@@ -64,15 +64,15 @@ function cleanVideoCourse(){
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue' => 'podcast',
+        'ordevalue' => 'video',
         'order' => 'DESC' ,
         'meta_key'   => 'course_type',
         'meta_value' => "video"
     );
-    $videos  = get_posts($args);
+    $videos  = get_posts($args); 
 
-    $correct_videos = array();
     foreach ($videos as  $course) {
+        $correct_videos = array();
         $youtube_playlists = get_field('youtube_videos', $course->ID);
         if (!$youtube_playlists)
             continue;

@@ -4,8 +4,8 @@
 
 extract($_POST);
 
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 
 $args = array(
         'post_type' => array('course','post','leerpad','assessment'),

@@ -4,8 +4,8 @@
 $like = get_stylesheet_directory_uri()."/img/love.png";
 $dislike = get_stylesheet_directory_uri()."/img/heart-like.png";
 
-$page = 'check_visibility.php';
-require($page); 
+//$page = 'check_visibility.php';
+//require($page); 
 extract($_POST);
 
 //The user

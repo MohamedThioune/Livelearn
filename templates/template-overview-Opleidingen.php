@@ -4,8 +4,8 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php
-$page = 'check_visibility.php';
-require($page);
+//$page = 'check_visibility.php';
+//require($page);
 ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 

@@ -1,7 +1,8 @@
 <?php /** Template Name: slim-subsidie */ ?>
 
-<?php $page = 'check_visibility.php';
-require($page);
+<?php 
+//$page = 'check_visibility.php';
+//require($page);
 ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -195,7 +196,7 @@ require($page);
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <h2 class="title-section">Wat is het subsidiebedrag?</h2>
+                    <h2 class="title-section">Wat is het subsidiebedrag? </h2>
                     <p class="description-section">Het subsidiepercentage kan oplopen tot maximaal 80% van de subsidiabele kosten. Voor individuele bedrijven bedraagt de maximale subsidie € 24.999. Voor samenwerkingsverbanden kan dit oplopen tot maximaal € 500.000.</p>
                 </div>
             </div>

@@ -6,9 +6,8 @@ global $wp;
 
 $url = home_url( $wp->request );
 
-$page = dirname(__FILE__) . '/templates/check_visibility.php';
- 
-require($page); 
+// $page = dirname(__FILE__) . '/templates/check_visibility.php'; 
+// require($page); 
 
 view($post);
 
@@ -18,9 +17,10 @@ $course_type = get_field('course_type', $post->ID);
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 $online = ['Video', 'Webinar','Podcast', 'E-learning'];
 
-//Redirection - visibility 
-if(!visibility($post, $visibility_company))
-    header('location: /');
+//Redirection - visibility
+if (isset($visibility_company))
+    if(!visibility($post, $visibility_company))
+        header('location: /');
 
 //Redirection - type
 if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel' && $course_type != 'Leerpad')
@@ -64,20 +64,21 @@ if(!isset($xml_parse)){
                 for($i = 0; $i < count($datum['data']); $i++)
                     array_push($dagdeel, $datum['data'][$i]['start_date']);
 }else{
-    if($data[0])
-        foreach($data as $datum){
-            $infos = explode(';', $datum['value']);
-            if(!empty($infos))
-                foreach($infos as $value) {
-                    $info = explode('-', $value);
-                    $date = $info[0];
-                    array_push($dagdeel, $date);
-                }
+    if (isset($data))
+        if($data[0])
+            foreach($data as $datum){
+                $infos = explode(';', $datum['value']);
+                if(!empty($infos))
+                    foreach($infos as $value) {
+                        $info = explode('-', $value);
+                        $date = $info[0];
+                        array_push($dagdeel, $date);
+                    }
+            }
+        else{
+            $data = get_field('dates', $post->ID);
+            $dagdeel = array($data);
         }
-    else{
-        $data = get_field('dates', $post->ID);
-        $dagdeel = array($data);
-    }
 }
 
 $dagdeel = array_count_values($dagdeel);
@@ -96,7 +97,7 @@ else
 
 $prijsvat = get_field('prijsvat', $post->ID);
 $btw = get_field('btw-klasse', $post->ID); 
-if(!$prijsvat) 
+if(!$prijsvat && isset($prijs))
     $prijsvat = (get_field('price', $post->ID) * $btw/100) - $prijs;
 
 $agenda = get_field('agenda', $post->ID);
@@ -124,7 +125,10 @@ $category_default = get_field('categories', $post->ID);
 $category_xml = get_field('category_xml', $post->ID);
 
 $user_id = get_current_user_id();
-
+//$podcast_index_for_not_connected [] = $podcast_index[0];
+//$youtube_videos_for_not_connected [] = $youtube_videos[0];
+//$podcast_index = $user_id ? $podcast_index : $podcast_index_for_not_connected;
+//$youtube_videos = $user_id ? $youtube_videos : $youtube_videos_for_not_connected;
 /*
 * User informations
 */
@@ -143,6 +147,8 @@ $user_choose = $post->post_author;
 
 foreach($users as $user) {
     $company_user = get_field('company',  'user_' . $user->ID);
+    if (!$company_user)
+        continue;
     if(!empty($company_connected) && !empty($company_user))
         if($company_user[0]->post_title == $company_connected[0]->post_title) 
             array_push($users_company, $user->ID);
@@ -192,7 +198,8 @@ else
 /*
 * Image
 */
-$thumbnail = get_field('preview', $post->ID)['url'];
+$thumbnail = "";
+//$thumbnail = get_field('preview', $post->ID)['url'];
 if(!$thumbnail){
     $thumbnail = get_the_post_thumbnail_url($post->ID);
     if(!$thumbnail)
@@ -200,7 +207,6 @@ if(!$thumbnail){
             if(!$thumbnail)
                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
-
 /*
 * Others
 */ 
@@ -216,34 +222,35 @@ $average_star = 0;
 $average_star_nor = 0;
 $my_review_bool = false;
 $counting_rate = 0;
-foreach ($reviews as $review):
-    if($review['user']->ID == $user_id)
-        $my_review_bool = true;
+if ($reviews)
+    foreach ($reviews as $review):
+        if($review['user']->ID == $user_id)
+            $my_review_bool = true;
 
-    //Star by number
-    switch ($review['rating']) {
-        case 1:
-            $star_review[1] += 1;
-            break;
-        case 2:
-            $star_review[2] += 1;
-            break;
-        case 3:
-            $star_review[3] += 1;
-            break;
-        case 4:
-            $star_review[4] += 1;
-            break;
-        case 5:
-            $star_review[5] += 1;
-            break;
-    }
+        //Star by number
+        switch ($review['rating']) {
+            case 1:
+                $star_review[1] += 1;
+                break;
+            case 2:
+                $star_review[2] += 1;
+                break;
+            case 3:
+                $star_review[3] += 1;
+                break;
+            case 4:
+                $star_review[4] += 1;
+                break;
+            case 5:
+                $star_review[5] += 1;
+                break;
+        }
 
-    if($review['rating']){
-        $average_star += intval($review['rating']); 
-        $counting_rate += 1;
-    }
-endforeach;
+        if($review['rating']){
+            $average_star += intval($review['rating']);
+            $counting_rate += 1;
+        }
+    endforeach;
 if ($counting_rate > 0 )
     $average_star_nor = $average_star / $counting_rate;
 $average_star_format = number_format($average_star_nor, 1, '.', ',');
@@ -333,8 +340,134 @@ else if($course_type == 'Assessment')
     include_once('template-parts/modules/single-new-course-assessment.php');
 
 
-?>  
- 
+?>
+<?php
+$current_url = get_permalink($post->ID);
+
+?>
+<!-- modal register / login -->
+<div class="modal fade" id="modal-login-with-podcast" tabindex="-1" role="dialog" aria-labelledby="modal-login-with-podcastTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body create-account-block">
+                <p class="title-modal">Welcome !</p>
+                <p class="description-modal">Please, Connect to continue</p>
+                <div class="group-btn-connection">
+                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                        Continue with Google
+                    </a>
+                </div>
+                <div class="d-flex hr-block">
+                    <hr>
+                    <p>Or</p>
+                    <hr>
+                </div>
+                <div class="form-input">
+                    <!--
+                    <form action="">
+                        <div class="first-step-modal">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
+                            </div>
+                            <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
+                        </div>
+
+                        <div class="second-step-modal">
+                            <div class="form-group">
+                                <label for="First-name">First name</label>
+                                <input type="text" class="form-control" id="First-name" aria-describedby="First-name" placeholder="Enter your First name">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last name</label>
+                                <input type="text" class="form-control" id="last-name" aria-describedby="last-name" placeholder="Enter your last name">
+                            </div>
+                            <div class="form-group">
+                                <label for="Company">Company</label>
+                                <input type="text" class="form-control" id="Company" aria-describedby="Company" placeholder="Enter your Company name">
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" class="form-control" id="Password" aria-describedby="Password" placeholder="Enter your Password">
+                            </div>
+                            <button type="submit" class="btn btn-coneection">Create Acccount</button>
+                        </div>
+
+                    </form>
+                    -->
+
+                    <?php
+                    $current_url = home_url(add_query_arg(array(), $wp->request));
+                    wp_login_form([
+                        'redirect' => $current_url,
+                        'remember' => false,
+                        'label_username' => 'Email address',
+                        'placeholder_email' => 'Enter your email address',
+                        'label_password' => 'Password',
+                        'label_log_in'   => 'Log in',
+                        'placeholder_password' => 'Enter your password',
+                    ]);
+                    ?>
+                    <button class="btn btn-switch-login btn-Sign-Up">You don't have an account ? Sign Up</button>
+                </div>
+            </div>
+            <div class="modal-body register-block">
+                <p class="title-modal">Welcome !</p>
+                <p class="description-modal">Please, Create an account to continue</p>
+                <div class="group-btn-connection">
+                    <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                        Continue with Google
+                    </a>
+                </div>
+                <div class="d-flex hr-block">
+                    <hr>
+                    <p>Or</p>
+                    <hr>
+                </div>
+                <div class="form-input">
+                    <!--
+                    <form action="">
+                        <div class="form-group">
+                            <label for="exampleInputEmail">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwoord">Passwoord</label>
+                            <input type="password" class="form-control" id="passwoord" placeholder="">
+                        </div>
+                        <button type="submit" class="btn btn-coneection">Sign Up</button>
+                    </form>
+                    -->
+                    <?php
+                    $base_url = get_site_url();
+                    if($base_url == 'https://livelearn.nl')
+                        echo (do_shortcode('[user_registration_form id="8477"]'));
+                    else
+                        echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+                    <button class="btn btn-switch-login">You already have an account ? Login</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#create-account-step").click(function() {
+        $(".first-step-modal").hide();
+        $(".second-step-modal").show();
+    });
+    $(".btn-switch-login").click(function() {
+        $(".register-block").hide();
+        $(".create-account-block").show();
+    });
+    $(".btn-Sign-Up").click(function() {
+        $(".register-block").show();
+        $(".create-account-block").hide();
+    });
+
+</script>
 <?php
 
 get_footer();

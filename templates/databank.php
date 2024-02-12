@@ -195,13 +195,14 @@ $urls =
         'Classical Music' => 'https://www.classical-music.com/',
         'Slipped Disc' => 'https://slippedisc.com/',
         'The Violin Channel' => 'https://www.theviolinchannel.com/',
-        'Carey Nieuwhof' => 'https://careynieuwhof.com/','Fresh'=>'https://www.stichtingfresh.nl/',
-        'Werf&'=>'https://www.werf-en.nl/',
-        'Monday.com'=>'https://monday.com/blog',
+        'Carey Nieuwhof' => 'https://careynieuwhof.com/',
+        'Monday.com'=>'https://monday.com/blog/',
+        'Fresh'=>'https://www.stichtingfresh.nl/',
+        'Werf'=>'https://www.werf-en.nl/',
         'HR Knowledge'=>'https://www.hrknowledge.com/',
         'HRcommunity'=>'https://hrcommunity.nl/',
         'Leeuwendaal'=>'https://www.leeuwendaal.nl/',
-        '&Samhoud'=>'https://www.samhoudconsultancy.com/',
+        'Samhoud'=>'https://www.samhoudconsultancy.com/',
         'Incontext'=>'https://incontext.nl/',
         'Successday'=>'https://successday.nl/',
         'Hospitality Group'=>'https://www.hospitality-group.nl/',
@@ -222,12 +223,13 @@ $urls =
         'TWST'=>'https://www.twst.nl/',
         'Contakt'=>'https://contakt.nl/',
         'Group Mapping'=>'https://groupmapping.org/',
-        'Newcraft'=>'https://thom.eu/',
-        'PPMC'=>'https://newcraftgroup.com/',
-        'Skim'=>'https://ppmc.nl/',
-        'MLC'=>'https://thenextorganization.com/',
-        'Salveos'=>'https://m-lc.nl/',
-        'The house of Marketing'=>'https://www.artefact.com/'
+        'The house of Marketing'=>'https://thom.eu/',
+        'PPMC'=>'https://ppmc.nl/',
+        'Newcraft'=>'https://newcraftgroup.com/',
+        'The Next Organization'=>'https://thenextorganization.com/',
+        'Salveos'=>'https://salveos.nl/',
+        'MLC'=>'https://m-lc.nl/',
+        'Artefact'=>'https://www.artefact.com/'
     ];
 
 $file_xml = [
@@ -341,6 +343,7 @@ if (isset($_GET["message"])) {
                             $parameter='';
                             $playlist_title= [];
                             $youtube_parameter=array();
+                            $compani = '';
                             $onderwp = '';
                             $keywords = array();
                             $indice=0;
@@ -350,11 +353,11 @@ if (isset($_GET["message"])) {
                                 $playlists_id[][$row[5]] = $row[3];
                                 $ptitle= $row[0];
                                 $subtopics = $row[7];
+                                $compani = $row[6];
                                 if($subtopics=="")
                                     $subtopics="";
-                                $parameter=array_keys($playlists_id[$indice])[0].','.array_values($playlists_id[$indice])[0].','.$subtopics;
+                                $parameter=array_keys($playlists_id[$indice])[0].','.array_values($playlists_id[$indice])[0].','.$subtopics.','.$compani;
                                 array_push($youtube_parameter,$parameter);
-                                // array_shift($youtube_parameter);
                                 array_push($keywords, $subtopics);
                                 array_push($playlist_title,$ptitle);
                                 $indice++;
@@ -951,14 +954,13 @@ if (!empty($courses)) {
                 success: function(response) {
                     console.log(response);
                     // document.getElementById('content-back-topics').innerHTML = response;
-                    location.reload();
                 },error:function() {
                     console.log('error'); 
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    // location.reload();
+                    location.reload();
                 }
             });
         });
@@ -1003,7 +1005,7 @@ if (!empty($courses)) {
         console.log(ids);
     });
 
-    $('#subtopics').on('click', function()
+    $('#subtopics').on('click', function() 
     {
         console.log('click');
         if(ids.length==0){
