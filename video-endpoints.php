@@ -82,6 +82,7 @@ function cleanVideoCourse(){
             if ($youtube_playlist['id'] && $youtube_playlist['title'] && $youtube_playlist['thumbnail_url'])
                 $correct_videos [] = $youtube_playlist;
 
+
         //var_dump($course->ID,$correct_videos);
         update_field('youtube_videos', null, $course->ID);
         update_field('youtube_videos', $correct_videos, $course->ID);
