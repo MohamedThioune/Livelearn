@@ -204,7 +204,7 @@
                 <div class="col-md-6">
                     <h2 class="title-section">Looptijd en deadlines voor de SLIM-subsidie</h2>
                     <p class="description-section">De SLIM-subsidie kent jaarlijks drie openstellingsperiodes. Als mkb-ondernemer kunt u een aanvraag indienen van 1 maart tot en met 30 maart, en van 1 september tot en met 28 september. Voor samenwerkingsverbanden en grootbedrijven is de regeling geopend van 1 juni tot en met 27 juli. Subsidieaanvragen worden behandeld in volgorde van binnenkomst. Bij overschrijding
-                        van het budget vindt er loting plaats onder alle aanvragen die gedurende de volledige periode zijn ingediend.</p>
+                        van het budget vindt er loting plaats onder alle aanvragen die gedurende de volledige periode zijn ingediend. </p>
                 </div>
                 <div class="col-md-6">
                     <div class="content-img-row-slim">
@@ -212,12 +212,12 @@
                     </div>
                 </div>
             </div>
-            <div class="block-following">
-                <a href="https://www.linkedin.com/company/35716760/admin/feed/posts/">
-                    <script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-                    <script type="IN/FollowCompany" data-id="35716760" data-counter="bottom"></script>
-                </a>
-            </div>
+                <div class="block-following">
+                    <a href="https://www.linkedin.com/company/35716760/admin/feed/posts/">
+                        <script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+                        <script type="IN/FollowCompany" data-id="35716760" data-counter="bottom"></script>
+                    </a>
+                </div>
         </section>
     </div>
     <section class="block-contact-calendy text-center">
@@ -231,7 +231,7 @@
                 </div>
             </div>
             <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
-            <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
+            <button class="btn btn-kies"  onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
 
         </div>
     </section>
