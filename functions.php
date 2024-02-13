@@ -1445,8 +1445,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthorsOptimized',
   ));
 
-  
-
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
@@ -1764,14 +1762,19 @@ add_action( 'rest_api_init', function () {
     'callback' => 'FavoritesUser'
   ));
 
-     register_rest_route ('custom/v1', '/user/search', array(
-     'methods' => 'POST',
-    'callback' => 'search'
-   ));
-
   register_rest_route ('custom/v1', '/user/postJob', array(
     'methods' => 'POST',
     'callback' => 'postJobUser'
   ));
+
+    register_rest_route ('custom/v1', '/user/comments', array(
+      'methods' => 'POST',
+      'callback' => 'commentByID'
+    ));
+
+    register_rest_route ('custom/v1', '/user/comment', array(
+      'methods' => 'POST',
+      'callback' => 'addComment'
+    ));
 
 });
