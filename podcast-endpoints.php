@@ -38,12 +38,11 @@ function crontab_podcast( ) {
 
         $all_urls_of_podcast_in_plateform_for_this_cours = array();
         $good_podcast_in_plateform = array();
-        foreach ($podcast_index as $podcast) {
+        foreach ($podcast_index as $podcast)
             if ($podcast['podcast_url']) {
                 $all_urls_of_podcast_in_plateform_for_this_cours [] = $podcast['podcast_url'];
                 $good_podcast_in_plateform [] = $podcast;
             }
-        }
 
         //$all_audios_in_plateform_for_this_cours =  $podcast_index;
 
@@ -53,6 +52,7 @@ function crontab_podcast( ) {
         $feedid = $feedid_from_platform ? : $feedid_from_databank;
         if (!$feedid)
             continue;
+
         $url = 'https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id='.$feedid;
         //$url = "https://api.podcastindex.org/api/1.0/search/bytitle?q=$course->post_title";
 
