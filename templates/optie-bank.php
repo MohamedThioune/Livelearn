@@ -220,7 +220,6 @@ else if($optie == "❌"){
         echo "<span class='alert alert-success'>deleted successfuly ✔️</span>";
     }
 }
-
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
 return $updated;
