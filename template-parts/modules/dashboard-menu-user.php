@@ -90,11 +90,11 @@ style="overflow-x: hidden !important;">
         <li class="elementTextDashboard">
             <a href="#" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
-                <p class="textLiDashboard">Assessments</p>
                 <?php
                 if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
                 ?>
-                <!-- <small class="comming-soon">&nbsp;Coming Soon</small> -->
+                <!-- <p class="textLiDashboard">Assessments</p>
+                <small class="comming-soon">&nbsp;Coming Soon</small> -->
             </a>
         </li>
         <li class="elementTextDashboard">
