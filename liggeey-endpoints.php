@@ -630,7 +630,7 @@ function allCompanies(){
   
 }
 
-//[GET]All jobs 
+//[GET]All the jobs 
 function allJobs(){
    
   $args = array(
@@ -670,7 +670,7 @@ function allJobs(){
 
 }
 
-//[POST]Detail job
+//[POST]Detail a job
 function jobDetail(WP_REST_Request $request){
   $param_post_id = $request['id'] ?? 0;
   $sample = job($param_post_id);
@@ -694,7 +694,7 @@ function jobDetail(WP_REST_Request $request){
 
 }
 
-//[POST]Detail category 
+//[POST]Detail a category 
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
   $sample = array();
@@ -755,7 +755,7 @@ function categoryDetail(WP_REST_Request $request){
   return $response;
 }
 
-//[GET]All artikels 
+//[GET]All the artikels 
 function allArtikels(WP_REST_Request $request){
   $args = array(
       'post_type' => 'post',
@@ -837,7 +837,7 @@ function jobUser(WP_REST_Request $request){
   return $response;
 }
 
-//[POST]Make favorite
+//[POST]Make a favorite
 function liggeeySave(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
@@ -1085,7 +1085,7 @@ function FavoritesUser(WP_REST_Request $request){
   return $response;
 }
 
-//Candidate a job
+//[POST]Dashboard User | Post a job
 function postJobUser(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
 

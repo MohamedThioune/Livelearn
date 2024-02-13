@@ -1764,11 +1764,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'FavoritesUser'
   ));
 
-     register_rest_route ('custom/v1', '/user/search', array(
-     'methods' => 'POST',
-    'callback' => 'search'
-   ));
-
   register_rest_route ('custom/v1', '/user/postJob', array(
     'methods' => 'POST',
     'callback' => 'postJobUser'
