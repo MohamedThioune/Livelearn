@@ -1086,7 +1086,7 @@ function FavoritesUser(WP_REST_Request $request){
 }
 
 //[POST]Dashboard User | Post a job
-function postJobUser(WP_REST_Request $request){
+function PostJobUser(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
 
   //Check required parameters apply
