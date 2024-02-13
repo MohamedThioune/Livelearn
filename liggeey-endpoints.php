@@ -667,21 +667,31 @@ function allJobs(){
   $response = new WP_REST_Response($jobs);
   $response->set_status(200);
   return $response;
-  
+
 }
 
 //[POST]Detail job
 function jobDetail(WP_REST_Request $request){
-
   $param_post_id = $request['id'] ?? 0;
-  
   $sample = job($param_post_id);
+    // Retrieve 3 posts per page
+  $args = array(
+        'post_type' => 'job',
+        'posts_per_page' => 3,
+        'order' => 'DESC',
+    );
+    $job_posts = get_posts($args);
+    $jobs = array();
+   // Convert $sample to an object
+   $sample = (object) $sample;
+  // Add $jobs object to the end of the $sample array
+   array_push($sample, $jobs);
 
-  //Response
-  $response = new WP_REST_Response($sample);
-  $response->set_status(200);
+   //Response
+   $response = new WP_REST_Response($sample);
+   $response->set_status(200);
+ return $response;
 
-  return $response;  
 }
 
 //[POST]Detail category 
@@ -945,7 +955,6 @@ function HomeUser(WP_REST_Request $request){
   // $sample['favorite'] = $favorite;
   $sample['count_favorite'] = ($favorite) ? count($favorite) : 0;
 
-
   $sample = (Object)$sample;
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -1074,46 +1083,6 @@ function FavoritesUser(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response;
-}
-
-//Recent job is not a endpoint but must be add to detail job endpoint
-function recentJobs(WP_REST_Request $request){
-
-  $args = array(
-      'post_type' => 'job',
-      'posts_per_page' => 3,
-      'order' => 'DESC',
-  );
-  $job_posts = get_posts($args);
-  $jobs = array();
-
-  // Boucle pour afficher les résultats
-  foreach ($job_posts as $post):
-    if(!$post)
-      continue;
-
-    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-    $sample = array('ID' => '0', 'title' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
-    // Affichez ici le contenu de chaque élément
-    $sample['ID'] = $post->ID;
-    $sample['title'] = $post->post_title;
-    $sample['posted_at'] = $post->post_date;
-    $company = get_field('job_company', $post->ID);
-
-    $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
-    $sample['image'] = !empty($company) ? get_field('company_logo',  $company->ID) : $sample['image'];
-    $sample['place'] = !empty($company) ? get_field('company_place',  $company->ID) : $sample['place'];
-    $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
-
-    $sample = (Object)$sample;
-    array_push($jobs, $sample);
-
-  endforeach;
-
-  $response = new WP_REST_Response($jobs);
-  $response->set_status(200);
-  return $response;
-  
 }
 
 //Candidate a job
