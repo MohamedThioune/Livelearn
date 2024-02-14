@@ -671,27 +671,41 @@ function allJobs(){
 }
 
 //[POST]Detail a job
+// function jobDetail(WP_REST_Request $request){
+//   $param_post_id = $request['id'] ?? 0;
+//   $sample = job($param_post_id);
+//     // Retrieve 3 posts per page
+//   $args = array(
+//         'post_type' => 'job',
+//         'posts_per_page' => 3,
+//         'order' => 'DESC',
+//     );
+//     $job_posts = get_posts($args);
+//     $jobs = array();
+//    // Convert $sample to an object
+//    $sample = (object) $sample;
+//   // Add $jobs object to the end of the $sample array
+//    array_push($sample, $jobs);
+
+//    //Response
+//    $response = new WP_REST_Response($sample);
+//    $response->set_status(200);
+//  return $response;
+
+// }
+
+//[POST]Detail job
 function jobDetail(WP_REST_Request $request){
+
   $param_post_id = $request['id'] ?? 0;
+  
   $sample = job($param_post_id);
-    // Retrieve 3 posts per page
-  $args = array(
-        'post_type' => 'job',
-        'posts_per_page' => 3,
-        'order' => 'DESC',
-    );
-    $job_posts = get_posts($args);
-    $jobs = array();
-   // Convert $sample to an object
-   $sample = (object) $sample;
-  // Add $jobs object to the end of the $sample array
-   array_push($sample, $jobs);
 
-   //Response
-   $response = new WP_REST_Response($sample);
-   $response->set_status(200);
- return $response;
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
 
+  return $response;  
 }
 
 //[POST]Detail a category 
