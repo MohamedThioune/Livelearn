@@ -1739,6 +1739,12 @@ add_action( 'rest_api_init', function () {
     'callback' => 'jobDetail'
   ));
 
+  register_rest_route('custom/v2', '/courses', array(
+    'methods' => 'GET',
+    'callback' => 'allCoursesOptimized',
+  ));
+
+
   register_rest_route ('custom/v1', '/apply', array(
     'methods' => 'POST',
     'callback' => 'jobUser'
