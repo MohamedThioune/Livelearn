@@ -700,6 +700,14 @@ function jobDetail(WP_REST_Request $request){
   $param_post_id = $request['id'] ?? 0;
   
   $sample = job($param_post_id);
+  // Retrieve 3 posts per page
+  //   $args = array(
+  //         'post_type' => 'job',
+  //         'posts_per_page' => 3,
+  //         'order' => 'DESC',
+  //     );
+  //   $main_other_jobs = get_posts($args);
+
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -711,7 +719,7 @@ function jobDetail(WP_REST_Request $request){
 //[POST]Detail a category 
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
-  $sample = array();
+  $sample = array('name' => '', 'jobs' => null, 'companies' => null, 'articles' => null);
   $param_category_id = $request['id'] ?? 0;
   $name = get_the_category_by_ID($param_category_id);
   if(!$name)
@@ -726,6 +734,7 @@ function categoryDetail(WP_REST_Request $request){
     )
   );
 
+  $sample['name'] =  $name;
   /** Global jobs **/
   $jobs = array();
   $args = array(
