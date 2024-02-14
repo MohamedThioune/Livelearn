@@ -1413,10 +1413,15 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'allArticles',
   ));
-
-  register_rest_route('custom/v2', '/courses', array(
+  register_rest_route('custom/v1', '/articles', array(
     'methods' => 'GET',
-    'callback' => 'allCoursesOptimized',
+    'callback' => 'allArticles',
+  ));
+
+
+  register_rest_route('custom/v2', '/similar/article/category/(?P<category_id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_related_articles_by_category',
   ));
 
   register_rest_route('custom/v2', '/articles', array(
