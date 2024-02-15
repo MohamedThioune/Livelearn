@@ -670,30 +670,6 @@ function allJobs(){
 
 }
 
-//[POST]Detail a job
-// function jobDetail(WP_REST_Request $request){
-//   $param_post_id = $request['id'] ?? 0;
-//   $sample = job($param_post_id);
-//     // Retrieve 3 posts per page
-//   $args = array(
-//         'post_type' => 'job',
-//         'posts_per_page' => 3,
-//         'order' => 'DESC',
-//     );
-//     $job_posts = get_posts($args);
-//     $jobs = array();
-//    // Convert $sample to an object
-//    $sample = (object) $sample;
-//   // Add $jobs object to the end of the $sample array
-//    array_push($sample, $jobs);
-
-//    //Response
-//    $response = new WP_REST_Response($sample);
-//    $response->set_status(200);
-//  return $response;
-
-// }
-
 //[POST]Detail job
 function jobDetail(WP_REST_Request $request){
 
@@ -707,6 +683,11 @@ function jobDetail(WP_REST_Request $request){
   //         'order' => 'DESC',
   //     );
   //   $main_other_jobs = get_posts($args);
+  //$jobs = array();
+  // foreach ($variable as $key => $value) {
+    # code...
+  // }
+  // $sample->other_jobs = $jobs
 
 
   //Response
@@ -983,19 +964,18 @@ function HomeUser(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response;
-
 }
 
 //[POST]Dashboard User | Jobs
 function JobsUser(WP_REST_Request $request){
+
   $errors = ['errors' => '', 'error_data' => ''];
 
   $required_parameters = ['userApplyId'];
   $open_jobs = array();
 
   //Check required parameters apply
-  $validated = validated($required_parameters, $request);  
-
+  $validated = validated($required_parameters, $request);
   //Get input
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id); 
@@ -1042,7 +1022,6 @@ function ApplicantsUser(WP_REST_Request $request){
     $response->set_status(401);
     return $response;  
   endif;
-
   //Job company 
   $post = get_field('company', 'user_' . $user_apply_id);
   $post_id = $post->ID;
@@ -1113,8 +1092,7 @@ function PostJobUser(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
 
   //Check required parameters apply
-  $validated = validated($required_parameters, $request);  
-
+  $validated = validated($required_parameters, $request);
   // Get input
   $title = $request['title'];
   $description = $request['description'];
@@ -1163,6 +1141,48 @@ function PostJobUser(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response;
+
+}
+
+//comment
+function commentByID(WP_REST_Request $request ) {
+
+    $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
+    $user = get_user_by('ID', $param_user_id);
+
+    $comments = array();
+    // Retrieve ACF data associated with the post ID
+    $main_reviews = get_field('reviews', $post_id);
+
+    // Loop through each ACF review
+    foreach ($main_reviews as $review) {
+       $user = $review['user']; // Get the user associated with the review
+       $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
+
+       $image_author = get_field('profile_img',  'user_' . $user->ID);
+       $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+       $rating = $review['rating'];
+       $feedback = $review['Feedback'];
+
+       // Assemble the comment data into an array
+       $comment = array(
+           'comment_author_name' => $author_name,
+           'comment_author_image' => $image_author,
+           'rating' => $rating,
+           'feedback' => $Feedback
+
+       );
+       // Add the comment data to the comments array
+       $comments[] = $comment;
+    }
+    // Return the array of comments
+    return $comments;
+
+}
+    //addcomment
+    function addComment(WP_REST_Request $request) {
+
 
 }
 
