@@ -1142,14 +1142,15 @@ function commentByID(WP_REST_Request $request ) {
        $image_author = get_field('profile_img',  'user_' . $user->ID);
        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-       $rating = $review['rating']; // Example of retrieving a rating
+       $rating = $review['rating'];
+       $feedback = $review['Feedback'];
 
        // Assemble the comment data into an array
        $comment = array(
            'comment_author_name' => $author_name,
            'comment_author_image' => $image_author,
            'rating' => $rating,
-           'feedback' => $feedback
+           'feedback' => $Feedback
 
        );
        // Add the comment data to the comments array
