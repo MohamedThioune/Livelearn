@@ -476,7 +476,7 @@ foreach($reactions as $value)
 
 
 <!-- modal register / login -->
-<div class="modal fade" id="modal-redirect" tabindex="-1" role="dialog" aria-labelledby="modal-redirectTitle" aria-hidden="true">
+<div class="modal show" id="modal-redirect" tabindex="-1" role="dialog" aria-labelledby="modal-redirectTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body create-account-block">

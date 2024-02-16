@@ -24,7 +24,7 @@ jQuery(function($) {
         console.log('enting for reservations done');
         var dateNameStart = $(this).find('input[data-attr="dateNameStart"]').val();
         $(this).find('.yith-wapo-option input').val(dateNameStart);
-    });
+    });  
 
     $('#modalForApp .close').click(function() {
         $('#modalForApp').hide();
@@ -569,6 +569,83 @@ jQuery(function($) {
         $(".sousMenuBlock3").hide();
         $(".btnUp").hide();
     });
+
+
+
+    $("#MijzelfBtn").click(function() {
+        $("#1sub-block").show();
+        $(".block-sous-nav-mobile").hide();
+    });
+    $(".go-back").click(function() {
+        $("#1sub-block").hide();
+        $(".block-sous-nav-mobile").show();
+    });
+
+    $("#teambtn").click(function() {
+        $("#team-organisati-block").show();
+        $(".block-sous-nav-mobile").hide();
+    });
+    $(".go-back").click(function() {
+        $("#team-organisati-block").hide();
+        $(".block-sous-nav-mobile").show();
+    });
+
+    $("#expertBtn").click(function() {
+        $("#expert-sub-block").show();
+        $(".block-sous-nav-mobile").hide();
+    });
+    $(".go-back").click(function() {
+        $("#expert-sub-block").hide();
+        $(".block-sous-nav-mobile").show();
+    });
+
+    $("#contactBtn").click(function() {
+        $("#contact-sub-block").show();
+        $(".block-sous-nav-mobile").hide();
+    });
+    $(".go-back").click(function() {
+        $("#contact-sub-block").hide();
+        $(".block-sous-nav-mobile").show();
+    });
+
+    $("#Groeien").click(function() {
+        $("#2sub-block").show();
+        $("#1sub-block").hide();
+    });
+    $(".go-back-2").click(function() {
+        $("#2sub-block").hide();
+        $("#1sub-block").show();
+    });
+    $("#Groeien-binnen").click(function() {
+        $("#3sub-block").show();
+        $("#1sub-block").hide();
+    });
+    $(".go-back-2").click(function() {
+        $("#3sub-block").hide();
+        $("#1sub-block").show();
+    });
+    $("#relevante-btn").click(function() {
+        $("#4sub-block").show();
+        $("#1sub-block").hide();
+    });
+    $(".go-back-2").click(function() {
+        $("#4sub-block").hide();
+        $("#1sub-block").show();
+    });
+    $("#Persoonlijke-btn").click(function() {
+        $("#5sub-block").show();
+        $("#1sub-block").hide();
+    });
+    $(".go-back-2").click(function() {
+        $("#5sub-block").hide();
+        $("#1sub-block").show();
+    });
+
+
+
+
+
+
 
     $("#Ontwikkel-persoonlijke").click(function() {
         $(".firstContentHeadSousMobile").hide();
