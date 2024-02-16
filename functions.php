@@ -1413,10 +1413,15 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'allArticles',
   ));
-
-  register_rest_route('custom/v2', '/courses', array(
+  register_rest_route('custom/v1', '/articles', array(
     'methods' => 'GET',
-    'callback' => 'allCoursesOptimized',
+    'callback' => 'allArticles',
+  ));
+
+
+  register_rest_route('custom/v2', '/similar/article/category/(?P<category_id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_related_articles_by_category',
   ));
 
   register_rest_route('custom/v2', '/articles', array(
@@ -1444,8 +1449,6 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'allAuthorsOptimized',
   ));
-
-  
 
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
@@ -1734,6 +1737,12 @@ add_action( 'rest_api_init', function () {
     'callback' => 'jobDetail'
   ));
 
+  register_rest_route('custom/v2', '/courses', array(
+    'methods' => 'GET',
+    'callback' => 'allCoursesOptimized',
+  ));
+
+
   register_rest_route ('custom/v1', '/apply', array(
     'methods' => 'POST',
     'callback' => 'jobUser'
@@ -1764,14 +1773,19 @@ add_action( 'rest_api_init', function () {
     'callback' => 'FavoritesUser'
   ));
 
-  // register_rest_route ('custom/v1', '/recentJob', array(
-  //   'methods' => 'POST',
-  //   'callback' => 'recentJobs'
-  // ));
-
   register_rest_route ('custom/v1', '/user/postJob', array(
     'methods' => 'POST',
-    'callback' => 'postJobUser'
+    'callback' => 'PostJobUser'
   ));
+
+    register_rest_route ('custom/v1', '/user/comments', array(
+      'methods' => 'GET',
+      'callback' => 'commentByID'
+    ));
+
+    register_rest_route ('custom/v1', '/user/comment', array(
+      'methods' => 'POST',
+      'callback' => 'addComment'
+    ));
 
 });

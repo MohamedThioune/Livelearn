@@ -7,9 +7,56 @@ global $wp;
 $url = home_url( $wp->request );
 
 // $page = dirname(__FILE__) . '/templates/check_visibility.php'; 
-// require($page); 
-
+// require($page);
 view($post);
+
+if (isset($_POST) && !empty($_POST)){
+    extract($_POST);
+    //ouvrir le modal et afficher un message à la fin du processus
+    $userdata = array(
+        'user_pass' => $_POST['password'],
+        'user_login' => $_POST['username'], // to change on firstname or special name in field on the form
+        'user_email' => $_POST['email'],
+        'user_url' => 'http://livelearn.nl/',
+        'display_name' => $_POST['firstName'] . ' ' . $_POST['lastName'],
+        'first_name' => $_POST['firstName'],
+        'last_name' => $_POST['lastName'],
+        'role' => 'Klant'
+    );
+    $user_id = wp_insert_user(wp_slash($userdata));
+    if(is_wp_error($user_id)) {
+        $danger = $user_id->get_error_message();
+        header("location:$url?message=" . $danger . "&danger");
+    } else {
+        $success = "U bent succesvol geregistreerd <br>";
+        //update_field('telnr', $phone, 'user_' . $user_id);
+        header("location:$url?message=" . $success . "&success");
+
+        //logged the user
+        /*
+        $login = wp_signon(array(
+            'user_email' => $_POST['email'],
+            'user_pass' => $_POST['password'],
+            'remember' => true,
+        ));
+        if (is_wp_error($login)){
+            $danger = $login->get_error_message();
+            header("location:$url?message=" . $danger . "&danger");
+        } else
+            header("location:$url?message=" . $success . "&success");
+          */
+
+    }
+
+} elseif ($_GET && isset($_GET['message'])){
+    if (isset($_GET['danger'])){
+        $danger = $_GET['message'];
+        echo "<div class='alert alert-danger text-center' role='alert'>$danger</div>";
+    } elseif (isset($_GET['success'])){
+        $success = $_GET['message'];
+        echo "<div class='alert alert-success text-center' role='alert'>$success</div>";
+    }
+}
 
 
 $course_type = get_field('course_type', $post->ID);
@@ -64,7 +111,7 @@ if(!isset($xml_parse)){
                 for($i = 0; $i < count($datum['data']); $i++)
                     array_push($dagdeel, $datum['data'][$i]['start_date']);
 }else{
-    if (isset($data))
+    if (isset($data[0]))
         if($data[0])
             foreach($data as $datum){
                 $infos = explode(';', $datum['value']);
@@ -364,39 +411,6 @@ $current_url = get_permalink($post->ID);
                     <hr>
                 </div>
                 <div class="form-input">
-                    <!--
-                    <form action="">
-                        <div class="first-step-modal">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address">
-                            </div>
-                            <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
-                        </div>
-
-                        <div class="second-step-modal">
-                            <div class="form-group">
-                                <label for="First-name">First name</label>
-                                <input type="text" class="form-control" id="First-name" aria-describedby="First-name" placeholder="Enter your First name">
-                            </div>
-                            <div class="form-group">
-                                <label for="last-name">Last name</label>
-                                <input type="text" class="form-control" id="last-name" aria-describedby="last-name" placeholder="Enter your last name">
-                            </div>
-                            <div class="form-group">
-                                <label for="Company">Company</label>
-                                <input type="text" class="form-control" id="Company" aria-describedby="Company" placeholder="Enter your Company name">
-                            </div>
-                            <div class="form-group">
-                                <label for="Password">Password</label>
-                                <input type="password" class="form-control" id="Password" aria-describedby="Password" placeholder="Enter your Password">
-                            </div>
-                            <button type="submit" class="btn btn-coneection">Create Acccount</button>
-                        </div>
-
-                    </form>
-                    -->
-
                     <?php
                     $current_url = home_url(add_query_arg(array(), $wp->request));
                     wp_login_form([
@@ -426,35 +440,66 @@ $current_url = get_permalink($post->ID);
                     <p>Or</p>
                     <hr>
                 </div>
+                <div class="alert alert-danger d-none text-center" role="alert" id="alert-danger-register">
+                    the confirm password don't match with password !!!
+                </div>
                 <div class="form-input">
-                    <!--
-                    <form action="">
-                        <div class="form-group">
-                            <label for="exampleInputEmail">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail" placeholder="">
+                    <form action="<?= $url ?>" method="POST" id="new-form-register-workflow">
+
+                        <div class="first-step-modal">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required>
+                            </div>
+                            <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
                         </div>
-                        <div class="form-group">
-                            <label for="passwoord">Passwoord</label>
-                            <input type="password" class="form-control" id="passwoord" placeholder="">
+
+                        <div class="second-step-modal">
+                            <div class="form-group">
+                                <label for="First-name">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="First-name">First name</label>
+                                <input type="text" class="form-control" id="First-name" name="firstName" placeholder="Enter your First name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last name</label>
+                                <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter your last name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Company">Company</label>
+                                <input type="text" class="form-control" id="Company" name="Company" placeholder="Enter your Company name">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone-number">phone number</label>
+                                <input type="text" class="form-control" id="phone-number" name="phone" placeholder="Enter your phone-number">
+                            </div>
+                            <div class="form-group">
+                                <label for="Password-workflow">Password</label>
+                                <input type="password" class="form-control" id="Password-workflow" name="password" placeholder="Enter your Password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password2-workflow">Password</label>
+                                <input type="password" class="form-control" id="Password2-workflow" name="password2" placeholder="Confirm your Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-coneection" id="">Create Acccount</button>
                         </div>
-                        <button type="submit" class="btn btn-coneection">Sign Up</button>
                     </form>
-                    -->
-                    <?php
-                    $base_url = get_site_url();
-                    if($base_url == 'https://livelearn.nl')
-                        echo (do_shortcode('[user_registration_form id="8477"]'));
-                    else
-                        echo (do_shortcode('[user_registration_form id="59"]'));
-                    ?>
-                    <button class="btn btn-switch-login">You already have an account ? Login</button>
+                    <div class="form-block">
+                        <button class="btn btn-switch-email d-none">Return on Email</button>
+                        <button class="btn btn-switch-login">You already have a account ? Login</button>
                     </div>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
 <script>
     $("#create-account-step").click(function() {
+        $(".btn-switch-email").removeClass('d-none');
         $(".first-step-modal").hide();
         $(".second-step-modal").show();
     });
@@ -462,14 +507,29 @@ $current_url = get_permalink($post->ID);
         $(".register-block").hide();
         $(".create-account-block").show();
     });
+    $(".btn-switch-email").click(function() {
+        $(".btn-switch-email").addClass('d-none');
+        $(".second-step-modal").hide();
+        $(".first-step-modal").show();
+    });
     $(".btn-Sign-Up").click(function() {
         $(".register-block").show();
         $(".create-account-block").hide();
     });
-
 </script>
-<?php
+<script>
+    $("#new-form-register-workflow").submit((e)=>{
+        //e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        password = formData.get('password')
+        password2 = formData.get('password2')
 
-get_footer();
-
-?>
+        if (password !== password2){
+            e.preventDefault();
+            $('#alert-danger-register').removeClass('d-none')
+            $('#Password-workflow').addClass('btn-danger')
+            $('#Password2-workflow').addClass('btn-danger')
+        }
+    })
+</script>
+<?php get_footer(); ?>
