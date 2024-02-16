@@ -24,7 +24,7 @@ jQuery(function($) {
         console.log('enting for reservations done');
         var dateNameStart = $(this).find('input[data-attr="dateNameStart"]').val();
         $(this).find('.yith-wapo-option input').val(dateNameStart);
-    });
+    });  
 
     $('#modalForApp .close').click(function() {
         $('#modalForApp').hide();

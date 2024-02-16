@@ -56,8 +56,6 @@
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
         $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
 
-        var_dump($httpCode);
-
         $response = curl_exec($ch);
 
         curl_close($ch);
@@ -89,7 +87,8 @@
         if(!$user_id)
             return 0;
         $occurence = 1;
-
+        save_tracking();
+        //check_tracking();
         //Add by MaxBird - get name entity
         if($type == 'course')
         {
@@ -105,7 +104,7 @@
             $data_name = (String)get_the_category_by_ID($corse_id);
             
         //testing wheither data_id exist ?
-        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $corse_id AND user_id = $user_id");
+        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $corse_id AND user_id = $user_id AND data_type = '$type'");
         $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
         $id_tracker_founded = $wpdb->get_results( $sql)[0]->id;
         if($type == 'course'){
@@ -283,3 +282,72 @@
         return $wpdb->insert_id;
     }
 
+    function save_tracking(){
+        global $post;
+        global $wpdb;
+        $table_tracker_views = $wpdb->prefix . 'tracker_views';
+        $current_ip_adesss= $_SERVER['REMOTE_ADDR'];
+        $user_id = get_current_user_id();
+        $occurence = 1;
+        $course_type = get_field('course_type', $post->ID);
+
+        if ($course_type !== 'Artikel' )
+            return;
+
+        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $post->ID AND user_id = $user_id AND data_type = 'ipadress'");
+        $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
+        $id_tracker_founded = $wpdb->get_results( $sql)[0]->id;
+
+        if ($occurence_id) {
+            $occurence = intval($occurence_id) + 1;
+            $data_modified=[
+                'occurence' => $occurence,
+                'updated_at'=> date("Y-m-d H:i:s")
+            ];
+            $where=[
+                'id' => $id_tracker_founded
+            ];
+            return $wpdb->update($table_tracker_views,$data_modified,$where);
+        }
+
+        $data = [
+            'data_type' => 'ipadress',
+            'data_id' => $post->ID,
+            'data_name' => $current_ip_adesss,
+            'user_id' => $user_id,
+            'platform' => 'web',
+            'occurence' => $occurence
+        ];
+        //echo "<div class='mt-5'>_-_</div>";
+        return $wpdb->insert($table_tracker_views, $data);
+    }
+    function check_tracking(){
+        global $post;
+        global $wpdb;
+        $table_tracker_views = $wpdb->prefix . 'tracker_views';
+        $current_ip_adesss= $_SERVER['REMOTE_ADDR'];
+        $user_id = get_current_user_id();
+        $course_type = get_field('course_type', $post->ID);
+
+        if ($course_type !== 'Artikel' )
+            return;
+
+        echo "<div class='mt-5'></div>";
+
+        //if ($user_id) {
+        if ( !is_user_logged_in() ) {
+            echo "<div class='mt-5'></div>";
+
+            $sql = $wpdb->prepare("SELECT occurence,id FROM $table_tracker_views WHERE data_id = $post->ID AND data_name = '$current_ip_adesss' AND data_type = 'ipadress'");
+            $occurence_id = $wpdb->get_results($sql)[0]->occurence;
+            $id_tracker_founded = $wpdb->get_results($sql)[0]->id;
+            if ($id_tracker_founded)
+                if ( intval($occurence_id) > 3 ) {
+                    $params = array(
+                        'message' => 'You have already read this article more 3 times connected to continue reading',
+                        'redirect' => get_permalink($post->ID)
+                    );
+                    header('Location: /inloggen/?' . http_build_query($params));
+                }
+        }
+    }
