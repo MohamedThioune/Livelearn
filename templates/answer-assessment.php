@@ -40,14 +40,15 @@ if (isset($_POST['id_current_assessment']))
         $score = (int)(($score/count($question)) * 100);
         $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
 
-        if ($score >= 60)
+        if ($score >= 50)
         {
-            //array_push($assessments_validated , $assessment);
+            array_push($assessments_validated , $assessment);
             add_user_meta( get_current_user_id(), 'assessment_validated',$assessment); 
             
         }
-        $status = $score >= 60 ? "Congratulations " : "Unfortunately ";
-        echo $status.'your score is '. $score . '%' ;
+        // $status = $score >= 50 ? "Congratulations " : "Unfortunately ";
+        // echo $status.'your score is '. $score . '%' ;
+        echo $score;
     }
 
 }
