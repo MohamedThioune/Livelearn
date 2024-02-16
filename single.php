@@ -5,8 +5,7 @@ wp_head();
 get_header(); 
 
 // $page = dirname(__FILE__) . '/templates/check_visibility.php';
-// require($page); 
-
+// require($page);
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />

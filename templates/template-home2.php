@@ -1146,7 +1146,6 @@
     <a href="/ranking" target="_blank" class="btn btn-success btn-block">ranking</a>
 </div>
 <!-- -->
-
 <div class="container-fluid">
     <div class="talent-binnen-block">
         <div class="first-block-binnen">
