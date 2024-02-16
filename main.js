@@ -570,7 +570,7 @@ jQuery(function($) {
         $(".btnUp").hide();
     });
 
-
+// for menu hamberger:
 
     $("#MijzelfBtn").click(function() {
         $("#1sub-block").show();
@@ -641,8 +641,7 @@ jQuery(function($) {
         $("#1sub-block").show();
     });
 
-
-
+// end of menu hamberger
 
 
 
