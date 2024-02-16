@@ -374,7 +374,6 @@ foreach($categories as $categ){
     <script>
         $('#topic_search').change(function(){
             var topic_search = $("#topic_search option:selected").val();
-
             var complete_categorieen = $("#topic_search option:selected").text();
             $('#complete-categorien').html(complete_categorieen);
 
