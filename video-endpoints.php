@@ -31,6 +31,7 @@ function updateYoutube(){
             $ids_video [] = $youtube_playlist['id'];
             if ($youtube_playlist['id'])
                 $correct_videos [] = $youtube_playlist;
+
         }
         $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $id_playlist . "&maxResults=" . $maxResults . "&key=" . $api_key;
         $detail_playlist = json_decode(file_get_contents($url_playlist, true));
@@ -72,16 +73,18 @@ function cleanVideoCourse(){
     $videos  = get_posts($args); 
 
     foreach ($videos as  $course) {
-        $correct_videos = array();
+    $correct_videos = array();
         $youtube_playlists = get_field('youtube_videos', $course->ID);
         if (!$youtube_playlists)
             continue;
-        foreach ($youtube_playlists as $youtube_playlist) {
+        //var_dump($course->ID, $youtube_playlists);
+        foreach ($youtube_playlists as $youtube_playlist)
             if ($youtube_playlist['id'] && $youtube_playlist['title'] && $youtube_playlist['thumbnail_url'])
                 $correct_videos [] = $youtube_playlist;
-        }
+
+        //var_dump($course->ID,$correct_videos);
         update_field('youtube_videos', null, $course->ID);
         update_field('youtube_videos', $correct_videos, $course->ID);
-        echo "<h1 class='textOpleidRight'>the course  $course->ID is updating...</h1>";
+        echo "<h3 class='textOpleidRight'>the course  $course->ID is updating...</h3>";
     }
 }

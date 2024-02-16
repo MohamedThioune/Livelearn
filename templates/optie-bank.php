@@ -115,12 +115,13 @@ if($optie == "✔"){
             'post_title'  => $course->titel
         );
         $id_post = wp_insert_post($args, true);
-        $podcasts = explode('|', $course->podcasts);
+        $podcasts = explode('^', $course->podcasts);
         $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
         foreach ($podcasts as $item) {
             if (!$item)
                 continue;
+
             $podcasts_playlist = [];
             $podcast = explode('~', $item);
             $podcasts_playlist['podcast_url'] = $podcast[0];

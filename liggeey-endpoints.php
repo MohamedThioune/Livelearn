@@ -630,7 +630,7 @@ function allCompanies(){
   
 }
 
-//[GET]All jobs 
+//[GET]All the jobs 
 function allJobs(){
    
   $args = array(
@@ -667,7 +667,7 @@ function allJobs(){
   $response = new WP_REST_Response($jobs);
   $response->set_status(200);
   return $response;
-  
+
 }
 
 //[POST]Detail job
@@ -676,6 +676,19 @@ function jobDetail(WP_REST_Request $request){
   $param_post_id = $request['id'] ?? 0;
   
   $sample = job($param_post_id);
+  // Retrieve 3 posts per page
+  //   $args = array(
+  //         'post_type' => 'job',
+  //         'posts_per_page' => 3,
+  //         'order' => 'DESC',
+  //     );
+  //   $main_other_jobs = get_posts($args);
+  //$jobs = array();
+  // foreach ($variable as $key => $value) {
+    # code...
+  // }
+  // $sample->other_jobs = $jobs
+
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -684,10 +697,10 @@ function jobDetail(WP_REST_Request $request){
   return $response;  
 }
 
-//[POST]Detail category 
+//[POST]Detail a category 
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
-  $sample = array();
+  $sample = array('name' => '', 'jobs' => null, 'companies' => null, 'articles' => null);
   $param_category_id = $request['id'] ?? 0;
   $name = get_the_category_by_ID($param_category_id);
   if(!$name)
@@ -702,6 +715,7 @@ function categoryDetail(WP_REST_Request $request){
     )
   );
 
+  $sample['name'] =  $name;
   /** Global jobs **/
   $jobs = array();
   $args = array(
@@ -745,7 +759,7 @@ function categoryDetail(WP_REST_Request $request){
   return $response;
 }
 
-//[GET]All artikels 
+//[GET]All the artikels 
 function allArtikels(WP_REST_Request $request){
   $args = array(
       'post_type' => 'post',
@@ -827,7 +841,7 @@ function jobUser(WP_REST_Request $request){
   return $response;
 }
 
-//[POST]Make favorite
+//[POST]Make a favorite
 function liggeeySave(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
@@ -945,25 +959,23 @@ function HomeUser(WP_REST_Request $request){
   // $sample['favorite'] = $favorite;
   $sample['count_favorite'] = ($favorite) ? count($favorite) : 0;
 
-
   $sample = (Object)$sample;
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
 
   return $response;
-
 }
 
 //[POST]Dashboard User | Jobs
 function JobsUser(WP_REST_Request $request){
+
   $errors = ['errors' => '', 'error_data' => ''];
 
   $required_parameters = ['userApplyId'];
   $open_jobs = array();
 
   //Check required parameters apply
-  $validated = validated($required_parameters, $request);  
-
+  $validated = validated($required_parameters, $request);
   //Get input
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id); 
@@ -1010,7 +1022,6 @@ function ApplicantsUser(WP_REST_Request $request){
     $response->set_status(401);
     return $response;  
   endif;
-
   //Job company 
   $post = get_field('company', 'user_' . $user_apply_id);
   $post_id = $post->ID;
@@ -1076,53 +1087,12 @@ function FavoritesUser(WP_REST_Request $request){
   return $response;
 }
 
-//Recent job is not a endpoint but must be add to detail job endpoint
-function recentJobs(WP_REST_Request $request){
-
-  $args = array(
-      'post_type' => 'job',
-      'posts_per_page' => 3,
-      'order' => 'DESC',
-  );
-  $job_posts = get_posts($args);
-  $jobs = array();
-
-  // Boucle pour afficher les résultats
-  foreach ($job_posts as $post):
-    if(!$post)
-      continue;
-
-    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-    $sample = array('ID' => '0', 'title' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
-    // Affichez ici le contenu de chaque élément
-    $sample['ID'] = $post->ID;
-    $sample['title'] = $post->post_title;
-    $sample['posted_at'] = $post->post_date;
-    $company = get_field('job_company', $post->ID);
-
-    $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
-    $sample['image'] = !empty($company) ? get_field('company_logo',  $company->ID) : $sample['image'];
-    $sample['place'] = !empty($company) ? get_field('company_place',  $company->ID) : $sample['place'];
-    $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
-
-    $sample = (Object)$sample;
-    array_push($jobs, $sample);
-
-  endforeach;
-
-  $response = new WP_REST_Response($jobs);
-  $response->set_status(200);
-  return $response;
-  
-}
-
-//Candidate a job
-function postJobUser(WP_REST_Request $request){
+//[POST]Dashboard User | Post a job
+function PostJobUser(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
 
   //Check required parameters apply
-  $validated = validated($required_parameters, $request);  
-
+  $validated = validated($required_parameters, $request);
   // Get input
   $title = $request['title'];
   $description = $request['description'];
@@ -1171,6 +1141,48 @@ function postJobUser(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response;
+
+}
+
+//comment
+function commentByID(WP_REST_Request $request ) {
+
+    $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
+    $user = get_user_by('ID', $param_user_id);
+
+    $comments = array();
+    // Retrieve ACF data associated with the post ID
+    $main_reviews = get_field('reviews', $post_id);
+
+    // Loop through each ACF review
+    foreach ($main_reviews as $review) {
+       $user = $review['user']; // Get the user associated with the review
+       $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
+
+       $image_author = get_field('profile_img',  'user_' . $user->ID);
+       $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+       $rating = $review['rating'];
+       $feedback = $review['Feedback'];
+
+       // Assemble the comment data into an array
+       $comment = array(
+           'comment_author_name' => $author_name,
+           'comment_author_image' => $image_author,
+           'rating' => $rating,
+           'feedback' => $Feedback
+
+       );
+       // Add the comment data to the comments array
+       $comments[] = $comment;
+    }
+    // Return the array of comments
+    return $comments;
+
+}
+    //addcomment
+    function addComment(WP_REST_Request $request) {
+
 
 }
 
