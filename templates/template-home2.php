@@ -316,17 +316,6 @@
     $user_connected_head = wp_get_current_user();
     $users = get_users();
 
-
-/**
-    foreach ($id_courses_viewed as $id_course) {
-        $course = get_post($id_course);
-        $expert_id = $course->post_author;
-        //if ($expert_id)
-        $expert_from_database[] = $expert_id;
-    }
-    $expert_from_database = array_unique($expert_from_database);
-*/
-
     if(!isset($visibility_company))
         $visibility_company = "";
     
@@ -1142,9 +1131,11 @@
 
 </div>
 <!-- replaces of ranking -->
+<!-- 
 <div class="text-center mt-5">
     <a href="/ranking" target="_blank" class="btn btn-success btn-block">ranking</a>
-</div>
+</div> 
+-->
 <!-- -->
 <div class="container-fluid">
     <div class="talent-binnen-block">
