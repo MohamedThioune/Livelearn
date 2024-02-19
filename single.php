@@ -17,9 +17,9 @@ global $wp;
 global $wpdb;
 
 view($post);
-
-if(!visibility($post, $visibility_company))
-    header('location: /'); 
+    if (isset($visibility_company))
+        if(!visibility($post, $visibility_company))
+            header('location: /');
 
 $url = home_url( $wp->request );
 
