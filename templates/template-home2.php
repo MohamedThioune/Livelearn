@@ -866,10 +866,10 @@
                     </div>
                 </div>
                 <div class="groupeBtn-Jouw-inloggen groupBtnAppConnecte">
-                    <a href="" class="btn btn-signup">
+                    <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/play-store-icon.png" alt="" />
                     </a>
-                    <a href="" class="btn btn-signup">
+                    <a href="https://apps.apple.com/nl/app/livelearn/id1666976386/" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store-icon.png" alt="" />
                     </a>
                 </div>

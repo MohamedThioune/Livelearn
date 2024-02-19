@@ -315,8 +315,6 @@ $url = home_url( $wp->request );
                                         <?php echo do_shortcode('[gtranslate]'); ?>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
