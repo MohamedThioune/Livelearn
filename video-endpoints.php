@@ -70,19 +70,39 @@ function cleanVideoCourse(){
         'meta_key'   => 'course_type',
         'meta_value' => "video"
     );
-    $videos  = get_posts($args); 
+    $videos  = get_posts($args);
+    $count = count($videos);
+    $step = 100;
 
-    foreach ($videos as  $course) {
-    $correct_videos = array();
+    $number_iteration = intval(ceil($count / $step));
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [1 to => $number_iteration]</h1>";
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        }else{
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+
+    $star_index = ($key - 1) * $step;
+
+    for ($i = $star_index; $i < $star_index + 10 && $i < $count ; $i++) {
+        $course = $videos[$i];
+        $correct_videos = array();
         $youtube_playlists = get_field('youtube_videos', $course->ID);
         if (!$youtube_playlists)
             continue;
-        //var_dump($course->ID, $youtube_playlists);
+
         foreach ($youtube_playlists as $youtube_playlist)
             if ($youtube_playlist['id'] && $youtube_playlist['title'] && $youtube_playlist['thumbnail_url'])
                 $correct_videos [] = $youtube_playlist;
 
-        //var_dump($course->ID,$correct_videos);
         update_field('youtube_videos', null, $course->ID);
         update_field('youtube_videos', $correct_videos, $course->ID);
         echo "<h3 class='textOpleidRight'>the course  $course->ID is updating...</h3>";
