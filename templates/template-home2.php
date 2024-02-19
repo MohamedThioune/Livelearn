@@ -133,9 +133,10 @@
             display: none;
         }
         .content-home2 .wordDeBestText2 {
-            font-size: 25px;
-            line-height: 32px;
+            font-size: 32px;
+            line-height: 46px;
             padding: 0 15px;
+            font-weight: 600;
         }
         .content-home2 .voorBlock {
             padding-top: 50px;
@@ -805,6 +806,10 @@
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/second-group-parteners-logo.png" class="logo-parteners-left " alt="">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/first-group-parteners-logo.png" class="logo-parteners-right" alt="">
 
+                <div class="gtTranslateBlock gt-translatre-mobile">
+                    <?php echo do_shortcode('[gtranslate]'); ?>
+                </div>
+
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
                 <form action="/product-search" class="position-relative newFormSarchBar" method="GET">
@@ -859,7 +864,14 @@
                         <p class="bekijk-text">Bekijk wat we doen</p>
                         <hr>
                     </div>
-
+                </div>
+                <div class="groupeBtn-Jouw-inloggen groupBtnAppConnecte">
+                    <a href="" class="btn btn-signup">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/play-store-icon.png" alt="" />
+                    </a>
+                    <a href="" class="btn btn-signup">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store-icon.png" alt="" />
+                    </a>
                 </div>
                 <?php if(!$user_id) { ?>
                     <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
@@ -1093,6 +1105,7 @@
             </form>
         </div>
     </div>
+
 </div>
 
 <div class="container-fluid">

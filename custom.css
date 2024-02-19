@@ -22748,6 +22748,9 @@ figure ul li {
 .gt_float_switcher .gt-selected .gt-current-lang span.gt_float_switcher-arrow {
     float: right;
 }
+.gt-translatre-mobile{
+    display: none;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -26531,6 +26534,7 @@ figure ul li {
     }
     .content-home2 .newFormSarchBar .js-bs-select-dropdown {
         padding: 6px 0px;
+        display: none;
     }
     .content-list-amount {
         width: 95%;
@@ -27552,6 +27556,45 @@ figure ul li {
     }
     .sub-block-2{
         display: none;
+    }
+    .gt-translatre-mobile{
+        display: block;
+        width: fit-content;
+        margin: 0 auto 33px;
+    }
+    .gt-translatre-mobile .gt_switcher {
+        width: fit-content !important;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected a {
+        border: 0px solid #ccc !important;
+        padding: 3px 35px 0 0 !important;
+        width: fit-content !important;
+        background: unset;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected {
+        background: unset !important;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected a:after {
+        right: 10px !important;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected a:hover {
+        background: unset !important;
+    }
+    .content-home2 form .searchInputHome {
+        border-top-left-radius: 13px;
+        border-bottom-left-radius: 13px;
+    }
+    .groupBtnAppConnecte .btn-signup {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto 15px !important;
+    }
+    .groupBtnAppConnecte .btn-signup img {
+        width: 90px;
+        height: auto;
+    }
+    .groupBtnAppConnecte {
+        display: block;
     }
 
 
