@@ -36,10 +36,21 @@
                         <div class="boxCardForm">
                             <p class="TitleForm">Jouw leeromgeving</p>
                             <div class="form-block">
-                                
+                                <h2>Sign into Your Account</h2>
+                                <?php
+                                $redirect = "/dashboard/user/";
+                                if(isset($_GET['login'])) {
+                                    if ($_GET['login'] == 'failed')
+                                        echo "<span class='alert alert-error' style='color:red'>Failed to login, informations are incorrect</span>";
+                                }
+                                if (isset($_GET['redirect']) && isset($_GET['message'])) {
+                                    echo "<span class='alert alert-error' style='color: red'>". $_GET['message'] ."</span>";
+                                    $redirect = $_GET['redirect'];
+                                }
+                                ?>
                                 <?php
                                 wp_login_form([
-                                    'redirect' => '/dashboard/user/',
+                                    'redirect' => $redirect,
                                     'remember' => false,
                                     'label_username' => 'Wat is je e-mailadres?',
                                     'placeholder_email' => 'E-mailadress',
