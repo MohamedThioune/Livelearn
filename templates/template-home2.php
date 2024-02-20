@@ -875,10 +875,10 @@
                 </div>
                 <?php if(!$user_id) { ?>
                     <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                        <a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
+                       <!-- <a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/googleImg.png" alt="" />
                             Gratis inloggen met Google
-                        </a>
+                        </a>-->
                         <!-- <button class="btn btn-signup">
                         <img src="<?php //echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin

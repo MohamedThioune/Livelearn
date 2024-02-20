@@ -22751,6 +22751,9 @@ figure ul li {
 .gt-translatre-mobile{
     display: none;
 }
+.groupBtnAppConnecte{
+    display: none;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -27591,12 +27594,18 @@ figure ul li {
         margin: 0 auto 15px !important;
     }
     .groupBtnAppConnecte .btn-signup img {
-        width: 90px;
+        width: fit-content;
         height: auto;
     }
     .groupBtnAppConnecte {
         display: block;
     }
+    .groupBtnAppConnecte .btn-signup {
+        min-height: 51px;
+    }
+     .gt-translatre-mobile .gt_selected {
+         z-index: 9 !important;
+     }
 
 
 
