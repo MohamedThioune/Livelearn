@@ -49,6 +49,7 @@ function artikel($id){
     $comment['comment_author_name'] = $author_name ;
     $comment['comment_author_image'] = $image_author;
     $comment['rating'] = $review['rating'];
+    $comment['Feedback'] = $review['Feedback'];
 
     $comments[] = $comment;
   endforeach;
@@ -655,28 +656,35 @@ function allJobs(){
 }
 
 //[POST]Detail job
+
+
 function jobDetail(WP_REST_Request $request){
-  $param_post_id = $request['id'] ?? 0;
-  $sample = job($param_post_id);
-    // Retrieve 3 posts per page
-  $args = array(
-        'post_type' => 'job',
+
+    $param_post_id = $request['id'] ?? 0;
+    $sample = job($param_post_id);
+
+    // Retrieve the latest job posts
+     $args = array(
+        'post_type'      => 'job',
         'posts_per_page' => 3,
-        'order' => 'DESC',
+        'order'          => 'DESC',
     );
+
     $job_posts = get_posts($args);
     $jobs = array();
-   // Convert $sample to an object
-   $sample = (object) $sample;
-  // Add $jobs object to the end of the $sample array
-   array_push($sample, $jobs);
 
-   //Response
-   $response = new WP_REST_Response($sample);
-   $response->set_status(200);
- return $response;
+    foreach ($job_posts as $job_post) {
 
+        $jobs[] = $job_post;
+    }
+    $sample->other_jobs = $jobs;
+
+    //Response
+    $response = new WP_REST_Response($sample);
+    $response->set_status(200);
+    return $response;
 }
+
 
 //[POST]Detail category 
 function categoryDetail(WP_REST_Request $request){
@@ -1150,7 +1158,7 @@ function commentByID(WP_REST_Request $request ) {
            'comment_author_name' => $author_name,
            'comment_author_image' => $image_author,
            'rating' => $rating,
-           'feedback' => $Feedback
+           'feedback' => $feedback
 
        );
        // Add the comment data to the comments array
