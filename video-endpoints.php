@@ -72,10 +72,11 @@ function cleanVideoCourse(){
     );
     $videos  = get_posts($args);
     $count = count($videos);
-    $step = 100;
+    $step = 50;
 
     $number_iteration = intval(ceil($count / $step));
-    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [1 to => $number_iteration]</h1>";
+    $number_iteration = $count%$step == 0 ? $number_iteration : $number_iteration + 1;
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
     $key = 1;
     if (isset($_GET['key'])) {
         if ( intval($_GET['key'])) {
