@@ -1168,10 +1168,45 @@ function commentByID(WP_REST_Request $request ) {
     return $comments;
 
 }
-    //addcomment
-    function addComment(WP_REST_Request $request) {
+//addcomment
+function addComment(WP_REST_Request $request) {
+    // Récupérer l'ID de l'utilisateur connecté
+    $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
 
+    // Récupérer l'utilisateur par son ID
+    $user = get_user_by('ID', $param_user_id);
 
+    // Vérifier si un utilisateur est connecté
+    if ($user) {
+        // Récupérer les données du commentaire depuis la requête
+        $review = $request->get_params();
+
+        // tableau de données pour le commentaire
+        $comment_data = array(
+            'comment_post_ID' => $review['post_id'],
+            'comment_author' => ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name,
+            //($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
+            'comment_approved' => 1, // Approuver automatiquement le commentaire
+            'comment_content' => $review['Feedback'],
+        );
+
+        // Insérer le commentaire
+        $comment_id = wp_insert_comment($comment_data);
+
+        // les champs feedback et rating
+        update_field('rating', $review['rating'], $comment_id);
+        update_field('Feedback', $review['Feedback'], $comment_id);
+
+        // Retourner les données du commentaire inséré
+        $comment = get_comment($comment_id);
+        $response = new WP_REST_Response($comment);
+        $response->set_status(200);
+        return $response;
+    } else {
+        // L'utilisateur n'est pas connecté, retourner une erreur
+        return new WP_Error('user_not_logged_in');
+    }
 }
+
 
 /* * End Liggeey * */
