@@ -84,7 +84,7 @@ function cleanVideoCourse(){
     $count = count($videos);
     $step = 100;
 
-    var_dump($count);
+    // var_dump($count);
 
     $number_iteration = intval(ceil($count / $step));
     $number_iteration = $count%$step == 0 ? $number_iteration : $number_iteration + 1;
