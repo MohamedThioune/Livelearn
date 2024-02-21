@@ -84,11 +84,12 @@
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
         $data_name = "";
+        save_tracking();
+        check_tracking();
+
         if(!$user_id)
             return 0;
         $occurence = 1;
-        save_tracking();
-        //check_tracking();
         //Add by MaxBird - get name entity
         if($type == 'course')
         {
@@ -287,18 +288,21 @@
         global $wpdb;
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $current_ip_adesss= $_SERVER['REMOTE_ADDR'];
-        $user_id = get_current_user_id();
+        $user_id = get_current_user_id() ? : 0;
         $occurence = 1;
         $course_type = get_field('course_type', $post->ID);
+
+        if ($user_id)
+            return;
 
         if ($course_type !== 'Artikel' )
             return;
 
-        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $post->ID AND user_id = $user_id AND data_type = 'ipadress'");
+        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views WHERE data_id = $post->ID AND data_type = 'ipadress' AND data_name = '$current_ip_adesss'");
         $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
         $id_tracker_founded = $wpdb->get_results( $sql)[0]->id;
 
-        if ($occurence_id) {
+        if ($id_tracker_founded) {
             $occurence = intval($occurence_id) + 1;
             $data_modified=[
                 'occurence' => $occurence,
@@ -318,7 +322,7 @@
             'platform' => 'web',
             'occurence' => $occurence
         ];
-        //echo "<div class='mt-5'>_-_</div>";
+
         return $wpdb->insert($table_tracker_views, $data);
     }
     function check_tracking(){
@@ -326,19 +330,17 @@
         global $wpdb;
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $current_ip_adesss= $_SERVER['REMOTE_ADDR'];
-        $user_id = get_current_user_id();
+        $user_id = get_current_user_id() ? : 0;
         $course_type = get_field('course_type', $post->ID);
 
-        if ($course_type !== 'Artikel' )
+        if ($user_id)
             return;
 
-        echo "<div class='mt-5'></div>";
+        if ($course_type !== 'Artikel')
+            return;
 
-        //if ($user_id) {
-        if ( !is_user_logged_in() ) {
-            echo "<div class='mt-5'></div>";
-
-            $sql = $wpdb->prepare("SELECT occurence,id FROM $table_tracker_views WHERE data_id = $post->ID AND data_name = '$current_ip_adesss' AND data_type = 'ipadress'");
+            // if the scrip arrive here that's there's no user connected, so need to check if the user has already read the article more than 3 times
+            $sql = $wpdb->prepare("SELECT occurence,id FROM $table_tracker_views WHERE data_id = $post->ID AND data_name = '$current_ip_adesss'" );
             $occurence_id = $wpdb->get_results($sql)[0]->occurence;
             $id_tracker_founded = $wpdb->get_results($sql)[0]->id;
             if ($id_tracker_founded)
@@ -349,6 +351,4 @@
                     );
                     header('Location: /inloggen/?' . http_build_query($params));
                 }
-        }
     }
-
