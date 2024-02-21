@@ -82,7 +82,7 @@ function cleanVideoCourse(){
     $videos = searching_course_by_type($global_posts, 'Video')['courses'];
 
     $count = count($videos);
-    $step = 100;
+    $step = 50;
 
     // var_dump($count);
 
