@@ -882,7 +882,7 @@
                         <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
-                    </button> -->
+                    </button>-->
                         <a href="/inloggen/" class="btn group-btn-signup">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/gratis-accouunt.png" alt="">
                             <span>Gratis Account</span>
