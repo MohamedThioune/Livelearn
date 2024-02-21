@@ -4,6 +4,7 @@
 
 <?php
 global $post;
+
 $posttags = get_the_tags();
 
  //Image
