@@ -325,6 +325,7 @@
 
         return $wpdb->insert($table_tracker_views, $data);
     }
+    
     function check_tracking(){
         global $post;
         global $wpdb;

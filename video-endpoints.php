@@ -62,17 +62,17 @@ function updateYoutube(){
 
 function cleanVideoCourse(){
     $args = array(
-        'post_type' => array('course','post'),
+        'post_type' => array('course'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'ordevalue' => 'video',
         'order' => 'DESC' ,
-        'meta_key'   => 'course_type',
+        'meta_key' => 'course_type',
         'meta_value' => "video"
     );
     $videos  = get_posts($args);
     $count = count($videos);
-    $step = 50;
+    $step = 100;
 
     $number_iteration = intval(ceil($count / $step));
     $number_iteration = $count%$step == 0 ? $number_iteration : $number_iteration + 1;
