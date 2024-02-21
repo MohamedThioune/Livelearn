@@ -752,6 +752,8 @@ function categoryDetail(WP_REST_Request $request){
   // Category post 
   $sample['articles'] = searching_course_by_group($global_posts, 'category', $param_category_id)['courses'];
 
+  // return $sample['articles'];
+
   //Response
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
