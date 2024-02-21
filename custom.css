@@ -22593,7 +22593,12 @@ figure ul li {
     margin-left: auto !important;
     text-align: right;
     font-size: 14px;
-    width: 100%;
+}
+.form-block .btn-switch-login{
+    width: 55%;
+}
+.group-btn-modal {
+    margin-top: 25px;
 }
 .register-block{
     display: none;
@@ -22752,6 +22757,64 @@ figure ul li {
     display: none;
 }
 .groupBtnAppConnecte{
+    display: none;
+}
+.newSearchBlock{
+    width: 45%;
+    margin: 0px auto 59px;
+}
+.newSearchBlock input{
+    border: 1px solid #ced4da !important;
+    width: 100% !important;
+    padding: 15px 95px 14px 20px !important;
+    border-radius: 10px !important;
+    margin-bottom: 0 !important;
+    height: 50px;
+}
+.newSearchBlock .btn-Zoek {
+    top: 8px;
+    right: 20px;
+    padding: 3px 25px;
+    border-radius: 10px;
+}
+.swiper-leeveroom .swiper-slide {
+    flex-shrink: 0;
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid #033357;
+    margin: 0px 10px;
+    padding: 8px 17px;
+    color: #033357;
+}
+.swiper-leeveroom .active{
+    background: #023357;
+    color: white;
+}
+.swiper-leeveroom h2{
+    color: #033357;
+    font-size: 24px;
+    margin-bottom: 23px;
+}
+.Onderwerpen-block{
+    margin-top: 50px;
+}
+.content-result-course .new-card-course {
+    width: 25%;
+}
+.group-btn-signup {
+    background: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    color: #023357 !important;
+    min-width: 225px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+}
+.group-btn-signup img{
+    height: 42px;
+}
+.visible-on-mobile{
     display: none;
 }
 /*responsive mobile*/
@@ -27605,6 +27668,12 @@ figure ul li {
     }
      .gt-translatre-mobile .gt_selected {
          z-index: 9 !important;
+     }
+     .group-btn-signup{
+         display: none;
+     }
+     .visible-on-mobile{
+         display: block;
      }
 
 
