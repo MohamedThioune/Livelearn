@@ -1076,6 +1076,7 @@ $saved = get_user_meta($user_id, 'course');
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
                     </button>-->
+
                         <a href="/inloggen/" class="btn group-btn-signup">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/gratis.png" alt="">
                             <span>Gratis Account</span>
