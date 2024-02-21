@@ -105,7 +105,7 @@ function cleanVideoCourse(){
 
     $star_index = ($key - 1) * $step;
 
-    for ($i = $star_index; $i < $star_index + 10 && $i < $count ; $i++) {
+    for ($i = $star_index; $i < $star_index + $step && $i < $count ; $i++) {
         $course = $videos[$i];
         $correct_videos = array();
         $youtube_playlists = get_field('youtube_videos', $course->ID);
