@@ -432,6 +432,149 @@ $url = home_url( $wp->request );
 
 
                     <!-- modal dropdown Voor Voor opleiders  -->
+                    <div class="modal dropdown-menu-custom dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p class="title-search">Populair zoeken</p>
+                                    <div class="d-grid">
+                                        <a href="">IT / Gegevens</a>
+                                        <a href="">Hardware</a>
+                                        <a href="">Informatiebeheer</a>
+                                        <a href="">Kunst</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="title-search">Suggesties</p>
+                                    <ul class="secondUlModal ">
+                                        <li>
+                                            <a href="/product-search?filter=Opleidingen">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleidingen-Header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Opleidingen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=E-learning">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/E-learning-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">E-Learnings</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Lezing">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Lezingen-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Lezingen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Training">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Trainingen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Video">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Video's-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Video's</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Event">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Evens-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Events</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Workshop">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/workshop.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Workshops</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Artikel">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Artikelen-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Artikelen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Webinar">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/webinar-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Webinars</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Masterclass">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Masterclasses-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Masterclasses</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Assessment">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Assessments-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Assessments</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Podcast">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcasts-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Podcasts</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- modal dropdown Voor Voor opleiders  -->
                     <div class="modal  dropdown-menu-custom" id="voorOpleidersModal" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                         <div class="souselementHeader">
                             <div class="blockdropdownnHeader">

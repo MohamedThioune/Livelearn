@@ -180,9 +180,7 @@ form {
     width: 100%;
 }
 .dropdown-menuSearch{
-    display: none;
-}
-.dropdown-menuSearch {
+    display: none !important;
     position: absolute;
     left: 30px;
     background: white;
