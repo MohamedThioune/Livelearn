@@ -1511,6 +1511,7 @@
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
 
+
     <script>
         // for search bar
         document.addEventListener('DOMContentLoaded', function() {
