@@ -61,18 +61,30 @@ function updateYoutube(){
 }
 
 function cleanVideoCourse(){
+    // $args = array(
+    //     'post_type' => array('course'),
+    //     'post_status' => 'publish',
+    //     'posts_per_page' => -1,
+    //     'ordevalue' => 'video',
+    //     'order' => 'DESC' ,
+    //     'meta_key' => 'course_type',
+    //     'meta_value' => "video"
+    // );
+    // $videos  = get_posts($args);
     $args = array(
-        'post_type' => array('course','post'),
+        'post_type' => 'course',
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue' => 'video',
-        'order' => 'DESC' ,
-        'meta_key'   => 'course_type',
-        'meta_value' => "video"
+        'order' => 'DESC'
     );
-    $videos  = get_posts($args);
+
+    $global_posts = get_posts($args);
+    $videos = searching_course_by_type($global_posts, 'Video')['courses'];
+
     $count = count($videos);
-    $step = 50;
+    $step = 30;
+
+    // var_dump($count);
 
     $number_iteration = intval(ceil($count / $step));
     $number_iteration = $count%$step == 0 ? $number_iteration : $number_iteration + 1;
@@ -93,7 +105,7 @@ function cleanVideoCourse(){
 
     $star_index = ($key - 1) * $step;
 
-    for ($i = $star_index; $i < $star_index + 10 && $i < $count ; $i++) {
+    for ($i = $star_index; $i < $star_index + $step && $i < $count ; $i++) {
         $course = $videos[$i];
         $correct_videos = array();
         $youtube_playlists = get_field('youtube_videos', $course->ID);
