@@ -490,12 +490,22 @@ jQuery(function($) {
         $(".btnUp").hide();
     });
 
+    $("#header-search").click(function() {
+        $("#for-search-element").show();
+        $(".activeModalHeader").show();
+        $("#voorOpleidersModal").hide();
+        $("#OpleidingenModal").hide();
+        $("#OverOnsModal").hide();
+        $("#voorOrganisatiModal").hide();
+    });
+
     $("#voorOrganisati").click(function() {
         $("#voorOrganisatiModal").toggle();
         $(".activeModalHeader").show();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     $("#opleiders").click(function() {
@@ -504,6 +514,7 @@ jQuery(function($) {
         $("#voorOpleidersModal").toggle();
         $("#OpleidingenModal").hide();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     $("#Opleidingen").click(function() {
@@ -512,6 +523,7 @@ jQuery(function($) {
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").toggle();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     $("#OverOns").click(function() {
@@ -520,6 +532,7 @@ jQuery(function($) {
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
         $("#OverOnsModal").toggle();
+        $("#for-search-element").hide();
     });
 
     $(".activeModalHeader").click(function() {
@@ -528,6 +541,7 @@ jQuery(function($) {
         $("#OpleidingenModal").hide();
         $(".activeModalHeader").hide();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     //Filter bar on category page
@@ -643,8 +657,6 @@ jQuery(function($) {
 
 
 // end of menu hamberger
-
-
 
 
     $("#Ontwikkel-persoonlijke").click(function() {

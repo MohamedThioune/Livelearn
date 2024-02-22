@@ -319,7 +319,7 @@
 
     if(!isset($visibility_company))
         $visibility_company = "";
-    
+
     /*
     * Check statistic by user *
     */
@@ -1157,10 +1157,10 @@
 
 </div>
 <!-- replaces of ranking -->
-<!-- 
+<!--
 <div class="text-center mt-5">
     <a href="/ranking" target="_blank" class="btn btn-success btn-block">ranking</a>
-</div> 
+</div>
 -->
 <!-- -->
 <div class="container-fluid">
@@ -1510,6 +1510,27 @@
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+
+    <script>
+        // for search bar
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search').addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                var headerSearchInput = document.getElementById('header-search');
+                headerSearchInput.focus();
+                headerSearchInput.selectionStart = headerSearchInput.selectionEnd = headerSearchInput.value.length;
+                headerSearchInput.dispatchEvent(new Event('click'));
+                searchFunction();
+            });
+
+            document.getElementById('header-search').addEventListener('input', function() {
+                if (document.activeElement === document.getElementById('header-search')) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    searchFunction();
+                }
+            });
+        });
+    </script>
     <script>
         $('.owl-carousel').owlCarousel({
             loop:true,
@@ -1671,3 +1692,4 @@
             });
         });
     </script>
+
