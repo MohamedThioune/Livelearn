@@ -49,6 +49,7 @@ function artikel($id){
     $comment['comment_author_name'] = $author_name ;
     $comment['comment_author_image'] = $image_author;
     $comment['rating'] = $review['rating'];
+    $comment['Feedback'] = $review['Feedback'];
 
     $comments[] = $comment;
   endforeach;
@@ -671,33 +672,37 @@ function allJobs(){
 }
 
 //[POST]Detail job
+
+
 function jobDetail(WP_REST_Request $request){
 
-  $param_post_id = $request['id'] ?? 0;
-  
-  $sample = job($param_post_id);
-  // Retrieve 3 posts per page
-  //   $args = array(
-  //         'post_type' => 'job',
-  //         'posts_per_page' => 3,
-  //         'order' => 'DESC',
-  //     );
-  //   $main_other_jobs = get_posts($args);
-  //$jobs = array();
-  // foreach ($variable as $key => $value) {
-    # code...
-  // }
-  // $sample->other_jobs = $jobs
+    $param_post_id = $request['id'] ?? 0;
+    $sample = job($param_post_id);
 
+    // Retrieve the latest job posts
+     $args = array(
+        'post_type'      => 'job',
+        'posts_per_page' => 3,
+        'order'          => 'DESC',
+    );
 
-  //Response
-  $response = new WP_REST_Response($sample);
-  $response->set_status(200);
+    $job_posts = get_posts($args);
+    $jobs = array();
 
-  return $response;  
+    foreach ($job_posts as $job_post) {
+
+        $jobs[] = $job_post;
+    }
+    $sample->other_jobs = $jobs;
+
+    //Response
+    $response = new WP_REST_Response($sample);
+    $response->set_status(200);
+    return $response;
 }
 
-//[POST]Detail a category 
+
+//[POST]Detail category 
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
   $sample = array('name' => '', 'jobs' => null, 'companies' => null, 'articles' => null);
@@ -751,6 +756,8 @@ function categoryDetail(WP_REST_Request $request){
   $global_posts = get_posts($args);
   // Category post 
   $sample['articles'] = searching_course_by_group($global_posts, 'category', $param_category_id)['courses'];
+
+  // return $sample['articles'];
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -1145,45 +1152,82 @@ function PostJobUser(WP_REST_Request $request){
 }
 
 //comment
-function commentByID(WP_REST_Request $request ) {
+// function commentByID(WP_REST_Request $request ) {
 
-    $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-    $user = get_user_by('ID', $param_user_id);
+//     $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
+//     $user = get_user_by('ID', $param_user_id);
 
-    $comments = array();
-    // Retrieve ACF data associated with the post ID
-    $main_reviews = get_field('reviews', $post_id);
+//     $comments = array();
+//     // Retrieve ACF data associated with the post ID
+//     $main_reviews = get_field('reviews', $post_id);
 
-    // Loop through each ACF review
-    foreach ($main_reviews as $review) {
-       $user = $review['user']; // Get the user associated with the review
-       $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
+//     // Loop through each ACF review
+//     foreach ($main_reviews as $review) {
+//        $user = $review['user']; // Get the user associated with the review
+//        $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
 
-       $image_author = get_field('profile_img',  'user_' . $user->ID);
-       $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+//        $image_author = get_field('profile_img',  'user_' . $user->ID);
+//        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-       $rating = $review['rating'];
-       $feedback = $review['Feedback'];
+//        $rating = $review['rating'];
+//        $feedback = $review['Feedback'];
 
-       // Assemble the comment data into an array
-       $comment = array(
-           'comment_author_name' => $author_name,
-           'comment_author_image' => $image_author,
-           'rating' => $rating,
-           'feedback' => $Feedback
+//        // Assemble the comment data into an array
+//        $comment = array(
+//            'comment_author_name' => $author_name,
+//            'comment_author_image' => $image_author,
+//            'rating' => $rating,
+//            'feedback' => $feedback
 
-       );
-       // Add the comment data to the comments array
-       $comments[] = $comment;
-    }
-    // Return the array of comments
-    return $comments;
+//        );
+//        // Add the comment data to the comments array
+//        $comments[] = $comment;
+//     }
+//     // Return the array of comments
+//     return $comments;
 
+// }
+
+//addComment
+function addComment(WP_REST_Request $request) {
+  // Récupérer l'ID de l'utilisateur connecté
+  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
+
+  // Récupérer l'utilisateur par son ID
+  $user = get_user_by('ID', $param_user_id);
+
+  // Vérifier si un utilisateur est connecté
+  if ($user) {
+      // Récupérer les données du commentaire depuis la requête
+      $review = $request->get_params();
+
+      // tableau de données pour le commentaire
+      $comment_data = array(
+          'comment_post_ID' => $review['post_id'],
+          'comment_author' => ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name,
+          //($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
+          'comment_approved' => 1, // Approuver automatiquement le commentaire
+          'comment_content' => $review['Feedback'],
+      );
+
+      // Insérer le commentaire
+      $comment_id = wp_insert_comment($comment_data);
+
+      // les champs feedback et rating
+      update_field('rating', $review['rating'], $comment_id);
+      update_field('Feedback', $review['Feedback'], $comment_id);
+
+      // Retourner les données du commentaire inséré
+      $comment = get_comment($comment_id);
+      $response = new WP_REST_Response($comment);
+      $response->set_status(200);
+      return $response;
+  } 
+  else {
+    // L'utilisateur n'est pas connecté, retourner une erreur
+    return new WP_Error('user_not_logged_in');
+  }
 }
-    //addcomment
-    function addComment(WP_REST_Request $request) {
 
-
-}
 
 /* * End Liggeey * */

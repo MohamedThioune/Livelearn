@@ -19,7 +19,7 @@
         box-shadow: none;
     }
     .nav-link {
-        color: #043356 !important;
+        color: #043356 !important; 
     }
     .nav-link .containerModife{
         border: none;
@@ -240,10 +240,8 @@
 </div>
 
 
-
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
-
 
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

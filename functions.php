@@ -1778,14 +1778,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'PostJobUser'
   ));
 
-    register_rest_route ('custom/v1', '/user/comments', array(
-      'methods' => 'GET',
-      'callback' => 'commentByID'
-    ));
+  // register_rest_route ('custom/v1', '/user/comments', array(
+  //   'methods' => 'GET',
+  //   'callback' => 'commentByID'
+  // ));
 
-    register_rest_route ('custom/v1', '/user/comment', array(
-      'methods' => 'POST',
-      'callback' => 'addComment'
-    ));
+  register_rest_route ('custom/v1', '/user/comment', array(
+    'methods' => 'POST',
+    'callback' => 'addComment'
+  ));
 
 });

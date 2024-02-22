@@ -265,9 +265,12 @@ $see_experts = get_users(
                                     </div>
                                     <?php
                                         if(!empty($todos)){
+                                            $key = 0;
                                             foreach($todos as $todo){
                                                 if($key == 4)
                                                     break;
+
+                                                $key += 1;
 
                                                 $read = get_field('read_feedback', $todo->ID);
                                                 if($read)
