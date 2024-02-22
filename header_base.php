@@ -902,7 +902,6 @@ $url = home_url( $wp->request );
                         </div>
                     </div>
 
-
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- input search -->
                         <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
