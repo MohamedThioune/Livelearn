@@ -1,4 +1,4 @@
-<?php
+ <?php
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 
 $GLOBALS['id_user'] = get_current_user_id();
@@ -1775,6 +1775,16 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/user/comment', array(
       'methods' => 'POST',
       'callback' => 'addComment'
+    ));
+
+    register_rest_route ('custom/v1', '/companyProfil', array(
+    'methods' => 'POST',
+    'callback' => 'companyProfil'
+    ));
+
+    register_rest_route ('custom/v1', '/candidate/profil', array(
+      'methods' => 'GET',
+      'callback' => 'candidateProfil'
     ));
 
 });
