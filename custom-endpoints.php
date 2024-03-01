@@ -240,8 +240,8 @@ function cleanAuthor(){
         //if ($count == 0)
             //wp_delete_user($author->ID);
     }
-    echo '<h3>Authors without courses</h3>';
-    var_dump('number authors without courses  '.count($authors_withouting_courses),$authors_withouting_courses);
+    echo '<h3>Authors without courses :  '. count($authors_withouting_courses). '</h3>';
+    var_dump($authors_withouting_courses);
 }
 
 function get_expert_courses ($data) 
