@@ -242,6 +242,7 @@ function cleanAuthor(){
     }
     echo '<h3>Authors without courses :  '. count($authors_withouting_courses). '</h3>';
     var_dump($authors_withouting_courses);
+
 }
 
 function get_expert_courses ($data) 

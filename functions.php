@@ -1454,6 +1454,7 @@ add_action( 'rest_api_init', function () {
       'methods' => 'GET',
       'callback' => 'cleanAuthor',
   ));
+
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
