@@ -1450,6 +1450,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthorsOptimized',
   ));
 
+  register_rest_route('custom/v1', '/clean-author', array(
+      'methods' => 'GET',
+      'callback' => 'cleanAuthor',
+  ));
+
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
