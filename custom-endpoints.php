@@ -194,6 +194,57 @@ function allAuthorsOptimized()
     return ['authors' => $authors,"codeStatus" => 200];
 }
 
+function cleanAuthor(){
+    $authors = get_users (
+        [
+            'role__in' => ['author'],
+        ]
+    );
+
+    $i = 0;
+
+    $authors_withouting_courses = array();
+
+    foreach($authors as $author) {
+        // $email_author = substr($author->user_email,0,6);
+           // if($author->roles) {
+                //var_dump($author->roles);
+            //} else {
+                //var_dump($author->allcaps['Klant']);
+                //var_dump('klant');
+           // }
+        $artikel = array();
+        $posts = get_posts (
+            array(
+                'post_type' => ['post','course'],
+                'author' => $author->ID
+            )
+        );
+        /*
+        if($posts) {
+            foreach ($posts as $post) {
+                $course_type = get_field('course_type', $post->ID);
+                //var_dump($course_type);
+                if ($course_type === 'Artikel')
+                    $artikel[] = $post;
+                else
+                    var_dump('pas artikel  ' . $author->ID);
+            }
+        }
+        */
+        if (!$posts) {
+            $author->roles[] = $author->ID;
+            $authors_withouting_courses[] = $author->roles ;
+        }
+        $count = count($posts);
+        //if ($count == 0)
+            //wp_delete_user($author->ID);
+    }
+    echo '<h3>Authors without courses :  '. count($authors_withouting_courses). '</h3>';
+    var_dump($authors_withouting_courses);
+
+}
+
 function get_expert_courses ($data) 
 {
   $current_user_id = $GLOBALS['user_id'];
