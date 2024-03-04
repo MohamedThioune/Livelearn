@@ -196,9 +196,9 @@ function allAuthorsOptimized()
 
 function cleanAuthor(){
     $authors = get_users (
-        [
-            'role__in' => ['author'],
-        ]
+      [
+          'role__in' => ['author'],
+      ]
     );
 
     $i = 0;
