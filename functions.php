@@ -1783,24 +1783,19 @@ add_action( 'rest_api_init', function () {
     'callback' => 'PostJobUser'
   ));
 
-  // register_rest_route ('custom/v1', '/user/comments', array(
-  //   'methods' => 'GET',
-  //   'callback' => 'commentByID'
-  // ));
-
   register_rest_route ('custom/v1', '/user/comment', array(
     'methods' => 'POST',
     'callback' => 'addComment'
   ));
 
-    register_rest_route ('custom/v1', '/companyProfil', array(
-    'methods' => 'POST',
-    'callback' => 'companyProfil'
-    ));
+  register_rest_route ('custom/v1', '/user/profil', array(
+  'methods' => 'POST',
+  'callback' => 'companyProfil'
+  ));
 
-    register_rest_route ('custom/v1', '/candidate/profil', array(
-      'methods' => 'GET',
-      'callback' => 'candidateProfil'
-    ));
+  register_rest_route ('custom/v1', '/candidate/profil', array(
+    'methods' => 'GET',
+    'callback' => 'candidateProfil'
+  ));
 
 });
