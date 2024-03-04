@@ -5,8 +5,7 @@ wp_head();
 get_header(); 
 
 // $page = dirname(__FILE__) . '/templates/check_visibility.php';
-// require($page); 
-
+// require($page);
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -18,9 +17,9 @@ global $wp;
 global $wpdb;
 
 view($post);
-
-if(!visibility($post, $visibility_company))
-    header('location: /'); 
+    if (isset($visibility_company))
+        if(!visibility($post, $visibility_company))
+            header('location: /');
 
 $url = home_url( $wp->request );
 
@@ -476,24 +475,24 @@ foreach($reactions as $value)
 
 
 <!-- modal register / login -->
-<div class="modal fade" id="modal-redirect" tabindex="-1" role="dialog" aria-labelledby="modal-redirectTitle" aria-hidden="true">
+<div class="modal show" id="modal-redirect" tabindex="-1" role="dialog" aria-labelledby="modal-redirectTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body create-account-block">
                 <p class="title-modal">Continue reading on</p>
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="d-flex">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="img-for-modal-redirect" alt="">
+                <div class="d-flex justify-content-between mb-2">
+                    <div class="d-flex  align-items-center">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/mobile-app-element.png" class="img-for-modal-redirect" alt="">
                         <p class="name-for-redirect">The mobile App</p>
                     </div>
-                    <a href="" class="btn btn-for-redirect">Open</a>
+                    <button class="btn btn-for-redirect" onclick="redirect()">Open</button>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/userExample.jpg" class="img-for-modal-redirect" alt="">
+                    <div class="d-flex  align-items-center">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/browser-logos.png" class="img-for-modal-redirect" alt="">
                         <p class="name-for-redirect">Your Browser</p>
                     </div>
-                    <a href="" class="btn btn-for-redirect">Continue</a>
+                    <button class="btn btn-for-redirect-continue" id="close-modal-reddit">Continue</button>
                 </div>
             </div>
         </div>
@@ -510,9 +509,30 @@ foreach($reactions as $value)
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Sélectionner le modal par son identifiant et l'afficher
-        $("#modal-redirect").modal('show');
+        function checkWindowWidth() {
+            var windowWidth = $(window).width();
+
+            if (windowWidth >= 300 && windowWidth <= 767) {
+                $("#modal-redirect").modal('show');
+            }
+        }
+        checkWindowWidth();
+
+        $(window).resize(function () {
+            checkWindowWidth();
+        });
     });
+    $('#close-modal-reddit').click(function(){
+        $('#modal-redirect').removeClass('show');
+    });
+    function redirect() {
+        var userAgent = navigator.userAgent;
+        if (userAgent.indexOf("iPhone") > -1 || userAgent.indexOf("iPod") > -1){
+            window.location.href = "https://apps.apple.com/nl/app/livelearn/id1666976386/";
+        } else {
+            window.location.href = "https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr";
+        }
+    }
 </script>
 <script>
     // partners slides

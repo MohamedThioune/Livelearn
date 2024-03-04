@@ -86,15 +86,21 @@
                            <button type="submit" class="btn btn-coneection">Sign In</button>
                         </form> 
                         -->
-                        <?php 
-                        if(isset($_GET['login'])) 
-                            if($_GET['login'] == 'failed') 
-                                echo "<span class='alert alert-error' style='color:red'>Failed to login, informations are incorrect</span>"
+                        <?php
+                        $redirect = "/dashboard/user/";
+                        if(isset($_GET['login'])) {
+                            if ($_GET['login'] == 'failed')
+                                echo "<span class='alert alert-error' style='color:red'>Failed to login, informations are incorrect</span>";
+                        }
+                        if (isset($_GET['redirect']) && isset($_GET['message'])) {
+                            echo "<span class='alert alert-error' style='color: red'>". $_GET['message'] ."</span>";
+                            $redirect = $_GET['redirect'];
+                        }
                         ?>
 
                         <?php
                             wp_login_form([
-                                'redirect' => '/dashboard/user/',
+                                'redirect' => $redirect,
                                 'remember' => true,
                                 'label_username' => 'Email address',
                                 'placeholder_email' => 'Enter your email address',

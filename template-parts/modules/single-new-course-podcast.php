@@ -35,13 +35,14 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
-// if (!$user_id){
-//     $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
-//     $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
-// }else {
+ if (!$user_id){
+     $read_status_icon = '<button class="btn" data-toggle="modal" data-target="#modal-login-with-podcast"></button>';
+     $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#modal-login-with-podcast"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
+     $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#modal-login-with-podcast" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
+}else {
 $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
 $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-// }
+}
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -170,12 +171,16 @@ endif;
                                             $link = '#';
                                             $reading = "#";
                                             $date_podcast = date("m/d/Y", strtotime($post->post_date));
-                                            $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
-                                            $read_status_icon = '';
+                                            $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
+                                            //$read_status_icon = '';
+                                            $read_status_icon = '<div class="cp-audioquote__player--playBtn"></div>';
                                             if($bool_link || $key == 0){
                                                 $reading = $podcast['course_podcast_data'];
-                                                $status_icon = get_stylesheet_directory_uri() . "/img/view-course.svg";
-                                                $read_status_icon = '<div class="cp-audioquote__player--playBtn"></div>';
+                                            }
+                                            if (!$user_id && $key>0) {
+                                                $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
+                                                $read_status_icon = '<button class="btn btn-audio-blocked cp-audioquote__player--playBtn" data-toggle="modal" data-target="#modal-login-with-podcast"></button>';
+                                                $reading = "#";
                                             }
 
                                             $lecture_index = $key + 1;
@@ -192,16 +197,14 @@ endif;
                                                         <p class="date-added-playlist"><?=$date_podcast?></p>
                                                     </div>
                                                     <div class="audio position-relative">
-                                                      <!--  <button class="btn btn-audio-blocked" data-toggle="modal" data-target="#modal-login-with-podcast">
-                                                            <i class="fa fa-play"></i>
-                                                        </button>-->
                                                         <div class="cp-audioquote">
                                                             <div class="cp-audioquote__player">
                                                                 <!-- src -->
                                                                 <audio class="cp-audioquote__player__src" src="<?= $reading ?>">
                                                                     <p><?= strip_tags($podcast['course_podcast_intro']) ?></p>
                                                                 </audio>
-                                                                <div class="cp-audioquote__player--playBtn"></div>
+                                                                <?= $read_status_icon ?>
+                                                               <!-- <div class="cp-audioquote__player--playBtn"></div> -->
                                                                 <div class="cp-audioquote__player--display">
                                                                     <div class="cp-audioquote__player--progress">
                                                                         <span class="cp-audioquote__player--track"></span>
@@ -213,7 +216,7 @@ endif;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div class="ml-3">
                                                     <img class="status-icon" src="<?= $status_icon ?>" alt="">
                                                 </div>
                                             </div>
@@ -262,8 +265,18 @@ endif;
                                                             <p class="title-podcast"><?= strip_tags($podcast['podcast_title']) ?></p>
                                                         </div>
                                                         <p class="date-added-playlist"><?=$date_podcast?></p>
+                                                        <div class="ml-3">
+                                                            <?php if ($user_id || (!$user_id && $key==0)) :?>
+                                                                <img class="status-icon" src="<?= get_stylesheet_directory_uri() . "/img/view-course.svg" ?>" alt="">
+                                                            <?php endif; ?>
+
+                                                            <?php if (!$user_id && $key>0) :?>
+                                                                <img class="status-icon" src="<?= get_stylesheet_directory_uri() . "/img/blocked.svg" ?>" alt="">
+                                                            <?php endif; ?>
+
+                                                </div>
                                                     </div>
-                                                    <?php if ($user_id): ?>
+                                                    <?php if ($user_id):?>
                                                     <div class="audio">
                                                         <div class="cp-audioquote">
                                                             <div class="cp-audioquote__player">
@@ -289,6 +302,7 @@ endif;
                                                 if ( $key>0 ) {
                                                     $reading = "#";
                                                     $button = '<button class="btn btn-audio-blocked cp-audioquote__player--playBtn" data-toggle="modal" data-target="#modal-login-with-podcast"></button>';
+                                                    $status_icon = get_stylesheet_directory_uri() . "/img/blocked.svg";
                                                 }
                                                 ?>
                                                 <div class="audio">
