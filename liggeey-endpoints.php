@@ -1217,12 +1217,10 @@ function companyProfil(WP_REST_Request $request){
               'mobile_phone' => $company_data->mobile_phone,
               'website' => $company_data->website,
               'size' => $company_data->size,
-
               );
               }
 
  // Return response
-
   $response = new WP_REST_Response($dataCompany);
   $response->set_status(200);
 
@@ -1258,6 +1256,61 @@ function candidateProfil(WP_REST_Request $request) {
         // Return error
         return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
     }
+}
+
+ function candidateAppliedJobs(WP_REST_Request $request) {
+
+     $args = array(
+         'post_type' => 'job',
+         'post_status' => 'publish',
+         'posts_per_page' => -1,
+     );
+     // Récupérer les offres d'emploi
+     $job_posts = get_posts($args);
+     //var_dump($job_posts);
+     // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
+     $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
+     // Tableau pour stocker les emplois auxquels le candidat a postulé
+     $applied_jobs = array();
+     foreach ($job_posts as $post) {
+         if(!$post)
+          continue;
+         $applied_jobs = get_field('job_appliants', $post->ID);
+         $applied_jobs[] = $post;
+     }
+     // Retourner la liste des emplois auxquels le candidat a postulé
+     $response = new WP_REST_Response($applied_jobs);
+     $response->set_status(200);
+     return $response;
+ }
+
+
+  function candidateShorlistedJobs(WP_REST_Request $request) {
+
+ // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
+     $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
+
+      // Récupérer les emplois favoris de l'utilisateur
+      $favorite_jobs = get_field('save_liggeey', 'user_' . $user_id);
+
+      // Vérifier si l'utilisateur a des emplois favoris
+      if ($favorite_jobs) {
+          // Afficher les détails de chaque emploi favori
+          echo '<h2>Vos emplois favoris :</h2>';
+          echo '<ul>';
+          foreach ($favorite_jobs as $favorite) {
+              $type = $favorite['type'];
+              $id = $favorite['id'];
+              // Afficher les détails de l'emploi en fonction du type (job)
+              if ($type === 'job') {
+                  $job_title = get_the_title($id);
+                  $job_permalink = get_permalink($id);
+                  echo '<li><a href="' . $job_permalink . '">' . $job_title . '</a></li>';
+              }
+          }
+
+  }
+
 }
 
 

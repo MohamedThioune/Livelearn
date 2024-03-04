@@ -9,7 +9,7 @@ function updateYoutube(){
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue' => 'podcast',
+        'ordevalue' => 'video',
         'order' => 'DESC' ,
         'meta_key'   => 'course_type',
         'meta_value' => "video"
@@ -31,6 +31,7 @@ function updateYoutube(){
             $ids_video [] = $youtube_playlist['id'];
             if ($youtube_playlist['id'])
                 $correct_videos [] = $youtube_playlist;
+
         }
         $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $id_playlist . "&maxResults=" . $maxResults . "&key=" . $api_key;
         $detail_playlist = json_decode(file_get_contents($url_playlist, true));
@@ -60,28 +61,63 @@ function updateYoutube(){
 }
 
 function cleanVideoCourse(){
+    // $args = array(
+    //     'post_type' => array('course'),
+    //     'post_status' => 'publish',
+    //     'posts_per_page' => -1,
+    //     'ordevalue' => 'video',
+    //     'order' => 'DESC' ,
+    //     'meta_key' => 'course_type',
+    //     'meta_value' => "video"
+    // );
+    // $videos  = get_posts($args);
     $args = array(
-        'post_type' => array('course','post'),
+        'post_type' => 'course',
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue' => 'podcast',
-        'order' => 'DESC' ,
-        'meta_key'   => 'course_type',
-        'meta_value' => "video"
+        'order' => 'DESC'
     );
-    $videos  = get_posts($args);
 
-    $correct_videos = array();
-    foreach ($videos as  $course) {
+    $global_posts = get_posts($args);
+    $videos = searching_course_by_type($global_posts, 'Video')['courses'];
+
+    $count = count($videos);
+    $step = 30;
+
+    // var_dump($count);
+
+    $number_iteration = intval(ceil($count / $step));
+    $number_iteration = $count%$step == 0 ? $number_iteration : $number_iteration + 1;
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        }else{
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+
+    $star_index = ($key - 1) * $step;
+
+    for ($i = $star_index; $i < $star_index + $step && $i < $count ; $i++) {
+        $course = $videos[$i];
+        $correct_videos = array();
         $youtube_playlists = get_field('youtube_videos', $course->ID);
         if (!$youtube_playlists)
             continue;
-        foreach ($youtube_playlists as $youtube_playlist) {
+
+        foreach ($youtube_playlists as $youtube_playlist)
             if ($youtube_playlist['id'] && $youtube_playlist['title'] && $youtube_playlist['thumbnail_url'])
                 $correct_videos [] = $youtube_playlist;
-        }
+
         update_field('youtube_videos', null, $course->ID);
         update_field('youtube_videos', $correct_videos, $course->ID);
-        echo "<h1 class='textOpleidRight'>the course  $course->ID is updating...</h1>";
+        echo "<h3 class='textOpleidRight'>the course  $course->ID is updating...</h3>";
     }
 }

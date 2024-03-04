@@ -56,7 +56,7 @@
                     header("location:registreren?message=".$success."&success");
                 }
 
-              
+
             }
             else{
                 $danger = "Vul de e-mail in, alsjeblieft";
