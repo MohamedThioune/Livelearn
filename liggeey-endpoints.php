@@ -72,9 +72,9 @@ function job($id){
   $sample['title'] = $post->post_title;
   $sample['posted_at'] = $post->post_date;
   $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
-  $sample['description'] = get_field('job_description', $post->ID);
-  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID);
-  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID);
+  $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
+  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
+  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in ';
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
@@ -107,19 +107,27 @@ function company($id){
   //var_dump($post);
   //assigner les champs
   $sample['ID'] = $post->ID;
-  $sample['title'] = $post->post_title;
-  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
-  $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
-  $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
-  $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
-
-  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
-  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
-
-  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
-
-  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
   $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['title'] = $post->post_title;
+  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
+  $sample['phone'] = get_field('company_phone', $post->ID) ?: '(xxx) xxx xx xxx';
+  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
+  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
+  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
+  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+
+  $sample['biography'] = get_field('company_bio', $post->ID) ?: 'Empty till now, but will be filled with a great history soon !';
+
+  $sample['facebook'] =  get_field('company_facebook', $post->ID) ?: 'xxxxx';
+  $sample['linkedin'] = get_field('company_linkedin', $post->ID) ?: 'xxxxx';
+  $sample['twitter'] = get_field('company_twitter', $post->ID) ?: 'xxxxx';
+  $sample['instagram'] = get_field('company_instagram', $post->ID) ?: 'xxxxx';
+
+  $sample['place'] = get_field('company_place', $post->ID) ?: 'Somewhere place ...';
+  $sample['country'] = get_field('company_country', $post->ID) ?: 'Somewhere country ...';
+  $sample['complete_address'] = get_field('company_address', $post->ID) ?: 'Street No X ';
+
   //Open position
   $args = array(
     'post_type' => 'job',
@@ -130,6 +138,7 @@ function company($id){
     'meta_key' => 'job_company',
     'meta_value' => $post->ID
   );
+  
   $jobs = get_posts($args);
   $sample['count_open_jobs'] = empty($jobs) ? 0 : count($jobs);
   $sample['open_jobs'] = empty($jobs) ? array() : $jobs;
@@ -178,20 +187,24 @@ function candidate($id){
   $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
   $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
 
-  //Get Topics
-  // $topics_external = get_user_meta($user_id, 'topic');
-  // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
-  // $topics = array();
-  // if(!empty($topics_external))
-  //   $topics = !empty($topics_external) $topics_external;
-
-  // if(!empty($topics_internal))
-  //   foreach($topics_internal as $item)
-  //       array_push($topics, $item);
-
   $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
   "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
   Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+
+  $topics = array();
+  $limit = 3;
+  $topics = get_user_meta($user->ID, 'topic');
+  $sample['skills'] = [];
+  if(!empty($topics)):
+    $args = array( 
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'include'  => $topics,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        'include' => $topics,
+        'post_per_page' => $limit
+    );
+    $sample['skills'] = get_categories($args);
+  endif;
 
   //Education Information
   $main_education = get_field('education',  'user_' . $user->ID);
@@ -1224,60 +1237,67 @@ function addComment(WP_REST_Request $request) {
     return new WP_Error('user_not_logged_in');
   }
 }
-//Dashboard manageJob
+
+//[POST]Dashboard User | Profil
 function companyProfil(WP_REST_Request $request){
 
-  $param_post_id = $request['id'] ?? 0;
-  $company_data = company($param_post_id);
+  $required_parameters = ['userApplyId'];
+  $errors = ['errors' => '', 'error_data' => ''];
 
-  if ($company_data) 
-    // Choose fields to display
-    $dataCompany = array(
-      'title' => $company_data->title,
-      'email' => $company_data->email,
-      'mobile_phone' => $company_data->mobile_phone,
-      'website' => $company_data->website,
-      'size' => $company_data->size,
-    );
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);
 
+  //Get input
+  $user_apply_id = $request['userApplyId'];
+  $user_apply = get_user_by('ID', $user_apply_id);
+  if(!$user_apply):
+    $errors['errors'] = 'User not found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
 
- // Return response
+  //Get company
+  $compagnie = get_field('company',  'user_' . $user_apply->ID);
+  $companyInfos = company($compagnie[0]->ID);
 
-  $response = new WP_REST_Response($dataCompany);
+  // Return response
+  $response = new WP_REST_Response($companyInfos);
   $response->set_status(200);
 
   return $response;
 }
 
+//[POST]Dashboard Candidate | Profil
 function candidateProfil(WP_REST_Request $request) {
-    $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
-    $candidate_data = candidate($user_id);
+  $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
+  $candidate_data = candidate($user_id);
 
-    // Check if candidate data is retrieved
-    if ($candidate_data) {
-        // Choose fields to display
-        $dataProfil = array(
-            'first_name' => $candidate_data->first_name,
-            'education_level' => $candidate_data->education_level,
-             'language' => $candidate_data->language,
-             'age' => $candidate_data->age,
-            'email_adress' => $candidate_data->email,
-            'mobile_phone' => $candidate_data->mobile_phone,
-             'country' => $candidate_data->country,
-             'city' => $candidate_data->city,
-             'adress' => $candidate_data->adress,
-            'experience' => $candidate_data->experience,
-            'experiences' => $candidate_data->experiences,
-            'job_title' => $candidate_data->job_title,
-            'social_network' => $candidate_data->social_network,
-        );
+  // Check if candidate data is retrieved
+  if ($candidate_data) {
+      // Choose fields to display
+      $dataProfil = array(
+        'first_name' => $candidate_data->first_name,
+        'education_level' => $candidate_data->education_level,
+        'language' => $candidate_data->language,
+        'age' => $candidate_data->age,
+        'email_adress' => $candidate_data->email,
+        'mobile_phone' => $candidate_data->mobile_phone,
+        'country' => $candidate_data->country,
+        'city' => $candidate_data->city,
+        'adress' => $candidate_data->adress,
+        'experience' => $candidate_data->experience,
+        'experiences' => $candidate_data->experiences,
+        'job_title' => $candidate_data->job_title,
+        'social_network' => $candidate_data->social_network
+      );
 
-        // Return response
-        return rest_ensure_response($dataProfil);
-    } else {
-        // Return error
-        return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
-    }
+      // Return response
+      return rest_ensure_response($dataProfil);
+  } else {
+      // Return error
+      return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
+  }
 }
 
 /* * End Liggeey * */
