@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 
 <?php
-
 global $wp;
 $url = home_url( $wp->request );
-
 ?>
 
 

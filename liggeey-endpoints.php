@@ -312,14 +312,6 @@ function homepage(){
 
   //Category [Block]
   $categories = array();
-<<<<<<< HEAD
-=======
-  // $sample_categories = array(
-  //   'Digital Marketing', 'Digital Project Manager', 'Community Manager', 'Social Media Manager',
-  //   'Webdesigner', '3D Illustrator', 'UX Designer',
-  //   'Data Analyst', 'Salesforce', 'Google', 'Web Project Manager', 'COMMCARE', 'DHIS2', 'DRUPAL',
-  //   'Wordpress', 'Webflow', 'Odoo', 'Prestashop');
->>>>>>> origin/peinda
 
   //Category information
   $no_content = "Some information missing !";
@@ -639,11 +631,7 @@ function allCompanies(){
 
 }
 
-<<<<<<< HEAD
 //[GET]All the jobs 
-=======
-//[GET]All jobs
->>>>>>> origin/peinda
 function allJobs(){
 
   $args = array(
@@ -778,11 +766,7 @@ function categoryDetail(WP_REST_Request $request){
   return $response;
 }
 
-<<<<<<< HEAD
 //[GET]All the artikels 
-=======
-//[GET]All artikels
->>>>>>> origin/peinda
 function allArtikels(WP_REST_Request $request){
   $args = array(
       'post_type' => 'post',
@@ -1110,14 +1094,9 @@ function FavoritesUser(WP_REST_Request $request){
   return $response;
 }
 
-<<<<<<< HEAD
 //[POST]Dashboard User | Post a job
 function PostJobUser(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
-=======
-//Candidate a job
-function postJobUser(WP_REST_Request $request){
->>>>>>> origin/peinda
 
   //Check required parameters apply
   $validated = validated($required_parameters, $request);
@@ -1161,12 +1140,8 @@ function postJobUser(WP_REST_Request $request){
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
   update_field('job_expiration_date', $job_application_deadline, $job_id);
-<<<<<<< HEAD
   // update_field('job_skills_experiences', $job_skills_experiences, $job_id);
   
-=======
-
->>>>>>> origin/peinda
   // Return the job
   $job = job($job_id);
   $response = new WP_REST_Response($job);
@@ -1213,36 +1188,8 @@ function postJobUser(WP_REST_Request $request){
 
 // }
 
-//addComment
+//[POST]Dashboard User | Post a commment 
 function addComment(WP_REST_Request $request) {
-<<<<<<< HEAD
-  // Récupérer l'ID de l'utilisateur connecté
-  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-
-  // Récupérer l'utilisateur par son ID
-  $user = get_user_by('ID', $param_user_id);
-
-  // Vérifier si un utilisateur est connecté
-  if ($user) {
-      // Récupérer les données du commentaire depuis la requête
-      $review = $request->get_params();
-
-      // tableau de données pour le commentaire
-      $comment_data = array(
-          'comment_post_ID' => $review['post_id'],
-          'comment_author' => ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name,
-          //($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
-          'comment_approved' => 1, // Approuver automatiquement le commentaire
-          'comment_content' => $review['Feedback'],
-      );
-
-      // Insérer le commentaire
-      $comment_id = wp_insert_comment($comment_data);
-
-      // les champs feedback et rating
-      update_field('rating', $review['rating'], $comment_id);
-      update_field('Feedback', $review['Feedback'], $comment_id);
-=======
     // Récupérer l'ID de l'utilisateur connecté
     $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
     // Récupérer l'utilisateur par son ID
@@ -1265,7 +1212,6 @@ function addComment(WP_REST_Request $request) {
         // les champs feedback et rating
         update_field('rating', $review['rating'], $comment_id);
         update_field('Feedback', $review['Feedback'], $comment_id);
->>>>>>> origin/peinda
 
       // Retourner les données du commentaire inséré
       $comment = get_comment($comment_id);
@@ -1284,18 +1230,16 @@ function companyProfil(WP_REST_Request $request){
   $param_post_id = $request['id'] ?? 0;
   $company_data = company($param_post_id);
 
-  if ($company_data) {
-  //var_dump($company_data);
-          // Choose fields to display
-          $dataCompany = array(
-              'title' => $company_data->title,
-              'email' => $company_data->email,
-              'mobile_phone' => $company_data->mobile_phone,
-              'website' => $company_data->website,
-              'size' => $company_data->size,
+  if ($company_data) 
+    // Choose fields to display
+    $dataCompany = array(
+      'title' => $company_data->title,
+      'email' => $company_data->email,
+      'mobile_phone' => $company_data->mobile_phone,
+      'website' => $company_data->website,
+      'size' => $company_data->size,
+    );
 
-              );
-              }
 
  // Return response
 
@@ -1335,6 +1279,5 @@ function candidateProfil(WP_REST_Request $request) {
         return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
     }
 }
-
 
 /* * End Liggeey * */
