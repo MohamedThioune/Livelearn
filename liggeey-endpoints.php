@@ -293,7 +293,6 @@ function validated($required_parameters, $request){
 
 //[GET]Home page
 function homepage(){
-  $jobs = [];
   $categories = [];
   $artikels = [];
   $candidates = [];
@@ -312,14 +311,12 @@ function homepage(){
   );
   $job_posts = get_posts($args);
   $jobs = array();
-
   foreach ($job_posts as $post):
     if(!$post)
       continue;
 
     $sample = job($post->ID);
     array_push($jobs, $sample);
-
   endforeach;
   $infos['jobs'] = $jobs;
 
@@ -718,7 +715,7 @@ function jobDetail(WP_REST_Request $request){
 //[POST]Detail category
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
-  $sample = array('name' => '', 'jobs' => null, 'companies' => null, 'articles' => null);
+  $sample = array();
   $param_category_id = $request['id'] ?? 0;
   $name = get_the_category_by_ID($param_category_id);
   if(!$name)
@@ -733,7 +730,6 @@ function categoryDetail(WP_REST_Request $request){
     )
   );
 
-  $sample['name'] =  $name;
   /** Global jobs **/
   $jobs = array();
   $args = array(
@@ -769,8 +765,6 @@ function categoryDetail(WP_REST_Request $request){
   $global_posts = get_posts($args);
   // Category post
   $sample['articles'] = searching_course_by_group($global_posts, 'category', $param_category_id)['courses'];
-
-  // return $sample['articles'];
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -861,7 +855,7 @@ function jobUser(WP_REST_Request $request){
   return $response;
 }
 
-//[POST]Make a favorite
+//[POST]Make favorite
 function liggeeySave(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
@@ -1120,6 +1114,7 @@ function PostJobUser(WP_REST_Request $request){
   $job_level_experience = ($request['job_level_of_experience']) ?: '';
   $job_language = ($request['job_langues']) ?: 'English';
   $job_application_deadline = ($request['job_application_deadline']);
+  $skills = isset($request['skills']) ? $request['skills'] : null;
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
 
@@ -1148,13 +1143,16 @@ function PostJobUser(WP_REST_Request $request){
 
   // Add custom fields
   update_field('job_company', $company, $job_id);
+  // update_field('job_skills_experiences', $job_skills_experiences, $job_id);
   update_field('description', $description, $job_id);
   update_field('job_contract', $job_contract, $job_id);
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
   update_field('job_expiration_date', $job_application_deadline, $job_id);
-  // update_field('job_skills_experiences', $job_skills_experiences, $job_id);
-  
+
+  //update terms skills
+  $terms = ($skills) ? wp_set_post_terms( $job_id, $skills, 'course_category') : false;
+
   // Return the job
   $job = job($job_id);
   $response = new WP_REST_Response($job);
@@ -1163,43 +1161,6 @@ function PostJobUser(WP_REST_Request $request){
   return $response;
 
 }
-
-//comment
-// function commentByID(WP_REST_Request $request ) {
-
-//     $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-//     $user = get_user_by('ID', $param_user_id);
-
-//     $comments = array();
-//     // Retrieve ACF data associated with the post ID
-//     $main_reviews = get_field('reviews', $post_id);
-
-//     // Loop through each ACF review
-//     foreach ($main_reviews as $review) {
-//        $user = $review['user']; // Get the user associated with the review
-//        $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
-
-//        $image_author = get_field('profile_img',  'user_' . $user->ID);
-//        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-//        $rating = $review['rating'];
-//        $feedback = $review['Feedback'];
-
-//        // Assemble the comment data into an array
-//        $comment = array(
-//            'comment_author_name' => $author_name,
-//            'comment_author_image' => $image_author,
-//            'rating' => $rating,
-//            'feedback' => $feedback
-
-//        );
-//        // Add the comment data to the comments array
-//        $comments[] = $comment;
-//     }
-//     // Return the array of comments
-//     return $comments;
-
-// }
 
 //[POST]Dashboard User | Post a commment 
 function addComment(WP_REST_Request $request) {
@@ -1226,16 +1187,15 @@ function addComment(WP_REST_Request $request) {
         update_field('rating', $review['rating'], $comment_id);
         update_field('Feedback', $review['Feedback'], $comment_id);
 
-      // Retourner les données du commentaire inséré
-      $comment = get_comment($comment_id);
-      $response = new WP_REST_Response($comment);
-      $response->set_status(200);
-      return $response;
-  } 
-  else {
-    // L'utilisateur n'est pas connecté, retourner une erreur
-    return new WP_Error('user_not_logged_in');
-  }
+        // Retourner les données du commentaire inséré
+        $comment = get_comment($comment_id);
+        $response = new WP_REST_Response($comment);
+        $response->set_status(200);
+        return $response;
+    } else {
+        // L'utilisateur n'est pas connecté, retourner une erreur
+        return new WP_Error('user_not_logged_in');
+    }
 }
 
 //[POST]Dashboard User | Profil
@@ -1299,5 +1259,60 @@ function candidateProfil(WP_REST_Request $request) {
       return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
   }
 }
+
+function candidateAppliedJobs(WP_REST_Request $request) {
+  $args = array(
+      'post_type' => 'job',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  // Récupérer les offres d'emploi
+  $job_posts = get_posts($args);
+  //var_dump($job_posts);
+
+  // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+  // Tableau pour stocker les emplois auxquels le candidat a postulé
+  $applied_jobs = array();
+  foreach ($job_posts as $post) {
+      if(!$post)
+      continue;
+      $applied_jobs = get_field('job_appliants', $post->ID);
+      $applied_jobs[] = $post;
+  }
+  
+  // Retourner la liste des emplois auxquels le candidat a postulé
+  $response = new WP_REST_Response($applied_jobs);
+  $response->set_status(200);
+  return $response;
+}
+
+function candidateShorlistedJobs(WP_REST_Request $request) {
+  // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+  // Récupérer les emplois favoris de l'utilisateur
+  $favorite_jobs = get_field('save_liggeey', 'user_' . $user_id);
+
+  // Vérifier si l'utilisateur a des emplois favoris
+  if ($favorite_jobs) :
+    // Afficher les détails de chaque emploi favori
+    echo '<h2>Vos emplois favoris :</h2>';
+    echo '<ul>';
+    foreach ($favorite_jobs as $favorite) {
+        $type = $favorite['type'];
+        $id = $favorite['id'];
+        // Afficher les détails de l'emploi en fonction du type (job)
+        if ($type === 'job') {
+            $job_title = get_the_title($id);
+            $job_permalink = get_permalink($id);
+            echo '<li><a href="' . $job_permalink . '">' . $job_title . '</a></li>';
+        }
+    }
+  endif;
+
+}
+
 
 /* * End Liggeey * */
