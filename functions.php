@@ -1798,13 +1798,18 @@ add_action( 'rest_api_init', function () {
       'callback' => 'candidateProfil'
     ));
 
+    register_rest_route ('custom/v1', '/candidate/profilUpdate', array(
+      'methods' => 'PUT',
+      'callback' => 'updatecandidateProfil'
+    ));
+
      register_rest_route ('custom/v1', '/candidate/AppliedJobs', array(
           'methods' => 'POST',
           'callback' => 'candidateAppliedJobs'
         ));
 
-  register_rest_route ('custom/v1', '/candidate/ShorlistedJobs', array(
-          'methods' => 'GET',
+     register_rest_route ('custom/v1', '/candidate/ShorlistedJobs', array(
+          'methods' => 'POST',
           'callback' => 'candidateShorlistedJobs'
         ));
 
