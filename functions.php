@@ -1,4 +1,4 @@
- <?php
+<?php
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 
 $GLOBALS['id_user'] = get_current_user_id();
@@ -1489,6 +1489,33 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'getExpertCourseOptimized',
   ));
+
+  register_rest_route('custom/v2', '/user/(?P<user_id>\d+)/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'timeSpentOnAllCourseType',
+  ));
+
+  register_rest_route('custom/v2', '/user/statistics', array(
+    'methods' => 'PUT',
+    'callback' => 'updateTimeSpentOnCourseType',
+  ));
+
+  register_rest_route('custom/v2', '/user/courses/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserCourseStastics',
+  ));
+
+  register_rest_route('custom/v2', '/user/courses/progression/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getProgressionStatistics',
+  ));
+
+  register_rest_route('custom/v2', '/user/assessments/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserAttempts',
+  ));
+
+  
 
   register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
     'methods' => 'GET',
