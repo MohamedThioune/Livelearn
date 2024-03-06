@@ -147,6 +147,10 @@ function candidate($id){
   $sample['ID'] = $user->ID;
   $sample['first_name'] = $user->first_name;
   $sample['last_name'] = $user->last_name;
+  $sample['email'] = $user->email;
+  $sample['mobile_phone'] = $user->mobile_phone;
+  $sample['city'] = $user->city;
+  $sample['adress'] = $user->adress;
   $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
@@ -871,7 +875,6 @@ function liggeeySave(WP_REST_Request $request){
   // Create a favorite entry for a job
   $favorite['type'] = $type_applied_id;
   $favorite['id'] = $id;
-  // $favorites = array($favorite);
 
   // Update the favorites array
   array_push($user_favorites, $favorite);
@@ -1169,21 +1172,17 @@ function commentByID(WP_REST_Request $request ) {
 }
 //addcomment
 function addComment(WP_REST_Request $request) {
-    // Récupérer l'ID de l'utilisateur connecté
+
     $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-    // Récupérer l'utilisateur par son ID
     $user = get_user_by('ID', $param_user_id);
-    // Vérifier si un utilisateur est connecté
     if ($user) {
         // Récupérer les données du commentaire depuis la requête
         $review = $request->get_params();
-
         // tableau de données pour le commentaire
         $comment_data = array(
             'comment_post_ID' => $review['post_id'],
             'comment_author' => ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name,
-            //($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
-            'comment_approved' => 1, // Approuver automatiquement le commentaire
+            'comment_approved' => 1,
             'comment_content' => $review['Feedback'],
         );
         // Insérer le commentaire
@@ -1223,41 +1222,68 @@ function companyProfil(WP_REST_Request $request){
  // Return response
   $response = new WP_REST_Response($dataCompany);
   $response->set_status(200);
-
   return $response;
 }
 
 function candidateProfil(WP_REST_Request $request) {
-    $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
+
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $required_parameters = ['userApplyId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+ //Check required parameters apply
+  $validated = validated($required_parameters, $request);
+
+  //Get input
+  $user_apply_id = $request['userApplyId'];
+  $user_apply = get_user_by('ID', $user_apply_id);
+  if(!$user_apply):
+    $errors['errors'] = 'User not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+
+    $candidate_data = candidate($user_id);
+    // Return response
+    $response = new WP_REST_Response($candidate_data);
+    $response->set_status(200);
+    return $response;
+}
+//Update candidateProfil
+function updateCandidateProfil(WP_REST_Request $request) {
+
+    $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+    $required_parameters = ['userApplyId'];
+    $errors = ['errors' => '', 'error_data' => ''];
+    $validated = validated($required_parameters, $request);
+
+    // Data User
     $candidate_data = candidate($user_id);
 
-    // Check if candidate data is retrieved
-    if ($candidate_data) {
-        // Choose fields to display
-        $dataProfil = array(
-            'first_name' => $candidate_data->first_name,
-            'education_level' => $candidate_data->education_level,
-             'language' => $candidate_data->language,
-             'age' => $candidate_data->age,
-            'email_adress' => $candidate_data->email,
-            'mobile_phone' => $candidate_data->mobile_phone,
-             'country' => $candidate_data->country,
-             'city' => $candidate_data->city,
-             'adress' => $candidate_data->adress,
-            'experience' => $candidate_data->experience,
-            'experiences' => $candidate_data->experiences,
-            'job_title' => $candidate_data->job_title,
-            'social_network' => $candidate_data->social_network,
-        );
-
-        // Return response
-        return rest_ensure_response($dataProfil);
-    } else {
-        // Return error
-        return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
+    if (!$candidate_data) {
+        $errors['errors'] = 'User not found';
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
     }
+
+    // the parameters REST request
+    $updated_data = $request->get_params();
+
+    // Update Fields
+    foreach ($updated_data as $field_name => $field_value) {
+        update_field($field_name, $field_value, 'user_' . $user_id);
+    }
+
+    // Return response
+    $updated_candidate_data = candidate($user_id);
+    $response = new WP_REST_Response($updated_candidate_data);
+    $response->set_status(200);
+    return $response;
 }
 
+/*
  function candidateAppliedJobs(WP_REST_Request $request) {
 
      $args = array(
@@ -1287,31 +1313,34 @@ function candidateProfil(WP_REST_Request $request) {
 
   function candidateShorlistedJobs(WP_REST_Request $request) {
 
- // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
-     $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
+     // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
+         $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
 
-      // Récupérer les emplois favoris de l'utilisateur
-      $favorite_jobs = get_field('save_liggeey', 'user_' . $user_id);
+       // Récupérer les emplois favoris de l'utilisateur
+       $user_favorites = get_field('save_liggeey', 'user_' . $user_id);
+    //var_dump($user_favorites);
+       // Vérifier si l'utilisateur a des emplois favoris
+       if ($user_favorites) {
 
-      // Vérifier si l'utilisateur a des emplois favoris
-      if ($favorite_jobs) {
-          // Afficher les détails de chaque emploi favori
-          echo '<h2>Vos emplois favoris :</h2>';
-          echo '<ul>';
-          foreach ($favorite_jobs as $favorite) {
-              $type = $favorite['type'];
-              $id = $favorite['id'];
-              // Afficher les détails de l'emploi en fonction du type (job)
-              if ($type === 'job') {
-                  $job_title = get_the_title($id);
-                  $job_permalink = get_permalink($id);
-                  echo '<li><a href="' . $job_permalink . '">' . $job_title . '</a></li>';
-              }
-          }
+           // Parcourir chaque favori de l'utilisateur
+           foreach ($user_favorites as $favorite) {
+               // Vérifier le type de favori (emploi)
+               if ($favorite['type'] === 'job') {
+                   // Récupérer les détails de l'emploi
+                   $job_id = $favorite['id'];
+                   $job_title = get_the_title($job_id);
+                   $job_permalink = get_permalink($job_id);
 
-  }
+               }
+           }
+       }
+   }
+ */
 
-}
+      /*  // Retourner la liste des emplois auxquels le candidat a postulé
+       $response = new WP_REST_Response($favorite_jobs);
+       $response->set_status(200);
+       return $response;
 
-
+} */
 /* * End Liggeey * */
