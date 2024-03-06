@@ -946,13 +946,18 @@ function HomeUser(WP_REST_Request $request){
   endforeach;
 
   //Application company
+  $mat_ids = [];
   $sample['application'] = $application;
   $sample['count_application'] = (!empty($application)) ? count($application) : 0;
   $sample['application'] = array();
   foreach($application as $key => $user):
+    if(in_array($user->ID, $mat_ids))
+      continue;
+
     if($key >= 6)
       break;
     $sample['application'][] = candidate($user->ID);
+    $mat_ids[] = $user->ID;
   endforeach;
 
   //Favorite company
@@ -1220,7 +1225,6 @@ function companyProfil(WP_REST_Request $request){
   //Get company
   $compagnie = get_field('company',  'user_' . $user_apply->ID);
   $companyInfos = company($compagnie[0]->ID);
-
   // Return response
   $response = new WP_REST_Response($companyInfos);
   $response->set_status(200);
@@ -1230,7 +1234,7 @@ function companyProfil(WP_REST_Request $request){
 
 //[POST]Dashboard Candidate | Profil
 function candidateProfil(WP_REST_Request $request) {
-  $user_id = isset($request['id']) ? $request['id'] : get_current_user_id();
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $candidate_data = candidate($user_id);
 
   // Check if candidate data is retrieved
@@ -1311,7 +1315,6 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
         }
     }
   endif;
-
 }
 
 
