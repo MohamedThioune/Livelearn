@@ -681,10 +681,9 @@ function allJobs(){
   return $response;
 
 }
+  
 
 //[POST]Detail job
-
-
 function jobDetail(WP_REST_Request $request){
 
     $param_post_id = $request['id'] ?? 0;
@@ -1265,6 +1264,7 @@ function candidateProfil(WP_REST_Request $request) {
   }
 }
 
+//[POST]Dashboard Candidate | Applied 
 function candidateAppliedJobs(WP_REST_Request $request) {
   $args = array(
       'post_type' => 'job',
