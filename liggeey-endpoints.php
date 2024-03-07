@@ -148,6 +148,7 @@ function company($id){
   return $sample;
 }
 
+//Detail candidate
 function candidate($id){
   $param_user_id = $id ?: get_current_user_id();
   $sample = array();
@@ -1316,6 +1317,5 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
     }
   endif;
 }
-
 
 /* * End Liggeey * */
