@@ -278,6 +278,7 @@ $file_xml = [
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 
 <body>
+    
     <!-- Content -->
     <div class="container-fluid">
         <div class="contentListeCourseDataBank">
@@ -719,6 +720,9 @@ if (!empty($courses)) {
             </div>
         </div>
     </div>
+
+
+    
     <!--end modal audios playlist -->
 </body>
 
@@ -935,6 +939,7 @@ if (!empty($courses)) {
 
     $(document).ready(function() {
         $('#bouddha').on('click', function() {
+            
             var selectedOptions = $('#select_company').find('option:selected');
             var selectedValues = [];
 
@@ -1080,7 +1085,7 @@ if (!empty($courses)) {
                         // console.log(ids[i]);
                     }
                     alert("Record applied successfully");
-                    location.reload();
+                   // location.reload();
                     // window.location.href = "/optieAll";
                 },
                 complete: function(data){
@@ -1092,7 +1097,9 @@ if (!empty($courses)) {
 
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
+    
         var ids = tr_element.id;
+        
         const state = document.querySelector('.state').className;
         var classs = state.split(' ')[0];
         var optie = e.target.value;
@@ -1116,7 +1123,7 @@ if (!empty($courses)) {
                     console.log('saving one course on plateform')
                 },
                error: function(error) {
-                console.log(error);
+                
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',true)
                 $('#select_field').attr('hidden',false)
@@ -1131,7 +1138,7 @@ if (!empty($courses)) {
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
-                    location.reload();
+                //    location.reload();
                     // alert("Record applied successfully");
                 }
             });
