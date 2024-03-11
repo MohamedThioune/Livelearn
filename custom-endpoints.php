@@ -195,54 +195,58 @@ function allAuthorsOptimized()
 }
 
 function cleanAuthor(){
-    $authors = get_users (
-        [
-            'role__in' => ['author'],
-        ]
-    );
-
-    $i = 0;
-
-    $authors_withouting_courses = array();
-
+    global $wpdb;
+    $authors = get_users (array(
+        'role__in' => ['author']
+    ));
+    //Remplir la colonne "company_id" par "author_id" si "company_id" nul
+    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+    $courses = $wpdb->get_results($sql);
+    foreach ($courses as $course) {
+      if(!$course->company_id) {
+           $author_id = $course->author_id;
+           $id_course = $course->id;
+           $author_company = get_field('company', 'user_' . $author_id);
+           $company_id_for_this_author = $author_company[0]->ID;
+           //update field company_id
+           
+           $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET company_id = $company_id_for_this_author WHERE id = $id_course");
+           $course_updated = $wpdb->get_results($sql); //
+           echo "<h4>course $id_course id updated, company id is adding</h4>";
+      }
+    }
+    // script to delete authors without cours
     foreach($authors as $author) {
-        // $email_author = substr($author->user_email,0,6);
-           // if($author->roles) {
-                //var_dump($author->roles);
-            //} else {
-                //var_dump($author->allcaps['Klant']);
-                //var_dump('klant');
-           // }
-        $artikel = array();
+      // Trying to see if this user have one or more posts ?
         $posts = get_posts (
             array(
-                'post_type' => ['post','course'],
-                'author' => $author->ID
+              'post_type' => ['post','course'],
+              'author' => $author->ID
             )
         );
-        /*
-        if($posts) {
-            foreach ($posts as $post) {
-                $course_type = get_field('course_type', $post->ID);
-                //var_dump($course_type);
-                if ($course_type === 'Artikel')
-                    $artikel[] = $post;
-                else
-                    var_dump('pas artikel  ' . $author->ID);
-            }
-        }
-        */
-        if (!$posts) {
-            $author->roles[] = $author->ID;
-            $authors_withouting_courses[] = $author->roles ;
-        }
-        $count = count($posts);
-        //if ($count == 0)
-            //wp_delete_user($author->ID);
+        //if not post for this author : this user is to deleate
+        if (!$posts)
+            wp_delete_user($author->ID);
     }
-    echo '<h3>Authors without courses :  '. count($authors_withouting_courses). ' </h3>';
-    var_dump($authors_withouting_courses);
 
+    //Remplir la colonne "author_id" par "company_id"
+
+    foreach ($courses as $course) {
+        $id_company = get_post($course->company_id)->ID;
+
+        //get all users having in
+        $users = get_users();
+        foreach ($users as $user) {
+            $user_company_id = get_field('company', 'user_' . $user->ID)[0]->ID;
+            if ($user_company_id)
+                if($id_company == $user_company_id){
+                    // update the field author_id directly via sql request
+                    $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET author_id = $user_company_id WHERE id = $course->id");
+                    $course_updated = $wpdb->get_results($sql); //
+                    echo "<h4>course $course->id id updated for author_id via company_id</h4>";
+                }
+        }
+    }
 }
 
 function get_expert_courses ($data) 
