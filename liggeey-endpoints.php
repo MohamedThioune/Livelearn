@@ -682,7 +682,6 @@ function allJobs(){
 
 }
   
-
 //[POST]Detail job
 function jobDetail(WP_REST_Request $request){
 
@@ -711,7 +710,6 @@ function jobDetail(WP_REST_Request $request){
     return $response;
 }
 
-
 //[POST]Detail category
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
@@ -721,6 +719,7 @@ function categoryDetail(WP_REST_Request $request){
   if(!$name)
       return $sample;
 
+  $sample['name'] = $name;
   //tax query
   $tax_query = array(
     array(
@@ -764,7 +763,11 @@ function categoryDetail(WP_REST_Request $request){
   );
   $global_posts = get_posts($args);
   // Category post
-  $sample['articles'] = searching_course_by_group($global_posts, 'category', $param_category_id)['courses'];
+  $main_artikels = searching_course_by_group($global_posts, 'category', $param_category_id)['courses'];
+  $sample['articles'] = [];
+
+  foreach ($main_artikels as $key => $artikel)
+    $sample['articles'][] = artikel($artikel->ID);
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -1238,30 +1241,31 @@ function candidateProfil(WP_REST_Request $request) {
   $candidate_data = candidate($user_id);
 
   // Check if candidate data is retrieved
-  if ($candidate_data) {
-      // Choose fields to display
-      $dataProfil = array(
-        'first_name' => $candidate_data->first_name,
-        'education_level' => $candidate_data->education_level,
-        'language' => $candidate_data->language,
-        'age' => $candidate_data->age,
-        'email_adress' => $candidate_data->email,
-        'mobile_phone' => $candidate_data->mobile_phone,
-        'country' => $candidate_data->country,
-        'city' => $candidate_data->city,
-        'adress' => $candidate_data->adress,
-        'experience' => $candidate_data->experience,
-        'experiences' => $candidate_data->experiences,
-        'job_title' => $candidate_data->job_title,
-        'social_network' => $candidate_data->social_network
-      );
+  if ($candidate_data) :
+    // Choose fields to display
+    $dataProfil = array(
+      'first_name' => $candidate_data->first_name,
+      'education_level' => $candidate_data->education_level,
+      'language' => $candidate_data->language,
+      'age' => $candidate_data->age,
+      'email_adress' => $candidate_data->email,
+      'mobile_phone' => $candidate_data->mobile_phone,
+      'country' => $candidate_data->country,
+      'city' => $candidate_data->city,
+      'adress' => $candidate_data->adress,
+      'experience' => $candidate_data->experience,
+      'experiences' => $candidate_data->experiences,
+      'job_title' => $candidate_data->job_title,
+      'social_network' => $candidate_data->social_network
+    );
 
-      // Return response
-      return rest_ensure_response($dataProfil);
-  } else {
-      // Return error
-      return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
-  }
+    // Return response
+    return rest_ensure_response($dataProfil);
+  endif;
+
+  // Return error
+  return new WP_Error('no_candidate_data', __('Candidate data not found.'), array('status' => 404));
+  
 }
 
 //[POST]Dashboard Candidate | Applied 
