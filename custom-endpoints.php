@@ -1,5 +1,6 @@
 <?php
 
+require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
 $GLOBALS['user_id'] = get_current_user_id();
 
 /** **************** Class **************** */
@@ -202,7 +203,7 @@ function cleanAuthor(){
     //Remplir la colonne "company_id" par "author_id" si "company_id" nul
     $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
     $courses = $wpdb->get_results($sql);
-    foreach ($courses as $course) {
+    foreach ($courses as $course)
       if(!$course->company_id) {
            $author_id = $course->author_id;
            $id_course = $course->id;
@@ -214,7 +215,7 @@ function cleanAuthor(){
            $course_updated = $wpdb->get_results($sql); //
            echo "<h4>course $id_course id updated, company id is adding</h4>";
       }
-    }
+
     // script to delete authors without cours
     foreach($authors as $author) {
       // Trying to see if this user have one or more posts ?
@@ -225,8 +226,10 @@ function cleanAuthor(){
             )
         );
         //if not post for this author : this user is to deleate
-        if (!$posts)
+        if (!$posts) {
             wp_delete_user($author->ID);
+            echo "<h4>user $author->ID is deleted success...</h4>";
+        }
     }
 
     //Remplir la colonne "author_id" par "company_id"
