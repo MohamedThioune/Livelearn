@@ -1344,6 +1344,5 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
   $response = new WP_REST_Response($user_shorlisted_jobs);
   $response->set_status(200);
   return $response;
-
 }
 /* * End Liggeey * */
