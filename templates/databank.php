@@ -1138,7 +1138,7 @@ if (!empty($courses)) {
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
-                //    location.reload();
+                    location.reload();
                     // alert("Record applied successfully");
                 }
             });
