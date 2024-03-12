@@ -3507,6 +3507,7 @@ endif;
           $courses;
        }
 
+       // Retrieve or create new row for user
       function getUserStatistics($user_id)
       {
           global $wpdb;
@@ -3525,13 +3526,14 @@ endif;
           return $results;
       }
 
-      function formatSecondes($secondes) {
+      function formatSecondes($secondes) 
+      {
         $heures = floor($secondes / 3600);
         $minutes = floor(($secondes % 3600) / 60);
         $secondes = $secondes % 60;
         return sprintf("%dh %dmn %ds", $heures, $minutes, $secondes);
-    }
-
+      }
+      // Retrieves courses viewed by the user
       function getStatisticsOfCourseType (WP_REST_Request $request)
       {
         $user_id = $request['user_id'];
@@ -3708,13 +3710,19 @@ endif;
           return $state;
       }
 
-      /** 
+      /**
        * Assessment Statistics
       */
 
           function getUserAttempts()
           {
-            $user_id = $GLOBALS['user_id'] = get_current_user_id();
+            $user_id = $GLOBALS['user_id'] = get_current_user_id(); 
+            if ($user_id == 0)
+            {
+              $response = new WP_REST_Response("You have to login please!!!"); 
+              $response->set_status(400);
+              return $response;
+            }
             $user = get_user_by( 'ID', $user_id);
             $user_attempts = get_posts(
               array(
@@ -3722,14 +3730,13 @@ endif;
                   'post_status' => 'publish',
                   'posts_per_page' => -1,
                   'order' => 'DESC',
-                  'post_author' => $user_id
+                  'author' => $user_id
             ));
             $assessment_validated = get_user_meta($user->ID,'assessment_validated');
             $formated_assessments_validated = array();
             foreach ($assessment_validated as $key => $value) {
               if ($value != "")
                 array_push ($formated_assessments_validated,$value);
-
             }
             $failed_assessments = count($user_attempts) - count($formated_assessments_validated);
             $user_assessments_statistics = array (
@@ -3737,6 +3744,7 @@ endif;
               "attempts" => count($user_attempts),
               "failed" => $failed_assessments,
               "success" => count($formated_assessments_validated)
+
             );
               return ($user_assessments_statistics);
           }
