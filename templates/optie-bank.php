@@ -29,14 +29,11 @@ if($optie == "✔"){
         $course->image_xml=$image;
         $wpdb->update($table,$course->image_xml,$where); 
     }
-   
-
-    if (strval($course->type) == "Podcast" || strval($course->type) == "Video" || strval($course->type) == "Artikel"){
       // ADD AUTHOR ID  
-      if(!$course->author_id || $course->author_id==0) {
+      if(!$course->author_id) {
               $course->author_id=addAuthor($users);
       }
-      if(!$course->company_id || $course->company_id==0) {
+      if(!$course->company_id) {
                  foreach ($users as $user) {
                     $company_user = get_field('company', 'user_' . $user->ID);
                     if ($company_user) {
@@ -77,7 +74,7 @@ if($optie == "✔"){
 
         
 
-    }
+    
     if (!$course->short_description){
             $course->short_description = "no short description !";
     }
