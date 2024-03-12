@@ -167,8 +167,6 @@ $urls =
                $key=$keyurl;
             if (isset($company_user->post_title) && strtolower($company_user->post_title) == strtolower($key)) { 
                 $author_id = $user->ID;
-                $company = $company_user;
-                $company_id = $company_user->ID;
 
                 break 2;
           }

@@ -6,7 +6,7 @@ require 'add-author.php';
 global $wpdb;
 $table = $wpdb->prefix . 'databank';
 extract($_POST);
-$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
+$sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
 
 $origin_id = $course->org;
@@ -33,10 +33,10 @@ if($optie == "✔"){
 
     if (strval($course->type) == "Podcast" || strval($course->type) == "Video" || strval($course->type) == "Artikel"){
       // ADD AUTHOR ID  
-      if(!$course->author_id) {
+      if(!$course->author_id || $course->author_id==0) {
               $course->author_id=addAuthor($users);
       }
-      if(!$course->company_id) {
+      if(!$course->company_id || $course->company_id==0) {
                  foreach ($users as $user) {
                     $company_user = get_field('company', 'user_' . $user->ID);
                     if ($company_user) {
