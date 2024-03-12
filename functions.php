@@ -1744,10 +1744,20 @@ add_action( 'rest_api_init', function () {
     'callback' => 'artikelDetail'
   ));
 
-   register_rest_route ('custom/v1', '/artikels', array(
-      'methods' => 'POST',
-      'callback' => 'allArtikels'
-    ));
+  register_rest_route ('custom/v1', '/artikel/detail', array(
+    'methods' => 'POST',
+    'callback' => 'artikelDetail'
+  ));
+
+  register_rest_route ('custom/v1', '/artikel/comment/', array(
+    'methods' => 'POST',
+    'callback' => 'artikelDetail'
+  ));
+
+  register_rest_route ('custom/v1', '/artikels', array(
+    'methods' => 'POST',
+    'callback' => 'allArtikels'
+  ));
 
   register_rest_route ('custom/v1', '/company/detail', array(
     'methods' => 'POST',
@@ -1773,7 +1783,6 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'allCoursesOptimized',
   ));
-
 
   register_rest_route ('custom/v1', '/apply', array(
     'methods' => 'POST',
@@ -1820,19 +1829,24 @@ add_action( 'rest_api_init', function () {
   'callback' => 'companyProfil'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/profil', array(
-    'methods' => 'GET',
-    'callback' => 'candidateProfil'
+  // register_rest_route ('custom/v1', '/candidate/profil', array(
+  //   'methods' => 'GET',
+  //   'callback' => 'candidateProfil'
+  // ));
+
+  register_rest_route ('custom/v1', '/candidate/profil/update', array(
+    'methods' => 'POST',
+    'callback' => 'updatecandidateProfil'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/AppliedJobs', array(
+  register_rest_route ('custom/v1', '/candidate/applieds', array(
     'methods' => 'POST',
     'callback' => 'candidateAppliedJobs'
   ));
 
-  // register_rest_route ('custom/v1', '/candidate/ShorlistedJobs', array(
-  //   'methods' => 'GET',
-  //   'callback' => 'candidateShorlistedJobs'
-  // ));   
+  register_rest_route ('custom/v1', '/candidate/favorites', array(
+    'methods' => 'POST',
+    'callback' => 'candidateShorlistedJobs'
+  ));
 
 });
