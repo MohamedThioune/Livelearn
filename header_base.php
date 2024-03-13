@@ -25,6 +25,84 @@ $url = home_url( $wp->request );
     #voorOpleidersModal, #OpleidingenModal{
         height: auto;
     }
+    .dropdown-search ul li a .blockImg {
+        width: 35px;
+        height: 35px;
+        margin-right: 15px;
+        text-align: center;
+        overflow: hidden;
+    }
+    .dropdown-search ul li a .blockImg img {
+        width: 100%;
+        margin-top: 0;
+        height: 100%;
+        object-fit: cover;
+    }
+    .subtitleSousElementHeader {
+        color: #043356;
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+    .scrolled{
+        background: #023356 !important;
+    }
+    .scrolled .logoModife img:first-child {
+        display: block;
+    }
+    .scrolled .imgLogoBleu{
+        display: none;
+    }
+    .scrolled .nav-link {
+        color: #ffffff !important;
+        display: flex;
+    }
+    .scrolled .imgArrowDropDown {
+        display: block;
+    }
+    .scrolled .fa-angle-down-bleu {
+        display: none;
+    }
+    .scrolled .inputSearch {
+        background: #FFFFFF !important;
+    }
+    .scrolled .navModife4 .additionImg {
+        display: block;
+    }
+    .scrolled .additionBlock{
+        display: none;
+    }
+    .scrolled .bntNotification img {
+        display: block;
+    }
+    .scrolled .bntNotification i {
+        display: none;
+    }
+    .dropdown-search ul li a {
+        display: flex;
+        align-items: center;
+        margin-bottom: 7px;
+        border-radius: 18px;
+        padding: 7px 9px 9px;
+    }
+    .dropdown-search .secondUlModal li {
+        width: 25%;
+        padding: 0 15px;
+    }
+    .dropdown-search .secondUlModal {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .dropdown-search .title-search {
+        color: #043458;
+        font-weight: 500;
+        font-size: 19px;
+    }
+    .dropdown-search .d-grid a {
+        margin-bottom: 10px;
+    }
+    .scrolled .dropdown-search a, .scrolled .dropdown-search p{
+        color: white !important;
+    }
 
     @media all and (min-width: 1330px) {
         #searchIconeTablet, #croieSearchTablet, .tabletsearch{
@@ -113,6 +191,20 @@ $url = home_url( $wp->request );
     gtag('js', new Date());
 
     gtag('config', 'AW-625166739');
+    </script>
+    <script>
+        $(function() {
+            var header = $(".navbar");
+            $(window).scroll(function() {
+                var scroll = $(window).scrollTop();
+                if (scroll >= 61) {
+                    header.addClass("scrolled");
+                } else {
+                    header.removeClass("scrolled");
+                }
+            });
+
+        });
     </script>
     <!-- End Google tag (gtag.js) -->
     <style>
@@ -805,7 +897,7 @@ $url = home_url( $wp->request );
             </nav>
 
             <!-- for search  -->
-            <div class="modal dropdown-menu-custom dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
+            <div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                 <div class="container-fluid">
                     <div class="d-flex w-100 justify-content-between">
                         <div class="for-search-mobile">
@@ -1181,7 +1273,7 @@ $url = home_url( $wp->request );
 
                         <div class="d-flex align-items-center">
                             <div class="second-element-mobile">
-                                <div id="searchIcone">
+                                <div id="searchIcone" class="showblock-mobil-search">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/search-white.png" alt="search">
                                 </div>
                                 <div id="croieSearch" class="btn">

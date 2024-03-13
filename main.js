@@ -18,6 +18,9 @@ jQuery(function($) {
         $("#burgerCroie-web").hide();
         $("#burger-web").show();
     });
+    $(".btn-close-modal-search").click(function() {
+        $(".dropdown-search").hide();
+    });
 
     //variable for offline courses date input
     $('.block2evens').each(function() {
@@ -784,7 +787,7 @@ jQuery(function($) {
 
 
     //POur inuput recherche coté responsivité
-    $("#searchIcone").click(function() {
+/*    $("#searchIcone").click(function() {
         $("#searchIcone").hide();
         $("#burgerCroie").hide();
         $("#headOne").hide();
@@ -799,7 +802,7 @@ jQuery(function($) {
         $("#searchIcone").show();
         $(".searchInputHedear").hide();
         $("#croieSearch").hide();
-    });
+    });*/
 
     $("#profilView").click(function() {
         $("#croieProfil").show();
