@@ -1450,6 +1450,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthorsOptimized',
   ));
 
+  register_rest_route('custom/v1', '/clean-author', array(
+      'methods' => 'GET',
+      'callback' => 'cleanAuthor',
+  ));
+
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
@@ -1778,20 +1783,25 @@ add_action( 'rest_api_init', function () {
     'callback' => 'PostJobUser'
   ));
 
-  // register_rest_route ('custom/v1', '/user/comments', array(
-  //   'methods' => 'GET',
-  //   'callback' => 'commentByID'
-  // ));
-
   register_rest_route ('custom/v1', '/user/comment', array(
     'methods' => 'POST',
     'callback' => 'addComment'
   ));
 
-    register_rest_route ('custom/v1', '/companyProfil', array(
+  register_rest_route ('custom/v1', '/user/profil', array(
+  'methods' => 'POST',
+  'callback' => 'companyProfil'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/profil', array(
+    'methods' => 'GET',
+    'callback' => 'candidateProfil'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/AppliedJobs', array(
     'methods' => 'POST',
-    'callback' => 'companyProfil'
-    ));
+    'callback' => 'candidateAppliedJobs'
+  ));
 
     register_rest_route ('custom/v1', '/candidate/profil', array(
       'methods' => 'GET',
@@ -1812,5 +1822,13 @@ add_action( 'rest_api_init', function () {
           'methods' => 'POST',
           'callback' => 'candidateShorlistedJobs'
         ));
+     register_rest_route ('custom/v1', '/candidate/skills_passport', array(
+        'methods' => 'POST',
+        'callback' => 'candidateSkillsPassport'
+       ));
+    register_rest_route ('custom/v1', '/company/updateProfil', array(
+        'methods' => 'POST',
+        'callback' => 'updateCompanyProfil'
+       ));
 
 });
