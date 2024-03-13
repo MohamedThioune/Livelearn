@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 
 <?php
-
 global $wp;
 $url = home_url( $wp->request );
-
 ?>
 
 
@@ -315,8 +313,6 @@ $url = home_url( $wp->request );
                                         <?php echo do_shortcode('[gtranslate]'); ?>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -426,6 +422,149 @@ $url = home_url( $wp->request );
                                         <?php
                                         }
                                         ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- modal dropdown Voor Voor opleiders  -->
+                    <div class="modal dropdown-menu-custom dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p class="title-search">Populair zoeken</p>
+                                    <div class="d-grid">
+                                        <a href="">IT / Gegevens</a>
+                                        <a href="">Hardware</a>
+                                        <a href="">Informatiebeheer</a>
+                                        <a href="">Kunst</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="title-search">Suggesties</p>
+                                    <ul class="secondUlModal ">
+                                        <li>
+                                            <a href="/product-search?filter=Opleidingen">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleidingen-Header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Opleidingen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=E-learning">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/E-learning-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">E-Learnings</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Lezing">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Lezingen-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Lezingen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Training">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Trainingen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Video">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Video's-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Video's</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Event">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Evens-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Events</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Workshop">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/workshop.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Workshops</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Artikel">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Artikelen-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Artikelen</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Webinar">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/webinar-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Webinars</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Masterclass">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Masterclasses-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Masterclasses</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Assessment">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Assessments-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Assessments</p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/product-search?filter=Podcast">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcasts-header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">Podcasts</p>
+                                                </div>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -761,9 +900,6 @@ $url = home_url( $wp->request );
                         </div>
                     </div>
 
-
-
-
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- input search -->
                         <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
@@ -1007,100 +1143,160 @@ $url = home_url( $wp->request );
                         </div>
                     </div>
                 </div>-->
-                <div class="block-sous-nav-mobile d-grid">
-                    <a href="/inloggen/" class="element-navMobile">
+                <div class="block-sous-nav-mobile">
+                    <a href="/inloggen-2/" class="element-navMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/lock-open.png" alt="search">
                         Inloggen
                     </a>
-                    <a href="registreren/" class="element-navMobile mb-0">
+                    <a href="/registreren/" class="element-navMobile mb-0">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-signature.png" alt="search">
                         Registreren
                     </a>
+                    <button class="btn element-navMobile" id="MijzelfBtn" type="button" data-toggle="collapse" data-target="#collapseNavOne" aria-expanded="true" aria-controls="collapseNavOne">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/rocket.png" alt="search">
+                        Mijzelf ontwikkelen
+                    </button>
+                    <button class="btn element-navMobile" id="teambtn" type="button" data-toggle="collapse" data-target="#collapseNavTwo" aria-expanded="false" aria-controls="collapseNavTwo">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-building.png" alt="search">
+                        Mijn team / organisatie managen
+                    </button>
+                    <button class="btn element-navMobile" id="expertBtn" type="button" data-toggle="collapse" data-target="#collapseNavThree" aria-expanded="false" aria-controls="collapseNavThree">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/metro-fire.png" alt="search">
+                        Expert / opleider worden
+                    </button>
+                    <button class="btn element-navMobile" id="contactBtn" type="button" data-toggle="collapse" data-target="#collapseNavFour" aria-expanded="false" aria-controls="collapseNavFour">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/information-circle.png" alt="search">
+                        Informatie
+                    </button>
+                    <button onclick="redirect()"  class="element-navMobile new-element-mobile mb-0">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store-ios.png" alt="search">
+                        Download onze gratis app
+                    </button>
+                </div>
+                <div class="sub-block-2" id="1sub-block">
+                    <button class="btn btn-back go-back"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <button id="Groeien" class="btn element-navMobile">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/material-work.png" alt="search">
+                                Groeien richting een baan
+                        </button>
+                        <button id="Groeien-binnen" class="btn element-navMobile">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-building.png" alt="search">
+                                Groeien binnen je functie
+                        </button>
+                        <button id="relevante-btn" class="btn element-navMobile">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-lightbulb.png" alt="search">
+                                Relevante skills ontwikkelen
+                        </button>
+                        <button id="Persoonlijke-btn" class="btn element-navMobile">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-thumbs-up.png" alt="search">
+                                Persoonlijke interesses en vrije tijd
+                        </button>
+                    </ul>
+                </div>
+                <div class="sub-block-2" id="2sub-block">
+                    <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <li class="btn element-navMobile">
+                            <a href="">Detailhandel</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Agrarisch / Groen</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Bouw</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Cultureel</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sub-block-2" id="3sub-block">
+                    <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <li class="btn element-navMobile">
+                            <a href="">Financieel</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Human Resources</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Inkoop</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Innovatie en R&D</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sub-block-2" id="4sub-block">
+                    <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <li class="btn element-navMobile">
+                            <a href="">Cultuur</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Hardware</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Informatie management</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Interpersonal</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sub-block-2" id="5sub-block">
+                    <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <li class="btn element-navMobile">
+                            <a href="">Social media</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Ambachten</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Eten / Drinken</a>
+                        </li>
+                        <li class="btn element-navMobile">
+                            <a href="">Fashion</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sub-block-2" id="team-organisati-block">
+                    <button class="btn btn-back go-back"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <li class="btn element-navMobile"><a  class="linkElementNav" href="/voor-organisaties/">Aanmelden</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/functionaliteiten/">Functionaliteiten</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/pricing/">Pricing</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/zzpers/">Voor ZZPers</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/sme/">Voor het MKB</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/corporate/">Voor Corporates</a></li>
+                        <button onclick="redirect()" class="btn element-navMobile"> Zelf eerst een kijkje nemen</button>
+                    </ul>
+                </div>
+                <div class="sub-block-2" id="expert-sub-block">
+                    <button class="btn btn-back go-back"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <li class="btn element-navMobile"><a  class="linkElementNav" href="/voor-opleiders/">Aanmelden</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/creeren/">Content creëren</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/ontwikkelen/">Uitleggen product / service</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/verkopen/">Kennis verkopen</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/opleiders/">Alle opleiders</a></li>
+                        <button onclick="redirect()" class="btn element-navMobile">Zelf eerst een kijkje nemen</button>
+                    </ul>
+                </div>
+                <div class="sub-block-2" id="contact-sub-block">
+                    <button class="btn btn-back go-back"><i class="fa fa-angle-left mr-2"></i>Back</button>
+                    <ul>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/contact/">Contact</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/about">Wie zijn wij</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/filosofie/">Onze filosofie</a></li>
+                        <li class="btn element-navMobile"> <a class="linkElementNav" href="/our-users/">Onze gebruikers</a></li>
+                        <button onclick="redirect()" class="btn element-navMobile">Zelf eerst een kijkje nemen</button>
+
+                    </ul>
                 </div>
 
-                <div class="accordion" id="accordionExample2">
-                    <div class="element-nav-accordion">
-                        <div class="card-header" id="headingNavOne">
-                            <h2 class="mb-0">
-                                <button class="btn element-navMobile " type="button" data-toggle="collapse" data-target="#collapseNavOne" aria-expanded="true" aria-controls="collapseNavOne">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/rocket.png" alt="search">
-                                    Mijzelf ontwikkelen
-                                    <span>Gratis</span>
-                                </button>
-                            </h2>
-                        </div>
-
-                        <div id="collapseNavOne" class="collapse" aria-labelledby="headingNavOne" data-parent="#accordionExample2">
-                            <ul>
-                                <li><a class="linkElementNav" href="/inloggen-2/">Je eigen leeromgeving</a></li>
-                                <li> <a class="linkElementNav" href="/onderwer/">Wat voor content / onderwerpen?</a></li>
-                                <li> <a class="linkElementNav" href="/pricing/">Het is gratis</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="element-nav-accordion">
-                        <div class="card-header" id="headingNavTwo">
-                            <h2 class="mb-0">
-                                <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavTwo" aria-expanded="false" aria-controls="collapseNavTwo">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-building.png" alt="search">
-                                    Ontwikkel team / organisatie
-                                    <span>Va. €4,95</span>
-
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="collapseNavTwo" class="collapse" aria-labelledby="headingNavTwo" data-parent="#accordionExample2">
-                            <ul>
-                                <li><a  class="linkElementNav" href="/voor-organisatie-2/">Onze leeromgeving</a></li>
-                                <li> <a class="linkElementNav" href="">Functionaliteiten</a></li>
-                                <li> <a class="linkElementNav" href="/pricing/">Pricing</a></li>
-                                <li> <a class="linkElementNav" href="/zzpers/">Voor ZZPers</a></li>
-                                <li> <a class="linkElementNav" href="/mkb/">Voor het MKB</a></li>
-                                <li> <a class="linkElementNav" href="/grootbedrijf/">Voor Corporates</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="element-nav-accordion">
-                        <div class="card-header" id="headingNavThree">
-                            <h2 class="mb-0">
-                                <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavThree" aria-expanded="false" aria-controls="collapseNavThree">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/metro-fire.png" alt="search">
-                                    Expert / opleider worden
-                                    <span>No cure no pay</span>
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="collapseNavThree" class="collapse" aria-labelledby="headingNavThree" data-parent="#accordionExample2">
-                            <ul>
-                                <li><a  class="linkElementNav" href="/voor-teacher-2-2/">De expert ranking per sector</a></li>
-                                <li> <a class="linkElementNav" href="/verkopen/">Kennis verkopen</a></li>
-                                <li> <a class="linkElementNav" href="/creeren/">Content creëren</a></li>
-                                <li> <a class="linkElementNav" href="/uitleggen/">Uitleggen van producten / services</a></li>
-                                <li> <a class="linkElementNav" href="/opleiders/">Alle opleiders</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="element-nav-accordion">
-                        <div class="card-header" id="headingNavFour">
-                            <h2 class="mb-0">
-                                <button class="btn element-navMobile collapsed" type="button" data-toggle="collapse" data-target="#collapseNavFour" aria-expanded="false" aria-controls="collapseNavFour">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/information-circle.png" alt="search">
-                                    Informatie
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="collapseNavFour" class="collapse" aria-labelledby="headingNavFour" data-parent="#accordionExample2">
-                            <ul>
-                                <li> <a class="linkElementNav" href="/contact/">Contact</a></li>
-                                <li> <a class="linkElementNav" href="/about">Wie zijn wij</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>
