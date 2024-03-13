@@ -117,6 +117,7 @@
         $company_user = get_field('company',  'user_' . $user->ID);
         
         if(trim(strtolower($company_user[0]->post_title)) == trim(strtolower(strval($post['org']))) ){
+
           $author_id = $user->ID;
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;  
@@ -125,6 +126,9 @@
   
       if(!$author_id)
       {
+        // $informations = addAuthor($users, $post['org']);
+        // $author_id = $informations['author_id'];
+        // $company_id = $informations['company_id'];
         $args = array(
             'post_type' => 'company', 
             'posts_per_page' => -1,

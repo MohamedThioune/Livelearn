@@ -1450,6 +1450,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthorsOptimized',
   ));
 
+  register_rest_route('custom/v1', '/clean-author', array(
+      'methods' => 'GET',
+      'callback' => 'cleanAuthor',
+  ));
+
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
@@ -1484,6 +1489,33 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'getExpertCourseOptimized',
   ));
+
+  register_rest_route('custom/v2', '/user/(?P<user_id>\d+)/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'timeSpentOnAllCourseType',
+  ));
+
+  register_rest_route('custom/v2', '/user/statistics', array(
+    'methods' => 'PUT',
+    'callback' => 'updateTimeSpentOnCourseType',
+  ));
+
+  register_rest_route('custom/v2', '/user/courses/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserCourseStastics',
+  ));
+
+  register_rest_route('custom/v2', '/user/courses/progression/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getProgressionStatistics',
+  ));
+
+  register_rest_route('custom/v2', '/user/assessments/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserAttempts',
+  ));
+
+  
 
   register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
     'methods' => 'GET',
@@ -1712,10 +1744,20 @@ add_action( 'rest_api_init', function () {
     'callback' => 'artikelDetail'
   ));
 
-   register_rest_route ('custom/v1', '/artikels', array(
-      'methods' => 'POST',
-      'callback' => 'allArtikels'
-    ));
+  register_rest_route ('custom/v1', '/artikel/detail', array(
+    'methods' => 'POST',
+    'callback' => 'artikelDetail'
+  ));
+
+  register_rest_route ('custom/v1', '/artikel/comment/', array(
+    'methods' => 'POST',
+    'callback' => 'artikelDetail'
+  ));
+
+  register_rest_route ('custom/v1', '/artikels', array(
+    'methods' => 'POST',
+    'callback' => 'allArtikels'
+  ));
 
   register_rest_route ('custom/v1', '/company/detail', array(
     'methods' => 'POST',
@@ -1741,7 +1783,6 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'allCoursesOptimized',
   ));
-
 
   register_rest_route ('custom/v1', '/apply', array(
     'methods' => 'POST',
@@ -1778,14 +1819,34 @@ add_action( 'rest_api_init', function () {
     'callback' => 'PostJobUser'
   ));
 
-  // register_rest_route ('custom/v1', '/user/comments', array(
-  //   'methods' => 'GET',
-  //   'callback' => 'commentByID'
-  // ));
-
   register_rest_route ('custom/v1', '/user/comment', array(
     'methods' => 'POST',
     'callback' => 'addComment'
+  ));
+
+  register_rest_route ('custom/v1', '/user/profil', array(
+  'methods' => 'POST',
+  'callback' => 'companyProfil'
+  ));
+
+  // register_rest_route ('custom/v1', '/candidate/profil', array(
+  //   'methods' => 'GET',
+  //   'callback' => 'candidateProfil'
+  // ));
+
+  register_rest_route ('custom/v1', '/candidate/profil/update', array(
+    'methods' => 'POST',
+    'callback' => 'updatecandidateProfil'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/applieds', array(
+    'methods' => 'POST',
+    'callback' => 'candidateAppliedJobs'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/favorites', array(
+    'methods' => 'POST',
+    'callback' => 'candidateShorlistedJobs'
   ));
 
 });
