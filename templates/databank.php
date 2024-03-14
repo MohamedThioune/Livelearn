@@ -965,7 +965,7 @@ if (!empty($courses)) {
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    location.reload();
+                   location.reload();
                 }
             });
         });
