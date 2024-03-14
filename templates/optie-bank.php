@@ -29,26 +29,6 @@ if($optie == "✔"){
         $course->image_xml=$image;
         $wpdb->update($table,$course->image_xml,$where); 
     }
-    // ADD AUTHOR ID  
-    //   if(!$course->author_id) {
-    //         //$course->author_id=addAuthor($users, $cour );            
-    //   }
-    
-    if(!$course->company_id) {
-                 foreach ($users as $user) {
-                    $company_user = get_field('company', 'user_' . $user->ID);
-                    if ($company_user) {
-                            if ($course->author_id && $course->author_id == $user->ID) {
-                                      $company = $company_user[0];
-                                     if (isset($company_user[0]->ID)) {
-                                             $course->company_id = $company_user[0]->ID;
-                                     }
-                            }
-                    }
-
-                 }
-       }
-
 
    
 
