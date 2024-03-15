@@ -133,9 +133,10 @@
             display: none;
         }
         .content-home2 .wordDeBestText2 {
-            font-size: 25px;
-            line-height: 32px;
+            font-size: 32px;
+            line-height: 46px;
             padding: 0 15px;
+            font-weight: 600;
         }
         .content-home2 .voorBlock {
             padding-top: 50px;
@@ -318,7 +319,7 @@
 
     if(!isset($visibility_company))
         $visibility_company = "";
-    
+
     /*
     * Check statistic by user *
     */
@@ -805,6 +806,10 @@
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/second-group-parteners-logo.png" class="logo-parteners-left " alt="">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/first-group-parteners-logo.png" class="logo-parteners-right" alt="">
 
+                <div class="gtTranslateBlock gt-translatre-mobile">
+                    <?php echo do_shortcode('[gtranslate]'); ?>
+                </div>
+
                 <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
                 <form action="/product-search" class="position-relative newFormSarchBar" method="GET">
@@ -859,19 +864,39 @@
                         <p class="bekijk-text">Bekijk wat we doen</p>
                         <hr>
                     </div>
-
+                </div>
+                <div class="groupeBtn-Jouw-inloggen groupBtnAppConnecte">
+                    <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="btn btn-signup">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/play-store-icon.png" alt="" />
+                    </a>
+                    <a href="https://apps.apple.com/nl/app/livelearn/id1666976386/" class="btn btn-signup">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store-icon.png" alt="" />
+                    </a>
                 </div>
                 <?php if(!$user_id) { ?>
                     <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                        <a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
+                        <!--<a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/googleImg.png" alt="" />
                             Gratis inloggen met Google
-                        </a>
+                        </a>-->
                         <!-- <button class="btn btn-signup">
-                        <img src="<?php //echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
-                    </button> -->
-                        <a href="/inloggen/" class="btn btn-signup-email">
+                    </button>-->
+
+                        <a href="/inloggen/" class="btn group-btn-signup">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/gratis-accouunt.png" alt="">
+                            <span>Gratis Account</span>
+                        </a>
+                        <a href="/inloggen/" class="btn group-btn-signup">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/l-d-account.png" alt="">
+                            <span>L&D in 5 minuten?</span>
+                        </a>
+                        <a href="/inloggen/" class="btn group-btn-signup">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Keuzehulp.png" alt="">
+                            <span>Keuzehulp</span>
+                        </a>
+                        <a href="/inloggen/" class="btn btn-signup-email visible-on-mobile">
                             <span style="color:white">Gratis inloggen via mail</span>
                         </a>
                     </div>
@@ -1093,6 +1118,7 @@
             </form>
         </div>
     </div>
+
 </div>
 
 <div class="container-fluid">
@@ -1131,10 +1157,10 @@
 
 </div>
 <!-- replaces of ranking -->
-<!-- 
+<!--
 <div class="text-center mt-5">
     <a href="/ranking" target="_blank" class="btn btn-success btn-block">ranking</a>
-</div> 
+</div>
 -->
 <!-- -->
 <div class="container-fluid">
@@ -1484,6 +1510,28 @@
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
     <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+
+
+    <script>
+        // for search bar
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search').addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                var headerSearchInput = document.getElementById('header-search');
+                headerSearchInput.focus();
+                headerSearchInput.selectionStart = headerSearchInput.selectionEnd = headerSearchInput.value.length;
+                headerSearchInput.dispatchEvent(new Event('click'));
+                searchFunction();
+            });
+
+            document.getElementById('header-search').addEventListener('input', function() {
+                if (document.activeElement === document.getElementById('header-search')) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    searchFunction();
+                }
+            });
+        });
+    </script>
     <script>
         $('.owl-carousel').owlCarousel({
             loop:true,
@@ -1645,3 +1693,4 @@
             });
         });
     </script>
+

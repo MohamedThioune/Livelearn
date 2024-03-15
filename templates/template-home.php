@@ -1068,15 +1068,28 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
                 <?php if(!$user_id) { ?>
                     <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                        <a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
+                        <!--<a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/googleImg.png" alt="" />
                             Gratis inloggen met Google
-                        </a>
+                        </a>-->
                         <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
-                    </button> -->
+                    </button>-->
+
+                        <a href="/inloggen/" class="btn group-btn-signup">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/gratis.png" alt="">
+                            <span>Gratis Account</span>
+                        </a>
                         <a href="/inloggen/" class="btn btn-signup-email">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/l-d-account.png" alt="">
+                            <span>L&D in 5 minuten?</span>
+                        </a>
+                        <a href="/inloggen/" class="btn btn-signup-email">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Keuzehulp.png" alt="">
+                            <span>Keuzehulp</span>
+                        </a>
+                        <a href="/inloggen/" class="btn btn-signup-email visible-on-mobile">
                             <span style="color:white">Gratis inloggen via mail</span>
                         </a>
                     </div>
