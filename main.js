@@ -490,12 +490,22 @@ jQuery(function($) {
         $(".btnUp").hide();
     });
 
+    $("#header-search").click(function() {
+        $("#for-search-element").show();
+        $(".activeModalHeader").show();
+        $("#voorOpleidersModal").hide();
+        $("#OpleidingenModal").hide();
+        $("#OverOnsModal").hide();
+        $("#voorOrganisatiModal").hide();
+    });
+
     $("#voorOrganisati").click(function() {
         $("#voorOrganisatiModal").toggle();
         $(".activeModalHeader").show();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     $("#opleiders").click(function() {
@@ -504,6 +514,7 @@ jQuery(function($) {
         $("#voorOpleidersModal").toggle();
         $("#OpleidingenModal").hide();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     $("#Opleidingen").click(function() {
@@ -512,6 +523,7 @@ jQuery(function($) {
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").toggle();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     $("#OverOns").click(function() {
@@ -520,6 +532,7 @@ jQuery(function($) {
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
         $("#OverOnsModal").toggle();
+        $("#for-search-element").hide();
     });
 
     $(".activeModalHeader").click(function() {
@@ -528,6 +541,7 @@ jQuery(function($) {
         $("#OpleidingenModal").hide();
         $(".activeModalHeader").hide();
         $("#OverOnsModal").hide();
+        $("#for-search-element").hide();
     });
 
     //Filter bar on category page
@@ -569,6 +583,81 @@ jQuery(function($) {
         $(".sousMenuBlock3").hide();
         $(".btnUp").hide();
     });
+
+// for menu hamberger:
+
+        $("#MijzelfBtn").click(function() {
+            $("#1sub-block").show();
+            $(".block-sous-nav-mobile").hide();
+        });
+        $(".go-back").click(function() {
+            $("#1sub-block").hide();
+            $(".block-sous-nav-mobile").show();
+        });
+
+        $("#teambtn").click(function() {
+            $("#team-organisati-block").show();
+            $(".block-sous-nav-mobile").hide();
+        });
+        $(".go-back").click(function() {
+            $("#team-organisati-block").hide();
+            $(".block-sous-nav-mobile").show();
+        });
+
+        $("#expertBtn").click(function() {
+            $("#expert-sub-block").show();
+            $(".block-sous-nav-mobile").hide();
+        });
+        $(".go-back").click(function() {
+            $("#expert-sub-block").hide();
+            $(".block-sous-nav-mobile").show();
+        });
+
+        $("#contactBtn").click(function() {
+            $("#contact-sub-block").show();
+            $(".block-sous-nav-mobile").hide();
+        });
+        $(".go-back").click(function() {
+            $("#contact-sub-block").hide();
+            $(".block-sous-nav-mobile").show();
+        });
+
+        $("#Groeien").click(function() {
+            $("#2sub-block").show();
+            $("#1sub-block").hide();
+        });
+        $(".go-back-2").click(function() {
+            $("#2sub-block").hide();
+            $("#1sub-block").show();
+        });
+        $("#Groeien-binnen").click(function() {
+            $("#3sub-block").show();
+            $("#1sub-block").hide();
+        });
+        $(".go-back-2").click(function() {
+            $("#3sub-block").hide();
+            $("#1sub-block").show();
+        });
+        $("#relevante-btn").click(function() {
+            $("#4sub-block").show();
+            $("#1sub-block").hide();
+        });
+        $(".go-back-2").click(function() {
+            $("#4sub-block").hide();
+            $("#1sub-block").show();
+        });
+        $("#Persoonlijke-btn").click(function() {
+            $("#5sub-block").show();
+            $("#1sub-block").hide();
+        });
+        $(".go-back-2").click(function() {
+            $("#5sub-block").hide();
+            $("#1sub-block").show();
+        });
+
+
+// end of menu hamberger
+
 
     $("#Ontwikkel-persoonlijke").click(function() {
         $(".firstContentHeadSousMobile").hide();

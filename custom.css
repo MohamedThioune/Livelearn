@@ -4991,6 +4991,65 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     border: 1px solid #ffffff !important;
     background: white;
 }
+.dropdown-search{
+    width: 100%;
+    top: 115px;
+    box-shadow: none;
+    background: #e2f0f5 !important;
+    border-radius: 0;
+    color: #023356;
+    height: fit-content;
+    border-bottom: 4px solid #afc5cf !important;
+}
+.scrolled .dropdown-search{
+    background: #023356 !important;
+    color: white !important;
+    border-bottom: 4px solid #202020 !important;
+}
+.dropdown-search ul li a .blockImg {
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+    text-align: center;
+    overflow: hidden;
+}
+.dropdown-search ul li a .blockImg img {
+    width: 100%;
+    margin-top: 0;
+    height: 100%;
+    object-fit: cover;
+}
+.subtitleSousElementHeader {
+    color: #043356;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.dropdown-search ul li a {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+    border-radius: 18px;
+    padding: 7px 9px 9px;
+}
+.dropdown-search .secondUlModal li {
+    width: 25%;
+    padding: 0 15px;
+}
+.dropdown-search .secondUlModal {
+    display: flex;
+    flex-wrap: wrap;
+}
+.dropdown-search .title-search {
+    color: #043458;
+    font-weight: 500;
+    font-size: 21px;
+}
+.dropdown-search .d-grid a {
+    margin-bottom: 10px;
+}
+.scrolled .dropdown-search a, .scrolled .dropdown-search p{
+    color: white !important;
+}
 
 @media not all and (min-resolution:.001dpcm) {
     @supports (-webkit-appearance: none) and (stroke-color: transparent) {
@@ -22593,7 +22652,12 @@ figure ul li {
     margin-left: auto !important;
     text-align: right;
     font-size: 14px;
-    width: 100%;
+}
+.form-block .btn-switch-login{
+    width: 55%;
+}
+.group-btn-modal {
+    margin-top: 25px;
 }
 .register-block{
     display: none;
@@ -22747,6 +22811,70 @@ figure ul li {
 }
 .gt_float_switcher .gt-selected .gt-current-lang span.gt_float_switcher-arrow {
     float: right;
+}
+.gt-translatre-mobile{
+    display: none;
+}
+.groupBtnAppConnecte{
+    display: none;
+}
+.newSearchBlock{
+    width: 45%;
+    margin: 0px auto 59px;
+}
+.newSearchBlock input{
+    border: 1px solid #ced4da !important;
+    width: 100% !important;
+    padding: 15px 95px 14px 20px !important;
+    border-radius: 10px !important;
+    margin-bottom: 0 !important;
+    height: 50px;
+}
+.newSearchBlock .btn-Zoek {
+    top: 8px;
+    right: 20px;
+    padding: 3px 25px;
+    border-radius: 10px;
+}
+.swiper-leeveroom .swiper-slide {
+    flex-shrink: 0;
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid #033357;
+    margin: 0px 10px;
+    padding: 8px 17px;
+    color: #033357;
+}
+.swiper-leeveroom .active{
+    background: #023357;
+    color: white;
+}
+.swiper-leeveroom h2{
+    color: #033357;
+    font-size: 24px;
+    margin-bottom: 23px;
+}
+.Onderwerpen-block{
+    margin-top: 50px;
+}
+.content-result-course .new-card-course {
+    width: 25%;
+}
+.group-btn-signup {
+    background: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    color: #023357 !important;
+    min-width: 225px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+}
+.group-btn-signup img{
+    height: 42px;
+}
+.visible-on-mobile{
+    display: none;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -25348,12 +25476,15 @@ figure ul li {
     .block-sous-nav-mobile {
         border-bottom: 1px solid #02335680;
         margin-bottom: 18px;
-        padding: 5px 0px 20px;
+        padding: 5px 0px 0px;
         display: grid;
     }
     .block-sous-nav-mobile:last-child {
         border-bottom: 0px solid #023356;
         margin-bottom: 0px;
+    }
+    .sousMenuNavMobil .btn-back {
+        font-weight: 700;
     }
     .element-navMobile {
         margin-bottom: 0px;
@@ -25363,6 +25494,10 @@ figure ul li {
         padding: 20px 10px;
         color: #043356;
         border-bottom: 1px solid #04335657;
+        width: 100%;
+    }
+    .element-navMobile:last-child {
+        border-bottom: 0;
     }
     .element-navMobile img{
         height: 19px;
@@ -26524,6 +26659,7 @@ figure ul li {
     }
     .content-home2 .newFormSarchBar .js-bs-select-dropdown {
         padding: 6px 0px;
+        display: none;
     }
     .content-list-amount {
         width: 95%;
@@ -27543,10 +27679,61 @@ figure ul li {
         border: none;
         background: unset;
     }
+    .sub-block-2{
+        display: none;
+    }
+    .gt-translatre-mobile{
+        display: block;
+        width: fit-content;
+        margin: 0 auto 33px;
+    }
+    .gt-translatre-mobile .gt_switcher {
+        width: fit-content !important;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected a {
+        border: 0px solid #ccc !important;
+        padding: 3px 35px 0 0 !important;
+        width: fit-content !important;
+        background: unset;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected {
+        background: unset !important;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected a:after {
+        right: 10px !important;
+    }
+    .gt-translatre-mobile .gt_switcher .gt_selected a:hover {
+        background: unset !important;
+    }
 
-
-
-
+    .content-home2 form .searchInputHome {
+        border-top-left-radius: 13px;
+        border-bottom-left-radius: 13px;
+    }
+    .groupBtnAppConnecte .btn-signup {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto 15px !important;
+    }
+    .groupBtnAppConnecte .btn-signup img {
+        width: fit-content;
+        height: auto;
+    }
+    .groupBtnAppConnecte {
+        display: block;
+    }
+    .groupBtnAppConnecte .btn-signup {
+        min-height: 51px;
+    }
+     .gt-translatre-mobile .gt_selected {
+         z-index: 9 !important;
+     }
+     .group-btn-signup{
+         display: none;
+     }
+     .visible-on-mobile{
+         display: block;
+     }
 
 
 }

@@ -179,10 +179,9 @@ form {
     left: 0;
     width: 100%;
 }
+
 .dropdown-menuSearch{
-    display: none;
-}
-.dropdown-menuSearch {
+    display: none !important;
     position: absolute;
     left: 30px;
     background: white;
@@ -494,10 +493,6 @@ form {
     .btnElementSousMenu img{
         width: 11px;
         float: right;
-    }
-    .sousMenuNavMobil .accordion .element-nav-accordion:last-child {
-        border-bottom: 0px solid #02335680;
-        margin-bottom: 20px;
     }
     .navMobile-custom {
         padding: 0px 0 8px !important;

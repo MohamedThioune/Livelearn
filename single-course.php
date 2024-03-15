@@ -487,9 +487,9 @@ $current_url = get_permalink($post->ID);
                             <button type="submit" class="btn btn-coneection" id="">Create Acccount</button>
                         </div>
                     </form>
-                    <div class="form-block">
+                    <div class="form-block group-btn-modal d-flex align-items-center">
                         <button class="btn btn-switch-email d-none">Return on Email</button>
-                        <button class="btn btn-switch-login">You already have a account ? Login</button>
+                        <button class="btn btn-switch-login">You already have a account? <b>Login</b></button>
                     </div>
                 </div>
             </div>
