@@ -212,7 +212,7 @@ if ($audio_search){
             curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
             $content = curl_exec($ch2);
             curl_close($ch2);
-            $content_podcasts = $content/
+            $content_podcasts = $content;
         }
         foreach ($content_podcasts as $key => $pod) {
             if ($pod->enclosure->attributes()->url) {
