@@ -24,68 +24,6 @@ if (isset($selectedValues)) {
         $key = $option['text'];
 
         $company_id = 0;
-        //* MaxBird was there *//
-        //Has to be done as a function 
-        // foreach ($users as $user){
-        //     $company_user = get_field('company', 'user_' . $user->ID);
-
-        //     //company exists
-        //     if (isset($company_user->post_title)){
-        //         if (strtolower($company_user->post_title) == strtolower($key)) {
-        //             $author_id = $user->ID;
-        //             $company = $company_user;
-        //             $company_id = $company_user->ID;
-        //             break;
-        //         }
-        //     }
-        // }
-
-        // if (!$author_id) {
-        //     //Looking for company
-        //     $company = get_page_by_path($key, OBJECT, 'company');
-
-        //     if(!$company){
-        //         //Creating new company
-        //         $argv = array(
-        //             "post_type" => "company",
-        //             "post_title" => $key,
-        //             "post_status"=> "publish"
-        //         );
-        //         $company_id = wp_insert_post($argv);
-        //         $company = get_post($company_id);
-        //     }else {
-        //         $company_id = $company->ID;
-        //     }
-
-        //     //Creating a new user
-        //     $login = 'user' . random_int(0, 100000);
-        //     $password = "pass" . random_int(0, 100000);
-        //     $email = "author_" . $key . random_int(0, 100000) . "@" . 'livelearn' . ".nl";
-        //     $first_name = explode(' ', $key)[0];
-        //     $last_name = isset(explode(' ', $key)[1]) ? explode(' ', $key)[1] : '';
-
-        //     $userdata = array(
-        //         'user_pass' => $password,
-        //         'user_login' => $login,
-        //         'user_email' => $email,
-        //         'user_url' => 'https://livelearn.nl/inloggen/',
-        //         'display_name' => $first_name,
-        //         'first_name' => $first_name,
-        //         'last_name' => $last_name,
-        //         'role' => 'author',
-        //     );
-
-        //     $author_id = wp_insert_user(wp_slash($userdata)); 
-        // }
-
-        // //var_dump($company_id);
-        // //die();
-
-        // //Accord the author a company
-        // if (!is_wp_error($author_id)) {
-        //     update_field('company', $company, 'user_' . $author_id);
-        // }
-
 
 
         // function add Author  in addAuthor.php
