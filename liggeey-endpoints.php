@@ -561,7 +561,7 @@ function candidateDetail(WP_REST_Request $request){
   $validated = validated($required_parameters, $request);
 
   //Get input
-  $user_apply_id = $request['userApplyId'];
+  $user_apply_id = $param_user_id;
   $user_apply = get_user_by('ID', $user_apply_id);
   if(!$user_apply):
     $errors['errors'] = 'User not found';
