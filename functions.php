@@ -1844,9 +1844,24 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateAppliedJobs'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/favorites', array(
+  register_rest_route ('custom/v1', '/candidate/AppliedJobs', array(
+    'methods' => 'POST',
+    'callback' => 'candidateAppliedJobs'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/ShorlistedJobs', array(
     'methods' => 'POST',
     'callback' => 'candidateShorlistedJobs'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/skills_passport', array(
+    'methods' => 'POST',
+    'callback' => 'candidateSkillsPassport'
+  ));
+
+  register_rest_route ('custom/v1', '/company/updateProfil', array(
+    'methods' => 'POST',
+    'callback' => 'updateCompanyProfil'
   ));
 
 });
