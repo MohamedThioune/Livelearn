@@ -62,7 +62,6 @@ function artikel($id){
 
 //Detail job
 function job($id){
-
   $param_post_id = $id ?? 0;
   $sample = array();
   $post = get_post($param_post_id);
@@ -72,9 +71,9 @@ function job($id){
   $sample['title'] = $post->post_title;
   $sample['posted_at'] = $post->post_date;
   $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
-  $sample['description'] = get_field('job_description', $post->ID);
-  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID);
-  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID);
+  $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
+  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
+  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in ';
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
@@ -198,6 +197,21 @@ function candidate($id){
   "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
   Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
 
+  $topics = array();
+  $limit = 3;
+  $topics = get_user_meta($user->ID, 'topic');
+  $sample['skills'] = [];
+  if(!empty($topics)):
+    $args = array( 
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'include'  => $topics,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        'include' => $topics,
+        'post_per_page' => $limit
+    );
+    $sample['skills'] = get_categories($args);
+  endif;
+
   //Education Information
   $main_education = get_field('education',  'user_' . $user->ID);
   $educations = array();
@@ -288,19 +302,32 @@ function homepage(){
   $categories = [];
   $artikels = [];
   $candidates = [];
-  $infos = array('categories' => $categories, 'artikels' => $artikels, 'candidates' => $candidates);
+  $infos = array('jobs' => $jobs, 'categories' => $categories, 'artikels' => $artikels, 'candidates' => $candidates);
 
   $errors = ['errors' => '', 'error_data' => ''];
+  $limit_job = 6;
   $limit_post = 3;
   $limit_candidate = 20;
 
+  //Job [Block]
+  $args = array(
+    'post_type' => array('job'),  
+    'post_status' => 'publish',
+    'posts_per_page' => $limit_job,
+  );
+  $job_posts = get_posts($args);
+  $jobs = array();
+  foreach ($job_posts as $post):
+    if(!$post)
+      continue;
+
+    $sample = job($post->ID);
+    array_push($jobs, $sample);
+  endforeach;
+  $infos['jobs'] = $jobs;
+
   //Category [Block]
   $categories = array();
-  // $sample_categories = array(
-  //   'Digital Marketing', 'Digital Project Manager', 'Community Manager', 'Social Media Manager',
-  //   'Webdesigner', '3D Illustrator', 'UX Designer',
-  //   'Data Analyst', 'Salesforce', 'Google', 'Web Project Manager', 'COMMCARE', 'DHIS2', 'DRUPAL',
-  //   'Wordpress', 'Webflow', 'Odoo', 'Prestashop');
 
   //Category information
   $no_content = "Some information missing !";
@@ -435,6 +462,8 @@ function homepage(){
   return $response;
 
 }
+
+
 
 //[POST]Register the company chief
 function register_company(WP_REST_Request $request){
@@ -653,6 +682,8 @@ function allJobs(){
     $sample['place'] = !empty($company) ? get_field('company_place',  $company->ID) : $sample['place'];
     $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
 
+    $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+
     $sample = (Object)$sample;
     array_push($jobs, $sample);
 
@@ -680,10 +711,10 @@ function jobDetail(WP_REST_Request $request){
     $job_posts = get_posts($args);
     $jobs = array();
 
-    foreach ($job_posts as $job_post) {
+    foreach ($job_posts as $key => $job_post) 
+      if($key < 3)
+        $jobs[] = job($job_post->ID);
 
-        $jobs[] = $job_post;
-    }
     $sample->other_jobs = $jobs;
 
     //Response
