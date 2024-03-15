@@ -238,7 +238,6 @@ function refreshAuthor(){
     }
   endforeach;
 }
-
 //Third step : Delete the extra-author useless [reviewed ]
 function fillUpAuthor(){
   global $wpdb;
