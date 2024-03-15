@@ -1450,9 +1450,22 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthorsOptimized',
   ));
 
-  register_rest_route('custom/v1', '/clean-author', array(
+  //First apply !
+  register_rest_route('custom/v1', '/fill-company', array(
       'methods' => 'GET',
-      'callback' => 'cleanAuthor',
+      'callback' => 'fillUpCompany',
+  ));
+
+  //Second apply !
+  register_rest_route('custom/v1', '/refresh-author', array(
+      'methods' => 'GET',
+      'callback' => 'refreshAuthor',
+  ));
+
+  //Third apply !
+  register_rest_route('custom/v1', '/fill-author', array(
+    'methods' => 'GET',
+    'callback' => 'fillUpAuthor',
   ));
 
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
@@ -1849,7 +1862,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateAppliedJobs'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/ShorlistedJobs', array(
+  register_rest_route ('custom/v1', '/candidate/favorites', array(
     'methods' => 'POST',
     'callback' => 'candidateShorlistedJobs'
   ));
