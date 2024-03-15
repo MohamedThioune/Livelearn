@@ -238,6 +238,7 @@ function refreshAuthor(){
     }
   endforeach;
 }
+
 //Third step : Delete the extra-author useless [reviewed ]
 function fillUpAuthor(){
   global $wpdb;
@@ -274,8 +275,8 @@ function fillUpAuthor(){
         $rand = random_int(0, 100000);
         if(strpos($key,' ')){
             $keys = explode(' ',$key);
-            $email = $rand . $keys . "@" . 'livelearn' . ".nl";
-            $first_name = explode(' ', $key)[0];
+            $email = $rand . $keys[0] . "@" . 'livelearn' . ".nl";
+            $first_name = $keys[0];
             $last_name = $keys[1];
         }else{
             $email = $rand . $key . "@" . 'livelearn' . ".nl";
