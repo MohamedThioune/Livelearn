@@ -896,6 +896,74 @@ function liggeeySave(WP_REST_Request $request){
   return $response;
 }
 
+//comment
+function commentByID(WP_REST_Request $request ) {
+
+  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
+  $user = get_user_by('ID', $param_user_id);
+
+  $comments = array();
+  // Retrieve ACF data associated with the post ID
+  $main_reviews = get_field('reviews', $post_id);
+
+  // Loop through each ACF review
+  foreach ($main_reviews as $review) {
+     $user = $review['user']; // Get the user associated with the review
+     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
+
+     $image_author = get_field('profile_img',  'user_' . $user->ID);
+     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+     $rating = $review['rating'];
+     $feedback = $review['Feedback'];
+
+     // Assemble the comment data into an array
+     $comment = array(
+         'comment_author_name' => $author_name,
+         'comment_author_image' => $image_author,
+         'rating' => $rating,
+         'feedback' => $feedback
+
+     );
+     // Add the comment data to the comments array
+     $comments[] = $comment;
+  }
+  // Return the array of comments
+  return $comments;
+
+}
+
+//Add comment
+function addComment(WP_REST_Request $request) {
+  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
+  $user = get_user_by('ID', $param_user_id);
+  if ($user) {
+      // Récupérer les données du commentaire depuis la requête
+      $review = $request->get_params();
+      // tableau de données pour le commentaire
+      $comment_data = array(
+          'comment_post_ID' => $review['post_id'],
+          'comment_author' => ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name,
+          'comment_approved' => 1,
+          'comment_content' => $review['feedback'],
+      );
+      // Insérer le commentaire
+      $comment_id = wp_insert_comment($comment_data);
+      // les champs feedback et rating
+      update_field('rating', $review['rating'], $comment_id);
+      update_field('Feedback', $review['feedback'], $comment_id);
+
+      // Retourner les données du commentaire inséré
+      $comment = get_comment($comment_id);
+      $response = new WP_REST_Response($comment);
+      $response->set_status(200);
+      return $response;
+  } else {
+      // L'utilisateur n'est pas connecté, retourner une erreur
+      return new WP_Error('user_not_logged_in');
+  }
+}
+
 //[POST]Dashboard User | Home
 function HomeUser(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
@@ -1089,7 +1157,7 @@ function FavoritesUser(WP_REST_Request $request){
   return $response;
 }
 
-//Candidate a job
+//[POST]Dashboard User | Post Job
 function postJobUser(WP_REST_Request $request){
 
   //Check required parameters apply
@@ -1145,88 +1213,22 @@ function postJobUser(WP_REST_Request $request){
 
 }
 
-//comment
-function commentByID(WP_REST_Request $request ) {
-
-    $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-    $user = get_user_by('ID', $param_user_id);
-
-    $comments = array();
-    // Retrieve ACF data associated with the post ID
-    $main_reviews = get_field('reviews', $post_id);
-
-    // Loop through each ACF review
-    foreach ($main_reviews as $review) {
-       $user = $review['user']; // Get the user associated with the review
-       $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
-
-       $image_author = get_field('profile_img',  'user_' . $user->ID);
-       $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-       $rating = $review['rating'];
-       $feedback = $review['Feedback'];
-
-       // Assemble the comment data into an array
-       $comment = array(
-           'comment_author_name' => $author_name,
-           'comment_author_image' => $image_author,
-           'rating' => $rating,
-           'feedback' => $feedback
-
-       );
-       // Add the comment data to the comments array
-       $comments[] = $comment;
-    }
-    // Return the array of comments
-    return $comments;
-
-}
-//addcomment
-function addComment(WP_REST_Request $request) {
-  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-  $user = get_user_by('ID', $param_user_id);
-  if ($user) {
-      // Récupérer les données du commentaire depuis la requête
-      $review = $request->get_params();
-      // tableau de données pour le commentaire
-      $comment_data = array(
-          'comment_post_ID' => $review['post_id'],
-          'comment_author' => ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name,
-          'comment_approved' => 1,
-          'comment_content' => $review['feedback'],
-      );
-      // Insérer le commentaire
-      $comment_id = wp_insert_comment($comment_data);
-      // les champs feedback et rating
-      update_field('rating', $review['rating'], $comment_id);
-      update_field('Feedback', $review['feedback'], $comment_id);
-
-      // Retourner les données du commentaire inséré
-      $comment = get_comment($comment_id);
-      $response = new WP_REST_Response($comment);
-      $response->set_status(200);
-      return $response;
-  } else {
-      // L'utilisateur n'est pas connecté, retourner une erreur
-      return new WP_Error('user_not_logged_in');
-  }
-}
-//Dashboard manageJob
+//[POST]Dashboard User | Profil
 function companyProfil(WP_REST_Request $request){
   $required_parameters = ['userApplyId'];
   $errors = ['errors' => '', 'error_data' => ''];
 
   if ($company_data) {
-  //var_dump($company_data);
-          // Choose fields to display
-          $dataCompany = array(
-              'title' => $company_data->title,
-              'email' => $company_data->email,
-              'mobile_phone' => $company_data->mobile_phone,
-              'website' => $company_data->website,
-              'size' => $company_data->size,
-              );
-              }
+    //var_dump($company_data);
+    // Choose fields to display
+    $dataCompany = array(
+      'title' => $company_data->title,
+      'email' => $company_data->email,
+      'mobile_phone' => $company_data->mobile_phone,
+      'website' => $company_data->website,
+      'size' => $company_data->size,
+      );
+    }
 
   //Get input
   $user_apply_id = $request['userApplyId'];
@@ -1247,6 +1249,45 @@ function companyProfil(WP_REST_Request $request){
   return $response;
 }
 
+//[POST]Dashboard User | Update | Profil ? Look carefully this function
+function updateCompanyProfil(WP_REST_Request $request) {
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+  //Get company id through the user id
+  //$company = get_field('company', 'user_' . $user_id); 
+
+  $required_parameters = ['userApplyId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+
+  $validated = validated($required_parameters, $request);
+
+  // Data User
+  $company_data = company($user_id); //?
+
+  if (!$company_data) {
+      $errors['errors'] = 'User not found';
+      $response = new WP_REST_Response($errors);
+      $response->set_status(401);
+      return $response;
+  }
+  // Parameters REST request
+  $updated_data = $request->get_params();
+
+  // Update Fields
+  foreach ($updated_data as $field_name => $field_value) {
+    if($field_value)
+    if($field_value != '' && $field_value != ' ')
+      update_field($field_name, $field_value, $company->ID);
+  }
+
+  // Return response
+  $updated_company_data = company($user_id);
+  $response = new WP_REST_Response($updated_company_data);
+  $response->set_status(200);
+  return $response;
+}
+
+//[POST]Dashboard Candidate | Profil
 function candidateProfil(WP_REST_Request $request) {
 
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
@@ -1271,81 +1312,96 @@ function candidateProfil(WP_REST_Request $request) {
     $response->set_status(200);
     return $response;
 }
-//Update candidateProfil
-    function updateCandidateProfil(WP_REST_Request $request) {
 
-        $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-        $required_parameters = ['userApplyId'];
-        $errors = ['errors' => '', 'error_data' => ''];
+//[POST]Dashboard Candidate | Update | Profil
+function updateCandidateProfil(WP_REST_Request $request) {
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
-        $validated = validated($required_parameters, $request);
-         // Data User
-            $candidate_data = candidate($user_id);
+  $required_parameters = ['userApplyId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+  $validated = validated($required_parameters, $request);
 
-        if (!$candidate_data) {
-            $errors['errors'] = 'User not found';
-            $response = new WP_REST_Response($errors);
-            $response->set_status(401);
-            return $response;
-        }
+  //Data User
+  $candidate_data = candidate($user_id);
 
-        // the parameters REST request
-        $updated_data = $request->get_params();
-      // Update Fields
-        foreach ($updated_data as $field_name => $field_value) {
-            update_field($field_name, $field_value, 'user_' . $user_id);
-        }
-           // Return response
-        $updated_candidate_data = candidate($user_id);
-        $response = new WP_REST_Response($updated_candidate_data);
-        $response->set_status(200);
-        return $response;
+  if (!$candidate_data) {
+      $errors['errors'] = 'User not found';
+      $response = new WP_REST_Response($errors);
+      $response->set_status(401);
+      return $response;
+  }
+
+  // Parameters REST request
+  $updated_data = $request->get_params();
+
+  // Update Fields
+  foreach ($updated_data as $field_name => $field_value):
+      if($field_value)
+      if($field_value != '' && $field_value != ' ')
+        update_field($field_name, $field_value, 'user_' . $user_id);
+  endforeach;
+
+  // Return response
+  $updated_candidate_data = candidate($user_id);
+  $response = new WP_REST_Response($updated_candidate_data);
+  $response->set_status(200);
+  return $response;
+}
+
+//[POST]Dashboard Candidate | Applied Jobs 
+function candidateAppliedJobs(WP_REST_Request $request) {
+  $args = array(
+      'post_type' => 'job',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  // Récupérer les offres d'emploi
+  $job_posts = get_posts($args);
+
+  // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
+  $userApplyId = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  
+  // Tableau pour stocker les emplois auxquels le candidat a postulé
+  $applied_jobs = array();
+  foreach ($job_posts as $post) :
+    $user_applied_jobs = get_field('job_appliants', $post->ID);
+    //@Penda U cannot put user where job is needed
+    foreach($user_applied_jobs as $userapply)
+      if($userapply->ID == $userApplyId)
+        $applied_jobs[] = job($post->ID);
+  endforeach;
+
+  // Retourner la liste des emplois auxquels le candidat a postulé
+  $response = new WP_REST_Response($applied_jobs);
+  $response->set_status(200);
+  return $response;
+}
+
+//[POST]Dashboard Candidate | Favorites
+function candidateShorlistedJobs(WP_REST_Request $request) {
+  // Récupérer l'ID de l'utilisateur à partir de la requête ou de l'utilisateur connecté
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+  // Récupérer les emplois favoris de l'utilisateur
+  $user_favorites = get_field('save_liggeey', 'user_' . $user_id);
+  $user_shorlisted_jobs = [];
+
+  // Vérifier si l'utilisateur a des emplois favoris
+  if ($user_favorites) 
+    foreach ($user_favorites as $favorite)
+      if ($favorite['type'] == 'job') :
+        // Récupérer les détails de l'emploi
+        if($favorite['id'])
+          $user_shorlisted_jobs[] = job($favorite['id']);
+      endif;
+
+  $response = new WP_REST_Response($user_shorlisted_jobs);
+  $response->set_status(200);
+  return $response;
 
 }
 
-
- function candidateAppliedJobs(WP_REST_Request $request) {
-
-     $args = array(
-         'post_type' => 'job',
-         'post_status' => 'publish',
-         'posts_per_page' => -1,
-     );
-     $job_posts = get_posts($args);
-     //var_dump($job_posts);
-
-        $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-          $required_parameters = ['userApplyId'];
-          $errors = ['errors' => '', 'error_data' => ''];
-         //Check required parameters apply
-          $validated = validated($required_parameters, $request);
-
-          //Get input
-          $user_apply_id = $request['userApplyId'];
-          $user_apply = get_user_by('ID', $user_apply_id);
-          if(!$user_apply):
-            $errors['errors'] = 'User not found';
-            $response = new WP_REST_Response($errors);
-            $response->set_status(401);
-            return $response;
-          endif;
-       // Table to store jobs the candidate applied for
-         $applied_jobs = array();
-         foreach ($job_posts as $post) {
-             if(!$post)
-          continue;
-         $applied_jobs = get_field('job_appliants', $post->ID);
-         $applied_jobs[] = $post;
-
-
-     }
-     // Return response
-     $response = new WP_REST_Response($applied_jobs);
-     $response->set_status(200);
-     return $response;
- }
-
-
+//[POST]Dashboard Candidate | Skills passport
 function candidateSkillsPassport(WP_REST_Request $request) {
     $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
@@ -1421,39 +1477,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     }
 
     return new WP_REST_Response($state, 200);
-}
-
-
-
-    function updateCompanyProfil(WP_REST_Request $request) {
-
-       $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-        $required_parameters = ['userApplyId'];
-        $errors = ['errors' => '', 'error_data' => ''];
-
-        $validated = validated($required_parameters, $request);
-         // Data User
-            $company_data = company($user_id);
-
-        if (!$company_data) {
-            $errors['errors'] = 'User not found';
-            $response = new WP_REST_Response($errors);
-            $response->set_status(401);
-            return $response;
-        }
-          // the parameters REST request
-                $updated_data = $request->get_params();
-              // Update Fields
-                foreach ($updated_data as $field_name => $field_value) {
-                    update_field($field_name, $field_value, 'company_' . $user_id);
-                }
-                   // Return response
-                $updated_company_data = company($user_id);
-                $response = new WP_REST_Response($updated_company_data);
-                $response->set_status(200);
-                return $response;
-
-
 }
 
 /* * End Liggeey * */
