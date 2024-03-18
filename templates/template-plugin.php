@@ -14,7 +14,6 @@ $args = array(
     'post_type' => 'company',
     'posts_per_page' => -1,
 );
-var_dump($selectedValues);
 $companies = get_posts($args);
 if (isset($selectedValues)) {
     
