@@ -12,7 +12,6 @@ class Expert
   public $company;
   public $role;
   public $is_followed;
-
   function __construct($expert,$profilImg) {
     $this->id=(int)$expert->ID;
     $this->name=$expert->display_name;
@@ -186,63 +185,68 @@ function allAuthorsOptimized()
     if(!empty($authors_post))
       foreach ($authors_post as $key => $experts_post) {
         
-        $experts_post-> is_followed = in_array($experts_post->ID,$experts_followed);
+        $experts_post->is_followed = in_array($experts_post->ID,$experts_followed);
         $experts_img = get_field('profile_img','user_'.$experts_post->ID) ? get_field('profile_img','user_'.$experts_post->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $experts = new Expert($experts_post, $experts_img);
         array_push($authors,$experts);
       }
-    return ['authors' => $authors,"codeStatus" => 200];
+    return ['authors' => $authors, "codeStatus" => 200];
 }
 
 function cleanAuthor(){
-    $authors = get_users (
-      [
-          'role__in' => ['author'],
-      ]
-    );
+  global $wpdb;
+  $authors = get_users (array(
+      'role__in' => ['author']
+  ));
 
-    $i = 0;
-
-    $authors_withouting_courses = array();
-
-    foreach($authors as $author) {
-        // $email_author = substr($author->user_email,0,6);
-           // if($author->roles) {
-                //var_dump($author->roles);
-            //} else {
-                //var_dump($author->allcaps['Klant']);
-                //var_dump('klant');
-           // }
-        $artikel = array();
-        $posts = get_posts (
-            array(
-                'post_type' => ['post','course'],
-                'author' => $author->ID
-            )
-        );
-        /*
-        if($posts) {
-            foreach ($posts as $post) {
-                $course_type = get_field('course_type', $post->ID);
-                //var_dump($course_type);
-                if ($course_type === 'Artikel')
-                    $artikel[] = $post;
-                else
-                    var_dump('pas artikel  ' . $author->ID);
-            }
-        }
-        */
-        if (!$posts) {
-            $author->roles[] = $author->ID;
-            $authors_withouting_courses[] = $author->roles ;
-        }
-        $count = count($posts);
-        //if ($count == 0)
-            //wp_delete_user($author->ID);
+  // Remplir la colonne "company_id" par "author_id" si "company_id" nul
+  $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+  $courses = $wpdb->get_results($sql);
+  foreach ($courses as $course):
+    if(!$course->company_id) {
+      $author_id = $course->author_id;
+      $id_course = $course->id;
+      $author_company = get_field('company', 'user_' . $author_id);
+      $company_id_for_this_author = $author_company[0]->ID;
+      //update field company_id
+      
+      $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET company_id = $company_id_for_this_author WHERE id = $id_course");
+      $course_updated = $wpdb->get_results($sql); //
+      echo "<h4>course $id_course id updated, company id is adding</h4>";
     }
-    echo '<h3>Authors without courses :  '. count($authors_withouting_courses). '</h3>';
-    var_dump($authors_withouting_courses);
+  endforeach;
 
+  // Script to delete authors without cours
+  foreach($authors as $author):
+    // Trying to see if this user have one or more posts ?
+    $posts = get_posts (
+        array(
+          'post_type' => ['post','course'],
+          'author' => $author->ID
+        )
+    );
+    // If not post for this author : this user is to deleate
+    if (!$posts)
+      wp_delete_user($author->ID);
+  endforeach;
+
+  //Remplir la colonne "author_id" par "company_id"
+  foreach ($courses as $course):
+    $id_company = get_post($course->company_id)->ID;
+
+    //get all users having in
+    $users = get_users();
+    foreach ($users as $user) {
+        $user_company_id = get_field('company', 'user_' . $user->ID)[0]->ID;
+        if ($user_company_id)
+            if($id_company == $user_company_id){
+                // update the field author_id directly via sql request
+                $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET author_id = $user_company_id WHERE id = $course->id");
+                $course_updated = $wpdb->get_results($sql); //
+                echo "<h4>course $course->id id updated for author_id via company_id</h4>";
+            }
+    }
+  endforeach;
 }
 
 function get_expert_courses ($data) 
@@ -362,7 +366,9 @@ function getExpertCourseOptimized ($data)
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
-        'author'        => $expert->ID
+        // 'meta_key' => 'experts',
+        // 'meta_value' => '3'
+       // 'author'        => $expert->ID
   ));
   $expert_courses = array();
     foreach ($courses as $key => $course) {
@@ -3517,6 +3523,288 @@ endif;
     return [];
    }
   }
+
+  /** 
+   * Statistics Endpoints
+  */
+
+
+
+       function get_user_views($user_id)
+       {
+          global $wpdb;
+          $table_tracker_views = $wpdb->prefix . 'tracker_views';
+          $user_id = $request['user_id'] ?? false;
+          $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id");
+          $results = $wpdb->get_results( $sql );
+          $datas_id = array();
+          if (empty($results))
+          {
+            return [];
+          }
+          foreach ($results as $key => $value) {
+            array_push( $datas_id, $value->data_id);
+          }
+          $courses = get_posts(
+            array
+            (
+              'post_type' => array('course', 'post'),
+              'post__in' => $datas_id
+            )
+          );
+          return $courses;
+       }
+
+       function getUserCourseStastics ($data)
+       {
+          
+          $user_id = $GLOBALS['user_id'];
+          $courses = get_user_views($user_id);
+          $courses;
+       }
+
+      function getUserStatistics($user_id)
+      {
+          global $wpdb;
+          $user_statistics_table = $wpdb->prefix . 'user_statistics';
+          $select_query = "SELECT * FROM $user_statistics_table WHERE user_id = $user_id";
+          $insert_query = "INSERT INTO $user_statistics_table (`id`, `podcast`, `artikel`, `video`, `online`, `location`, `user_id`) VALUES (NULL, '0', '0', '0', '0', '0', $user_id)";
+          $sql = $wpdb->prepare( $select_query );
+          $results = $wpdb->get_results($sql)[0];
+          if (empty($results))
+          {
+            $sql = $wpdb->prepare($insert_query);
+            $wpdb->query($sql);
+            $sql = $wpdb->prepare( $select_query );
+            $results = $wpdb->get_results($sql)[0];
+          }
+          return $results;
+      }
+
+      function formatSecondes($secondes) {
+        $heures = floor($secondes / 3600);
+        $minutes = floor(($secondes % 3600) / 60);
+        $secondes = $secondes % 60;
+        return sprintf("%dh %dmn %ds", $heures, $minutes, $secondes);
+    }
+
+      function getStatisticsOfCourseType (WP_REST_Request $request)
+      {
+        $user_id = $request['user_id'];
+        if (!$user_id)
+        {
+          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $user = get_user_by( 'ID', $user_id ) ?? false;
+        if (!$user)
+        {
+          $response = new WP_REST_Response("This user id filled doesn't exist !");
+          $response->set_status(400);
+          return $response;
+        }
+        $courses = get_user_views($user_id);
+        return $courses; 
+      }
+      
+      function timeSpentOnAllCourseType($data)
+      {
+        $user_id = $data['user_id'] ?? false;
+        if (!$user_id)
+        {
+          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $user = get_user_by( 'ID', $user_id ) ?? false;
+        if (!$user)
+        {
+          $response = new WP_REST_Response("This user id filled doesn't exist !");
+          $response->set_status(400);
+          return $response;
+        } 
+          $results = getUserStatistics($user_id);
+          foreach ($results as $key => $result) {
+            if ($key == 'id' || $key == 'user_id')
+              continue;
+             $results->$key = formatSecondes($results->$key);
+          }
+          return $results;
+      }
+
+      function updateTimeSpentOnCourseType(WP_REST_Request $request)
+      {
+        $user_id = $request['user_id'] ?? false; 
+        if (!$user_id)
+        {
+          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $user = get_user_by( 'ID', $user_id ) ?? false;
+       
+        if (!$user)
+        {
+          $response = new WP_REST_Response("This user id filled doesn't exist !");
+          $response->set_status(400);
+          return $response;
+        }
+        $courseType = $request['course_type'] ?? false;
+        if (!$courseType)
+        {
+          $response = new WP_REST_Response("You have to fill the course type !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $newTimeValue = (int)$request['time_spent'] ?? false;
+        if (!$newTimeValue)
+        {
+          $response = new WP_REST_Response("You have to fill the time spent for the episode !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        global $wpdb;
+        $user_statistics_table = $wpdb->prefix . 'user_statistics';
+        $sql = $wpdb->prepare("SELECT $courseType FROM $user_statistics_table WHERE user_id = $user_id");
+        $timeSpentinSecond = ((int)getUserStatistics($user_id)->$courseType + $newTimeValue);
+        $sql = $wpdb->prepare("UPDATE $user_statistics_table SET $courseType = ($timeSpentinSecond)  WHERE user_id = $user_id");
+        (int)$wpdb->get_results($sql)[0];
+        return $timeSpentinSecond;
+      }
+
+      function getProgressionStatistics ()
+      {
+        $user = $GLOBALS['user_id'] = get_current_user_id();
+        /*
+          * * Courses dedicated of these user "Boughts + Mandatories"
+        */
+
+          $enrolled = array();
+          $enrolled_courses = array();
+
+          //Orders - enrolled courses  
+          $args = array(
+              'customer_id' => $user,
+              'post_status' => array('wc-processing', 'wc-completed'),
+              'orderby' => 'date',
+              'order' => 'DESC',
+              'limit' => -1,
+          );
+          $bunch_orders = wc_get_orders($args);
+
+          foreach($bunch_orders as $order){
+              foreach ($order->get_items() as $item_id => $item ) {
+                  //Get woo orders from user
+                  $id_course = intval($item->get_product_id()) - 1;
+                  $prijs = get_field('price', $course_id);
+                  $expenses += $prijs; 
+                  if(!in_array($id_course, $enrolled))
+                      array_push($enrolled, $id_course);
+              }
+          }
+          if(!empty($enrolled))
+          {
+              $args = array(
+                  'post_type' => 'course', 
+                  'posts_per_page' => -1,
+                  'orderby' => 'post_date',
+                  'order' => 'DESC',
+                  'include' => $enrolled,  
+              );
+              $enrolled_courses = get_posts($args);
+
+              if(!empty($enrolled_courses))
+                  $your_count_courses = count($enrolled_courses);
+          }
+
+          $state = array('todo' => 0, 'progress' => 0, 'done' => 0, 'total' => 0);
+
+          foreach($enrolled_courses as $key => $course) :
+
+              /* * State actual details * */
+              $status = "todo";
+              //Get read by user 
+              $args = array(
+                  'post_type' => 'progression', 
+                  'title' => $course->post_name,
+                  'post_status' => 'publish',
+                  'author' => $user,
+                  'posts_per_page'         => 1,
+                  'no_found_rows'          => true,
+                  'ignore_sticky_posts'    => true,
+                  'update_post_term_cache' => false,
+                  'update_post_meta_cache' => false
+              );
+              $progressions = get_posts($args);
+              if(!empty($progressions)){
+                  $status = "progress";
+                  $progression_id = $progressions[0]->ID;
+                  //Finish read
+                  $is_finish = get_field('state_actual', $progression_id);
+                  if($is_finish)
+                      $status = "done";
+              }
+
+              // Analytics
+              switch ($status) {
+                  case 'todo':
+                      $state['todo']++;
+                      break;
+                  case 'progress':
+                      $state['progress']++;
+                      break;
+                  case 'done':
+                      $state['done']++;
+                      break;
+              }
+
+          endforeach;
+          $state['total'] = $state['todo'] + $state['progress'] + $state['done'];
+          return $state;
+      }
+
+      /** 
+       * Assessment Statistics
+      */
+
+          function getUserAttempts()
+          {
+            $user_id = $GLOBALS['user_id'] = get_current_user_id();
+            $user = get_user_by( 'ID', $user_id);
+            $user_attempts = get_posts(
+              array(
+                  'post_type' => array('response_assessment'), 
+                  'post_status' => 'publish',
+                  'posts_per_page' => -1,
+                  'order' => 'DESC',
+                  'post_author' => $user_id
+            ));
+            $assessment_validated = get_user_meta($user->ID,'assessment_validated');
+            $formated_assessments_validated = array();
+            foreach ($assessment_validated as $key => $value) {
+              if ($value != "")
+                array_push ($formated_assessments_validated,$value);
+
+            }
+            $failed_assessments = count($user_attempts) - count($formated_assessments_validated);
+            $user_assessments_statistics = array (
+              
+              "attempts" => count($user_attempts),
+              "failed" => $failed_assessments,
+              "success" => count($formated_assessments_validated)
+            );
+              return ($user_assessments_statistics);
+          }
+
+      /** 
+       * Assessment Statistics
+      */
+
+
+  /** 
+   * Statistics Endpoints
+  */
   
   function get_user_topics($user_id)
   {
@@ -3544,6 +3832,8 @@ endif;
     }
     return $infos['following_topics'];
   }
+
+  
     
   //* Max Bird *//
   function recommendedWeekly()
