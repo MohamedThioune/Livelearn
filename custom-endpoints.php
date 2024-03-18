@@ -254,8 +254,9 @@ function fillUpAuthor(){
     $users = get_users();
     $find_company = false;
     foreach ($users as $user) :
-          $user_company_id = get_field('company', 'user_' . $user->ID)[0]->ID;
-          if ($user_company_id)
+        //$user_company_id = (get_field('company', 'user_' . $user->ID)) ? get_field('company', 'user_' . $user->ID)[0]->ID : 0;
+        $user_company_id = get_field('company', 'user_' . $user->ID)[0]->ID;
+        if ($user_company_id)
                 if($id_company == $user_company_id){
                     $find_company = true;
                     // update the field author_id directly via sql request
