@@ -49,7 +49,7 @@ function artikel($id){
     $comment['comment_author_name'] = $author_name ;
     $comment['comment_author_image'] = $image_author;
     $comment['rating'] = $review['rating'];
-    $comment['Feedback'] = $review['Feedback'];
+    $comment['feedback'] = $review['feedback'];
 
     $comments[] = $comment;
   endforeach;
@@ -89,9 +89,33 @@ function job($id){
 
   $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
 
-  $sample['applied'] = get_field('job_appliants', $post->ID) ?: 0;
+  $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
+  $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
+  $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
 
   $sample = (Object)$sample;
+
+  // Retrieve the applied 
+  $entity = null;
+  $applied = array();
+  foreach ($sample->applied as $entity) 
+    $applied[] = candidate($entity->ID);
+  $sample->applied = $applied;
+
+  // Retrieve the approved 
+  $entity = null;
+  $approved = array();
+  foreach ($sample->approve as $entity) 
+    $approved[] = candidate($entity->ID);
+  $sample->approved = $approved;
+
+  // Retrieve the rejected 
+  $entity = null;
+  $rejected = array();
+  foreach ($sample->reject as $entity) 
+    $rejected[] = candidate($entity->ID);
+  $sample->rejected = $rejected;
+  
   return $sample;
 }
 
@@ -278,7 +302,10 @@ function validated($required_parameters, $request){
 
   //Check required parameters register
   foreach ($required_parameters as $required):
-    if (!isset($request[$required])):
+    $testin = isset($request[$required]) ? $request[$required] : 0;
+    $testin = ($testin) ?: 0;
+    $testin = ($testin != "") ? $testin : 0;
+    if (!$testin):
       $errors['errors'] = $required . " field is missing !";
       $errors = (Object)$errors;
       $response = new WP_REST_Response($errors);
@@ -463,8 +490,6 @@ function homepage(){
 
 }
 
-
-
 //[POST]Register the company chief
 function register_company(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
@@ -599,9 +624,14 @@ function companyDetail(WP_REST_Request $request){
   $param_post_id = $request['id'] ?? 0;
   $sample = company($param_post_id);
 
+  //Jobs
+  $jobs = [];
+  foreach($sample->open_jobs as $post)
+    $jobs[] = job($post->ID);
+  $sample->open_jobs = $jobs;
+
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
-
   return $response;
 }
 
@@ -707,14 +737,11 @@ function jobDetail(WP_REST_Request $request){
         'posts_per_page' => 3,
         'order'          => 'DESC',
     );
-
     $job_posts = get_posts($args);
     $jobs = array();
-
     foreach ($job_posts as $key => $job_post) 
       if($key < 3)
         $jobs[] = job($job_post->ID);
-
     $sample->other_jobs = $jobs;
 
     //Response
@@ -925,74 +952,6 @@ function liggeeySave(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response;
-}
-
-//comment
-function commentByID(WP_REST_Request $request ) {
-
-  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-  $user = get_user_by('ID', $param_user_id);
-
-  $comments = array();
-  // Retrieve ACF data associated with the post ID
-  $main_reviews = get_field('reviews', $post_id);
-
-  // Loop through each ACF review
-  foreach ($main_reviews as $review) {
-     $user = $review['user']; // Get the user associated with the review
-     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
-
-     $image_author = get_field('profile_img',  'user_' . $user->ID);
-     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-     $rating = $review['rating'];
-     $feedback = $review['Feedback'];
-
-     // Assemble the comment data into an array
-     $comment = array(
-         'comment_author_name' => $author_name,
-         'comment_author_image' => $image_author,
-         'rating' => $rating,
-         'feedback' => $feedback
-
-     );
-     // Add the comment data to the comments array
-     $comments[] = $comment;
-  }
-  // Return the array of comments
-  return $comments;
-
-}
-
-//Add comment
-function addComment(WP_REST_Request $request) {
-  $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
-  $user = get_user_by('ID', $param_user_id);
-  if ($user) {
-      // Récupérer les données du commentaire depuis la requête
-      $review = $request->get_params();
-      // tableau de données pour le commentaire
-      $comment_data = array(
-          'comment_post_ID' => $review['post_id'],
-          'comment_author' => ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name,
-          'comment_approved' => 1,
-          'comment_content' => $review['feedback'],
-      );
-      // Insérer le commentaire
-      $comment_id = wp_insert_comment($comment_data);
-      // les champs feedback et rating
-      update_field('rating', $review['rating'], $comment_id);
-      update_field('Feedback', $review['feedback'], $comment_id);
-
-      // Retourner les données du commentaire inséré
-      $comment = get_comment($comment_id);
-      $response = new WP_REST_Response($comment);
-      $response->set_status(200);
-      return $response;
-  } else {
-      // L'utilisateur n'est pas connecté, retourner une erreur
-      return new WP_Error('user_not_logged_in');
-  }
 }
 
 //[POST]Dashboard User | Home
@@ -1318,13 +1277,117 @@ function updateCompanyProfil(WP_REST_Request $request) {
   return $response;
 }
 
-//[POST]Dashboard Candidate | Profil
-function candidateProfil(WP_REST_Request $request) {
-
-  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $required_parameters = ['userApplyId'];
+//[POST]Apply User | Approve or Reject candidate
+function jobUserApprove(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
- //Check required parameters apply
+  $required_parameters = ['userApplyId', 'jobAppliedId', 'status'];
+
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);
+
+  //Get inputs
+  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
+  $job_applied_id = isset($request['jobAppliedId']) ? $request['jobAppliedId'] : 0;
+  $status = isset($request['status']) ? $request['status'] : 0;
+
+  $user_apply = get_user_by('ID', $user_apply_id);
+
+  //Remove the user in list appliants
+  $appliants = get_field('job_appliants', $job_applied_id);
+  $appliants = ($appliants) ?: array();
+  $key = array_search($user_apply, $appliants);
+  if($key !== false)
+    unset($appliants[$key]);
+  update_field('job_appliants', $appliants, $job_applied_id);
+
+  if(!$status || $status == "" || $status == " "):
+    $response = new WP_REST_Response("No status found !");
+    $response->set_status(200);
+  endif;
+
+  if($status == 'approve'):
+    //Get the approved appliants user
+    $user_appliants = get_field('job_appliants_approved', $job_applied_id);
+    $user_appliants = ($user_appliants) ?: array();
+    //Add the applying user
+    array_push($user_appliants, $user_apply);
+    update_field('job_appliants_approved', $user_appliants, $job_applied_id);
+  elseif($status == "reject"):
+    //Get the rejected appliants user
+    $user_appliants = get_field('job_appliants_rejected', $job_applied_id);
+    $user_appliants = ($user_appliants) ?: array();
+    //Add the applying user
+    array_push($user_appliants, $user_apply);
+    update_field('job_appliants_rejected', $user_appliants, $job_applied_id);
+  endif;
+
+  $success = "User application changed with success !";
+  $response = new WP_REST_Response($success);
+  $response->set_status(200);
+
+  return $response;
+}
+
+//[POST]Apply User | Delete favorite candidate
+function trashFavouriteCandidate(WP_REST_Request $request){
+  $errors = ['errors' => '', 'error_data' => ''];
+  $required_parameters = ['userApplyId', 'userDeleteId'];
+
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);
+
+  //Get inputs
+  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
+  $user_trash_id = isset($request['userDeleteId']) ? $request['userDeleteId'] : 0;
+
+
+  // Récupérer les favoris de l'utilisateur
+  $user_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
+  $user_favourites = array();
+  $user_shorlisted_jobs = [];
+
+  // Vérifier si l'utilisateur a des emplois favoris
+  if ($user_favorites) 
+    foreach ($user_favorites as $favorite):
+      if ($favorite['type'] == 'candidate') :
+        // Récupérer les détails de l'emploi
+        if($favorite['id'] == $user_trash_id)
+          continue;
+      endif;
+
+      $user_shorlisted_jobs['type'] = $favorite['type'];
+      $user_shorlisted_jobs['id'] = $favorite['id'];
+      array_push($user_favourites, $user_shorlisted_jobs);
+    endforeach;
+  
+  update_field('save_liggeey', $user_favourites, 'user_' . $user_apply_id);
+
+  //Remove the user in list appliants
+  $appliants = get_field('job_appliants', $job_applied_id);
+  $appliants = ($appliants) ?: array();
+  $key = array_search($user_apply, $appliants);
+  if($key !== false)
+    unset($appliants[$key]);
+  update_field('job_appliants', $appliants, $job_applied_id);
+
+  $success = "User favorites changed with success !";
+  $response = new WP_REST_Response($success);
+  $response->set_status(200);
+
+  return $response;
+}
+
+//[POST]Dashboard Candidate | Home
+function HomeCandidate(WP_REST_Request $request){
+  $errors = ['errors' => '', 'error_data' => ''];
+  $sample = array();
+  $limit_job = 6;
+
+  $required_parameters = ['userApplyId'];
+  $application = array();
+  $favorite = array();
+
+  //Check required parameters apply
   $validated = validated($required_parameters, $request);
 
   //Get input
@@ -1337,11 +1400,82 @@ function candidateProfil(WP_REST_Request $request) {
     return $response;
   endif;
 
-    $candidate_data = candidate($user_id);
-    // Return response
-    $response = new WP_REST_Response($candidate_data);
-    $response->set_status(200);
+  //Jobs
+  $args = array(
+    'post_type' => array('job'),  
+    'post_status' => 'publish',
+    'posts_per_page' => $limit_job,
+    'ordevalue' => $user_apply,
+    'order' => 'DESC' ,
+  );
+  $job_posts = get_posts($args);
+  $suggestion_jobs = array();
+  $count_applied = 0;
+
+  foreach ($job_posts as $post) :
+    if(count($suggestion_jobs) < 6 )
+      $suggestion_jobs[] = job($post->ID);
+    $user_applied_jobs = get_field('job_appliants', $post->ID);
+    foreach($user_applied_jobs as $userapply)
+      if($userapply->ID == $userApplyId)
+        $count_applied += 1;
+        // $applied_jobs[] = job($post->ID);
+  endforeach;
+  $sample['count_applied_jobs'] = $count_applied;
+ 
+  //Job alerts 
+  $sample['count_job_alerts'] = 0;
+  /** Instrtuctions should be there */
+
+  //Favorite company
+  $main_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
+
+  foreach($main_favorites as $favo):
+    if(!$favo)
+      continue;
+    if($favo['type'] != 'company' && $favo['type'] != 'job')
+      continue;
+    $user_id = $favo['id'];
+    $user = get_user_by('ID', $user_id);
+    if(!$user)
+      continue;
+    $favorite[] = candidate($user->ID);
+  endforeach;
+  // $sample['favorite'] = $favorite;
+  $sample['count_favorite'] = ($favorite) ? count($favorite) : 0;
+
+  $sample['suggestion_jobs'] = $suggestion_jobs;
+  $sample = (Object)$sample;
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response;
+}
+
+//[POST]Dashboard Candidate | Profil
+function candidateProfil(WP_REST_Request $request) {
+
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $required_parameters = ['userApplyId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);
+
+  //Get input
+  $user_apply_id = $request['userApplyId'];
+  $user_apply = get_user_by('ID', $user_apply_id);
+  if(!$user_apply):
+    $errors['errors'] = 'User not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
     return $response;
+  endif;
+
+  $candidate_data = candidate($user_id);
+  // Return response
+  $response = new WP_REST_Response($candidate_data);
+  $response->set_status(200);
+  return $response;
 }
 
 //[POST]Dashboard Candidate | Update | Profil
@@ -1429,7 +1563,6 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
   $response = new WP_REST_Response($user_shorlisted_jobs);
   $response->set_status(200);
   return $response;
-
 }
 
 //[POST]Dashboard Candidate | Skills passport
