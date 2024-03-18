@@ -175,7 +175,7 @@
                 <?php if($list_of_all_employees): ?>
                 <span class="alert alert-success ">people from loket are available</span>
                 <?php endif ?>
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center group-btn-mensen">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
                         <button class="btn  salary-administration  btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

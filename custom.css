@@ -22411,6 +22411,9 @@ figure ul li {
     display: none;
     z-index: 99;
 }
+#sectionDashboard1 .btn-close-sidbar i{
+    display: none;
+}
 .playlist-course-block .pagination-container , .list-content-podcast .pagination-container, .section-tabs .pagination-container {
     padding: 20px 0 25px !important;
 }
@@ -22876,6 +22879,37 @@ figure ul li {
 }
 .owl-carousel-modal .owl-dots {
     display: none;
+}
+#for-search-element .secondUlModal li {
+    width: 33%;
+    padding: 0 15px;
+}
+#for-search-element .secondUlModal {
+    margin-left: -20px;
+}
+.card-suggestion-for-search{
+    width: 100%;
+}
+#for-search-element .card-suggestion-for-search .subtitleSousElementHeader {
+    color: #043356;
+    font-size: 15px;
+    margin-bottom: 2px;
+    font-weight: 600;
+}
+#for-search-element .card-suggestion-for-search .subbategory{
+    margin-bottom: 0;
+}
+#for-search-element ul li a .blockImg {
+    width: 45px;
+    height: 45px;
+    margin-right: 11px;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 5px;
+}
+#for-search-element .secondUlModal li a:hover {
+    font-weight: 500;
+    background: #0000000d;
 }
 
 /*responsive mobile*/
@@ -27535,17 +27569,23 @@ figure ul li {
         margin: 60px 15px 15px;
     }
     .btn-show-sidbar{
-        display: block;
+        display: block !important;
         margin: 50px 15px 0;
         width: 93%;
-        border: 1px solid #00a89d;
-        padding: 13px 5px;
-        border-radius: 15px;
-        color: #043356;
+        border: 1px solid #00a89d !important;
+        padding: 13px 5px !important;
+        border-radius: 15px !important;
+        color: #043356 !important;
     }
     .btn-show-sidbar:hover{
         background: #00a89d;
         color: #FFFFFF;
+    }
+    #sectionDashboard1 .btn-close-sidbar i{
+        display: none;
+    }
+    .btn-close-sidbar {
+        display: block;
     }
     .header-user {
         background: #e1eff5;
@@ -27792,7 +27832,26 @@ figure ul li {
    .scrolled-modal .btn-close-modal-search {
         color: white;
     }
-
+    .contentCardAlloccate .table; .contentListeCourse .pagination-container{
+        display: block !important;
+        width: auto !important;
+        overflow: scroll;
+    }
+    .group-btn-mensen{
+        flex-wrap: wrap;
+    }
+    .add-people-manualy {
+        margin-right: 0px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .group-btn-mensen .custom-dropdown-select, .group-btn-mensen .custom-dropdown-select button {
+        width: 100%;
+    }
+    #for-search-element .secondUlModal li {
+        width: 100%;
+        padding: 0 15px;
+    }
 
 }
 

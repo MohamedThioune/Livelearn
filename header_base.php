@@ -1069,123 +1069,87 @@ $url = home_url( $wp->request );
                                 <p class="title-search">Suggesties</p>
                                 <ul class="secondUlModal ">
                                     <li>
-                                        <a href="/product-search?filter=Opleidingen">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleidingen-Header.jpg" alt="">
+                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
+                                            <div class="d-flex">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleidingen-Header.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
+                                                    <p class="subbategory">IT/developpement</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Opleidingen</p>
-                                            </div>
+                                            <p class="price mb-0">Free</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=E-learning">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/E-learning-header.jpg" alt="">
+                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
+                                            <div class="d-flex">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
+                                                    <p class="subbategory">IT/developpement</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">E-Learnings</p>
-                                            </div>
+                                            <p class="price mb-0">Free</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=Lezing">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Lezingen-header.jpg" alt="">
+                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
+                                            <div class="d-flex">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
+                                                    <p class="subbategory">IT/developpement</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Lezingen</p>
-                                            </div>
+                                            <p class="price mb-0">Free</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=Training">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
+                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
+                                            <div class="d-flex">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
+                                                    <p class="subbategory">IT/developpement</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Trainingen</p>
-                                            </div>
+                                            <p class="price mb-0">Free</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=Video">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Video's-header.jpg" alt="">
+                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
+                                            <div class="d-flex">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
+                                                    <p class="subbategory">IT/developpement</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Video's</p>
-                                            </div>
+                                            <p class="price mb-0">Free</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=Event">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Evens-header.jpg" alt="">
+                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
+                                            <div class="d-flex">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
+                                                    <p class="subbategory">IT/developpement</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Events</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/product-search?filter=Workshop">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/workshop.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Workshops</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/product-search?filter=Artikel">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Artikelen-header.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Artikelen</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/product-search?filter=Webinar">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/webinar-header.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Webinars</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/product-search?filter=Masterclass">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Masterclasses-header.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Masterclasses</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/product-search?filter=Assessment">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Assessments-header.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Assessments</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/product-search?filter=Podcast">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcasts-header.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="subtitleSousElementHeader">Podcasts</p>
-                                            </div>
+                                            <p class="price mb-0">Free</p>
                                         </a>
                                     </li>
                                 </ul>
