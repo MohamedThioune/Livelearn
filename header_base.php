@@ -1156,8 +1156,6 @@ $url = home_url( $wp->request );
                             </div>
                         </div>
                     </section>
-
-
                 </div>
             </div>
 
