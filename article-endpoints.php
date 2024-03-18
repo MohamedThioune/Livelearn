@@ -364,7 +364,7 @@ function Artikel_From_Company($data)
     if($data_found==1)
     echo "datas founded and recordered in Databank";
     else
-     echo "datas not founded so we have no record in Databank";
+     echo "new datas not founded so we have no record in Databank";
 }
 
 function xmlParse($data)
@@ -504,7 +504,7 @@ function xmlParse($data)
             //* MaxBird was there *//
            
             //Accord the author a company
-           $informations=addAuthor($users,$post['org']);
+        $informations=addAuthor($users,$post['org']);
          $author_id= $informations['author'];
          $company_id=$informations['company'];
             //Fill the company if do not exist "next-version"
