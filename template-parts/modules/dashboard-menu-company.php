@@ -142,9 +142,9 @@
 </style>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
-    <!-- <button  class="btn btn-close-sidbar">
+    <button class="btn btn-close-sidbar">
         <i class="fa fa-close"></i>
-    </button> -->
+    </button>
     <div class="row">
         <div class="col">
             <div class="theme-side-menu__list" style="color:#212529">
@@ -188,28 +188,6 @@
                             if($option_menu[2] == 'learning-databank') echo '<span><b>Leer-databank</b></span>'; else echo '<span>Leer-databank</span>';
                             ?>
                         </a>
-                    </li>
-                    <li class="elementTextDashboard">
-                        <button href="#" class="d-flex berichtenBtn">
-                            <div class="d-flex">
-                                <div class="elementImgSidebar" >
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
-                                </div>
-                                <span>Leerbudgetten</span>
-                            </div>
-                            <span class="comming-soon">Coming Soon</span>
-                        </button>
-                    </li>
-                    <li class="elementTextDashboard">
-                        <button href="#" class="d-flex berichtenBtn">
-                            <div class="d-flex">
-                                <div class="elementImgSidebar" >
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
-                                </div>
-                                <span>Berichten</span>
-                            </div>
-                            <span class="comming-soon">Coming Soon</span>
-                        </button>
                     </li>
                     <li class="elementTextDashboard">
                         <a href="/dashboard/company/statistic" class="d-flex">
