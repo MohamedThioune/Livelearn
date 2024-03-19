@@ -1845,8 +1845,6 @@ add_action( 'rest_api_init', function () {
   'callback' => 'companyProfil'
   ));
 
-<<<<<<< HEAD
-=======
   register_rest_route ('custom/v1', '/user/application', array(
     'methods' => 'POST',
     'callback' => 'jobUserApprove'
@@ -1857,7 +1855,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'trashFavouriteCandidate'
   ));
 
->>>>>>> 912b03e1d50bc2883509baea2b7a7047c22f0411
   // register_rest_route ('custom/v1', '/candidate/profil', array(
   //   'methods' => 'GET',
   //   'callback' => 'candidateProfil'
@@ -1892,33 +1889,25 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'candidateSkillsPassport'
   ));
-<<<<<<< HEAD
 
   register_rest_route ('custom/v1', '/company/Profil/update', array(
     'methods' => 'POST',
     'callback' => 'updateCompanyProfil'
   ));
 
-    register_rest_route ('custom/v1', '/candidate/skills_passport', array(
-    'methods' => 'POST',
-     'callback' => 'candidateSkillsPassport'
-    ));
-
-    register_rest_route ('custom/v1', '/company/updateProfil', array(
-    'methods' => 'PUT',
-    'callback' => 'updateCompanyProfil'
-    ));
-
-    register_rest_route ('custom/v1', '/candidate/countUserAppliedJobs', array(
-    'methods' => 'POST',
-    'callback' => 'countUserAppliedJobsAndFavorites'
-    ));
-=======
-  
-  register_rest_route ('custom/v1', '/company/updateProfil', array(
-    'methods' => 'POST',
-    'callback' => 'updateCompanyProfil'
+  register_rest_route ('custom/v1', '/candidate/skills_passport', array(
+  'methods' => 'POST',
+    'callback' => 'candidateSkillsPassport'
   ));
->>>>>>> 912b03e1d50bc2883509baea2b7a7047c22f0411
+
+  register_rest_route ('custom/v1', '/company/updateProfil', array(
+  'methods' => 'PUT',
+  'callback' => 'updateCompanyProfil'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/countUserAppliedJobs', array(
+  'methods' => 'POST',
+  'callback' => 'countUserAppliedJobsAndFavorites'
+  ));
 
 });
