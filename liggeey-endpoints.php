@@ -105,14 +105,14 @@ function job($id){
   // Retrieve the approved 
   $entity = null;
   $approved = array();
-  foreach ($sample->approve as $entity) 
+  foreach ($sample->approved as $entity) 
     $approved[] = candidate($entity->ID);
   $sample->approved = $approved;
 
   // Retrieve the rejected 
   $entity = null;
   $rejected = array();
-  foreach ($sample->reject as $entity) 
+  foreach ($sample->rejected as $entity) 
     $rejected[] = candidate($entity->ID);
   $sample->rejected = $rejected;
 
@@ -1732,7 +1732,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         }
 
     endforeach;
-    
+
     //favorite course
     $course_saved = get_user_meta($user_id, 'course') ?? false ;
     $courses = get_posts(

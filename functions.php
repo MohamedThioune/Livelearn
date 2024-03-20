@@ -1885,7 +1885,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateShorlistedJobs'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/skills_passport', array(
+  register_rest_route ('custom/v1', '/candidate/skillsPassport', array(
     'methods' => 'POST',
     'callback' => 'candidateSkillsPassport'
   ));
@@ -1893,16 +1893,6 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/company/Profil/update', array(
     'methods' => 'POST',
     'callback' => 'updateCompanyProfil'
-  ));
-
-  register_rest_route ('custom/v1', '/candidate/skills_passport', array(
-  'methods' => 'POST',
-    'callback' => 'candidateSkillsPassport'
-  ));
-
-  register_rest_route ('custom/v1', '/company/updateProfil', array(
-  'methods' => 'PUT',
-  'callback' => 'updateCompanyProfil'
   ));
 
   register_rest_route ('custom/v1', '/candidate/countUserAppliedJobs', array(
