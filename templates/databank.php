@@ -954,7 +954,7 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/artikels",
+                url: "/livelearn/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
@@ -965,7 +965,7 @@ if (!empty($courses)) {
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    location.reload();
+                   location.reload();
                 }
             });
         });

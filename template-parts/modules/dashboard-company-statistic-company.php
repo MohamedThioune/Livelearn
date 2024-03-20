@@ -386,9 +386,9 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                 </div>
                 <div class="usage-block-card-team">
                     <h2>Usage desktop vs Mobile app</h2>
-                    <div>
+                    <!-- <div>
                         <canvas id="ChartDesktopMobile"></canvas>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <?php
