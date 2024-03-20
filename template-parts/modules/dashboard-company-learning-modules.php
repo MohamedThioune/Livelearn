@@ -284,7 +284,7 @@ $orders = wc_get_orders($order_args);
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
             <?php 
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
-                    echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
+                    echo '<a href="/dashboard/teacher/course-selection/" target="_blank" class="btnNewCourse">Nieuwe course</a>';
             ?>
         </div>
 
@@ -432,7 +432,7 @@ $orders = wc_get_orders($order_args);
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
                                     <?php
                                     if($course->post_author == $user_in->ID || in_array('hr', $user_in->roles) || in_array('administrator', $user_in->roles) ){
-                                        echo '<li class="my-2"><i class="fa fa-gear px-2"></i><a href="' . $path_edit . '">Pas aan</a></li>';
+                                        echo '<li class="my-2"><i class="fa fa-gear px-2"></i><a href="' . $path_edit . '" target="_blank">Pas aan</a></li>';
                                         echo '<li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>';
                                     }
                                     ?>
@@ -457,7 +457,7 @@ $orders = wc_get_orders($order_args);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        const itemsPerPage = 10;
+        const itemsPerPage = 20;
         const $rows = $('.pagination-element-block');
         const pageCount = Math.ceil($rows.length / itemsPerPage);
         let currentPage = 1;

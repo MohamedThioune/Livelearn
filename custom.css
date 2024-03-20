@@ -22912,14 +22912,14 @@ figure ul li {
     font-weight: 500;
     background: #0000000d;
 }
-.contentEducationCandidat .first-block-portfolio{
+.first-block-portfolio{
     width: 85%;
 }
-.contentEducationCandidat .content-btn{
+.contentBlockSetting .content-btn{
     justify-content: right;
     width: 15%;
 }
-.contentEducationCandidat .btn-remove{
+.contentBlockSetting .btn-remove{
     color: #d93025 !important;
     background: #d9302526 !important;
     padding: 8px;
@@ -22928,7 +22928,7 @@ figure ul li {
     border: none;
     height: fit-content;
 }
-.contentEducationCandidat .btn-edit{
+.contentBlockSetting .btn-edit{
     color: #00a89d !important;
     background: #00a89d30 !important;
     padding: 8px;
@@ -22937,9 +22937,6 @@ figure ul li {
     border: none;
     height: fit-content;
     margin-right: 10px;
-}
-.contentEducationCandida .fa{
-    font-weight: 500;
 }
 
 /*responsive mobile*/
