@@ -205,7 +205,7 @@ $podcast_single = "Podcast";
 
 <script>
     $(document).ready(function() {
-        const itemsPerPage = 10;
+        const itemsPerPage = 20;
         const $rows = $('.pagination-element-block');
         const pageCount = Math.ceil($rows.length / itemsPerPage);
 
