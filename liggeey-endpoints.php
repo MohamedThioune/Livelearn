@@ -92,7 +92,6 @@ function job($id){
   $sample['applied'] = get_field('job_appliants', $post->ID) ?: 0;
 
   $sample = (Object)$sample;
-<<<<<<< HEAD
 
   // Retrieve the applied 
   $entity = null;
@@ -115,8 +114,6 @@ function job($id){
     $rejected[] = candidate($entity->ID);
   $sample->rejected = $rejected;
 
-=======
->>>>>>> origin/peinda
   return $sample;
 }
 
@@ -1113,12 +1110,14 @@ function JobsUser(WP_REST_Request $request){
     return $response;
   endif;
 
-  //Job company
-  $post = get_field('company', 'user_' . $user_apply_id);
-  $post_id = $post->ID;
-  $company = company($post[0]->ID);
-  $jobs = $company->open_jobs;
-  // $sample['count_open_jobs'] = $company->count_open_jobs;
+  //Jobs company
+  $args = array(
+    'post_type' => 'job',  
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC' ,
+  );
+  $jobs = get_posts($args);
   foreach($jobs as $post)
     $open_jobs[] = job($post->ID);
 
@@ -1306,94 +1305,55 @@ function companyProfil(WP_REST_Request $request){
 }
 
 //[POST]Dashboard User | Update | Profil ? Look carefully this function
-<<<<<<< HEAD
-function updateCompanyProfil(WP_REST_Request $request) {
-=======
  function updateCompanyProfil(WP_REST_Request $request) {
-
-    $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-
-        // Retourner la liste des emplois auxquels le candidat a postulé
-            $company_id = get_field('company', 'user_' . $user_id)[0];
-           // var_dump($company_id);
-
-        if (!$company_id) {
-            $errors['errors'] = 'company not found';
-            $response = new WP_REST_Response($errors);
-            $response->set_status(401);
-            return $response;
-        }
-            $company_data = company($company_id);
-
-           // the parameters REST request
-                $updated_data = $request->get_params();
-              // Update Fields
-                foreach ($updated_data as $field_name => $field_value) {
-                    update_field($field_name, $field_value, $company_id);
-                }
-                   // Return response
-                $updated_company_data = company($company_id);
-                $response = new WP_REST_Response($updated_company_data);
-                $response->set_status(200);
-                return $response;
-
-
-}
-
-//[POST]Dashboard Candidate | Profil
-function candidateProfil(WP_REST_Request $request) {
-
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $required_parameters = ['userApplyId'];
-  $errors = ['errors' => '', 'error_data' => ''];
- //Check required parameters apply
-  $validated = validated($required_parameters, $request);
 
-  //Get input
-  $user_apply_id = $request['userApplyId'];
-  $user_apply = get_user_by('ID', $user_apply_id);
-  if(!$user_apply):
-    $errors['errors'] = 'User not found';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-  endif;
+  // Retourner la liste des emplois auxquels le candidat a postulé
+      $company_id = get_field('company', 'user_' . $user_id)[0];
+      // var_dump($company_id);
 
-    $candidate_data = candidate($user_id);
-    // Return response
-    $response = new WP_REST_Response($candidate_data);
-    $response->set_status(200);
-    return $response;
+  if (!$company_id) {
+      $errors['errors'] = 'company not found';
+      $response = new WP_REST_Response($errors);
+      $response->set_status(401);
+      return $response;
+  }
+
+  $company_data = company($company_id);
+
+  // Parameters REST request
+  $updated_data = $request->get_params();
+  // Update Fields
+  foreach ($updated_data as $field_name => $field_value) :
+    if($field_value)
+    if($field_value != '' && $field_value != ' ')
+      update_field($field_name, $field_value, $company_id);
+  endforeach;
+
+  // Return response
+  $updated_company_data = company($company_id);
+  $response = new WP_REST_Response($updated_company_data);
+  $response->set_status(200);
+  
+  return $response;
 }
 
 //[POST]Dashboard Candidate | Update | Profil
 function updateCandidateProfil(WP_REST_Request $request) {
->>>>>>> origin/peinda
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
   $required_parameters = ['userApplyId'];
   $errors = ['errors' => '', 'error_data' => ''];
-<<<<<<< HEAD
-
-  $validated = validated($required_parameters, $request);
-
-  // Data User
-  $company_data = company($user_id); //?
-
-  if (!$company_data) {
-=======
   $validated = validated($required_parameters, $request);
 
   //Data User
   $candidate_data = candidate($user_id);
 
   if (!$candidate_data) {
->>>>>>> origin/peinda
       $errors['errors'] = 'User not found';
       $response = new WP_REST_Response($errors);
       $response->set_status(401);
       return $response;
-<<<<<<< HEAD
   }
   // Parameters REST request
   $updated_data = $request->get_params();
@@ -1613,45 +1573,6 @@ function candidateProfil(WP_REST_Request $request) {
   return $response;
 }
 
-//Update candidateProfil
-function updateCandidateProfil(WP_REST_Request $request) {
-
-  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $required_parameters = ['userApplyId'];
-  $errors = ['errors' => '', 'error_data' => ''];
-
-  //Data User
-  $candidate_data = candidate($user_id);
-  $validated = validated($required_parameters, $request);
-  // Data User
-  $candidate_data = candidate($user_id);
-
-  if (!$candidate_data) {
-    $errors['errors'] = 'User not found';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-=======
->>>>>>> origin/peinda
-  }
-
-  // Parameters REST request
-  $updated_data = $request->get_params();
-
-  // Update Fields
-  foreach ($updated_data as $field_name => $field_value):
-      if($field_value)
-      if($field_value != '' && $field_value != ' ')
-        update_field($field_name, $field_value, 'user_' . $user_id);
-  endforeach;
-
-  // Return response
-  $updated_candidate_data = candidate($user_id);
-  $response = new WP_REST_Response($updated_candidate_data);
-  $response->set_status(200);
-  return $response;
-}
-
 //[POST]Dashboard Candidate | Applied Jobs
 function candidateAppliedJobs(WP_REST_Request $request) {
   $args = array(
@@ -1797,53 +1718,47 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         }
 
     endforeach;
-<<<<<<< HEAD
-=======
-      //favorite course
-          $courses_saved = get_user_meta($user_id, 'course') ?? false;
-          $courses = get_posts(
-              array(
-                  'post_type' => array('course', 'post'),
-                  'post_status' => 'publish',
-                  'posts_per_page' => -1,
-                  'order' => 'DESC',
-                  'include' => $courses_saved
-              )
-          );
+    //favorite course
+    $courses_saved = get_user_meta($user_id, 'course') ?? false;
+    $courses = get_posts(
+        array(
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'order' => 'DESC',
+            'include' => $courses_saved
+        )
+    );
+    $courses_combined = array();
+    foreach ($courses as $course) {
+        //data courses
+        $course_info = array(
+            'post_id' => $course->ID,
+            'post_title' => $course->post_title,
 
-          $courses_combined = array();
+        );
 
-          foreach ($courses as $course) {
-              //data courses
-              $course_info = array(
-                  'post_id' => $course->ID,
-                  'post_title' => $course->post_title,
+        $thumbnail_url = get_the_post_thumbnail_url($course->ID);
+        $price = get_field('price', $course->ID);
+        if ($price != "0") {
+            $formatted_price = '$' . number_format($price, 2, '.', ',');
+        } else {
+            $formatted_price = 'Gratis';
+        }
+        $author = get_user_by('ID', $course->post_author);
+        $author_name = $author->display_name ?: $author->first_name;
 
-              );
+          //data additional
+        $course_combined_info = array_merge($course_info, array(
+            'thumbnail_url' => $thumbnail_url,
+            'price' => $formatted_price,
+            'author_name' => $author_name,
 
-              $thumbnail_url = get_the_post_thumbnail_url($course->ID);
-              $price = get_field('price', $course->ID);
-              if ($price != "0") {
-                  $formatted_price = '$' . number_format($price, 2, '.', ',');
-              } else {
-                  $formatted_price = 'Gratis';
-              }
-              $author = get_user_by('ID', $course->post_author);
-              $author_name = $author->display_name ?: $author->first_name;
+        ));
 
-                //data additional
-              $course_combined_info = array_merge($course_info, array(
-                  'thumbnail_url' => $thumbnail_url,
-                  'price' => $formatted_price,
-                  'author_name' => $author_name,
-
-              ));
-
-              // table
-              $courses_combined[] = $course_combined_info;
-          }
-
->>>>>>> origin/peinda
+        // table
+        $courses_combined[] = $course_combined_info;
+    }
 
     //favorite course
     $course_saved = get_user_meta($user_id, 'course') ?? false ;
@@ -1865,14 +1780,8 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     if (!empty($topics_external))
         $topics = $topics_external;
 
-<<<<<<< HEAD
-    if (!empty($topics_internal))
-        foreach ($topics_internal as $value)
-            array_push($topics, $value);
-=======
      $skills_note = get_field('skills', 'user_' . $user_id);
      $count_skills_note = (empty($skills_note)) ? 0 : count($skills_note);
->>>>>>> origin/peinda
 
     $skills_note = get_field('skills', 'user_' . $user_id);
     $topics_with_notes = array();
@@ -1959,8 +1868,4 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     return $response;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/peinda
 /* * End Liggeey * */

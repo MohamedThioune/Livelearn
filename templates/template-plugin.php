@@ -36,7 +36,7 @@ if (isset($selectedValues)) {
         foreach ($artikels as $article) {
             // $onderwerpen = trim($onderwerpen);
 
-            if ($article != null) {
+            if (!$article) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
                 $result_title = $wpdb->get_results($sql_title);
                 

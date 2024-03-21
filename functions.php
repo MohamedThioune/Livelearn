@@ -1800,7 +1800,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCoursesOptimized',
   ));
 
-  register_rest_route ('custom/v1', '/apply', array(
+  register_rest_route ('custom/v1', '/apply', array( 
     'methods' => 'POST',
     'callback' => 'jobUser'
   ));
