@@ -17,7 +17,7 @@
 
   <?php
   /** Template Name: xml parse */  
-
+  require 'add-author.php';
   global $wpdb;
 
   extract($_POST);
@@ -113,59 +113,67 @@
       $users = get_users();
 
       //Implement author of this course
-      foreach($users as $user) {
-        $company_user = get_field('company',  'user_' . $user->ID);
+      // foreach($users as $user) {
+      //   $company_user = get_field('company',  'user_' . $user->ID);
         
-        if(trim(strtolower($company_user[0]->post_title)) == trim(strtolower(strval($post['org']))) ){
-          $author_id = $user->ID;
-          $company = $company_user[0];
-          $company_id = $company_user[0]->ID;  
-        }
-      }
+      //   if(trim(strtolower($company_user[0]->post_title)) == trim(strtolower(strval($post['org']))) ){
+
+      //     $author_id = $user->ID;
+      //     $company = $company_user[0];
+      //     $company_id = $company_user[0]->ID;  
+      //   }
+      // }
   
-      if(!$author_id)
-      {
-        $args = array(
-            'post_type' => 'company', 
-            'posts_per_page' => -1,
-        );
+      // if(!$author_id)
+      // {
+      //   // $informations = addAuthor($users, $post['org']);
+      //   // $author_id = $informations['author_id'];
+      //   // $company_id = $informations['company_id'];
+      //   $args = array(
+      //       'post_type' => 'company', 
+      //       'posts_per_page' => -1,
+      //   );
 
-        $companies = get_posts($args);
-        foreach($companies as $value) 
-          if(trim(strtolower($value->post_title)) == trim(strval($post['org']))  ){
-            $company = $value;
-            $company_id = $value->ID;
-            break;
-          }
+      //   $companies = get_posts($args);
+      //   foreach($companies as $value) 
+      //     if(trim(strtolower($value->post_title)) == trim(strval($post['org']))  ){
+      //       $company = $value;
+      //       $company_id = $value->ID;
+      //       break;
+      //     }
 
-        $login = RandomString();
-        $password = RandomString();
-        $random = RandomString();
-        $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
-        $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomString();;
-        $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomString();
-        $display_name = ($first_name ) ?? RandomString();
+      //   $login = RandomString();
+      //   $password = RandomString();
+      //   $random = RandomString();
+      //   $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
+      //   $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomString();;
+      //   $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomString();
+      //   $display_name = ($first_name ) ?? RandomString();
 
-        $userdata = array(
-            'user_pass' => $password,
-            'user_login' => $login,
-            'user_email' => $email,
-            'user_url' => 'https://livelearn.nl/inloggen/',
-            'display_name' => $display_name,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'role' => 'author'
-        );
+      //   $userdata = array(
+      //       'user_pass' => $password,
+      //       'user_login' => $login,
+      //       'user_email' => $email,
+      //       'user_url' => 'https://livelearn.nl/inloggen/',
+      //       'display_name' => $display_name,
+      //       'first_name' => $first_name,
+      //       'last_name' => $last_name,
+      //       'role' => 'author'
+      //   );
 
-        $author_id = wp_insert_user(wp_slash($userdata));       
-      }
+      //   $author_id = wp_insert_user(wp_slash($userdata));       
+      // }
 
       //Accord the author a company
-      if(!is_wp_error($author_id))
-        update_field('company', $company, 'user_' . $author_id);
+      // if(!is_wp_error($author_id))
+      //   update_field('company', $company, 'user_' . $author_id);
 
       //Fill the company if do not exist "next-version"
-    
+        $informations = addAuthor($users, $post['org']);
+         $author_id = $informations['author'];
+        $company_id = $informations['company'];
+         echo "<span class='textOpleidRight'> Course_ID: " . $author_id. " - Insertion done successfully <br><br></span>";
+      
       $title = explode(' ', strval($datum->programDescriptions->programName));
       $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
       $description_html = explode(' ', strval($datum->programDescriptions->programSummaryHtml));    

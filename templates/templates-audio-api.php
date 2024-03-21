@@ -201,10 +201,21 @@ if ($audio_search){
         echo $message;
         return;
     }else{
-        $xml = simplexml_load_file($url);
         $podcasts="";
-        foreach($xml->channel[0] as $key => $pod) {
-            if($pod->enclosure->attributes()->url) {
+        $content_podcasts = array();
+        $xml = simplexml_load_file($url);
+        if($xml) {
+            $content_podcasts = $xml->channel[0];
+        } else {
+            $ch2 = curl_init();
+            curl_setopt($ch2, CURLOPT_URL, $url);
+            curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+            $content = curl_exec($ch2);
+            curl_close($ch2);
+            $content_podcasts = $content;
+        }
+        foreach ($content_podcasts as $key => $pod) {
+            if ($pod->enclosure->attributes()->url) {
                 $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
                 $mp3 = $pod->enclosure->attributes()->url;

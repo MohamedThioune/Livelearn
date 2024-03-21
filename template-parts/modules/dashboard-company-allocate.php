@@ -100,42 +100,6 @@ $users = get_users();
                             <td class="textTh text-center">Mohamed Thioune</td>
                             <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
                         </tr>
-                        <tr id="" >
-                            <td scope="row">2</td>
-                            <td class="textTh thModife">
-                                <div class="ImgUser">
-                                    <a href="" >
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/placeholder_user.png" class="" alt="">
-                                    </a>
-                                </div>
-                            </td>
-                            <td class="textTh text-center">Mohamed Thioune</td>
-                            <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
-                        </tr>
-                        <tr id="" >
-                            <td scope="row">3</td>
-                            <td class="textTh thModife">
-                                <div class="ImgUser">
-                                    <a href="" >
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/placeholder_user.png" class="" alt="">
-                                    </a>
-                                </div>
-                            </td>
-                            <td class="textTh text-center">Mohamed Thioune</td>
-                            <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
-                        </tr>
-                        <tr id="" >
-                            <td scope="row">4</td>
-                            <td class="textTh thModife">
-                                <div class="ImgUser">
-                                    <a href="" >
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/placeholder_user.png" class="" alt="">
-                                    </a>
-                                </div>
-                            </td>
-                            <td class="textTh text-center">Mohamed Thioune</td>
-                            <td class="textTh text-center"><input class='form-check-input' type='checkbox' value="" id=""></td>
-                        </tr>
                     </tbody>
                 </table>
 
