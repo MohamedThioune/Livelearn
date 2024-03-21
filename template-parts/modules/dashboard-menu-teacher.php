@@ -33,7 +33,6 @@
         'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
         'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
     );
-
     // create endpoint with params
     $api_endpoint = $endpoint . '?' . http_build_query( $params );
 
