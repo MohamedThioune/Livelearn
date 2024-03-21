@@ -460,6 +460,7 @@ $orders = wc_get_orders($order_args);
         const itemsPerPage = 20;
         const $rows = $('.pagination-element-block');
         const pageCount = Math.ceil($rows.length / itemsPerPage);
+        let currentPage = 1;
 
         function showPage(page) {
             const startIndex = (page - 1) * itemsPerPage;
@@ -476,35 +477,60 @@ $orders = wc_get_orders($order_args);
 
         function createPaginationButtons() {
             const $paginationContainer = $('.pagination-container');
-            let firstButtonAdded = false;
 
             if (pageCount <= 1) {
                 $paginationContainer.css('display', 'none');
                 return;
             }
 
+            const $prevButton = $('<button>&lt;</button>').on('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                }
+            });
+
+            const $nextButton = $('<button>&gt;</button>').on('click', function() {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                }
+            });
+
+            $paginationContainer.append($prevButton);
+
             for (let i = 1; i <= pageCount; i++) {
                 const $button = $('<button></button>').text(i);
                 $button.on('click', function() {
-                    showPage(i);
-
-                    $('.pagination-container button').removeClass('active');
-                    $(this).addClass('active');
+                    currentPage = i;
+                    showPage(currentPage);
+                    updatePaginationButtons();
                 });
 
-                if (!firstButtonAdded) {
-                    $button.addClass('active');
-                    firstButtonAdded = true;
+                if (i === 1 || i === pageCount || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    $paginationContainer.append($button);
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    $paginationContainer.append($('<span>...</span>'));
                 }
-
-                $paginationContainer.append($button);
             }
+
+            $paginationContainer.append($nextButton);
         }
 
-        showPage(1);
+        function updatePaginationButtons() {
+            $('.pagination-container button').removeClass('active');
+            $('.pagination-container button').filter(function() {
+                return parseInt($(this).text()) === currentPage;
+            }).addClass('active');
+        }
+
+        showPage(currentPage);
         createPaginationButtons();
     });
 </script>
+
 
 
 <script>
