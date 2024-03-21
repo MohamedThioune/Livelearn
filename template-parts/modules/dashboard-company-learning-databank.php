@@ -428,7 +428,7 @@
                                 $course_type = 'Artikel';
 
                         ?>
-                        <tr>
+                        <tr class="pagination-element-block">
                             <td scope="row"><?= $key; ?></td>
                             <td class="textTh text-left"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                             <td class="textTh"><?php echo $price; ?></td>
@@ -516,6 +516,9 @@
                         ?>
                     </tbody>
                 </table>
+                <div class="pagination-container">
+                    <!-- Les boutons de pagination seront ajoutés ici -->
+                </div>
             </div>
         </div>
     </div>
@@ -555,7 +558,85 @@
 
        </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const itemsPerPage = 10;
+        const $rows = $('.pagination-element-block');
+        const pageCount = Math.ceil($rows.length / itemsPerPage);
+        let currentPage = 1;
+
+        function showPage(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            $rows.each(function(index, row) {
+                if (index >= startIndex && index < endIndex) {
+                    $(row).css('display', 'table-row');
+                } else {
+                    $(row).css('display', 'none');
+                }
+            });
+        }
+
+        function createPaginationButtons() {
+            const $paginationContainer = $('.pagination-container');
+
+            if (pageCount <= 1) {
+                $paginationContainer.css('display', 'none');
+                return;
+            }
+
+            const $prevButton = $('<button>&lt;</button>').on('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                }
+            });
+
+            const $nextButton = $('<button>&gt;</button>').on('click', function() {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                }
+            });
+
+            $paginationContainer.append($prevButton);
+
+            for (let i = 1; i <= pageCount; i++) {
+                const $button = $('<button></button>').text(i);
+                $button.on('click', function() {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                });
+
+                if (i === 1 || i === pageCount || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    $paginationContainer.append($button);
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    $paginationContainer.append($('<span>...</span>'));
+                }
+            }
+
+            $paginationContainer.append($nextButton);
+        }
+
+        function updatePaginationButtons() {
+            $('.pagination-container button').removeClass('active');
+            $('.pagination-container button').filter(function() {
+                return parseInt($(this).text()) === currentPage;
+            }).addClass('active');
+        }
+
+        showPage(currentPage);
+        createPaginationButtons();
+    });
+</script>
+
+
 <!-- script-modal -->
 <script>
     var id_course;
@@ -625,7 +706,6 @@
   })
 });
 </script>
-
 
 <script>
      $('#search_txt_course').keyup(function(){

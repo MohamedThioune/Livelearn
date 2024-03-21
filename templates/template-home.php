@@ -201,40 +201,6 @@ $type_course = array(
         display: block;
         font-size: 28px;
     }
-    .scrolled{
-        background: #023356 !important;
-    }
-    .scrolled .logoModife img:first-child {
-        display: block;
-    }
-    .scrolled .imgLogoBleu{
-        display: none;
-    }
-    .scrolled .nav-link {
-        color: #ffffff !important;
-        display: flex;
-    }
-    .scrolled .imgArrowDropDown {
-        display: block;
-    }
-    .scrolled .fa-angle-down-bleu {
-       display: none;
-    }
-    .scrolled .inputSearch {
-        background: #FFFFFF !important;
-    }
-    .scrolled .navModife4 .additionImg {
-        display: block;
-    }
-    .scrolled .additionBlock{
-        display: none;
-    }
-    .scrolled .bntNotification img {
-        display: block;
-    }
-    .scrolled .bntNotification i {
-        display: none;
-    }
     .boxOne3 {
         height: 510px;
     }
@@ -1989,20 +1955,6 @@ $saved = get_user_meta($user_id, 'course');
             });
         });
 
-    </script>
-    <script>
-        $(function() {
-            var header = $(".navbar");
-            $(window).scroll(function() {
-                var scroll = $(window).scrollTop();
-                if (scroll >= 61) {
-                    header.addClass("scrolled");
-                } else {
-                    header.removeClass("scrolled");
-                }
-            });
-
-        });
     </script>
 
     <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
