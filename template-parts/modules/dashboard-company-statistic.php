@@ -365,9 +365,9 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                     </div>
                 </div>
             </div>
-            <div class="usage-block-card">
+            <!-- <div class="usage-block-card">
                 <canvas id="chartsGroup"></canvas>
-            </div>
+            </div> -->
             <?php
             if(!empty($members)):
             ?>
