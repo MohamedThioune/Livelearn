@@ -701,7 +701,7 @@ function get_total_followed_experts()
                     );
                     array_push ($courses[$i]->podcasts,($item));
                   }
-                }
+                } 
             }
           }
           $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
