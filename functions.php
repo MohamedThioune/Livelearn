@@ -1910,4 +1910,18 @@ add_action( 'rest_api_init', function () {
   'callback' => 'countUserAppliedJobsAndFavorites'
   ));
 
+ register_rest_route ('custom/v1', '/candidate/myResume/update', array(
+  'methods' => 'POST',
+  'callback' => 'candidateMyResumeEdit'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/myResume/add', array(
+    'methods' => 'POST',
+    'callback' => 'candidateMyResumeAdd'
+    ));
+
+     register_rest_route ('custom/v1', '/candidate/myResume/delete', array(
+        'methods' => 'Delete',
+        'callback' => 'candidateMyResumeDelete'
+        ));
 });

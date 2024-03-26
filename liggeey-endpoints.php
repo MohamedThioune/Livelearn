@@ -138,139 +138,138 @@ function company($id){
   return $sample;
 }
 
-//Detail candidate
-function candidate($id){
-  $param_user_id = $id ?: get_current_user_id();
-  $sample = array();
-  $user = get_user_by('ID', $param_user_id);
+    //Detail candidate
+    function candidate($id){
 
-  $sample['ID'] = $user->ID;
-  $sample['first_name'] = $user->first_name;
-  $sample['last_name'] = $user->last_name;
-  $sample['email'] = $user->user_email;
-  $sample['mobile_phone'] = $user->mobile_phone;
-  $sample['city'] = $user->city;
-  $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-  $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
-  $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
+      $param_user_id = $id ?: get_current_user_id();
+      $sample = array();
+      $user = get_user_by('ID', $param_user_id);
 
-  $member_since = new DateTimeImmutable($user->user_registered_at);
-  $sample['member_since'] = $member_since->format('M d, Y');
+      $sample['ID'] = $user->ID;
+      $sample['first_name'] = $user->first_name;
+      $sample['last_name'] = $user->last_name;
+      $sample['email'] = $user->user_email;
+      $sample['mobile_phone'] = $user->mobile_phone;
+      $sample['city'] = $user->city;
+      $sample['adress'] = $user->adress;
+      $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+      $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
-  $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
+      $member_since = new DateTimeImmutable($user->user_registered_at);
+      $sample['member_since'] = $member_since->format('M d, Y');
 
-  $date_born = get_field('date_born',  'user_' . $user->ID);
-  if(!$date_born)
-      $age = "No birth";
-  else{
-      //explode the date to get month, day and year
-      $birthDate = explode("/", $date_born);
-      //get age from date or birthdate
-      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
-          ? ((date("Y") - $birthDate[2]) - 1)
-          : (date("Y") - $birthDate[2]));
-      $age .= ' Years';
-  }
-  $sample['age'] = $age;
+      $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
 
-  $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
-  $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
-  $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
+      $date_born = get_field('date_born',  'user_' . $user->ID);
+      if(!$date_born)
+          $age = "No birth";
+      else{
+          //explode the date to get month, day and year
+          $birthDate = explode("/", $date_born);
+          //get age from date or birthdate
+          $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+              ? ((date("Y") - $birthDate[2]) - 1)
+              : (date("Y") - $birthDate[2]));
+          $age .= ' Years';
+      }
+      $sample['age'] = $age;
 
-  //Get Topics
-  // $topics_external = get_user_meta($user_id, 'topic');
-  // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
-  // $topics = array();
-  // if(!empty($topics_external))
-  //   $topics = !empty($topics_external) $topics_external;
+      $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
+      $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
+      $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
+      $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
+      $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
+      $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
+      $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
 
-  // if(!empty($topics_internal))
-  //   foreach($topics_internal as $item)
-  //       array_push($topics, $item);
+      //Get Topics
+      // $topics_external = get_user_meta($user_id, 'topic');
+      // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+      // $topics = array();
+      // if(!empty($topics_external))
+      //   $topics = !empty($topics_external) $topics_external;
 
-  $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
-  "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
-  Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+      // if(!empty($topics_internal))
+      //   foreach($topics_internal as $item)
+      //       array_push($topics, $item);
 
-  $topics = array();
-  $limit = 3;
-  $topics = get_user_meta($user->ID, 'topic');
-  $sample['skills'] = [];
-  if(!empty($topics)):
-    $args = array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'include'  => $topics,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        'include' => $topics,
-        'post_per_page' => $limit
-    );
-    $sample['skills'] = get_categories($args);
-  endif;
+      $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
+      "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
+      Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
 
-  //Education Information
-  $main_education = get_field('education',  'user_' . $user->ID);
-  $educations = array();
-  foreach($main_education as $value):
+      $topics = array();
+      $limit = 3;
+      $topics = get_user_meta($user->ID, 'topic');
+      $sample['skills'] = [];
+      if(!empty($topics)):
+        $args = array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'include'  => $topics,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            'include' => $topics,
+            'post_per_page' => $limit
+        );
+        $sample['skills'] = get_categories($args);
+      endif;
 
-    $education = array();
-    if(!$value)
-      continue;
+      //Education Information
+      $main_education = get_field('education',  'user_' . $user->ID);
+      $educations = array();
+      foreach($main_education as $value):
 
-    $explosion = explode(";", $value);
+        $education = array();
+        if(!$value)
+          continue;
 
-    $year = "";
-    if(isset($explosion[2]))
-        $year = explode("-", $explosion[2])[0];
+        $explosion = explode(";", $value);
 
-    if(isset($explosion[3]))
-        if(intval($explosion[2]) != intval($explosion[3]))
-            $year = $year . "-" .  explode("-", $explosion[3])[0];
+        $year = "";
+        if(isset($explosion[2]))
+            $year = explode("-", $explosion[2])[0];
 
-    $education['diploma'] = $explosion[1];
-    $education['year'] = $year;
-    $education['school'] = $explosion[0];
-    $education['description'] = $explosion[4];
-    $educations[] = $education;
+        if(isset($explosion[3]))
+            if(intval($explosion[2]) != intval($explosion[3]))
+                $year = $year . "-" .  explode("-", $explosion[3])[0];
 
-  endforeach;
-  $sample['educations'] = $educations;
+        $education['diploma'] = $explosion[1];
+        $education['year'] = $year;
+        $education['school'] = $explosion[0];
+        $education['description'] = $explosion[4];
+        $educations[] = $education;
 
-  //Work & Experience Information
-  $main_experience = get_field('work',  'user_' . $user->ID);
-  $experiences = array();
-  foreach($main_experience as $value):
+      endforeach;
+      $sample['educations'] = $educations;
 
-    $experience = array();
-    if(!$value)
-      continue;
+      //Work & Experience Information
+      $main_experience = get_field('work',  'user_' . $user->ID);
+      $experiences = array();
+      foreach($main_experience as $value):
 
-    $explosion = explode(";", $value);
+        $experience = array();
+        if(!$value)
+          continue;
 
-    $year = "";
-    if(isset($explosion[2]))
-        $year = explode("-", $explosion[2])[0];
+        $explosion = explode(";", $value);
 
-    if(isset($explosion[3]))
-        if(intval($explosion[2]) != intval($explosion[3]))
-            $year = $year . "-" .  explode("-", $explosion[3])[0];
+        $year = "";
+        if(isset($explosion[2]))
+            $year = explode("-", $explosion[2])[0];
 
-    $experience['company'] = $explosion[1];
-    $experience['year'] = $year;
-    $experience['job'] = $explosion[0];
-    $experience['description'] = $explosion[4];
-    $experiences[] = $experience;
+        if(isset($explosion[3]))
+            if(intval($explosion[2]) != intval($explosion[3]))
+                $year = $year . "-" .  explode("-", $explosion[3])[0];
 
-  endforeach;
-  $sample['experiences'] = $experiences;
+        $experience['company'] = $explosion[1];
+        $experience['year'] = $year;
+        $experience['job'] = $explosion[0];
+        $experience['description'] = $explosion[4];
+        $experiences[] = $experience;
+      endforeach;
+      $sample['experiences'] = $experiences;
 
-  $sample = (Object)$sample;
-
-  return $sample;
+      $sample = (Object)$sample;
+      return $sample;
 }
 
 function validated($required_parameters, $request){
@@ -1285,7 +1284,6 @@ function companyProfil(WP_REST_Request $request){
 
     $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
-        // Retourner la liste des emplois auxquels le candidat a postulé
             $company_id = get_field('company', 'user_' . $user_id)[0];
            // var_dump($company_id);
 
@@ -1299,6 +1297,7 @@ function companyProfil(WP_REST_Request $request){
 
            // the parameters REST request
                 $updated_data = $request->get_params();
+                //var_dump($updated_data);
               // Update Fields
                 foreach ($updated_data as $field_name => $field_value) {
                     update_field($field_name, $field_value, $company_id);
@@ -1562,7 +1561,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
               $courses_combined[] = $course_combined_info;
           }
 
-
       //Skills
      $topics_external = get_user_meta($user_id, 'topic');
      $topics_internal = get_user_meta($user_id, 'topic_affiliate');
@@ -1653,7 +1651,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         'state' => $state,
         'topics' => $topics_with_notes,
         'badges' => $badges,
-         'courses_info' => $courses_combined,
+         'courses_info' => $courses_combined
 
     );
 
@@ -1663,5 +1661,146 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     return $response;
 }
 
+//[Edit]Dashboard My_Resume
+function candidateMyResumeEdit(WP_REST_Request $request) {
+    $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+    // Array response data
+    $response_data = array();
 
+    // Update Education
+    if(isset($request['education_index'], $request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
+        // Education entry
+        $updated_education_index = $request['education_index'];
+        $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
+        // Education data
+        $educations = get_field('education', 'user_' . $user_id);
+        // Education entry
+        if(isset($educations[$updated_education_index])) {
+            $educations[$updated_education_index] = $updated_education;
+            // Update education field
+            update_field('education', $educations, 'user_' . $user_id);
+            //Response data
+            $response_data['updated_education'] = $updated_education;
+        } else {
+            $response_data['error'] = 'Education entry with specified index does not exist.';
+        }
+    }
+
+    // Update Award
+    if(isset($request['award_index'], $request['title'], $request['description'], $request['date'])) {
+        // Award entry
+        $updated_award_index = $request['award_index'];
+        $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
+        $awards = get_field('awards', 'user_' . $user_id);
+        if(isset($awards[$updated_award_index])) {
+            $awards[$updated_award_index] = $updated_award;
+            // Awards field
+            update_field('awards', $awards, 'user_' . $user_id);
+            //Response data
+            $response_data['updated_award'] = $updated_award;
+        } else {
+
+            $response_data['error'] = 'Award entry with specified index does not exist.';
+        }
+    }
+
+    // Update Work
+    if(isset($request['work_index'], $request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
+        // Work entry
+        $updated_work_index = $request['work_index'];
+        $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
+
+        $works = get_field('work', 'user_' . $user_id);
+        // Work entry
+        if(isset($works[$updated_work_index])) {
+            $works[$updated_work_index] = $updated_work;
+            // Update work field
+            update_field('work', $works, 'user_' . $user_id);
+            // Response data
+            $response_data['updated_work'] = $updated_work;
+        } else {
+            $response_data['error'] = 'Work entry with specified index does not exist.';
+        }
+    }
+
+    // Return the response data
+    $response = new WP_REST_Response($response_data);
+    $response->set_status(200);
+    return $response;
+}
+
+
+//[Add]Dashboard My_Resume
+function candidateMyResumeAdd(WP_REST_Request $request) {
+
+      $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+      // Array response data
+      $response_data = array();
+
+          // Add new Education
+      if(isset($request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
+          // New education entry
+          $new_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
+          $educations = get_field('education', 'user_' . $user_id);
+          // New data
+          $educations[] = $new_education;
+          // Update field
+          update_field('education', $educations, 'user_' . $user_id);
+
+          // Add the new education to the response data
+          $response_data['new_education'] = $new_education;
+      }
+
+      // Add new Award
+      if(isset($request['title'], $request['description'], $request['date'])) {
+         // New award entry
+          $new_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
+          $awards = get_field('awards', 'user_' . $user_id);
+         //New data
+          $awards[] = $new_award;
+          // Update field
+          update_field('awards', $awards, 'user_' . $user_id);
+          // Add the new award to the response data
+          $response_data['new_award'] = $new_award;
+      }
+
+      // Add new Word
+      if(isset($request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
+          // New work entry
+          $new_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
+          $works = get_field('work', 'user_' . $user_id);
+          //New data
+          $works[] = $new_work;
+          // Update field
+          update_field('work', $works, 'user_' . $user_id);
+          // Add the new work to the response data
+          $response_data['new_work'] = $new_work;
+      }
+
+      // Return the response data
+      $response = new WP_REST_Response($response_data);
+      $response->set_status(200);
+      return $response;
+
+}
+
+//[Delete]Dashboard My_Resume
+function candidateMyResumeDelete(WP_REST_Request $request) {
+
+   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+     $data = get_field($field_type, 'user_' . $user_id);
+
+     if(isset($data[$index])) {
+         unset($data[$index]);
+
+         update_field($field_type, $data, 'user_' . $user_id);
+
+         return $data;
+     } else {
+
+         return 'Index not found';
+     }
+ 
+
+}
 /* * End Liggeey * */
