@@ -917,14 +917,16 @@ if (!empty($courses)) {
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                     document.getElementById('content-back-topics').innerHTML = response;
+                     
                     // window.location.href='/xml-parse';
-                },error:function() {
+                },error:function(error) {
                     console.log('error');
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
+                   // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 }
             });
@@ -954,11 +956,11 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/artikels",
+                url: "/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                    document.getElementById('content-back-topics').innerHTML = response;
                 },error:function() {
                     console.log('error'); 
                 },
