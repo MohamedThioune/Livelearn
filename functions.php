@@ -1837,6 +1837,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'PostJobUser'
   ));
 
+  register_rest_route ('custom/v1', '/user/editJob', array(
+    'methods' => 'POST',
+    'callback' => 'EditJobUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/deleteJob', array(
+    'methods' => 'POST',
+    'callback' => 'DeleteJobUser'
+  ));
+
   register_rest_route ('custom/v1', '/user/comment', array(
     'methods' => 'POST',
     'callback' => 'addComment'
