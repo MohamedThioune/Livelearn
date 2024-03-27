@@ -15,7 +15,7 @@ $args = array(
     'posts_per_page' => -1,
 );
 $companies = get_posts($args);
-$data_insert=0;
+$data_insert = 0;
 if (isset($selectedValues)) {
     
     foreach ($selectedValues as $option) {
