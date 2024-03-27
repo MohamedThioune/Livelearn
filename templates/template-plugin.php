@@ -1,5 +1,6 @@
 <?php /** Template Name: Get & Save Artikles*/?>
 <?php
+require_once 'add-author.php';
 global $wpdb;
 
 extract($_POST);
@@ -13,122 +14,97 @@ $args = array(
     'post_type' => 'company',
     'posts_per_page' => -1,
 );
-// var_dump($selectedValues);
 $companies = get_posts($args);
+$data_insert = 0;
 if (isset($selectedValues)) {
+    
     foreach ($selectedValues as $option) {
         $author_id=0;
         $website = $option['value'];
         $key = $option['text'];
 
         $company_id = 0;
-        //* MaxBird was there *//
-        //Has to be done as a function 
-        foreach ($users as $user){
-            $company_user = get_field('company', 'user_' . $user->ID);
 
-            //company exists
-            if (isset($company_user->post_title)){
-                if (strtolower($company_user->post_title) == strtolower($key)) {
-                    $author_id = $user->ID;
-                    $company = $company_user;
-                    $company_id = $company_user->ID;
-                    break;
-                }
-            }
-        }
 
-        if (!$author_id) {
-            //Looking for company
-            $company = get_page_by_path($key, OBJECT, 'company');
+        // function add Author  in addAuthor.php
+        $informations = addAuthor($users,$key);
+        $author_id = $informations['author'];
+        $company_id = $informations['company'];
 
-            if(!$company){
-                //Creating new company
-                $argv = array(
-                    "post_type" => "company",
-                    "post_title" => $key,
-                    "post_status"=> "publish"
-                );
-                $company_id = wp_insert_post($argv);
-                $company = get_post($company_id);
-            }else {
-                $company_id = $company->ID;
-            }
-
-            //Creating a new user
-            $login = 'user' . random_int(0, 100000);
-            $password = "pass" . random_int(0, 100000);
-            $email = "author_" . $key . random_int(0, 100000) . "@" . 'livelearn' . ".nl";
-            $first_name = explode(' ', $key)[0];
-            $last_name = isset(explode(' ', $key)[1]) ? explode(' ', $key)[1] : '';
-
-            $userdata = array(
-                'user_pass' => $password,
-                'user_login' => $login,
-                'user_email' => $email,
-                'user_url' => 'https://livelearn.nl/inloggen/',
-                'display_name' => $first_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'role' => 'author',
-            );
-
-            $author_id = wp_insert_user(wp_slash($userdata)); 
-        }
-
-        //var_dump($company_id);
-        //die();
-
-        //Accord the author a company
-        if (!is_wp_error($author_id)) {
-            update_field('company', $company, 'user_' . $author_id);
-        }
-
+        //recuperer les posts depuis l'API wordpress
         $span = $website . "wp-json/wp/v2/posts/";
         $artikels = json_decode(file_get_contents($span), true);
+        //Parcourir chaque article
         foreach ($artikels as $article) {
             // $onderwerpen = trim($onderwerpen);
-
+            // verifier si l'article est non null 
             if ($article != null) {
+                //si oui, recuperer le titre depuis le databank
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
                 $result_title = $wpdb->get_results($sql_title);
                 
-                // var_dump($article['excerpt']['rendered']);
-                // die;
-            if ($article['content']['rendered']!='') {
-                if ($article['excerpt']['rendered']==''){
-                    $firstSentence = explode('.',$article['content']['rendered']);
-                    $article['excerpt']['rendered'] = $firstSentence[0];
-                }
-                // var_dump($article['excerpt']['rendered']);
-                if ($article['featured_media'] != 0) {
-                    $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
-                    $images = json_decode(file_get_contents($span2), true);
-                    // $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
-                    // $result_image = $wpdb->get_results($sql_image);
+                //var_dump($article['excerpt']['rendered']);
+                //die;
+                //si le contenu de l'article est non null 
+                if ($article['content']['rendered'] != '') {
+                    if ($article['excerpt']['rendered'] == ''){
+                        $firstSentence = explode('.',$article['content']['rendered']);
+                        $article['excerpt']['rendered'] = $firstSentence[0];
+                        //Pourquoi couper ce contenu a 1e phrase ?  @MaxBird to @Fallou
+                    }
 
-                    if (/*!isset($result_image[0]) && */!isset($result_title[0])) {
-                        if (!isset($images['data']['status'])) {
-                            $status = 'extern';
-                            $datas = array(
-                                'titel' => $article['title']['rendered'],
-                                'type' => 'Artikel',
-                                'videos' => null,
-                                'short_description' => strip_html_tags($article['excerpt']['rendered']),
-                                'long_description' => $article['content']['rendered'],
-                                'duration' => null,
-                                'prijs' => 0,
-                                'prijs_vat' => 0,
-                                'image_xml' => $images['guid']['rendered'],
-                                'onderwerpen' => $onderwerpen,
-                                'date_multiple' => null,
-                                'course_id' => null,
-                                'author_id' => $author_id,
-                                'company_id' => $company_id,
-                                'contributors' => null,
-                                'status' => $status,
-                            );
-                        }else{
+                    // var_dump($article['excerpt']['rendered']);
+                    if ($article['featured_media'] != 0) {
+                        $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
+                        $images = json_decode(file_get_contents($span2), true);
+                        // $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
+                        // $result_image = $wpdb->get_results($sql_image);
+
+                        if (/*!isset($result_image[0]) && */!isset($result_title[0])) {
+                            if (!isset($images['data']['status'])) {
+                                $status = 'extern';
+                                $datas = array(
+                                    'titel' => $article['title']['rendered'],
+                                    'type' => 'Artikel',
+                                    'videos' => null,
+                                    'short_description' => strip_html_tags($article['excerpt']['rendered']),
+                                    'long_description' => $article['content']['rendered'],
+                                    'duration' => null,
+                                    'prijs' => 0,
+                                    'prijs_vat' => 0,
+                                    'image_xml' => $images['guid']['rendered'],
+                                    'onderwerpen' => $onderwerpen,
+                                    'date_multiple' => null,
+                                    'course_id' => null,
+                                    'author_id' => $author_id,
+                                    'company_id' => $company_id,
+                                    'contributors' => null,
+                                    'status' => $status,
+                                );
+                            }else{
+                                $status = 'extern';
+                                $datas = array(
+                                    'titel' => $article['title']['rendered'],
+                                    'type' => 'Artikel',
+                                    'videos' => null,
+                                    'short_description' => strip_html_tags($article['excerpt']['rendered']),
+                                    'long_description' => $article['content']['rendered'],
+                                    'duration' => null,
+                                    'prijs' => 0,
+                                    'prijs_vat' => 0,
+                                    'image_xml' => null,
+                                    'onderwerpen' => $onderwerpen,
+                                    'date_multiple' => null,
+                                    'course_id' => null,
+                                    'author_id' => $author_id,
+                                    'company_id' => $company_id,
+                                    'contributors' => null,
+                                    'status' => $status,
+                                );
+                            }
+                        }else continue;
+                    }else{
+                        if (!isset($result_title[0])) {
                             $status = 'extern';
                             $datas = array(
                                 'titel' => $article['title']['rendered'],
@@ -149,47 +125,27 @@ if (isset($selectedValues)) {
                                 'status' => $status,
                             );
                         }
-                    }else continue;
-                }else{
-                    if (!isset($result_title[0])) {
-                        $status = 'extern';
-                        $datas = array(
-                            'titel' => $article['title']['rendered'],
-                            'type' => 'Artikel',
-                            'videos' => null,
-                            'short_description' => strip_html_tags($article['excerpt']['rendered']),
-                            'long_description' => $article['content']['rendered'],
-                            'duration' => null,
-                            'prijs' => 0,
-                            'prijs_vat' => 0,
-                            'image_xml' => null,
-                            'onderwerpen' => $onderwerpen,
-                            'date_multiple' => null,
-                            'course_id' => null,
-                            'author_id' => $author_id,
-                            'company_id' => $company_id,
-                            'contributors' => null,
-                            'status' => $status,
-                        );
                     }
+                }else{
+                    continue;
                 }
-            }else{
-                var_dump('no content');
-                continue;
-            }
-            // echo "Selected option: $text (value=$value)<br>";
-            try
-            {
-                $wpdb->insert($table, $datas);
-                // echo $key."  ".$wpdb->last_error."<br>";
-                $id_post = $wpdb->insert_id;
-                // var_dump($datas);
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+         
+                if($wpdb->insert($table, $datas)){
+                   $id_post = $wpdb->insert_id;
+                   $data_insert=1;
+                }            
             }
         }
     }
+
+    if( $data_insert==1)
+      echo "<span class='alert alert-success'>Articles inserted successfuly ✔️</span>";
+    else
+      echo "<span class='alert alert-danger'>Articles not founded so we have any inserted ❌</span>";
+  
+}
+else{
+    echo "<span class='alert alert-danger'>Please select the company key to be able to upload Articles ❌</span>";
 }
 // header("location:/livelearn/databank");
 ?>

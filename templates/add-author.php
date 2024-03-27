@@ -1,5 +1,50 @@
 <?php
 
+// require __DIR__. '/vendor/pear/text_languagedetect/Text/LanguageDetect.php';
+//require_once dirname(__DIR__) . '/vendor/pear/text_languagedetect/Text/LanguageDetect.php';
+
+
+
+//Detected langage of text
+// function detectLanguage($text)
+// {
+//     //echo "Language detection failed";
+   
+//     $detector = new Text_LanguageDetect();
+//     $result = $detector->detectSimple($text);
+//    return $result;
+//     // Check if language detection is successful
+//     if ($result !== false) {
+//       //  return "Language BON";
+//         echo $result['language'];
+//     } else {
+//         return "Language";
+//     }
+   
+//   //  detectLanguage('Bonjour');
+// }
+// detectLanguage("Language detection failed");
+
+ function generatorAuthor($key){
+    $login = 'user' . random_int(0, 100000);
+        $password = "pass" . random_int(0, 100000);
+        $email = random_int(0, 100) . $key . "@" . 'livelearn' . ".nl";
+        $first_name = explode(' ', $key)[0];
+        $last_name = isset(explode(' ', $key)[1]) ? explode(' ', $key)[1] : '';
+        $userdata = array(
+            'user_pass' => $password,
+            'user_login' => $login,
+            'user_email' => $email,
+            'user_url' => 'https://livelearn.nl/inloggen/',
+            'display_name' => $first_name,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'role' => 'author'
+        );
+         return  wp_insert_user(wp_slash($userdata));
+
+  }
+
 function addAuthor($users, $key){
     //Artikel + "Opleidingen" + "Masterclass"...XMl 
 
@@ -21,26 +66,7 @@ function addAuthor($users, $key){
         $company_id = wp_insert_post($argv);
         $company = get_post($company_id);
 
-        //[Function] Create new author 
-        $login = 'user' . random_int(0, 100000);
-        $password = "pass" . random_int(0, 100000);
-        $email = random_int(0, 100) . $key . "@" . 'livelearn' . ".nl";
-        $first_name = explode(' ', $key)[0];
-        $last_name = isset(explode(' ', $key)[1]) ? explode(' ', $key)[1] : '';
-        $userdata = array(
-            'user_pass' => $password,
-            'user_login' => $login,
-            'user_email' => $email,
-            'user_url' => 'https://livelearn.nl/inloggen/',
-            'display_name' => $first_name,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'role' => 'author'
-        );
-        //[End Function]
-
-        // Insert new user
-        $author_id = wp_insert_user(wp_slash($userdata));
+        $author_id = generatorAuthor($key);
     
         // Associate user with company
         if(!is_wp_error($author_id)) 
@@ -66,23 +92,9 @@ function addAuthor($users, $key){
         //No author match to this company
         if(!$author_id):
             //[Function] Create new author 
-            $login = 'user' . random_int(0, 100000);
-            $password = "pass" . random_int(0, 100000);
-            $email = random_int(0, 100) . $key . "@" . 'livelearn' . ".nl";
-            $first_name = explode(' ', $key)[0];
-            $last_name = isset(explode(' ', $key)[1]) ? explode(' ', $key)[1] : '';
-            $userdata = array(
-                'user_pass' => $password,
-                'user_login' => $login,
-                'user_email' => $email,
-                'user_url' => 'https://livelearn.nl/inloggen/',
-                'display_name' => $first_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'role' => 'author'
-            );
+          
             //[End Function]
-    
+              $author_id = generatorAuthor($key);
             // Associate user with company
             if (!is_wp_error($author_id)) {
                 update_field('company', $company, 'user_' . $author_id);
@@ -94,4 +106,5 @@ function addAuthor($users, $key){
     return ['author' => $author_id, 'company' => $company->ID];
   
   }
+  
   ?>
