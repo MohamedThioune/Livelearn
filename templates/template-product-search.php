@@ -1011,18 +1011,18 @@ $courses = array_slice($courses, 0, 500);
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<!--script pagination-->
 
 <script>
     const itemsPerPage = 12;
     const blockList = document.querySelector('.block-new-card-course');
     const blocks = blockList.querySelectorAll('.new-card-course');
     const paginationContainer = document.querySelector('.pagination-container');
+    let currentPage = 1;
 
     function displayPage(pageNumber) {
         const start = (pageNumber - 1) * itemsPerPage;
@@ -1055,44 +1055,66 @@ $courses = array_slice($courses, 0, 500);
             return;
         }
 
-        let firstButtonAdded = false; // Keep track of whether the first button is added
+        const prevButton = document.createElement('button');
+        prevButton.textContent = '‹'; // Flèche gauche
+        prevButton.classList.add('pagination-button');
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                scrollToTop();
+                currentPage--;
+                displayPage(currentPage);
+                updatePaginationButtons();
+            }
+        });
+        paginationContainer.appendChild(prevButton);
 
         for (let i = 1; i <= pageCount; i++) {
             const button = document.createElement('button');
             button.textContent = i;
             button.classList.add('pagination-button');
             button.addEventListener('click', () => {
-                scrollToTop(); // Scroll to the top when a button is clicked
-                displayPage(i);
-
-                // Remove the .active class from all buttons
-                const buttons = document.querySelectorAll('.pagination-button');
-                buttons.forEach((btn) => {
-                    btn.classList.remove('active');
-                });
-
-                // Add the .active class to the clicked button
-                button.classList.add('active');
+                scrollToTop();
+                currentPage = i;
+                displayPage(currentPage);
+                updatePaginationButtons();
             });
             paginationContainer.appendChild(button);
-
-            // Add the .active class to the first button
-            if (!firstButtonAdded) {
-                button.classList.add('active');
-                firstButtonAdded = true;
-            }
         }
+
+        const nextButton = document.createElement('button');
+        nextButton.textContent = '›'; // Flèche droite
+        nextButton.classList.add('pagination-button');
+        nextButton.addEventListener('click', () => {
+            if (currentPage < pageCount) {
+                scrollToTop();
+                currentPage++;
+                displayPage(currentPage);
+                updatePaginationButtons();
+            }
+        });
+        paginationContainer.appendChild(nextButton);
+
+        updatePaginationButtons();
+    }
+
+    function updatePaginationButtons() {
+        const buttons = document.querySelectorAll('.pagination-button');
+        buttons.forEach((btn) => {
+            btn.classList.remove('active');
+            if (parseInt(btn.textContent) === currentPage) {
+                btn.classList.add('active');
+            }
+        });
     }
 
     function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    displayPage(1);
+    displayPage(currentPage);
     createPaginationButtons();
-
-
 </script>
+
 
 <script>
     $(".content-filter").click(function() {

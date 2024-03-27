@@ -9,6 +9,8 @@ include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
+include "script-to-update-author.php";
+
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
 
@@ -1800,7 +1802,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCoursesOptimized',
   ));
 
-  register_rest_route ('custom/v1', '/apply', array(
+  register_rest_route ('custom/v1', '/apply', array( 
     'methods' => 'POST',
     'callback' => 'jobUser'
   ));
@@ -1833,6 +1835,16 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/user/postJob', array(
     'methods' => 'POST',
     'callback' => 'PostJobUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/editJob', array(
+    'methods' => 'POST',
+    'callback' => 'EditJobUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/deleteJob', array(
+    'methods' => 'POST',
+    'callback' => 'DeleteJobUser'
   ));
 
   register_rest_route ('custom/v1', '/user/comment', array(
@@ -1885,7 +1897,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateShorlistedJobs'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/skills_passport', array(
+  register_rest_route ('custom/v1', '/candidate/skillsPassport', array(
     'methods' => 'POST',
     'callback' => 'candidateSkillsPassport'
   ));
