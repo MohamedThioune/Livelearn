@@ -289,13 +289,8 @@ if (isset($_GET["message"])) {
 }
 
 ?>
-<<<<<<< HEAD
                <div class="headListeCourse">
                     <!-- 
-=======
-                 <!-- <div class="headListeCourse">
-                  
->>>>>>> 212339c36f86c82ab37ec6cae3d7abc1a2017578
                     <p class="JouwOpleid"><br><br> <strong>Load From</strong> : &nbsp;
                        
                         <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
@@ -316,7 +311,6 @@ if (isset($_GET["message"])) {
                             <img  src="<?=get_stylesheet_directory_uri();?>/img/searchM.png" alt="youtube image">
                         </button>
                     </div> 
-<<<<<<< HEAD
                     -->
 
                 </div>
@@ -336,28 +330,6 @@ if (isset($_GET["message"])) {
                                 <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
                                 </div>
                             </p>
-=======
-
-                </div>  -->
-                <div class="container contentCardListeCourse">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="headListeCourse">
-                                <p class="JouwOpleid"><br> 
-                                    <strong>Load From</strong> : &nbsp;
-                                    <!-- <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a> -->
-                                    <!-- &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button> -->
-
-                                    <button type="button" title="podcast playlist" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
-                                        playlist audios
-                                        <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="40" height="40">
-                                    </button>
-
-                                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
-                                    </div>
-                                </p>
-                            </div>
->>>>>>> 212339c36f86c82ab37ec6cae3d7abc1a2017578
                         </div>
                     </div>
 

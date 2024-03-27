@@ -299,13 +299,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         </select> -->
                     </div>
                     <div>
-<<<<<<< HEAD
-                       <!--  <canvas id="ChartEngagement"></canvas> -->
-			     <span>No data enough !</span>
-=======
                         <!-- <canvas id="ChartEngagement"></canvas> -->
                         <span>No data enough !</span>
->>>>>>> 212339c36f86c82ab37ec6cae3d7abc1a2017578
                     </div>
                 </div> 
                
