@@ -391,10 +391,6 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         <canvas id="ChartDesktopMobile"></canvas>
                     </div> -->
                     <span>No data enough !</span>
-<<<<<<< HEAD
-=======
-
->>>>>>> 212339c36f86c82ab37ec6cae3d7abc1a2017578
                 </div>
             </div>
             <?php
