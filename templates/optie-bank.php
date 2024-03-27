@@ -1,7 +1,7 @@
 <?php /** Template Name: Optie bank */ ?>
 
 <?php
-require 'add-author.php';
+
 
 global $wpdb;
 $table = $wpdb->prefix . 'databank';

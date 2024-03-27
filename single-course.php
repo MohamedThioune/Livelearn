@@ -246,7 +246,6 @@ else
 * Image
 */
 $thumbnail = "";
-//$thumbnail = get_field('preview', $post->ID)['url'];
 if(!$thumbnail){
     $thumbnail = get_the_post_thumbnail_url($post->ID);
     if(!$thumbnail)
