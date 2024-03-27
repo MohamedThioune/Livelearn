@@ -290,14 +290,11 @@ if (isset($_GET["message"])) {
 
 ?>
                <div class="headListeCourse">
-                   <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
-                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
-                       <!-- &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?//=get_stylesheet_directory_uri();?>/img/xml-orange.jpg" alt="xml image"></a> -->
-                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
-                       <!-- &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button> -->
-                       <!--<button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
-                           <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
-                       </button>-->
+                    <!-- 
+                    <p class="JouwOpleid"><br><br> <strong>Load From</strong> : &nbsp;
+                       
+                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
+                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
 
                        <button type="button" title="podcast playlist" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
                            playlist audios
@@ -313,9 +310,29 @@ if (isset($_GET["message"])) {
                         <button class="btn btnSearchCourseDatabank">
                             <img  src="<?=get_stylesheet_directory_uri();?>/img/searchM.png" alt="youtube image">
                         </button>
-                    </div>
+                    </div> 
+                    -->
+
                 </div>
                 <div class="container contentCardListeCourse">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="JouwOpleid"><br> 
+                                <strong>Load From</strong> : &nbsp;
+                                <!-- <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a> -->
+                                <!-- &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button> -->
+
+                                <button type="button" title="podcast playlist" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
+                                    playlist audios
+                                    <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="40" height="40">
+                                </button>
+
+                                <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <br>
                         <div class="col-md-3">
@@ -917,14 +934,15 @@ if (!empty($courses)) {
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                    document.getElementById('content-back-topics').innerHTML = response;
                     // window.location.href='/xml-parse';
-                },error:function() {
+                },error:function(error) {
                     console.log('error');
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
+                    // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 }
             });
@@ -954,11 +972,11 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/artikels",
+                url: "/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                    document.getElementById('content-back-topics').innerHTML = response;
                 },error:function() {
                     console.log('error'); 
                 },

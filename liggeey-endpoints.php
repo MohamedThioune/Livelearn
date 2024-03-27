@@ -74,6 +74,9 @@ function job($id){
   $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
   $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
   $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in ';
+  $sample['job_contract'] = get_field('job_contract', $post->ID) ?: 'Nothin filled in ';
+  $sample['job_level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 'Nothin filled in ';
+  $sample['job_langues'] = get_field('job_langues', $post->ID) ?: 'Nothin filled in ';
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
@@ -705,9 +708,18 @@ function allJobs(){
     $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
 
     $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+    $sample['applied'] = get_field('job_appliants', $post->ID) ?: 0;
 
     $sample = (Object)$sample;
-    array_push($jobs, $sample);
+  
+    // Retrieve the applied 
+    $entity = null;
+    $applied = array();
+    foreach ($sample->applied as $entity) 
+      $applied[] = candidate($entity->ID);
+    $sample->applied = $applied;
+  
+    array_push($jobs, $sample); 
 
   endforeach;
 
@@ -719,30 +731,29 @@ function allJobs(){
 
 //[POST]Detail job
 function jobDetail(WP_REST_Request $request){
+  $param_post_id = $request['id'] ?? 0;
+  $sample = job($param_post_id);
 
-    $param_post_id = $request['id'] ?? 0;
-    $sample = job($param_post_id);
+  // Retrieve the latest job posts
+    $args = array(
+      'post_type'      => 'job',
+      'posts_per_page' => 3,
+      'order'          => 'DESC',
+  );
 
-    // Retrieve the latest job posts
-     $args = array(
-        'post_type'      => 'job',
-        'posts_per_page' => 3,
-        'order'          => 'DESC',
-    );
+  $job_posts = get_posts($args);
+  $jobs = array();
 
-    $job_posts = get_posts($args);
-    $jobs = array();
+  foreach ($job_posts as $key => $job_post)
+    if($key < 3)
+      $jobs[] = job($job_post->ID);
 
-    foreach ($job_posts as $key => $job_post)
-      if($key < 3)
-        $jobs[] = job($job_post->ID);
+  $sample->other_jobs = $jobs;
 
-    $sample->other_jobs = $jobs;
-
-    //Response
-    $response = new WP_REST_Response($sample);
-    $response->set_status(200);
-    return $response;
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+  return $response;
 }
 
 //[POST]Detail category
@@ -1133,6 +1144,7 @@ function ApplicantsUser(WP_REST_Request $request){
 
   $required_parameters = ['userApplyId'];
   $applications = array();
+  $int_applications = array();
   $application = array();
 
   //Check required parameters apply
@@ -1162,7 +1174,11 @@ function ApplicantsUser(WP_REST_Request $request){
   foreach($application as $key => $user):
     // if($key >= 6)
     //   break;
-    $applications[] = candidate($user->ID);
+    if(!in_array($user->ID, $int_applications)):
+      $applications[] = candidate($user->ID);
+      $int_applications[] = $user->ID;
+    endif;
+
   endforeach;
 
   $response = new WP_REST_Response($applications);
@@ -1224,6 +1240,7 @@ function postJobUser(WP_REST_Request $request){
   $job_level_experience = ($request['job_level_of_experience']) ?: '';
   $job_language = ($request['job_langues']) ?: 'English';
   $job_application_deadline = ($request['job_application_deadline']);
+  $skills = ($request['skills']) ?: null;
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
 
@@ -1251,8 +1268,10 @@ function postJobUser(WP_REST_Request $request){
   endif;
 
   // Add custom fields
+  if($skills)
+    wp_set_post_terms($job_id, $skills, 'course_category');
+
   update_field('job_company', $company, $job_id);
-  // update_field('job_skills_experiences', $job_skills_experiences, $job_id);
   update_field('description', $description, $job_id);
   update_field('job_contract', $job_contract, $job_id);
   update_field('job_level_of_experience', $job_level_experience, $job_id);
@@ -1266,6 +1285,77 @@ function postJobUser(WP_REST_Request $request){
 
   return $response;
 
+}
+
+//[POST]Dashboard User | Edit Job
+function editJobUser(WP_REST_Request $request) {
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
+  $skills = ($request['skills']) ?: null;
+
+  $required_parameters = ['jobId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+  $validated = validated($required_parameters, $request);
+
+  //Data Job
+  $job = get_post($job_id);
+  $candidate = get_user_by('ID', $user_id);
+
+  if (!$job || !$candidate) {
+      $errors['errors'] = 'Something went wrong !';
+      $response = new WP_REST_Response($errors);
+      $response->set_status(401);
+      return $response;
+  }
+
+  if($skills)
+    wp_set_post_terms($job_id, $terms, 'course_category');
+
+  // Parameters REST request
+  $updated_data = $request->get_params();
+
+  // Update Fields
+  foreach ($updated_data as $field_name => $field_value) {
+    if($field_value)
+    if($field_value != '' && $field_value != ' ')
+      update_field($field_name, $field_value, $job->ID);
+  }
+
+  // Return response
+  $updated_company_data = job($job_id);
+  $response = new WP_REST_Response($updated_company_data);
+  $response->set_status(200);
+  return $response;
+}
+
+//[POST]Dashboard User | Delete Job
+function deleteJobUser(WP_REST_Request $request) {
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
+
+  $required_parameters = ['jobId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+  $validated = validated($required_parameters, $request);
+
+  //Data Job
+  $job = get_post($job_id);
+  $jobTo = job($job_id);
+  $candidate = get_user_by('ID', $user_id);
+
+  if (!$job || !$candidate) {
+    $errors['errors'] = 'Something went wrong !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  }
+
+  // Delete job
+  wp_delete_post($jobTo->ID);
+
+  // Return response
+  $response = new WP_REST_Response($jobTo);
+  $response->set_status(200);
+  return $response;
 }
 
 //[POST]Dashboard User | Profil
@@ -1305,21 +1395,21 @@ function companyProfil(WP_REST_Request $request){
 }
 
 //[POST]Dashboard User | Update | Profil ? Look carefully this function
- function updateCompanyProfil(WP_REST_Request $request) {
+function updateCompanyProfil(WP_REST_Request $request) {
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
   // Retourner la liste des emplois auxquels le candidat a postulé
-      $company_id = get_field('company', 'user_' . $user_id)[0];
-      // var_dump($company_id);
+  $company = get_field('company', 'user_' . $user_id)[0];
+  // var_dump($company_id);
 
-  if (!$company_id) {
-      $errors['errors'] = 'company not found';
-      $response = new WP_REST_Response($errors);
-      $response->set_status(401);
-      return $response;
+  if (!$company) {
+    $errors['errors'] = 'Company not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
   }
 
-  $company_data = company($company_id);
+  $company_id = $company->ID;
 
   // Parameters REST request
   $updated_data = $request->get_params();
@@ -1347,7 +1437,7 @@ function updateCandidateProfil(WP_REST_Request $request) {
   $validated = validated($required_parameters, $request);
 
   //Data User
-  $candidate_data = candidate($user_id);
+  $candidate_data = get_user_by('ID', $user_id);
 
   if (!$candidate_data) {
       $errors['errors'] = 'User not found';
@@ -1355,6 +1445,7 @@ function updateCandidateProfil(WP_REST_Request $request) {
       $response->set_status(401);
       return $response;
   }
+
   // Parameters REST request
   $updated_data = $request->get_params();
 
@@ -1362,12 +1453,12 @@ function updateCandidateProfil(WP_REST_Request $request) {
   foreach ($updated_data as $field_name => $field_value) {
     if($field_value)
     if($field_value != '' && $field_value != ' ')
-      update_field($field_name, $field_value, $company->ID);
+      update_field($field_name, $field_value, 'user_' . $user_id);
   }
 
   // Return response
-  $updated_company_data = company($user_id);
-  $response = new WP_REST_Response($updated_company_data);
+  $updated_candidate_data = candidate($user_id);
+  $response = new WP_REST_Response($updated_candidate_data);
   $response->set_status(200);
   return $response;
 }
@@ -1423,7 +1514,7 @@ function jobUserApprove(WP_REST_Request $request){
   return $response;
 }
 
-//[POST]Apply User | Delete favorite candidate
+//[POST]Apply Candidate | Delete favorite candidate
 function trashFavouriteCandidate(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
   $required_parameters = ['userApplyId', 'userDeleteId'];
