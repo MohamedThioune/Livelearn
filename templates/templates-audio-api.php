@@ -1,7 +1,9 @@
 <?php /** Template Name: audio api */ ?>
 <?php // /audio-api ?>
 <?php
+require_once 'detect-language.php';
 global $wpdb;
+
 $table = $wpdb->prefix . 'databank';
 $users = get_users();
 $args = array(
@@ -233,6 +235,7 @@ if ($audio_search){
             'author_id' => $user_id,
             'status' => 'extern',
             'company_id' => $company_id,
+            'language'=>detectLanguage($title)
         );
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
