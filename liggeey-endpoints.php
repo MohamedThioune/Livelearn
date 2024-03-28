@@ -1374,6 +1374,7 @@ function updateCandidateProfil(WP_REST_Request $request) {
 
 //[POST]Dashboard Candidate | Applied Jobs
 function candidateAppliedJobs(WP_REST_Request $request) {
+
   $args = array(
       'post_type' => 'job',
       'post_status' => 'publish',
@@ -1399,6 +1400,7 @@ function candidateAppliedJobs(WP_REST_Request $request) {
   $response = new WP_REST_Response($applied_jobs);
   $response->set_status(200);
   return $response;
+
 }
 
 //[POST]Dashboard Candidate | Favorites
@@ -1531,7 +1533,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
 
           $courses_combined = array();
 
-
           foreach ($courses as $course) {
               //data courses
               $course_info = array(
@@ -1540,16 +1541,16 @@ function candidateSkillsPassport(WP_REST_Request $request) {
 
               );
 
-              $thumbnail = "";
-              $course_type = get_field('course_type', $course->ID);
-              if(!$thumbnail){
-                  $thumbnail = get_the_post_thumbnail_url($course->ID);
-                  if(!$thumbnail)
-                      $thumbnail = get_field('url_image_xml', $course->ID);
-                          if(!$thumbnail)
-                              $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+          $thumbnail = "";
+          $course_type = get_field('course_type', $course->ID);
+          if(!$thumbnail){
+              $thumbnail = get_the_post_thumbnail_url($course->ID);
+              if(!$thumbnail)
+                  $thumbnail = get_field('url_image_xml', $course->ID);
+                      if(!$thumbnail)
+                          $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 
-              }
+          }
 
               $price = get_field('price', $course->ID);
               if ($price != "0") {
@@ -1617,7 +1618,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     );
     $achievements = get_posts($args);
     $badges = array();
-    $certificates = array();
+    $certificats = array();
     $performances = array();
     $diplomas = array();
      $image = '';
@@ -1625,8 +1626,8 @@ function candidateSkillsPassport(WP_REST_Request $request) {
        foreach($achievements as $key=>$achievement):
 
            $type = get_field('type_badge', $achievement->ID);
-           $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
 
+           $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->ID);
            if(!$image)
                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
@@ -1637,9 +1638,17 @@ function candidateSkillsPassport(WP_REST_Request $request) {
                    array_push($badges, $achievement);
                    break;
                case 'Certificaat':
-                   $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-                   array_push($certificats, $achievement);
+                      $achievement_info = array(
+                          'title' => $achievement->post_title,
+                          'description' => $achievement->post_content,
+                          'manager' => $achievement->manager,
+                          'manager_image' => $achievement->manager_image,
+                          'trigger' => get_field('trigger_badge', $achievement->ID),
+                      );
+                      $certificats[] = $achievement_info;
+
                    break;
+
                case 'Prestatie':
                    $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
                    array_push($prestaties, $achievement);
@@ -1653,15 +1662,18 @@ function candidateSkillsPassport(WP_REST_Request $request) {
                    array_push($badges, $achievement);
                    break;
            }
+
        endforeach;
 
+      
     // Data
     $data = array(
 
         'state' => $state,
         'topics' => $topics_with_notes,
         'badges' => $badges,
-         'courses_info' => $courses_combined
+         'certificats' => $certificats,
+         'courses_info' => $courses_combined,
 
     );
 
@@ -1671,73 +1683,66 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     return $response;
 }
 
+
 //[Edit]Dashboard My_Resume
 function candidateMyResumeEdit(WP_REST_Request $request) {
     $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
     // Array response data
     $response_data = array();
 
-    // Update Education
-    if(isset($request['education_index'], $request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
-        // Education entry
-        $updated_education_index = $request['education_index'];
-        $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
-        // Education data
-        $educations = get_field('education', 'user_' . $user_id);
-        // Education entry
-        if(isset($educations[$updated_education_index])) {
-            $educations[$updated_education_index] = $updated_education;
-            // Update education field
-            update_field('education', $educations, 'user_' . $user_id);
-            //Response data
-            $response_data['updated_education'] = $updated_education;
-        } else {
-            $response_data['error'] = 'Education entry with specified index does not exist.';
-        }
-    }
+   // Update Work
+       if(isset($request['work_index'], $request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
+           // Work entry index
+           $updated_work_index = $request['work_index'];
+           // updated work entry
+           $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
+           $works = get_field('work', 'user_' . $user_id);
+           if(isset($works[$updated_work_index])) {
+               $works[$updated_work_index] = $updated_work;
+               update_field('work', $works, 'user_' . $user_id);
+               $response_data['updated_work'] = $updated_work;
+           } else {
+               $response_data['error'] = 'Work entry with specified index does not exist.';
+           }
+       }
+
+       // Update Education
+           if(isset($request['education_index'], $request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
+               // Education entry index
+               $updated_education_index = $request['education_index'];
+               // Updated education entry
+               $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
+               $educations = get_field('education', 'user_' . $user_id);
+               if(isset($educations[$updated_education_index])) {
+                   $educations[$updated_education_index] = $updated_education;
+                   update_field('education', $educations, 'user_' . $user_id);
+                   $response_data['updated_education'] = $updated_education;
+               } else {
+                   $response_data['error'] = 'Education entry with specified index does not exist.';
+               }
+           }
 
     // Update Award
-    if(isset($request['award_index'], $request['title'], $request['description'], $request['date'])) {
-        // Award entry
-        $updated_award_index = $request['award_index'];
-        $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
-        $works = get_field('work', 'user_' . $user_id);
-                if(isset($works[$updated_work_index])) {
-                    $works[$updated_work_index] = $updated_work;
-                    // Update work field
-                    update_field('work', $works, 'user_' . $user_id);
-                    // Response data
-                    $response_data['updated_work'] = $updated_work;
-                } else {
-                    $response_data['error'] = 'Work index does not exist.';
-                }
-    }
-
-    // Update Work
-    if(isset($request['work_index'], $request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
-        // Work entry
-        $updated_work_index = $request['work_index'];
-        $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
-
-        $works = get_field('work', 'user_' . $user_id);
-        // Work entry
-        if(isset($works[$updated_work_index])) {
-            $works[$updated_work_index] = $updated_work;
-            // Update work field
-            update_field('work', $works, 'user_' . $user_id);
-            // Response data
-            $response_data['updated_work'] = $updated_work;
-        } else {
-            $response_data['error'] = 'Work entry with specified index does not exist.';
-        }
-    }
+       if(isset($request['award_index'], $request['title'], $request['description'], $request['date'])) {
+           // Award entry index
+           $updated_award_index = $request['award_index'];
+           // Updated award entry
+           $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
+           $awards = get_field('awards', 'user_' . $user_id);
+           if(isset($awards[$updated_award_index])) {
+               $awards[$updated_award_index] = $updated_award;
+               update_field('awards', $awards, 'user_' . $user_id);
+               $response_data['updated_award'] = $updated_award;
+           } else {
+               $response_data['error'] = 'Award entry with specified index does not exist.';
+           }
+       }
 
     // Return the response data
     $response = new WP_REST_Response($response_data);
     $response->set_status(200);
     return $response;
 }
-
 
 //[Add]Dashboard My_Resume
 function candidateMyResumeAdd(WP_REST_Request $request) {
@@ -1758,7 +1763,6 @@ function candidateMyResumeAdd(WP_REST_Request $request) {
 
       // Add the new education to the response data
       $response_data['new_education'] = $new_education;
-      var_dump($new_education);
     }
 
     // Add new Award
@@ -1772,10 +1776,9 @@ function candidateMyResumeAdd(WP_REST_Request $request) {
       update_field('awards', $awards, 'user_' . $user_id);
       // Add the new award to the response data
       $response_data['new_award'] = $new_award;
-      var_dump($new_award);
     }
 
-    // Add new Word
+    // Add new Work
     if(isset($request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
       // New work entry
       $new_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
@@ -1786,9 +1789,8 @@ function candidateMyResumeAdd(WP_REST_Request $request) {
       update_field('work', $works, 'user_' . $user_id);
       // Add the new work to the response data
       $response_data['new_work'] = $new_work;
-      var_dump($new_work);
     }
-
+      //var_dump($response_data);
     // Return the response data
     $response = new WP_REST_Response($response_data);
     $response->set_status(200);
@@ -1799,44 +1801,56 @@ function candidateMyResumeAdd(WP_REST_Request $request) {
 //[Delete]Dashboard My_Resume
 function candidateMyResumeDelete(WP_REST_Request $request) {
 
-       // Récupérer l'ID de l'utilisateur
-       $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+          $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+          //var_dump($user_id);
+          // Array response data
+          $response_data = array();
 
-       function delete_data_with_unset($user_id, $data_type, $index) {
-           switch ($data_type) {
-               case 'education':
-                   $data_key = 'education';
-                   break;
-               case 'portfolio':
-                   $data_key = 'portfolio';
-                   break;
-               case 'experience':
-                   $data_key = 'work';
-                   break;
-               case 'awards':
-                   $data_key = 'awards';
-                   break;
-               default:
-                   return 'Invalid data type';
-           }
+          // Delete Education
+          if(isset($request['delete_education'])) {
+              $education_index = $request['delete_education'];
+              $educations = get_field('education', 'user_' . $user_id);
+                           // var_dump($educations);
 
-           // Vérifier si l'index spécifié existe dans les données
-           if(isset($data[$index])) {
-               // Supprimer l'élément correspondant à l'index spécifié
-               unset($data[$index]);
+              if(isset($educations[$education_index])) {
+                  unset($educations[$education_index]);
+                  update_field('education', $educations, 'user_' . $user_id);
+                  $response_data['message'] = 'Education deleted successfully';
+              } else {
+                  $response_data['error'] = 'Education entry with specified index does not exist.';
+              }
+          }
 
-               // Mettre à jour les données du champ pour l'utilisateur
-               update_field($data_key, $data, 'user_' . $user_id);
+         /*  // Delete Award
+          if(isset($request['delete_award'])) {
+              $award_index = $request['delete_award'];
+              $awards = get_field('awards', 'user_' . $user_id);
+              if(isset($awards[$award_index])) {
+                  unset($awards[$award_index]);
+                  update_field('awards', $awards, 'user_' . $user_id);
+                  $response_data['message'] = 'Award deleted successfully';
+              } else {
+                  $response_data['error'] = 'Award entry with specified index does not exist.';
+              }
+          }
 
-               // Retourner un message de succès
-               return 'Data deleted successfully';
-           } else {
-               // Si l'index spécifié n'est pas trouvé, retourner un message d'erreur
-               return 'Index not found';
-           }
-       }
-
-
-
+          // Delete Work
+          if(isset($request['delete_work'])) {
+              $work_index = $request['delete_work'];
+              $works = get_field('work', 'user_' . $user_id);
+              if(isset($works[$work_index])) {
+                  unset($works[$work_index]);
+                  update_field('work', $works, 'user_' . $user_id);
+                  $response_data['message'] = 'Work experience deleted successfully';
+              } else {
+                  $response_data['error'] = 'Work entry with specified index does not exist.';
+              }
+          }
+ */
+        /*   // Return the response data
+          $response = new WP_REST_Response($response_data);
+          $response->set_status(200);
+          return $response;
+ */
 }
 /* * End Liggeey * */
