@@ -25,6 +25,7 @@ body {
 #ccn-main-region .container {
     max-width: unset;
 }
+
 .theme-error {
     background-color: #ffcccc;
     border: 2px solid #cc0000;
