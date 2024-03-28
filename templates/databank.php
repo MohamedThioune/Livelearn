@@ -1,7 +1,7 @@
 <?php /** Template Name: Databank */?>
 
 <?php
-
+require_once 'add-author.php';
 global $wpdb;
 
 /*
@@ -229,7 +229,35 @@ $urls =
         'The Next Organization'=>'https://thenextorganization.com/',
         'Salveos'=>'https://salveos.nl/',
         'MLC'=>'https://m-lc.nl/',
-        'Artefact'=>'https://www.artefact.com/'
+        'Artefact'=>'https://www.artefact.com/',
+       // 'React news'=>'https://reactnews.com/',
+        'Horeca Magazine'=>'https://horecamagazine.be/',
+       // 'Skift'=>'https://skift.com/',
+      //  'UK Hospitality'=>'https://www.ukhospitality.org.uk/',
+        'Around the Bar'=>'https://aroundthebar.nl/',
+        'Hospitality News'=>'https://hospitalitynewsny.com/',
+        'ZOUT'=>'https://www.zoutmagazine.eu/',
+        'Tableau'=>'https://tableaumagazine.nl/',
+
+    'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+	'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
+	'Modern Agriculture' =>	'https://modernagriculture.ca/',
+	'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
+	'Farm Journal' =>	'https://www.farmjournal.com/',
+	'Future Farming' =>	'https://www.futurefarming.com/',
+	'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
+	'Global Finance' =>	'https://gfmag.com/',
+	'InFinance' =>	'https://www.infinance.nl/',
+	'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
+	'Computer' =>	'https://www.computer.org/',
+	'PHP Magazine' =>	'https://phpmagazine.net/',
+	//'PHP Arch' =>	'https://www.phparch.com/',
+//	'Devmio' =>	'https://devm.io/',
+	//'Life after Football' =>	'https://lifeafterfootball.eu/',
+	'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
+//	'C’t magazine' => 'https://www.ct.nl/',
+	'Digital DJ Tips' =>'https://www.digitaldjtips.com/'
+        
     ];
 
 $file_xml = [
@@ -967,7 +995,7 @@ if (!empty($courses)) {
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                   location.reload();
+                  // location.reload();
                 }
             });
         });

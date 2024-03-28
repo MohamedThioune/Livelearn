@@ -1570,7 +1570,7 @@ $saved = get_user_meta($user_id, 'course');
                 ?>
 
                 <?php
-            }else
+            } else
                 echo '<p class="verkop"> Geen deskundigen beschikbaar </p>';
             ?>
         </div>

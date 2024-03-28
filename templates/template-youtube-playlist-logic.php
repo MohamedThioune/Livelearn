@@ -1,6 +1,7 @@
 <?php /** Template Name: youtube playlist */?>
 <?php
  require_once 'add-author.php';
+ require_once 'detect-language.php';
 global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
@@ -227,6 +228,7 @@ if ($playlist_youtube) {
                         'company_id' => $company_id,
                         'status' => $status,
                         'org'=>$playlist['id'],
+                        'language'=>detectLanguage($playlist['title']['rendered'])
                     );
                     $wpdb->insert($table, $data);
                    
@@ -241,12 +243,12 @@ if ($playlist_youtube) {
         }
 
     } else {
-        echo "<span class='alert alert-danger'>No news playlists found ❌</span>";
+        echo "<span class='alert alert-danger'>No new data ! ❌</span>";
     }
     if($data_insert==1)
      echo"<span class='alert alert-success'> Courses Insertion done successfully ✔️</span><br><br>";
      else
-         echo "<span class='alert alert-danger'>Any insertion is doing ❌</span>";
+         echo "<span class='alert alert-danger'>No new data ! ❌</span>";
     //Empty youtube channels after parse
 
     // update_field('youtube_playlists', null, 'user_' . $author_id);

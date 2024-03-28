@@ -1,5 +1,6 @@
 <?php
 require_once 'templates/add-author.php';
+require_once 'templates/detect-language.php';
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
 
@@ -274,6 +275,8 @@ function Artikel_From_Company($data)
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+                                'language'=>detectLanguage($article['title']['rendered'])
+                                
                             );
                         } else {
                             $status = 'extern';
@@ -294,6 +297,7 @@ function Artikel_From_Company($data)
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+                                'language'=>detectLanguage($article['title']['rendered'])
 
                                 // 'podcasts'=> null,
                                 // 'for_who'=> null,
@@ -346,6 +350,7 @@ function Artikel_From_Company($data)
                             'company_id' => $company_id,
                             'contributors' => null,
                             'status' => $status,
+                            'language'=>detectLanguage($article['title']['rendered'])
                         );
                          try
                 {
@@ -725,6 +730,7 @@ function xmlParse($data)
                 'author_id' => $author_id,
                 'company_id' => $company_id,
                 'status' => $status,
+                'language'=>detectLanguage($datum->programDescriptions->programName)
             );
             $where = ['titel' => strval($datum->programDescriptions->programName)];
             $updated = $wpdb->update($table, $post, $where);
