@@ -215,7 +215,7 @@ if ($audio_search){
             curl_close($ch2);
             $content_podcasts = $content;
         }
-        foreach ($content_podcasts as $key => $pod) {
+        foreach ($content_podcasts as $key => $pod)
             if ($pod->enclosure->attributes()->url) {
                 $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
@@ -225,8 +225,8 @@ if ($audio_search){
 
                 $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio^";
             }
-        }
-        //wich table will I do the request to show the list of podcast ?
+
+
         $data = array(
             //'titel' => htmlentities($title,ENT_NOQUOTES),
             'titel' => $title,

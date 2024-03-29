@@ -1403,6 +1403,4 @@ $url = home_url( $wp->request );
                         window.location.href = "https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr";
                     }
                 }
-
             </script>
-

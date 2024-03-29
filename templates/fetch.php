@@ -44,6 +44,3 @@ if (($_POST["course_searched"])) {
         return;
     }
 }
-
-
-
