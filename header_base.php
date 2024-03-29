@@ -935,7 +935,6 @@ $url = home_url( $wp->request );
                                 </div>
                             </div>
                         </form>
-
                         <ul class="navbar-nav nav-right">
                             <li class="nav-item">
                                 <a class="nav-link nav-linModife dropdown-toggle" id="OverOns" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#OverOns"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Over ons</a>
@@ -966,7 +965,6 @@ $url = home_url( $wp->request );
                     </div>
                 </div>
             </nav>
-
             <!-- for search  -->
             <div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                 <div class="container-fluid">
