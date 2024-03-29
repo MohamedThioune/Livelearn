@@ -1,169 +1,46 @@
 <?php /** Template Name: Fetch ajax */ ?>
 
 <?php
-$visibility_company = NULL;
-$page = 'check_visibility.php';
+if (($_POST["course_searched"])) {
+    extract($_POST);
+    if (!empty($course_searched)) {
 
-require($page); 
+        $args = array(
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            's' => $course_searched,
+            'orderby' => 'date',
+            'order' => 'ASC',
+        );
+        $course_founded = get_posts($args);
+        if ($course_founded)
+            foreach ($course_founded as $key => $course){
+                $course_type = get_field('course_type', $course->ID);
 
-extract($_POST);
-/**
- * Bunch of users 
- */
-$args = array(
-    'role' => 'Administrator'
-);
-$users = get_users($args);
-
-$user_id = get_current_user_id();
-
-/*
-** Courses - owned * 
-*/
-$courses = array();
-
-$args = array(
-    'post_type' => 'course',
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC',
-);
-
-$global_courses = get_posts($args);
-
-foreach($global_courses as $course)
-{  
-    if(!visibility($course, $visibility_company))
-        continue;
-        
-    array_push($courses, $course);
-}
-/**
- * Bunch of topics ?
-*/
-
-$output = "";
-$row_opleidingen = "";
-$row_onderwerpen = "";
-$row_opleiders = "";
-
-$row_path = "";
-
-$ro = 0;
-$rx = 0;
-if(isset($_POST['search_path'])){
-    foreach($courses as $course)
-        if(stristr($course->post_title, $_POST['search_path']) || $_POST['search_path'] == ''){
-
-            $type_course = get_field('course_type', $course->ID);
-            $short_description = get_field('short_description', $course->ID);
-
-            /*
-            * Experts
-            */
-            $expert = get_field('experts', $course->ID);
-            $author = array($course->post_author);
-            $experts = array_merge($expert, $author);
-
-            $experts_strength = ""; 
-            
-            if(!empty($experts))
-                foreach($experts as $expert){
-                    $image_author = get_field('profile_img',  'user_' . $expert);
-                    if(!$image_author)
-                        $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
-                    $experts_strength .= '<img class="euroImg" src="' . $image_author . '" alt="">'; 
+                $thumbnail = get_field('preview', $post->ID)['url'];
+                if(!$thumbnail){
+                    $thumbnail = get_the_post_thumbnail_url($post->ID);
+                    if(!$thumbnail)
+                        $thumbnail = get_field('url_image_xml', $post->ID);
+                    if(!$thumbnail)
+                        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                 }
-            
-            /*
-            * Thumbnails
-            */
-            $image = get_field('preview', $course->ID)['url'];
-            if(!$image){
-                $image = get_field('url_image_xml', $course->ID);
-                if(!$image)
-                    $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
-            }
-          
-            $output .= '
-                <tr>
-                    <td>
-                        <div class="checkbox table-checkbox">
-                            <label class="block-label selection-button-checkbox">
-                                <input type="checkbox" name="road_path[]" value="' . $course->ID . '"> </label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="blockCardCoursRoad">
-                            <div class="imgCoursRoad">
-                                <img class="" src="' . $image . '" alt="">
-                            </div>
-                            <div class="">
-                                <p class="titleCoursRoad">' . $course->post_title . '</p>
-                                <div class="sousBlockCategorieRoad ">
-                                    <img class="euroImg" src="' . get_stylesheet_directory_uri() . '/img/grad-search.png" alt="">
-                                    <p class="categoryText">' . $type_course .'</p>
+                echo '<li>
+                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" target="_blank" href="'.get_permalink($course->ID).'">
+                            <div class="d-flex">
+                                <div class="blockImg">
+                                    <img src="'.$thumbnail.'" alt="'.$thumbnail.'">
                                 </div>
-                                <p class="descriptionTextRoad">' . $short_description . '</p>
-                                <div class="contentImgCardCour">
-                                '
-                                    . $experts_strength .
-                                '
+                                <div>
+                                    <p class="subtitleSousElementHeader">'.$course->post_title.'</p>
+                                    <p class="subbategory">'.$course_type.'</p>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>';
-        }
-    if($output != "" )
-        echo $output;
-    else 
-        echo "<center> <i class='hasNoResults'>No matching results</i> </center>";
- 
-}else{
-    if(strlen($_POST['search']) >= 2){
-        foreach($users as $user){
-            $filter = $user->data->display_name;
-            if(stristr($filter, $_POST['search'])){
-                $rx++;
-                $row_opleiders .= "<a href='user-overview/?id=". $user->ID ."' class='dropdown-item'><img class='icon9' src='". get_stylesheet_directory_uri() ."/img/fic_student.png'  alt=''> " . $user->display_name."</a>";
+                            <p class="price mb-0">Free</p>
+                        </a>
+                    </li>';
             }
-            if($rx == 3)
-                break;
-        }
-
-    /*  foreach($_SESSION['filter_subtopic'] as $filter)
-            if(stristr($filter['name'], $_POST['search']))
-                $row_onderwerpen .= "<a href='web6.php?sub=".$filter['id']."' style='color:black'><img class='icon9' src='img/fic_search.png' alt=''>" . $filter['name'] ."</a>"; */
+        return;
     }
-
-    if(strlen($_POST['search']) >= 3)
-        foreach($courses as $course){
-            if(stristr($course->post_title, $_POST['search'])){
-                if($typo != 'Alles'){
-                    $course_type = get_field('course_type', $course->ID);
-                    if($course_type != $typo)
-                        continue;
-                }
-                $row_opleidingen .= "<a href='". get_permalink($course->ID) ."' class='dropdown-item'><img class='icon9' src='". get_stylesheet_directory_uri() ."/img/fic_book.png' alt=''>" . $course->post_title ."</a>";
-                $ro++;
-            }
-            if($ro == 4)
-                break;
-        }
-
-
-    //theme-mastersearch-divider
-    if($row_opleidingen != "" || $row_onderwerpen != "" || $row_opleiders != ""){
-        if($row_opleidingen != "")
-            $output .= "<p class='theme-mastersearch-divider' style='color:black'>Cursussen</p>" . $row_opleidingen;  
-        if($row_onderwerpen != "")
-            $output .= "<p class='theme-mastersearch-divider' style='color:black'>Onderwerpen</p>" . $row_onderwerpen;
-        if($row_opleiders != "")
-            $output .= "<p class='theme-mastersearch-divider' style='color:black'>Opleiders</p>" . $row_opleiders;
-        echo $output;
-    }else 
-        echo "<center> <i class='hasNoResults'>No matching results</i> </center>";
 }
-
-?>
