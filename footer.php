@@ -490,7 +490,7 @@ $site_url = get_site_url() . "/apply-cookie";
 
             if(txt){
                 $.ajax({
-                    url:"/livelearn/fetch-ajax",
+                    url:"/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,
@@ -783,7 +783,7 @@ $site_url = get_site_url() . "/apply-cookie";
             if (string_to_find.length<2)
                 return;
             $.ajax({
-                url :"/livelearn/fetch-ajax",
+                url :"/fetch-ajax",
                 method : "POST",
                 data : {
                     course_searched : string_to_find
