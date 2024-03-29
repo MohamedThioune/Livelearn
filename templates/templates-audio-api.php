@@ -226,7 +226,6 @@ if ($audio_search){
                     $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio^";
                 }
 
-        //wich table will I do the request to show the list of podcast ?
         $data = array(
             //'titel' => htmlentities($title,ENT_NOQUOTES),
             'titel' => $title,

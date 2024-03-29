@@ -102,8 +102,6 @@ if(isset($filter_args)):
     $order_type = searching_course_with_filter($courses, $args)['order_type'];
     $expertise = searching_course_with_filter($courses, $args)['experts'];
 
-    // var_dump($courses);
-    // die();
 
     /* * End search by * */
 endif;
