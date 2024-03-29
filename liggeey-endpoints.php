@@ -784,7 +784,6 @@ function categoryDetail(WP_REST_Request $request){
   //Response
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
-
   return $response;
 }
 
@@ -922,7 +921,6 @@ function liggeeySave(WP_REST_Request $request){
   $success = "Favoris saved with success !";
   $response = new WP_REST_Response($success);
   $response->set_status(200);
-
   return $response;
 }
 
@@ -953,14 +951,12 @@ function commentByID(WP_REST_Request $request ) {
          'comment_author_image' => $image_author,
          'rating' => $rating,
          'feedback' => $feedback
-
      );
      // Add the comment data to the comments array
      $comments[] = $comment;
   }
   // Return the array of comments
   return $comments;
-
 }
 
 //Add comment
@@ -993,6 +989,7 @@ function addComment(WP_REST_Request $request) {
       return new WP_Error('user_not_logged_in');
   }
 }
+
 
 //[POST]Dashboard User | Home
 function HomeUser(WP_REST_Request $request){
@@ -1063,7 +1060,6 @@ function HomeUser(WP_REST_Request $request){
   $sample = (Object)$sample;
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
-
   return $response;
 }
 
@@ -1071,7 +1067,6 @@ function HomeUser(WP_REST_Request $request){
 function JobsUser(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
-
   $required_parameters = ['userApplyId'];
   $open_jobs = array();
 
@@ -1098,14 +1093,13 @@ function JobsUser(WP_REST_Request $request){
 
   $response = new WP_REST_Response($open_jobs);
   $response->set_status(200);
-
   return $response;
 }
 
 //[POST]Dashboard User | Applicants
 function ApplicantsUser(WP_REST_Request $request){
-  $errors = ['errors' => '', 'error_data' => ''];
 
+  $errors = ['errors' => '', 'error_data' => ''];
   $required_parameters = ['userApplyId'];
   $applications = array();
   $application = array();
@@ -1142,7 +1136,6 @@ function ApplicantsUser(WP_REST_Request $request){
 
   $response = new WP_REST_Response($applications);
   $response->set_status(200);
-
   return $response;
 
 }
@@ -1183,7 +1176,6 @@ function FavoritesUser(WP_REST_Request $request){
 
   $response = new WP_REST_Response($favorite);
   $response->set_status(200);
-
   return $response;
 }
 
@@ -1238,7 +1230,6 @@ function postJobUser(WP_REST_Request $request){
   $job = job($job_id);
   $response = new WP_REST_Response($job);
   $response->set_status(200);
-
   return $response;
 
 }
@@ -1668,7 +1659,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
       
     // Data
     $data = array(
-
         'state' => $state,
         'topics' => $topics_with_notes,
         'badges' => $badges,
@@ -1682,7 +1672,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     $response->set_status(200);
     return $response;
 }
-
 
 //[Edit]Dashboard My_Resume
 function candidateMyResumeEdit(WP_REST_Request $request) {
@@ -1809,8 +1798,9 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
           // Delete Education
           if(isset($request['delete_education'])) {
               $education_index = $request['delete_education'];
+
+              //var_dump($education_index);
               $educations = get_field('education', 'user_' . $user_id);
-                           // var_dump($educations);
 
               if(isset($educations[$education_index])) {
                   unset($educations[$education_index]);
@@ -1821,9 +1811,10 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
               }
           }
 
-         /*  // Delete Award
+           // Delete Award
           if(isset($request['delete_award'])) {
               $award_index = $request['delete_award'];
+
               $awards = get_field('awards', 'user_' . $user_id);
               if(isset($awards[$award_index])) {
                   unset($awards[$award_index]);
@@ -1837,6 +1828,7 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
           // Delete Work
           if(isset($request['delete_work'])) {
               $work_index = $request['delete_work'];
+
               $works = get_field('work', 'user_' . $user_id);
               if(isset($works[$work_index])) {
                   unset($works[$work_index]);
@@ -1846,11 +1838,11 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
                   $response_data['error'] = 'Work entry with specified index does not exist.';
               }
           }
- */
-        /*   // Return the response data
+
+           // Return the response data
           $response = new WP_REST_Response($response_data);
           $response->set_status(200);
           return $response;
- */
+
 }
 /* * End Liggeey * */
