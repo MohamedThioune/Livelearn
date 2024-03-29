@@ -425,7 +425,6 @@ $site_url = get_site_url() . "/apply-cookie";
         else 
             topics_selected.push(tags_id);        
     });
- 
     $("#btn-topics").click((e)=>
     {
         $(e.preventDefault())
@@ -472,7 +471,6 @@ $site_url = get_site_url() . "/apply-cookie";
         });
     });
 </script>
-
 <script>
     jQuery(function($){
         $('#header-search').keyup(function(){
