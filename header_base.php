@@ -927,7 +927,7 @@ $url = home_url( $wp->request );
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- input search on top -->
-                        <form action="/livelearn/product-search" method="GET" class="form-inline ml-auto mb-0 ">
+                        <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 ">
                             <input id="header-search" value="<?=$_GET['search'] ? : ''?>" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                             <div class="dropdown-menuSearch headerDrop" id="header-list">
                                 <div class="list-autocomplete" id="header">
