@@ -1702,15 +1702,15 @@ function candidateMyResumeEdit(WP_REST_Request $request) {
         $updated_award_index = $request['award_index'];
         $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
         $works = get_field('work', 'user_' . $user_id);
-                if(isset($works[$updated_work_index])) {
-                    $works[$updated_work_index] = $updated_work;
-                    // Update work field
-                    update_field('work', $works, 'user_' . $user_id);
-                    // Response data
-                    $response_data['updated_work'] = $updated_work;
-                } else {
-                    $response_data['error'] = 'Work index does not exist.';
-                }
+        if(isset($works[$updated_work_index])) {
+            $works[$updated_work_index] = $updated_work;
+            // Update work field
+            update_field('work', $works, 'user_' . $user_id);
+            // Response data
+            $response_data['updated_work'] = $updated_work;
+        } else {
+            $response_data['error'] = 'Work index does not exist.';
+        }
     }
 
     // Update Work
@@ -1737,7 +1737,6 @@ function candidateMyResumeEdit(WP_REST_Request $request) {
     $response->set_status(200);
     return $response;
 }
-
 
 //[Add]Dashboard My_Resume
 function candidateMyResumeAdd(WP_REST_Request $request) {
@@ -1798,45 +1797,42 @@ function candidateMyResumeAdd(WP_REST_Request $request) {
 
 //[Delete]Dashboard My_Resume
 function candidateMyResumeDelete(WP_REST_Request $request) {
+  // Récupérer l'ID de l'utilisateur
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
-       // Récupérer l'ID de l'utilisateur
-       $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  function delete_data_with_unset($user_id, $data_type, $index) {
+      switch ($data_type) {
+          case 'education':
+              $data_key = 'education';
+              break;
+          case 'portfolio':
+              $data_key = 'portfolio';
+              break;
+          case 'experience':
+              $data_key = 'work';
+              break;
+          case 'awards':
+              $data_key = 'awards';
+              break;
+          default:
+              return 'Invalid data type';
+      }
 
-       function delete_data_with_unset($user_id, $data_type, $index) {
-           switch ($data_type) {
-               case 'education':
-                   $data_key = 'education';
-                   break;
-               case 'portfolio':
-                   $data_key = 'portfolio';
-                   break;
-               case 'experience':
-                   $data_key = 'work';
-                   break;
-               case 'awards':
-                   $data_key = 'awards';
-                   break;
-               default:
-                   return 'Invalid data type';
-           }
+      // Vérifier si l'index spécifié existe dans les données
+      if(isset($data[$index])) {
+          // Supprimer l'élément correspondant à l'index spécifié
+          unset($data[$index]);
 
-           // Vérifier si l'index spécifié existe dans les données
-           if(isset($data[$index])) {
-               // Supprimer l'élément correspondant à l'index spécifié
-               unset($data[$index]);
+          // Mettre à jour les données du champ pour l'utilisateur
+          update_field($data_key, $data, 'user_' . $user_id);
 
-               // Mettre à jour les données du champ pour l'utilisateur
-               update_field($data_key, $data, 'user_' . $user_id);
-
-               // Retourner un message de succès
-               return 'Data deleted successfully';
-           } else {
-               // Si l'index spécifié n'est pas trouvé, retourner un message d'erreur
-               return 'Index not found';
-           }
-       }
-
-
+          // Retourner un message de succès
+          return 'Data deleted successfully';
+      } else {
+          // Si l'index spécifié n'est pas trouvé, retourner un message d'erreur
+          return 'Index not found';
+      }
+  }
 
 }
 /* * End Liggeey * */
