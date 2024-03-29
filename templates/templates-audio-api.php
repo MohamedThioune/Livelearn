@@ -167,6 +167,7 @@ if ($audio_search){
                             <img src='".$staticImg."' width='20px' height='20px'>
                             <span class='h6'>$author</span>
                         </div>
+                        <p class='m-lg-3'>lange : $language</p>
                   </div>
             </div>
         ";
@@ -214,17 +215,17 @@ if ($audio_search){
             curl_close($ch2);
             $content_podcasts = $content;
         }
-        foreach ($content_podcasts as $key => $pod) {
-            if ($pod->enclosure->attributes()->url) {
-                $description_podcast = (string)$pod->description;
-                $title_podcast = (string)$pod->title;
-                $mp3 = $pod->enclosure->attributes()->url;
-                $date =(string)$pod->pubDate;
-                $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
+        foreach ($content_podcasts as $key => $pod)
+                if ($pod->enclosure->attributes()->url) {
+                    $description_podcast = (string)$pod->description;
+                    $title_podcast = (string)$pod->title;
+                    $mp3 = $pod->enclosure->attributes()->url;
+                    $date =(string)$pod->pubDate;
+                    $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
 
-                $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio^";
-            }
-        }
+                    $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio^";
+                }
+
         //wich table will I do the request to show the list of podcast ?
         $data = array(
             //'titel' => htmlentities($title,ENT_NOQUOTES),
@@ -244,12 +245,14 @@ if ($audio_search){
             'author_id' => $user_id,
             'status' => 'extern',
             'company_id' => $company_id,
+            'language'=>$language
         );
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
-        if ($post_id) {
+        if ($post_id)
             $message = "$title saved in platform success ✅✅✅";
-        }
+        else
+            $message = $wpdb->last_error;
     }
     echo $message;
 }

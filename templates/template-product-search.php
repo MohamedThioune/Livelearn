@@ -54,8 +54,7 @@ elseif($filter):
     $expertise = searching_course_by_type($global_posts, $filter)['experts'];    
     $no_filter = false;
     $leervom[] = $filter;
-    // var_dump($courses);
-    // die();
+
 endif;
 
 /* * Group by type * */
@@ -246,6 +245,16 @@ $courses = array_slice($courses, 0, 500);
                                 </div>
                                 <p class="number-course"><?= isset($order_type['Lezing']) ? $order_type['Lezing'] : 0 ?></p>
                             </div>
+
+                            <div class="form-check d-flex justify-content-between">
+                                <div class="group-input-check">
+                                    <input class="form-check-input" type="checkbox" id="" name="leervom[]" value="Assessment" <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Assessment', $leervom) || $search_type == "Assessment" ) echo "checked" ; else echo ""  ?>>
+                                    <label class="form-check-label" for="Backend">
+                                        Assessment
+                                    </label>
+                                </div>
+                                <p class="number-course"><?= isset($order_type['Assessment']) ? $order_type['Assessment'] : 0 ?></p>
+                            </div>
                         </div>
 
                         <div class="sub-section">
@@ -359,12 +368,29 @@ $courses = array_slice($courses, 0, 500);
                         // var_dump($visibility_company);
                         // die();
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+
+                        if (isset($_GET['search'])):
+                            $args = array(
+                                'post_type' => array('post','course', 'learnpath', 'assessment','courses'),
+                                'post_status' => 'publish',
+                                'orderby' => 'date',
+                                'order'   => 'DESC',
+                                'posts_per_page' => -1,
+                                's'=>$_GET['search']
+                            );
+                            /**
+                                @args from fetch.php
+                             */
+                        $courses = get_posts($args);
+                        //echo '<pre>';var_dump('with search',$courses[0]);
+                        endif;
                         foreach($courses as $post):
 
                         $hidden = 0;
                         $hidden = visibility($post, $visibility_company);
                         if(!$hidden)
                             continue;
+                        //var_dump($post->ID);
 
                         /* Displaying information */
 

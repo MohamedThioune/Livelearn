@@ -92,31 +92,6 @@ function job($id){
   $sample['applied'] = get_field('job_appliants', $post->ID) ?: 0;
 
   $sample = (Object)$sample;
-<<<<<<< HEAD
-
-  // Retrieve the applied 
-  $entity = null;
-  $applied = array();
-  foreach ($sample->applied as $entity) 
-    $applied[] = candidate($entity->ID);
-  $sample->applied = $applied;
-
-  // Retrieve the approved 
-  $entity = null;
-  $approved = array();
-  foreach ($sample->approved as $entity) 
-    $approved[] = candidate($entity->ID);
-  $sample->approved = $approved;
-
-  // Retrieve the rejected 
-  $entity = null;
-  $rejected = array();
-  foreach ($sample->rejected as $entity) 
-    $rejected[] = candidate($entity->ID);
-  $sample->rejected = $rejected;
-
-=======
->>>>>>> origin/peinda
   return $sample;
 }
 
@@ -163,139 +138,138 @@ function company($id){
   return $sample;
 }
 
-//Detail candidate
-function candidate($id){
-  $param_user_id = $id ?: get_current_user_id();
-  $sample = array();
-  $user = get_user_by('ID', $param_user_id);
+    //Detail candidate
+    function candidate($id){
 
-  $sample['ID'] = $user->ID;
-  $sample['first_name'] = $user->first_name;
-  $sample['last_name'] = $user->last_name;
-  $sample['email'] = $user->user_email;
-  $sample['mobile_phone'] = $user->mobile_phone;
-  $sample['city'] = $user->city;
-  $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-  $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
-  $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
+      $param_user_id = $id ?: get_current_user_id();
+      $sample = array();
+      $user = get_user_by('ID', $param_user_id);
 
-  $member_since = new DateTimeImmutable($user->user_registered_at);
-  $sample['member_since'] = $member_since->format('M d, Y');
+      $sample['ID'] = $user->ID;
+      $sample['first_name'] = $user->first_name;
+      $sample['last_name'] = $user->last_name;
+      $sample['email'] = $user->user_email;
+      $sample['mobile_phone'] = $user->mobile_phone;
+      $sample['city'] = $user->city;
+      $sample['adress'] = $user->adress;
+      $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+      $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
-  $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
+      $member_since = new DateTimeImmutable($user->user_registered_at);
+      $sample['member_since'] = $member_since->format('M d, Y');
 
-  $date_born = get_field('date_born',  'user_' . $user->ID);
-  if(!$date_born)
-      $age = "No birth";
-  else{
-      //explode the date to get month, day and year
-      $birthDate = explode("/", $date_born);
-      //get age from date or birthdate
-      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
-          ? ((date("Y") - $birthDate[2]) - 1)
-          : (date("Y") - $birthDate[2]));
-      $age .= ' Years';
-  }
-  $sample['age'] = $age;
+      $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
 
-  $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
-  $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
-  $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
+      $date_born = get_field('date_born',  'user_' . $user->ID);
+      if(!$date_born)
+          $age = "No birth";
+      else{
+          //explode the date to get month, day and year
+          $birthDate = explode("/", $date_born);
+          //get age from date or birthdate
+          $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+              ? ((date("Y") - $birthDate[2]) - 1)
+              : (date("Y") - $birthDate[2]));
+          $age .= ' Years';
+      }
+      $sample['age'] = $age;
 
-  //Get Topics
-  // $topics_external = get_user_meta($user_id, 'topic');
-  // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
-  // $topics = array();
-  // if(!empty($topics_external))
-  //   $topics = !empty($topics_external) $topics_external;
+      $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
+      $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
+      $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
+      $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
+      $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
+      $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
+      $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
 
-  // if(!empty($topics_internal))
-  //   foreach($topics_internal as $item)
-  //       array_push($topics, $item);
+      //Get Topics
+      // $topics_external = get_user_meta($user_id, 'topic');
+      // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+      // $topics = array();
+      // if(!empty($topics_external))
+      //   $topics = !empty($topics_external) $topics_external;
 
-  $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
-  "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
-  Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+      // if(!empty($topics_internal))
+      //   foreach($topics_internal as $item)
+      //       array_push($topics, $item);
 
-  $topics = array();
-  $limit = 3;
-  $topics = get_user_meta($user->ID, 'topic');
-  $sample['skills'] = [];
-  if(!empty($topics)):
-    $args = array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'include'  => $topics,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        'include' => $topics,
-        'post_per_page' => $limit
-    );
-    $sample['skills'] = get_categories($args);
-  endif;
+      $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
+      "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
+      Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
 
-  //Education Information
-  $main_education = get_field('education',  'user_' . $user->ID);
-  $educations = array();
-  foreach($main_education as $value):
+      $topics = array();
+      $limit = 3;
+      $topics = get_user_meta($user->ID, 'topic');
+      $sample['skills'] = [];
+      if(!empty($topics)):
+        $args = array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'include'  => $topics,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            'include' => $topics,
+            'post_per_page' => $limit
+        );
+        $sample['skills'] = get_categories($args);
+      endif;
 
-    $education = array();
-    if(!$value)
-      continue;
+      //Education Information
+      $main_education = get_field('education',  'user_' . $user->ID);
+      $educations = array();
+      foreach($main_education as $value):
 
-    $explosion = explode(";", $value);
+        $education = array();
+        if(!$value)
+          continue;
 
-    $year = "";
-    if(isset($explosion[2]))
-        $year = explode("-", $explosion[2])[0];
+        $explosion = explode(";", $value);
 
-    if(isset($explosion[3]))
-        if(intval($explosion[2]) != intval($explosion[3]))
-            $year = $year . "-" .  explode("-", $explosion[3])[0];
+        $year = "";
+        if(isset($explosion[2]))
+            $year = explode("-", $explosion[2])[0];
 
-    $education['diploma'] = $explosion[1];
-    $education['year'] = $year;
-    $education['school'] = $explosion[0];
-    $education['description'] = $explosion[4];
-    $educations[] = $education;
+        if(isset($explosion[3]))
+            if(intval($explosion[2]) != intval($explosion[3]))
+                $year = $year . "-" .  explode("-", $explosion[3])[0];
 
-  endforeach;
-  $sample['educations'] = $educations;
+        $education['diploma'] = $explosion[1];
+        $education['year'] = $year;
+        $education['school'] = $explosion[0];
+        $education['description'] = $explosion[4];
+        $educations[] = $education;
 
-  //Work & Experience Information
-  $main_experience = get_field('work',  'user_' . $user->ID);
-  $experiences = array();
-  foreach($main_experience as $value):
+      endforeach;
+      $sample['educations'] = $educations;
 
-    $experience = array();
-    if(!$value)
-      continue;
+      //Work & Experience Information
+      $main_experience = get_field('work',  'user_' . $user->ID);
+      $experiences = array();
+      foreach($main_experience as $value):
 
-    $explosion = explode(";", $value);
+        $experience = array();
+        if(!$value)
+          continue;
 
-    $year = "";
-    if(isset($explosion[2]))
-        $year = explode("-", $explosion[2])[0];
+        $explosion = explode(";", $value);
 
-    if(isset($explosion[3]))
-        if(intval($explosion[2]) != intval($explosion[3]))
-            $year = $year . "-" .  explode("-", $explosion[3])[0];
+        $year = "";
+        if(isset($explosion[2]))
+            $year = explode("-", $explosion[2])[0];
 
-    $experience['company'] = $explosion[1];
-    $experience['year'] = $year;
-    $experience['job'] = $explosion[0];
-    $experience['description'] = $explosion[4];
-    $experiences[] = $experience;
+        if(isset($explosion[3]))
+            if(intval($explosion[2]) != intval($explosion[3]))
+                $year = $year . "-" .  explode("-", $explosion[3])[0];
 
-  endforeach;
-  $sample['experiences'] = $experiences;
+        $experience['company'] = $explosion[1];
+        $experience['year'] = $year;
+        $experience['job'] = $explosion[0];
+        $experience['description'] = $explosion[4];
+        $experiences[] = $experience;
+      endforeach;
+      $sample['experiences'] = $experiences;
 
-  $sample = (Object)$sample;
-
-  return $sample;
+      $sample = (Object)$sample;
+      return $sample;
 }
 
 function validated($required_parameters, $request){
@@ -1306,14 +1280,10 @@ function companyProfil(WP_REST_Request $request){
 }
 
 //[POST]Dashboard User | Update | Profil ? Look carefully this function
-<<<<<<< HEAD
-function updateCompanyProfil(WP_REST_Request $request) {
-=======
  function updateCompanyProfil(WP_REST_Request $request) {
 
     $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
-        // Retourner la liste des emplois auxquels le candidat a postulé
             $company_id = get_field('company', 'user_' . $user_id)[0];
            // var_dump($company_id);
 
@@ -1327,6 +1297,7 @@ function updateCompanyProfil(WP_REST_Request $request) {
 
            // the parameters REST request
                 $updated_data = $request->get_params();
+                //var_dump($updated_data);
               // Update Fields
                 foreach ($updated_data as $field_name => $field_value) {
                     update_field($field_name, $field_value, $company_id);
@@ -1368,271 +1339,20 @@ function candidateProfil(WP_REST_Request $request) {
 
 //[POST]Dashboard Candidate | Update | Profil
 function updateCandidateProfil(WP_REST_Request $request) {
->>>>>>> origin/peinda
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
   $required_parameters = ['userApplyId'];
   $errors = ['errors' => '', 'error_data' => ''];
-<<<<<<< HEAD
-
-  $validated = validated($required_parameters, $request);
-
-  // Data User
-  $company_data = company($user_id); //?
-
-  if (!$company_data) {
-=======
   $validated = validated($required_parameters, $request);
 
   //Data User
   $candidate_data = candidate($user_id);
 
   if (!$candidate_data) {
->>>>>>> origin/peinda
       $errors['errors'] = 'User not found';
       $response = new WP_REST_Response($errors);
       $response->set_status(401);
       return $response;
-<<<<<<< HEAD
-  }
-  // Parameters REST request
-  $updated_data = $request->get_params();
-
-  // Update Fields
-  foreach ($updated_data as $field_name => $field_value) {
-    if($field_value)
-    if($field_value != '' && $field_value != ' ')
-      update_field($field_name, $field_value, $company->ID);
-  }
-
-  // Return response
-  $updated_company_data = company($user_id);
-  $response = new WP_REST_Response($updated_company_data);
-  $response->set_status(200);
-  return $response;
-}
-
-//[POST]Apply User | Approve or Reject candidate
-function jobUserApprove(WP_REST_Request $request){
-  $errors = ['errors' => '', 'error_data' => ''];
-  $required_parameters = ['userApplyId', 'jobAppliedId', 'status'];
-
-  //Check required parameters apply
-  $validated = validated($required_parameters, $request);
-
-  //Get inputs
-  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
-  $job_applied_id = isset($request['jobAppliedId']) ? $request['jobAppliedId'] : 0;
-  $status = isset($request['status']) ? $request['status'] : 0;
-
-  $user_apply = get_user_by('ID', $user_apply_id);
-
-  //Remove the user in list appliants
-  $appliants = get_field('job_appliants', $job_applied_id);
-  $appliants = ($appliants) ?: array();
-  $key = array_search($user_apply, $appliants);
-  if($key !== false)
-    unset($appliants[$key]);
-  update_field('job_appliants', $appliants, $job_applied_id);
-
-  if(!$status || $status == "" || $status == " "):
-    $response = new WP_REST_Response("No status found !");
-    $response->set_status(200);
-  endif;
-
-  if($status == 'approve'):
-    //Get the approved appliants user
-    $user_appliants = get_field('job_appliants_approved', $job_applied_id);
-    $user_appliants = ($user_appliants) ?: array();
-    //Add the applying user
-    array_push($user_appliants, $user_apply);
-    update_field('job_appliants_approved', $user_appliants, $job_applied_id);
-  elseif($status == "reject"):
-    //Get the rejected appliants user
-    $user_appliants = get_field('job_appliants_rejected', $job_applied_id);
-    $user_appliants = ($user_appliants) ?: array();
-    //Add the applying user
-    array_push($user_appliants, $user_apply);
-    update_field('job_appliants_rejected', $user_appliants, $job_applied_id);
-  endif;
-
-  $success = "User application changed with success !";
-  $response = new WP_REST_Response($success);
-  $response->set_status(200);
-
-  return $response;
-}
-
-//[POST]Apply User | Delete favorite candidate
-function trashFavouriteCandidate(WP_REST_Request $request){
-  $errors = ['errors' => '', 'error_data' => ''];
-  $required_parameters = ['userApplyId', 'userDeleteId'];
-
-  //Check required parameters apply
-  $validated = validated($required_parameters, $request);
-
-  //Get inputs
-  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
-  $user_trash_id = isset($request['userDeleteId']) ? $request['userDeleteId'] : 0;
-
-
-  // Récupérer les favoris de l'utilisateur
-  $user_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
-  $user_favourites = array();
-  $user_shorlisted_jobs = [];
-
-  // Vérifier si l'utilisateur a des emplois favoris
-  if ($user_favorites) 
-    foreach ($user_favorites as $favorite):
-      if ($favorite['type'] == 'candidate') :
-        // Récupérer les détails de l'emploi
-        if($favorite['id'] == $user_trash_id)
-          continue;
-      endif;
-
-      $user_shorlisted_jobs['type'] = $favorite['type'];
-      $user_shorlisted_jobs['id'] = $favorite['id'];
-      array_push($user_favourites, $user_shorlisted_jobs);
-    endforeach;
-  
-  update_field('save_liggeey', $user_favourites, 'user_' . $user_apply_id);
-
-  //Remove the user in list appliants
-  $appliants = get_field('job_appliants', $job_applied_id);
-  $appliants = ($appliants) ?: array();
-  $key = array_search($user_apply, $appliants);
-  if($key !== false)
-    unset($appliants[$key]);
-  update_field('job_appliants', $appliants, $job_applied_id);
-
-  $success = "User favorites changed with success !";
-  $response = new WP_REST_Response($success);
-  $response->set_status(200);
-
-  return $response;
-}
-
-//[POST]Dashboard Candidate | Home
-function HomeCandidate(WP_REST_Request $request){
-  $errors = ['errors' => '', 'error_data' => ''];
-  $sample = array();
-  $limit_job = 6;
-
-  $required_parameters = ['userApplyId'];
-  $application = array();
-  $favorite = array();
-
-  //Check required parameters apply
-  $validated = validated($required_parameters, $request);
-
-  //Get input
-  $user_apply_id = $request['userApplyId'];
-  $user_apply = get_user_by('ID', $user_apply_id);
-  if(!$user_apply):
-    $errors['errors'] = 'User not found';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-  endif;
-
-  //Jobs
-  $args = array(
-    'post_type' => array('job'),  
-    'post_status' => 'publish',
-    'posts_per_page' => $limit_job,
-    'ordevalue' => $user_apply,
-    'order' => 'DESC' ,
-  );
-  $job_posts = get_posts($args);
-  $suggestion_jobs = array();
-  $count_applied = 0;
-
-  foreach ($job_posts as $post) :
-    if(count($suggestion_jobs) < 6 )
-      $suggestion_jobs[] = job($post->ID);
-    $user_applied_jobs = get_field('job_appliants', $post->ID);
-    foreach($user_applied_jobs as $userapply)
-      if($userapply->ID == $userApplyId)
-        $count_applied += 1;
-        // $applied_jobs[] = job($post->ID);
-  endforeach;
-  $sample['count_applied_jobs'] = $count_applied;
- 
-  //Job alerts 
-  $sample['count_job_alerts'] = 0;
-  /** Instrtuctions should be there */
-
-  //Favorite company
-  $main_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
-
-  foreach($main_favorites as $favo):
-    if(!$favo)
-      continue;
-    if($favo['type'] != 'company' && $favo['type'] != 'job')
-      continue;
-    $user_id = $favo['id'];
-    $user = get_user_by('ID', $user_id);
-    if(!$user)
-      continue;
-    $favorite[] = candidate($user->ID);
-  endforeach;
-  // $sample['favorite'] = $favorite;
-  $sample['count_favorite'] = ($favorite) ? count($favorite) : 0;
-
-  $sample['suggestion_jobs'] = $suggestion_jobs;
-  $sample = (Object)$sample;
-  $response = new WP_REST_Response($sample);
-  $response->set_status(200);
-
-  return $response;
-}
-
-//[POST]Dashboard Candidate | Profil
-function candidateProfil(WP_REST_Request $request) {
-
-  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $required_parameters = ['userApplyId'];
-  $errors = ['errors' => '', 'error_data' => ''];
-  //Check required parameters apply
-  $validated = validated($required_parameters, $request);
-
-  //Get input
-  $user_apply_id = $request['userApplyId'];
-  $user_apply = get_user_by('ID', $user_apply_id);
-  if(!$user_apply):
-    $errors['errors'] = 'User not found';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-  endif;
-
-  $candidate_data = candidate($user_id);
-  // Return response
-  $response = new WP_REST_Response($candidate_data);
-  $response->set_status(200);
-  return $response;
-}
-
-//Update candidateProfil
-function updateCandidateProfil(WP_REST_Request $request) {
-
-  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $required_parameters = ['userApplyId'];
-  $errors = ['errors' => '', 'error_data' => ''];
-
-  //Data User
-  $candidate_data = candidate($user_id);
-  $validated = validated($required_parameters, $request);
-  // Data User
-  $candidate_data = candidate($user_id);
-
-  if (!$candidate_data) {
-    $errors['errors'] = 'User not found';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-=======
->>>>>>> origin/peinda
   }
 
   // Parameters REST request
@@ -1797,8 +1517,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         }
 
     endforeach;
-<<<<<<< HEAD
-=======
       //favorite course
           $courses_saved = get_user_meta($user_id, 'course') ?? false;
           $courses = get_posts(
@@ -1843,57 +1561,41 @@ function candidateSkillsPassport(WP_REST_Request $request) {
               $courses_combined[] = $course_combined_info;
           }
 
->>>>>>> origin/peinda
+      //Skills
+     $topics_external = get_user_meta($user_id, 'topic');
+     $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+     $topics = array();
 
-    //favorite course
-    $course_saved = get_user_meta($user_id, 'course') ?? false ;
-    $courses = get_posts(
-      array(
-          'post_type' => array('course', 'post'),
-          'post_status' => 'publish',
-          'posts_per_page' => -1,
-          'order' => 'DESC',
-          'include' => $course_saved
-      )
-    );
+     if (!empty($topics_external))
+         $topics = $topics_external;
 
-    //Skills
-    $topics_external = get_user_meta($user_id, 'topic');
-    $topics_internal = get_user_meta($user_id, 'topic_affiliate');
-    $topics = array();
+     if (!empty($topics_internal))
+         foreach ($topics_internal as $value)
+             array_push($topics, $value);
 
-    if (!empty($topics_external))
-        $topics = $topics_external;
-
-<<<<<<< HEAD
-    if (!empty($topics_internal))
-        foreach ($topics_internal as $value)
-            array_push($topics, $value);
-=======
      $skills_note = get_field('skills', 'user_' . $user_id);
      $count_skills_note = (empty($skills_note)) ? 0 : count($skills_note);
->>>>>>> origin/peinda
 
-    $skills_note = get_field('skills', 'user_' . $user_id);
-    $topics_with_notes = array();
-    foreach ($topics as $value) {
-        $topic = get_the_category_by_ID($value);
-        $note = 0;
+     $topics_with_notes = array();
 
-        if (!empty($skills_note)) {
-          foreach ($skills_note as $skill) {
-              if ($skill['id'] == $value) {
-                  $note = $skill['note'];
-                  break;
-                  }
-          }
-        }
+     foreach ($topics as $value) {
+         $topic = get_the_category_by_ID($value);
+         $note = 0;
 
-        $topics_with_notes[] = array(
-            'topic_name' => (string) $topic,
-            'note' => $note
-        );
-    }
+         if (!empty($skills_note)) {
+             foreach ($skills_note as $skill) {
+                 if ($skill['id'] == $value) {
+                     $note = $skill['note'];
+                     break;
+                     }
+             }
+         }
+
+         $topics_with_notes[] = array(
+             'topic_name' => (string) $topic,
+             'note' => $note
+         );
+     }
 
     // Badges
     $args = array(
@@ -1908,40 +1610,40 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     $certificates = array();
     $performances = array();
     $diplomas = array();
-    $image = '';
-    if(!empty($achievements))
-      foreach($achievements as $key=>$achievement):
-        $type = get_field('type_badge', $achievement->ID);
-        $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+     $image = '';
+     if(!empty($achievements))
+       foreach($achievements as $key=>$achievement):
 
-        $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->ID);
-        if(!$image)
-            $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+           $type = get_field('type_badge', $achievement->ID);
+           $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
 
-        switch ($type) {
-          case 'Genuine':
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($badges, $achievement);
-              break;
-          case 'Certificaat':
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($certificats, $achievement);
-              break;
-          case 'Prestatie':
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($prestaties, $achievement);
-              break;
-          case 'Diploma':
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($diplomas, $achievement);
-              break;
-          default:
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($badges, $achievement);
-              break;
-        }
+           $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->ID);
+           if(!$image)
+               $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-      endforeach;
+           switch ($type) {
+               case 'Genuine':
+                   $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                   array_push($badges, $achievement);
+                   break;
+               case 'Certificaat':
+                   $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                   array_push($certificats, $achievement);
+                   break;
+               case 'Prestatie':
+                   $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                   array_push($prestaties, $achievement);
+                   break;
+               case 'Diploma':
+                   $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                   array_push($diplomas, $achievement);
+                   break;
+               default:
+                   $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                   array_push($badges, $achievement);
+                   break;
+           }
+       endforeach;
 
     // Data
     $data = array(
@@ -1949,7 +1651,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         'state' => $state,
         'topics' => $topics_with_notes,
         'badges' => $badges,
-         'courses_info' => $courses_combined,
+         'courses_info' => $courses_combined
 
     );
 
@@ -1959,8 +1661,146 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     return $response;
 }
 
-<<<<<<< HEAD
-=======
+//[Edit]Dashboard My_Resume
+function candidateMyResumeEdit(WP_REST_Request $request) {
+    $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+    // Array response data
+    $response_data = array();
 
->>>>>>> origin/peinda
+    // Update Education
+    if(isset($request['education_index'], $request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
+        // Education entry
+        $updated_education_index = $request['education_index'];
+        $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
+        // Education data
+        $educations = get_field('education', 'user_' . $user_id);
+        // Education entry
+        if(isset($educations[$updated_education_index])) {
+            $educations[$updated_education_index] = $updated_education;
+            // Update education field
+            update_field('education', $educations, 'user_' . $user_id);
+            //Response data
+            $response_data['updated_education'] = $updated_education;
+        } else {
+            $response_data['error'] = 'Education entry with specified index does not exist.';
+        }
+    }
+
+    // Update Award
+    if(isset($request['award_index'], $request['title'], $request['description'], $request['date'])) {
+        // Award entry
+        $updated_award_index = $request['award_index'];
+        $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
+        $awards = get_field('awards', 'user_' . $user_id);
+        if(isset($awards[$updated_award_index])) {
+            $awards[$updated_award_index] = $updated_award;
+            // Awards field
+            update_field('awards', $awards, 'user_' . $user_id);
+            //Response data
+            $response_data['updated_award'] = $updated_award;
+        } else {
+
+            $response_data['error'] = 'Award entry with specified index does not exist.';
+        }
+    }
+
+    // Update Work
+    if(isset($request['work_index'], $request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
+        // Work entry
+        $updated_work_index = $request['work_index'];
+        $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
+
+        $works = get_field('work', 'user_' . $user_id);
+        // Work entry
+        if(isset($works[$updated_work_index])) {
+            $works[$updated_work_index] = $updated_work;
+            // Update work field
+            update_field('work', $works, 'user_' . $user_id);
+            // Response data
+            $response_data['updated_work'] = $updated_work;
+        } else {
+            $response_data['error'] = 'Work entry with specified index does not exist.';
+        }
+    }
+
+    // Return the response data
+    $response = new WP_REST_Response($response_data);
+    $response->set_status(200);
+    return $response;
+}
+
+
+//[Add]Dashboard My_Resume
+function candidateMyResumeAdd(WP_REST_Request $request) {
+
+      $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+      // Array response data
+      $response_data = array();
+
+          // Add new Education
+      if(isset($request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
+          // New education entry
+          $new_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
+          $educations = get_field('education', 'user_' . $user_id);
+          // New data
+          $educations[] = $new_education;
+          // Update field
+          update_field('education', $educations, 'user_' . $user_id);
+
+          // Add the new education to the response data
+          $response_data['new_education'] = $new_education;
+      }
+
+      // Add new Award
+      if(isset($request['title'], $request['description'], $request['date'])) {
+         // New award entry
+          $new_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
+          $awards = get_field('awards', 'user_' . $user_id);
+         //New data
+          $awards[] = $new_award;
+          // Update field
+          update_field('awards', $awards, 'user_' . $user_id);
+          // Add the new award to the response data
+          $response_data['new_award'] = $new_award;
+      }
+
+      // Add new Word
+      if(isset($request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
+          // New work entry
+          $new_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
+          $works = get_field('work', 'user_' . $user_id);
+          //New data
+          $works[] = $new_work;
+          // Update field
+          update_field('work', $works, 'user_' . $user_id);
+          // Add the new work to the response data
+          $response_data['new_work'] = $new_work;
+      }
+
+      // Return the response data
+      $response = new WP_REST_Response($response_data);
+      $response->set_status(200);
+      return $response;
+
+}
+
+//[Delete]Dashboard My_Resume
+function candidateMyResumeDelete(WP_REST_Request $request) {
+
+   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+     $data = get_field($field_type, 'user_' . $user_id);
+
+     if(isset($data[$index])) {
+         unset($data[$index]);
+
+         update_field($field_type, $data, 'user_' . $user_id);
+
+         return $data;
+     } else {
+
+         return 'Index not found';
+     }
+ 
+
+}
 /* * End Liggeey * */
