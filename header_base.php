@@ -148,6 +148,79 @@ $url = home_url( $wp->request );
     }
 
 
+    .newtons-cradle {
+        --uib-size: 50px;
+        --uib-speed: 1.2s;
+        --uib-color: #474554;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--uib-size);
+        height: var(--uib-size);
+    }
+
+    .newtons-cradle__dot {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 25%;
+        transform-origin: center top;
+    }
+
+    .newtons-cradle__dot::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 25%;
+        border-radius: 50%;
+        background-color: var(--uib-color);
+    }
+
+    .newtons-cradle__dot:first-child {
+        animation: swing var(--uib-speed) linear infinite;
+    }
+
+    .newtons-cradle__dot:last-child {
+        animation: swing2 var(--uib-speed) linear infinite;
+    }
+
+    @keyframes swing {
+        0% {
+            transform: rotate(0deg);
+            animation-timing-function: ease-out;
+        }
+
+        25% {
+            transform: rotate(70deg);
+            animation-timing-function: ease-in;
+        }
+
+        50% {
+            transform: rotate(0deg);
+            animation-timing-function: linear;
+        }
+    }
+
+    @keyframes swing2 {
+        0% {
+            transform: rotate(0deg);
+            animation-timing-function: linear;
+        }
+
+        50% {
+            transform: rotate(0deg);
+            animation-timing-function: ease-out;
+        }
+
+        75% {
+            transform: rotate(-70deg);
+            animation-timing-function: ease-in;
+        }
+    }
+
+
 </style>
 <html>
     <head>
@@ -853,9 +926,9 @@ $url = home_url( $wp->request );
                     </div>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- input search -->
-                        <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
-                            <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
+                        <!-- input search on top -->
+                        <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 ">
+                            <input id="header-search" value="<?=$_GET['search'] ? : ''?>" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                             <div class="dropdown-menuSearch headerDrop" id="header-list">
                                 <div class="list-autocomplete" id="header">
                                     <center> <i class='hasNoResults'>No matching results</i> </center>
@@ -897,6 +970,7 @@ $url = home_url( $wp->request );
             <!-- for search  -->
             <div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                 <div class="container-fluid">
+                    <!--
                     <div class="d-flex w-100 justify-content-between">
                         <div class="for-search-mobile">
                             <form action="/product-search" method="POST" class="form-inline ">
@@ -909,9 +983,11 @@ $url = home_url( $wp->request );
                             </form>
                         </div>
                         <button type="button" class="close btn-close-modal-search" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>butonnn
                         </button>
                     </div>
+                    -->
+
 <!--                    <div class="row">
                         <div class="col-md-3">
                             <p class="title-search">Populair zoeken</p>
@@ -1055,103 +1131,27 @@ $url = home_url( $wp->request );
                                 <p class="title-search">Populair zoeken</p>
                                 <div class="swiper-container new-swiper-modal">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide">Podcasts</div>
-                                        <div class="swiper-slide">Videos</div>
-                                        <div class="swiper-slide">Opleiding</div>
-                                        <div class="swiper-slide">Artikel</div>
-                                        <div class="swiper-slide">Assessment</div>
-                                        <div class="swiper-slide">Podcasts</div>
+                                        <a href="/product-search/?filter=Podcast" class="btn swiper-slide">Podcasts</a>
+                                        <a href="/product-search/?filter=Video" class="btn swiper-slide">Videos</a>
+                                        <a href="/product-search/?filter=Opleidingen" class="btn swiper-slide">Opleiding</a>
+                                        <a href="/product-search/?filter=Artikel" class="btn swiper-slide">Artikel</a>
+                                        <a href="/product-search/?filter=Assessment" class="btn swiper-slide">Assessment</a>
+                                        <a href="/product-search/?filter=Podcast" class="btn swiper-slide">Podcasts</a>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="block-Suggesties">
-                                <p class="title-search">Suggesties</p>
-                                <ul class="secondUlModal ">
-                                    <li>
-                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
-                                            <div class="d-flex">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleidingen-Header.jpg" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
-                                                    <p class="subbategory">IT/developpement</p>
-                                                </div>
-                                            </div>
-                                            <p class="price mb-0">Free</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
-                                            <div class="d-flex">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
-                                                    <p class="subbategory">IT/developpement</p>
-                                                </div>
-                                            </div>
-                                            <p class="price mb-0">Free</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
-                                            <div class="d-flex">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
-                                                    <p class="subbategory">IT/developpement</p>
-                                                </div>
-                                            </div>
-                                            <p class="price mb-0">Free</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
-                                            <div class="d-flex">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
-                                                    <p class="subbategory">IT/developpement</p>
-                                                </div>
-                                            </div>
-                                            <p class="price mb-0">Free</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
-                                            <div class="d-flex">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
-                                                    <p class="subbategory">IT/developpement</p>
-                                                </div>
-                                            </div>
-                                            <p class="price mb-0">Free</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="card-suggestion-for-search d-flex justify-content-between align-items-center" href="/product-search?filter=Opleidingen">
-                                            <div class="d-flex">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                                                </div>
-                                                <div>
-                                                    <p class="subtitleSousElementHeader">UX UI Design course</p>
-                                                    <p class="subbategory">IT/developpement</p>
-                                                </div>
-                                            </div>
-                                            <p class="price mb-0">Free</p>
-                                        </a>
-                                    </li>
+                                <p class="title-search">
+                                    Suggesties
+                                    <div class="newtons-cradle d-none" id="loader-suggestion-search-bar">
+                                        <div class="newtons-cradle__dot"></div>
+                                        <div class="newtons-cradle__dot"></div>
+                                        <div class="newtons-cradle__dot"></div>
+                                    </div>
+                                </p>
+                                <ul class="secondUlModal" id="back-for-search-bar">
+                                  <!-- back for serach ba, searching course -->
                                 </ul>
                             </div>
                         </div>
@@ -1560,4 +1560,6 @@ $url = home_url( $wp->request );
                         window.location.href = "https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr";
                     }
                 }
+
             </script>
+

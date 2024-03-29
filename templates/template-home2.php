@@ -1522,13 +1522,13 @@
                 headerSearchInput.focus();
                 headerSearchInput.selectionStart = headerSearchInput.selectionEnd = headerSearchInput.value.length;
                 headerSearchInput.dispatchEvent(new Event('click'));
-                searchFunction();
+                //searchFunction();
             });
 
             document.getElementById('header-search').addEventListener('input', function() {
                 if (document.activeElement === document.getElementById('header-search')) {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    searchFunction();
+                    //searchFunction();
                 }
             });
         });
