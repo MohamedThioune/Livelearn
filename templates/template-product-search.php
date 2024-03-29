@@ -1147,5 +1147,3 @@ $courses = array_slice($courses, 0, 500);
 </script>
 
 </body>
-
-
