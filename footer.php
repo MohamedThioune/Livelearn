@@ -490,7 +490,7 @@ $site_url = get_site_url() . "/apply-cookie";
 
             if(txt){
                 $.ajax({
-                    url:"/fetch-ajax",
+                    url:"/livelearn/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,
@@ -780,10 +780,10 @@ $site_url = get_site_url() . "/apply-cookie";
             const string_to_find = e.target.value.trim();
             const backSearcBar = document.getElementById('back-for-search-bar');
             console.log(string_to_find.length)
-            if (string_to_find.length<3)
+            if (string_to_find.length<2)
                 return;
             $.ajax({
-                url :"/fetch-ajax",
+                url :"/livelearn/fetch-ajax",
                 method : "POST",
                 data : {
                     course_searched : string_to_find
