@@ -794,7 +794,7 @@ $site_url = get_site_url() . "/apply-cookie";
                     console.log(data)
                     backSearcBar.innerHTML = data;
                 },error:function (e) {
-                    console.log('error to ajaxxx',e)
+                    console.log('error to ajax search',e)
                 },complete:function (c) {
                     console.log('finish')
                     $('#loader-suggestion-search-bar').addClass('d-none');

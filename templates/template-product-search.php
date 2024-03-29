@@ -366,7 +366,6 @@ $courses = array_slice($courses, 0, 500);
                         // var_dump($visibility_company);
                         // die();
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
-
                         if (isset($_GET['search'])):
                             $args = array(
                                 'post_type' => array('post','course', 'learnpath', 'assessment','courses'),
@@ -376,14 +375,12 @@ $courses = array_slice($courses, 0, 500);
                                 'posts_per_page' => -1,
                                 's'=>$_GET['search']
                             );
-                            /**
-                                @args from fetch.php
-                             */
                         $courses = get_posts($args);
-                        //echo '<pre>';var_dump('with search',$courses[0]);
+                        if (count($courses)==0)
+                             echo '<h5> no result for : '.$_GET['search'].'<h5/>';
                         endif;
-                        foreach($courses as $post):
 
+                        foreach($courses as $post):
                         $hidden = 0;
                         $hidden = visibility($post, $visibility_company);
                         if(!$hidden)
