@@ -8246,7 +8246,14 @@ tbody {
             max-height: 100%;
             height: -webkit-fill-available !important;
         }
+        .section-app-store a {
+            height: 63px !important;
+        }
+        .img-store-footer {
+            height: 46px !important;
+        }
         @media all and (min-width: 300px) and (max-width: 767px){
+
             .second-block-binnen img {
                 height: 190px !important;
             }
@@ -20404,6 +20411,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .section-app-store a{
     width: 165px;
     margin-bottom: 50px;
+    max-height: 63px;
 }
 .section-app-store a:last-child{
     padding: 0 !important;
@@ -27779,6 +27787,7 @@ figure ul li {
     .content-home2 form .searchInputHome {
         border-top-left-radius: 13px;
         border-bottom-left-radius: 13px;
+        box-shadow: 0px 0px 1.5px 1.5px #d7d7d76e;
     }
     .groupBtnAppConnecte .btn-signup {
         display: flex;
@@ -28806,6 +28815,12 @@ figure ul li {
     }
     .block-reverse .carousel-indicators {
         bottom: 0px !important;
+    }
+   .navMobile-custom {
+        display: none !important;
+    }
+    .navbar{
+        height: 162px;
     }
 
 
