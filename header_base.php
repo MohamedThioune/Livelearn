@@ -926,15 +926,16 @@ $url = home_url( $wp->request );
                     </div>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- input search on top -->
-                        <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 ">
-                            <input id="header-search" value="<?=$_GET['search'] ? : ''?>" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
+                        <!-- input search -->
+                        <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
+                            <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                             <div class="dropdown-menuSearch headerDrop" id="header-list">
                                 <div class="list-autocomplete" id="header">
                                     <center> <i class='hasNoResults'>No matching results</i> </center>
                                 </div>
                             </div>
                         </form>
+
                         <ul class="navbar-nav nav-right">
                             <li class="nav-item">
                                 <a class="nav-link nav-linModife dropdown-toggle" id="OverOns" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#OverOns"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Over ons</a>
@@ -965,6 +966,7 @@ $url = home_url( $wp->request );
                     </div>
                 </div>
             </nav>
+
             <!-- for search  -->
             <div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                 <div class="container-fluid">
@@ -993,6 +995,9 @@ $url = home_url( $wp->request );
                                         <div class="newtons-cradle__dot"></div>
                                     </div>
                                 </p>
+                                <ul class="secondUlModal" id="back-for-search-bar">
+                                  <!-- back for serach ba, searching course -->
+                                <p class="title-search">Suggesties</p>
                                 <ul class="secondUlModal" id="back-for-search-bar">
                                   <!-- back for serach ba, searching course -->
                                 </ul>
