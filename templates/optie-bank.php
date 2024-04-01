@@ -1,7 +1,7 @@
 <?php /** Template Name: Optie bank */ ?>
 
 <?php
-require 'add-author.php';
+require_once 'detect-language.php';
 
 global $wpdb;
 $table = $wpdb->prefix . 'databank';
@@ -18,7 +18,10 @@ $where = [ 'id' => $id ];
 
 // NULL value in WHERE clause.
 if($optie == "✔"){
-
+       
+      
+    
+    
     if($course->image_xml==null)
     {   
    
@@ -83,7 +86,8 @@ if($optie == "✔"){
         //     update_field('image_xml', $image, $id_post);
         // }
         update_field('course_type', 'article', $id_post);
-        update_field('article_itself', nl2br($course->long_description), $id_post);        
+        update_field('article_itself', nl2br($course->long_description), $id_post); 
+      
     }
     //Insert YouTube
     else if (strval($course->type) == "Video"){
@@ -168,13 +172,22 @@ if($optie == "✔"){
         }
         update_field('course_type', $typos[$course->type] , $id_post);
     }
+   
+       
     if(is_wp_error($id_post)){
         $error = new WP_Error($id_post);
         echo $error->get_error_message($id_post);
     }
     else{
+         $language = $course->language==null? detectLanguage($course->titel):$course->language;
+
+        if(update_field('language', $language, $id_post))
+          echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
+        else
+           echo "<span class='alert alert-danger'>Error in language added ! ❌</span>";
+        
         // echo "post-id : " . $id_post;
-        echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
+       
     }
     $onderwerpen = explode(',', $course->onderwerpen);
     /*

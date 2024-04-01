@@ -17,7 +17,8 @@
 
   <?php
   /** Template Name: xml parse */  
-  require 'add-author.php';
+  require_once 'add-author.php';
+  require_once 'detect-language.php';
   global $wpdb;
 
   extract($_POST);
@@ -36,11 +37,12 @@
   
   //Get all users
   $users = get_users(); 
-
+  $data_insert=0;
+  $change  = false;
   
 
   //Start inserting course 
-  echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
+
   
   if (isset($selectedxmlValues)) {
     
@@ -112,67 +114,14 @@
       $company = null;
       $users = get_users();
 
-      //Implement author of this course
-      // foreach($users as $user) {
-      //   $company_user = get_field('company',  'user_' . $user->ID);
-        
-      //   if(trim(strtolower($company_user[0]->post_title)) == trim(strtolower(strval($post['org']))) ){
-
-      //     $author_id = $user->ID;
-      //     $company = $company_user[0];
-      //     $company_id = $company_user[0]->ID;  
-      //   }
-      // }
-  
-      // if(!$author_id)
-      // {
-      //   // $informations = addAuthor($users, $post['org']);
-      //   // $author_id = $informations['author_id'];
-      //   // $company_id = $informations['company_id'];
-      //   $args = array(
-      //       'post_type' => 'company', 
-      //       'posts_per_page' => -1,
-      //   );
-
-      //   $companies = get_posts($args);
-      //   foreach($companies as $value) 
-      //     if(trim(strtolower($value->post_title)) == trim(strval($post['org']))  ){
-      //       $company = $value;
-      //       $company_id = $value->ID;
-      //       break;
-      //     }
-
-      //   $login = RandomString();
-      //   $password = RandomString();
-      //   $random = RandomString();
-      //   $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
-      //   $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomString();;
-      //   $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomString();
-      //   $display_name = ($first_name ) ?? RandomString();
-
-      //   $userdata = array(
-      //       'user_pass' => $password,
-      //       'user_login' => $login,
-      //       'user_email' => $email,
-      //       'user_url' => 'https://livelearn.nl/inloggen/',
-      //       'display_name' => $display_name,
-      //       'first_name' => $first_name,
-      //       'last_name' => $last_name,
-      //       'role' => 'author'
-      //   );
-
-      //   $author_id = wp_insert_user(wp_slash($userdata));       
-      // }
-
-      //Accord the author a company
-      // if(!is_wp_error($author_id))
-      //   update_field('company', $company, 'user_' . $author_id);
+    
 
       //Fill the company if do not exist "next-version"
         $informations = addAuthor($users, $post['org']);
          $author_id = $informations['author'];
         $company_id = $informations['company'];
-         echo "<span class='textOpleidRight'> Course_ID: " . $author_id. " - Insertion done successfully <br><br></span>";
+       
+         
       
       $title = explode(' ', strval($datum->programDescriptions->programName));
       $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
@@ -352,7 +301,7 @@
           $data_locaties = join('~', $data_locaties_xml);
         }
 
-        var_dump($data_locaties);
+        
         
       /*  
       * * END
@@ -381,27 +330,33 @@
         'course_id' => strval($datum->programClassification->programId),
         'author_id' => $author_id,
         'company_id' => $company_id,
-        'status' => $status
+        'status' => $status,
+        'language'=>detectLanguage($datum->programDescriptions->programName)
       );
       $where = [ 'titel' => strval($datum->programDescriptions->programName) ];
       $updated = $wpdb->update( $table, $post, $where );
 
       if( !isset($check_image[0]) && !isset($check_title[0]) ){ 
 
-        $wpdb->insert($table, $post);
-        $post_id = $wpdb->insert_id;
+       
+        if($wpdb->insert($table, $post)) {
+            $data_insert=1;
+            $post_id = $wpdb->insert_id;
+        }
+        
+      
         // $post_id = 1;
 
-        echo $wpdb->last_error;
+        //echo $wpdb->last_error;
 
-        echo "<span class='textOpleidRight'> Course_ID: " . $datum->programClassification->programId . " - Insertion done successfully <br><br></span>";
+       
 
       }
       else{
         $course = array(1);
 
         if(empty($course)){
-          echo "****** Course # " . strval($datum->programDescriptions->programName) . " not detected anymore<br><br>";
+          // echo "****** Course # " . strval($datum->programDescriptions->programName) . " not detected anymore<br><br>";
         }
         else{
         
@@ -409,48 +364,53 @@
 
           $course = $wpdb->get_results( $sql )[0];
       
-          $change  = false;
+         
           $message = 'field on change detected and applied<br><br>';
   
           if($post['type'] != $course->type){
             $data = [ 'type' => $post['type']]; // NULL value.
             $where = [ 'id' => $course->id ];
             $updated = $wpdb->update( $table, $data, $where );
+            if($updated)
+             $change = true;
 
-            echo '****** Type of course - ' . $message;
-            $change = true;
+          //  echo '****** Type of course - ' . $message;
+           
           }
 
           if($post['author_id'] != $course->author_id){
             $data = [ 'author_id' => $author_id]; // NULL value.
             $where = [ 'id' => $course->id ];
             $updated = $wpdb->update( $table, $data, $where );
-
-            echo '****** Author - ' . $message;
-            $change = true;
+             if($updated)
+             $change = true;
           }
 
           if($post['company_id'] != $course->company_id){
             $data = [ 'company_id' => $company_id]; // NULL value.
             $where = [ 'id' => $course->id ];
             $updated = $wpdb->update( $table, $data, $where );
-
-            echo '****** Company - ' . $message;
-            $change = true;
+             if($updated)
+             $change = true;
           }
         
-          if(!$change)
-            echo '*** ~ *** No change found for this course ! *** ~ ***<br><br>';
-          else
-            echo '<br><br>'; 
+          
 
         }
       }
     }
 
-    echo "<h2 class='titleGroupText'> End .</h2>";
+       //echo "<h2 class='titleGroupText'> End .</h2>";
+    } 
+   
+          
+    if($data_insert==1)
+     echo "<span class='alert alert-success'> Course - Insertion done successfully</span> <br><br>";
+    else 
+      echo "<span class='alert alert-danger'>No New Data! ❌</span>";
   }
-}
+  else
+      echo "<span class='alert alert-danger'>Please select the  key to be able to upload Courses ❌</span>";
 ?>
 
 </body>

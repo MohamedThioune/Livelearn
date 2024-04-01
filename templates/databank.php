@@ -1,7 +1,7 @@
 <?php /** Template Name: Databank */?>
 
 <?php
-
+require_once 'add-author.php';
 global $wpdb;
 
 /*
@@ -229,7 +229,35 @@ $urls =
         'The Next Organization'=>'https://thenextorganization.com/',
         'Salveos'=>'https://salveos.nl/',
         'MLC'=>'https://m-lc.nl/',
-        'Artefact'=>'https://www.artefact.com/'
+        'Artefact'=>'https://www.artefact.com/',
+       // 'React news'=>'https://reactnews.com/',
+        'Horeca Magazine'=>'https://horecamagazine.be/',
+       // 'Skift'=>'https://skift.com/',
+      //  'UK Hospitality'=>'https://www.ukhospitality.org.uk/',
+        'Around the Bar'=>'https://aroundthebar.nl/',
+        'Hospitality News'=>'https://hospitalitynewsny.com/',
+        'ZOUT'=>'https://www.zoutmagazine.eu/',
+        'Tableau'=>'https://tableaumagazine.nl/',
+
+    'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+	'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
+	'Modern Agriculture' =>	'https://modernagriculture.ca/',
+	'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
+	'Farm Journal' =>	'https://www.farmjournal.com/',
+	'Future Farming' =>	'https://www.futurefarming.com/',
+	'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
+	'Global Finance' =>	'https://gfmag.com/',
+	'InFinance' =>	'https://www.infinance.nl/',
+	'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
+	'Computer' =>	'https://www.computer.org/',
+	'PHP Magazine' =>	'https://phpmagazine.net/',
+	//'PHP Arch' =>	'https://www.phparch.com/',
+//	'Devmio' =>	'https://devm.io/',
+	//'Life after Football' =>	'https://lifeafterfootball.eu/',
+	'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
+//	'C’t magazine' => 'https://www.ct.nl/',
+	'Digital DJ Tips' =>'https://www.digitaldjtips.com/'
+        
     ];
 
 $file_xml = [
@@ -917,14 +945,16 @@ if (!empty($courses)) {
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                     document.getElementById('content-back-topics').innerHTML = response;
+                     
                     // window.location.href='/xml-parse';
-                },error:function() {
+                },error:function(error) {
                     console.log('error');
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
+                   // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 }
             });
@@ -954,18 +984,18 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/artikels",
+                url: "/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                    document.getElementById('content-back-topics').innerHTML = response;
                 },error:function() {
                     console.log('error'); 
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                   location.reload();
+                  // location.reload();
                 }
             });
         });
