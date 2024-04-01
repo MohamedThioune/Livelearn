@@ -1,4 +1,5 @@
 <?php
+require 'templates/add-author.php';
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
 
@@ -37,6 +38,8 @@ function Artikel_From_Company($data)
 
     $list = array();
     $datas = array();
+
+    $data_found=0;
 
     //fix data table
     $table = $wpdb->prefix . 'databank';
@@ -232,129 +235,19 @@ function Artikel_From_Company($data)
     // var_dump($list);
     $companies = get_posts($args);
     foreach ($list as $key => $website) {
-        $author_id = null;
-
-        // foreach ($companies as $companie) {
-        //     if (strtolower($companie->post_title) == strtolower($key)) {
-        //         $company = $companie;
-
-        //     }
-
-        //     foreach ($users as $user) {
-        //         $company_user = get_field('company', 'user_' . $user->ID);
-
-        //         if (isset($company_user[0]->post_title)) {
-        //             if (strtolower($company_user[0]->post_title) == strtolower($key)) {
-        //                 $author_id = $user->ID;
-        //                 $company = $company_user[0];
-        //                 $company_id = $company_user[0]->ID;
-        //                 continue;
-        //             }
-        //         }
-
-        //     }
-        //     var_dump($author_id);
-        //     die;
-        // }
-
-        // if (!$author_id) {
-        //     $login = 'user' . random_int(0, 100000);
-        //     $password = "pass" . random_int(0, 100000);
-        //     $email = "author_" . $key . "@" . 'livelearn' . ".nl";
-        //     $first_name = explode(' ', $key)[0];
-        //     $last_name = isset(explode(' ', $key)[1]) ? explode(' ', $key)[1] : '';
-
-        //     $userdata = array(
-        //         'user_pass' => $password,
-        //         'user_login' => $login,
-        //         'user_email' => $email,
-        //         'user_url' => 'https://livelearn.nl/inloggen/',
-        //         'display_name' => $first_name,
-        //         'first_name' => $first_name,
-        //         'last_name' => $last_name,
-        //         'role' => 'author',
-        //     );
-
-        //     $author_id = wp_insert_user(wp_slash($userdata));
-        // }
-
-        // //Accord the author a company
-        // if (!is_wp_error($author_id)) {
-        //     update_field('company', $company, 'user_' . $author_id);
-        // }
-
-        $company_id = 0;
-        //* MaxBird was there *//
-        //Has to be done as a function
-        foreach ($users as $user) {
-            $company_user = get_field('company', 'user_' . $user->ID);
-
-            //company exists
-            if (isset($company_user->post_title)) {
-                if (strtolower($company_user->post_title) == strtolower($key)) {
-                    $author_id = $user->ID;
-                    $company = $company_user;
-                    $company_id = $company_user->ID;
-                    break;
-                }
-            }
-        }
-
-        if (!$author_id) {
-            //Looking for company
-            $company = get_page_by_path($key, OBJECT, 'company');
-
-            if (!$company) {
-                //Creating new company
-                $argv = array(
-                    "post_type" => "company",
-                    "post_title" => $key,
-                    "post_status" => "publish",
-                );
-                $company_id = wp_insert_post($argv);
-                $company = get_post($company_id);
-            } else {
-                $company_id = $company->ID;
-            }
-
-            //Creating a new user
-            $login = 'user' . random_int(0, 100000);
-            $password = "pass" . random_int(0, 100000);
-            $email = "author_" . $key . random_int(0, 100000) . "@" . 'livelearn' . ".nl";
-            $first_name = explode(' ', $key)[0];
-            $last_name = isset(explode(' ', $key)[1]) ? explode(' ', $key)[1] : '';
-
-            $userdata = array(
-                'user_pass' => $password,
-                'user_login' => $login,
-                'user_email' => $email,
-                'user_url' => 'https://livelearn.nl/inloggen/',
-                'display_name' => $first_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'role' => 'author',
-            );
-
-            $author_id = wp_insert_user(wp_slash($userdata));
-        }
-
-        // var_dump($company_id);
-        // die();
-
-        //Accord the author a company
-        if (!is_wp_error($author_id)) {
-            update_field('company', $company, 'user_' . $author_id);
-        }
-
-        //Process to the loading of articles
+      // function add Author  in addAuthor.php
+        $informations=addAuthor($users,$key);
+         $author_id= $informations['author'];
+         $company_id=$informations['company'];
         $span = $website . "wp-json/wp/v2/posts/";
+
         $artikels = json_decode(file_get_contents($span), true);
         foreach ($artikels as $article) {
-            //         // $onderwerpen = trim($onderwerpen);
-
+            
             if ($article != null) {
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
                 $result_title = $wpdb->get_results($sql_title);
+                  
                 if ($article['featured_media'] != 0) {
                     $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
                     $images = json_decode(file_get_contents($span2), true);
@@ -401,8 +294,34 @@ function Artikel_From_Company($data)
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+
+                                // 'podcasts'=> null,
+                                // 'for_who'=> null,
+                                // 'agenda'=> null,
+                                // 'results'=> null,
+                                // 'attachment_xml'=> null, 
+                                // 'location'=> null,
+                                // 'level'=> null,
+                                // 'language'=> null,
+                                // 'teacher_id'=> NULL,
+                                // 'state'=>0,
+                                // 'org'=> null,
+                                // 'optie'=> null,
+                                // 'created_at'=>null
+
+
+                                
+                                
                             );
-                        }
+                 try
+                {
+                    
+                   $wpdb->insert($table, $datas);
+                   $data_found=1;
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
+                }
                     } else {
                         continue;
                     }
@@ -428,21 +347,24 @@ function Artikel_From_Company($data)
                             'contributors' => null,
                             'status' => $status,
                         );
-                    }
-                }
-                // echo "Selected option: $text (value=$value)<br>";
-                try
+                         try
                 {
-                    $wpdb->insert($table, $datas);
-                    // echo $key."  ".$wpdb->last_error."<br>";
-                    $id_post = $wpdb->insert_id;
-                    // var_dump($datas);
+                    
+                   $wpdb->insert($table, $datas);
+                 $data_found=1;
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
+                    }
+                }
+               
             }
         }
     }
+    if($data_found==1)
+    echo "datas founded and recordered in Databank";
+    else
+     echo "new datas not founded so we have no record in Databank";
 }
 
 function xmlParse($data)
@@ -579,68 +501,12 @@ function xmlParse($data)
             /*
              ** -- Main fields --
              */
-            $author_id = 0;
-            $company_id = 0;
             //* MaxBird was there *//
-            //Has to be done as a function
-            foreach ($users as $user) {
-                $company_user = get_field('company', 'user_' . $user->ID);
-
-                //company exists
-                if (isset($company_user->post_title)) {
-                    if (strtolower($company_user->post_title) == strtolower($post['org'])) {
-                        $author_id = $user->ID;
-                        $company = $company_user;
-                        $company_id = $company_user->ID;
-                        break;
-                    }
-                }
-            }
-
-            if (!$author_id) {
-                //Looking for company
-                $company = get_page_by_path($post['org'], OBJECT, 'company');
-
-                if (!$company) {
-                    //Creating new company
-                    $argv = array(
-                        "post_type" => "company",
-                        "post_title" => $post['org'],
-                        "post_status" => "publish",
-                    );
-                    $company_id = wp_insert_post($argv);
-                    $company = get_post($company_id);
-                } else {
-                    $company_id = $company->ID;
-                }
-
-                $login = RandomDoubleString();
-                $password = RandomDoubleString();
-                $random = RandomDoubleString();
-                $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
-                $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomDoubleString();
-                $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomDoubleString();
-                $display_name = ($first_name) ?? RandomDoubleString();
-
-                $userdata = array(
-                    'user_pass' => $password,
-                    'user_login' => $login,
-                    'user_email' => $email,
-                    'user_url' => 'https://livelearn.nl/inloggen/',
-                    'display_name' => $display_name,
-                    'first_name' => $first_name,
-                    'last_name' => $last_name,
-                    'role' => 'author',
-                );
-
-                $author_id = wp_insert_user(wp_slash($userdata));
-            }
-
+           
             //Accord the author a company
-            if (!is_wp_error($author_id)) {
-                update_field('company', $company, 'user_' . $author_id);
-            }
-
+        $informations=addAuthor($users,$post['org']);
+         $author_id= $informations['author'];
+         $company_id=$informations['company'];
             //Fill the company if do not exist "next-version"
 
             $title = explode(' ', strval($datum->programDescriptions->programName));

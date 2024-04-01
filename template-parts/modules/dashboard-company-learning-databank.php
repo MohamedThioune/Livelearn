@@ -247,10 +247,10 @@
         <div class="cardOverviewCours">
             <div class="headListeCourse">
                 <p class="JouwOpleid">Alle opleidingen</p>
-                <input id="search_txt_course" class="InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
+                <!-- <input id="search_txt_course" class="InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" > -->
                 <?php
                 if ( in_array( 'author', $user_in->roles ) || in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
-                    echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
+                    echo '<a href="/dashboard/teacher/course-selection/" target="_blank" class="btnNewCourse">Nieuwe course</a>';
                 ?>
             </div>
             <div class="headFilterCourse">
@@ -558,7 +558,85 @@
 
        </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const itemsPerPage = 10;
+        const $rows = $('.pagination-element-block');
+        const pageCount = Math.ceil($rows.length / itemsPerPage);
+        let currentPage = 1;
+
+        function showPage(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            $rows.each(function(index, row) {
+                if (index >= startIndex && index < endIndex) {
+                    $(row).css('display', 'table-row');
+                } else {
+                    $(row).css('display', 'none');
+                }
+            });
+        }
+
+        function createPaginationButtons() {
+            const $paginationContainer = $('.pagination-container');
+
+            if (pageCount <= 1) {
+                $paginationContainer.css('display', 'none');
+                return;
+            }
+
+            const $prevButton = $('<button>&lt;</button>').on('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                }
+            });
+
+            const $nextButton = $('<button>&gt;</button>').on('click', function() {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                }
+            });
+
+            $paginationContainer.append($prevButton);
+
+            for (let i = 1; i <= pageCount; i++) {
+                const $button = $('<button></button>').text(i);
+                $button.on('click', function() {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updatePaginationButtons();
+                });
+
+                if (i === 1 || i === pageCount || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    $paginationContainer.append($button);
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    $paginationContainer.append($('<span>...</span>'));
+                }
+            }
+
+            $paginationContainer.append($nextButton);
+        }
+
+        function updatePaginationButtons() {
+            $('.pagination-container button').removeClass('active');
+            $('.pagination-container button').filter(function() {
+                return parseInt($(this).text()) === currentPage;
+            }).addClass('active');
+        }
+
+        showPage(currentPage);
+        createPaginationButtons();
+    });
+</script>
+
+
 <!-- script-modal -->
 <script>
     var id_course;
@@ -628,59 +706,6 @@
   })
 });
 </script>
-
-
-<script>
-    $(document).ready(function() {
-        const itemsPerPage = 10;
-        const $rows = $('.pagination-element-block');
-        const pageCount = Math.ceil($rows.length / itemsPerPage);
-
-        function showPage(page) {
-            const startIndex = (page - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-
-            $rows.each(function(index, row) {
-                if (index >= startIndex && index < endIndex) {
-                    $(row).css('display', 'table-row');
-                } else {
-                    $(row).css('display', 'none');
-                }
-            });
-        }
-
-        function createPaginationButtons() {
-            const $paginationContainer = $('.pagination-container');
-            let firstButtonAdded = false;
-
-            if (pageCount <= 1) {
-                $paginationContainer.css('display', 'none');
-                return;
-            }
-
-            for (let i = 1; i <= pageCount; i++) {
-                const $button = $('<button></button>').text(i);
-                $button.on('click', function() {
-                    showPage(i);
-
-                    $('.pagination-container button').removeClass('active');
-                    $(this).addClass('active');
-                });
-
-                if (!firstButtonAdded) {
-                    $button.addClass('active');
-                    firstButtonAdded = true;
-                }
-
-                $paginationContainer.append($button);
-            }
-        }
-
-        showPage(1);
-        createPaginationButtons();
-    });
-</script>
-
 
 <script>
      $('#search_txt_course').keyup(function(){
