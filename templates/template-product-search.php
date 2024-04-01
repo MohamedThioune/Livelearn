@@ -54,8 +54,7 @@ elseif($filter):
     $expertise = searching_course_by_type($global_posts, $filter)['experts'];    
     $no_filter = false;
     $leervom[] = $filter;
-    // var_dump($courses);
-    // die();
+
 endif;
 
 /* * Group by type * */
@@ -103,8 +102,6 @@ if(isset($filter_args)):
     $order_type = searching_course_with_filter($courses, $args)['order_type'];
     $expertise = searching_course_with_filter($courses, $args)['experts'];
 
-    // var_dump($courses);
-    // die();
 
     /* * End search by * */
 endif;
@@ -246,6 +243,16 @@ $courses = array_slice($courses, 0, 500);
                                 </div>
                                 <p class="number-course"><?= isset($order_type['Lezing']) ? $order_type['Lezing'] : 0 ?></p>
                             </div>
+
+                            <div class="form-check d-flex justify-content-between">
+                                <div class="group-input-check">
+                                    <input class="form-check-input" type="checkbox" id="" name="leervom[]" value="Assessment" <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Assessment', $leervom) || $search_type == "Assessment" ) echo "checked" ; else echo ""  ?>>
+                                    <label class="form-check-label" for="Backend">
+                                        Assessment
+                                    </label>
+                                </div>
+                                <p class="number-course"><?= isset($order_type['Assessment']) ? $order_type['Assessment'] : 0 ?></p>
+                            </div>
                         </div>
 
                         <div class="sub-section">
@@ -359,12 +366,26 @@ $courses = array_slice($courses, 0, 500);
                         // var_dump($visibility_company);
                         // die();
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
-                        foreach($courses as $post):
+                        if (isset($_GET['search'])):
+                            $args = array(
+                                'post_type' => array('post','course', 'learnpath', 'assessment','courses'),
+                                'post_status' => 'publish',
+                                'orderby' => 'date',
+                                'order'   => 'DESC',
+                                'posts_per_page' => -1,
+                                's'=>$_GET['search']
+                            );
+                        $courses = get_posts($args);
+                        if (count($courses)==0)
+                             echo '<h5> no result for : '.$_GET['search'].'<h5/>';
+                        endif;
 
+                        foreach($courses as $post):
                         $hidden = 0;
                         $hidden = visibility($post, $visibility_company);
                         if(!$hidden)
                             continue;
+                        //var_dump($post->ID);
 
                         /* Displaying information */
 
@@ -1011,18 +1032,18 @@ $courses = array_slice($courses, 0, 500);
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<!--script pagination-->
 
 <script>
     const itemsPerPage = 12;
     const blockList = document.querySelector('.block-new-card-course');
     const blocks = blockList.querySelectorAll('.new-card-course');
     const paginationContainer = document.querySelector('.pagination-container');
+    let currentPage = 1;
 
     function displayPage(pageNumber) {
         const start = (pageNumber - 1) * itemsPerPage;
@@ -1055,44 +1076,66 @@ $courses = array_slice($courses, 0, 500);
             return;
         }
 
-        let firstButtonAdded = false; // Keep track of whether the first button is added
+        const prevButton = document.createElement('button');
+        prevButton.textContent = '‹'; // Flèche gauche
+        prevButton.classList.add('pagination-button');
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                scrollToTop();
+                currentPage--;
+                displayPage(currentPage);
+                updatePaginationButtons();
+            }
+        });
+        paginationContainer.appendChild(prevButton);
 
         for (let i = 1; i <= pageCount; i++) {
             const button = document.createElement('button');
             button.textContent = i;
             button.classList.add('pagination-button');
             button.addEventListener('click', () => {
-                scrollToTop(); // Scroll to the top when a button is clicked
-                displayPage(i);
-
-                // Remove the .active class from all buttons
-                const buttons = document.querySelectorAll('.pagination-button');
-                buttons.forEach((btn) => {
-                    btn.classList.remove('active');
-                });
-
-                // Add the .active class to the clicked button
-                button.classList.add('active');
+                scrollToTop();
+                currentPage = i;
+                displayPage(currentPage);
+                updatePaginationButtons();
             });
             paginationContainer.appendChild(button);
-
-            // Add the .active class to the first button
-            if (!firstButtonAdded) {
-                button.classList.add('active');
-                firstButtonAdded = true;
-            }
         }
+
+        const nextButton = document.createElement('button');
+        nextButton.textContent = '›'; // Flèche droite
+        nextButton.classList.add('pagination-button');
+        nextButton.addEventListener('click', () => {
+            if (currentPage < pageCount) {
+                scrollToTop();
+                currentPage++;
+                displayPage(currentPage);
+                updatePaginationButtons();
+            }
+        });
+        paginationContainer.appendChild(nextButton);
+
+        updatePaginationButtons();
+    }
+
+    function updatePaginationButtons() {
+        const buttons = document.querySelectorAll('.pagination-button');
+        buttons.forEach((btn) => {
+            btn.classList.remove('active');
+            if (parseInt(btn.textContent) === currentPage) {
+                btn.classList.add('active');
+            }
+        });
     }
 
     function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    displayPage(1);
+    displayPage(currentPage);
     createPaginationButtons();
-
-
 </script>
+
 
 <script>
     $(".content-filter").click(function() {

@@ -18523,13 +18523,13 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin: 0px 0px 19px 15px;
 }
 .statistic-bar label{
-    width: 8%;
+    width: 11%;
     color: #5f646b;
     text-align: left;
     margin-bottom: 0;
 }
 .statistic-bar .content-bar{
-    width: 90%;
+    width: 89%;
     position: relative;
 }
 .statistic-bar .horizontal {
@@ -18557,6 +18557,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 100%;
     align-items: center;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 .statistic-bar .progress-fill span {
     opacity: 0;
@@ -22911,6 +22912,32 @@ figure ul li {
     font-weight: 500;
     background: #0000000d;
 }
+.first-block-portfolio{
+    width: 85%;
+}
+.contentBlockSetting .content-btn{
+    justify-content: right;
+    width: 15%;
+}
+.contentBlockSetting .btn-remove{
+    color: #d93025 !important;
+    background: #d9302526 !important;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 0;
+    border: none;
+    height: fit-content;
+}
+.contentBlockSetting .btn-edit{
+    color: #00a89d !important;
+    background: #00a89d30 !important;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 0;
+    border: none;
+    height: fit-content;
+    margin-right: 10px;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -24307,7 +24334,7 @@ figure ul li {
         padding-top: 20px;
     }
     .titleSetting {
-        font-size: 25px;
+        font-size: 22px;
     }
     .cardOpleiders {
         height: auto !important;
@@ -26137,7 +26164,7 @@ figure ul li {
     .card-communities {
         background: white;
         width: 100%;
-        margin-right: 14px;
+        margin-right: 0px;
         margin-bottom: 20px;
     }
     .content-communities .head-community h1 {
@@ -26509,7 +26536,7 @@ figure ul li {
     }
     #tab-url1 .nav li {
         margin: 0 10px 20px 0;
-        min-width: 43%;
+        min-width: 42%;
         text-align: center;
     }
     #tab-url1 .nav li .current {
@@ -27582,7 +27609,7 @@ figure ul li {
         color: #FFFFFF;
     }
     #sectionDashboard1 .btn-close-sidbar i{
-        display: none;
+        display: block;
     }
     .btn-close-sidbar {
         display: block;
@@ -27852,6 +27879,9 @@ figure ul li {
         width: 100%;
         padding: 0 15px;
     }
+    .profilUserP{
+        margin-top: 35px;
+    }
 
 
 
@@ -27895,6 +27925,7 @@ figure ul li {
 .content-voor-teacher-2 .firstSection{
     background: linear-gradient(180deg, hsla(176, 100%, 33%, 1) 60%, hsla(205, 95%, 17%, 1) 100%);
 }
+
 
 
 
@@ -28593,7 +28624,7 @@ figure ul li {
     .card-communities {
         background: white;
         width: 48%;
-        margin-right: 0px;
+        margin-right: 0px !important;
         margin-bottom: 20px;
     }
     .tabs-search-block .head {
