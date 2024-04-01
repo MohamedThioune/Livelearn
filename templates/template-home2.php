@@ -1515,23 +1515,43 @@
 
     <script>
         // for search bar
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('search').addEventListener('click', function() {
+       // document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search').addEventListener('click', function(e) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 var headerSearchInput = document.getElementById('header-search');
                 headerSearchInput.focus();
                 headerSearchInput.selectionStart = headerSearchInput.selectionEnd = headerSearchInput.value.length;
-                headerSearchInput.dispatchEvent(new Event('click'));
-                searchFunction();
+                headerSearchInput.dispatchEvent(new Event('click')); //importatn
+                //searchFunction();
+                headerSearchInput.addEventListener('input',function (e) {
+                    const string_to_find = e.target.value;
+                    const backSearcBar = document.getElementById('back-for-search-bar');
+                    $.ajax({
+                        url :"/livelearn/fetch-ajax",
+                        method : "POST",
+                        data : {
+                            course_searched : string_to_find
+                        },beforeSend:function () {
+                            console.log("send serach")
+                        },success:function (data) {
+                            console.log('success',data)
+                            backSearcBar.innerHTML = data;
+                        },error:function (e) {
+                            console.log('error to ajaxxx',e)
+                        },complete:function (c) {
+                            console.log('finish')
+                        }
+                    })
+                })
             });
 
-            document.getElementById('header-search').addEventListener('input', function() {
-                if (document.activeElement === document.getElementById('header-search')) {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    searchFunction();
-                }
-            });
-        });
+            //document.getElementById('header-search').addEventListener('input', function() {
+              //  if (document.activeElement === document.getElementById('header-search')) {
+                    //window.scrollTo({ top: 0, behavior: 'smooth' });
+                    //searchFunction();
+                //}
+            //});
+       // });
     </script>
 
     <script>
@@ -1635,7 +1655,7 @@
             if(txt){
                 $.ajax({
 
-                    url:"/fetch-ajax",
+                    url:"/livelearn/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,
