@@ -1,4 +1,11 @@
 <?php
+
+
+
+
+
+ // detectLanguage("Hallo vrienden");
+
  function generatorAuthor($key){
     $login = 'user' . random_int(0, 100000);
         $password = "pass" . random_int(0, 100000);
