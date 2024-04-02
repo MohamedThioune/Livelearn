@@ -335,7 +335,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         </select> -->
                     </div>
                     <div>
-                        <canvas id="ChartEngagement"></canvas>
+                        <!-- <canvas id="ChartEngagement"></canvas> -->
+                        <span>No data enough !</span>
                     </div>
                 </div>
                 <div class="card-circular-bar">
@@ -386,9 +387,10 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                 </div>
                 <div class="usage-block-card-team">
                     <h2>Usage desktop vs Mobile app</h2>
-                    <div>
+                    <!-- <div>
                         <canvas id="ChartDesktopMobile"></canvas>
-                    </div>
+                    </div> -->
+                    <span>No data enough !</span>
                 </div>
             </div>
             <?php

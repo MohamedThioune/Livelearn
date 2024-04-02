@@ -459,29 +459,19 @@ $site_url = get_site_url() . "/apply-cookie";
         });
     });
 </script>
-<!--<script type="text/javascript">
-      $(window).on('load', function() {
-        $('#myFirstModal').modal('show');
-          alert('ok');
-    });
-</script>-->
-<!--<script>
-    const buttons = document.querySelectorAll('.button');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownSearch = document.querySelector('.dropdown-search');
 
-    buttons.forEach(function(button, index) {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            this.parentNode.classList.toggle('on');
-
-            buttons.forEach(function(button2, index2) {
-                if ( index !== index2 ) {
-                    button2.parentNode.classList.remove('on');
-                }
-            });
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                dropdownSearch.classList.add('scrolled-modal');
+            } else {
+                dropdownSearch.classList.remove('scrolled-modal');
+            }
         });
     });
-</script>-->
+</script>
 
 <script>
     jQuery(function($){
@@ -585,6 +575,44 @@ $site_url = get_site_url() . "/apply-cookie";
 
     });
 </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var swiper = new Swiper('.swipper-in-modal', {
+                slidesPerView: 'auto',
+                preventClicks: true,
+                preventClicksPropagation: true,
+                spaceBetween: 30,
+                on: {
+                    init: function() {
+                        hideAllSlidesExceptActive(this);
+                    },
+                    slideChange: function() {
+                        hideAllSlidesExceptActive(this);
+                    },
+                    reachEnd: function() {
+                        this.allowSlideNext = false;
+                    },
+                    reachBeginning: function() {
+                        this.allowSlidePrev = false;
+                    }
+                }
+            });
+
+            function hideAllSlidesExceptActive(swiperInstance) {
+                var activeIndex = swiperInstance.activeIndex;
+                var slides = swiperInstance.slides;
+                slides.forEach(function(slide, index) {
+                    if (index === activeIndex) {
+                        slide.style.display = 'block';
+                    } else {
+                        slide.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+
+    </script>
 
 <script>
     var swiper = new Swiper('.swipeContaine2', {

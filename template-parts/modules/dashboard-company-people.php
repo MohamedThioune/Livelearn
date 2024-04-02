@@ -27,7 +27,6 @@
             }
         }
     }
-    $count = count($members);
     extract($_POST);
 
     //logique of nmbrs salary administrastion 
@@ -166,6 +165,8 @@
             }
         }
     }
+
+    $count = count($members);
     ?>
     <div class="cardPeople cardPeopleModife">
         <div class="headListeCourse">
@@ -175,14 +176,14 @@
                 <?php if($list_of_all_employees): ?>
                 <span class="alert alert-success ">people from loket are available</span>
                 <?php endif ?>
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center group-btn-mensen">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
                         <button class="btn  salary-administration  btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Salary administration
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#nmbrsModal">Nmbrs</button>
+                            <!-- <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#nmbrsModal">Nmbrs</button> -->
                             <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#polarisModal">Polaris</button>
                             <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#loketModal">Loket</button>
                         </div>
@@ -348,9 +349,6 @@
                     ?>
                 </tbody>
             </table>
-            <div class="pagination-container">
-                <!-- Les boutons de pagination seront ajoutés ici -->
-            </div>
         </div>
     </div>
 
@@ -565,61 +563,6 @@
             });
         }
     });
-</script>
-
-<script>
-    const itemsPerPage = 7;
-    const rows = document.querySelectorAll('.pagination-element-block');
-    const pageCount = Math.ceil(rows.length / itemsPerPage);
-
-    function showPage(page) {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-
-        rows.forEach((row, index) => {
-            if (index >= startIndex && index < endIndex) {
-                row.style.display = 'table-row';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    function createPaginationButtons() {
-        const paginationContainer = document.querySelector('.pagination-container');
-        let firstButtonAdded = false;
-
-        if (pageCount <= 1) {
-            paginationContainer.style.display = 'none';
-            return;
-        }
-
-        for (let i = 1; i <= pageCount; i++) {
-            const button = document.createElement('button');
-            button.textContent = i;
-            button.addEventListener('click', function() {
-                showPage(i);
-
-                const buttons = document.querySelectorAll('.pagination-container button');
-                buttons.forEach((btn) => {
-                    btn.classList.remove('active');
-                });
-
-                this.classList.add('active');
-            });
-
-            if (!firstButtonAdded) {
-                button.classList.add('active');
-                firstButtonAdded = true;
-            }
-
-            paginationContainer.appendChild(button);
-        }
-    }
-
-    showPage(1);
-    createPaginationButtons();
-
 </script>
 
 <script>

@@ -1,4 +1,5 @@
 <?php
+// require_once 'check_visibility.php';
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_companie = array();
@@ -281,10 +282,10 @@ $orders = wc_get_orders($order_args);
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Jouw opleidingen</p>
-            <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
+            <!-- <input id="search_txt_learn_module" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek learn modules" aria-label="Zoek" > -->
             <?php 
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
-                    echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
+                    echo '<a href="/dashboard/teacher/course-selection/" target="_blank" class="btnNewCourse">Nieuwe course</a>';
             ?>
         </div>
 
@@ -302,7 +303,7 @@ $orders = wc_get_orders($order_args);
                         <th scope="col">Optie</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="autocomplete_learning_module">
                     <?php 
                     foreach($courses as $key => $course){
                         if(!visibility($course, $visibility_company))
@@ -457,7 +458,7 @@ $orders = wc_get_orders($order_args);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        const itemsPerPage = 10;
+        const itemsPerPage = 20;
         const $rows = $('.pagination-element-block');
         const pageCount = Math.ceil($rows.length / itemsPerPage);
 
@@ -645,4 +646,32 @@ $orders = wc_get_orders($order_args);
         }
     });
 
+</script>
+<script>
+    $('#search_txt_learn_module').on('input', function(e) {
+        var value = $(this).val().toLowerCase();
+        console.log(value)
+        $.ajax({
+            //url:'/fetch-company-learn-modules', //must create later ☺️
+            url:'/fetch-company-people',
+            method:"post",
+            data:{
+                search_company_learn_module:value,
+            },
+            dataType:"text",
+            beforeSend: function(){
+                console.log('beforeSend');
+            },
+            success: function(data){
+                console.log('success',data);
+                $('#autocomplete_learning_module').html(data);
+            },
+            error: function(error){
+                console.log(error);
+            },
+            complete: function () {
+                console.log('complete');
+            }
+        });
+    });
 </script>
