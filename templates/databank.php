@@ -239,24 +239,52 @@ $urls =
         'ZOUT'=>'https://www.zoutmagazine.eu/',
         'Tableau'=>'https://tableaumagazine.nl/',
 
-    'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
-	'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
-	'Modern Agriculture' =>	'https://modernagriculture.ca/',
-	'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
-	'Farm Journal' =>	'https://www.farmjournal.com/',
-	'Future Farming' =>	'https://www.futurefarming.com/',
-	'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
-	'Global Finance' =>	'https://gfmag.com/',
-	'InFinance' =>	'https://www.infinance.nl/',
-	'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
-	'Computer' =>	'https://www.computer.org/',
-	'PHP Magazine' =>	'https://phpmagazine.net/',
-	//'PHP Arch' =>	'https://www.phparch.com/',
-//	'Devmio' =>	'https://devm.io/',
-	//'Life after Football' =>	'https://lifeafterfootball.eu/',
-	'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
-//	'C’t magazine' => 'https://www.ct.nl/',
-	'Digital DJ Tips' =>'https://www.digitaldjtips.com/'
+        'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+	    'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
+	    'Modern Agriculture' =>	'https://modernagriculture.ca/',
+	    'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
+	    'Farm Journal' =>	'https://www.farmjournal.com/',
+	    'Future Farming' =>	'https://www.futurefarming.com/',
+	    'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
+	    'Global Finance' =>	'https://gfmag.com/',
+	    'InFinance' =>	'https://www.infinance.nl/',
+	    'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
+	    'Computer' =>	'https://www.computer.org/',
+	    'PHP Magazine' =>	'https://phpmagazine.net/',
+	    'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
+
+	    'Digital DJ Tips' =>'https://www.digitaldjtips.com/',
+        //ici debute
+        "The Architect's Newspaper" =>	"https://www.archpaper.com/",
+        'Centrum voor Conflicthantering' =>	'https://cvc.nl/',
+        'HR Morning'	 =>'https://www.hrmorning.com/',
+        'HR Executive'  =>	'https://hrexecutive.com/',
+        'Centrum voor Conflicthantering'  =>	'https://cvc.nl/',
+        'HR Morning'  =>	'https://www.hrmorning.com/',
+        'HR Executive'  =>	'https://hrexecutive.com/',
+        'Human in Progress'  =>	'https://humaninprogress.com/',
+        'Personelle Today'	 => 'https://www.personneltoday.com/',
+        'The HR Digest'	 => 'https://www.thehrdigest.com/',
+        'Wccf Tech' => 'https://wccftech.com/',
+        'Kit Guru'  =>	'https://www.kitguru.net/',
+        'CMM'  =>	'https://cmmonline.com/',
+        'CHT'  =>	'https://chtmag.com/',
+        'Intelligent Transport'	 => 'https://www.intelligenttransport.com/',
+        'Law Asia'	 => 'https://law.asia/',
+        'Attorney at Law Magazine'  =>	'https://attorneyatlawmagazine.com/',
+        'Lawyer Monthly'  =>	'https://www.lawyer-monthly.com/',
+        'Judicature'  =>	'https://judicature.duke.edu/',
+        'Architects Journal'  =>	'https://www.architectsjournal.co.uk/',
+        'E-architect' =>	'https://www.e-architect.com/',
+        'Construction News'	 => 'https://www.constructionnews.co.uk/',
+        'Construction Week'  =>	'https://www.constructionweekonline.com/',
+        'Wired'	=> 'https://www.wired.com/',
+        'Threat Post'=>	'https://threatpost.com/',
+        'Craft Industry' => 'Alliance	craftindustryalliance.org',
+        'ARTnews'  =>	'https://www.artnews.com/',
+        'Design Wanted'	 =>'https://designwanted.com/',
+        'Craftsmanship'	 =>'https://craftsmanship.net/',
+        'Wood and Panel'  =>	'https://www.woodandpanel.com/',
         
     ];
 
@@ -995,7 +1023,7 @@ if (!empty($courses)) {
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                  // location.reload();
+                  location.reload();
                 }
             });
         });
