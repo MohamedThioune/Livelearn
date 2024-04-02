@@ -820,10 +820,11 @@
                         ?>
                     </select>
                     <div class="group-input-dropdown">
-                        <input id="search" type="search" class="jAuto searchInputHome form-control"
+                        <input id="search" type="search" class="jAuto searchInputHome form-control showblock-mobil-search"
                                placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
                         <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
                     </div>
+
 
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
@@ -1514,52 +1515,71 @@
 
     <script>
         // for search bar
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('search').addEventListener('click', function() {
+       // document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('search').addEventListener('click', function(e) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 var headerSearchInput = document.getElementById('header-search');
                 headerSearchInput.focus();
                 headerSearchInput.selectionStart = headerSearchInput.selectionEnd = headerSearchInput.value.length;
-                headerSearchInput.dispatchEvent(new Event('click'));
-                searchFunction();
+                headerSearchInput.dispatchEvent(new Event('click')); //importatn
+                //searchFunction();
+                headerSearchInput.addEventListener('input',function (e) {
+                    const string_to_find = e.target.value;
+                    const backSearcBar = document.getElementById('back-for-search-bar');
+                    $.ajax({
+                        url :"/livelearn/fetch-ajax",
+                        method : "POST",
+                        data : {
+                            course_searched : string_to_find
+                        },beforeSend:function () {
+                            console.log("send serach")
+                        },success:function (data) {
+                            console.log('success',data)
+                            backSearcBar.innerHTML = data;
+                        },error:function (e) {
+                            console.log('error to ajaxxx',e)
+                        },complete:function (c) {
+                            console.log('finish')
+                        }
+                    })
+                })
             });
 
-            document.getElementById('header-search').addEventListener('input', function() {
-                if (document.activeElement === document.getElementById('header-search')) {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    searchFunction();
-                }
-            });
+            //document.getElementById('header-search').addEventListener('input', function() {
+              //  if (document.activeElement === document.getElementById('header-search')) {
+                    //window.scrollTo({ top: 0, behavior: 'smooth' });
+                    //searchFunction();
+                //}
+            //});
+       // });
+    </script>
+
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            spaceBetween: 13,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                600: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                1000: {
+                    slidesPerView: 4,
+                    spaceBetween: 30,
+                },
+            },
         });
     </script>
-    <script>
-        $('.owl-carousel').owlCarousel({
-            loop:true,
-            margin:13,
-            items:3.4,
-            lazyLoad:true,
-            responsiveClass:true,
-            autoplayHoverPause:true,
-            nav:false,
-            merge:true,
-            URLhashListener:true,
-            responsive:{
-                0:{
-                    items:1.1,
-                    nav:true
-                },
-                600:{
-                    items:2.2,
-                    nav:false
-                },
-                1000:{
-                    items:3.4,
-                    nav:true,
-                    loop:false
-                }
-            }
-        })
-    </script>
+
 
     <script>
         (function($){
@@ -1635,7 +1655,7 @@
             if(txt){
                 $.ajax({
 
-                    url:"/fetch-ajax",
+                    url:"/livelearn/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,
@@ -1692,5 +1712,36 @@
                 }
             });
         });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            // Fonction pour vérifier la largeur de la fenêtre
+            function checkWindowWidth() {
+                var windowWidth = $(window).width();
+                if (windowWidth >= 300 && windowWidth <= 767) {
+
+                    $(".showblock-mobil-search").click(function() {
+                        $("#for-search-element").addClass("show-mobile-search-block");
+                    });
+
+                    $(".close").click(function() {
+                        $("#for-search-element").removeClass("show-mobile-search-block");
+                    });
+
+                }
+            }
+
+            // Appeler la fonction pour vérifier la largeur de la fenêtre lors du chargement de la page
+            checkWindowWidth();
+
+            // Ajouter un gestionnaire d'événements pour redimensionner la fenêtre
+            $(window).resize(function() {
+                // Appeler à nouveau la fonction pour vérifier la largeur de la fenêtre lors du redimensionnement
+                checkWindowWidth();
+            });
+        });
+
+
     </script>
 

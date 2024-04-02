@@ -1,5 +1,7 @@
 <?php
 
+$GLOBALS['user_id'] = get_current_user_id() ;
+require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
 $GLOBALS['user_id'] = get_current_user_id();
 
 /** **************** Class **************** */
@@ -12,7 +14,9 @@ class Expert
   public $company;
   public $role;
   public $is_followed;
+
   function __construct($expert,$profilImg) {
+    
     $this->id=(int)$expert->ID;
     $this->name=$expert->display_name;
     $this->profilImg =$profilImg;
@@ -185,12 +189,12 @@ function allAuthorsOptimized()
     if(!empty($authors_post))
       foreach ($authors_post as $key => $experts_post) {
         
-        $experts_post-> is_followed = in_array($experts_post->ID,$experts_followed);
+        $experts_post->is_followed = in_array($experts_post->ID,$experts_followed);
         $experts_img = get_field('profile_img','user_'.$experts_post->ID) ? get_field('profile_img','user_'.$experts_post->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $experts = new Expert($experts_post, $experts_img);
         array_push($authors,$experts);
       }
-    return ['authors' => $authors,"codeStatus" => 200];
+    return ['authors' => $authors, "codeStatus" => 200];
 }
 
 function get_expert_courses ($data) 
@@ -310,9 +314,7 @@ function getExpertCourseOptimized ($data)
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
-        // 'meta_key' => 'experts',
-        // 'meta_value' => '3'
-       // 'author'        => $expert->ID
+        'author'        => $expert->ID
   ));
   $expert_courses = array();
     foreach ($courses as $key => $course) {
@@ -589,7 +591,7 @@ function get_total_followed_experts()
                     );
                     array_push ($courses[$i]->podcasts,($item));
                   }
-                }
+                } 
             }
           }
           $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
@@ -3516,7 +3518,7 @@ endif;
           $sql = $wpdb->prepare( $select_query );
           $results = $wpdb->get_results($sql)[0];
           if (empty($results))
-          {
+          { 
             $sql = $wpdb->prepare($insert_query);
             $wpdb->query($sql);
             $sql = $wpdb->prepare( $select_query );
@@ -3776,8 +3778,6 @@ endif;
     }
     return $infos['following_topics'];
   }
-
-  
     
   //* Max Bird *//
   function recommendedWeekly()

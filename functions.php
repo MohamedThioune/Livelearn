@@ -9,6 +9,8 @@ include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
+include "script-to-update-author.php";
+
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
 
@@ -1128,9 +1130,10 @@ function tracker_course(WP_REST_Request $request){
 }
 
 function store_comments(WP_REST_Request $request){
+    $user_id = $request['id'];
     $id = $request['course_id'];
     $stars = $request['stars'];
-    $feedback_content =  $request['feedback_content'];
+    $feedback_content = $request['feedback_content'];
 
     if(!$id || !$stars || !$feedback_content)
         return ['error' => 'Please fill all data required !'];
@@ -1139,9 +1142,9 @@ function store_comments(WP_REST_Request $request){
     if(!in_array($stars, $valuable))
         return ['error' => 'The stars must be between 1 till 5!'];
 
+    $current_user = ($user_id) ?: get_current_user_id();
     $reviews = get_field('reviews', $id);
     $informations = array();
-    $current_user  = get_current_user_id();
     $my_review_bool = false;
     foreach ($reviews as $review)
         if($review['user']->ID == $current_user){
@@ -1158,6 +1161,8 @@ function store_comments(WP_REST_Request $request){
         $reviews = array();
     array_push($reviews,$review);
     update_field('reviews',$reviews, $id);
+    
+    $review['author'] = get_user_by('ID', $current_user)->display_name;
 
     $informations['success'] = "Comment sent successfully !";
     $informations['data'] = $review;
@@ -1450,9 +1455,22 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthorsOptimized',
   ));
 
-  register_rest_route('custom/v1', '/clean-author', array(
+  //First apply !
+  register_rest_route('custom/v1', '/fill-company', array(
       'methods' => 'GET',
-      'callback' => 'cleanAuthor',
+      'callback' => 'fillUpCompany',
+  ));
+
+  //Second apply !
+  register_rest_route('custom/v1', '/refresh-author', array(
+      'methods' => 'GET',
+      'callback' => 'refreshAuthor',
+  ));
+
+  //Third apply !
+  register_rest_route('custom/v1', '/fill-author', array(
+    'methods' => 'GET',
+    'callback' => 'fillUpAuthor',
   ));
 
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
@@ -1515,7 +1533,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getUserAttempts',
   ));
 
-  
+
 
   register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
     'methods' => 'GET',
@@ -1666,7 +1684,7 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'reserve_course',
   ));
-  
+
 
   register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
      'methods' => 'GET',
@@ -1733,7 +1751,7 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'categoryDetail'
   ));
-  
+
   register_rest_route ('custom/v1', '/candidate/detail', array(
     'methods' => 'POST',
     'callback' => 'candidateDetail',
@@ -1751,7 +1769,7 @@ add_action( 'rest_api_init', function () {
 
   register_rest_route ('custom/v1', '/artikel/comment/', array(
     'methods' => 'POST',
-    'callback' => 'artikelDetail'
+    'callback' => 'store_comments'
   ));
 
   register_rest_route ('custom/v1', '/artikels', array(
@@ -1784,7 +1802,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCoursesOptimized',
   ));
 
-  register_rest_route ('custom/v1', '/apply', array(
+  register_rest_route ('custom/v1', '/apply', array( 
     'methods' => 'POST',
     'callback' => 'jobUser'
   ));
@@ -1819,6 +1837,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'PostJobUser'
   ));
 
+  register_rest_route ('custom/v1', '/user/editJob', array(
+    'methods' => 'POST',
+    'callback' => 'EditJobUser'
+  ));
+
+  register_rest_route ('custom/v1', '/user/deleteJob', array(
+    'methods' => 'POST',
+    'callback' => 'DeleteJobUser'
+  ));
+
   register_rest_route ('custom/v1', '/user/comment', array(
     'methods' => 'POST',
     'callback' => 'addComment'
@@ -1829,10 +1857,25 @@ add_action( 'rest_api_init', function () {
   'callback' => 'companyProfil'
   ));
 
+  register_rest_route ('custom/v1', '/user/application', array(
+    'methods' => 'POST',
+    'callback' => 'jobUserApprove'
+  ));
+
+  register_rest_route ('custom/v1', '/user/trash/favourite', array(
+    'methods' => 'POST',
+    'callback' => 'trashFavouriteCandidate'
+  ));
+
   // register_rest_route ('custom/v1', '/candidate/profil', array(
   //   'methods' => 'GET',
   //   'callback' => 'candidateProfil'
   // ));
+
+  register_rest_route ('custom/v1', '/candidate/home', array(
+    'methods' => 'POST',
+    'callback' => 'HomeCandidate'
+  ));
 
   register_rest_route ('custom/v1', '/candidate/profil/update', array(
     'methods' => 'POST',
@@ -1844,9 +1887,53 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateAppliedJobs'
   ));
 
+  register_rest_route ('custom/v1', '/candidate/AppliedJobs', array(
+    'methods' => 'POST',
+    'callback' => 'candidateAppliedJobs'
+  ));
+
   register_rest_route ('custom/v1', '/candidate/favorites', array(
     'methods' => 'POST',
     'callback' => 'candidateShorlistedJobs'
   ));
 
+  register_rest_route ('custom/v1', '/candidate/skillsPassport', array(
+    'methods' => 'POST',
+    'callback' => 'candidateSkillsPassport'
+  ));
+
+  register_rest_route ('custom/v1', '/user/profil/update', array(
+    'methods' => 'POST',
+    'callback' => 'updateCompanyProfil'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/skills_passport', array(
+    'methods' => 'POST',
+    'callback' => 'candidateSkillsPassport'
+  ));
+
+  register_rest_route ('custom/v1', '/company/updateProfil', array(
+    'methods' => 'POST',
+    'callback' => 'updateCompanyProfil'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/countUserAppliedJobs', array(
+    'methods' => 'POST',
+    'callback' => 'countUserAppliedJobsAndFavorites'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/myResume/update', array(
+    'methods' => 'POST',
+    'callback' => 'candidateMyResumeEdit'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/myResume/add', array(
+    'methods' => 'POST',
+    'callback' => 'candidateMyResumeAdd'
+  ));
+
+  register_rest_route ('custom/v1', '/candidate/myResume/delete', array(
+    'methods' => 'POST',
+    'callback' => 'candidateMyResumeDelete'
+  ));
 });

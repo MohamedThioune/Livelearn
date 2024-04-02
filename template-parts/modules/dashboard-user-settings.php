@@ -297,21 +297,24 @@ if(!empty($bunch)){
                                                 if(intval($value[2]) != intval($value[3]))
                                                     $year = $year . "-" .  explode("-", $value[3])[0];
                                             ?>
-                                            <div class="contentEducationCandidat">
-                                                <div class="titleDateEducation">
-                                                    <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
-                                                    <?php if($year) { ?>
-                                                        <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                                    <?php } ?>
+                                            <div class="contentEducationCandidat d-flex justify-content-between">
+                                               <div class="first-block-portfolio">
+                                                   <div class="titleDateEducation">
+                                                       <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
+                                                       <?php if($year) { ?>
+                                                           <p class="dateCourCandidat"><?php echo $year; ?></p>
+                                                       <?php } ?>
+                                                   </div>
+                                                   <p class="schoolCandidat"><?php echo $value[0]; ?></p>
+                                                   <p class="textDetailCategorie"><?php echo $value[4]?: ''; ?></p>
+                                               </div>
+                                                <div class="d-flex content-btn">
+                                                    <button class="btn btn-edit" style="color:white" data-toggle="modal" data-target="#editModalEdu<?php echo $key; ?>"><i class="fa fa-edit"></i></button>
+                                                    <form action="" method="POST">
+                                                        <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                                        <button class="btn btn-remove" style="color:white" name="delete_education" type="submit"><i class="fa fa-trash"></i></button>
+                                                    </form>
                                                 </div>
-                                                <p class="schoolCandidat"><?php echo $value[0]; ?></p>
-                                                <p class="textDetailCategorie"><?php echo $value[4]?: ''; ?></p>
-
-                                                <form action="" method="POST">
-                                                    <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                                    <button class="btn btn-danger" style="color:white" name="delete_education" type="submit"><i class="fa fa-trash"></i></button>
-                                                </form>
-                                                <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalEdu<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
                                             </div>
                                             <br>
 
@@ -450,20 +453,24 @@ if(!empty($bunch)){
                                             if(intval($value[2]) != intval($value[3]))
                                                 $year = $year . "-" .  explode("-", $value[3])[0];
                                         ?>
-                                        <div class="contentEducationCandidat">
-                                            <div class="titleDateEducation">
-                                                <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
-                                                <?php if($year) { ?>
-                                                    <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                                <?php } ?>
+                                        <div class="contentEducationCandidat d-flex justify-content-between">
+                                           <div class="first-block-portfolio">
+                                               <div class="titleDateEducation">
+                                                   <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
+                                                   <?php if($year) { ?>
+                                                       <p class="dateCourCandidat"><?php echo $year; ?></p>
+                                                   <?php } ?>
+                                               </div>
+                                               <p class="schoolCandidat"><?php echo $value[0]; ?></p>
+                                               <p class="textDetailCategorie"><?php echo $value[4]?: '' ?> </p>
+                                           </div>
+                                            <div class="d-flex content-btn">
+                                                <button class="btn btn-edit" style="color:white" data-toggle="modal" data-target="#editModalEdu<?php echo $key; ?>"><i class="fa fa-edit"></i></button>
+                                                <form action="" method="POST">
+                                                    <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                                    <button class="btn btn-remove" style="color:white" name="delete_education" type="submit"><i class="fa fa-trash"></i></button>
+                                                </form>
                                             </div>
-                                            <p class="schoolCandidat"><?php echo $value[0]; ?></p>
-                                            <p class="textDetailCategorie"><?php echo $value[4]?: '' ?> </p>
-                                            <form action="" method="POST">
-                                                <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                                <button class="btn btn-danger" style="color:white" name="delete_experience" type="submit"><i class="fa fa-trash"></i></button>
-                                            </form>
-                                            <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalWork<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
                                         </div>
                                         <br>
 
@@ -610,15 +617,19 @@ if(!empty($bunch)){
                                     foreach($portfolios as $value) {
                                         $value = explode(";", $value);
                                         ?>
-                                        <div class="contentEducationCandidat">
-                                            <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
-                                            <p class="textDetailCategorie"><?php echo $value[1]; ?> </p>
-                                            <a href="#" class="seeProject">See project</a>
-                                            <form action="" method="POST">
-                                                <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                                <button class="btn btn-danger" style="color:white" name="delete_portfolio" type="submit"><i class="fa fa-trash"></i></button>
-                                            </form>
-                                            <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalProject<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
+                                        <div class="contentEducationCandidat d-flex justify-content-between">
+                                            <div class="first-block-portfolio">
+                                                <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
+                                                <p class="textDetailCategorie"><?php echo $value[1]; ?> </p>
+                                                <a href="#" class="seeProject">See project</a>
+                                            </div>
+                                            <div class="d-flex content-btn">
+                                                <button class="btn btn-edit" style="color:white" data-toggle="modal" data-target="#editModalEdu<?php echo $key; ?>"><i class="fa fa-edit"></i></button>
+                                                <form action="" method="POST">
+                                                    <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                                    <button class="btn btn-remove" style="color:white" name="delete_education" type="submit"><i class="fa fa-trash"></i></button>
+                                                </form>
+                                            </div>
                                         </div>
                                         <br>
 
