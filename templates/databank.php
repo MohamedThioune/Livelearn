@@ -819,7 +819,7 @@ if (!empty($courses)) {
         const backAudioApiPlaylist = document.getElementById('content-back-audio-playlist');
         console.log(search_playlist);
         $.ajax({
-            url : "/audio-api/",
+            url : "/livelearn/audio-api/",
             method : "POST",
             data : {
                 audio_search_playlist : search_playlist
@@ -855,7 +855,7 @@ if (!empty($courses)) {
         //console.log('information to save',data)
         const spinner = e.target.nextElementSibling
         $.ajax({
-            url : "/audio-api/",
+            url : "/livelearn/audio-api/",
             method : "POST",
             data : {
                 playlist_audio : data
@@ -888,7 +888,7 @@ if (!empty($courses)) {
         const backAudioApi = document.getElementById('content-back-audio');
         console.log(search);
         $.ajax({
-           url : "/audio-api/",
+           url : "/livelearn/audio-api/",
             method : "POST",
             data : {
                audio_search : search
@@ -960,7 +960,7 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/xml-parse",
+                url: "/livelearn/xml-parse",
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
@@ -1157,7 +1157,7 @@ if (!empty($courses)) {
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/optie-bank',
+                url: '/livelearn/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
@@ -1349,7 +1349,7 @@ if (!empty($courses)) {
          $('#loader').attr('hidden',false);
 
         $.ajax({
-            url:"/youtube-playlist/",
+            url:"/livelearn/youtube-playlist/",
             method:"POST",
             data:{
                 playlist_youtube: playlistId
