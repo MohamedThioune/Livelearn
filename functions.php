@@ -1922,4 +1922,9 @@ add_action( 'rest_api_init', function () {
   'callback' => 'countUserAppliedJobsAndFavorites'
   ));
 
+  register_rest_route ('custom/v1', '/update-language-courses', array(
+      'methods' => 'GET',
+      'callback' => 'updateLangaugeCourses'
+  ));
+
 });
