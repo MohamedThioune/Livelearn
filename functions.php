@@ -1553,6 +1553,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getExpertCourseOptimized',
   ));
 
+  register_rest_route('custom/v2', '/topic/(?P<id>\d+)/courses', array(
+    'methods' => 'GET',
+    'callback' => 'getTopicCoursesOptimized',
+  ));
+
   register_rest_route('custom/v2', '/user/(?P<user_id>\d+)/statistics', array(
     'methods' => 'GET',
     'callback' => 'timeSpentOnAllCourseType',
