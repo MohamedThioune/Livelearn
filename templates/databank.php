@@ -317,12 +317,15 @@ if (isset($_GET["message"])) {
 }
 
 ?>
-               <!-- 
                <div class="headListeCourse">
-                    <p class="JouwOpleid"><br><br> <strong>Load From</strong> : &nbsp;
-                       
-                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
-                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
+                   <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
+                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a>
+                       <!-- &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?//=get_stylesheet_directory_uri();?>/img/xml-orange.jpg" alt="xml image"></a> -->
+                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button>
+                       <!-- &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/playlist_icon.png" alt="load playlist"></button> -->
+                       <!--<button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
+                           <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
+                       </button>-->
 
                        <button type="button" title="podcast playlist" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
                            playlist audios
@@ -338,31 +341,9 @@ if (isset($_GET["message"])) {
                         <button class="btn btnSearchCourseDatabank">
                             <img  src="<?=get_stylesheet_directory_uri();?>/img/searchM.png" alt="youtube image">
                         </button>
-                    </div> 
-                </div>
-                -->
-
-                <div class="container contentCardListeCourse">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="headListeCourse">
-                                <p class="JouwOpleid"><br> 
-                                    <strong>Load From</strong> : &nbsp;
-                                    <!-- <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?=get_stylesheet_directory_uri();?>/img/youtube.png" alt="youtube image"></a> -->
-                                    <!-- &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?=get_stylesheet_directory_uri();?>/img/artikel.jpg" alt="load subtopics"></button> -->
-
-                                    <button type="button" title="podcast playlist" class="btn btn-info" data-toggle="modal" data-target="#playlist-audios-indexpodcast">
-                                        playlist audios
-                                        <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="40" height="40">
-                                    </button>
-
-                                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
-                                    </div>
-                                </p>
-                            </div>
-                        </div>
                     </div>
-
+                </div>
+                <div class="container contentCardListeCourse">
                     <div class="row">
                         <br>
                         <div class="col-md-3">
@@ -819,7 +800,7 @@ if (!empty($courses)) {
         const backAudioApiPlaylist = document.getElementById('content-back-audio-playlist');
         console.log(search_playlist);
         $.ajax({
-            url : "/livelearn/audio-api/",
+            url : "/audio-api/",
             method : "POST",
             data : {
                 audio_search_playlist : search_playlist
@@ -855,7 +836,7 @@ if (!empty($courses)) {
         //console.log('information to save',data)
         const spinner = e.target.nextElementSibling
         $.ajax({
-            url : "/livelearn/audio-api/",
+            url : "/audio-api/",
             method : "POST",
             data : {
                 playlist_audio : data
@@ -888,7 +869,7 @@ if (!empty($courses)) {
         const backAudioApi = document.getElementById('content-back-audio');
         console.log(search);
         $.ajax({
-           url : "/livelearn/audio-api/",
+           url : "/audio-api/",
             method : "POST",
             data : {
                audio_search : search
@@ -960,11 +941,12 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/xml-parse",
+                url: "/xml-parse",
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
-                    document.getElementById('content-back-topics').innerHTML = response;
+                     document.getElementById('content-back-topics').innerHTML = response;
+                     
                     // window.location.href='/xml-parse';
                 },error:function(error) {
                     console.log('error');
@@ -972,7 +954,7 @@ if (!empty($courses)) {
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                   // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 }
             });
@@ -1157,7 +1139,7 @@ if (!empty($courses)) {
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/livelearn/optie-bank',
+                url: '/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
@@ -1349,7 +1331,7 @@ if (!empty($courses)) {
          $('#loader').attr('hidden',false);
 
         $.ajax({
-            url:"/livelearn/youtube-playlist/",
+            url:"/youtube-playlist/",
             method:"POST",
             data:{
                 playlist_youtube: playlistId
