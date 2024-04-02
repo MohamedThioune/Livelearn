@@ -657,6 +657,51 @@ function custom_post_type() {
 
     register_post_type( 'job', $job_args );
 
+    /**  
+      Liggeey notifications cpt By Fadel
+    **/
+    $notifications = array(
+      'name'                => _x( 'Notifications', 'Notifications', 'notification' ),
+      'singular_name'       => _x( 'Notifications', 'Notification', 'notification' ),
+      'menu_name'           => __( 'Notifications', 'notification' ),
+      //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+      'all_items'           => __( 'All notifications', 'notification' ),
+      'view_item'           => __( 'View notification', 'view_notification' ),
+      'add_new_item'        => __( 'New notification', 'add_new_notification' ),
+      'add_new'             => __( 'New notification', 'text_domain' ),
+      'edit_item'           => __( 'Edit Item', 'text_domain' ),
+      'update_item'         => __( 'Update Item', 'text_domain' ),
+      'search_items'        => __( 'Search Item', 'text_domain' ),
+      'not_found'           => __( 'Not found', 'text_domain' ),
+      'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+  );
+
+  $notification_args = array(
+      'label'               => __( 'notification', 'text_domain' ),
+      'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+      'labels'              => $notifications,
+      'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+      //'taxonomies'          => array('course_category'),
+      'hierarchical'        => false,
+      'public'              => true,
+      'show_ui'             => true,
+      'show_in_rest'        => false,
+      'show_in_menu'        => true,
+      'show_in_nav_menus'   => true,
+      'show_in_admin_bar'   => true,
+      'menu_position'       => 5,
+      'menu_icon'           => '',
+      'can_export'          => true,
+      'rewrite'             => array('slug' => 'notification'),
+      'has_archive'         => true,
+      'exclude_from_search' => false,
+      'publicly_queryable'  => true,
+      'capability_type'     => 'page',
+
+  );
+
+  register_post_type( 'notification', $notification_args );
+
 }
 add_action( 'init', 'custom_post_type', 0 );
 
@@ -1935,5 +1980,11 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/candidate/myResume/delete', array(
     'methods' => 'POST',
     'callback' => 'candidateMyResumeDelete'
+  ));
+
+  // Made By Fadel
+  register_rest_route ('custom/v1', '/notifications/create', array(
+    'methods' => 'POST',
+    'callback' => 'sendNotificationBetweenLiggeyActors'
   ));
 });

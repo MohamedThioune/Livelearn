@@ -300,7 +300,7 @@ function get_expert_courses ($data)
     return $expert_courses;
 }
 
-function getExpertCourseOptimized ($data) 
+function getExpertCourseOptimized  ($data) 
 {
   $current_user_id = $GLOBALS['user_id'];
   $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
@@ -378,22 +378,22 @@ function getExpertCourseOptimized ($data)
                 array_push($course->tags,$tag);
               }
 
-              /**
-               * Handle Image exception
-               */
-              $handle = curl_init($course->pathImage);
-              curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+              // /**
+              //  * Handle Image exception
+              //  */
+              // $handle = curl_init($course->pathImage);
+              // curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
 
-              /* Get the HTML or whatever is linked in $url. */
-              $response = curl_exec($handle);
+              // /* Get the HTML or whatever is linked in $url. */
+              // $response = curl_exec($handle);
 
-              /* Check for 404 (file not found). */
-              $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-              if($httpCode != 200) {
-                  /* Handle 404 here. */
-                  $course->pathImage = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
-                }
-              curl_close($handle);
+              // /* Check for 404 (file not found). */
+              // $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+              // if($httpCode != 200) {
+              //     /* Handle 404 here. */
+              //     $course->pathImage = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+              //   }
+              // curl_close($handle);
         array_push($expert_courses,new Course($course));
       }
     return $expert_courses;
