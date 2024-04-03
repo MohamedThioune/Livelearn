@@ -2,6 +2,7 @@
 <?php
 require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
 $GLOBALS['user_id'] = get_current_user_id();
+require_once __DIR__ .DIRECTORY_SEPARATOR. 'templates'.DIRECTORY_SEPARATOR.'detect-language.php';
 
 //First step : Fill up company id by the author
 function fillUpCompany(){
@@ -114,4 +115,44 @@ function fillUpAuthor(){
             //break on success
         }
     endforeach;
+}
+
+/**
+ * @return void
+ * http://localhost:8888/livelearn/wp-json/custom/v1/update-language-courses/?key=1
+ */
+function updateLangaugeCourses()
+{
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+    );
+    $courses = get_posts($args);
+    //pagination
+    $count = count($courses);
+    define("STEP", 50);
+    $number_iteration = intval(ceil($count / STEP));
+
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        } else {
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+    $star_index = ($key - 1) * STEP;
+    for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
+        $course = $courses[$i];
+        if(update_field('language', detectLanguage($course->post_title), $course->ID))
+            echo '<h3>language added for :'.$course->post_title.' : '.$course->ID.'</h3>';
+    }
 }

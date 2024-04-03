@@ -1527,7 +1527,7 @@
                     const string_to_find = e.target.value;
                     const backSearcBar = document.getElementById('back-for-search-bar');
                     $.ajax({
-                        url :"/livelearn/fetch-ajax",
+                        url :"/fetch-ajax",
                         method : "POST",
                         data : {
                             course_searched : string_to_find
@@ -1543,6 +1543,15 @@
                         }
                     })
                 })
+                headerSearchInput.dispatchEvent(new Event('click'));
+                //searchFunction();
+            });
+
+            document.getElementById('header-search').addEventListener('input', function() {
+                if (document.activeElement === document.getElementById('header-search')) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    //searchFunction();
+                }
             });
 
             //document.getElementById('header-search').addEventListener('input', function() {
@@ -1655,7 +1664,7 @@
             if(txt){
                 $.ajax({
 
-                    url:"/livelearn/fetch-ajax",
+                    url:"/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,

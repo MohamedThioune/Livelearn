@@ -9,7 +9,7 @@ include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
-include "script-to-update-author.php";
+include "script-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
@@ -1992,4 +1992,10 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'sendNotificationBetweenLiggeyActors'
   ));
+  
+  register_rest_route ('custom/v1', '/update-language-courses', array(
+      'methods' => 'GET',
+      'callback' => 'updateLangaugeCourses'
+  ));
+
 });
