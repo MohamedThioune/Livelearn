@@ -179,136 +179,135 @@ function company($id){
 
 //Detail candidate
 function candidate($id){
+  $param_user_id = $id ?: get_current_user_id();
+  $sample = array();
+  $user = get_user_by('ID', $param_user_id);
 
-      $param_user_id = $id ?: get_current_user_id();
-      $sample = array();
-      $user = get_user_by('ID', $param_user_id);
+  $sample['ID'] = $user->ID;
+  $sample['first_name'] = $user->first_name;
+  $sample['last_name'] = $user->last_name;
+  $sample['email'] = $user->user_email;
+  $sample['mobile_phone'] = $user->mobile_phone;
+  $sample['city'] = $user->city;
+  $sample['adress'] = $user->adress;
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+  $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
-      $sample['ID'] = $user->ID;
-      $sample['first_name'] = $user->first_name;
-      $sample['last_name'] = $user->last_name;
-      $sample['email'] = $user->user_email;
-      $sample['mobile_phone'] = $user->mobile_phone;
-      $sample['city'] = $user->city;
-      $sample['adress'] = $user->adress;
-      $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-      $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
-      $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
+  $member_since = new DateTimeImmutable($user->user_registered_at);
+  $sample['member_since'] = $member_since->format('M d, Y');
 
-      $member_since = new DateTimeImmutable($user->user_registered_at);
-      $sample['member_since'] = $member_since->format('M d, Y');
+  $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
 
-      $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
+  $date_born = get_field('date_born',  'user_' . $user->ID);
+  if(!$date_born)
+      $age = "No birth";
+  else{
+      //explode the date to get month, day and year
+      $birthDate = explode("/", $date_born);
+      //get age from date or birthdate
+      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+          ? ((date("Y") - $birthDate[2]) - 1)
+          : (date("Y") - $birthDate[2]));
+      $age .= ' Years';
+  }
+  $sample['age'] = $age;
 
-      $date_born = get_field('date_born',  'user_' . $user->ID);
-      if(!$date_born)
-          $age = "No birth";
-      else{
-          //explode the date to get month, day and year
-          $birthDate = explode("/", $date_born);
-          //get age from date or birthdate
-          $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
-              ? ((date("Y") - $birthDate[2]) - 1)
-              : (date("Y") - $birthDate[2]));
-          $age .= ' Years';
-      }
-      $sample['age'] = $age;
+  $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
+  $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
+  $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
+  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
 
-      $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
-      $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
-      $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-      $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
-      $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
-      $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
-      $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
+  //Get Topics
+  // $topics_external = get_user_meta($user_id, 'topic');
+  // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+  // $topics = array();
+  // if(!empty($topics_external))
+  //   $topics = !empty($topics_external) $topics_external;
 
-      //Get Topics
-      // $topics_external = get_user_meta($user_id, 'topic');
-      // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
-      // $topics = array();
-      // if(!empty($topics_external))
-      //   $topics = !empty($topics_external) $topics_external;
+  // if(!empty($topics_internal))
+  //   foreach($topics_internal as $item)
+  //       array_push($topics, $item);
 
-      // if(!empty($topics_internal))
-      //   foreach($topics_internal as $item)
-      //       array_push($topics, $item);
+  $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
+  "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
+  Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
 
-      $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
-      "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
-      Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+  $topics = array();
+  $limit = 3;
+  $topics = get_user_meta($user->ID, 'topic');
+  $sample['skills'] = [];
+  if(!empty($topics)):
+    $args = array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'include'  => $topics,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        'include' => $topics,
+        'post_per_page' => $limit
+    );
+    $sample['skills'] = get_categories($args);
+  endif;
 
-      $topics = array();
-      $limit = 3;
-      $topics = get_user_meta($user->ID, 'topic');
-      $sample['skills'] = [];
-      if(!empty($topics)):
-        $args = array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'include'  => $topics,
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            'include' => $topics,
-            'post_per_page' => $limit
-        );
-        $sample['skills'] = get_categories($args);
-      endif;
+  //Education Information
+  $main_education = get_field('education',  'user_' . $user->ID);
+  $educations = array();
+  foreach($main_education as $value):
 
-      //Education Information
-      $main_education = get_field('education',  'user_' . $user->ID);
-      $educations = array();
-      foreach($main_education as $value):
+    $education = array();
+    if(!$value)
+      continue;
 
-        $education = array();
-        if(!$value)
-          continue;
+    $explosion = explode(";", $value);
 
-        $explosion = explode(";", $value);
+    $year = "";
+    if(isset($explosion[2]))
+        $year = explode("-", $explosion[2])[0];
 
-        $year = "";
-        if(isset($explosion[2]))
-            $year = explode("-", $explosion[2])[0];
+    if(isset($explosion[3]))
+        if(intval($explosion[2]) != intval($explosion[3]))
+            $year = $year . "-" .  explode("-", $explosion[3])[0];
 
-        if(isset($explosion[3]))
-            if(intval($explosion[2]) != intval($explosion[3]))
-                $year = $year . "-" .  explode("-", $explosion[3])[0];
+    $education['diploma'] = $explosion[1];
+    $education['year'] = $year;
+    $education['school'] = $explosion[0];
+    $education['description'] = $explosion[4];
+    $educations[] = $education;
 
-        $education['diploma'] = $explosion[1];
-        $education['year'] = $year;
-        $education['school'] = $explosion[0];
-        $education['description'] = $explosion[4];
-        $educations[] = $education;
+  endforeach;
+  $sample['educations'] = $educations;
 
-      endforeach;
-      $sample['educations'] = $educations;
+  //Work & Experience Information
+  $main_experience = get_field('work',  'user_' . $user->ID);
+  $experiences = array();
+  foreach($main_experience as $value):
 
-      //Work & Experience Information
-      $main_experience = get_field('work',  'user_' . $user->ID);
-      $experiences = array();
-      foreach($main_experience as $value):
+    $experience = array();
+    if(!$value)
+      continue;
 
-        $experience = array();
-        if(!$value)
-          continue;
+    $explosion = explode(";", $value);
 
-        $explosion = explode(";", $value);
+    $year = "";
+    if(isset($explosion[2]))
+        $year = explode("-", $explosion[2])[0];
 
-        $year = "";
-        if(isset($explosion[2]))
-            $year = explode("-", $explosion[2])[0];
+    if(isset($explosion[3]))
+        if(intval($explosion[2]) != intval($explosion[3]))
+            $year = $year . "-" .  explode("-", $explosion[3])[0];
 
-        if(isset($explosion[3]))
-            if(intval($explosion[2]) != intval($explosion[3]))
-                $year = $year . "-" .  explode("-", $explosion[3])[0];
+    $experience['company'] = $explosion[1];
+    $experience['year'] = $year;
+    $experience['job'] = $explosion[0];
+    $experience['description'] = $explosion[4];
+    $experiences[] = $experience;
+  endforeach;
+  $sample['experiences'] = $experiences;
 
-        $experience['company'] = $explosion[1];
-        $experience['year'] = $year;
-        $experience['job'] = $explosion[0];
-        $experience['description'] = $explosion[4];
-        $experiences[] = $experience;
-      endforeach;
-      $sample['experiences'] = $experiences;
-
-      $sample = (Object)$sample;
-      return $sample;
+  $sample = (Object)$sample;
+  return $sample;
 }
 
 function validated($required_parameters, $request){
@@ -1421,6 +1420,55 @@ function updateCompanyProfil(WP_REST_Request $request) {
   $updated_company_data = company($company_id);
   $response = new WP_REST_Response($updated_company_data);
   $response->set_status(200);
+  return $response;
+}
+
+//[POST]Apply Candidate | Delete favorite candidate
+function trashFavouriteCandidate(WP_REST_Request $request){
+  $errors = ['errors' => '', 'error_data' => ''];
+  $required_parameters = ['userApplyId', 'userDeleteId'];
+
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);
+
+  //Get inputs
+  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
+  $user_trash_id = isset($request['userDeleteId']) ? $request['userDeleteId'] : 0;
+
+
+  // Récupérer les favoris de l'utilisateur
+  $user_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
+  $user_favourites = array();
+  $user_shorlisted_jobs = [];
+
+  // Vérifier si l'utilisateur a des emplois favoris
+  if ($user_favorites) 
+    foreach ($user_favorites as $favorite):
+      if ($favorite['type'] == 'candidate') :
+        // Récupérer les détails de l'emploi
+        if($favorite['id'] == $user_trash_id)
+          continue;
+      endif;
+
+      $user_shorlisted_jobs['type'] = $favorite['type'];
+      $user_shorlisted_jobs['id'] = $favorite['id'];
+      array_push($user_favourites, $user_shorlisted_jobs);
+    endforeach;
+  
+  update_field('save_liggeey', $user_favourites, 'user_' . $user_apply_id);
+
+  //Remove the user in list appliants
+  $appliants = get_field('job_appliants', $job_applied_id);
+  $appliants = ($appliants) ?: array();
+  $key = array_search($user_apply, $appliants);
+  if($key !== false)
+    unset($appliants[$key]);
+  update_field('job_appliants', $appliants, $job_applied_id);
+
+  $success = "User favorites changed with success !";
+  $response = new WP_REST_Response($success);
+  $response->set_status(200);
+
   return $response;
 }
 
