@@ -148,6 +148,79 @@ $url = home_url( $wp->request );
     }
 
 
+    .newtons-cradle {
+        --uib-size: 50px;
+        --uib-speed: 1.2s;
+        --uib-color: #474554;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--uib-size);
+        height: var(--uib-size);
+    }
+
+    .newtons-cradle__dot {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 25%;
+        transform-origin: center top;
+    }
+
+    .newtons-cradle__dot::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 25%;
+        border-radius: 50%;
+        background-color: var(--uib-color);
+    }
+
+    .newtons-cradle__dot:first-child {
+        animation: swing var(--uib-speed) linear infinite;
+    }
+
+    .newtons-cradle__dot:last-child {
+        animation: swing2 var(--uib-speed) linear infinite;
+    }
+
+    @keyframes swing {
+        0% {
+            transform: rotate(0deg);
+            animation-timing-function: ease-out;
+        }
+
+        25% {
+            transform: rotate(70deg);
+            animation-timing-function: ease-in;
+        }
+
+        50% {
+            transform: rotate(0deg);
+            animation-timing-function: linear;
+        }
+    }
+
+    @keyframes swing2 {
+        0% {
+            transform: rotate(0deg);
+            animation-timing-function: linear;
+        }
+
+        50% {
+            transform: rotate(0deg);
+            animation-timing-function: ease-out;
+        }
+
+        75% {
+            transform: rotate(-70deg);
+            animation-timing-function: ease-in;
+        }
+    }
+
+
 </style>
 <html>
     <head>
@@ -853,7 +926,7 @@ $url = home_url( $wp->request );
                     </div>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- input search on top -->
+                        <!-- input search -->
                         <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
                             <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                             <div class="dropdown-menuSearch headerDrop" id="header-list">
@@ -897,178 +970,33 @@ $url = home_url( $wp->request );
             <!-- for search  -->
             <div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                 <div class="container-fluid">
-                    <!--
-                    <div class="d-flex w-100 justify-content-between">
-                        <div class="for-search-mobile">
-                            <form action="/product-search" method="POST" class="form-inline ">
-                                <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
-                                <div class="dropdown-menuSearch headerDrop" id="header-list">
-                                    <div class="list-autocomplete" id="header">
-                                        <center> <i class='hasNoResults'>No matching results</i> </center>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <button type="button" class="close btn-close-modal-search" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>butonnn
-                        </button>
-                    </div>
-                    -->
-
-<!--                    <div class="row">
-                        <div class="col-md-3">
-                            <p class="title-search">Populair zoeken</p>
-                            <div class="d-grid">
-                                <a href="">IT / Gegevens</a>
-                                <a href="">Hardware</a>
-                                <a href="">Informatiebeheer</a>
-                                <a href="">Kunst</a>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <p class="title-search">Suggesties</p>
-                            <ul class="secondUlModal ">
-                                <li>
-                                    <a href="/product-search?filter=Opleidingen">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Opleidingen-Header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Opleidingen</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=E-learning">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/E-learning-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">E-Learnings</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Lezing">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Lezingen-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Lezingen</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Training">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Trainingen.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Trainingen</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Video">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Video's-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Video's</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Event">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Evens-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Events</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Workshop">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/workshop.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Workshops</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Artikel">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Artikelen-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Artikelen</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Webinar">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/webinar-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Webinars</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Masterclass">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Masterclasses-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Masterclasses</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Assessment">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Assessments-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Assessments</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/product-search?filter=Podcast">
-                                        <div class="blockImg">
-                                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Podcasts-header.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="subtitleSousElementHeader">Podcasts</p>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>-->
-
                     <section class="content-product-search">
                         <div class="container-fluid">
                             <div class="swiper-leeveroom">
                                 <p class="title-search">Populair zoeken</p>
                                 <div class="swiper-container new-swiper-modal">
                                     <div class="swiper-wrapper">
-                                        <button class="btn swiper-slide">Podcasts</button>
-                                        <button class="btn swiper-slide">Videos</button>
-                                        <button class="btn swiper-slide">Opleiding</button>
-                                        <button class="btn swiper-slide">Artikel</button>
-                                        <button class="btn swiper-slide">Assessment</button>
-                                        <button class="btn swiper-slide">Podcasts</button>
+                                        <a href="/product-search/?filter=Podcast" class="btn swiper-slide">Podcasts</a>
+                                        <a href="/product-search/?filter=Video" class="btn swiper-slide">Videos</a>
+                                        <a href="/product-search/?filter=Opleidingen" class="btn swiper-slide">Opleiding</a>
+                                        <a href="/product-search/?filter=Artikel" class="btn swiper-slide">Artikel</a>
+                                        <a href="/product-search/?filter=Assessment" class="btn swiper-slide">Assessment</a>
+                                        <a href="/product-search/?filter=Podcast" class="btn swiper-slide">Podcasts</a>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="block-Suggesties">
+                                <p class="title-search">
+                                    Suggesties
+                                    <div class="newtons-cradle d-none" id="loader-suggestion-search-bar">
+                                        <div class="newtons-cradle__dot"></div>
+                                        <div class="newtons-cradle__dot"></div>
+                                        <div class="newtons-cradle__dot"></div>
+                                    </div>
+                                </p>
+                                <ul class="secondUlModal" id="back-for-search-bar">
+                                  <!-- back for serach ba, searching course -->
                                 <p class="title-search">Suggesties</p>
                                 <ul class="secondUlModal" id="back-for-search-bar">
                                   <!-- back for serach ba, searching course -->
@@ -1481,4 +1409,3 @@ $url = home_url( $wp->request );
                     }
                 }
             </script>
-
