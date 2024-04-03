@@ -1,29 +1,10 @@
 <?php
 
-// require __DIR__. '/vendor/pear/text_languagedetect/Text/LanguageDetect.php';
-//require_once dirname(__DIR__) . '/vendor/pear/text_languagedetect/Text/LanguageDetect.php';
 
 
 
-//Detected langage of text
-// function detectLanguage($text)
-// {
-//     //echo "Language detection failed";
-   
-//     $detector = new Text_LanguageDetect();
-//     $result = $detector->detectSimple($text);
-//    return $result;
-//     // Check if language detection is successful
-//     if ($result !== false) {
-//       //  return "Language BON";
-//         echo $result['language'];
-//     } else {
-//         return "Language";
-//     }
-   
-//   //  detectLanguage('Bonjour');
-// }
-// detectLanguage("Language detection failed");
+
+ // detectLanguage("Hallo vrienden");
 
  function generatorAuthor($key){
     $login = 'user' . random_int(0, 100000);
