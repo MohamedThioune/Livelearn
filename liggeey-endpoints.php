@@ -2146,4 +2146,92 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
   return $response;
 
 }
+
+// Made By Fadel
+function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
+{
+  $code_status = 400;
+  $user_id = isset($GLOBALS['user_id']) && $GLOBALS['user_id'] != 0 ? $GLOBALS['user_id'] : false;
+  if (!($user_id))
+  {
+    $response = new WP_REST_Response('You\'ve to be logged in !');
+    $response->set_status($code_status);
+    return $response;
+  }
+  
+  $user = get_user_by( 'ID', $user_id );
+
+  $title = $request['title'] != null && !empty($request['title']) ? $request['title'] : false;
+  if (!$title)
+  {
+    $response = new WP_REST_Response('The title is required !');
+    $response->set_status($code_status);
+    return $response;
+  }
+  $content = $request['content'] != null && !empty($request['content']) ? $request['content'] : false;
+  if (!($content))
+  {
+    $response = new WP_REST_Response('The content is required !');
+    $response->set_status($code_status);
+    return $response;
+  }
+  $receiver_id = $request['receiver_id'] != null && !empty($request['receiver_id']) ? $request['receiver_id'] : false;
+  if (!($receiver_id))
+  {
+    $response = new WP_REST_Response('The id of the receiver is required !');
+    $response->set_status($code_status);
+    return $response;
+  }
+  if (! get_user_by( 'ID', $receiver_id ))
+  {
+    $response = new WP_REST_Response('The receiver doesn\'t exist on our database !');
+    $response->set_status($code_status);
+    return $response;
+  }
+  $receiver = get_user_by( 'ID', $receiver_id );
+  $trigger = $request['trigger'] != null && !empty($request['trigger']) ? $request['trigger'] : false;
+  if (!($trigger))
+  {
+    $response = new WP_REST_Response('The trigger is required !');
+    $response->set_status($code_status);
+    return $response;
+  }
+  
+  
+  //Create notification
+  $notification_data = 
+  array(
+    'post_title' => $title,
+    'post_author' => $receiver->ID,
+    'post_type' => 'notification',
+    'post_status' => 'publish'
+  );
+  $notification_id = wp_insert_post($notification_data);
+  if (is_int($notification_id))
+  {
+    update_field('content', $content, $notification_id);
+    update_field('trigger', $trigger, $notification_id);
+    update_field('author_trigger_id', $user->ID, $notification_id);
+    
+    //Sending email notification
+    $first_name = $receiver->first_name ?: $receiver->display_name;
+    $email = $receiver->user_email;
+    $path_mail = '/templates/mail-notification-invitation.php';
+    require(__DIR__ . $path_mail);
+    $subject = $title;
+    // Have to put here the liggey admin email and define the base template
+    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+    if (wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )))
+    {
+      $response = new WP_REST_Response('The email was sent successfully');
+      $code_status = 201;
+      $response->set_status($code_status);
+      return $response;
+    }
+  }
+  $response = new WP_REST_Response('An error occurred while sending the email !');
+  $response->set_status($code_status);
+  return $response;
+}
+
 /* * End Liggeey * */
