@@ -147,7 +147,7 @@ if(!isset($_COOKIE["cookie_consent"])):
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <ul>
-                            <li><a class="linkElementFooter" href="/zzpers/"> Voor ZZP’ers</a></li>
+                            <li><a class="linkElementFooter" href="/zzpers/"> Voor ZZP'ers</a></li>
                             <li> <a class="linkElementFooter" href="/mkb/">Voor het MKB </a></li>
                             <li> <a class="linkElementFooter" href="/mkb/">Voor Corporates </a></li>
                             <li> <a class="linkElementFooter" href="/pricing/">Pricing </a></li>
@@ -290,14 +290,14 @@ if(!isset($_COOKIE["cookie_consent"])):
 <script>
     $('.bntNotification').click((e)=>{
         $.ajax({
-                url: "/read-notification",
-                method: "get",
-                data: { },
-                dataType:"text",
-                success: function(data){
-                    // Get the modal
-                    console.log(data);
-                }
+            url: "/read-notification",
+            method: "get",
+            data: { },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                console.log(data);
+            }
         });
     });
 </script>
