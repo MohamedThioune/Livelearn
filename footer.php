@@ -794,7 +794,6 @@ $site_url = get_site_url() . "/apply-cookie";
             })
         })
 
-
         headerSearchInput.addEventListener('submit',function (event) {
             const string_to_send = event.target.value.trim();
             if (string_to_send === '')
