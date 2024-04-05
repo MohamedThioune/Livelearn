@@ -14,7 +14,7 @@ $dataString = http_build_query($data);
 $headers = [
     'content-type: application/x-www-form-urlencoded',
     'Accept-Encoding: application/gzip',
-    'X-RapidAPI-Key: 9def8024e2mshe1eaef1df9acceap161c95jsne1ba92e2482d',
+    'X-RapidAPI-Key: 07a7f2b29cmshbce4b715d1960c6p1d98cbjsn46412055a8ba',
     'X-RapidAPI-Host: google-translate1.p.rapidapi.com'
 ];
 
@@ -40,7 +40,7 @@ if ($response === false) {
 }
 
 
-
+ 
   return $language;
   
 
