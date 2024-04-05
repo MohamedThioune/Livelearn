@@ -483,9 +483,12 @@ $site_url = get_site_url() . "/apply-cookie";
             $(document).click( function(){
 
                 $('#header-list').hide();
-
             });
-
+            $(document).click( function(){
+                $('#mobile-list').hide();
+            });
+            $("#mobile-list").fadeIn("fast");
+            /*
             if(txt){
                 $.ajax({
                     url:"/fetch-ajax",
@@ -503,19 +506,9 @@ $site_url = get_site_url() . "/apply-cookie";
             else
                 $('#header').html("<center> <small>Typing ... </small> <center>");
         });
-
-
         $('#mobile-search').keyup(function(){
             var txt = $(this).val();
-
             event.stopPropagation();
-
-            $("#mobile-list").fadeIn("fast");
-
-            $(document).click( function(){
-                $('#mobile-list').hide();
-            });
-
             if(txt){
                 $.ajax({
                     url:"fetch-ajax",
@@ -534,6 +527,7 @@ $site_url = get_site_url() . "/apply-cookie";
                 $('#mobileS').html("<center> <small>Typing ... </small> <center>");
         });
     });
+    */
 </script>
 
 <script>
