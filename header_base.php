@@ -997,9 +997,6 @@ $url = home_url( $wp->request );
                                 </p>
                                 <ul class="secondUlModal" id="back-for-search-bar">
                                   <!-- back for serach ba, searching course -->
-                                <p class="title-search">Suggesties</p>
-                                <ul class="secondUlModal" id="back-for-search-bar">
-                                  <!-- back for serach ba, searching course -->
                                 </ul>
                             </div>
                         </div>
