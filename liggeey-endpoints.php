@@ -1144,6 +1144,7 @@ function HomeUser(WP_REST_Request $request){
 function JobsUser(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
+
   $required_parameters = ['userApplyId'];
   $open_jobs = array();
 
@@ -1159,19 +1160,23 @@ function JobsUser(WP_REST_Request $request){
     return $response;
   endif;
 
-  //Job company
-  $post = get_field('company', 'user_' . $user_apply_id);
-  $post_id = $post->ID;
-  $company = company($post[0]->ID);
-  $jobs = $company->open_jobs;
-  // $sample['count_open_jobs'] = $company->count_open_jobs;
+  //Jobs company
+  $args = array(
+    'post_type' => 'job',  
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC' ,
+  );
+  $jobs = get_posts($args);
   foreach($jobs as $post)
     $open_jobs[] = job($post->ID);
 
   $response = new WP_REST_Response($open_jobs);
   $response->set_status(200);
+
   return $response;
 }
+
 
 //[POST]Dashboard User | Applicants
 function ApplicantsUser(WP_REST_Request $request){
@@ -2151,7 +2156,7 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
 function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
 {
   $code_status = 400;
-  $user_id = isset($GLOBALS['user_id']) && $GLOBALS['user_id'] != 0 ? $GLOBALS['user_id'] : false;
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   if (!($user_id))
   {
     $response = new WP_REST_Response('You\'ve to be logged in !');
