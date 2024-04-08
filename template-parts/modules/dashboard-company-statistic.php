@@ -4,6 +4,7 @@
 $current_user = wp_get_current_user();
 $full_name_user = ($current_user->first_name) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name;
 $image = get_field('profile_img',  'user_' . $current_user->ID);
+global $wpdb;
 if(!$image)
     $image = get_stylesheet_directory_uri() . '/img/placehoder_user.png';
 
@@ -208,7 +209,7 @@ $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_t
 $topic_views = $wpdb->get_results($sql);
 
 //Show link by scope 
-$status_content_link .= "";
+$status_content_link = "";
 if(isset($company_name))
     $status_content_link .= '<li class="nav-one"><a href="/dashboard/company/statistic-company">Company</a></li>';
 
@@ -345,7 +346,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         </select> -->
                     </div>
                     <div>
-                        <canvas id="ChartEngagement"></canvas>
+                         <canvas id="ChartEngagement"></canvas>
+                        <!-- <span>No data enough !</span> -->
                     </div>
                 </div>
                 <div class="card-circular-bar">
@@ -394,7 +396,15 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         
                         $department = get_field('department', 'user_' . $user->ID);
 
-                        $is_login = get_field('is_first_login', 'user_' . $user->ID);
+                        //$is_login = get_field('is_first_login', 'user_' . $user->ID);
+                        $is_login = false;
+
+                        $table_tracker_views = $wpdb->prefix . 'tracker_views';
+                        $sql = $wpdb->prepare("SELECT * FROM `wpe7_tracker_views` WHERE `user_id` = ".$user->ID);
+                        $if_user_actif = $wpdb->get_results($sql);
+
+                        if ($if_user_actif)
+                            $is_login = true;
 
                         $status = ($is_login) ? 'actif' : 'actif inactif';
                         $status_text = ($is_login) ? 'Active' : 'Inactive';

@@ -2,6 +2,7 @@
 <?php // /audio-api ?>
 <?php
 global $wpdb;
+
 $table = $wpdb->prefix . 'databank';
 $users = get_users();
 $args = array(
