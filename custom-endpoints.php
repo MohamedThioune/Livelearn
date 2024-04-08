@@ -1,5 +1,6 @@
 <?php
 
+$GLOBALS['user_id'] = get_current_user_id() ;
 require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
 $GLOBALS['user_id'] = get_current_user_id();
 
@@ -15,6 +16,7 @@ class Expert
   public $is_followed;
 
   function __construct($expert,$profilImg) {
+    
     $this->id=(int)$expert->ID;
     $this->name=$expert->display_name;
     $this->profilImg =$profilImg;
@@ -298,7 +300,7 @@ function get_expert_courses ($data)
     return $expert_courses;
 }
 
-function getExpertCourseOptimized ($data) 
+function getExpertCourseOptimized  ($data) 
 {
   $current_user_id = $GLOBALS['user_id'];
   $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
@@ -376,22 +378,22 @@ function getExpertCourseOptimized ($data)
                 array_push($course->tags,$tag);
               }
 
-              /**
-               * Handle Image exception
-               */
-              $handle = curl_init($course->pathImage);
-              curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+              // /**
+              //  * Handle Image exception
+              //  */
+              // $handle = curl_init($course->pathImage);
+              // curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
 
-              /* Get the HTML or whatever is linked in $url. */
-              $response = curl_exec($handle);
+              // /* Get the HTML or whatever is linked in $url. */
+              // $response = curl_exec($handle);
 
-              /* Check for 404 (file not found). */
-              $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-              if($httpCode != 200) {
-                  /* Handle 404 here. */
-                  $course->pathImage = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
-                }
-              curl_close($handle);
+              // /* Check for 404 (file not found). */
+              // $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+              // if($httpCode != 200) {
+              //     /* Handle 404 here. */
+              //     $course->pathImage = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+              //   }
+              // curl_close($handle);
         array_push($expert_courses,new Course($course));
       }
     return $expert_courses;
@@ -589,7 +591,7 @@ function get_total_followed_experts()
                     );
                     array_push ($courses[$i]->podcasts,($item));
                   }
-                }
+                } 
             }
           }
           $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
@@ -1753,6 +1755,109 @@ function get_courses_of_subtopics($data)
           }
   }
   return $courses_related_subtopic;
+}
+
+function getTopicCoursesOptimized($data)
+{
+   $topic_id = $data['id'];
+   $courses = get_posts(
+    array(
+      'post_type' => array('course', 'post'),
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC',
+      'meta_query'     => array(
+        'relation' => 'OR',
+         array
+         (
+             'key'     => 'categories',
+             'value'   => $topic_id, 
+             'compare' => 'LIKE'
+         ),
+        array
+        (
+            'key'     => 'category_xml',
+            'value'   => $topic_id, 
+            'compare' => 'LIKE'
+        )
+    )
+    )
+  );
+
+  $outcome_courses = array();
+  
+  for($i=0; $i <count($courses) ;$i++) 
+  {
+    $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
+    $author = get_user_by( 'ID', $courses[$i] -> post_author  );
+    $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+    if ($courses[$i]->visibility != []) 
+      if ($author_company != $current_user_company)
+        continue;
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $courses[$i]->experts = array(); 
+        $experts = get_field('experts',$courses[$i]->ID);
+        if(!empty($experts))
+          foreach ($experts as $key => $expert) {
+            $expert = get_user_by( 'ID', $expert );
+            $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+            }
+      
+        $courses[$i]-> author = new Expert ($author , $author_img);
+        $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+        $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+        $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+        //Image - article
+        $image = get_field('preview', $courses[$i]->ID)['url'];
+        if(!$image){
+            $image = get_the_post_thumbnail_url($courses[$i]->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $courses[$i]->ID);
+                    if(!$image)
+                        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+        }
+        $courses[$i]->pathImage = $image;
+        $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+        $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
+        if (strtolower($courses[$i]->courseType) == 'podcast')
+        {
+           $podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
+           if (!empty($podcasts))
+              $courses[$i]->podcasts = $podcasts;
+            else {
+              $podcasts = get_field('podcasts_index',$courses[$i]->ID) ? get_field('podcasts_index',$courses[$i]->ID) : [];
+              if (!empty($podcasts))
+              {
+                $courses[$i]->podcasts = array();
+                foreach ($podcasts as $key => $podcast) 
+                { 
+                  $item= array(
+                    "course_podcast_title"=>$podcast['podcast_title'], 
+                    "course_podcast_intro"=>$podcast['podcast_description'],
+                    "course_podcast_url" => $podcast['podcast_url'],
+                    "course_podcast_image" => $podcast['podcast_image'],
+                  );
+                  array_push ($courses[$i]->podcasts,($item));
+                }
+              }
+          }
+        }
+        $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
+        $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
+        $tags = get_field('categories',$courses[$i]->ID) ?? [];
+        $courses[$i]->tags= array();
+        if($tags)
+          if (!empty($tags))
+            foreach ($tags as $key => $category) 
+              if(isset($category['value'])){
+                $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                array_push($courses[$i]->tags,$tag);
+              }
+        $new_course = new Course($courses[$i]);
+        array_push($outcome_courses, $new_course);
+  }
+ return  $outcome_courses;
 }
 
 
@@ -3467,6 +3572,288 @@ endif;
     return [];
    }
   }
+
+  /** 
+   * Statistics Endpoints
+  */
+
+
+
+       function get_user_views($user_id)
+       {
+          global $wpdb;
+          $table_tracker_views = $wpdb->prefix . 'tracker_views';
+          $user_id = $request['user_id'] ?? false;
+          $sql = $wpdb->prepare( "SELECT data_id FROM $table_tracker_views WHERE user_id = $user_id");
+          $results = $wpdb->get_results( $sql );
+          $datas_id = array();
+          if (empty($results))
+          {
+            return [];
+          }
+          foreach ($results as $key => $value) {
+            array_push( $datas_id, $value->data_id);
+          }
+          $courses = get_posts(
+            array
+            (
+              'post_type' => array('course', 'post'),
+              'post__in' => $datas_id
+            )
+          );
+          return $courses;
+       }
+
+       function getUserCourseStastics ($data)
+       {
+          
+          $user_id = $GLOBALS['user_id'];
+          $courses = get_user_views($user_id);
+          $courses;
+       }
+
+      function getUserStatistics($user_id)
+      {
+          global $wpdb;
+          $user_statistics_table = $wpdb->prefix . 'user_statistics';
+          $select_query = "SELECT * FROM $user_statistics_table WHERE user_id = $user_id";
+          $insert_query = "INSERT INTO $user_statistics_table (`id`, `podcast`, `artikel`, `video`, `online`, `location`, `user_id`) VALUES (NULL, '0', '0', '0', '0', '0', $user_id)";
+          $sql = $wpdb->prepare( $select_query );
+          $results = $wpdb->get_results($sql)[0];
+          if (empty($results))
+          { 
+            $sql = $wpdb->prepare($insert_query);
+            $wpdb->query($sql);
+            $sql = $wpdb->prepare( $select_query );
+            $results = $wpdb->get_results($sql)[0];
+          }
+          return $results;
+      }
+
+      function formatSecondes($secondes) {
+        $heures = floor($secondes / 3600);
+        $minutes = floor(($secondes % 3600) / 60);
+        $secondes = $secondes % 60;
+        return sprintf("%dh %dmn %ds", $heures, $minutes, $secondes);
+    }
+
+      function getStatisticsOfCourseType (WP_REST_Request $request)
+      {
+        $user_id = $request['user_id'];
+        if (!$user_id)
+        {
+          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $user = get_user_by( 'ID', $user_id ) ?? false;
+        if (!$user)
+        {
+          $response = new WP_REST_Response("This user id filled doesn't exist !");
+          $response->set_status(400);
+          return $response;
+        }
+        $courses = get_user_views($user_id);
+        return $courses; 
+      }
+      
+      function timeSpentOnAllCourseType($data)
+      {
+        $user_id = $data['user_id'] ?? false;
+        if (!$user_id)
+        {
+          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $user = get_user_by( 'ID', $user_id ) ?? false;
+        if (!$user)
+        {
+          $response = new WP_REST_Response("This user id filled doesn't exist !");
+          $response->set_status(400);
+          return $response;
+        } 
+          $results = getUserStatistics($user_id);
+          foreach ($results as $key => $result) {
+            if ($key == 'id' || $key == 'user_id')
+              continue;
+             $results->$key = formatSecondes($results->$key);
+          }
+          return $results;
+      }
+
+      function updateTimeSpentOnCourseType(WP_REST_Request $request)
+      {
+        $user_id = $request['user_id'] ?? false; 
+        if (!$user_id)
+        {
+          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $user = get_user_by( 'ID', $user_id ) ?? false;
+       
+        if (!$user)
+        {
+          $response = new WP_REST_Response("This user id filled doesn't exist !");
+          $response->set_status(400);
+          return $response;
+        }
+        $courseType = $request['course_type'] ?? false;
+        if (!$courseType)
+        {
+          $response = new WP_REST_Response("You have to fill the course type !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $newTimeValue = (int)$request['time_spent'] ?? false;
+        if (!$newTimeValue)
+        {
+          $response = new WP_REST_Response("You have to fill the time spent for the episode !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        global $wpdb;
+        $user_statistics_table = $wpdb->prefix . 'user_statistics';
+        $sql = $wpdb->prepare("SELECT $courseType FROM $user_statistics_table WHERE user_id = $user_id");
+        $timeSpentinSecond = ((int)getUserStatistics($user_id)->$courseType + $newTimeValue);
+        $sql = $wpdb->prepare("UPDATE $user_statistics_table SET $courseType = ($timeSpentinSecond)  WHERE user_id = $user_id");
+        (int)$wpdb->get_results($sql)[0];
+        return $timeSpentinSecond;
+      }
+
+      function getProgressionStatistics ()
+      {
+        $user = $GLOBALS['user_id'] = get_current_user_id();
+        /*
+          * * Courses dedicated of these user "Boughts + Mandatories"
+        */
+
+          $enrolled = array();
+          $enrolled_courses = array();
+
+          //Orders - enrolled courses  
+          $args = array(
+              'customer_id' => $user,
+              'post_status' => array('wc-processing', 'wc-completed'),
+              'orderby' => 'date',
+              'order' => 'DESC',
+              'limit' => -1,
+          );
+          $bunch_orders = wc_get_orders($args);
+
+          foreach($bunch_orders as $order){
+              foreach ($order->get_items() as $item_id => $item ) {
+                  //Get woo orders from user
+                  $id_course = intval($item->get_product_id()) - 1;
+                  $prijs = get_field('price', $course_id);
+                  $expenses += $prijs; 
+                  if(!in_array($id_course, $enrolled))
+                      array_push($enrolled, $id_course);
+              }
+          }
+          if(!empty($enrolled))
+          {
+              $args = array(
+                  'post_type' => 'course', 
+                  'posts_per_page' => -1,
+                  'orderby' => 'post_date',
+                  'order' => 'DESC',
+                  'include' => $enrolled,  
+              );
+              $enrolled_courses = get_posts($args);
+
+              if(!empty($enrolled_courses))
+                  $your_count_courses = count($enrolled_courses);
+          }
+
+          $state = array('todo' => 0, 'progress' => 0, 'done' => 0, 'total' => 0);
+
+          foreach($enrolled_courses as $key => $course) :
+
+              /* * State actual details * */
+              $status = "todo";
+              //Get read by user 
+              $args = array(
+                  'post_type' => 'progression', 
+                  'title' => $course->post_name,
+                  'post_status' => 'publish',
+                  'author' => $user,
+                  'posts_per_page'         => 1,
+                  'no_found_rows'          => true,
+                  'ignore_sticky_posts'    => true,
+                  'update_post_term_cache' => false,
+                  'update_post_meta_cache' => false
+              );
+              $progressions = get_posts($args);
+              if(!empty($progressions)){
+                  $status = "progress";
+                  $progression_id = $progressions[0]->ID;
+                  //Finish read
+                  $is_finish = get_field('state_actual', $progression_id);
+                  if($is_finish)
+                      $status = "done";
+              }
+
+              // Analytics
+              switch ($status) {
+                  case 'todo':
+                      $state['todo']++;
+                      break;
+                  case 'progress':
+                      $state['progress']++;
+                      break;
+                  case 'done':
+                      $state['done']++;
+                      break;
+              }
+
+          endforeach;
+          $state['total'] = $state['todo'] + $state['progress'] + $state['done'];
+          return $state;
+      }
+
+      /** 
+       * Assessment Statistics
+      */
+
+          function getUserAttempts()
+          {
+            $user_id = $GLOBALS['user_id'] = get_current_user_id();
+            $user = get_user_by( 'ID', $user_id);
+            $user_attempts = get_posts(
+              array(
+                  'post_type' => array('response_assessment'), 
+                  'post_status' => 'publish',
+                  'posts_per_page' => -1,
+                  'order' => 'DESC',
+                  'post_author' => $user_id
+            ));
+            $assessment_validated = get_user_meta($user->ID,'assessment_validated');
+            $formated_assessments_validated = array();
+            foreach ($assessment_validated as $key => $value) {
+              if ($value != "")
+                array_push ($formated_assessments_validated,$value);
+
+            }
+            $failed_assessments = count($user_attempts) - count($formated_assessments_validated);
+            $user_assessments_statistics = array (
+              
+              "attempts" => count($user_attempts),
+              "failed" => $failed_assessments,
+              "success" => count($formated_assessments_validated)
+            );
+              return ($user_assessments_statistics);
+          }
+
+      /** 
+       * Assessment Statistics
+      */
+
+
+  /** 
+   * Statistics Endpoints
+  */
   
   function get_user_topics($user_id)
   {

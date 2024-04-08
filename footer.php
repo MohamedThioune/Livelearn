@@ -147,7 +147,7 @@ if(!isset($_COOKIE["cookie_consent"])):
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <ul>
-                            <li><a class="linkElementFooter" href="/zzpers/"> Voor ZZP’ers</a></li>
+                            <li><a class="linkElementFooter" href="/zzpers/"> Voor ZZP'ers</a></li>
                             <li> <a class="linkElementFooter" href="/mkb/">Voor het MKB </a></li>
                             <li> <a class="linkElementFooter" href="/mkb/">Voor Corporates </a></li>
                             <li> <a class="linkElementFooter" href="/pricing/">Pricing </a></li>
@@ -290,14 +290,14 @@ if(!isset($_COOKIE["cookie_consent"])):
 <script>
     $('.bntNotification').click((e)=>{
         $.ajax({
-                url: "/read-notification",
-                method: "get",
-                data: { },
-                dataType:"text",
-                success: function(data){
-                    // Get the modal
-                    console.log(data);
-                }
+            url: "/read-notification",
+            method: "get",
+            data: { },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                console.log(data);
+            }
         });
     });
 </script>
@@ -483,9 +483,12 @@ $site_url = get_site_url() . "/apply-cookie";
             $(document).click( function(){
 
                 $('#header-list').hide();
-
             });
-
+            $(document).click( function(){
+                $('#mobile-list').hide();
+            });
+            $("#mobile-list").fadeIn("fast");
+            /*
             if(txt){
                 $.ajax({
                     url:"/fetch-ajax",
@@ -503,19 +506,9 @@ $site_url = get_site_url() . "/apply-cookie";
             else
                 $('#header').html("<center> <small>Typing ... </small> <center>");
         });
-
-
         $('#mobile-search').keyup(function(){
             var txt = $(this).val();
-
             event.stopPropagation();
-
-            $("#mobile-list").fadeIn("fast");
-
-            $(document).click( function(){
-                $('#mobile-list').hide();
-            });
-
             if(txt){
                 $.ajax({
                     url:"fetch-ajax",
@@ -534,6 +527,7 @@ $site_url = get_site_url() . "/apply-cookie";
                 $('#mobileS').html("<center> <small>Typing ... </small> <center>");
         });
     });
+    */
 </script>
 
 <script>
@@ -774,39 +768,40 @@ $site_url = get_site_url() . "/apply-cookie";
         headerSearchInput.selectionStart = headerSearchInput.selectionEnd = headerSearchInput.value.length;
         headerSearchInput.dispatchEvent(new Event('click')); //importatn
         //searchFunction();
-        headerSearchInput.addEventListener('input',function (e) {
-            const string_to_find = e.target.value.trim();
-            const backSearcBar = document.getElementById('back-for-search-bar');
-            console.log(string_to_find.length)
-            if (string_to_find.length<2)
-                return;
-            $.ajax({
-                url :"/fetch-ajax",
-                method : "POST",
-                data : {
-                    course_searched : string_to_find
-                },beforeSend:function () {
-                    $('#loader-suggestion-search-bar').removeClass('d-none');
-                    console.log("send serach : ",string_to_find);
-                },success:function (data) {
-                    console.log(data)
-                    backSearcBar.innerHTML = data;
-                },error:function (e) {
-                    console.log('error to ajax search',e)
-                },complete:function (c) {
-                    console.log('finish')
-                    $('#loader-suggestion-search-bar').addClass('d-none');
-                }
-            })
-        })
 
-
-        headerSearchInput.addEventListener('submit',function (event) {
-            const string_to_send = event.target.value.trim();
-            if (string_to_send === '')
-                event.preventDefault();
-        })
     });
+    var headerSearchInput = document.getElementById('header-search');
+    headerSearchInput.addEventListener('input',function (e) {
+        const string_to_find = e.target.value.trim();
+        const backSearcBar = document.getElementById('back-for-search-bar');
+        console.log(string_to_find.length)
+        if (string_to_find.length<2)
+            return;
+        $.ajax({
+            url :"/fetch-ajax",
+            method : "POST",
+            data : {
+                course_searched : string_to_find
+            },beforeSend:function () {
+                $('#loader-suggestion-search-bar').removeClass('d-none');
+                console.log("send serach : ",string_to_find);
+            },success:function (data) {
+                console.log(data)
+                backSearcBar.innerHTML = data;
+            },error:function (e) {
+                console.log('error to ajax search',e)
+            },complete:function (c) {
+                console.log('finish')
+                $('#loader-suggestion-search-bar').addClass('d-none');
+            }
+        })
+    })
+
+    headerSearchInput.addEventListener('submit',function (event) {
+        const string_to_send = event.target.value.trim();
+        if (string_to_send === '')
+            event.preventDefault();
+    })
 </script>
 </footer>  
 

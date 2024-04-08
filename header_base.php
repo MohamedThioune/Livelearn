@@ -928,13 +928,14 @@ $url = home_url( $wp->request );
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- input search on top on top -->
                         <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 ">
-                            <input id="header-search" value="<?=$_GET['search'] ? : ''?>" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
+                            <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                             <div class="dropdown-menuSearch headerDrop" id="header-list">
                                 <div class="list-autocomplete" id="header">
                                     <center> <i class='hasNoResults'>No matching results</i> </center>
                                 </div>
                             </div>
                         </form>
+
                         <ul class="navbar-nav nav-right">
                             <li class="nav-item">
                                 <a class="nav-link nav-linModife dropdown-toggle" id="OverOns" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#OverOns"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Over ons</a>
@@ -965,6 +966,7 @@ $url = home_url( $wp->request );
                     </div>
                 </div>
             </nav>
+
             <!-- for search  -->
             <div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                 <div class="container-fluid">
@@ -974,12 +976,12 @@ $url = home_url( $wp->request );
                                 <p class="title-search">Populair zoeken</p>
                                 <div class="swiper-container new-swiper-modal">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide">Podcasts</div>
-                                        <div class="swiper-slide">Videos</div>
-                                        <div class="swiper-slide">Opleiding</div>
-                                        <div class="swiper-slide">Artikel</div>
-                                        <div class="swiper-slide">Assessment</div>
-                                        <div class="swiper-slide">Podcasts</div>
+                                        <a href="/product-search/?filter=Podcast" class="btn swiper-slide">Podcasts</a>
+                                        <a href="/product-search/?filter=Video" class="btn swiper-slide">Videos</a>
+                                        <a href="/product-search/?filter=Opleidingen" class="btn swiper-slide">Opleiding</a>
+                                        <a href="/product-search/?filter=Artikel" class="btn swiper-slide">Artikel</a>
+                                        <a href="/product-search/?filter=Assessment" class="btn swiper-slide">Assessment</a>
+                                        <a href="/product-search/?filter=Podcast" class="btn swiper-slide">Podcasts</a>
                                     </div>
                                 </div>
 

@@ -1,5 +1,6 @@
 <?php
-require 'templates/add-author.php';
+require_once 'templates/add-author.php';
+require_once 'templates/detect-language.php';
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
 
@@ -274,6 +275,8 @@ function Artikel_From_Company($data)
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+                                'language'=>detectLanguage($article['title']['rendered'])
+                                
                             );
                         } else {
                             $status = 'extern';
@@ -294,6 +297,7 @@ function Artikel_From_Company($data)
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+                                'language'=>detectLanguage($article['title']['rendered'])
 
                                 // 'podcasts'=> null,
                                 // 'for_who'=> null,
@@ -346,6 +350,7 @@ function Artikel_From_Company($data)
                             'company_id' => $company_id,
                             'contributors' => null,
                             'status' => $status,
+                            'language'=>detectLanguage($article['title']['rendered'])
                         );
                          try
                 {
@@ -504,7 +509,7 @@ function xmlParse($data)
             //* MaxBird was there *//
            
             //Accord the author a company
-        $informations=addAuthor($users,$post['org']);
+         $informations=addAuthor($users,$post['org']);
          $author_id= $informations['author'];
          $company_id=$informations['company'];
             //Fill the company if do not exist "next-version"
@@ -725,6 +730,7 @@ function xmlParse($data)
                 'author_id' => $author_id,
                 'company_id' => $company_id,
                 'status' => $status,
+                'language'=>detectLanguage($datum->programDescriptions->programName)
             );
             $where = ['titel' => strval($datum->programDescriptions->programName)];
             $updated = $wpdb->update($table, $post, $where);
@@ -741,7 +747,9 @@ function xmlParse($data)
 
                 echo "<span class='textOpleidRight'> Course_ID: " . $datum->programClassification->programId . " - Insertion done successfully <br><br></span>";
 
-            } else {
+            }
+            
+             else {
                 $course = array(1);
 
                 if (empty($course)) {
@@ -795,3 +803,9 @@ function xmlParse($data)
         echo "<h2 class='titleGroupText'> End .</h2>";
     }
 }
+
+
+
+
+
+

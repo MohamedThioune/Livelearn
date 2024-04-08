@@ -131,12 +131,12 @@ $args = array(
     'order' => 'DESC',
     'posts_per_page' => -1,
 );
-$achievements = get_posts($args);
-$badges = array();
-$certificats = array();
-$prestaties = array();
-$diplomas = array();
-if(!empty($achievements))
+    $achievements = get_posts($args);
+    $badges = array();
+    $certificats = array();
+    $prestaties = array();
+    $diplomas = array();
+    if(!empty($achievements))
     foreach($achievements as $key=>$achievement):
 
         $type = get_field('type_badge', $achievement->ID);
@@ -155,6 +155,7 @@ if(!empty($achievements))
                 $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
                 array_push($certificats, $achievement);
                 break;
+
             case 'Prestatie':
                 $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
                 array_push($prestaties, $achievement);
@@ -168,6 +169,8 @@ if(!empty($achievements))
                 array_push($badges, $achievement);
                 break;
         }
+
+
     endforeach;
 
 //Todos post

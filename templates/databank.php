@@ -1,7 +1,7 @@
 <?php /** Template Name: Databank */?>
 
 <?php
-
+require_once 'add-author.php';
 global $wpdb;
 
 /*
@@ -229,7 +229,63 @@ $urls =
         'The Next Organization'=>'https://thenextorganization.com/',
         'Salveos'=>'https://salveos.nl/',
         'MLC'=>'https://m-lc.nl/',
-        'Artefact'=>'https://www.artefact.com/'
+        'Artefact'=>'https://www.artefact.com/',
+       // 'React news'=>'https://reactnews.com/',
+        'Horeca Magazine'=>'https://horecamagazine.be/',
+       // 'Skift'=>'https://skift.com/',
+      //  'UK Hospitality'=>'https://www.ukhospitality.org.uk/',
+        'Around the Bar'=>'https://aroundthebar.nl/',
+        'Hospitality News'=>'https://hospitalitynewsny.com/',
+        'ZOUT'=>'https://www.zoutmagazine.eu/',
+        'Tableau'=>'https://tableaumagazine.nl/',
+
+        'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+	    'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
+	    'Modern Agriculture' =>	'https://modernagriculture.ca/',
+	    'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
+	    'Farm Journal' =>	'https://www.farmjournal.com/',
+	    'Future Farming' =>	'https://www.futurefarming.com/',
+	    'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
+	    'Global Finance' =>	'https://gfmag.com/',
+	    'InFinance' =>	'https://www.infinance.nl/',
+	    'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
+	    'Computer' =>	'https://www.computer.org/',
+	    'PHP Magazine' =>	'https://phpmagazine.net/',
+	    'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
+
+	    'Digital DJ Tips' =>'https://www.digitaldjtips.com/',
+        //ici debute
+        "The Architect's Newspaper" =>	"https://www.archpaper.com/",
+        'Centrum voor Conflicthantering' =>	'https://cvc.nl/',
+        'HR Morning'	 =>'https://www.hrmorning.com/',
+        'HR Executive'  =>	'https://hrexecutive.com/',
+        'Centrum voor Conflicthantering'  =>	'https://cvc.nl/',
+        'HR Morning'  =>	'https://www.hrmorning.com/',
+        'HR Executive'  =>	'https://hrexecutive.com/',
+        'Human in Progress'  =>	'https://humaninprogress.com/',
+        'Personelle Today'	 => 'https://www.personneltoday.com/',
+        'The HR Digest'	 => 'https://www.thehrdigest.com/',
+        'Wccf Tech' => 'https://wccftech.com/',
+        'Kit Guru'  =>	'https://www.kitguru.net/',
+        'CMM'  =>	'https://cmmonline.com/',
+        'CHT'  =>	'https://chtmag.com/',
+        'Intelligent Transport'	 => 'https://www.intelligenttransport.com/',
+        'Law Asia'	 => 'https://law.asia/',
+        'Attorney at Law Magazine'  =>	'https://attorneyatlawmagazine.com/',
+        'Lawyer Monthly'  =>	'https://www.lawyer-monthly.com/',
+        'Judicature'  =>	'https://judicature.duke.edu/',
+        'Architects Journal'  =>	'https://www.architectsjournal.co.uk/',
+        'E-architect' =>	'https://www.e-architect.com/',
+        'Construction News'	 => 'https://www.constructionnews.co.uk/',
+        'Construction Week'  =>	'https://www.constructionweekonline.com/',
+        'Wired'	=> 'https://www.wired.com/',
+        'Threat Post'=>	'https://threatpost.com/',
+        'Craft Industry' => 'Alliance	craftindustryalliance.org',
+        'ARTnews'  =>	'https://www.artnews.com/',
+        'Design Wanted'	 =>'https://designwanted.com/',
+        'Craftsmanship'	 =>'https://craftsmanship.net/',
+        'Wood and Panel'  =>	'https://www.woodandpanel.com/',
+        
     ];
 
 $file_xml = [
@@ -917,14 +973,16 @@ if (!empty($courses)) {
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                     document.getElementById('content-back-topics').innerHTML = response;
+                     
                     // window.location.href='/xml-parse';
-                },error:function() {
+                },error:function(error) {
                     console.log('error');
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
+                   // document.getElementById('content-back-topics').innerHTML = response;
                     location.reload();
                 }
             });
@@ -954,18 +1012,18 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/artikels",
+                url: "/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
-                    // document.getElementById('content-back-topics').innerHTML = response;
+                    document.getElementById('content-back-topics').innerHTML = response;
                 },error:function() {
                     console.log('error'); 
                 },
                 complete:function(response){
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
-                   location.reload();
+                  location.reload();
                 }
             });
         });
