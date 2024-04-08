@@ -772,6 +772,7 @@ $site_url = get_site_url() . "/apply-cookie";
     });
     var headerSearchInput = document.getElementById('header-search');
     headerSearchInput.addEventListener('input',function (e) {
+        alert()
         const string_to_find = e.target.value.trim();
         const backSearcBar = document.getElementById('back-for-search-bar');
         console.log(string_to_find.length)
@@ -795,7 +796,7 @@ $site_url = get_site_url() . "/apply-cookie";
                 $('#loader-suggestion-search-bar').addClass('d-none');
             }
         })
-    })
+    });
 
     headerSearchInput.addEventListener('submit',function (event) {
         const string_to_send = event.target.value.trim();
