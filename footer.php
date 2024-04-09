@@ -780,7 +780,7 @@ $site_url = get_site_url() . "/apply-cookie";
         $.ajax({
             url :"/fetch-ajax",
             method : "POST",
-            data : {
+            data : { 
                 course_searched : string_to_find
             },beforeSend:function () {
                 $('#loader-suggestion-search-bar').removeClass('d-none');
