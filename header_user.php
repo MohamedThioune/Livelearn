@@ -355,8 +355,8 @@ $see_experts = get_users(
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- input search -->
-                    <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 formHeaderUser">
-                        <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
+                    <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 formHeaderUser">
+                        <input value="<?=isset($_GET['search']) ? $_GET['search'] : '' ?>" id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                         <div class="dropdown-menuSearch headerDrop" id="header-list">
                             <div class="list-autocomplete" id="header">
                                 <center> <i class='hasNoResults'>No matching results</i> </center>
@@ -830,46 +830,3 @@ $see_experts = get_users(
             </div>
         </div>
     </div>
-
-    <script src="<?php echo get_stylesheet_directory_uri();?>/organictabs.jquery.js"></script>
-    <script>
-        'use strict';
-
-        function Tabs() {
-            var bindAll = function() {
-                var menuElements = document.querySelectorAll('[data-tab]');
-                for(var i = 0; i < menuElements.length ; i++) {
-                    menuElements[i].addEventListener('click', change, false);
-                }
-            };
-
-            var clear = function() {
-                var menuElements = document.querySelectorAll('[data-tab]');
-                for(var i = 0; i < menuElements.length ; i++) {
-                    menuElements[i].classList.remove('active');
-                    var id = menuElements[i].getAttribute('data-tab');
-                    document.getElementById(id).classList.remove('active');
-                }
-            };
-
-            var change = function(e) {
-                clear();
-                e.target.classList.add('active');
-                var id = e.currentTarget.getAttribute('data-tab');
-                document.getElementById(id).classList.add('active');
-            };
-
-            bindAll();
-
-            //window.location.hash = target_panel_selector ;
-            if(history.pushState) {
-                history.pushState(null, null, target_panel_selector);
-            } else {
-                window.location.hash = target_panel_selector;
-            }
-            return false;
-        }
-
-        var connectTabs = new Tabs();
-
-    </script>
