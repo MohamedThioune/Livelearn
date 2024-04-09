@@ -73,7 +73,9 @@ function job($id, $userApplyId = null){
   $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
   $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
   $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
-  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in ';
+  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in so far ...';
+  $sample['level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 0;
+
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
@@ -1365,6 +1367,36 @@ function editJobUser(WP_REST_Request $request) {
   return $response;
 }
 
+//[POST]Dashboard User | Delete Job
+function deleteJobUser(WP_REST_Request $request) {
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
+
+  $required_parameters = ['jobId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+  $validated = validated($required_parameters, $request);
+
+  //Data Job
+  $job = get_post($job_id);
+  $jobTo = job($job_id);
+  $candidate = get_user_by('ID', $user_id);
+
+  if (!$job || !$candidate) {
+    $errors['errors'] = 'Something went wrong !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  }
+
+  // Delete job
+  wp_delete_post($jobTo->ID);
+
+  // Return response
+  $response = new WP_REST_Response($jobTo);
+  $response->set_status(200);
+  return $response;
+}
+
 //[POST]Dashboard User | Profil
 function companyProfil(WP_REST_Request $request){
   $required_parameters = ['userApplyId'];
@@ -1481,13 +1513,13 @@ function trashFavouriteCandidate(WP_REST_Request $request){
 //[POST]Apply User | Approve or Reject candidate
 function jobUserApprove(WP_REST_Request $request){
   $errors = ['errors' => '', 'error_data' => ''];
-  $required_parameters = ['userApplyId', 'jobAppliedId', 'status'];
+  $required_parameters = ['userApproveId', 'jobAppliedId', 'status'];
 
   //Check required parameters apply
   $validated = validated($required_parameters, $request);
 
   //Get inputs
-  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
+  $user_apply_id = isset($request['userApproveId']) ? $request['userApproveId'] : 0;
   $job_applied_id = isset($request['jobAppliedId']) ? $request['jobAppliedId'] : 0;
   $status = isset($request['status']) ? $request['status'] : 0;
 
@@ -1497,8 +1529,15 @@ function jobUserApprove(WP_REST_Request $request){
   $appliants = get_field('job_appliants', $job_applied_id);
   $appliants = ($appliants) ?: array();
   $key = array_search($user_apply, $appliants);
-  if($key !== false)
+  if($key !== false):
     unset($appliants[$key]);
+  else:
+    $error = "You don't need to perform any further actions on this user !";
+    $response = new WP_REST_Response($error);
+    $response->set_status(401);
+    return $response;
+  endif;
+
   update_field('job_appliants', $appliants, $job_applied_id);
 
   if(!$status || $status == "" || $status == " "):
@@ -2152,7 +2191,7 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
 
 }
 
-// Made By Fadel
+//Made By Fadel
 function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
 {
   $code_status = 400;
