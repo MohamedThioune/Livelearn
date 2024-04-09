@@ -133,8 +133,8 @@
             display: none;
         }
         .content-home2 .wordDeBestText2 {
-            font-size: 32px;
-            line-height: 46px;
+            font-size: 24px;
+            line-height: 33px;
             padding: 0 15px;
             font-weight: 600;
         }
@@ -868,10 +868,10 @@
                 </div>
                 <div class="groupeBtn-Jouw-inloggen groupBtnAppConnecte">
                     <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/play-store-icon.png" alt="" />
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/play-icon.png" alt="" />
                     </a>
                     <a href="https://apps.apple.com/nl/app/livelearn/id1666976386/" class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store-icon.png" alt="" />
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-icon-store.png" alt="" />
                     </a>
                 </div>
                 <?php if(!$user_id) { ?>
