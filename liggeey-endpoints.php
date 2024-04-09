@@ -965,7 +965,7 @@ function liggeeySave(WP_REST_Request $request){
   $allowedValues = ['job', 'company', 'candidate'];
 
   if (!in_array($typeApplyId, $allowedValues)) {
-      $errors['errors'] = "Please respect this type listed: job, company, candidate!";
+      $errors['errors'] = "Please respect this type listed: job, company, candidate !";
       $errors = (object)$errors;
       $response = new WP_REST_Response($errors);
       $response->set_status(400);
