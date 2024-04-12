@@ -1917,6 +1917,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'trashFavouriteCandidate'
   ));
 
+  register_rest_route ('custom/v1', '/user/trash/job', array(
+    'methods' => 'POST',
+    'callback' => 'trashFavouriteJob'
+  ));
+
   // register_rest_route ('custom/v1', '/candidate/profil', array(
   //   'methods' => 'GET',
   //   'callback' => 'candidateProfil'

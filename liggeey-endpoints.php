@@ -75,7 +75,7 @@ function job($id, $userApplyId = null){
   $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
   $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in so far ...';
   $sample['level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 0;
-
+  $sample['langues'] = get_field('job_langues', $post->ID) ?: "";
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
@@ -1502,6 +1502,54 @@ function trashFavouriteCandidate(WP_REST_Request $request){
   if($key !== false)
     unset($appliants[$key]);
   update_field('job_appliants', $appliants, $job_applied_id);
+
+  $success = "User favorites changed with success !";
+  $response = new WP_REST_Response($success);
+  $response->set_status(200);
+
+  return $response;
+}
+
+//[POST]Apply Candidate | Delete favorite job
+function trashFavouriteJob(WP_REST_Request $request){
+  $errors = ['errors' => '', 'error_data' => ''];
+  $required_parameters = ['userApplyId', 'userJobId'];
+
+  //Check required parameters apply
+  $validated = validated($required_parameters, $request);
+
+  //Get inputs
+  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
+  $user_job_id = isset($request['userJobId']) ? $request['userJobId'] : 0;
+
+  // Récupérer les favoris de l'utilisateur
+  $user_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
+  $user_favourites = array();
+  $user_shorlisted_jobs = [];
+
+  // Vérifier si l'utilisateur a des emplois favoris
+  if ($user_favorites) 
+    foreach ($user_favorites as $favorite):
+      if ($favorite['type'] == 'job') :
+        // Récupérer les détails de l'emploi
+        if($favorite['id'] == $user_job_id)
+          continue;
+      endif;
+
+      $user_shorlisted_jobs['type'] = $favorite['type'];
+      $user_shorlisted_jobs['id'] = $favorite['id'];
+      array_push($user_favourites, $user_shorlisted_jobs);
+    endforeach;
+  
+  update_field('save_liggeey', $user_favourites, 'user_' . $user_apply_id);
+
+  //Remove the user in list appliants
+  // $appliants = get_field('job_appliants', $job_applied_id);
+  // $appliants = ($appliants) ?: array();
+  // $key = array_search($user_apply, $appliants);
+  // if($key !== false)
+  //   unset($appliants[$key]);
+  // update_field('job_appliants', $appliants, $job_applied_id);
 
   $success = "User favorites changed with success !";
   $response = new WP_REST_Response($success);

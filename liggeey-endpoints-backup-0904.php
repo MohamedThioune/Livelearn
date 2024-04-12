@@ -75,7 +75,7 @@ function job($id, $userApplyId = null){
   $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
   $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in so far ...';
   $sample['level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 0;
-
+  $sample['langues'] = get_field('job_langues', $post->ID) ?: "";
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
