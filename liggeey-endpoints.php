@@ -2326,4 +2326,57 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
   return $response;
 }
 
+//[Post]Add skill
+function add_topic_to_user(WP_REST_Request $request) {
+
+    $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+    // ID topic
+    $topic_id = isset($request['topic_id']) ? intval($request['topic_id']) : 0;
+
+    // ID validated
+    if ($topic_id <= 0) {
+        $response = array(
+            'success' => false,
+            'message' => 'Invalid topic ID.'
+        );
+        return new WP_REST_Response($response, 400);
+    }
+
+    $topics_external = get_user_meta($user_id, 'topic');
+    $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+
+    // topics external and et topics_internal
+    $topics = array_merge($topics_external, $topics_internal);
+
+    // if topic already exists for user
+    if (in_array($topic_id, $topics)) {
+        $response = array(
+            'success' => false,
+            'message' => 'Topic already exists for the user.'
+        );
+        return new WP_REST_Response($response, 400);
+    }
+
+    // Add topics for user
+    $added = add_user_meta($user_id, 'topic', $topic_id);
+
+    // Return response
+    if ($added) {
+        $response = array(
+            'success' => true,
+            'message' => 'Topic added successfully.'
+        );
+    } else {
+        $response = array(
+            'success' => false,
+            'message' => 'Failed to add topic.'
+        );
+    }
+
+    // Response
+    return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
+}
+
+
 /* * End Liggeey * */
