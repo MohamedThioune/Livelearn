@@ -2,7 +2,9 @@
 <?php
 $guest = wp_get_current_user();
 $name_guest = (($guest->first_name) ?: $guest->display_name);
-$mail_invitation_body = 
+$mail_invitation_body =
+
+
 '<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
