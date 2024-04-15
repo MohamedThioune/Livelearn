@@ -49,32 +49,60 @@ function refreshAuthor(){
 }
 
 //Third step : Delete the extra-author useless [reviewed ]
+/**
+ * @return void
+ * @url localhost:8888/livelearn/wp-json/custom/v1/fill-author/?key=1
+ */
 function fillUpAuthor(){
     global $wpdb;
 
     //Remplir la colonne "author_id" par "company_id"
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = 0");
     $courses = $wpdb->get_results($sql);
-    foreach ($courses as $course):
+
+    // Make pagination
+    $count = count($courses);
+    define("STEP", 100);
+    $number_iteration = intval(ceil($count / STEP));
+
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        } else {
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+    $star_index = ($key - 1) * STEP;
+    for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
+        $course = $courses[$i];
         $company = get_post($course->company_id);
         $id_company = $company->ID;
 
         //Get all users having in
-        $users = get_users();
+        $users = get_users(array(
+            'role__in'=>'author'
+        ));
         $find_company = false;
-        foreach ($users as $user) :
+        foreach ($users as $user):
             //$user_company_id = (get_field('company', 'user_' . $user->ID)) ? get_field('company', 'user_' . $user->ID)[0]->ID : 0;
             $user_company_id = get_field('company', 'user_' . $user->ID)[0]->ID;
             if ($user_company_id)
-                if($id_company == $user_company_id){
+                if($id_company == $user_company_id):
                     $find_company = true;
                     // update the field author_id directly via sql request
                     $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET author_id = $user_company_id WHERE id = $course->id");
-                    if($wpdb->get_results($sql)); //
-                    echo "<h4>course $course->id id updated for author_id via company_id</h4>";
+                    if($wpdb->get_results($sql)); // apply the update
+                        echo "<h4>course $course->id id updated for author_id via company_id</h4>";
                     //break on success
                     break;
-                }
+                endif;
         endforeach;
 
         // Find the company ?
@@ -114,12 +142,12 @@ function fillUpAuthor(){
             echo "<h4>course $course->id id updated for author_id via company_id with new author generated !</h4>";
             //break on success
         }
-    endforeach;
+    }
 }
 
 /**
  * @return void
- * http://localhost:8888/livelearn/wp-json/custom/v1/update-language-courses/?key=1
+ * @url http://localhost:8888/livelearn/wp-json/custom/v1/update-language-courses/?key=1
  */
 function updateLangaugeCourses()
 {
