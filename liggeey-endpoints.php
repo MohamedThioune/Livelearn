@@ -79,6 +79,7 @@ function job($id, $userApplyId = null){
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
+  $main_company['ID'] = !empty($company) ? $company->ID : 0;
   $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
   $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
   $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
@@ -144,7 +145,6 @@ function company($id){
 
   // return $param_post_id;
 
-  //var_dump($post);
   //assigner les champs
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
@@ -160,6 +160,7 @@ function company($id){
 
   $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
   $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
   //Open position
   $args = array(
     'post_type' => 'job',
@@ -170,9 +171,12 @@ function company($id){
     'meta_key' => 'job_company',
     'meta_value' => $post->ID
   );
-  $jobs = get_posts($args);
-  $sample['count_open_jobs'] = empty($jobs) ? 0 : count($jobs);
-  $sample['open_jobs'] = empty($jobs) ? array() : $jobs;
+  $main_jobs = get_posts($args);
+  $sample['count_open_jobs'] = empty($main_jobs) ? 0 : count($main_jobs);
+  $jobs = array();
+  foreach ($main_jobs as $job)
+    $jobs[] = job($job->ID);
+  $sample['open_jobs'] = $jobs;
 
   $sample = (Object)$sample;
 
@@ -835,14 +839,16 @@ function categoryDetail(WP_REST_Request $request){
 
   /** Global companies **/
   $companies = array();
-  $args = array(
-    'post_type' => 'company',
-    'tax_query' => $tax_query
-  );
-  $query_companies = new WP_Query( $args );
-  $global_companies = isset($query_companies->posts) ? $query_companies->posts : array();
-  foreach ($global_companies as $company)
-    $companies[] = company($company->ID);
+  $company_in = array();
+
+  foreach($sample['jobs'] as $job):
+    if(!$job->company->ID) 
+      continue;
+    if(!in_array($job->company->ID, $company_in)):
+      $company_in[] = $job->company->ID;
+      $companies[] = company($job->company->ID);
+    endif;
+  endforeach;
   $sample['companies'] = $companies;
 
   /** Global posts **/
@@ -1167,6 +1173,7 @@ function JobsUser(WP_REST_Request $request){
     'post_type' => 'job',  
     'post_status' => 'publish',
     'posts_per_page' => -1,
+    'author' => $user_apply->ID,
     'order' => 'DESC' ,
   );
   $jobs = get_posts($args);
@@ -1312,7 +1319,7 @@ function postJobUser(WP_REST_Request $request){
     wp_set_post_terms($job_id, $skills, 'course_category');
 
   update_field('job_company', $company, $job_id);
-  update_field('description', $description, $job_id);
+  update_field('job_description', $description, $job_id);
   update_field('job_contract', $job_contract, $job_id);
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
@@ -1338,9 +1345,9 @@ function editJobUser(WP_REST_Request $request) {
 
   //Data Job
   $job = get_post($job_id);
-  $candidate = get_user_by('ID', $user_id);
+  // $candidate = get_user_by('ID', $user_id);
 
-  if (!$job || !$candidate) {
+  if (!$job) {
       $errors['errors'] = 'Something went wrong !';
       $response = new WP_REST_Response($errors);
       $response->set_status(401);
@@ -1348,7 +1355,7 @@ function editJobUser(WP_REST_Request $request) {
   }
 
   if($skills)
-    wp_set_post_terms($job_id, $terms, 'course_category');
+    wp_set_post_terms($job_id, $skills, 'course_category');
 
   // Parameters REST request
   $updated_data = $request->get_params();
@@ -1796,6 +1803,7 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
   // Récupérer les emplois favoris de l'utilisateur
   $user_favorites = get_field('save_liggeey', 'user_' . $user_id);
   $user_shorlisted_jobs = [];
+  $user_in = [];
 
   // Vérifier si l'utilisateur a des emplois favoris
   if ($user_favorites)
@@ -1803,13 +1811,15 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
       if ($favorite['type'] == 'job') :
         // Récupérer les détails de l'emploi
         if($favorite['id'])
-          $user_shorlisted_jobs[] = job($favorite['id']);
+          if(!in_array($favorite['id'], $user_in)):
+            array_push($user_in, $favorite['id']);
+            $user_shorlisted_jobs[] = job($favorite['id']);
+          endif;
       endif;
 
   $response = new WP_REST_Response($user_shorlisted_jobs);
   $response->set_status(200);
   return $response;
-
 }
 
 //[POST]Dashboard Candidate | Skills passport
