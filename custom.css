@@ -22947,6 +22947,20 @@ figure ul li {
     height: fit-content;
     margin-right: 10px;
 }
+.content-btn-get-app .btn {
+    width: fit-content;
+    background: #023357;
+    margin: 0 auto 55px;
+    display: block;
+    color: white !important;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+.content-btn-get-app .btn img {
+    height: 15px;
+    margin-right: 6px;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
