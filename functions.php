@@ -1937,11 +1937,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateAppliedJobs'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/AppliedJobs', array(
-    'methods' => 'POST',
-    'callback' => 'candidateAppliedJobs'
-  ));
-
   register_rest_route ('custom/v1', '/candidate/favorites', array(
     'methods' => 'POST',
     'callback' => 'candidateShorlistedJobs'
@@ -1988,11 +1983,11 @@ add_action( 'rest_api_init', function () {
   ));
 
   // Made By Fadel
-  register_rest_route ('custom/v1', '/notifications/create', array(
+  register_rest_route ('custom/v1', '/notification/create', array(
     'methods' => 'POST',
     'callback' => 'sendNotificationBetweenLiggeyActors'
   ));
-  
+
   register_rest_route ('custom/v1', '/update-language-courses', array(
       'methods' => 'GET',
       'callback' => 'updateLangaugeCourses'
