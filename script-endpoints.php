@@ -9,9 +9,32 @@ function fillUpCompany(){
     global $wpdb;
 
     // Remplir la colonne "company_id" par "author_id" si "company_id" nul
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+    //$sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = 0");
     $courses = $wpdb->get_results($sql);
-    foreach ($courses as $course)
+    // Make pagination
+    $count = count($courses);
+    define("STEP", 100);
+    $number_iteration = intval(ceil($count / STEP));
+
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        } else {
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+    $star_index = ($key - 1) * STEP;
+    for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
+        $course = $courses[$i];
+
         if(!$course->company_id) {
             $author_id = $course->author_id;
             $id_course = $course->id;
@@ -23,6 +46,7 @@ function fillUpCompany(){
             $course_updated = $wpdb->get_results($sql); //
             echo "<h4>course $id_course id updated, company id is adding</h4>";
         }
+    }
 }
 
 //Second step : Delete the extra-author useless
