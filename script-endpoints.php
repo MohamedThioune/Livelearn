@@ -207,7 +207,7 @@ function updateLangaugeCourses()
     $star_index = ($key - 1) * STEP;
     for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
         $course = $courses[$i];
-        echo $i . '-' . $course->titel .'|' .$course->ID. "<br>";
+        echo $i . '-' . $course->post_title .'|' .$course->ID. "<br>";
         $language = detectLanguage($course->post_title);
         echo $language . "<br>";
     
