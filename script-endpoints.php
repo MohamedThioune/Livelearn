@@ -58,7 +58,7 @@ function refreshAuthor(){
 
     // Make pagination
     $count = count($authors);
-    define("STEP", 100);
+    define("STEP", 500);
     $number_iteration = intval(ceil($count / STEP));
 
     $key = 1;
