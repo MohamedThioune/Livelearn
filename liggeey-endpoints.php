@@ -1450,7 +1450,7 @@ function updateCompanyProfil(WP_REST_Request $request) {
   // Parameters REST request
   $updated_data = $request->get_params();
   // Update Fields
-  foreach ($updated_data as $field_name => $field_value) 
+  foreach ($updated_data as $field_name => $field_value)
     if($field_value)
     if($field_value != '' && $field_value != ' ')
       update_field($field_name, $field_value, $company_id);
@@ -1570,75 +1570,88 @@ function jobUserApprove(WP_REST_Request $request){
 
 //[POST]Dashboard Candidate | Home
 function HomeCandidate(WP_REST_Request $request){
-  $errors = ['errors' => '', 'error_data' => ''];
-  $sample = array();
-  $limit_job = 6;
+    $errors = ['errors' => '', 'error_data' => ''];
+    $sample = array();
+    $limit_job = 6;
 
-  $required_parameters = ['userApplyId'];
-  $application = array();
-  $favorite = array();
+    $required_parameters = ['userApplyId'];
+    $application = array();
+    $favorite = array();
 
-  //Check required parameters apply
-  $validated = validated($required_parameters, $request);
+    //Check required parameters apply
+    $validated = validated($required_parameters, $request);
 
-  //Get input
-  $userApplyId = $request['userApplyId'];
-  $user_apply = get_user_by('ID', $userApplyId);
-  if(!$user_apply):
-    $errors['errors'] = 'User not found';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
+    //Get input
+    $userApplyId = $request['userApplyId'];
+    $user_apply = get_user_by('ID', $userApplyId);
+    if(!$user_apply):
+        $errors['errors'] = 'User not found';
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+
+    //Jobs
+    $args = array(
+        'post_type' => 'job',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+    );
+    $job_posts = get_posts($args);
+    $suggestion_jobs = array();
+    $count_applied = 0;
+
+    // Verification array $job_posts
+    if (is_array($job_posts)) {
+        foreach ($job_posts as $post) {
+            if (count($suggestion_jobs) < $limit_job) {
+                $suggestion_jobs[] = job($post->ID);
+            }
+
+            $user_applied_jobs = get_field('job_appliants', $post->ID);
+
+            // Verification array
+            if (is_array($user_applied_jobs)) {
+                foreach ($user_applied_jobs as $userapply) {
+                    if ($userapply->ID == $userApplyId) {
+                        $count_applied += 1;
+                    }
+                }
+            }
+        }
+    } else {
+        $count_applied = 0;
+    }
+    $sample['count_applieds'] = $count_applied;
+    //Job alerts
+    $sample['count_jobs'] = 0;
+    /** Instrtuctions should be there */
+
+   //Favorite company
+   $main_favorites = get_field('save_liggeey', 'user_' . $userApplyId);
+   // Associative array to store unique elements
+   $unique_favorites = array();
+   // Verification
+   if (is_array($main_favorites)) {
+       foreach($main_favorites as $favo):
+           if(!$favo)
+               continue;
+           if($favo['type'] != 'company' && $favo['type'] != 'job')
+               continue;
+           $unique_favorites[$favo['id']] = $favo;
+       endforeach;
+   }
+
+   $count_unique_favorites = count($unique_favorites);
+   $sample['count_favorites'] = $count_unique_favorites;
+
+    $sample['suggestions'] = $suggestion_jobs;
+    $sample = (Object)$sample;
+    $response = new WP_REST_Response($sample);
+    $response->set_status(200);
+
     return $response;
-  endif;
-
-  //Jobs
-  $args = array(
-    'post_type' => 'job',  
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC' ,
-  );
-  $job_posts = get_posts($args);
-  $suggestion_jobs = array();
-  $count_applied = 0;
-
-  foreach ($job_posts as $post) :
-
-    if(count($suggestion_jobs) < $limit_job)
-      $suggestion_jobs[] = job($post->ID);
-
-    $user_applied_jobs = get_field('job_appliants', $post->ID);
-    foreach($user_applied_jobs as $userapply)
-      if($userapply->ID == $userApplyId)
-        $count_applied += 1;
-        // $applied_jobs[] = job($post->ID);
-
-  endforeach;
-  $sample['count_applieds'] = $count_applied;
- 
-  //Job alerts 
-  $sample['count_jobs'] = 0;
-  /** Instrtuctions should be there */
-
-  //Favorite company
-  $main_favorites = get_field('save_liggeey', 'user_' . $userApplyId);
-  $favorite = 0;
-
-  foreach($main_favorites as $favo):
-    if(!$favo)
-      continue;
-    if($favo['type'] != 'company' && $favo['type'] != 'job')
-      continue;
-    $favorite += 1;
-  endforeach;
-  $sample['count_favorites'] = $favorite;
-
-  $sample['suggestions'] = $suggestion_jobs;
-  $sample = (Object)$sample;
-  $response = new WP_REST_Response($sample);
-  $response->set_status(200);
-
-  return $response;
 }
 
 //[POST]Dashboard Candidate | Profil
@@ -2282,7 +2295,6 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
 function add_topic_to_user(WP_REST_Request $request) {
 
     $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-
     // ID topic
     $topic_id = isset($request['topic_id']) ? intval($request['topic_id']) : 0;
 
