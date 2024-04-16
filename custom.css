@@ -22966,6 +22966,9 @@ figure ul li {
 .scrolled-modal .titleGroupText, .scrolled-modal .TextZorg {
     color: #ffffff !important;
 }
+.dropdown-search .search-mobile, .dropdown-search .block-Suggesties{
+    display: none;
+}
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -27840,7 +27843,7 @@ figure ul li {
         box-shadow: 0 0 5px 0 #007bff;
     }
     .show-mobile-search-block{
-        display: block !important;
+        display: block;
         position: fixed;
         top: 128px;
         width: 100%;
@@ -27910,6 +27913,18 @@ figure ul li {
     }
     .profilUserP{
         margin-top: 35px;
+    }
+    .dropdown-search .search-mobile{
+        display: block;
+    }
+    .search-mobile form {
+        width: 95%;
+        margin: 0 !important;
+    }
+    .search-mobile form input{
+        background: #C3DCE5 !important;
+        width: 100%;
+        margin-bottom: 25px !important;
     }
 
 

@@ -787,22 +787,21 @@ jQuery(function($) {
 
 
     //POur inuput recherche coté responsivité
-/*    $("#searchIcone").click(function() {
+   $("#searchIcone").click(function() {
         $("#searchIcone").hide();
         $("#burgerCroie").hide();
         $("#headOne").hide();
         $("#croieProfil").hide();
         $("#headTwo").hide();
-        $(".searchInputHedear").show();
         $("#burger").show();
         $("#croieSearch").show();
         $("#profilView").show();
     });
     $("#croieSearch").click(function() {
         $("#searchIcone").show();
-        $(".searchInputHedear").hide();
+        $(".show-mobile-search-block").hide();
         $("#croieSearch").hide();
-    });*/
+    });
 
     $("#profilView").click(function() {
         $("#croieProfil").show();

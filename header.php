@@ -6,7 +6,7 @@ if(is_user_logged_in()){
     $user_roles = $user->roles;
 
 //    if(in_array('manager', $user_roles) || in_array('administrator', $user_roles)){
-//        include_once(dirname(__FILE__).'/header_manager.php');	
+//        include_once(dirname(__FILE__).'/header_manager.php');
 //    }else if(in_array('teacher', $user_roles)){
 //        include_once(dirname(__FILE__).'/header_teacher.php');
 //    }else{
@@ -387,10 +387,20 @@ if (isset($_POST["subtopics_first_login"])){
 
 </style>
 <!-- for search  -->
-<div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
+<div class="modal dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
     <div class="container-fluid">
         <section class="content-product-search">
             <div class="container-fluid">
+                <div class="search-mobile">
+                    <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 ">
+                        <input value="<?=isset($_GET['search']) ? $_GET['search'] : '' ?>" id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
+                        <div class="dropdown-menuSearch headerDrop" id="header-list">
+                            <div class="list-autocomplete" id="header">
+                                <center> <i class='hasNoResults'>No matching results</i> </center>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="swiper-leeveroom">
                     <p class="title-search">Populair zoeken</p>
                     <div class="swiper-container new-swiper-modal">
@@ -529,18 +539,22 @@ if (isset($_POST["subtopics_first_login"])){
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('header-search');
+        const searchInputs = document.querySelectorAll('.inputSearch');
         const blockTopHeader = document.querySelector('.block-top-header');
         const blockSuggesties = document.querySelector('.block-Suggesties');
 
-        searchInput.addEventListener('input', function() {
-            if (searchInput.value.trim() !== '') {
-                blockSuggesties.style.display = 'block';
-                blockTopHeader.style.display = 'none';
-            } else {
-                blockSuggesties.style.display = 'none';
-                blockTopHeader.style.display = 'block';
-            }
+        searchInputs.forEach(function(searchInput) {
+            searchInput.addEventListener('input', function() {
+                if (searchInput.value.trim() !== '') {
+                    // Afficher block-Suggesties et masquer block-top-header
+                    blockSuggesties.style.display = 'block';
+                    blockTopHeader.style.display = 'none';
+                } else {
+                    // Masquer block-Suggesties et afficher block-top-header
+                    blockSuggesties.style.display = 'none';
+                    blockTopHeader.style.display = 'block';
+                }
+            });
         });
     });
 </script>

@@ -1658,6 +1658,8 @@
 
                     $(".showblock-mobil-search").click(function() {
                         $("#for-search-element").addClass("show-mobile-search-block");
+                        $("#searchIcone").hide();
+                        $("#croieSearch").show();
                     });
 
                     $(".close").click(function() {
