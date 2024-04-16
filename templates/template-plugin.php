@@ -1,6 +1,7 @@
 <?php /** Template Name: Get & Save Artikles*/?>
 <?php
 require_once 'add-author.php';
+require_once 'detect-language.php';
 global $wpdb;
 
 extract($_POST);
@@ -80,6 +81,7 @@ if (isset($selectedValues)) {
                                     'company_id' => $company_id,
                                     'contributors' => null,
                                     'status' => $status,
+                                    'language'=>detectLanguage($article['title']['rendered'])
                                 );
                             }else{
                                 $status = 'extern';
@@ -100,6 +102,7 @@ if (isset($selectedValues)) {
                                     'company_id' => $company_id,
                                     'contributors' => null,
                                     'status' => $status,
+                                   'language'=>detectLanguage($article['title']['rendered'])
                                 );
                             }
                         }else continue;
@@ -123,6 +126,7 @@ if (isset($selectedValues)) {
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+                                'language'=>detectLanguage($article['title']['rendered'])
                             );
                         }
                     }
@@ -141,7 +145,7 @@ if (isset($selectedValues)) {
     if( $data_insert==1)
       echo "<span class='alert alert-success'>Articles inserted successfuly ✔️</span>";
     else
-      echo "<span class='alert alert-danger'>Articles not founded so we have any inserted ❌</span>";
+      echo "<span class='alert alert-danger'>No new data ! ❌</span>";
   
 }
 else{

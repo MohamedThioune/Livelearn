@@ -133,8 +133,8 @@
             display: none;
         }
         .content-home2 .wordDeBestText2 {
-            font-size: 32px;
-            line-height: 46px;
+            font-size: 24px;
+            line-height: 33px;
             padding: 0 15px;
             font-weight: 600;
         }
@@ -868,10 +868,10 @@
                 </div>
                 <div class="groupeBtn-Jouw-inloggen groupBtnAppConnecte">
                     <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/play-store-icon.png" alt="" />
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/play-icon.png" alt="" />
                     </a>
                     <a href="https://apps.apple.com/nl/app/livelearn/id1666976386/" class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store-icon.png" alt="" />
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/app-icon-store.png" alt="" />
                     </a>
                 </div>
                 <?php if(!$user_id) { ?>
@@ -1124,7 +1124,10 @@
 
 <div class="container-fluid">
     <div class="img-block-illustration">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.png"  alt="">
+        <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.webp"  alt="">
+    </div>
+    <div class="content-btn-get-app">
+        <button onclick="redirect()" class="btn"> <img src="<?php echo get_stylesheet_directory_uri();?>/img/qrcode.png"  alt=""> <span>Get the APP</span></button>
     </div>
     <div class="row">
         <div class="col-md-4">
@@ -1514,74 +1517,6 @@
 
 
     <script>
-        // for search bar
-       // document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('search').addEventListener('click', function(e) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                var headerSearchInput = document.getElementById('header-search');
-                headerSearchInput.focus();
-                headerSearchInput.selectionStart = headerSearchInput.selectionEnd = headerSearchInput.value.length;
-                headerSearchInput.dispatchEvent(new Event('click')); //importatn
-                //searchFunction();
-                headerSearchInput.addEventListener('input',function (e) {
-                    const string_to_find = e.target.value;
-                    const backSearcBar = document.getElementById('back-for-search-bar');
-                    $.ajax({
-                        url :"/livelearn/fetch-ajax",
-                        method : "POST",
-                        data : {
-                            course_searched : string_to_find
-                        },beforeSend:function () {
-                            console.log("send serach")
-                        },success:function (data) {
-                            console.log('success',data)
-                            backSearcBar.innerHTML = data;
-                        },error:function (e) {
-                            console.log('error to ajaxxx',e)
-                        },complete:function (c) {
-                            console.log('finish')
-                        }
-                    })
-                })
-            });
-
-            //document.getElementById('header-search').addEventListener('input', function() {
-              //  if (document.activeElement === document.getElementById('header-search')) {
-                    //window.scrollTo({ top: 0, behavior: 'smooth' });
-                    //searchFunction();
-                //}
-            //});
-       // });
-    </script>
-
-    <script>
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 'auto',
-            spaceBetween: 13,
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                600: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                },
-                1000: {
-                    slidesPerView: 4,
-                    spaceBetween: 30,
-                },
-            },
-        });
-    </script>
-
-
-    <script>
         (function($){
             let classes = ['outline-custom'];
             let selects = $('.selectSearchHome');
@@ -1655,7 +1590,7 @@
             if(txt){
                 $.ajax({
 
-                    url:"/livelearn/fetch-ajax",
+                    url:"/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,

@@ -1,5 +1,6 @@
 <?php
 require_once 'templates/add-author.php';
+require_once 'templates/detect-language.php';
 /** Artikels Endpoints */
 $GLOBALS['user_id'] = get_current_user_id();
 
@@ -221,7 +222,54 @@ function Artikel_From_Company($data)
             'Salveos' => 'https://salveos.nl/',
             'MLC' => 'https://m-lc.nl/',
             'Artefact' => 'https://www.artefact.com/',
+             'Horeca Magazine'=>'https://horecamagazine.be/',
+            'Around the Bar'=>'https://aroundthebar.nl/',
+            'Hospitality News'=>'https://hospitalitynewsny.com/',
+            'ZOUT'=>'https://www.zoutmagazine.eu/',
+            'Tableau'=>'https://tableaumagazine.nl/',
         ],
+        [
+           'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+	       'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
+	       'Modern Agriculture' =>	'https://modernagriculture.ca/',
+	       'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
+	       'Farm Journal' =>	'https://www.farmjournal.com/',
+	       'Future Farming' =>	'https://www.futurefarming.com/',
+	       'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
+	       'Global Finance' =>	'https://gfmag.com/',
+	       'InFinance' =>	'https://www.infinance.nl/',
+	       'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
+        ],
+        [
+           'Computer' =>	'https://www.computer.org/',
+	       'PHP Magazine' =>	'https://phpmagazine.net/',
+	       'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
+	       'Digital DJ Tips' =>'https://www.digitaldjtips.com/',
+           'Centrum voor Conflicthantering' =>	'https://cvc.nl/',
+           'HR Morning'	 =>'https://www.hrmorning.com/',
+           'Human in Progress'  =>	'https://humaninprogress.com/',
+           'Personelle Today'	 => 'https://www.personneltoday.com/',
+           'Wccf Tech' => 'https://wccftech.com/',
+           'Kit Guru'  =>	'https://www.kitguru.net/',
+        ],
+        [
+           'CHT'  =>	'https://chtmag.com/',
+           'Intelligent Transport'	 => 'https://www.intelligenttransport.com/',
+           'Attorney at Law Magazine'  =>	'https://attorneyatlawmagazine.com/',
+           'Lawyer Monthly'  =>	'https://www.lawyer-monthly.com/',
+           'Architects Journal'  =>	'https://www.architectsjournal.co.uk/',
+           'E-architect' =>	'https://www.e-architect.com/',
+           'Construction News'	 => 'https://www.constructionnews.co.uk/',
+           'Construction Week'  =>	'https://www.constructionweekonline.com/',
+           'Threat Post'=>	'https://threatpost.com/',
+           'ARTnews'  =>	'https://www.artnews.com/',
+        ],
+        [
+           'Design Wanted'	 =>'https://designwanted.com/',
+           'Craftsmanship'	 =>'https://craftsmanship.net/',
+           'Wood and Panel'  =>	'https://www.woodandpanel.com/',
+        ],
+
     ];
 
     $args = array(
@@ -274,6 +322,8 @@ function Artikel_From_Company($data)
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+                                'language'=>detectLanguage($article['title']['rendered'])
+                                
                             );
                         } else {
                             $status = 'extern';
@@ -294,6 +344,7 @@ function Artikel_From_Company($data)
                                 'company_id' => $company_id,
                                 'contributors' => null,
                                 'status' => $status,
+                                'language'=>detectLanguage($article['title']['rendered'])
 
                                 // 'podcasts'=> null,
                                 // 'for_who'=> null,
@@ -346,6 +397,7 @@ function Artikel_From_Company($data)
                             'company_id' => $company_id,
                             'contributors' => null,
                             'status' => $status,
+                            'language'=>detectLanguage($article['title']['rendered'])
                         );
                          try
                 {
@@ -725,6 +777,7 @@ function xmlParse($data)
                 'author_id' => $author_id,
                 'company_id' => $company_id,
                 'status' => $status,
+                'language'=>detectLanguage($datum->programDescriptions->programName)
             );
             $where = ['titel' => strval($datum->programDescriptions->programName)];
             $updated = $wpdb->update($table, $post, $where);

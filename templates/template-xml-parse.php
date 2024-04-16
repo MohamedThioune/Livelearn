@@ -18,6 +18,7 @@
   <?php
   /** Template Name: xml parse */  
   require_once 'add-author.php';
+  require_once 'detect-language.php';
   global $wpdb;
 
   extract($_POST);
@@ -329,7 +330,8 @@
         'course_id' => strval($datum->programClassification->programId),
         'author_id' => $author_id,
         'company_id' => $company_id,
-        'status' => $status
+        'status' => $status,
+        'language'=>detectLanguage($datum->programDescriptions->programName)
       );
       $where = [ 'titel' => strval($datum->programDescriptions->programName) ];
       $updated = $wpdb->update( $table, $post, $where );
@@ -400,13 +402,12 @@
 
        //echo "<h2 class='titleGroupText'> End .</h2>";
     } 
-    if(!$change)
-     echo "<span class='alert alert-danger'>*** ~ *** No change found for this course ❌! *** ~ ***</span><br><br>";
+   
           
     if($data_insert==1)
      echo "<span class='alert alert-success'> Course - Insertion done successfully</span> <br><br>";
     else 
-      echo "<span class='alert alert-danger'>Any insertion is doing ❌</span>";
+      echo "<span class='alert alert-danger'>No New Data! ❌</span>";
   }
   else
       echo "<span class='alert alert-danger'>Please select the  key to be able to upload Courses ❌</span>";
