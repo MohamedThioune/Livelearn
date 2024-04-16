@@ -557,4 +557,5 @@ if (isset($_POST["subtopics_first_login"])){
             });
         });
     });
+
 </script>
