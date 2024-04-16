@@ -3,6 +3,7 @@
 require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
 $GLOBALS['user_id'] = get_current_user_id();
 require_once __DIR__ .DIRECTORY_SEPARATOR. 'templates'.DIRECTORY_SEPARATOR.'detect-language.php';
+require_once __DIR__ .DIRECTORY_SEPARATOR. 'templates'.DIRECTORY_SEPARATOR.'add-author.php';
 
 //First step : Fill up company id by the author
 function fillUpCompany(){
@@ -55,24 +56,45 @@ function refreshAuthor(){
         'role__in' => ['author']
     ));
 
+    // Make pagination
+    $count = count($authors);
+    define("STEP", 100);
+    $number_iteration = intval(ceil($count / STEP));
+
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ $key to => $number_iteration ]</h1>";
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        } else {
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+    $star_index = ($key - 1) * STEP;
     // Script to delete authors without course
-    foreach($authors as $author) :
+    for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
+        $author = $authors[$i];
         // Trying to see if this user have one or more posts ?
-        $posts = get_posts (
+        $posts = get_posts(
             array(
-                'post_type' => ['post','course'],
+                'post_type' => ['post', 'course'],
                 'author' => $author->ID
             )
         );
         //if not post for this author : this user is to deleate
         if (!$posts) {
-            wp_delete_user($author->ID);
-            echo "<h4>user $author->ID is deleted success...</h4>";
+            if (wp_delete_user($author->ID))
+                echo "<h4>user $author->ID is deleted success...</h4>";
         }
-    endforeach;
+    }
 }
 
-//Third step : Delete the extra-author useless [reviewed ]
+// Third step : Delete the extra-author useless [reviewed ]
 /**
  * @return void
  * @url localhost:8888/livelearn/wp-json/custom/v1/fill-author/?key=1
