@@ -55,6 +55,27 @@
     $xml = simplexml_load_file($file);
     $data_xml = $xml->program;
     // var_dump($xml->program);
+//      $url = 'https://api-test.edudex.nl/data/v1/organizations';
+//    ///  curl -s 'https://api-test.edudex.nl/data/v1/organizations' -H "Authorization: Bearer $APITOKEN" | jq
+//      $headers = [
+
+    
+//     'Bearer:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJFZHUtRGV4IiwiaWF0IjoxNzEzMTg3Njg2LCJuYmYiOjE3MTMxODc2ODYsInN1YiI6ImVkdWRleC1hcGktdXNlciIsInNjb3BlIjoiZGF0YSIsIm5vbmNlIjoialRnZ3J1dllmMHVsMUEyc0tMRTBxdyJ9._c_lawdWDOOS83l1LLCl02m9Bj8QjUeGLSiRxM2X0hU',
+    
+// ];
+
+// $ch = curl_init();
+// curl_setopt($ch, CURLOPT_URL, $url);
+// curl_setopt($ch, CURLOPT_POST, true);
+// curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+// curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+// $response = curl_exec($ch);
+// var_dump($response);
+// die();
 
 
     echo "<h3>".$data_xml[0]->programClassification->orgUnitId." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
