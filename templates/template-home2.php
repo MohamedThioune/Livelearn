@@ -1651,7 +1651,6 @@
     <script>
 
         $(document).ready(function () {
-            // Fonction pour vérifier la largeur de la fenêtre
             function checkWindowWidth() {
                 var windowWidth = $(window).width();
                 if (windowWidth >= 300 && windowWidth <= 767) {
@@ -1668,7 +1667,6 @@
 
                 }
             }
-            // Appeler la fonction pour vérifier la largeur de la fenêtre lors du chargement de la page
             checkWindowWidth();
 
             $(window).resize(function() {

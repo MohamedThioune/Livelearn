@@ -797,7 +797,6 @@ jQuery(function($) {
         $("#croieSearch").show();
         $("#profilView").show();
     });
-
     $("#croieSearch").click(function() {
         $("#searchIcone").show();
         $(".show-mobile-search-block").hide();

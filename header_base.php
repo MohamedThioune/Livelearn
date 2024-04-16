@@ -820,6 +820,7 @@ $url = home_url( $wp->request );
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile">
                     </a>
                     <div class="sousNav3">
+
                         <div class="d-flex align-items-center">
                             <div class="second-element-mobile">
                                 <div id="searchIcone" class="showblock-mobil-search">
