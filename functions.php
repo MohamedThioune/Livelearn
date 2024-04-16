@@ -1998,9 +1998,9 @@ add_action( 'rest_api_init', function () {
       'callback' => 'updateLangaugeCourses'
   ));
 
-   register_rest_route ('custom/v1', '/user/skill', array(
-        'methods' => 'POST',
-        'callback' => 'add_topic_to_user'
-    ));
+  register_rest_route ('custom/v1', '/user/skill', array(
+      'methods' => 'POST',
+      'callback' => 'add_topic_to_user'
+  ));
 
 });
