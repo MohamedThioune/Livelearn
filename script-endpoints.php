@@ -9,20 +9,47 @@ function fillUpCompany(){
     global $wpdb;
 
     // Remplir la colonne "company_id" par "author_id" si "company_id" nul
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+    //$sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = 0");
     $courses = $wpdb->get_results($sql);
-    foreach ($courses as $course)
+    // Make pagination
+    $count = count($courses);
+    define("STEP", 6000);
+    $number_iteration = intval(ceil($count / STEP));
+
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        } else {
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+    $star_index = ($key - 1) * STEP;
+    for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
+        $course = $courses[$i];
+        echo $i . "<br>";
         if(!$course->company_id) {
+            echo $course->titel; 
             $author_id = $course->author_id;
             $id_course = $course->id;
             $author_company = get_field('company', 'user_' . $author_id);
+            //if no company
+                //Delete the row 
             $company_id_for_this_author = $author_company[0]->ID;
             //update field company_id
 
             $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET company_id = $company_id_for_this_author WHERE id = $id_course");
             $course_updated = $wpdb->get_results($sql); //
-            echo "<h4>course $id_course id updated, company id is adding</h4>";
+            echo "<h4>course $id_course id updated, company id is adding</h4><br>";
         }
+    }
 }
 
 //Second step : Delete the extra-author useless
@@ -49,32 +76,60 @@ function refreshAuthor(){
 }
 
 //Third step : Delete the extra-author useless [reviewed ]
+/**
+ * @return void
+ * @url localhost:8888/livelearn/wp-json/custom/v1/fill-author/?key=1
+ */
 function fillUpAuthor(){
     global $wpdb;
 
     //Remplir la colonne "author_id" par "company_id"
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE 1");
+    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = 0");
     $courses = $wpdb->get_results($sql);
-    foreach ($courses as $course):
+
+    // Make pagination
+    $count = count($courses);
+    define("STEP", 500);
+    $number_iteration = intval(ceil($count / STEP));
+
+    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+        } else {
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+    $star_index = ($key - 1) * STEP;
+    for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
+        $course = $courses[$i];
         $company = get_post($course->company_id);
         $id_company = $company->ID;
 
         //Get all users having in
-        $users = get_users();
+        $users = get_users(array(
+            'role__in'=>'author'
+        ));
         $find_company = false;
-        foreach ($users as $user) :
+        foreach ($users as $user):
             //$user_company_id = (get_field('company', 'user_' . $user->ID)) ? get_field('company', 'user_' . $user->ID)[0]->ID : 0;
             $user_company_id = get_field('company', 'user_' . $user->ID)[0]->ID;
             if ($user_company_id)
-                if($id_company == $user_company_id){
+                if($id_company == $user_company_id):
                     $find_company = true;
                     // update the field author_id directly via sql request
                     $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET author_id = $user_company_id WHERE id = $course->id");
-                    if($wpdb->get_results($sql)); //
-                    echo "<h4>course $course->id id updated for author_id via company_id</h4>";
+                    if($wpdb->get_results($sql)); // apply the update
+                        echo "<h4>course $course->id id updated for author_id via company_id</h4>";
                     //break on success
                     break;
-                }
+                endif;
         endforeach;
 
         // Find the company ?
@@ -114,12 +169,12 @@ function fillUpAuthor(){
             echo "<h4>course $course->id id updated for author_id via company_id with new author generated !</h4>";
             //break on success
         }
-    endforeach;
+    }
 }
 
 /**
  * @return void
- * http://localhost:8888/livelearn/wp-json/custom/v1/update-language-courses/?key=1
+ * @url http://localhost:8888/livelearn/wp-json/custom/v1/update-language-courses/?key=1
  */
 function updateLangaugeCourses()
 {
@@ -132,7 +187,7 @@ function updateLangaugeCourses()
     $courses = get_posts($args);
     //pagination
     $count = count($courses);
-    define("STEP", 50);
+    define("STEP", 300);
     $number_iteration = intval(ceil($count / STEP));
 
     echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
@@ -152,7 +207,10 @@ function updateLangaugeCourses()
     $star_index = ($key - 1) * STEP;
     for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
         $course = $courses[$i];
-        if(update_field('language', detectLanguage($course->post_title), $course->ID))
+        $language = detectLanguage($course->post_title);
+        echo $i . '-' . $course->post_title .'|'. $course->ID .'|'. $language . "<br>";
+    
+        if(update_field('language', $language, $course->ID))
             echo '<h3>language added for :'.$course->post_title.' : '.$course->ID.'</h3>';
     }
 }
