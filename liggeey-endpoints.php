@@ -79,7 +79,6 @@ function job($id, $userApplyId = null){
 
   $company = get_field('job_company', $post->ID);
   $main_company = array();
-  $main_company['ID'] = !empty($company) ? $company->ID : 0;
   $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
   $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
   $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
@@ -98,7 +97,7 @@ function job($id, $userApplyId = null){
 
   $sample = (Object)$sample;
 
-  // Retrieve the applied 
+  // Retrieve the applied
   $entity = null;
   $applied = array();
   $status = "No data available";
@@ -110,10 +109,10 @@ function job($id, $userApplyId = null){
   endforeach;
   $sample->applied = $applied;
 
-  // Retrieve the approved 
+  // Retrieve the approved
   $entity = null;
   $approved = array();
-  foreach ($sample->approved as $entity): 
+  foreach ($sample->approved as $entity):
     $approved[] = candidate($entity->ID);
     if($userApplyId)
     if($userApplyId == $entity->ID)
@@ -121,10 +120,10 @@ function job($id, $userApplyId = null){
   endforeach;
   $sample->approved = $approved;
 
-  // Retrieve the rejected 
+  // Retrieve the rejected
   $entity = null;
   $rejected = array();
-  foreach ($sample->rejected as $entity): 
+  foreach ($sample->rejected as $entity):
     $rejected[] = candidate($entity->ID);
     if($userApplyId)
     if($userApplyId == $entity->ID)
@@ -145,6 +144,7 @@ function company($id){
 
   // return $param_post_id;
 
+  //var_dump($post);
   //assigner les champs
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
@@ -160,7 +160,6 @@ function company($id){
 
   $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
   $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-
   //Open position
   $args = array(
     'post_type' => 'job',
@@ -171,12 +170,9 @@ function company($id){
     'meta_key' => 'job_company',
     'meta_value' => $post->ID
   );
-  $main_jobs = get_posts($args);
-  $sample['count_open_jobs'] = empty($main_jobs) ? 0 : count($main_jobs);
-  $jobs = array();
-  foreach ($main_jobs as $job)
-    $jobs[] = job($job->ID);
-  $sample['open_jobs'] = $jobs;
+  $jobs = get_posts($args);
+  $sample['count_open_jobs'] = empty($jobs) ? 0 : count($jobs);
+  $sample['open_jobs'] = empty($jobs) ? array() : $jobs;
 
   $sample = (Object)$sample;
 
@@ -730,10 +726,10 @@ function allJobs(){
     $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
     $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
     $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
-  
+
     $sample = (Object)$sample;
-  
-    // Retrieve the applied 
+
+    // Retrieve the applied
     $entity = null;
     $applied = array();
     $status = "No data available";
@@ -744,29 +740,29 @@ function allJobs(){
         $status = "Processing";
     endforeach;
     $sample->applied = $applied;
-  
-    // Retrieve the approved 
+
+    // Retrieve the approved
     $entity = null;
     $approved = array();
-    foreach ($sample->approved as $entity): 
+    foreach ($sample->approved as $entity):
       $approved[] = candidate($entity->ID);
       if($userApplyId)
       if($userApplyId == $entity->ID)
         $status = "Approved";
     endforeach;
     $sample->approved = $approved;
-  
-    // Retrieve the rejected 
+
+    // Retrieve the rejected
     $entity = null;
     $rejected = array();
-    foreach ($sample->rejected as $entity): 
+    foreach ($sample->rejected as $entity):
       $rejected[] = candidate($entity->ID);
       if($userApplyId)
       if($userApplyId == $entity->ID)
         $status = "Rejected";
     endforeach;
     $sample->rejected = $rejected;
-  
+
     $sample->status = $status;
 
     array_push($jobs, $sample);
@@ -839,16 +835,14 @@ function categoryDetail(WP_REST_Request $request){
 
   /** Global companies **/
   $companies = array();
-  $company_in = array();
-
-  foreach($sample['jobs'] as $job):
-    if(!$job->company->ID) 
-      continue;
-    if(!in_array($job->company->ID, $company_in)):
-      $company_in[] = $job->company->ID;
-      $companies[] = company($job->company->ID);
-    endif;
-  endforeach;
+  $args = array(
+    'post_type' => 'company',
+    'tax_query' => $tax_query
+  );
+  $query_companies = new WP_Query( $args );
+  $global_companies = isset($query_companies->posts) ? $query_companies->posts : array();
+  foreach ($global_companies as $company)
+    $companies[] = company($company->ID);
   $sample['companies'] = $companies;
 
   /** Global posts **/
@@ -1170,10 +1164,9 @@ function JobsUser(WP_REST_Request $request){
 
   //Jobs company
   $args = array(
-    'post_type' => 'job',  
+    'post_type' => 'job',
     'post_status' => 'publish',
     'posts_per_page' => -1,
-    'author' => $user_apply->ID,
     'order' => 'DESC' ,
   );
   $jobs = get_posts($args);
@@ -1189,7 +1182,7 @@ function JobsUser(WP_REST_Request $request){
 
 //[POST]Dashboard User | Applicants
 function ApplicantsUser(WP_REST_Request $request){
-  
+
   $errors = ['errors' => '', 'error_data' => ''];
   $required_parameters = ['userApplyId'];
   $applications = array();
@@ -1256,25 +1249,36 @@ function FavoritesUser(WP_REST_Request $request){
     return $response;
   endif;
 
-  //Favorite company
-  $main_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
-  foreach($main_favorites as $favo):
-    if(!$favo)
-      continue;
-    if($favo['type'] != 'candidate')
-      continue;
-    $user_id = $favo['id'];
-    $user = get_user_by('ID', $user_id);
-    if(!$user)
-      continue;
+   // Favoris de l'utilisateur
+      $main_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
+      $existing_candidate_ids = array();
+      // Parcourir les favoris principaux
+      foreach($main_favorites as $favo){
+          if(!$favo)
+              continue;
+          if($favo['type'] != 'candidate')
+              continue;
 
-    $favorite[] = candidate($user->ID);
-  endforeach;
+          $user_id = $favo['id'];
+          $user = get_user_by('ID', $user_id);
+          if(!$user)
+              continue;
 
-  $response = new WP_REST_Response($favorite);
-  $response->set_status(200);
-  return $response;
-}
+          if(in_array($user->ID, $existing_candidate_ids)){
+              $errors['errors'] = 'Duplicate candidate found in favorites';
+              $response = new WP_REST_Response($errors);
+              $response->set_status(400);
+              return $response;
+          }
+
+          $existing_candidate_ids[] = $user->ID;
+          $favorite[] = candidate($user->ID);
+      }
+
+      $response = new WP_REST_Response($favorite);
+      $response->set_status(200);
+      return $response;
+  }
 
 //[POST]Dashboard User | Post Job
 function postJobUser(WP_REST_Request $request){
@@ -1319,7 +1323,7 @@ function postJobUser(WP_REST_Request $request){
     wp_set_post_terms($job_id, $skills, 'course_category');
 
   update_field('job_company', $company, $job_id);
-  update_field('job_description', $description, $job_id);
+  update_field('description', $description, $job_id);
   update_field('job_contract', $job_contract, $job_id);
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
@@ -1345,9 +1349,9 @@ function editJobUser(WP_REST_Request $request) {
 
   //Data Job
   $job = get_post($job_id);
-  // $candidate = get_user_by('ID', $user_id);
+  $candidate = get_user_by('ID', $user_id);
 
-  if (!$job) {
+  if (!$job || !$candidate) {
       $errors['errors'] = 'Something went wrong !';
       $response = new WP_REST_Response($errors);
       $response->set_status(401);
@@ -1355,7 +1359,7 @@ function editJobUser(WP_REST_Request $request) {
   }
 
   if($skills)
-    wp_set_post_terms($job_id, $skills, 'course_category');
+    wp_set_post_terms($job_id, $terms, 'course_category');
 
   // Parameters REST request
   $updated_data = $request->get_params();
@@ -1461,7 +1465,7 @@ function updateCompanyProfil(WP_REST_Request $request) {
     if($field_value)
     if($field_value != '' && $field_value != ' ')
       update_field($field_name, $field_value, $company_id);
-  
+
   $updated_company_data = company($company_id);
   $response = new WP_REST_Response($updated_company_data);
   $response->set_status(200);
@@ -1487,7 +1491,7 @@ function trashFavouriteCandidate(WP_REST_Request $request){
   $user_shorlisted_jobs = [];
 
   // Vérifier si l'utilisateur a des emplois favoris
-  if ($user_favorites) 
+  if ($user_favorites)
     foreach ($user_favorites as $favorite):
       if ($favorite['type'] == 'candidate') :
         // Récupérer les détails de l'emploi
@@ -1499,7 +1503,7 @@ function trashFavouriteCandidate(WP_REST_Request $request){
       $user_shorlisted_jobs['id'] = $favorite['id'];
       array_push($user_favourites, $user_shorlisted_jobs);
     endforeach;
-  
+
   update_field('save_liggeey', $user_favourites, 'user_' . $user_apply_id);
 
   //Remove the user in list appliants
@@ -1509,54 +1513,6 @@ function trashFavouriteCandidate(WP_REST_Request $request){
   if($key !== false)
     unset($appliants[$key]);
   update_field('job_appliants', $appliants, $job_applied_id);
-
-  $success = "User favorites changed with success !";
-  $response = new WP_REST_Response($success);
-  $response->set_status(200);
-
-  return $response;
-}
-
-//[POST]Apply Candidate | Delete favorite job
-function trashFavouriteJob(WP_REST_Request $request){
-  $errors = ['errors' => '', 'error_data' => ''];
-  $required_parameters = ['userApplyId', 'userJobId'];
-
-  //Check required parameters apply
-  $validated = validated($required_parameters, $request);
-
-  //Get inputs
-  $user_apply_id = isset($request['userApplyId']) ? $request['userApplyId'] : 0;
-  $user_job_id = isset($request['userJobId']) ? $request['userJobId'] : 0;
-
-  // Récupérer les favoris de l'utilisateur
-  $user_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
-  $user_favourites = array();
-  $user_shorlisted_jobs = [];
-
-  // Vérifier si l'utilisateur a des emplois favoris
-  if ($user_favorites) 
-    foreach ($user_favorites as $favorite):
-      if ($favorite['type'] == 'job') :
-        // Récupérer les détails de l'emploi
-        if($favorite['id'] == $user_job_id)
-          continue;
-      endif;
-
-      $user_shorlisted_jobs['type'] = $favorite['type'];
-      $user_shorlisted_jobs['id'] = $favorite['id'];
-      array_push($user_favourites, $user_shorlisted_jobs);
-    endforeach;
-  
-  update_field('save_liggeey', $user_favourites, 'user_' . $user_apply_id);
-
-  //Remove the user in list appliants
-  // $appliants = get_field('job_appliants', $job_applied_id);
-  // $appliants = ($appliants) ?: array();
-  // $key = array_search($user_apply, $appliants);
-  // if($key !== false)
-  //   unset($appliants[$key]);
-  // update_field('job_appliants', $appliants, $job_applied_id);
 
   $success = "User favorites changed with success !";
   $response = new WP_REST_Response($success);
@@ -1701,6 +1657,7 @@ function HomeCandidate(WP_REST_Request $request){
    $count_unique_favorites = count($unique_favorites);
    $sample['count_favorites'] = $count_unique_favorites;
 
+
     $sample['suggestions'] = $suggestion_jobs;
     $sample = (Object)$sample;
     $response = new WP_REST_Response($sample);
@@ -1816,7 +1773,6 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
   // Récupérer les emplois favoris de l'utilisateur
   $user_favorites = get_field('save_liggeey', 'user_' . $user_id);
   $user_shorlisted_jobs = [];
-  $user_in = [];
 
   // Vérifier si l'utilisateur a des emplois favoris
   if ($user_favorites)
@@ -1824,15 +1780,13 @@ function candidateShorlistedJobs(WP_REST_Request $request) {
       if ($favorite['type'] == 'job') :
         // Récupérer les détails de l'emploi
         if($favorite['id'])
-          if(!in_array($favorite['id'], $user_in)):
-            array_push($user_in, $favorite['id']);
-            $user_shorlisted_jobs[] = job($favorite['id']);
-          endif;
+          $user_shorlisted_jobs[] = job($favorite['id']);
       endif;
 
   $response = new WP_REST_Response($user_shorlisted_jobs);
   $response->set_status(200);
   return $response;
+
 }
 
 //[POST]Dashboard Candidate | Skills passport
