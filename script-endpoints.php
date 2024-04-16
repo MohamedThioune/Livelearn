@@ -34,9 +34,9 @@ function fillUpCompany(){
     $star_index = ($key - 1) * STEP;
     for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
         $course = $courses[$i];
-
+        echo $i . "<br>";
         if(!$course->company_id) {
-            echo "<h1>" .  $course->titel . "</h1>";
+            echo $course->titel . "<br>"; 
             $author_id = $course->author_id;
             $id_course = $course->id;
             $author_company = get_field('company', 'user_' . $author_id);
@@ -87,7 +87,7 @@ function fillUpAuthor(){
 
     // Make pagination
     $count = count($courses);
-    define("STEP", 100);
+    define("STEP", 500);
     $number_iteration = intval(ceil($count / STEP));
 
     echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
