@@ -5002,6 +5002,8 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     height: fit-content;
     border-bottom: 4px solid #afc5cf !important;
     position: fixed !important;
+    height: 380px;
+    overflow-y: scroll !important;
 }
 .scrolled-modal{
     background: #023356 !important;
@@ -22960,6 +22962,9 @@ figure ul li {
 .content-btn-get-app .btn img {
     height: 15px;
     margin-right: 6px;
+}
+.scrolled-modal .titleGroupText, .scrolled-modal .TextZorg {
+    color: #ffffff !important;
 }
 
 /*responsive mobile*/
