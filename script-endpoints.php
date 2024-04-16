@@ -187,7 +187,7 @@ function updateLangaugeCourses()
     $courses = get_posts($args);
     //pagination
     $count = count($courses);
-    define("STEP", 200);
+    define("STEP", 100);
     $number_iteration = intval(ceil($count / STEP));
 
     echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
