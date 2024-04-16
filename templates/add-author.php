@@ -87,5 +87,18 @@ function addAuthor($users, $key){
     return ['author' => $author_id, 'company' => $company->ID];
   
   }
+  function usersWithCompany($users){
+    $usersWithCompany= array();
+     foreach ($users as $user) :
+            $company_users = get_field('company', 'user_' . $user->ID);
+            if(isset($company_users))            
+              array_push($usersWithCompany, $user);
+        
+               
+     endforeach;
+    return $usersWithCompany;
+   
+  }
+
   
   ?>
