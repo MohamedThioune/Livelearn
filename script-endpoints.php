@@ -36,16 +36,18 @@ function fillUpCompany(){
         $course = $courses[$i];
         echo $i . "<br>";
         if(!$course->company_id) {
-            echo $course->titel . "<br>"; 
+            echo $course->titel; 
             $author_id = $course->author_id;
             $id_course = $course->id;
             $author_company = get_field('company', 'user_' . $author_id);
+            //if no company
+                //Delete the row 
             $company_id_for_this_author = $author_company[0]->ID;
             //update field company_id
 
             $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET company_id = $company_id_for_this_author WHERE id = $id_course");
             $course_updated = $wpdb->get_results($sql); //
-            echo "<h4>course $id_course id updated, company id is adding</h4>";
+            echo "<h4>course $id_course id updated, company id is adding</h4><br>";
         }
     }
 }
@@ -185,7 +187,7 @@ function updateLangaugeCourses()
     $courses = get_posts($args);
     //pagination
     $count = count($courses);
-    define("STEP", 50);
+    define("STEP", 1000);
     $number_iteration = intval(ceil($count / STEP));
 
     echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
