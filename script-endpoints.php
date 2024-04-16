@@ -187,7 +187,7 @@ function updateLangaugeCourses()
     $courses = get_posts($args);
     //pagination
     $count = count($courses);
-    define("STEP", 200);
+    define("STEP", 100);
     $number_iteration = intval(ceil($count / STEP));
 
     echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
@@ -207,6 +207,7 @@ function updateLangaugeCourses()
     $star_index = ($key - 1) * STEP;
     for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
         $course = $courses[$i];
+        echo $i;
         if(update_field('language', detectLanguage($course->post_title), $course->ID))
             echo '<h3>language added for :'.$course->post_title.' : '.$course->ID.'</h3>';
     }
