@@ -36,6 +36,7 @@ function fillUpCompany(){
         $course = $courses[$i];
 
         if(!$course->company_id) {
+            echo "<h1>" .  $course->titel . "</h1>";
             $author_id = $course->author_id;
             $id_course = $course->id;
             $author_company = get_field('company', 'user_' . $author_id);
