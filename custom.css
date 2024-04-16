@@ -4994,7 +4994,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 .dropdown-search{
     width: 100%;
-    top: 115px !important;
+    top: 115px;
     box-shadow: none;
     background: #e2f0f5 !important;
     border-radius: 0;
@@ -27855,7 +27855,7 @@ figure ul li {
         position: fixed !important;
         height: 100%;
         overflow: scroll !important;
-        top: 139px !important;
+        top: 139px;
         overflow-x: scroll;
     }
     #for-search-element li {
