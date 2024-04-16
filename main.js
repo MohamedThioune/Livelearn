@@ -794,13 +794,16 @@ jQuery(function($) {
         $("#croieProfil").hide();
         $("#headTwo").hide();
         $("#burger").show();
+        $(".show-mobile-search-block").show();
         $("#croieSearch").show();
         $("#profilView").show();
+       $("#for-search-element").addClass("show-mobile-search-block");
     });
     $("#croieSearch").click(function() {
         $("#searchIcone").show();
         $(".show-mobile-search-block").hide();
         $("#croieSearch").hide();
+        $("#for-search-element").removeClass("show-mobile-search-block");
     });
 
     $("#profilView").click(function() {
