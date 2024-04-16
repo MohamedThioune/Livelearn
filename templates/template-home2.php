@@ -1668,13 +1668,10 @@
 
                 }
             }
-
             // Appeler la fonction pour vérifier la largeur de la fenêtre lors du chargement de la page
             checkWindowWidth();
 
-            // Ajouter un gestionnaire d'événements pour redimensionner la fenêtre
             $(window).resize(function() {
-                // Appeler à nouveau la fonction pour vérifier la largeur de la fenêtre lors du redimensionnement
                 checkWindowWidth();
             });
         });
