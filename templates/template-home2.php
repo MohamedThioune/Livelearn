@@ -1124,7 +1124,7 @@
 
 <div class="container-fluid">
     <div class="img-block-illustration">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.webp"  alt="">
+        <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn-.webp"  alt="">
     </div>
     <div class="content-btn-get-app">
         <button onclick="redirect()" class="btn"> <img src="<?php echo get_stylesheet_directory_uri();?>/img/qrcode.png"  alt=""> <span>Get the APP</span></button>
