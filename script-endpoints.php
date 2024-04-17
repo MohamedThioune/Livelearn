@@ -6,6 +6,10 @@ require_once __DIR__ .DIRECTORY_SEPARATOR. 'templates'.DIRECTORY_SEPARATOR.'dete
 require_once __DIR__ .DIRECTORY_SEPARATOR. 'templates'.DIRECTORY_SEPARATOR.'add-author.php';
 
 //First step : Fill up company id by the author
+/**
+ * @return void
+ * @url http://localhost:8888/livelearn/wp-json/custom/v1/fill-company/?key=1
+ */
 function fillUpCompany(){
     global $wpdb;
 
@@ -15,10 +19,8 @@ function fillUpCompany(){
     $courses = $wpdb->get_results($sql);
     // Make pagination
     $count = count($courses);
-    define("STEP", 6000);
+    define("STEP", 3000);
     $number_iteration = intval(ceil($count / STEP));
-
-    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
     $key = 1;
     if (isset($_GET['key'])) {
         if ( intval($_GET['key'])) {
@@ -27,6 +29,7 @@ function fillUpCompany(){
                 echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
                 return;
             }
+            echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ $key to => $number_iteration ]</h1>";
         } else {
             echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
             return;
@@ -35,20 +38,27 @@ function fillUpCompany(){
     $star_index = ($key - 1) * STEP;
     for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
         $course = $courses[$i];
-        echo $i . "<br>";
+        //echo $i . "<br>";
         if(!$course->company_id) {
-            echo $course->titel; 
+            // echo $course->titel;
             $author_id = $course->author_id;
             $id_course = $course->id;
             $author_company = get_field('company', 'user_' . $author_id);
-            //if no company
-                //Delete the row 
-            $company_id_for_this_author = $author_company[0]->ID;
-            //update field company_id
-
-            $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET company_id = $company_id_for_this_author WHERE id = $id_course");
-            $course_updated = $wpdb->get_results($sql); //
-            echo "<h4>course $id_course id updated, company id is adding</h4><br>";
+            //if company
+            if($author_company) {
+                $company_id_for_this_author = $author_company[0]->ID;
+                //update field company_id
+                echo "<h3>updating course in databank progress via company...</h3>";
+                $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}databank SET company_id = $company_id_for_this_author WHERE id = $id_course");
+                if($wpdb->get_results($sql))
+                    echo "<h4>course $id_course is updated, company id is adding</h4><br>";
+            } else {
+                //delete the row
+                echo "<h3>deleting course in databank progress...</h3>";
+                $sql = $wpdb->prepare("DELETE FROM {$wpdb->prefix}databank WHERE id = $id_course");
+                if($wpdb->get_results($sql))
+                    echo "<h4>course $id_course is deleted, his company id is not found ! ! !</h4><br>";
+            }
         }
     }
 }
@@ -114,7 +124,6 @@ function fillUpAuthor(){
     define("STEP", 700);
     $number_iteration = intval(ceil($count / STEP));
 
-    echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ 1 to => $number_iteration ]</h1>";
     $key = 1;
     if (isset($_GET['key'])) {
         if ( intval($_GET['key'])) {
@@ -123,6 +132,7 @@ function fillUpAuthor(){
                 echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
                 return;
             }
+            echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ $key to => $number_iteration ]</h1>";
         } else {
             echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
             return;
