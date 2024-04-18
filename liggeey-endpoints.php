@@ -964,41 +964,40 @@ function liggeeySave(WP_REST_Request $request){
   //Check required parameters apply
   $validated = validated($required_parameters, $request);
 
-  $allowedValues = ['job', 'company', 'candidate'];
-
-  if (!in_array($typeApplyId, $allowedValues)) {
-      $errors['errors'] = "Please respect this type listed: job, company, candidate !";
-      $errors = (object)$errors;
-      $response = new WP_REST_Response($errors);
-      $response->set_status(400);
-  }
-
   //Check if typeApplyId ['job', 'company', 'candidate']
-  if(!in_array($type_applied_id, $permission_type)):
-    $errors['errors'] = "Please respect this type listed : job, company, candidate";
-    return $errors;
-  endif;
-
-  // Initialize arrays
-  $user_favorites = array();
-  $favorites = array();
-  // $favorite_add = array();
+  if(!in_array($type_applied_id, $permission_type)) {
+    $errors['errors'] = "Please respect this type listed: job, company, candidate";
+    $errors = (object)$errors;
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  }
 
   // Get existing user favorites
   $user_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
   $user_favorites = ($user_favorites) ?: array();
 
-  // Create a favorite entry for a job
-  $favorite['type'] = $type_applied_id;
-  $favorite['id'] = $id;
+  // Check if the favorite already exists
+  foreach ($user_favorites as $favorite) {
+    if ($favorite['type'] === $type_applied_id && $favorite['id'] === $id) {
+      $errors['errors'] = "This favorite already exists for the user";
+      $errors = (object)$errors;
+      $response = new WP_REST_Response($errors);
+      $response->set_status(400);
+      return $response;
+    }
+  }
 
-  // Update the favorites array
-  array_push($user_favorites, $favorite);
+  // Create a new favorite entry
+  $new_favorite = ['type' => $type_applied_id, 'id' => $id];
+
+  // Add the new favorite to the user's favorites
+  $user_favorites[] = $new_favorite;
 
   // Update the save liggeey entries
   update_field('save_liggeey', $user_favorites, 'user_' . $user_apply_id);
 
-  $success = "Favoris saved with success !";
+  $success = "Favorite saved successfully";
   $response = new WP_REST_Response($success);
   $response->set_status(200);
   return $response;
@@ -1656,7 +1655,6 @@ function HomeCandidate(WP_REST_Request $request){
 
    $count_unique_favorites = count($unique_favorites);
    $sample['count_favorites'] = $count_unique_favorites;
-
 
     $sample['suggestions'] = $suggestion_jobs;
     $sample = (Object)$sample;
@@ -2351,7 +2349,7 @@ function add_topic_to_user(WP_REST_Request $request) {
     }
 
     // Response
-    return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
+    return new WP_REST_Response($response, 200);
 }
 
 
