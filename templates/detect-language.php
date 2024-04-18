@@ -41,12 +41,10 @@ if ($response === false) {
 
 
  
-  return $language;
-  
+    return $language;
+    
 
-   
-
- }
+}
 
  
   
