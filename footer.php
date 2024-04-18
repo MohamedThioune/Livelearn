@@ -104,7 +104,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                                 <li>Probeer onze gratis leer-app
                                     En start meteen met jezelf te ontwikkelen</li>
                                 <li> <a class="img-store-footer" href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&pcampaignid=web_share"><img src="<?php echo get_stylesheet_directory_uri();?>/img/play-store.png" alt=""> </a></li>
-                                <li> <a class="img-store-footer" href="https://apps.apple.com/in/app/livelearn/id1666976386?platform=iphone"><img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store.png" alt=""></a></li>
+                                <li> <a class="img-store-footer" href="https://apps.apple.com/in/app/livelearn/id1666976386?platform=iphone"><img src="<?php echo get_stylesheet_directory_uri();?>/img/app-store.webp" alt=""></a></li>
                             </ul>
                         </div>
                     </div>
@@ -772,7 +772,6 @@ $site_url = get_site_url() . "/apply-cookie";
     });
     var headerSearchInput = document.getElementById('header-search');
     headerSearchInput.addEventListener('input',function (e) {
-        alert()
         const string_to_find = e.target.value.trim();
         const backSearcBar = document.getElementById('back-for-search-bar');
         console.log(string_to_find.length)
@@ -781,7 +780,7 @@ $site_url = get_site_url() . "/apply-cookie";
         $.ajax({
             url :"/fetch-ajax",
             method : "POST",
-            data : {
+            data : { 
                 course_searched : string_to_find
             },beforeSend:function () {
                 $('#loader-suggestion-search-bar').removeClass('d-none');

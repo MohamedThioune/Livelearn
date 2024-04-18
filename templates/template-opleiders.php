@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <?php 
-
 extract($_POST);
 
 $args = array(
@@ -16,7 +15,6 @@ $args = array(
 );
 
 $companies = get_posts($args);
-
 ?>
 
 <div class="contentOne">
