@@ -485,8 +485,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
         data: {
             labels: ["Active",	"Inactive"],
             datasets: [{
-                //data: [<?=$members_active?>,<?=$members_inactive?>], // Specify the data values array
-                data: [67,17], // Specify the data values array
+                data: [<?=$members_active?>,<?=$members_inactive?>], // Specify the data values array
+                //data: [67,17], // Specify the data values array
                 borderColor: ['#47A99E', '#FF0000'], // Add custom color border
                 backgroundColor: ['#47A99E', '#FF0000'], // Add custom color background (Points and Fill)
             }]},
