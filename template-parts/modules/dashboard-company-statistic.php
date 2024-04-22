@@ -401,22 +401,27 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         //$is_login = get_field('is_first_login', 'user_' . $user->ID);
                         $is_login = false;
 
+                        $date = new DateTime();
+                        $date_this_month = $date->format('Y-m-d');
+                        $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
                         $table_tracker_views = $wpdb->prefix . 'tracker_views';
-                        $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}tracker_views WHERE `user_id` = ".$user->ID." AND updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW()");
+                        $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}tracker_views WHERE `user_id` = ".$user->ID." AND updated_at BETWEEN ".$date_last_month." AND ".$date_this_month);
                         $if_user_actif = $wpdb->get_results($sql);
 
                         if ($if_user_actif)
                             $is_login = true;
 
-                        $status = ($is_login) ? 'actif' : 'actif inactif';
+                        //$status = ($is_login) ? 'actif' : 'actif inactif';
                         //$status_text = ($is_login) ? 'Active' : 'Inactive';
                         if ($is_login) {
                             $status_text = 'Active';
                             $members_active++;
+                            $status = 'actif';
                         }
                         else {
                             $status_text = 'Inactive';
                             $members_inactive++;
+                            $status = 'actif inactif';
                         }
 
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $current_user->ID;
