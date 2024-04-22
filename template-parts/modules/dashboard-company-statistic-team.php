@@ -110,6 +110,7 @@ $args = array(
     'limit' => -1,
 );
 $bunch_orders = wc_get_orders($args);
+
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         //Get woo orders from user

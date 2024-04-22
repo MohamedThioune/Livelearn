@@ -65,8 +65,6 @@ $args = array(
 );
 $mandatories = get_posts($args);
 $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
-
-
 /*
 * * Courses dedicated of these user "Boughts + Mandatories"
 */
