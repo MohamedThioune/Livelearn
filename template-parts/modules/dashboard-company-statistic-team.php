@@ -305,8 +305,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         <canvas id="ChartEngagement"></canvas>
                         <!-- <span>No data enough !</span> -->
                     </div>
-                </div> 
-               
+                </div>
                 <div class="card-circular-bar">
                     <div class="head d-flex justify-content-between align-items-center">
                         <h2 >User progress in the courses <span>(<?= $count_enrolled_courses ?>) :</span></h2>
