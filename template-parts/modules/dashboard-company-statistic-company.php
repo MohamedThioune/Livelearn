@@ -397,7 +397,6 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
             endif;
             if(!empty($most_popular_course)):
             ?>
-
             <div class="card-course">
                 <h2>Popular Course</h2>
                 <table class="table table-responsive">
