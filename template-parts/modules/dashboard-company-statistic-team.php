@@ -387,6 +387,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         $department = get_field('department', 'user_' . $user->ID);
 
                         //$is_login = get_field('is_first_login', 'user_' . $user->ID);
+
                         $is_login = false;
 
                             $date = new DateTime();

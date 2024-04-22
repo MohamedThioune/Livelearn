@@ -46,7 +46,6 @@ foreach ($users as $user ) {
             //Followed topic
           
             //Stats engagement
-
         }
     //$is_login = get_field('is_first_login', 'user_' . $user->ID);
     $is_login = false;
