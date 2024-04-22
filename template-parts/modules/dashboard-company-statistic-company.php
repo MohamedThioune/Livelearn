@@ -177,6 +177,8 @@ $count_assessments = count($assessments);
 $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
 $assessment_not_started = 100;
 $assessment_completed = 0;
+$members_active = 0;
+$members_inactive = 0;
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
@@ -335,8 +337,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         </select> -->
                     </div>
                     <div>
-                        <!-- <canvas id="ChartEngagement"></canvas> -->
-                        <span>No data enough !</span>
+                        <canvas id="ChartEngagement"></canvas>
+                        <!-- <span>No data enough !</span> -->
                     </div>
                 </div>
                 <div class="card-circular-bar">
@@ -530,6 +532,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
             labels: ["Active",	"Inactive"],
             datasets: [{
                 data: [90,	10], // Specify the data values array
+                data: [<?=$members_active?>,<?=$members_inactive?>], // Specify the data values array
 
                 borderColor: ['#47A99E', '#FF0000'], // Add custom color border
                 backgroundColor: ['#47A99E', '#FF0000'], // Add custom color background (Points and Fill)
