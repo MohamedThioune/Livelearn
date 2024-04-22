@@ -339,6 +339,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                     <div>
                         <canvas id="ChartEngagement"></canvas>
                         <!-- <span>No data enough !</span> -->
+
                     </div>
                 </div>
                 <div class="card-circular-bar">
