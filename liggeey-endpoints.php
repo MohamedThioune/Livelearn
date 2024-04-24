@@ -2242,7 +2242,6 @@ function candidateMyResumeDelete(WP_REST_Request $request) {
   $response = new WP_REST_Response($response_data);
   $response->set_status(200);
   return $response;
-
 }
 
 //Made By Fadel
@@ -2330,26 +2329,36 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
   return $response;
 }
 
+//Notifications
 function notifications(WP_REST_Request $request){
   $required_parameters = ['userApplyId'];
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $user_apply = get_user_by( 'ID', $user_id );
 
-    $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-    // ID topic
-    $topic_id = isset($request['topic_id']) ? intval($request['topic_id']) : 0;
+  //List notification
+  $notifications = array(); 
+  $args = array(
+    'post_type' => 'notification',  
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author' => $user_apply->ID,
+    'order' => 'DESC' ,
+  );
+  $main_notifications = get_posts($args);
 
-    // ID validated
-    if ($topic_id <= 0) {
-        $response = array(
-            'success' => false,
-            'message' => 'Invalid topic ID.'
-        );
-        return new WP_REST_Response($response, 400);
-    }
+  // Récupérer l'ID de l'utilisateur 
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
 
-    $topics_external = get_user_meta($user_id, 'topic');
-    $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+  foreach ($main_notifications as $key => $post) :
+    # code...
+    $sample = array();
+    $sample['ID'] = $post->ID;
+    $sample['title'] = $post->post_title;
+    $post_date = new DateTimeImmutable($post->post_date);
+    $sample['post_date'] = $post_date->format('M d, Y');
+    $sample['content'] = get_field('content', $post->ID) ?: 'Nan';
+    $sample['trigger'] = get_field('trigger', $post->ID) ?: 'Nan';
+    $author_trigger_id = get_field('author_trigger_id', $post->ID);
 
     //Author trigger [Not in mandatory]
     if($author_trigger_id):
@@ -2360,32 +2369,14 @@ function notifications(WP_REST_Request $request){
       endif;
     endif;
 
-    // if topic already exists for user
-    if (in_array($topic_id, $topics)) {
-        $response = array(
-            'success' => false,
-            'message' => 'Topic already exists for the user.'
-        );
-        return new WP_REST_Response($response, 400);
-    }
+    array_push($notifications, $sample);
 
-    // Add topics for user
-    $added = add_user_meta($user_id, 'topic', $topic_id);
+  endforeach;
 
-    // Return response
-    if ($added) {
-        $response = array(
-            'success' => true,
-            'message' => 'Topic added successfully.'
-        );
-    } else {
-        $response = array(
-            'success' => false,
-            'message' => 'Failed to add topic.'
-        );
-    }
-    // Response
-    return new WP_REST_Response($response, 200);
+  $response = new WP_REST_Response($notifications);
+  $code_status = 201;
+  $response->set_status($code_status);
+  return $response;
 }
 
 
