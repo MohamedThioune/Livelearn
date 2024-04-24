@@ -26,7 +26,7 @@ function artikel($id){
   $sample['image'] = $thumbnail;
   $author = get_user_by('ID', $post->post_author);
   $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
   $post_date = new DateTimeImmutable($post->post_date);
   $sample['post_date'] = $post_date->format('M d, Y');
   $reviews = get_field('reviews', $post->ID);
@@ -35,13 +35,13 @@ function artikel($id){
   $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
 
   //Reviews | Comments
-  $comments = array();
+  $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
   foreach($main_reviews as $review):
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
     $image_author = get_field('profile_img',  'user_' . $user->ID);
-    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $company = get_field('company',  'user_' . $user->ID);
     $title = $company[0]->post_title;
 
@@ -49,7 +49,7 @@ function artikel($id){
     $comment['comment_author_name'] = $author_name ;
     $comment['comment_author_image'] = $image_author;
     $comment['rating'] = $review['rating'];
-    $comment['Feedback'] = $review['Feedback'];
+    $comment['feedback'] = $review['feedback'];
 
     $comments[] = $comment;
   endforeach;
@@ -66,7 +66,7 @@ function job($id, $userApplyId = null){
   $sample = array();
   $post = get_post($param_post_id);
 
-  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
   $sample['posted_at'] = $post->post_date;
@@ -82,6 +82,7 @@ function job($id, $userApplyId = null){
   $main_company['ID'] = !empty($company) ? $company->ID : 0;
   $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
   $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
+  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
   $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
   $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : 'xxxx';
   $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : 'xxxx';
@@ -159,7 +160,7 @@ function company($id){
   $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
 
   $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
-  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
 
   //Open position
   $args = array(
@@ -196,7 +197,7 @@ function candidate($id){
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
@@ -463,7 +464,7 @@ function homepage(){
 
     // $image_author = get_field('profile_img',  'user_' . $post->post_author);
     // if(!$image_author)
-    //     $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+    //     $image_author = get_stylesheet_directory_uri() ."/img/liggeey-logo-bis.png";
 
     $sample = (Object)$sample;
     array_push($artikels, $sample);
@@ -694,8 +695,8 @@ function allCompanies(){
     $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
     $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
     //Just check more by testing but otherwis that a "Good Job !"
-    // $sample['company_logo'] = get_field('company_logo',  $post->company_logo) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-    $sample['company_logo'] = get_field('company_logo',  $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    // $sample['company_logo'] = get_field('company_logo',  $post->company_logo) ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $sample['company_logo'] = get_field('company_logo',  $post->ID) ?: get_stylesheet_directory_uri() . '/img/company.png';
 
     //Open position
     $args = array(
@@ -737,7 +738,7 @@ function allJobs(){
     if(!$post)
       continue;
 
-    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
     $sample = array('ID' => '0', 'title' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
     // Affichez ici le contenu de chaque élément
     $sample['ID'] = $post->ID;
@@ -748,6 +749,7 @@ function allJobs(){
 
     $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
     $sample['image'] = !empty($company) ? get_field('company_logo',  $company->ID) : $sample['image'];
+    $sample['image'] = ($sample['image']) ?: $placeholder;
     $sample['place'] = !empty($company) ? get_field('company_place',  $company->ID) : $sample['place'];
     $sample['country'] = !empty($company) ? get_field('company_country',  $company->ID) : $sample['country'];
 
@@ -817,6 +819,15 @@ function jobDetail(WP_REST_Request $request){
     $response->set_status(400);
     return $response;
   endif;  
+
+  $job = get_post($param_post_id);
+  $errors = [];
+  if (!$job) {
+      $errors['errors'] = 'No job found !';
+      $response = new WP_REST_Response($errors);
+      $response->set_status(401);
+      return $response;
+  }
 
   $sample = job($param_post_id);
 
@@ -940,7 +951,7 @@ function allArtikels(WP_REST_Request $request){
     $sample['permalink'] = get_permalink($post->ID);
     $author = get_user_by('ID', $post->post_author);
     $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $post_date = new DateTimeImmutable($post->post_date);
     $sample['post_date'] = $post_date->format('M d, Y');
     $reviews = get_field('reviews', $post->ID);
@@ -1052,6 +1063,7 @@ function liggeeySave(WP_REST_Request $request){
 
   $allowedValues = ['job', 'company', 'candidate'];
 
+  $errors = [];
   if (!in_array($typeApplyId, $allowedValues)) {
       $errors['errors'] = "Please respect this type listed: job, company, candidate !";
       $errors = (object)$errors;
@@ -1109,7 +1121,7 @@ function commentByID(WP_REST_Request $request ) {
      $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
 
      $image_author = get_field('profile_img',  'user_' . $user->ID);
-     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
 
      $rating = $review['rating'];
      $feedback = $review['Feedback'];
@@ -1323,6 +1335,7 @@ function ApplicantsUser(WP_REST_Request $request){
   $company = company($post[0]->ID);
   $sample['open_jobs'] = $company->open_jobs;
   $sample['count_open_jobs'] = $company->count_open_jobs;
+  $application = array();
   foreach($sample['open_jobs'] as $post):
     $job_appliants = get_field('job_appliants', $post->ID);
     $application = (!empty($job_appliants)) ? array_merge($application, $job_appliants) : $application;
@@ -1459,7 +1472,7 @@ function postJobUser(WP_REST_Request $request){
 
 //[POST]Dashboard User | Edit Job
 function editJobUser(WP_REST_Request $request) {
-  $required_parameters = ['jobId'];
+  $required_parameters = ['jobID'];
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
   $skills = ($request['skills']) ?: null;
@@ -1475,8 +1488,9 @@ function editJobUser(WP_REST_Request $request) {
   //Data Job
   $job = get_post($job_id);
 
+  $errors = [];
   if (!$job) {
-      $errors['errors'] = 'Something went wrong !';
+      $errors['errors'] = 'No job found !';
       $response = new WP_REST_Response($errors);
       $response->set_status(401);
       return $response;
@@ -1486,7 +1500,7 @@ function editJobUser(WP_REST_Request $request) {
     wp_set_post_terms($job_id, $skills, 'course_category');
 
   // Parameters REST request
-  $updated_data = $request->get_params();
+  $updated_data = $request->get_params(); 
 
   // Update Fields
   foreach ($updated_data as $field_name => $field_value) {
@@ -2274,7 +2288,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
             }
 
        endforeach;
-
       
     // Data
     $data = array(
@@ -2629,13 +2642,8 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
 
 function notifications(WP_REST_Request $request){
   $required_parameters = ['userApplyId'];
-  // Check required parameters 
-  $errors = validated($required_parameters, $request);
-  if($errors):
-    $response = new WP_REST_Response($errors);
-    $response->set_status(400);
-    return $response;
-  endif; 
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $user_apply = get_user_by( 'ID', $user_id );
 
   //List notification
   $notifications = array(); 
@@ -2667,7 +2675,7 @@ function notifications(WP_REST_Request $request){
       $author = get_user_by('ID', $author_trigger_id);
       if($author):
         $sample['author_trigger']['name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-        $sample['author_trigger']['photo'] = get_field('profile_img',  'user_' . $author->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $sample['author_trigger']['photo'] = get_field('profile_img',  'user_' . $author->ID) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
       endif;
     endif;
 
