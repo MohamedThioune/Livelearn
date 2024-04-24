@@ -1449,7 +1449,7 @@ function updateCompanyProfil(WP_REST_Request $request) {
 
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $company_id = get_field('company', 'user_' . $user_id)[0];
-  // var_dump($company_id);
+   var_dump($company_id);
 
   if (!$company_id) {
     $errors['errors'] = 'company not found';
