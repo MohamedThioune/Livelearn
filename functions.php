@@ -1791,6 +1791,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'recommendedWeekly'
   ));
 
+  register_rest_route ('custom/v1', '/update-language-courses', array(
+    'methods' => 'GET',
+    'callback' => 'updateLangaugeCourses'
+  ));
+
   //Liggeey
   register_rest_route ('custom/v1', '/homepage', array(
     'methods' => 'GET',
@@ -1909,7 +1914,7 @@ add_action( 'rest_api_init', function () {
 
   register_rest_route ('custom/v1', '/user/application', array(
     'methods' => 'POST',
-    'callback' => 'jobUserApprove'
+    'callback' => 'jobUserApproval'
   ));
 
   register_rest_route ('custom/v1', '/user/trash/favourite', array(
@@ -1972,6 +1977,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'countUserAppliedJobsAndFavorites'
   ));
 
+  register_rest_route ('custom/v1', '/user/skill', array(
+    'methods' => 'POST',
+    'callback' => 'add_topic_to_user'
+  ));
+
   register_rest_route ('custom/v1', '/candidate/myResume/update', array(
     'methods' => 'POST',
     'callback' => 'candidateMyResumeEdit'
@@ -1993,14 +2003,9 @@ add_action( 'rest_api_init', function () {
     'callback' => 'sendNotificationBetweenLiggeyActors'
   ));
 
-  register_rest_route ('custom/v1', '/update-language-courses', array(
-      'methods' => 'GET',
-      'callback' => 'updateLangaugeCourses'
-  ));
-
-  register_rest_route ('custom/v1', '/user/skill', array(
-      'methods' => 'POST',
-      'callback' => 'add_topic_to_user'
+  register_rest_route ('custom/v1', '/notification/list', array(
+    'methods' => 'POST',
+    'callback' => 'notifications'
   ));
 
 });
