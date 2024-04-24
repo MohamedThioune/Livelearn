@@ -201,8 +201,8 @@ function candidate($id){
       $sample['member_since'] = $member_since->format('M d, Y');
 
       $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
-
       $date_born = get_field('date_born',  'user_' . $user->ID);
+      $sample['date_born'] = $date_born;
       if(!$date_born)
           $age = "No birth";
       else{
@@ -2263,8 +2263,6 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
     $response->set_status($code_status);
     return $response;
   }
-  
-  
   //Create notification
   $notification_data = 
   array(
@@ -2347,7 +2345,6 @@ function add_topic_to_user(WP_REST_Request $request) {
             'message' => 'Failed to add topic.'
         );
     }
-
     // Response
     return new WP_REST_Response($response, 200);
 }
