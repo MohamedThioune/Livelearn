@@ -1857,6 +1857,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCoursesOptimized',
   ));
 
+  register_rest_route('custom/v2', '/course/search/(?P<keywords>[-\w]+)', array(
+    'methods' => 'GET',
+    'callback' => 'searchCoursesViaKeyWords',
+  ));
+
+  register_rest_route('custom/v2', '/course/filtered', array(
+    'methods' => 'GET',
+    'callback' => 'allCoursesOptimizedWithFilter',
+  ));
+
   register_rest_route ('custom/v1', '/apply', array( 
     'methods' => 'POST',
     'callback' => 'jobUser'
