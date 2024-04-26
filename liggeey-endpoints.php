@@ -1406,7 +1406,7 @@ function FavoritesUser(WP_REST_Request $request){
 
 //[POST]Dashboard User | Post Job
 function postJobUser(WP_REST_Request $request){
-  $required_parameters = ['userApplyId', 'title', 'description', 'job_application_deadline', 'skills'];
+  $required_parameters = ['userApplyId', 'title', 'job_description', 'job_application_deadline', 'skills'];
 
   // Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -1418,7 +1418,7 @@ function postJobUser(WP_REST_Request $request){
 
   // Get input
   $title = $request['title'];
-  $job_description = $request['description'];
+  $job_description = $request['job_description'];
   $job_contract = ($request['job_contract']) ?: 'Full Time';
   $job_level_experience = ($request['job_level_of_experience']) ?: '';
   $job_language = ($request['job_langues']) ?: 'English';

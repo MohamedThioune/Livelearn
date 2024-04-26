@@ -65,8 +65,6 @@ $args = array(
 );
 $mandatories = get_posts($args);
 $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
-
-
 /*
 * * Courses dedicated of these user "Boughts + Mandatories"
 */
@@ -197,6 +195,8 @@ $count_assessments = count($assessments);
 $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
 $assessment_not_started = 100;
 $assessment_completed = 0;
+$members_active = 0;
+$members_inactive = 0;
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
@@ -399,15 +399,28 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         //$is_login = get_field('is_first_login', 'user_' . $user->ID);
                         $is_login = false;
 
+                        $date = new DateTime();
+                        $date_this_month = $date->format('Y-m-d');
+                        $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
                         $table_tracker_views = $wpdb->prefix . 'tracker_views';
-                        $sql = $wpdb->prepare("SELECT * FROM `wpe7_tracker_views` WHERE `user_id` = ".$user->ID);
+                        $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}tracker_views WHERE `user_id` = ".$user->ID." AND updated_at BETWEEN ".$date_last_month." AND ".$date_this_month);
                         $if_user_actif = $wpdb->get_results($sql);
 
                         if ($if_user_actif)
                             $is_login = true;
 
-                        $status = ($is_login) ? 'actif' : 'actif inactif';
-                        $status_text = ($is_login) ? 'Active' : 'Inactive';
+                        //$status = ($is_login) ? 'actif' : 'actif inactif';
+                        //$status_text = ($is_login) ? 'Active' : 'Inactive';
+                        if ($is_login) {
+                            $status_text = 'Active';
+                            $members_active++;
+                            $status = 'actif';
+                        }
+                        else {
+                            $status_text = 'Inactive';
+                            $members_inactive++;
+                            $status = 'actif inactif';
+                        }
 
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $current_user->ID;
                         
@@ -484,7 +497,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
         data: {
             labels: ["Active",	"Inactive"],
             datasets: [{
-                data: [90,	10], // Specify the data values array
+                //data: [50,	50], // Specify the data values array
+                data: [<?=$members_active?>,<?=$members_inactive?>], // Specify the data values array
 
                 borderColor: ['#47A99E', '#FF0000'], // Add custom color border
                 backgroundColor: ['#47A99E', '#FF0000'], // Add custom color background (Points and Fill)

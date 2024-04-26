@@ -709,7 +709,7 @@ $url = home_url( $wp->request );
                     </div>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- input search -->
+                        <!-- input search on top on top -->
                         <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 ">
                             <input value="<?=isset($_GET['search']) ? $_GET['search'] : '' ?>" id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                             <div class="dropdown-menuSearch headerDrop" id="header-list">
