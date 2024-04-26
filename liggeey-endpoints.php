@@ -1406,7 +1406,7 @@ function FavoritesUser(WP_REST_Request $request){
 
 //[POST]Dashboard User | Post Job
 function postJobUser(WP_REST_Request $request){
-  $required_parameters = ['userApplyId', 'title', 'job_description', 'job_contract', 'job_langues', 'skills'];
+  $required_parameters = ['userApplyId', 'title', 'job_description', 'job_langues', 'skills'];
 
   // Check required parameters 
   $errors = validated($required_parameters, $request);
