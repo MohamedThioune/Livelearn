@@ -1457,7 +1457,7 @@ function postJobUser(WP_REST_Request $request){
 
   // Add custom fields 
   update_field('job_company', $company, $job_id);
-  update_field('job_description', $description, $job_id);
+  update_field('job_description', $job_description, $job_id);
   update_field('job_contract', $job_contract, $job_id);
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
