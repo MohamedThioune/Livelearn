@@ -68,6 +68,7 @@
     .bntNotification i{
         display: block;
         font-size: 28px;
+
     }
     .scrolled{
         background: #023356 !important;
@@ -271,6 +272,7 @@
         }
 
     }
+
 
     @media not all and (min-resolution:.001dpcm) {
         @supports (-webkit-appearance: none) and (stroke-color: transparent) {
