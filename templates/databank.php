@@ -284,8 +284,7 @@ $urls =
         'Wood and Panel'  =>	'https://www.woodandpanel.com/',
         
     ];
-
-$file_xml = [
+    $file_xml = [
     '112BHV'=>'112bhv-20231101.1430.xml',
     '2xplain'=>'2xplain-b.v-20230925.0140.xml', 
     'agile scrum group'=>'agile-scrum-group-20230922.1323.xml', 
@@ -321,6 +320,37 @@ $file_xml = [
     'Winc Academy'=>'winc-academy-20231101.1423.xml',
     'Yearth Academy'=>'yearth-academy-20231102.0029.xml'
 ];
+
+      $url = 'https://api.edudex.nl/data/v1/organizations/livelearn/dynamiccatalogs';
+   ///  curl -s 'https://api-test.edudex.nl/data/v1/organizations' -H "Authorization: Bearer $APITOKEN" | jq
+     $headers = [
+
+    
+    'Authorization:Bearer secret-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJFZHUtRGV4IiwiaWF0IjoxNzEzNDMxMjExLCJuYmYiOjE3MTM0MzEyMTEsInN1YiI6ImVkdWRleC1hcGktdXNlciIsInNjb3BlIjoiZGF0YSIsIm5vbmNlIjoidjh2UjNmTkY4NHdWaTZOMDlfQWl5QSIsImV4cCI6MTkwMjc0MzEwMH0.RxttT9h1eA07fYIRFqDes3EJnLiDMVWaxcY0IVFIElI',
+    
+];
+ $file_xml = [];
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+    $response = curl_exec($ch); 
+
+    $data = json_decode($response, true);
+    $catalogs=$data["catalogs"];
+
+     foreach ($catalogs as $catalog) {
+     $file_xml[$catalog['title']] = $catalog['catalogId']; 
+        
+     }
+     
+
+
 ?>
 
 <?php wp_head();?>
