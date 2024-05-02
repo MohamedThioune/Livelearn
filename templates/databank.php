@@ -284,42 +284,7 @@ $urls =
         'Wood and Panel'  =>	'https://www.woodandpanel.com/',
         
     ];
-    $file_xml = [
-    '112BHV'=>'112bhv-20231101.1430.xml',
-    '2xplain'=>'2xplain-b.v-20230925.0140.xml', 
-    'agile scrum group'=>'agile-scrum-group-20230922.1323.xml', 
-    'Anker Kompas'=>'anker-kompas-20230922.1323.xml', 
-    'Aeres Tech'=>'aeres-tech-20230925.0141.xml',
-    'Edumia'=>'edumia-20231024.1105.xml',
-    'Arbeidsmarktcommunicatie'=>'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml',
-    'Beeckestijn'=>'beeckestijn-20231101.2250.xml',
-    'berenschot'=>'berenschot-20231101.1421.xml',
-    'bhv.nl'=>'bhv.nl-20231102.0032.xml',
-    'BIT Academy'=>'bit-academy-20231101.1430.xml',
-    'BLOM'=>'blom-20231102.0026.xml',
-    'Bureau-Vris'=>'bureau-vris-20231101.1431.xml',
-    'Buro Brand'=>'buro-brand-20231101.1422.xml',
-    'CM Partners'=>'cm-partners-20231102.0033.xml',
-    'Comenius'=>'comenius-20231101.1422.xml',
-    'Competence Factory'=>'competence-factory-20231102.0027.xml',
-    'Faculty of Skills'=>'faculty-of-skills-20231101.1430.xml',
-    'Frankwatching'=>'frankwatching-20231102.0033.xml',
-    'Growth Tribe'=>'growth-tribe-20231101.1422.xml', 
-    'Horizon'=>'horizon-20231102.0028.xml',
-    'HR Academy'=>'hr-academy-20231102.0028.xml',
-    'Kenneth Smit'=>'kenneth-smit-20231102.0028.xml',
-    'Kenneth Smit Direct'=>'kenneth-smit-direct-20231102.0028.xml',
-    'Possible'=>'possible-20231102.0028.xml',
-    'Saxion Parttime School'=>'saxion-parttime-school-20231101.1423.xml',
-    'Scheidegger'=>'scheidegger-20231102.0027.xml',
-    'Schouten Nelissen'=>'schouten-nelissen-20231102.0028.xml',
-    'Start2Move'=>'start2move-20231101.1423.xml',
-    'TekkieWorden'=>'tekkieworden-20231101.1423.xml',
-    'TVVL'=>'tvvl-20231101.1423.xml',
-    'Vijfhart'=>'vijfhart-20231102.0028.xml',
-    'Winc Academy'=>'winc-academy-20231101.1423.xml',
-    'Yearth Academy'=>'yearth-academy-20231102.0029.xml'
-];
+    
 
       $url = 'https://api.edudex.nl/data/v1/organizations/livelearn/dynamiccatalogs';
    ///  curl -s 'https://api-test.edudex.nl/data/v1/organizations' -H "Authorization: Bearer $APITOKEN" | jq
