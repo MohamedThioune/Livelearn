@@ -1144,7 +1144,7 @@
                 <p class="title-card">Voor opleiders / experts</p>
                 <p class="description-card">Ben jij een expert, opleider of coach? Unlock je teacher omgeving en deel / verkoop direct je kennis.</p>
                 <div class="w-100">
-                    <a href="/voor-opleiders/">Sign-up!</a>
+                    <button class="btn" data-toggle="modal" data-target="#modal-login-with-podcast">Sign-up!</button>
                 </div>
             </div>
         </div>
@@ -1678,3 +1678,128 @@
 
     </script>
 
+
+
+    <div class="modal fade" id="modal-login-with-podcast" tabindex="-1" role="dialog" aria-labelledby="modal-login-with-podcastTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body create-account-block">
+                    <p class="title-modal">Welcome !</p>
+                    <p class="description-modal">Please, Connect to continue</p>
+                    <div class="group-btn-connection">
+                        <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                            Continue with Google
+                        </a>
+                    </div>
+                    <div class="d-flex hr-block">
+                        <hr>
+                        <p>Or</p>
+                        <hr>
+                    </div>
+                    <div class="form-input">
+                        <form action="" method="POST">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password-workflow">Password</label>
+                                <input type="password" class="form-control" id="Password-workflow" name="password" placeholder="Enter your Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-coneection" id="">Create Acccount</button>
+                        </form>
+                        <button class="btn btn-switch-login btn-Sign-Up">You don't have an account ? Sign Up</button>
+                    </div>
+                </div>
+                <div class="modal-body register-block">
+                    <p class="title-modal">Welcome !</p>
+                    <p class="description-modal">Please, Create an account to continue</p>
+                    <div class="group-btn-connection">
+                        <a href="<?php echo get_site_url() ?>/fluidify/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-connection">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/net-icon-google.png" alt="First-slide-looggin">
+                            Continue with Google
+                        </a>
+                    </div>
+                    <div class="d-flex hr-block">
+                        <hr>
+                        <p>Or</p>
+                        <hr>
+                    </div>
+                    <div class="alert alert-danger d-none text-center" role="alert" id="alert-danger-register">
+                        the confirm password don't match with password !!!
+                    </div>
+                    <div class="form-input">
+                        <form action="<?= $url ?>" method="POST" id="new-form-register-workflow">
+
+                            <div class="first-step-modal">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required>
+                                </div>
+                                <button type="button" class="btn btn-coneection" id="create-account-step">Create Account</button>
+                            </div>
+
+                            <div class="second-step-modal">
+                                <div class="form-group">
+                                    <label for="First-name">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="First-name">First name</label>
+                                    <input type="text" class="form-control" id="First-name" name="firstName" placeholder="Enter your First name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last name</label>
+                                    <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter your last name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Company">Company</label>
+                                    <input type="text" class="form-control" id="Company" name="Company" placeholder="Enter your Company name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone-number">phone number</label>
+                                    <input type="text" class="form-control" id="phone-number" name="phone" placeholder="Enter your phone-number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Password-workflow">Password</label>
+                                    <input type="password" class="form-control" id="Password-workflow" name="password" placeholder="Enter your Password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Password2-workflow">Password</label>
+                                    <input type="password" class="form-control" id="Password2-workflow" name="password2" placeholder="Confirm your Password" required>
+                                </div>
+                                <button type="submit" class="btn btn-coneection" id="">Create Acccount</button>
+                            </div>
+                        </form>
+                        <div class="form-block group-btn-modal d-flex align-items-center">
+                            <button class="btn btn-switch-email d-none">Return on Email</button>
+                            <button class="btn btn-switch-login">You already have a account? <b>Login</b></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#create-account-step").click(function() {
+            $(".btn-switch-email").removeClass('d-none');
+            $(".first-step-modal").hide();
+            $(".second-step-modal").show();
+        });
+        $(".btn-switch-login").click(function() {
+            $(".register-block").hide();
+            $(".create-account-block").show();
+        });
+        $(".btn-switch-email").click(function() {
+            $(".btn-switch-email").addClass('d-none');
+            $(".second-step-modal").hide();
+            $(".first-step-modal").show();
+        });
+        $(".btn-Sign-Up").click(function() {
+            $(".register-block").show();
+            $(".create-account-block").hide();
+        });
+    </script>
