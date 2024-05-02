@@ -2,6 +2,7 @@
 <?php
 $guest = wp_get_current_user();
 $name_guest = (($guest->first_name) ?: $guest->display_name);
+$trigger = "LIGGEEY";
 $mail_invitation_body =
 
 
@@ -147,9 +148,9 @@ $mail_invitation_body =
                   <tbody>
                     <tr>
                       <td align="center" vertical-align="top"
-                        style="background:#023356;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
-                        <p style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
+                        style="background:#143352;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+                        <p style="border-top:solid 10px #143352;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #143352;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+                      </td></tr></table><![endif]-->
                       </td>
                     </tr>
                   </tbody>
@@ -181,7 +182,7 @@ $mail_invitation_body =
                           <tbody>
                             <tr>
                               <td style="width:50px;"><a href="https://liggeey.com" target="_blank"><img alt=""
-                                    height="auto" src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/lurx1/l0xh.png"
+                                    height="auto" src="' . get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png"
                                     style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                     width="50"></a></td>
                             </tr>
@@ -260,10 +261,10 @@ $mail_invitation_body =
                           style="border-collapse:separate;line-height:100%;">
                           <tbody>
                             <tr>
-                              <td align="center" bgcolor="#023356" role="presentation"
-                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
+                              <td align="center" bgcolor="#143352" role="presentation"
+                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#143352;"
                                 valign="middle"><a href="https://liggeey.com/login"
-                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
+                                  style="display:inline-block;background:#143352;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
                                     style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
                               </td>
@@ -298,7 +299,7 @@ $mail_invitation_body =
                       <td align="center" vertical-align="top"
                         style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
                         <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
+                      </td></tr></table><![endif]-->
                       </td>
                     </tr>
                   </tbody>
@@ -478,7 +479,7 @@ $mail_invitation_body =
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
                             data-testid="p1wGkfjeZKT7"><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
-                              sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
+                              sent to ' . $email . ' as part of our welcome series.</span><br><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
                               messages from this series, </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" target="_blank"
