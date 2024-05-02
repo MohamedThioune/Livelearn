@@ -92,6 +92,7 @@
             </div>
             <div class="d-flex align-items-center justify-content-center block-hr-strat">
                 <hr>
+
                 <div class="block-start d-flex align-items-center justify-content-center">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Group_301.png" class="" alt="">
                     <p class="mb-0">(8,1)</p>
