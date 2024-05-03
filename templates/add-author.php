@@ -42,7 +42,6 @@ function addAuthor($users, $key){
     $author_id = 0;
     if(!$company):
         // Creating new company
-
         $argv = array(
             "post_type" => "company",
             "post_title" => $key,
@@ -61,7 +60,7 @@ function addAuthor($users, $key){
 
     //Companny do exists
     if($company):
-     
+      
       
         foreach ($users as $user) :
             $key_title = $company->post_title;
@@ -71,7 +70,7 @@ function addAuthor($users, $key){
                 $company_user = $company_users[0];
                 $company_title = strtolower($company_user->post_title);
                 if($company_title == strtolower($key_title) || $company_title == strtolower($key_slug)):
-               
+                    
                     $author_id = $user->ID;
                     break;
                 endif;
