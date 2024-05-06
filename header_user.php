@@ -155,6 +155,20 @@ $see_experts = get_users(
             .fa-angle-down-bleu{
                 display: none;
             }
+            .dropdown-search {
+                top: 64px !important;
+            }
+            @media all and (min-width: 300px) and (max-width: 767px) {
+            #for-search-element {
+                padding: 30px 20px;
+                position: fixed !important;
+                height: 100%;
+                overflow: scroll !important;
+                top: 62px !important;
+                overflow-x: scroll;
+            }
+
+            }
         </style>
 
 
