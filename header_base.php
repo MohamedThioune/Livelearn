@@ -893,7 +893,9 @@ $url = home_url( $wp->request );
                         <button id="Groeien-binnen" class="btn element-navMobile">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-building.png" alt="search">
                                 Groeien binnen je functie
+
                         </button>
+                        
                         <button id="relevante-btn" class="btn element-navMobile">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-lightbulb.png" alt="search">
                                 Relevante skills ontwikkelen
@@ -907,69 +909,64 @@ $url = home_url( $wp->request );
                 <div class="sub-block-2" id="2sub-block">
                     <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
                     <ul>
+                      <?php
+                    foreach($bangerichts as $bangericht){
+                        ?>
                         <li class="btn element-navMobile">
-                            <a href="">Detailhandel</a>
+                        <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
                         </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Agrarisch / Groen</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Bouw</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Cultureel</a>
-                        </li>
+                        <?php
+                    }
+                    ?>
+                        
+                        
+                        
                     </ul>
                 </div>
                 <div class="sub-block-2" id="3sub-block">
                     <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
-                    <ul>
+                     <ul>
+                         <?php
+                    foreach($functies as $functie){
+                        ?>
                         <li class="btn element-navMobile">
-                            <a href="">Financieel</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Human Resources</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Inkoop</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Innovatie en R&D</a>
-                        </li>
+                        <a href="sub-topic?subtopic=<?php echo $functie->cat_ID ?>" class="TextZorg"><?php echo $functie->cat_name ?></a>
+                         </li>
+                        <?php
+                       
+                    }
+                    ?>
                     </ul>
+                  
                 </div>
                 <div class="sub-block-2" id="4sub-block">
                     <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
                     <ul>
+                      <?php
+                    foreach($skills as $skill){
+                        ?>
                         <li class="btn element-navMobile">
-                            <a href="">Cultuur</a>
+                        <a href="sub-topic?subtopic=<?php echo $skill->cat_ID ?>" class="TextZorg"><?php echo $skill->cat_name ?></a>
                         </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Hardware</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Informatie management</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Interpersonal</a>
-                        </li>
+                        <?php
+                    }
+                    ?>
+                        
                     </ul>
                 </div>
                 <div class="sub-block-2" id="5sub-block">
                     <button class="btn btn-back go-back-2"><i class="fa fa-angle-left mr-2"></i>Back</button>
                     <ul>
-                        <li class="btn element-navMobile">
-                            <a href="">Social media</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Ambachten</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Eten / Drinken</a>
-                        </li>
-                        <li class="btn element-navMobile">
-                            <a href="">Fashion</a>
-                        </li>
+                       <?php
+                    foreach($interesses as $interesse){
+                        ?>
+                         <li class="btn element-navMobile">
+                        <a href="sub-topic?subtopic=<?php echo $interesse->cat_ID ?>" class="TextZorg"><?php echo $interesse->cat_name ?></a>
+                         </li>
+                        <?php
+                    }
+                    ?>
+                        
                     </ul>
                 </div>
                 <div class="sub-block-2" id="team-organisati-block">

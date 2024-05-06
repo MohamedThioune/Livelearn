@@ -6,7 +6,7 @@ if(is_user_logged_in()){
     $user_roles = $user->roles;
 
 //    if(in_array('manager', $user_roles) || in_array('administrator', $user_roles)){
-//        include_once(dirname(__FILE__).'/header_manager.php');	
+//        include_once(dirname(__FILE__).'/header_manager.php');
 //    }else if(in_array('teacher', $user_roles)){
 //        include_once(dirname(__FILE__).'/header_teacher.php');
 //    }else{
@@ -15,7 +15,160 @@ if(is_user_logged_in()){
 }else{
     include_once(dirname(__FILE__).'/header_base.php');
 }
-//include_once(dirname(__FILE__).'/header_base.php');
+
+//Categories
+$bangerichts = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[1],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$functies = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[0],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$skills = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[3],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$interesses = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[2],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$subtopics = array();
+$topics = array();
+foreach($categories as $categ){
+    //Topics
+    $topicss = get_categories(
+        array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        )
+    );
+    $topics = array_merge($topics, $topicss);
+
+    foreach ($topicss as  $value) {
+        $subtopic = get_categories(
+            array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
+                //  change to 1 to hide categores not having a single post
+            )
+        );
+        $subtopics = array_merge($subtopics, $subtopic);
+    }
+}
+
+foreach($bangerichts as $key1=>$tag){
+
+    //Topics
+    $cats_bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => $tag->cat_ID,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ));
+    if (count($cats_bangerichts)!=0)
+    {
+        $row_bangrichts='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_bangerichts as $key => $value)
+        {
+            $row_bangrichts = '
+                <input type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
+        }
+        $row_bangrichts= '</div>';
+    }
+
+}
+
+foreach($functies as $key1 =>$tag)
+{
+
+    //Topics
+    $cats_functies = get_categories(
+        array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+    if (count($cats_functies)!=0)
+    {
+        $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_functies as $key => $value)
+        {
+            $row_functies .= '
+            <input type="checkbox" name="choice_functies_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_funct_'.($value->cat_ID).'" /><label class="labelChoose" for="cb_funct_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+        }
+        $row_functies.= '</div>';
+    }
+}
+
+foreach($skills as $key1=>$tag){
+    //Topics
+    $cats_skills = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => $tag->cat_ID,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ));
+    if (count($cats_skills)!=0)
+    {
+        $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_skills as $key => $value)
+        {
+            $row_skills .= '
+                    <input type="checkbox" name="choice_skills'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_skills_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_skills_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+        }
+        $row_skills.= '</div>';
+    }
+
+}
+
+foreach($interesses as $key1=>$tag){
+    //Topics
+    $cats_interesses = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => $tag->cat_ID,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ));
+    if (count($cats_interesses)!=0)
+    {
+        $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_interesses as $key => $value)
+        {
+            $row_interesses .= '
+            <input type="checkbox" name="choice_interesses_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_interesses_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_interesses_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+        }
+        $row_interesses.= '</div>';
+    }
+
+}
+
+if (isset($_POST["subtopics_first_login"])){
+    unset($_POST["subtopics_first_login"]);
+    $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+    foreach ($_POST as $key => $subtopics) {
+        if (isset($_POST[$key]))
+        {
+            if (!(in_array($_POST[$key], $subtopics_already_selected)))
+            {
+                add_user_meta(get_current_user_id(),'topic',$_POST[$key]);
+            }
+
+        }
+    }
+    update_field('is_first_login', true, 'user_'.get_current_user_id());
+}
+
+
+
+
 ?>
 <style>
     #croieSearch {
@@ -234,10 +387,20 @@ if(is_user_logged_in()){
 
 </style>
 <!-- for search  -->
-<div class="modal  dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
+<div class="modal dropdown-search" id="for-search-element" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
     <div class="container-fluid">
         <section class="content-product-search">
             <div class="container-fluid">
+                <div class="search-mobile">
+                    <form action="/product-search" method="GET" class="form-inline ml-auto mb-0 ">
+                        <input value="<?=isset($_GET['search']) ? $_GET['search'] : '' ?>" id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
+                        <div class="dropdown-menuSearch headerDrop" id="header-list">
+                            <div class="list-autocomplete" id="header">
+                                <center> <i class='hasNoResults'>No matching results</i> </center>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="swiper-leeveroom">
                     <p class="title-search">Populair zoeken</p>
                     <div class="swiper-container new-swiper-modal">
@@ -257,6 +420,60 @@ if(is_user_logged_in()){
                         </div>
                     </div>
 
+                </div>
+                <div class="block-top-header">
+                    <div class="blockGroupText">
+                        <a href="/main-category-overview/?main=1" class="titleGroupText">Opleiden richting een baan </a>
+
+                        <div class="sousBlockGroupText">
+                            <?php
+                            foreach($bangerichts as $bangericht){
+                                ?>
+                                <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="blockGroupText">
+                        <a href="/main-category-overview/?main=4" class="titleGroupText">Groeien binnen je functie </a>
+
+                        <div class="sousBlockGroupText">
+                            <?php
+                            foreach($functies as $functie){
+                                ?>
+                                <a href="sub-topic?subtopic=<?php echo $functie->cat_ID ?>" class="TextZorg"><?php echo $functie->cat_name ?></a>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="blockGroupText">
+                        <a href="/main-category-overview/?main=3" class="titleGroupText">Relevante skills ontwikkelen:</a>
+
+                        <div class="sousBlockGroupText">
+                            <?php
+                            foreach($skills as $skill){
+                                ?>
+                                <a href="sub-topic?subtopic=<?php echo $skill->cat_ID ?>" class="TextZorg"><?php echo $skill->cat_name ?></a>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="blockGroupText">
+                        <a href="/main-category-overview/?main=2" class="titleGroupText">Persoonlijke interesses & vrije tijd</a>
+
+                        <div class="sousBlockGroupText">
+                            <?php
+                            foreach($interesses as $interesse){
+                                ?>
+                                <a href="sub-topic?subtopic=<?php echo $interesse->cat_ID ?>" class="TextZorg"><?php echo $interesse->cat_name ?></a>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="block-Suggesties">
                     <p class="title-search">
@@ -319,4 +536,25 @@ if(is_user_logged_in()){
 
     var connectTabs = new Tabs();
 
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInputs = document.querySelectorAll('.inputSearch');
+        const blockTopHeader = document.querySelector('.block-top-header');
+        const blockSuggesties = document.querySelector('.block-Suggesties');
+
+        searchInputs.forEach(function(searchInput) {
+            searchInput.addEventListener('input', function() {
+                if (searchInput.value.trim() !== '') {
+                    // Afficher block-Suggesties et masquer block-top-header
+                    blockSuggesties.style.display = 'block';
+                    blockTopHeader.style.display = 'none';
+                } else {
+                    // Masquer block-Suggesties et afficher block-top-header
+                    blockSuggesties.style.display = 'none';
+                    blockTopHeader.style.display = 'block';
+                }
+            });
+        });
+    });
 </script>
