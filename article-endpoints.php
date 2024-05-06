@@ -913,12 +913,20 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     $index = intval($data['id']);
 
     $groups = $website_urls[$index];
-   
+    
     $data_insert=0;
-    foreach ($groups as $website) {
-        //Get the URL content
-          $data_insert=addCourseGeneral($website);
+    echo "<h1 class='titleGroupText' style='font-weight:bold'>Compagnies:</h1>";
+    echo "<h1 class='titleGroupText' style='font-weight:bold'>------------</h1>";
 
+   foreach ($groups  as $key => $website) {
+        echo "<h2 class='titleGroupText' style='font-weight:bold'>".$key."</h2>";
+   }
+    echo "<h1 class='titleGroupText' style='font-weight:bold'>------------</h1>";
+    foreach ($groups  as $key => $website) {
+        //Get the URL content
+          
+          $data_insert=addCourseGeneral($website);
+        
        
 
         //Retrieve courses
