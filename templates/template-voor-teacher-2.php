@@ -37,8 +37,56 @@
                     <div class="blockForm2">
                         <p><b>Aanmelden expert of opleider</b></p>
                         <?php
-                            echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
-                        ?>
+/*                            echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                        */?>
+                        <div class="form-input new-form-input">
+                            <form action="" method="POST" id="new-form-register-workflow">
+
+                                <div class="first-step-modal">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required>
+                                    </div>
+                                    <button type="button" class="btn btn-connection" id="create-account-step">Create Account</button>
+                                </div>
+
+                                <div class="second-step-modal">
+                                    <div class="form-group">
+                                        <label for="First-name">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="First-name">First name</label>
+                                        <input type="text" class="form-control" id="First-name" name="firstName" placeholder="Enter your First name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last-name">Last name</label>
+                                        <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter your last name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Company">Company</label>
+                                        <input type="text" class="form-control" id="Company" name="Company" placeholder="Enter your Company name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone-number">phone number</label>
+                                        <input type="text" class="form-control" id="phone-number" name="phone" placeholder="Enter your phone-number">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Password-workflow">Password</label>
+                                        <input type="password" class="form-control" id="Password-workflow" name="password" placeholder="Enter your Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Password2-workflow">Password</label>
+                                        <input type="password" class="form-control" id="Password2-workflow" name="password2" placeholder="Confirm your Password" required>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button class="btn btn-switch-email d-none mb-2">Return on Email</button>
+                                        <button type="submit" class="btn btn-connection" id="">Create Acccount</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,6 +131,26 @@
         </div>
     </section>
 </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $("#create-account-step").click(function() {
+            $(".btn-switch-email").removeClass('d-none');
+            $(".first-step-modal").hide();
+            $(".second-step-modal").show();
+        });
+        $(".btn-switch-login").click(function() {
+            $(".register-block").hide();
+            $(".create-account-block").show();
+        });
+        $(".btn-switch-email").click(function() {
+            $(".btn-switch-email").addClass('d-none');
+            $(".second-step-modal").hide();
+            $(".first-step-modal").show();
+        });
+        $(".btn-Sign-Up").click(function() {
+            $(".register-block").show();
+            $(".create-account-block").hide();
+        });
+    </script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
