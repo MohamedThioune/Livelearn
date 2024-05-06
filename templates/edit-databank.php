@@ -1,4 +1,6 @@
-<?php /** Template Name: Edit Databank */ ?>
+<?php /** Template Name: Edit Databank */ 
+require_once 'add-author.php';
+?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -234,15 +236,18 @@ $companies = get_posts($args);
                            <label for="">Author</label>
                            <select class="multipleSelect2" name="author_id" id="" required>
                               <?php
-                               if($course->author_id != 0)
-                                    foreach($users as $user)
+                               if($course->author_id != 0){
+                                    $userswithCompany=usersWithCompany($users);
+                                    foreach($userswithCompany as $user)
                                         if($user->ID == $course->author_id)
                                             echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
                                         else
                                             echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+                               }            
                                 else{
                                     echo '<option value=""></option>';
-                                    foreach($users as $user)
+                                     $userswithCompany=usersWithCompany($users);
+                                    foreach($userswithCompany as $user)
                                         echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
                                 }
                               ?>

@@ -34,6 +34,9 @@ function addAuthor($users, $key){
     $key_slug = $key;
     $company = get_page_by_path($key, OBJECT, 'company');
 
+   
+    
+  
 
     //Companny do not exists
     $author_id = 0;
@@ -46,7 +49,8 @@ function addAuthor($users, $key){
         );
         $company_id = wp_insert_post($argv);
         $company = get_post($company_id);
-
+       
+        // $company_users = get_field('company', 'user_' . $user->ID);
         $author_id = generatorAuthor($key);
     
         // Associate user with company
@@ -56,6 +60,8 @@ function addAuthor($users, $key){
 
     //Companny do exists
     if($company):
+      
+      
         foreach ($users as $user) :
             $key_title = $company->post_title;
             $key_slug = $company->post_name;    
@@ -64,6 +70,7 @@ function addAuthor($users, $key){
                 $company_user = $company_users[0];
                 $company_title = strtolower($company_user->post_title);
                 if($company_title == strtolower($key_title) || $company_title == strtolower($key_slug)):
+                    
                     $author_id = $user->ID;
                     break;
                 endif;
@@ -87,5 +94,18 @@ function addAuthor($users, $key){
     return ['author' => $author_id, 'company' => $company->ID];
   
   }
+  function usersWithCompany($users){
+    $usersWithCompany= array();
+     foreach ($users as $user) :
+            $company_users = get_field('company', 'user_' . $user->ID);
+            if(isset($company_users))            
+              array_push($usersWithCompany, $user);
+        
+               
+     endforeach;
+    return $usersWithCompany;
+   
+  }
+
   
   ?>

@@ -1124,7 +1124,7 @@
 
 <div class="container-fluid">
     <div class="img-block-illustration">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.webp"  alt="">
+        <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn-.webp"  alt="">
     </div>
     <div class="content-btn-get-app">
         <button onclick="redirect()" class="btn"> <img src="<?php echo get_stylesheet_directory_uri();?>/img/qrcode.png"  alt=""> <span>Get the APP</span></button>
@@ -1651,13 +1651,14 @@
     <script>
 
         $(document).ready(function () {
-            // Fonction pour vérifier la largeur de la fenêtre
             function checkWindowWidth() {
                 var windowWidth = $(window).width();
                 if (windowWidth >= 300 && windowWidth <= 767) {
 
                     $(".showblock-mobil-search").click(function() {
                         $("#for-search-element").addClass("show-mobile-search-block");
+                        $("#searchIcone").hide();
+                        $("#croieSearch").show();
                     });
 
                     $(".close").click(function() {
@@ -1666,13 +1667,9 @@
 
                 }
             }
-
-            // Appeler la fonction pour vérifier la largeur de la fenêtre lors du chargement de la page
             checkWindowWidth();
 
-            // Ajouter un gestionnaire d'événements pour redimensionner la fenêtre
             $(window).resize(function() {
-                // Appeler à nouveau la fonction pour vérifier la largeur de la fenêtre lors du redimensionnement
                 checkWindowWidth();
             });
         });
