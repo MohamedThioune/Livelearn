@@ -975,7 +975,7 @@ if (!empty($courses)) {
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
                    // document.getElementById('content-back-topics').innerHTML = response;
-                    location.reload();
+                     location.reload();
                 }
             });
         });

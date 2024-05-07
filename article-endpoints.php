@@ -835,15 +835,12 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
     $data = json_decode($response, true);
     $catalogs=$data["catalogs"];
-     $i=0;
+     
      foreach ($catalogs as $catalog) {
      $file_xml[$catalog['title']] = $catalog['catalogId'];
-     $i++;
-     if($i==4){
+    
        $website_urls[]=$file_xml;
-       $file_xml=[];
-       $i=0;
-     }   
+      
      }
      if (!in_array($file_xml, $website_urls)) {
     // Add $file_xml to $website_urls
