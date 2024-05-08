@@ -495,8 +495,8 @@ function Artikel_From_Company($data)
         'long_description' => null,
         'agenda' => $datum['programDescriptions']['programDescriptionText']['nl'],
         'url_image' => $image,
-        'prijs' => $datum['programSchedule']['genericProgramRun']['cost->amount'],
-        'prijsvat' => $datum['programSchedule']['genericProgramRun']['cost']['amountVAT'],
+        'prijs' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amount'],
+        'prijsvat' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amountVAT'],
         'degree' => $datum['programClassification']['degree'],
         'teacher_id' => $datum['programCurriculum']['teacher']['id'],
         'org' => $datum['programClassification']['orgUnitId'],
@@ -682,8 +682,9 @@ function Artikel_From_Company($data)
         'agenda' => strval($datum['programDescriptions']['programDescriptionText']['nl']),
         'image_xml' => strval($image),
         'attachment_xml' => $attachment_xml,
-        'prijs' => intval($datum['programSchedule']['genericProgramRun']['cost']['amount']),
-        'prijs_vat' => intval($datum['programSchedule']['genericProgramRun']['cost']['amountVAT']),
+       
+         'prijs' => intval($program['cost'][0]['amount']),
+        'prijs_vat' => intval($program['cost'][0]['amountVAT']),
         'level' => strval($datum['programClassification']['degree']),
         'teacher_id' => $datum['programCurriculum']['teacher']['id'],
         'org' => strval($datum['programClassification']['orgUnitId']),
@@ -805,7 +806,8 @@ function xmlParse($data)
 {
 
 
- $index = intval($data->get_param('id'));
+ $index = $data->get_param('id');
+ var_dump($index);
    // $index = intval($data['id']);
   
 
@@ -913,7 +915,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
     //Start inserting course
     echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
- $index = intval($data->get_param('id'));
+// $index = intval($data->get_param('id'));
    // $index = intval($data['id']);
 
 
