@@ -1,24 +1,10 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/style.css">
-  <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css">
 
-  <script src="https://kit.fontawesome.com/2def424b14.js" crossorigin="anonymous"></script>
-  <title>Parse Course</title>
-</head>
-
-
-<body>
 
   <?php
   /** Template Name: xml parse */  
   require_once 'add-author.php';
-  // require_once 'detect-language.php';
+  require_once 'detect-language.php';
   global $wpdb;
    $table = $wpdb->prefix . 'databank';
 $data_insert=0;
@@ -468,8 +454,11 @@ $data_insert=0;
     foreach ($selectedxmlValues as $option) {
   
         $website = $option['value'];
-      
-    
+       
+        
+        
+        
+           
         //  $data_insert=addCourseGeneral($website);
          
          $headers = [
@@ -490,6 +479,7 @@ $data_insert=0;
         
 
         if(isset($programs)){
+          
 
           $data = array();
           $data['programs']= array();
@@ -505,7 +495,7 @@ $data_insert=0;
           
           }
           $data_json = json_encode($data);
-           
+        
 
            //$data_insert=addOneCourse($data_json);
               $url = 'https://api.edudex.nl/data/v1/programs/bulk';
@@ -545,29 +535,39 @@ $headers = array(
     curl_close($curl);   
      $data = json_decode($response, true);
      echo "<h3>".$data['programs'][0]['data']['programClassification']['orgUnitId']." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
-     
-
+    
+     if($data['programs']!=null){
      foreach($data['programs'] as $key => $data_xml){
          
-            
-        $datum=$data_xml['data'];     
+      
+          
+
+        $datum=$data_xml['data'];    
+        if($datum!=null) {
         // var_dump($datum['programDescriptions']['programName']['nl']);
          $status = 'extern';
          $course_type = "Opleidingen";
          $image = "";
-       
-      foreach($datum['programDescriptions']['media'] as $media)
+        
+
+        if($datum['programDescriptions']['media']!=null){
+           foreach($datum['programDescriptions']['media'] as $media)
        
       
         if($media['type'] == "image"){
           $image = $media['url'];
           break;
         }
+
+        }
+       
+       
+     
         //       //Redundance check "Image & Title"
        
       $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
       $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum['programDescriptions']['programName']['nl']));
-
+    
       if($image != "")
         $check_image = $wpdb->get_results($sql_image); 
      
@@ -605,8 +605,7 @@ $headers = array(
         $company_id = $informations['company'] ;
        
 
-       
-         
+      
       $title = explode(' ', strval($datum['programDescriptions']['programName']['nl']));
       $description = explode(' ', strval($datum['programDescriptions']['programSummaryText']['nl']));
       $description_html = explode(' ', strval($datum['programDescriptions']['programSummaryHtml']['nl']));    
@@ -676,6 +675,8 @@ $headers = array(
                   $categorys = array_merge($categorys, $tag);      
               }
           }
+
+          if($datum['programDescriptions']['searchword']['nl']!=null){
           foreach($datum['programDescriptions']['searchword']['nl'] as $searchword){
             $searchword = strtolower(strval($searchword));
           
@@ -688,7 +689,7 @@ $headers = array(
                     array_push($tags, $category->cat_ID);
             }
           }
-
+        }
           if(empty($tags)){
             $occurrence = array_count_values(array_map('strtolower', $keywords));
             arsort($occurrence);
@@ -701,26 +702,30 @@ $headers = array(
           //Final value : categorie
           $onderwerpen = join(',' , $tags);
         $attachment = array();
+        if($datum['programDescriptions']['media']!=null){
         foreach($datum['programDescriptions']['media'] as $media){
           if($media['type'] == "image")
             $image = $media['url'];
           else
             array_push($attachment, $media['url']);
         } 
+        }
+        
         $attachment_xml = join(',', $attachment);
         $data_locaties_xml = array();
         $data_locaties = null;
       
-           if(!empty($datum['programSchedule']['programRun'])){
-         
+      if($datum['programSchedule']['programRun']!=null){
           foreach($datum['programSchedule']['programRun'] as $program){
             
              
             $info = array();
             $infos = "";
             $row = "";
+
+             if($program['courseDay']!=null){
        
-            foreach($program['courseDay'] as $key => $courseDay){
+              foreach($program['courseDay'] as $key => $courseDay){
 
               $dates = explode('-',strval($courseDay['date']));
              
@@ -740,7 +745,8 @@ $headers = array(
               $infos .= ';' ; 
                 
             }
-            
+             }
+           
 
             if(substr($infos, -1) == ';')
               $infos = rtrim($infos, ';');
@@ -753,42 +759,10 @@ $headers = array(
          }
 
           $data_locaties = join('~', $data_locaties_xml);
-        }
-        $data = [
-        'q' => $datum['programDescriptions']['programName']['nl'],
-    ];
-
-    $dataString = http_build_query($data);
-
-    $headers = [
-        'content-type: application/x-www-form-urlencoded',
-        'Accept-Encoding: application/gzip',
-        'X-RapidAPI-Key: YOUR_API_KEY', // Replace 'YOUR_API_KEY' with your actual API key
-        'X-RapidAPI-Host: google-translate1.p.rapidapi.com'
-    ];
-
-    $url = 'https://google-translate1.p.rapidapi.com/language/translate/v2/detect';
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-    if ($response === false) {
-        $language = 'Erreur cURL : ' . curl_error($ch);
-    } else {
-        $data = json_decode($response, true);
-        $language = $data["data"]["detections"][0][0]["language"];
-    }
-       // $language='nl';
-      //  $language=detectLanguage($datum['programDescriptions']['programName']['nl']);
+          
+       $language=$datum['programDescriptions']['programName']['nl']!=null?detectLanguage(strval($datum['programDescriptions']['programName']['nl'])):'';
+        
+         
         $post = array(
         'titel' => strval($datum['programDescriptions']['programName']['nl']),
         'type' => $course_type,
@@ -813,6 +787,7 @@ $headers = array(
        'language'=>$language
       
       );
+      
     
       
         
@@ -839,8 +814,7 @@ $headers = array(
             $data = [ 'type' => $post['type']]; // NULL value.
             $where = [ 'id' => $course->id ];
             $updated = $wpdb->update( $table, $data, $where );
-            if($updated)
-             $change = true;
+          
 
           //  echo '****** Type of course - ' . $message;
            
@@ -859,21 +833,31 @@ $headers = array(
             $updated = $wpdb->update( $table, $data, $where );
             
           }
-        
+            
           
+        }
+          
+        }
+        else{
+  
+              break;
 
         }
-
+         
+          
+       }
         
       }
+      }
+      
         }
 
 
-      if($data_insert==1){
+         if($data_insert==1){
           $verif=1;
          }
     }
-    if($data_insert==1)
+    if($verif==1)
      echo "<span class='alert alert-success'> Course - Insertion done successfully</span> <br><br>";
     else 
       echo "<span class='alert alert-danger'>No New Data! ❌</span>";     
@@ -889,5 +873,4 @@ $headers = array(
       
 ?>
 
-</body>
-</html> 
+
