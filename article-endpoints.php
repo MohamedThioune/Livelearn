@@ -805,7 +805,9 @@ function xmlParse($data)
 {
 
 
-
+ $index = intval($data->get_param('id'));
+   // $index = intval($data['id']);
+  
 
 
 
@@ -843,15 +845,14 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     $catalogs=$data["catalogs"];
      
      foreach ($catalogs as $catalog) {
+       $file_xml= [];
      $file_xml[$catalog['title']] = $catalog['catalogId'];
     
        $website_urls[]=$file_xml;
       
      }
-     if (!in_array($file_xml, $website_urls)) {
-    // Add $file_xml to $website_urls
-    $website_urls[] = $file_xml;
-}
+   
+ 
        
 
     // $website_urls = [
@@ -912,8 +913,9 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
     //Start inserting course
     echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
+ $index = intval($data->get_param('id'));
+   // $index = intval($data['id']);
 
-    $index = intval($data['id']);
 
     $groups = $website_urls[$index];
     
