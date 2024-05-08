@@ -471,7 +471,7 @@ function Artikel_From_Company($data)
          $status = 'extern';
          $course_type = "Opleidingen";
          $image = "";
-       
+        if($datum['programDescriptions']['media']!=null){
       foreach($datum['programDescriptions']['media'] as $media)
        
       
@@ -479,7 +479,7 @@ function Artikel_From_Company($data)
           $image = $media['url'];
           break;
         }
-        //       //Redundance check "Image & Title"
+        }//       //Redundance check "Image & Title"
        
       $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
       $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum['programDescriptions']['programName']['nl']));
@@ -617,12 +617,14 @@ function Artikel_From_Company($data)
           //Final value : categorie
           $onderwerpen = join(',' , $tags);
         $attachment = array();
+         if($datum['programDescriptions']['media']!=null){
         foreach($datum['programDescriptions']['media'] as $media){
           if($media['type'] == "image")
             $image = $media['url'];
           else
             array_push($attachment, $media['url']);
         } 
+         }
         $attachment_xml = join(',', $attachment);
         $data_locaties_xml = array();
         $data_locaties = null;
@@ -669,8 +671,7 @@ function Artikel_From_Company($data)
          }
 
           $data_locaties = join('~', $data_locaties_xml);
-        }
-        $language=detectLanguage($datum['programDescriptions']['programName']['nl']);
+                $language=detectLanguage(strval($datum['programDescriptions']['programName']['nl']));
         $post = array(
         'titel' => strval($datum['programDescriptions']['programName']['nl']),
         'type' => $course_type,
@@ -745,6 +746,11 @@ function Artikel_From_Company($data)
           
 
         }
+        }
+        else{
+              break;
+        }
+  
 
         
       }
