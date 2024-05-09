@@ -60,13 +60,6 @@
                                 $redirect = $_GET['redirect'];
                             }
                             ?>
-                            <!--
-                            <form action="<//?=$redirect?>" method="POST">
-                                <input type="text" name="email" placeholder="email" required><br><br>
-                                <input type="password" name="password" id="password">
-                                <button>submit</button>
-                            </form>
-                            -->
                             <?php
                             wp_login_form([
                                 'redirect' => $redirect,
