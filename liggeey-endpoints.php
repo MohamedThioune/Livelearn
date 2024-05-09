@@ -14,6 +14,7 @@ function artikel($id){
 
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
+  $sample['slug'] = $post->post_name;
   //Image information
   $thumbnail = get_field('preview', $post->ID)['url'];
   if(!$thumbnail){
@@ -69,6 +70,7 @@ function job($id, $userApplyId = null){
   $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
+  $sample['slug'] = $post->post_name;
   $sample['posted_at'] = $post->post_date;
   $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
   $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
@@ -149,6 +151,7 @@ function company($id){
   //assigner les champs
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
+  $sample['slug'] = $post->post_name;
   $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
   $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
   $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
@@ -439,6 +442,7 @@ function homepage(){
     $sample['ID'] = $post->ID;
     $sample['permalink'] = get_permalink($post->ID);
     $sample['post_title'] = $post->post_title;
+    $sample['post_slug'] = $post->post_name;
     $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
     $sample['long_description'] = get_field('long_description', $post->ID) ?: 'Empty till far ...';
 
@@ -693,6 +697,7 @@ function allCompanies(){
     // Affichez ici le contenu de chaque élément
     $sample['ID'] = $post->ID;
     $sample['post_title'] = $post->post_title;
+    $sample['post_slug'] = $post->post_name;
     $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
     $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
     //Just check more by testing but otherwis that a "Good Job !"
@@ -740,10 +745,11 @@ function allJobs(){
       continue;
 
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
-    $sample = array('ID' => '0', 'title' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
+    $sample = array('ID' => '0', 'title' => 'xxxx', 'slug' => 'xxxx', 'posted_at' => '', 'image' => $placeholder, 'company' => 'xxxx', 'place' => 'xxxx', 'country' => 'xxxx');
     // Affichez ici le contenu de chaque élément
     $sample['ID'] = $post->ID;
     $sample['title'] = $post->post_title;
+    $sample['slug'] = $post->post_name;
     $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
     $sample['posted_at'] = $post->post_date;
     $company = get_field('job_company', $post->ID);
@@ -1047,7 +1053,6 @@ function liggeeySave(WP_REST_Request $request){
 
   $errors = ['errors' => '', 'error_data' => ''];
   $required_parameters = ['userApplyId', 'typeApplyId', 'ID'];
-  $permission_type = ['job', 'company', 'candidate'];
 
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -1064,22 +1069,14 @@ function liggeeySave(WP_REST_Request $request){
 
   $allowedValues = ['job', 'company', 'candidate'];
 
-  $errors = [];
-  if (!in_array($typeApplyId, $allowedValues)) {
-      $errors['errors'] = "Please respect this type listed: job, company, candidate !";
-      $errors = (object)$errors;
-      $response = new WP_REST_Response($errors);
-      $response->set_status(400);
-  }
-
   //Check if typeApplyId ['job', 'company', 'candidate']
   $errors = [];
-  if(!in_array($type_applied_id, $permission_type)):
+  if(!in_array($type_applied_id, $allowedValues)):
     $errors['errors'] = "Please respect this type listed : job, company, candidate";
     $errors = (object)$errors;
     $response = new WP_REST_Response($errors);
     $response->set_status(400);
-endif;
+  endif;
 
   // Initialize arrays
   $user_favorites = array();
@@ -1395,6 +1392,13 @@ function FavoritesUser(WP_REST_Request $request){
     $user = get_user_by('ID', $user_id);
     if(!$user)
       continue;
+
+    if(!$user_apply):
+      $errors['errors'] = 'User not found !';
+      $response = new WP_REST_Response($errors);
+      $response->set_status(401);
+      return $response;
+    endif;
 
     $favorite[] = candidate($user->ID);
   endforeach;
