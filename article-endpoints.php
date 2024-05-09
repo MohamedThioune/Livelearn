@@ -553,9 +553,9 @@ function Artikel_From_Company($data)
         else
           $course_type = "Opleidingen";
       }
-       if($datum['programDescriptions']['programDescriptionHtml'])
-        $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
-      else
+      //  if($datum['programDescriptions']['programDescriptionHtml'])
+      //   $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
+      // else
         $descriptionHtml = $datum['programDescriptions']['programDescriptionText']['nl'];
       
         $tags = array();
