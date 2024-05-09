@@ -1,5 +1,5 @@
 <?php
-
+global $wpdb;
 
 
 /* Information user */
@@ -201,7 +201,7 @@ $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_t
 $topic_views = $wpdb->get_results($sql);
 
 //Show link by scope 
-$status_content_link .= "";
+$status_content_link = "";
 if(isset($company_name))
     $status_content_link .= '<li class="nav-one"><a href="/dashboard/company/statistic-company">Company</a></li>';
 
