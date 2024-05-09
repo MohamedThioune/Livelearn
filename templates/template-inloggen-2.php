@@ -60,16 +60,7 @@
                                 $redirect = $_GET['redirect'];
                             }
                             ?>
-
-                            <form action="<//?=$redirect?>" method="POST">
-                                <input type="text" name="email" placeholder="email" required><br><br>
-                                <input type="password" name="password" id="password">
-                                <button>submit</button>
-                            </form>
-
                             <?php
-                            /*
-                             *
                             wp_login_form([
                                 'redirect' => $redirect,
                                 'remember' => false,
@@ -77,7 +68,6 @@
                                 'placeholder_email' => 'E-mailadress',
                                 'label_password' => 'Wat is je wachtwoord?'
                             ]);
-                            */
                             ?>
                             <a href="<?= wp_lostpassword_url(''); ?>" class="redirectionText">Wachtwoord vergeten ?&nbsp; | &nbsp;</a>
                             <a href="/registreren" class="redirectionText pull-right">Maak je account </a>
