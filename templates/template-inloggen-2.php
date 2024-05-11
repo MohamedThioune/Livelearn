@@ -49,7 +49,8 @@
                             <h2>Sign into Your Account</h2>
 
                             <?php
-                            $redirect = "/dashboard/user/";
+                            //$redirect = "/dashboard/user/";
+                            $redirect = "http://localhost:4200?login=".$_POST['log']."&password=".$_POST['pwd'];
                             if(isset($_GET['login'])) {
                                 if ($_GET['login'] == 'failed')
                                     echo "<span class='alert alert-error' style='color:red'>Failed to login, informations are incorrect</span>";
@@ -59,7 +60,6 @@
                                 $redirect = $_GET['redirect'];
                             }
                             ?>
-
                             <?php
                             wp_login_form([
                                 'redirect' => $redirect,
