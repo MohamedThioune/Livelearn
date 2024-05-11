@@ -1,4 +1,4 @@
-<?php /** Template Name: Home 2 */ ?>
+<!-- <?php /** Template Name: Home 2 */ ?> -->
 
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
