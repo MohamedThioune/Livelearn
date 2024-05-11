@@ -1,5 +1,5 @@
 <?php
-
+global $wpdb;
 
 
 /* Information user */
@@ -188,7 +188,7 @@ $assessment_validated = (!empty($assessment_validated)) ? count($assessment_vali
 $assessment_not_started = 100;
 $assessment_completed = 0;
 $members_active = 0;
-$members_inactive = 0;
+$members_inactive = 25;
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
@@ -201,7 +201,7 @@ $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_t
 $topic_views = $wpdb->get_results($sql);
 
 //Show link by scope 
-$status_content_link .= "";
+$status_content_link = "";
 if(isset($company_name))
     $status_content_link .= '<li class="nav-one"><a href="/dashboard/company/statistic-company">Company</a></li>';
 

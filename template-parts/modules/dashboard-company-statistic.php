@@ -196,7 +196,7 @@ $assessment_validated = (!empty($assessment_validated)) ? count($assessment_vali
 $assessment_not_started = 100;
 $assessment_completed = 0;
 $members_active = 0;
-$members_inactive = 0;
+$members_inactive = 20;
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);

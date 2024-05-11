@@ -1,5 +1,5 @@
 <?php
-
+global $wpdb;
 /* Information user */
 $current_user = wp_get_current_user();
 $full_name_user = ($current_user->first_name) ? $current_user->first_name . ' ' . $current_user->last_name : $current_user->display_name;
@@ -21,10 +21,55 @@ $users = get_users();
 $members = array();
 $numbers = array();
 $numbers_count = array();
-
 $topic_views = array();
 $topic_followed = array();
-
+function get_number_for_month($month, $plateform='web'){
+    $number_of_month = 0;
+    global $wpdb;
+    $year = date('Y');
+switch ($month){
+    case 'Jan' :
+        $number_of_month = 1;
+        break;
+    case 'Feb' :
+        $number_of_month = 2;
+        break;
+    case 'March' :
+        $number_of_month = 3;
+        break;
+    case 'Apr' :
+        $number_of_month = 4;
+        break;
+    case 'May' :
+        $number_of_month = 5;
+        break;
+    case 'Jun' :
+        $number_of_month = 6;
+        break;
+    case 'Jul' :
+        $number_of_month = 7;
+        break;
+    case 'Aug' :
+        $number_of_month = 8;
+        break;
+    case 'Sep' :
+        $number_of_month = 9;
+        break;
+    case 'Oct' :
+        $number_of_month = 10;
+        break;
+    case 'Nov' :
+        $number_of_month = 11;
+        break;
+    case 'Dec' :
+        $number_of_month = 12;
+        break;
+}
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $sql = $wpdb->prepare("SELECT COUNT(*) FROM $table_tracker_views WHERE MONTH(updated_at) = $number_of_month AND YEAR(updated_at) = $year AND platform = $plateform");
+    $topic_views = $wpdb->get_results($sql);
+    return $topic_views;
+}
 $assessment_validated = array();
 foreach ($users as $user ) {
     $company = get_field('company',  'user_' . $user->ID);
@@ -53,7 +98,32 @@ foreach ($users as $user ) {
 }
 
 $count_members = count($members);
+foreach ($members as $user) {
+    $is_login = false;
 
+    $date = new DateTime();
+    $date_this_month = $date->format('Y-m-d');
+    $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN ".$date_last_month." AND ".$date_this_month);
+    $if_user_actif = $wpdb->get_results($sql);
+
+    if ($if_user_actif)
+        $is_login = true;
+
+    //$status = ($is_login) ? 'actif' : 'actif inactif';
+    //$status_text = ($is_login) ? 'Active' : 'Inactive';
+    if ($is_login) {
+        //$status_text = 'Active';
+        $members_active++;
+        //$status = 'actif';
+    }
+    else {
+        //$status_text = 'Inactive';
+        $members_inactive++;
+        //$status = 'actif inactif';
+    }
+}
 /* Members course */
 $args = array(
     'post_type' => array('course', 'post'),
@@ -177,6 +247,8 @@ $count_assessments = count($assessments);
 $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
 $assessment_not_started = 100;
 $assessment_completed = 0;
+$members_active = 0;
+$members_inactive = 20;
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
@@ -187,6 +259,8 @@ if($count_assessments > 0){
 $table_tracker_views = $wpdb->prefix . 'tracker_views';
 $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
 $topic_views = $wpdb->get_results($sql);
+// begin put the number for mont
+
 
 //Topic finished research through the course completed
 $read_category = array();
@@ -527,8 +601,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
         data: {
             labels: ["Active",	"Inactive"],
             datasets: [{
-                data: [90,	10], // Specify the data values array
-
+                //data: [90,	10], // Specify the data values array
+                data: [<?= $members_active ?>,<?= $members_inactive ?>], // Specify the data values array
                 borderColor: ['#47A99E', '#FF0000'], // Add custom color border
                 backgroundColor: ['#47A99E', '#FF0000'], // Add custom color background (Points and Fill)
             }]},
@@ -593,12 +667,38 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
         data: {
             labels: ['Jan', 'Feb', 'Mrt', 'April', 'Mei', 'Juni', 'Juli', 'Agtus', 'Sept', 'Okt', 'Nov', 'Dec'],
             datasets: [{
-                label: 'apples',
-                data: [60, 50, 40, 70, 120, 150, 140, 100, 80, 50, 22, 0],
+                label: 'web',
+                data: [
+                        <?=get_number_for_month('Jan')?>,
+                        <?=get_number_for_month('Feb')?>,
+                        <?=get_number_for_month('March')?>,
+                        <?=get_number_for_month('Apr')?>,
+                        <?=get_number_for_month('May')?>,
+                        <?=get_number_for_month('Jun')?>,
+                        <?=get_number_for_month('Jul')?>,
+                        <?=get_number_for_month('Aug')?>,
+                        <?=get_number_for_month('Sep')?>,
+                        <?=get_number_for_month('Oct')?>,
+                        <?=get_number_for_month('Nov')?>,
+                        <?=get_number_for_month('Dec')?>
+                    ],
                 backgroundColor: "#247ADC"
             }, {
-                label: 'oranges',
-                data: [0,57, 129, 42, 183, 91, 175, 68, 106, 15, 199, 0,],
+                label: 'mobile',
+                data: [
+                        <?=get_number_for_month('Jan','mobile')?>,
+                        <?=get_number_for_month('Feb','mobile')?>,
+                        <?=get_number_for_month('March','mobile')?>,
+                        <?=get_number_for_month('Apr','mobile')?>,
+                        <?=get_number_for_month('May','mobile')?>,
+                        <?=get_number_for_month('Jun','mobile')?>,
+                        <?=get_number_for_month('Jul','mobile')?>,
+                        <?=get_number_for_month('Aug','mobile')?>,
+                        <?=get_number_for_month('Sep','mobile')?>,
+                        <?=get_number_for_month('Oct','mobile')?>,
+                        <?=get_number_for_month('Nov','mobile')?>,
+                        <?=get_number_for_month('Dec','mobile')?>
+                    ],
                 backgroundColor: "#5AA1F2"
             }]
         },
