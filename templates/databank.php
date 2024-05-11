@@ -254,34 +254,46 @@ $urls =
 	    'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
 
 	    'Digital DJ Tips' =>'https://www.digitaldjtips.com/',
-        //ici debute
-    //    "The Architect's Newspaper" =>	"https://www.archpaper.com/",
+      
         'Centrum voor Conflicthantering' =>	'https://cvc.nl/',
         'HR Morning'	 =>'https://www.hrmorning.com/',
-       // 'HR Executive'  =>	'https://hrexecutive.com/',
+       
         'Human in Progress'  =>	'https://humaninprogress.com/',
         'Personelle Today'	 => 'https://www.personneltoday.com/',
-       // 'The HR Digest'	 => 'https://www.thehrdigest.com/',
+       
         'Wccf Tech' => 'https://wccftech.com/',
         'Kit Guru'  =>	'https://www.kitguru.net/',
-       // 'CMM'  =>	'https://cmmonline.com/',
+      
         'CHT'  =>	'https://chtmag.com/',
         'Intelligent Transport'	 => 'https://www.intelligenttransport.com/',
-      //  'Law Asia'	 => 'https://law.asia/',
+      
         'Attorney at Law Magazine'  =>	'https://attorneyatlawmagazine.com/',
         'Lawyer Monthly'  =>	'https://www.lawyer-monthly.com/',
-      //  'Judicature'  =>	'https://judicature.duke.edu/',
+      
         'Architects Journal'  =>	'https://www.architectsjournal.co.uk/',
         'E-architect' =>	'https://www.e-architect.com/',
         'Construction News'	 => 'https://www.constructionnews.co.uk/',
         'Construction Week'  =>	'https://www.constructionweekonline.com/',
-       // 'Wired'	=> 'https://www.wired.com/',
+       
         'Threat Post'=>	'https://threatpost.com/',
-      //  'Craft Industry Alliance'=>	'craftindustryalliance.org',
+      
         'ARTnews'  =>	'https://www.artnews.com/',
         'Design Wanted'	 =>'https://designwanted.com/',
         'Craftsmanship'	 =>'https://craftsmanship.net/',
         'Wood and Panel'  =>	'https://www.woodandpanel.com/',
+       															
+	   'Platform O' =>	'https://platformoverheid.nl/',																							
+	   'Duurzaam Ondernemen' =>	'https://www.duurzaam-ondernemen.nl/',																																											
+	   'IVVD' =>	'https://www.ivvd.nl/',																																													
+	   'De Afdeling Marketing' =>	'https://deafdelingmarketing.nl/',																																												
+	   'Neurofactor' =>	'https://neurofactor.nl/',																							
+	   'Kennisportal'	=> 'https://www.kennisportal.com/'	,																							
+	   'Orbis' =>	'https://www.orbis-software.nl/',																																												
+	   'Onno Kleyn' =>	'https://www.onnokleyn.nl/',																						
+	   'NFCI' =>	'https://nfcihospitality.com/',																																													
+	   'SVO' =>	'https://www.svo.nl/'																						
+																										
+        
         
     ];
     
@@ -294,6 +306,42 @@ $urls =
     'Authorization:Bearer secret-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJFZHUtRGV4IiwiaWF0IjoxNzEzNDMxMjExLCJuYmYiOjE3MTM0MzEyMTEsInN1YiI6ImVkdWRleC1hcGktdXNlciIsInNjb3BlIjoiZGF0YSIsIm5vbmNlIjoidjh2UjNmTkY4NHdWaTZOMDlfQWl5QSIsImV4cCI6MTkwMjc0MzEwMH0.RxttT9h1eA07fYIRFqDes3EJnLiDMVWaxcY0IVFIElI',
     
 ];
+// $file_xml = [
+//     '112BHV'=>'112bhv-20231101.1430.xml',
+//     '2xplain'=>'2xplain-b.v-20230925.0140.xml', 
+//     'agile scrum group'=>'agile-scrum-group-20230922.1323.xml', 
+//     'Anker Kompas'=>'anker-kompas-20230922.1323.xml', 
+//     'Aeres Tech'=>'aeres-tech-20230925.0141.xml',
+//     'Edumia'=>'edumia-20231024.1105.xml',
+//     'Arbeidsmarktcommunicatie'=>'academie-voor-arbeidsmarktcommunicatie-b.v-20230925.0141.xml',
+//     'Beeckestijn'=>'beeckestijn-20231101.2250.xml',
+//     'berenschot'=>'berenschot-20231101.1421.xml',
+//     'bhv.nl'=>'bhv.nl-20231102.0032.xml',
+//     'BIT Academy'=>'bit-academy-20231101.1430.xml',
+//     'BLOM'=>'blom-20231102.0026.xml',
+//     'Bureau-Vris'=>'bureau-vris-20231101.1431.xml',
+//     'Buro Brand'=>'buro-brand-20231101.1422.xml',
+//     'CM Partners'=>'cm-partners-20231102.0033.xml',
+//     'Comenius'=>'comenius-20231101.1422.xml',
+//     'Competence Factory'=>'competence-factory-20231102.0027.xml',
+//     'Faculty of Skills'=>'faculty-of-skills-20231101.1430.xml',
+//     'Frankwatching'=>'frankwatching-20231102.0033.xml',
+//     'Growth Tribe'=>'growth-tribe-20231101.1422.xml', 
+//     'Horizon'=>'horizon-20231102.0028.xml',
+//     'HR Academy'=>'hr-academy-20231102.0028.xml',
+//     'Kenneth Smit'=>'kenneth-smit-20231102.0028.xml',
+//     'Kenneth Smit Direct'=>'kenneth-smit-direct-20231102.0028.xml',
+//     'Possible'=>'possible-20231102.0028.xml',
+//     'Saxion Parttime School'=>'saxion-parttime-school-20231101.1423.xml',
+//     'Scheidegger'=>'scheidegger-20231102.0027.xml',
+//     'Schouten Nelissen'=>'schouten-nelissen-20231102.0028.xml',
+//     'Start2Move'=>'start2move-20231101.1423.xml',
+//     'TekkieWorden'=>'tekkieworden-20231101.1423.xml',
+//     'TVVL'=>'tvvl-20231101.1423.xml',
+//     'Vijfhart'=>'vijfhart-20231102.0028.xml',
+//     'Winc Academy'=>'winc-academy-20231101.1423.xml',
+//     'Yearth Academy'=>'yearth-academy-20231102.0029.xml'
+// ];
  $file_xml = [];
 
 $ch = curl_init();
@@ -975,7 +1023,7 @@ if (!empty($courses)) {
                     $('#select_field').hide(false,2000);
                     $('#loader').attr('hidden',true);
                    // document.getElementById('content-back-topics').innerHTML = response;
-                     location.reload();
+                    location.reload();
                 }
             });
         });

@@ -229,7 +229,7 @@ function Artikel_From_Company($data)
             'Tableau'=>'https://tableaumagazine.nl/',
         ],
         [
-           'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+          'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
 	       'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
 	       'Modern Agriculture' =>	'https://modernagriculture.ca/',
 	       'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
@@ -268,6 +268,18 @@ function Artikel_From_Company($data)
            'Design Wanted'	 =>'https://designwanted.com/',
            'Craftsmanship'	 =>'https://craftsmanship.net/',
            'Wood and Panel'  =>	'https://www.woodandpanel.com/',
+           'Platform O' =>	'https://platformoverheid.nl/',																							
+	         'Duurzaam Ondernemen' =>	'https://www.duurzaam-ondernemen.nl/',																																											
+	         'IVVD' =>	'https://www.ivvd.nl/',																																													
+	         'De Afdeling Marketing' =>	'https://deafdelingmarketing.nl/',																																												
+	         'Neurofactor' =>	'https://neurofactor.nl/',																							
+	         'Kennisportal'	=> 'https://www.kennisportal.com/'	,																							
+	         'Orbis' =>	'https://www.orbis-software.nl/',
+        ],
+         [
+           'Onno Kleyn' =>	'https://www.onnokleyn.nl/',																						
+	         'NFCI' =>	'https://nfcihospitality.com/',																																													
+	         'SVO' =>	'https://www.svo.nl/'	
         ],
 
     ];
@@ -471,7 +483,7 @@ function Artikel_From_Company($data)
          $status = 'extern';
          $course_type = "Opleidingen";
          $image = "";
-       
+        if($datum['programDescriptions']['media']!=null){
       foreach($datum['programDescriptions']['media'] as $media)
        
       
@@ -479,7 +491,7 @@ function Artikel_From_Company($data)
           $image = $media['url'];
           break;
         }
-        //       //Redundance check "Image & Title"
+        }//       //Redundance check "Image & Title"
        
       $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
       $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum['programDescriptions']['programName']['nl']));
@@ -495,8 +507,8 @@ function Artikel_From_Company($data)
         'long_description' => null,
         'agenda' => $datum['programDescriptions']['programDescriptionText']['nl'],
         'url_image' => $image,
-        'prijs' => $datum['programSchedule']['genericProgramRun']['cost->amount'],
-        'prijsvat' => $datum['programSchedule']['genericProgramRun']['cost']['amountVAT'],
+        'prijs' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amount'],
+        'prijsvat' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amountVAT'],
         'degree' => $datum['programClassification']['degree'],
         'teacher_id' => $datum['programCurriculum']['teacher']['id'],
         'org' => $datum['programClassification']['orgUnitId'],
@@ -541,9 +553,9 @@ function Artikel_From_Company($data)
         else
           $course_type = "Opleidingen";
       }
-       if($datum['programDescriptions']['programDescriptionHtml'])
-        $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
-      else
+      //  if($datum['programDescriptions']['programDescriptionHtml'])
+      //   $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
+      // else
         $descriptionHtml = $datum['programDescriptions']['programDescriptionText']['nl'];
       
         $tags = array();
@@ -617,12 +629,14 @@ function Artikel_From_Company($data)
           //Final value : categorie
           $onderwerpen = join(',' , $tags);
         $attachment = array();
+         if($datum['programDescriptions']['media']!=null){
         foreach($datum['programDescriptions']['media'] as $media){
           if($media['type'] == "image")
             $image = $media['url'];
           else
             array_push($attachment, $media['url']);
         } 
+         }
         $attachment_xml = join(',', $attachment);
         $data_locaties_xml = array();
         $data_locaties = null;
@@ -669,8 +683,7 @@ function Artikel_From_Company($data)
          }
 
           $data_locaties = join('~', $data_locaties_xml);
-        }
-        $language=detectLanguage($datum['programDescriptions']['programName']['nl']);
+                $language=detectLanguage(strval($datum['programDescriptions']['programName']['nl']));
         $post = array(
         'titel' => strval($datum['programDescriptions']['programName']['nl']),
         'type' => $course_type,
@@ -681,8 +694,9 @@ function Artikel_From_Company($data)
         'agenda' => strval($datum['programDescriptions']['programDescriptionText']['nl']),
         'image_xml' => strval($image),
         'attachment_xml' => $attachment_xml,
-        'prijs' => intval($datum['programSchedule']['genericProgramRun']['cost']['amount']),
-        'prijs_vat' => intval($datum['programSchedule']['genericProgramRun']['cost']['amountVAT']),
+       
+         'prijs' => intval($program['cost'][0]['amount']),
+        'prijs_vat' => intval($program['cost'][0]['amountVAT']),
         'level' => strval($datum['programClassification']['degree']),
         'teacher_id' => $datum['programCurriculum']['teacher']['id'],
         'org' => strval($datum['programClassification']['orgUnitId']),
@@ -745,6 +759,11 @@ function Artikel_From_Company($data)
           
 
         }
+        }
+        else{
+              break;
+        }
+  
 
         
       }
@@ -799,7 +818,10 @@ function xmlParse($data)
 {
 
 
-
+ $index = $data->get_param('id');
+ var_dump($index);
+   // $index = intval($data['id']);
+  
 
 
 
@@ -837,15 +859,14 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     $catalogs=$data["catalogs"];
      
      foreach ($catalogs as $catalog) {
+       $file_xml= [];
      $file_xml[$catalog['title']] = $catalog['catalogId'];
     
        $website_urls[]=$file_xml;
       
      }
-     if (!in_array($file_xml, $website_urls)) {
-    // Add $file_xml to $website_urls
-    $website_urls[] = $file_xml;
-}
+   
+ 
        
 
     // $website_urls = [
@@ -906,8 +927,9 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
     //Start inserting course
     echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
+// $index = intval($data->get_param('id'));
+   // $index = intval($data['id']);
 
-    $index = intval($data['id']);
 
     $groups = $website_urls[$index];
     

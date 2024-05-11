@@ -458,19 +458,6 @@ function homepage(){
     }
     $sample['image'] = $thumbnail;
 
-    //Author information
-    // $author = get_user_by('ID', $post->post_author);
-    // $name_author = ($author) ? $author->display_name : 'None';
-    // $user_id = get_current_user_id();
-    // if($author->ID != $user_id)
-    //     $name = ($author->last_name) ? $author->first_name : $author->display_name;
-    // else
-    //     $name = "Ikzelf";
-
-    // $image_author = get_field('profile_img',  'user_' . $post->post_author);
-    // if(!$image_author)
-    //     $image_author = get_stylesheet_directory_uri() ."/img/liggeey-logo-bis.png";
-
     $sample = (Object)$sample;
     array_push($artikels, $sample);
 
@@ -485,6 +472,8 @@ function homepage(){
   //Featured candidates [Block]
   $i = 0;
   foreach ($users as $key => $value) {
+    var_dump($value);
+    // die();
     $sample = array();
 
     //Is Liggeey User
@@ -638,9 +627,9 @@ function candidateDetail(WP_REST_Request $request){
 
 //[POST]Detail artikel
 function artikelDetail(WP_REST_Request $request){
-  $param_post_id = $request['id'] ?? 0;
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
 
-  $required_parameters = ['id'];
   //Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
@@ -649,7 +638,8 @@ function artikelDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $sample = artikel($param_post_id);
+  $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
+  $sample = artikel($artikel->ID);
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -660,9 +650,11 @@ function artikelDetail(WP_REST_Request $request){
 
 //[POST]Detail company
 function companyDetail(WP_REST_Request $request){
-  $param_post_id = $request['id'] ?? 0;
-  $required_parameters = ['id'];
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
   
+  $company = get_page_by_path($param_post_id, OBJECT, 'company');
+
   //Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
@@ -671,7 +663,7 @@ function companyDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $sample = company($param_post_id);
+  $sample = company($company->ID);
 
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -816,8 +808,8 @@ function allJobs(){
 
 //[POST]Detail job
 function jobDetail(WP_REST_Request $request){
-  $param_post_id = $request['id'] ?? 0;
-  $required_parameters = ['id'];
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
   
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -827,7 +819,8 @@ function jobDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $job = get_post($param_post_id);
+  $job = get_page_by_path($param_post_id, OBJECT, 'job');
+  // $job = get_post($param_post_id);
   $errors = [];
   if (!$job) {
       $errors['errors'] = 'No job found !';
@@ -836,7 +829,7 @@ function jobDetail(WP_REST_Request $request){
       return $response;
   }
 
-  $sample = job($param_post_id);
+  $sample = job($job->ID);
 
   // Retrieve the latest job posts
     $args = array(
@@ -875,11 +868,20 @@ function categoryDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $name = get_the_category_by_ID($param_category_id);
-  if(!$name)
-      return $sample;
+  //Name + Slug 
+  $categories = get_categories( array(
+    'taxonomy' => 'course_category',
+    'include' => $param_category_id,
+    ) 
+  );
+  $param_category = (isset($categories[0])) ? $categories[0] : 0;
+  if(!$param_category)  
+    return $sample;
+  $sample['name'] = $param_category->name ;
+  $sample['slug'] = $param_category->slug ;
+  // var_dump($param_category);
+  // die();
 
-  $sample['name'] = $name;
   //tax query
   $tax_query = array(
     array(
