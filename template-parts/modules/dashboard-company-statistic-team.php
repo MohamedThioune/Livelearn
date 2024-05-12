@@ -393,7 +393,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                             $date = new DateTime();
                             $date_last_month = $date->sub(new DateInterval('P2M'))->format('Y-m-d');
                             $date_this_month = date('Y-m-d');
-                            //$table_tracker_views = $wpdb->prefix . 'tracker_views';
+                            $table_tracker_views = $wpdb->prefix . 'tracker_views';
                             $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
                             $if_user_actif = count($wpdb->get_results($sql));
 
