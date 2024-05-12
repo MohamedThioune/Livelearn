@@ -24,9 +24,10 @@ $numbers_count = array();
 $topic_views = array();
 $topic_followed = array();
 function get_number_for_month($month, $plateform='web'){
-    $number_of_month = 0;
     global $wpdb;
-    $year = date('Y');
+    $number_of_month = 0;
+    $year = intval(date('Y'));
+    $actual_month = intval(date('m'));
 switch ($month){
     case 'Jan' :
         $number_of_month = 1;
@@ -65,10 +66,13 @@ switch ($month){
         $number_of_month = 12;
         break;
 }
+    if ($number_of_month>$actual_month)
+        $year = $year-1;
+
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
-    $sql = $wpdb->prepare("SELECT COUNT(*) FROM $table_tracker_views WHERE MONTH(updated_at) = $number_of_month AND YEAR(updated_at) = $year AND platform = $plateform");
-    $topic_views = $wpdb->get_results($sql);
-    return $topic_views;
+    $sql = $wpdb->prepare("SELECT COUNT(*) FROM $table_tracker_views WHERE MONTH(updated_at) = $number_of_month AND YEAR(updated_at) = $year AND platform = '".$plateform."'");
+    $number_statistics = $wpdb->get_results($sql)[0]->{'COUNT(*)'};
+    return intval($number_statistics);
 }
 $assessment_validated = array();
 foreach ($users as $user ) {
@@ -102,11 +106,11 @@ foreach ($members as $user) {
     $is_login = false;
 
     $date = new DateTime();
-    $date_this_month = $date->format('Y-m-d');
-    $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
+    $date_this_month = date('Y-m-d');
+    $date_last_month = $date->sub(new DateInterval('P2M'))->format('Y-m-d');
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN ".$date_last_month." AND ".$date_this_month);
-    $if_user_actif = $wpdb->get_results($sql);
+    $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+    $if_user_actif = count($wpdb->get_results($sql));
 
     if ($if_user_actif)
         $is_login = true;
@@ -247,8 +251,8 @@ $count_assessments = count($assessments);
 $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
 $assessment_not_started = 100;
 $assessment_completed = 0;
-$members_active = 0;
-$members_inactive = 20;
+$members_active = rand(1,10);
+$members_inactive = rand(1,10);
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
