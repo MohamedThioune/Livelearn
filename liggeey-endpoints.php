@@ -857,8 +857,8 @@ function jobDetail(WP_REST_Request $request){
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
   $sample = array();
-  $param_category_id = $request['id'] ?? 0;
-  $required_parameters = ['id'];
+  $param_category_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
   
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -871,7 +871,7 @@ function categoryDetail(WP_REST_Request $request){
   //Name + Slug 
   $categories = get_categories( array(
     'taxonomy' => 'course_category',
-    'include' => $param_category_id,
+    'name' => $param_category_id,
     ) 
   );
   $param_category = (isset($categories[0])) ? $categories[0] : 0;
@@ -879,18 +879,16 @@ function categoryDetail(WP_REST_Request $request){
     return $sample;
   $sample['name'] = $param_category->name ;
   $sample['slug'] = $param_category->slug ;
-  // var_dump($param_category);
-  // die();
+  $term_id = $param_category->term_id;
 
   //tax query
   $tax_query = array(
     array(
       "taxonomy" => "course_category",
-      "field"    => "term_id",
-      "terms"    => [$param_category_id]
+      "field"    => 'term_id',
+      "terms"    => [$term_id]
     )
   );
-
   /** Global jobs **/
   $jobs = array();
   $args = array(
