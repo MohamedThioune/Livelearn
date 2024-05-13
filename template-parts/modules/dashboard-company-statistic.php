@@ -195,8 +195,8 @@ $count_assessments = count($assessments);
 $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
 $assessment_not_started = 100;
 $assessment_completed = 0;
-$members_active = 0;
-$members_inactive = 20;
+$members_active = rand(1,10);
+$members_inactive = rand(1,10);
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
@@ -401,10 +401,10 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
 
                         $date = new DateTime();
                         $date_this_month = $date->format('Y-m-d');
-                        $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
+                        $date_last_month = $date->sub(new DateInterval('P2M'))->format('Y-m-d');
                         $table_tracker_views = $wpdb->prefix . 'tracker_views';
-                        $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}tracker_views WHERE `user_id` = ".$user->ID." AND updated_at BETWEEN ".$date_last_month." AND ".$date_this_month);
-                        $if_user_actif = $wpdb->get_results($sql);
+                        $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+                        $if_user_actif = count($wpdb->get_results($sql));
 
                         if ($if_user_actif)
                             $is_login = true;
