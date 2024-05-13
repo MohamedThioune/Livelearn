@@ -472,7 +472,6 @@ function homepage(){
   //Featured candidates [Block]
   $i = 0;
   foreach ($users as $key => $value) {
-    var_dump($value);
     // die();
     $sample = array();
 
@@ -654,6 +653,12 @@ function companyDetail(WP_REST_Request $request){
   $required_parameters = ['slug'];
   
   $company = get_page_by_path($param_post_id, OBJECT, 'company');
+  if (!$company) {
+    $errors['errors'] = 'No company found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+}
 
   //Check required parameters 
   $errors = validated($required_parameters, $request);
