@@ -87,10 +87,10 @@ if (isset($_POST) && !empty($_POST)){
                         <?php
                         if (isset($_GET['message']))
                             echo $_GET['message'];
-                           //echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                           echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
                         ?>
-                        <div class="form-input new-form-input">
-                            <form action="/" method="POST" id="new-form-register-workflow">
+                        <!--
+                            <form action="" method="POST" id="new-form-register-workflow">
 
                                 <div class="first-step-modal">
                                     <div class="form-group">
@@ -137,6 +137,7 @@ if (isset($_POST) && !empty($_POST)){
                                 </div>
                             </form>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>
