@@ -658,7 +658,7 @@ function companyDetail(WP_REST_Request $request){
     $response = new WP_REST_Response($errors);
     $response->set_status(401);
     return $response;
-}
+  }
 
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -880,8 +880,14 @@ function categoryDetail(WP_REST_Request $request){
     ) 
   );
   $param_category = (isset($categories[0])) ? $categories[0] : 0;
-  if(!$param_category)  
-    return $sample;
+
+  if(!$param_category):
+    $errors['errors'] = 'No company found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+  
   $sample['name'] = $param_category->name ;
   $sample['slug'] = $param_category->slug ;
   $term_id = $param_category->term_id;
@@ -2630,8 +2636,8 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
     //Sending email notification
     //title + trigger + content parsing
     $first_name = $user->first_name ?: $user->display_name;
-    // $emails = [$user->user_email, 'info@livelearn.nl'];
-    $emails = [$user->user_email];
+    $emails = [$user->user_email, 'info@livelearn.nl'];
+    // $emails = [$user->user_email];
     $path_mail = '/templates/mail-liggeey.php';
     require(__DIR__ . $path_mail);
     $subject = $title;
