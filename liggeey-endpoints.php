@@ -392,8 +392,9 @@ function homepage(){
     if(!$category)
       continue;
     $sample = array();
-    $sample['cat_ID'] = $category->cat_ID;
-    $sample['cat_name'] = $category->cat_name;
+    $sample['cat_ID'] = $category->term_id;
+    $sample['cat_name'] = $category->name;
+    $sample['cat_slug'] = $category->slug;
     $image_category = get_field('image', 'category_'. $category->cat_ID);
     $sample['cat_image'] = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
 
@@ -878,7 +879,7 @@ function categoryDetail(WP_REST_Request $request){
   //Name + Slug 
   $categories = get_categories( array(
     'taxonomy' => 'course_category',
-    'name' => $param_category_id,
+    'slug' => $param_category_id,
     ) 
   );
   $param_category = (isset($categories[0])) ? $categories[0] : 0;
