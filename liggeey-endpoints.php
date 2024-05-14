@@ -881,17 +881,18 @@ function categoryDetail(WP_REST_Request $request){
   $categories = get_categories( array(
     'taxonomy' => 'course_category',
     'slug' => $param_category_id,
+    'hide_empty' => 0
     ) 
   );
   $param_category = (isset($categories[0])) ? $categories[0] : 0;
 
-  $errors = [];
-  if(!$param_category):
-    $errors['errors'] = 'No category found !';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-  endif;
+  // $errors = [];
+  // if(!$param_category):
+  //   $errors['errors'] = 'No category found !';
+  //   $response = new WP_REST_Response($errors);
+  //   $response->set_status(401);
+  //   return $response;
+  // endif;
   
   $sample['name'] = $param_category->name ;
   $sample['slug'] = $param_category->slug ;
