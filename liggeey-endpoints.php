@@ -519,6 +519,7 @@ function register_company(WP_REST_Request $request){
   $password = $request['password'] ?? false;
   $password_confirmation = $request['password_confirmation'] ?? false;
 
+  $errors = array();
   //Password confirmation match ?
   if($password != $password_confirmation):
     $errors['errors'] = "the passwords did not match !";
@@ -541,6 +542,7 @@ function register_company(WP_REST_Request $request){
   );
   $user_id = wp_insert_user(wp_slash($userdata));
 
+  $errors = [];
   //Check if there are no errors
   if(is_wp_error($user_id)):
     $errors['errors'] = $user_id;
@@ -881,8 +883,9 @@ function categoryDetail(WP_REST_Request $request){
   );
   $param_category = (isset($categories[0])) ? $categories[0] : 0;
 
+  $errrors = [];
   if(!$param_category):
-    $errors['errors'] = 'No company found !';
+    $errors['errors'] = 'No category found !';
     $response = new WP_REST_Response($errors);
     $response->set_status(401);
     return $response;
@@ -1404,6 +1407,7 @@ function FavoritesUser(WP_REST_Request $request){
     if(!$user)
       continue;
 
+    $errors = array();
     if(!$user_apply):
       $errors['errors'] = 'User not found !';
       $response = new WP_REST_Response($errors);
@@ -1593,6 +1597,7 @@ function companyProfil(WP_REST_Request $request){
     }
 
   //Get input
+  $errors = [];
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
   if(!$user_apply):
@@ -1618,6 +1623,7 @@ function updateCompanyProfil(WP_REST_Request $request) {
   $company_id = get_field('company', 'user_' . $user_id)[0];
   // var_dump($company_id);
 
+  $errors = [];
   if (!$company_id) {
     $errors['errors'] = 'company not found';
     $response = new WP_REST_Response($errors);
@@ -1845,6 +1851,7 @@ function HomeCandidate(WP_REST_Request $request){
   endif; 
 
   //Get input
+  $errors = [];
   $userApplyId = $request['userApplyId'];
   $user_apply = get_user_by('ID', $userApplyId);
   if(!$user_apply):
@@ -1919,6 +1926,7 @@ function candidateProfil(WP_REST_Request $request) {
   endif; 
 
   //Get input
+  $errors = [];
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
   if(!$user_apply):
