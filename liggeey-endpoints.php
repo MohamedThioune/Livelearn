@@ -2636,8 +2636,8 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
     //Sending email notification
     //title + trigger + content parsing
     $first_name = $user->first_name ?: $user->display_name;
-    // $emails = [$user->user_email, 'info@livelearn.nl'];
-    $emails = [$user->user_email];
+    $emails = [$user->user_email, 'info@livelearn.nl'];
+    // $emails = [$user->user_email];
     $path_mail = '/templates/mail-liggeey.php';
     require(__DIR__ . $path_mail);
     $subject = $title;
