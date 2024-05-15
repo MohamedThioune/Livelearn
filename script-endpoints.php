@@ -75,7 +75,6 @@ function refreshAuthor(){
 //Third step : Delete the extra-author useless [reviewed ]
 /**
  * @return void
- * @url localhost:8888/livelearn/wp-json/custom/v1/fill-author/?key=1
  */
 function fillUpAuthor(){
     global $wpdb;
@@ -171,7 +170,6 @@ function fillUpAuthor(){
 
 /**
  * @return void
- * @url http://localhost:8888/livelearn/wp-json/custom/v1/update-language-courses/?key=1
  */
 function updateLangaugeCourses()
 {

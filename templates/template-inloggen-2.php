@@ -50,7 +50,6 @@
 
                             <?php
                             $redirect = "/dashboard/user/";
-                            //$redirect = "http://localhost:4200/dashboard/user";
                             if(isset($_GET['login'])) {
                                 if ($_GET['login'] == 'failed')
                                     echo "<span class='alert alert-error' style='color:red'>Failed to login, informations are incorrect</span>";
