@@ -1568,6 +1568,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'updateTimeSpentOnCourseType',
   ));
 
+  register_rest_route('custom/v2', '/user/subtopic/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserSubtopicsStatistics',
+  ));
+
+  register_rest_route('custom/v2', '/user/statistics/subtopic/update', array(
+    'methods' => 'POST',
+    'callback' => 'updateUserSubtopicsStatistics',
+  ));
+
   register_rest_route('custom/v2', '/user/courses/statistics', array(
     'methods' => 'GET',
     'callback' => 'getUserCourseStastics',
