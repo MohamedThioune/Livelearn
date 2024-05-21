@@ -1,6 +1,6 @@
 <?php
 
-function makeAPICall($url, $type, $data = null) {
+function makecall($url, $type, $data = null) {
     // credentials
     $api_key = "Bearer sk_test_51JyijWEuOtOzwPYXl8Z57qbOuYURVnzEMvVFgUT0Wo7lmAWx2Qr9qQMASvyEkYpDVf1FRL25yWa0amHVSBl2KYC400iZFj6eek";
     // $params = array( // 
@@ -60,14 +60,14 @@ function makeAPICall($url, $type, $data = null) {
 
 function create_customer_stripe($data){
     $endpoint = "https://api.stripe.com/v1/customers";
-    $information = makeAPICall($endpoint, 'POST', $data);
+    $information = makecall($endpoint, 'POST', $data);
 
     return $information;
 }
 
 function create_subscription_stripe($data){
     $endpoint = "https://api.stripe.com/v1/subscriptions";
-    $information = makeAPICall($endpoint, 'POST', $data);
+    $information = makecall($endpoint, 'POST', $data);
     return $information;
 }
 
