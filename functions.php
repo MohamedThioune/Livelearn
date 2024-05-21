@@ -13,6 +13,7 @@ include "script-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
+require __DIR__ . '/templates/new-module-subscribe.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -1568,6 +1569,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'updateTimeSpentOnCourseType',
   ));
 
+  register_rest_route('custom/v2', '/user/subtopic/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserSubtopicsStatistics',
+  ));
+
+  register_rest_route('custom/v2', '/user/statistics/subtopic/update', array(
+    'methods' => 'POST',
+    'callback' => 'updateUserSubtopicsStatistics',
+  ));
+
   register_rest_route('custom/v2', '/user/courses/statistics', array(
     'methods' => 'GET',
     'callback' => 'getUserCourseStastics',
@@ -2016,6 +2027,12 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/notification/list', array(
     'methods' => 'POST',
     'callback' => 'notifications'
+  ));
+
+  //Made by Mohamed | Subscribe
+  register_rest_route ('custom/v1', '/subscribe/new', array(
+    'methods' => 'POST',
+    'callback' => 'stripe'
   ));
 
 });

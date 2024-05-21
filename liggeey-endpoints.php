@@ -2327,7 +2327,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     );
 
     // Response
-     $response = new WP_REST_Response($data);
+    $response = new WP_REST_Response($data);
     $response->set_status(200);
     return $response;
 }
