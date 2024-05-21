@@ -3934,6 +3934,93 @@ endif;
         return $timeSpentinSecond;
       }
 
+      function getUserSubtopicsStatistics($data)
+      {
+        $user_id = $GLOBALS['user_id'] ?? false;
+        
+        if (!$user_id)
+        {
+          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response->set_status(400);
+          return $response;
+        }
+        $user = get_user_by( 'ID', $user_id ) ?? false;
+        if (!$user)
+        {
+          $response = new WP_REST_Response("This user id filled doesn't exist !");
+          $response->set_status(400);
+          return $response;
+        }
+        global $wpdb;
+        $table = $wpdb->prefix . 'user_subtopics_statistics';
+        $sql = $wpdb->prepare("SELECT * FROM $table WHERE user_id = $user_id");
+        return $wpdb->get_results($sql);
+
+      }
+
+      function updateUserSubtopicsStatistics(WP_REST_Request $request) 
+      {
+        // Retrieve the user ID, 
+        $user_id = $request['user_id'] ?? false;
+    
+        // Check if the user ID is provided
+        if (!$user_id) {
+            $response = new WP_REST_Response("You have to fill the id of the current user!");
+            $response->set_status(400);
+            return $response;
+        }
+    
+        // Check if the user exists
+        $user = get_user_by('ID', $user_id);
+        if (!$user) {
+            $response = new WP_REST_Response("This user id filled doesn't exist!");
+            $response->set_status(400);
+            return $response;
+        }
+    
+        // Retrieve the category ID, 
+        $category_id = $request['category_id'] ?? false;
+        if (!$category_id) {
+            $response = new WP_REST_Response("You have to fill the category id!");
+            $response->set_status(400);
+            return $response;
+        }
+    
+        // Retrieve the time spent, 
+        $time_spent = $request['time_spent'] ?? false;
+        if (!$time_spent) {
+            $response = new WP_REST_Response("You have to fill the time spent on the category!");
+            $response->set_status(400);
+            return $response;
+        }
+    
+        global $wpdb;
+    
+        $table = $wpdb->prefix . 'user_subtopics_statistics';
+    
+        // Prepare and execute the SQL statement to check for existing records
+        $sql = $wpdb->prepare("SELECT time_spent FROM $table WHERE user_id = %d AND category_id = %d", $user_id, $category_id);
+        $existing_record = $wpdb->get_row($sql);
+    
+        if (is_null($existing_record)) {
+            // No existing record, insert a new one
+            $data = [
+                'category_id' => $category_id,
+                'user_id' => $user_id,
+                'time_spent' => $time_spent
+            ];
+            $wpdb->insert($table, $data);
+        } else {
+            // Existing record found, add the new time_spent to the existing one
+            $new_time_spent = (int)$existing_record->time_spent + (int)$time_spent;
+            $sql = $wpdb->prepare("UPDATE $table SET time_spent = %d WHERE user_id = %d AND category_id = %d", $new_time_spent, $user_id, $category_id);
+            $wpdb->query($sql);
+        }
+        $response = new WP_REST_Response("User subtopic statistics updated successfully!");
+        $response->set_status(200);
+        return $response;
+      }
+
       function getProgressionStatistics ()
       {
         $user = $GLOBALS['user_id'] = get_current_user_id();

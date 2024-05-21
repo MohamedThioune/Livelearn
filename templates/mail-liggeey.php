@@ -11,7 +11,7 @@ $mail_invitation_body =
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>' . $first_name  . ', je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
+  <title>' . $first_name  . ', new notifications for you</firs-name></title><!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -247,7 +247,7 @@ $mail_invitation_body =
                             </span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">
                             <span style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
-                            All The LiveLearn Team                              
+                            All The Liggeey Team                              
                             </span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
