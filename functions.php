@@ -13,7 +13,7 @@ include "script-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
-require __DIR__ . '/templates/new-module-subscribe.php';
+require_once __DIR__ . '/templates/new-module-subscribe.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -1275,28 +1275,28 @@ function notification_display(){
     */
 
     $args = array(
-        'post_type' => 'feedback', 
-        'author' => $user->ID,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'posts_per_page' => -1,
+      'post_type' => 'feedback', 
+      'author' => $user->ID,
+      'orderby' => 'post_date',
+      'order' => 'DESC',
+      'posts_per_page' => -1,
     );
 
     $notifications = get_posts($args);
     $todos = array();
 
     if(!empty($notifications))
-        foreach($notifications as $todo){
-            $read = get_field('read_feedback', $todo->ID);
-            if($read)
-                continue;
-            array_push($todos,$todo);
-        }
+      foreach($notifications as $todo){
+          $read = get_field('read_feedback', $todo->ID);
+          if($read)
+              continue;
+          array_push($todos,$todo);
+      }
 
     if(!empty($todos))
-        return $todos;
+      return $todos;
     else
-        return ['error' => 'No notification you didn\'t see yet !'];
+      return ['error' => 'No notification you didn\'t see yet !'];
 }
 
 function notification($data){
