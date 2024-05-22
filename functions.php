@@ -1677,7 +1677,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getCommunitiesPersonal',
   ));
 
-  register_rest_route ('custom/v2', '/communitiess', array(
+  register_rest_route ('custom/v2', '/communities', array(
     'methods' => 'GET',
     'callback' => 'getCommunitiesOptimized',
   ));
