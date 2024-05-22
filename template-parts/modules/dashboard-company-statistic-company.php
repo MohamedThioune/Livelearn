@@ -87,6 +87,7 @@ foreach ($users as $user ) {
             // Object & ID member
             array_push($numbers,$user->ID);
             array_push($members,$user);
+            if($user->user_registered)
 
             // Assessment
             $validated = get_user_meta($user->ID, 'assessment_validated');
@@ -100,17 +101,22 @@ foreach ($users as $user ) {
 
         }
 }
+//get new members
 
+$new_members_count = 0;
 $count_members = count($members);
 foreach ($members as $user) {
     $is_login = false;
 
     $date = new DateTime();
     $date_this_month = date('Y-m-d');
-    $date_last_month = $date->sub(new DateInterval('P2M'))->format('Y-m-d');
+    $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
     $if_user_actif = count($wpdb->get_results($sql));
+
+    if ((new DateTime($user->user_registered))->format('Y-m-d') <= $date_last_month)
+        $new_members_count++;
 
     if ($if_user_actif)
         $is_login = true;
@@ -343,8 +349,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/faUser.png" alt="">
                     </div>
                     <div>
-                        <p class="total-member">New Members</p>
-                        <p class="number-members">0</p>
+                        <p class="total-member">NEW MEMBERS</p>
+                        <p class="number-members"><?=$new_members_count?></p>
                     </div>
                 </div>
                 <div class="card-element-company d-flex align-items-center bg-purple-c">
