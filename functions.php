@@ -1517,6 +1517,11 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'fillUpAuthor',
   ));
+    //Third apply !
+    register_rest_route('custom/v1', '/delete-old-course-databank', array(
+        'methods' => 'GET',
+        'callback' => 'delete_odl_courses_databank',
+    ));
 
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
