@@ -1666,7 +1666,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'answerAssessment',
   ));
 
-
   register_rest_route ('custom/v1', 'user/assessment/(?P<id>\d+)/validate/score', array(
     'methods' => 'GET',
     'callback' => 'getAssessmentValidateScore',

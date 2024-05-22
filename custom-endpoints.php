@@ -2371,7 +2371,7 @@ function answerAssessment (WP_REST_Request $request)
 
    return [$infos];
  }
-
+ 
 function getCommunitiesPersonal($data) {
   //Personal ID
   $user_id = $data['id'] ?? null;
