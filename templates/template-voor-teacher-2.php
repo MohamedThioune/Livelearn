@@ -1,6 +1,7 @@
 <?php /** Template Name: Voor teacher2 */ ?>
 <?php
 global $wp;
+
 $url = home_url( $wp->request );
 if ($_POST){
     $userdata = array(
@@ -22,7 +23,7 @@ if ($_POST){
             update_field('telnr', $_POST['phone'], 'user_' . $user_id);
 
         //create a new company the new user
-        $company_id = wp_insert_post(   
+        $company_id = wp_insert_post(
             array(
                 'post_title' => $_POST['company'],
                 'post_type' => 'company',
@@ -86,8 +87,9 @@ if ($_POST){
                         <?php
                         if (isset($_GET['message']))
                             echo $_GET['message'];
-                           //echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                           echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
                         ?>
+                        <!--
                         <div class="form-input new-form-input">
                             <form action="" method="POST" id="new-form-register-workflow">
 
@@ -136,6 +138,7 @@ if ($_POST){
                                 </div>
                             </form>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>
