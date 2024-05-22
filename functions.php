@@ -1666,15 +1666,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'answerAssessment',
   ));
 
-
   register_rest_route ('custom/v1', 'user/assessment/(?P<id>\d+)/validate/score', array(
     'methods' => 'GET',
     'callback' => 'getAssessmentValidateScore',
   ));
-
-  register_rest_route ('custom/v1', '/communities', array(
+  
+  register_rest_route ('custom/v1', '/community/personal/(?P<id>\d+)', array(
     'methods' => 'GET',
-    'callback' => 'getCommunities',
+    'callback' => 'getCommunitiesPersonal',
   ));
 
   register_rest_route ('custom/v2', '/communities', array(
@@ -1797,10 +1796,10 @@ add_action( 'rest_api_init', function () {
     'callback' => 'cleanVideoCourse'
   ));
 
-  register_rest_route ('custom/v1', '/weekly-recommendation', array(
-    'methods' => 'GET',
-    'callback' => 'recommendedWeekly'
-  ));
+  // register_rest_route ('custom/v1', '/weekly-recommendation', array(
+  //   'methods' => 'GET',
+  //   'callback' => 'recommendedWeekly'
+  // ));
 
   register_rest_route ('custom/v1', '/update-language-courses', array(
     'methods' => 'GET',
@@ -2005,7 +2004,7 @@ add_action( 'rest_api_init', function () {
 
   register_rest_route ('custom/v1', '/candidate/myResume/update', array(
     'methods' => 'POST',
-    'callback' => 'candidateMyResumeEdit'
+    'callback' => 'candidateMyResumeEdit' 
   ));
 
   register_rest_route ('custom/v1', '/candidate/myResume/add', array(
