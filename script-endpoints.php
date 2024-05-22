@@ -215,17 +215,18 @@ function updateLangaugeCourses()
 function delete_odl_courses_databank(){
     global $wpdb;
     $today = new DateTime();
+    $table_databank = $wpdb->prefix . 'databank';
     $lastMonthTeamstample = $today->sub(new DateInterval('P1M'));
     $one_month_before = $lastMonthTeamstample->format('Y-m-d');
-    //$sql = $wpdb->prepare("DELETE FROM {$wpdb->prefix}databank WHERE created_at <'$one_month_before'");
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE created_at <'$one_month_before'");
+    //$sql = $wpdb->prepare("DELETE FROM $table_databank WHERE created_at <'$one_month_before'");
+    $sql = $wpdb->prepare("SELECT * FROM $table_databank WHERE created_at <'$one_month_before'");
     $courses = $wpdb->get_results($sql);
     //pagination
     $count = count($courses);
     define("STEP", 500);
     $number_iteration = intval(ceil($count / STEP));
-    var_dump($courses);
-    /*
+    //var_dump($courses);
+
     $key = 1;
     if (isset($_GET['key'])) {
         if ( intval($_GET['key'])) {
@@ -243,6 +244,9 @@ function delete_odl_courses_databank(){
     $star_index = ($key - 1) * STEP;
     for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
         $course = $courses[$i];
+        //delete the course in databank
+        $sql = $wpdb->prepare("DELETE FROM $table_databank WHERE id = $course->id");
+        if($wpdb->get_results($sql))
+            echo "<h4>course $course->id id deleted success...</h4>";
     }
-    */
 }
