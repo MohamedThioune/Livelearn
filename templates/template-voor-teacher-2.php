@@ -1,9 +1,8 @@
 <?php /** Template Name: Voor teacher2 */ ?>
 <?php
 global $wp;
-
 $url = home_url( $wp->request );
-if (isset($_POST) && !empty($_POST)){
+if ($_POST){
     $userdata = array(
         'user_pass' => $_POST['password'],
         'user_login' => $_POST['username'],
@@ -23,7 +22,7 @@ if (isset($_POST) && !empty($_POST)){
             update_field('telnr', $_POST['phone'], 'user_' . $user_id);
 
         //create a new company the new user
-        $company_id = wp_insert_post(
+        $company_id = wp_insert_post(   
             array(
                 'post_title' => $_POST['company'],
                 'post_type' => 'company',
@@ -90,7 +89,7 @@ if (isset($_POST) && !empty($_POST)){
                            //echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
                         ?>
                         <div class="form-input new-form-input">
-                            <form action="<?= $url ?>" method="POST" id="new-form-register-workflow">
+                            <form action="" method="POST" id="new-form-register-workflow">
 
                                 <div class="first-step-modal">
                                     <div class="form-group">
@@ -204,16 +203,12 @@ if (isset($_POST) && !empty($_POST)){
     </script>
     <script>
         $("#new-form-register-workflow").submit((e)=>{
-            //e.preventDefault();
             const formData = new FormData(e.currentTarget);
             password = formData.get('password')
             password2 = formData.get('password2')
             if (password !== password2){
                 e.preventDefault();
                 alert('passwords not matched')
-                //$('#alert-danger-register').removeClass('d-none')
-                //$('#Password-workflow').addClass('btn-danger')
-                //$('#Password2-workflow').addClass('btn-danger')
             }
         })
     </script>
