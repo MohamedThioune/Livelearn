@@ -1671,13 +1671,13 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'getAssessmentValidateScore',
   ));
-
-  register_rest_route ('custom/v1', '/communities', array(
+  
+  register_rest_route ('custom/v1', '/community/personal/(?P<id>\d+)', array(
     'methods' => 'GET',
-    'callback' => 'getCommunities',
+    'callback' => 'getCommunitiesPersonal',
   ));
 
-  register_rest_route ('custom/v2', '/communities', array(
+  register_rest_route ('custom/v2', '/communitiess', array(
     'methods' => 'GET',
     'callback' => 'getCommunitiesOptimized',
   ));
