@@ -437,9 +437,10 @@ function homepage(){
   foreach($posts as $post):
     $sample = array();
 
-    //Hidden post
+    //Hidden post && language
+    $language = get_field('language', $post->ID);
     $hidden = get_field('visibility', $post->ID);
-    if($hidden)
+    if($hidden || $language != "en")
       continue;
     //Generic informations
     $sample['ID'] = $post->ID;
