@@ -41,8 +41,8 @@ function artikel($id){
   foreach($main_reviews as $review):
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
-    $image_author = get_field('profile_img',  'user_' . $user->ID);
-    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $company = get_field('company',  'user_' . $user->ID);
     $title = $company[0]->post_title;
 
@@ -200,7 +200,8 @@ function candidate($id){
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
+  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
@@ -975,7 +976,8 @@ function allArtikels(WP_REST_Request $request){
     $sample['permalink'] = get_permalink($post->ID);
     $author = get_user_by('ID', $post->post_author);
     $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_field('profile_img_api',  'user_' . $post->post_author);
+    $sample['author_image'] = $sample['author_image'] ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';  
     $post_date = new DateTimeImmutable($post->post_date);
     $sample['post_date'] = $post_date->format('M d, Y');
     $reviews = get_field('reviews', $post->ID);
@@ -1132,24 +1134,24 @@ function commentByID(WP_REST_Request $request ) {
 
   // Loop through each ACF review
   foreach ($main_reviews as $review) {
-     $user = $review['user']; // Get the user associated with the review
-     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
+    $user = $review['user']; // Get the user associated with the review
+    $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
 
-     $image_author = get_field('profile_img',  'user_' . $user->ID);
-     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  
+    $rating = $review['rating'];
+    $feedback = $review['Feedback'];
 
-     $rating = $review['rating'];
-     $feedback = $review['Feedback'];
-
-     // Assemble the comment data into an array
-     $comment = array(
-         'comment_author_name' => $author_name,
-         'comment_author_image' => $image_author,
-         'rating' => $rating,
-         'feedback' => $feedback
-     );
-     // Add the comment data to the comments array
-     $comments[] = $comment;
+    // Assemble the comment data into an array
+    $comment = array(
+        'comment_author_name' => $author_name,
+        'comment_author_image' => $image_author,
+        'rating' => $rating,
+        'feedback' => $feedback
+    );
+    // Add the comment data to the comments array
+    $comments[] = $comment;
   }
   // Return the array of comments
   return $comments;
@@ -1964,10 +1966,10 @@ function updateCandidateProfil(WP_REST_Request $request) {
 
   $errors = [];
   if (!$candidate_data) {
-      $errors['errors'] = 'User not found';
-      $response = new WP_REST_Response($errors);
-      $response->set_status(401);
-      return $response;
+    $errors['errors'] = 'User not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
   }
 
   // Parameters REST request
@@ -1975,9 +1977,9 @@ function updateCandidateProfil(WP_REST_Request $request) {
 
   // Update Fields
   foreach ($updated_data as $field_name => $field_value):
-      if($field_value)
-      if($field_value != '' && $field_value != ' ')
-        update_field($field_name, $field_value, 'user_' . $user_id);
+    if($field_value)
+    if($field_value != '' && $field_value != ' ')
+      update_field($field_name, $field_value, 'user_' . $user_id);
   endforeach;
 
   // Return response
@@ -2279,7 +2281,8 @@ function candidateSkillsPassport(WP_REST_Request $request) {
             $type = get_field('type_badge', $achievement->ID);
 
             $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->ID);
+            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
+            $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 

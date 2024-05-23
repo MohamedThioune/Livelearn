@@ -2395,10 +2395,8 @@ function getCommunitiesPersonal($data) {
     $author_community = get_field('company_author',$community->ID) ?? false;
     $author_company = get_field('company', 'user_' . (int) $user_id)[0] ?? false;
     if ($community->visibility_community !=false)
-    {
       if ($author_community ->ID != $author_company->ID)
         continue;
-    }
     
     $community-> author_company = array();
     if(is_object($author_community))
@@ -2406,18 +2404,19 @@ function getCommunitiesPersonal($data) {
     $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
     $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
     $community->is_connected_user_member = false;
-    $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
+    $follower_community = get_field('follower_community', $community->ID) ? get_field('follower_community', $community->ID) : [];
     $community->count_members =  count($follower_community) ?? 0;
+    $community->is_connected_user_member = false;
     if (!empty($follower_community))
-      foreach ($follower_community as $key => $follower) {
-        if ($follower -> data -> ID == $user_id)
-        {
+      foreach ($follower_community as $key => $follower) 
+        if ($follower -> data -> ID == $user_id){
           $community->is_connected_user_member = true;
           break;
         }
-      
-      }
-    array_push($retrieved_communities,$community);
+
+    $community->count_posts = get_field('course_community', $community->ID) ? count(get_field('course_community', $community->ID)) : 0;
+    
+    array_push($retrieved_communities, $community);
   }
   
   return $retrieved_communities;
@@ -2456,17 +2455,18 @@ function getCommunitiesOptimized()
     $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
     $community->is_connected_user_member = false;
     $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
-    $community->count_members =  count($follower_community) ?? 0;
+    $community->count_members = count($follower_community) ?? 0;
     if (!empty($follower_community))
-       foreach ($follower_community as $key => $follower) {
-         if ($follower -> data -> ID == $user_id)
-         {
-           $community->is_connected_user_member = true;
-           break;
-          }
-        
-       }
-      array_push($retrieved_communities,$community);
+      foreach ($follower_community as $key => $follower) 
+        if ($follower -> data -> ID == $user_id)
+        {
+          $community->is_connected_user_member = true;
+          break;
+        }
+    
+    $community->count_posts = get_field('course_community', $community->ID) ? count(get_field('course_community', $community->ID)) : 0;
+
+    array_push($retrieved_communities, $community);
   }
   
   return $retrieved_communities;
