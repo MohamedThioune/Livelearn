@@ -218,9 +218,14 @@ function delete_odl_courses_databank(){
     $table_databank = $wpdb->prefix . 'databank';
     $lastMonthTeamstample = $today->sub(new DateInterval('P1M'));
     $one_month_before = $lastMonthTeamstample->format('Y-m-d');
-    //$sql = $wpdb->prepare("DELETE FROM $table_databank WHERE created_at <'$one_month_before'");
-    $sql = $wpdb->prepare("SELECT * FROM $table_databank WHERE created_at <'$one_month_before'");
+    $sql = $wpdb->prepare("DELETE FROM $table_databank WHERE created_at <'$one_month_before'");
+    //$sql = $wpdb->prepare("SELECT * FROM $table_databank WHERE created_at <'$one_month_before'");
     $courses = $wpdb->get_results($sql);
+    if ($courses){
+        echo "<h1 class='textOpleidRight text-center alert alert-danger'>Old courses deleted ! ! !</h1>";
+        return;
+    }
+    /*
     //pagination
     $count = count($courses);
     define("STEP", 500);
@@ -249,4 +254,5 @@ function delete_odl_courses_databank(){
         if($wpdb->get_results($sql))
             echo "<h4>course $course->id id deleted success...</h4>";
     }
+    */
 }
