@@ -306,11 +306,9 @@ $leerpaden = get_posts($args);
                                             </div>
                                         <div class="group9">
                                             <div class="blockOpein">
-                                                <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
                                                 <p class="lieuAm">Artikelen voor ZZPers</p>
                                             </div>
                                             <div class="blockOpein">
-                                                <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
                                             </div>
                                         </div>
                                     </div>

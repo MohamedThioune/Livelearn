@@ -229,7 +229,7 @@ function Artikel_From_Company($data)
             'Tableau'=>'https://tableaumagazine.nl/',
         ],
         [
-           'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+          'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
 	       'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
 	       'Modern Agriculture' =>	'https://modernagriculture.ca/',
 	       'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
@@ -268,6 +268,18 @@ function Artikel_From_Company($data)
            'Design Wanted'	 =>'https://designwanted.com/',
            'Craftsmanship'	 =>'https://craftsmanship.net/',
            'Wood and Panel'  =>	'https://www.woodandpanel.com/',
+           'Platform O' =>	'https://platformoverheid.nl/',																							
+	         'Duurzaam Ondernemen' =>	'https://www.duurzaam-ondernemen.nl/',																																											
+	         'IVVD' =>	'https://www.ivvd.nl/',																																													
+	         'De Afdeling Marketing' =>	'https://deafdelingmarketing.nl/',																																												
+	         'Neurofactor' =>	'https://neurofactor.nl/',																							
+	         'Kennisportal'	=> 'https://www.kennisportal.com/'	,																							
+	         'Orbis' =>	'https://www.orbis-software.nl/',
+        ],
+         [
+           'Onno Kleyn' =>	'https://www.onnokleyn.nl/',																						
+	         'NFCI' =>	'https://nfcihospitality.com/',																																													
+	         'SVO' =>	'https://www.svo.nl/'	
         ],
 
     ];
@@ -541,9 +553,9 @@ function Artikel_From_Company($data)
         else
           $course_type = "Opleidingen";
       }
-       if($datum['programDescriptions']['programDescriptionHtml'])
-        $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
-      else
+      //  if($datum['programDescriptions']['programDescriptionHtml'])
+      //   $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
+      // else
         $descriptionHtml = $datum['programDescriptions']['programDescriptionText']['nl'];
       
         $tags = array();

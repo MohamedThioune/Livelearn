@@ -41,8 +41,8 @@ function artikel($id){
   foreach($main_reviews as $review):
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
-    $image_author = get_field('profile_img',  'user_' . $user->ID);
-    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $company = get_field('company',  'user_' . $user->ID);
     $title = $company[0]->post_title;
 
@@ -200,7 +200,8 @@ function candidate($id){
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
+  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
@@ -375,6 +376,7 @@ function homepage(){
   //Category information
   $no_content = "Some information missing !";
   $slugdefined = 'zakelijke-applicaties';
+  // $slugdefined = 'digital';
   $digital_category = get_categories(array('taxonomy' => 'course_category', 'slug' => $slugdefined, 'hide_empty' => 0) )[0];
   if(is_wp_error($digital_category)):
       echo $no_content;
@@ -392,8 +394,9 @@ function homepage(){
     if(!$category)
       continue;
     $sample = array();
-    $sample['cat_ID'] = $category->cat_ID;
-    $sample['cat_name'] = $category->cat_name;
+    $sample['cat_ID'] = $category->term_id;
+    $sample['cat_name'] = $category->name;
+    $sample['cat_slug'] = $category->slug;
     $image_category = get_field('image', 'category_'. $category->cat_ID);
     $sample['cat_image'] = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
 
@@ -434,9 +437,10 @@ function homepage(){
   foreach($posts as $post):
     $sample = array();
 
-    //Hidden post
+    //Hidden post && language
+    $language = get_field('language', $post->ID);
     $hidden = get_field('visibility', $post->ID);
-    if($hidden)
+    if($hidden || $language != "en")
       continue;
     //Generic informations
     $sample['ID'] = $post->ID;
@@ -458,19 +462,6 @@ function homepage(){
     }
     $sample['image'] = $thumbnail;
 
-    //Author information
-    // $author = get_user_by('ID', $post->post_author);
-    // $name_author = ($author) ? $author->display_name : 'None';
-    // $user_id = get_current_user_id();
-    // if($author->ID != $user_id)
-    //     $name = ($author->last_name) ? $author->first_name : $author->display_name;
-    // else
-    //     $name = "Ikzelf";
-
-    // $image_author = get_field('profile_img',  'user_' . $post->post_author);
-    // if(!$image_author)
-    //     $image_author = get_stylesheet_directory_uri() ."/img/liggeey-logo-bis.png";
-
     $sample = (Object)$sample;
     array_push($artikels, $sample);
 
@@ -485,6 +476,7 @@ function homepage(){
   //Featured candidates [Block]
   $i = 0;
   foreach ($users as $key => $value) {
+    // die();
     $sample = array();
 
     //Is Liggeey User
@@ -531,6 +523,7 @@ function register_company(WP_REST_Request $request){
   $password = $request['password'] ?? false;
   $password_confirmation = $request['password_confirmation'] ?? false;
 
+  $errors = array();
   //Password confirmation match ?
   if($password != $password_confirmation):
     $errors['errors'] = "the passwords did not match !";
@@ -553,6 +546,7 @@ function register_company(WP_REST_Request $request){
   );
   $user_id = wp_insert_user(wp_slash($userdata));
 
+  $errors = [];
   //Check if there are no errors
   if(is_wp_error($user_id)):
     $errors['errors'] = $user_id;
@@ -638,9 +632,9 @@ function candidateDetail(WP_REST_Request $request){
 
 //[POST]Detail artikel
 function artikelDetail(WP_REST_Request $request){
-  $param_post_id = $request['id'] ?? 0;
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
 
-  $required_parameters = ['id'];
   //Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
@@ -649,7 +643,8 @@ function artikelDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $sample = artikel($param_post_id);
+  $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
+  $sample = artikel($artikel->ID);
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -660,9 +655,17 @@ function artikelDetail(WP_REST_Request $request){
 
 //[POST]Detail company
 function companyDetail(WP_REST_Request $request){
-  $param_post_id = $request['id'] ?? 0;
-  $required_parameters = ['id'];
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
   
+  $company = get_page_by_path($param_post_id, OBJECT, 'company');
+  if (!$company) {
+    $errors['errors'] = 'No company found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  }
+
   //Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
@@ -671,7 +674,7 @@ function companyDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $sample = company($param_post_id);
+  $sample = company($company->ID);
 
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -816,8 +819,8 @@ function allJobs(){
 
 //[POST]Detail job
 function jobDetail(WP_REST_Request $request){
-  $param_post_id = $request['id'] ?? 0;
-  $required_parameters = ['id'];
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
   
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -827,7 +830,8 @@ function jobDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $job = get_post($param_post_id);
+  $job = get_page_by_path($param_post_id, OBJECT, 'job');
+  // $job = get_post($param_post_id);
   $errors = [];
   if (!$job) {
       $errors['errors'] = 'No job found !';
@@ -836,7 +840,7 @@ function jobDetail(WP_REST_Request $request){
       return $response;
   }
 
-  $sample = job($param_post_id);
+  $sample = job($job->ID);
 
   // Retrieve the latest job posts
     $args = array(
@@ -864,8 +868,8 @@ function jobDetail(WP_REST_Request $request){
 function categoryDetail(WP_REST_Request $request){
   //Get ID Category
   $sample = array();
-  $param_category_id = $request['id'] ?? 0;
-  $required_parameters = ['id'];
+  $param_category_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
   
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -875,20 +879,35 @@ function categoryDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $name = get_the_category_by_ID($param_category_id);
-  if(!$name)
-      return $sample;
+  //Name + Slug 
+  $categories = get_categories( array(
+    'taxonomy' => 'course_category',
+    'slug' => $param_category_id,
+    'hide_empty' => 0
+    ) 
+  );
+  $param_category = (isset($categories[0])) ? $categories[0] : 0;
 
-  $sample['name'] = $name;
+  $errors = [];
+  if(!$param_category):
+    $errors['errors'] = 'No category found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+  
+  $sample['name'] = $param_category->name ;
+  $sample['slug'] = $param_category->slug ;
+  $term_id = $param_category->term_id;
+
   //tax query
   $tax_query = array(
     array(
       "taxonomy" => "course_category",
-      "field"    => "term_id",
-      "terms"    => [$param_category_id]
+      "field"    => 'term_id',
+      "terms"    => [$term_id]
     )
   );
-
   /** Global jobs **/
   $jobs = array();
   $args = array(
@@ -958,7 +977,8 @@ function allArtikels(WP_REST_Request $request){
     $sample['permalink'] = get_permalink($post->ID);
     $author = get_user_by('ID', $post->post_author);
     $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_field('profile_img_api',  'user_' . $post->post_author);
+    $sample['author_image'] = $sample['author_image'] ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';  
     $post_date = new DateTimeImmutable($post->post_date);
     $sample['post_date'] = $post_date->format('M d, Y');
     $reviews = get_field('reviews', $post->ID);
@@ -1115,24 +1135,24 @@ function commentByID(WP_REST_Request $request ) {
 
   // Loop through each ACF review
   foreach ($main_reviews as $review) {
-     $user = $review['user']; // Get the user associated with the review
-     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
+    $user = $review['user']; // Get the user associated with the review
+    $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
 
-     $image_author = get_field('profile_img',  'user_' . $user->ID);
-     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  
+    $rating = $review['rating'];
+    $feedback = $review['Feedback'];
 
-     $rating = $review['rating'];
-     $feedback = $review['Feedback'];
-
-     // Assemble the comment data into an array
-     $comment = array(
-         'comment_author_name' => $author_name,
-         'comment_author_image' => $image_author,
-         'rating' => $rating,
-         'feedback' => $feedback
-     );
-     // Add the comment data to the comments array
-     $comments[] = $comment;
+    // Assemble the comment data into an array
+    $comment = array(
+        'comment_author_name' => $author_name,
+        'comment_author_image' => $image_author,
+        'rating' => $rating,
+        'feedback' => $feedback
+    );
+    // Add the comment data to the comments array
+    $comments[] = $comment;
   }
   // Return the array of comments
   return $comments;
@@ -1393,6 +1413,7 @@ function FavoritesUser(WP_REST_Request $request){
     if(!$user)
       continue;
 
+    $errors = array();
     if(!$user_apply):
       $errors['errors'] = 'User not found !';
       $response = new WP_REST_Response($errors);
@@ -1582,6 +1603,7 @@ function companyProfil(WP_REST_Request $request){
     }
 
   //Get input
+  $errors = [];
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
   if(!$user_apply):
@@ -1607,6 +1629,7 @@ function updateCompanyProfil(WP_REST_Request $request) {
   $company_id = get_field('company', 'user_' . $user_id)[0];
   // var_dump($company_id);
 
+  $errors = [];
   if (!$company_id) {
     $errors['errors'] = 'company not found';
     $response = new WP_REST_Response($errors);
@@ -1834,6 +1857,7 @@ function HomeCandidate(WP_REST_Request $request){
   endif; 
 
   //Get input
+  $errors = [];
   $userApplyId = $request['userApplyId'];
   $user_apply = get_user_by('ID', $userApplyId);
   if(!$user_apply):
@@ -1908,6 +1932,7 @@ function candidateProfil(WP_REST_Request $request) {
   endif; 
 
   //Get input
+  $errors = [];
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
   if(!$user_apply):
@@ -1942,10 +1967,10 @@ function updateCandidateProfil(WP_REST_Request $request) {
 
   $errors = [];
   if (!$candidate_data) {
-      $errors['errors'] = 'User not found';
-      $response = new WP_REST_Response($errors);
-      $response->set_status(401);
-      return $response;
+    $errors['errors'] = 'User not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
   }
 
   // Parameters REST request
@@ -1953,9 +1978,9 @@ function updateCandidateProfil(WP_REST_Request $request) {
 
   // Update Fields
   foreach ($updated_data as $field_name => $field_value):
-      if($field_value)
-      if($field_value != '' && $field_value != ' ')
-        update_field($field_name, $field_value, 'user_' . $user_id);
+    if($field_value)
+    if($field_value != '' && $field_value != ' ')
+      update_field($field_name, $field_value, 'user_' . $user_id);
   endforeach;
 
   // Return response
@@ -2257,7 +2282,8 @@ function candidateSkillsPassport(WP_REST_Request $request) {
             $type = get_field('type_badge', $achievement->ID);
 
             $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->ID);
+            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
+            $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
@@ -2305,7 +2331,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     );
 
     // Response
-     $response = new WP_REST_Response($data);
+    $response = new WP_REST_Response($data);
     $response->set_status(200);
     return $response;
 }
@@ -2625,8 +2651,8 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
     //Sending email notification
     //title + trigger + content parsing
     $first_name = $user->first_name ?: $user->display_name;
-    // $emails = [$user->user_email, 'info@livelearn.nl'];
-    $emails = [$user->user_email];
+    $emails = [$user->user_email, 'info@livelearn.nl'];
+    // $emails = [$user->user_email];
     $path_mail = '/templates/mail-liggeey.php';
     require(__DIR__ . $path_mail);
     $subject = $title;
