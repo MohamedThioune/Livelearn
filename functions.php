@@ -13,6 +13,7 @@ include "script-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
+require_once __DIR__ . '/templates/new-module-subscribe.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -1274,28 +1275,28 @@ function notification_display(){
     */
 
     $args = array(
-        'post_type' => 'feedback', 
-        'author' => $user->ID,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'posts_per_page' => -1,
+      'post_type' => 'feedback', 
+      'author' => $user->ID,
+      'orderby' => 'post_date',
+      'order' => 'DESC',
+      'posts_per_page' => -1,
     );
 
     $notifications = get_posts($args);
     $todos = array();
 
     if(!empty($notifications))
-        foreach($notifications as $todo){
-            $read = get_field('read_feedback', $todo->ID);
-            if($read)
-                continue;
-            array_push($todos,$todo);
-        }
+      foreach($notifications as $todo){
+          $read = get_field('read_feedback', $todo->ID);
+          if($read)
+              continue;
+          array_push($todos,$todo);
+      }
 
     if(!empty($todos))
-        return $todos;
+      return $todos;
     else
-        return ['error' => 'No notification you didn\'t see yet !'];
+      return ['error' => 'No notification you didn\'t see yet !'];
 }
 
 function notification($data){
@@ -1573,6 +1574,21 @@ add_action( 'rest_api_init', function () {
     'callback' => 'updateTimeSpentOnCourseType',
   ));
 
+  register_rest_route('custom/v2', '/user/subtopic/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserSubtopicsStatistics',
+  ));
+
+  register_rest_route('custom/v2', '/user/internal/courses', array(
+    'methods' => 'GET',
+    'callback' => 'getUserInternalCourses',
+  ));
+
+  register_rest_route('custom/v2', '/user/statistics/subtopic/update', array(
+    'methods' => 'POST',
+    'callback' => 'updateUserSubtopicsStatistics',
+  ));
+
   register_rest_route('custom/v2', '/user/courses/statistics', array(
     'methods' => 'GET',
     'callback' => 'getUserCourseStastics',
@@ -1660,15 +1676,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'answerAssessment',
   ));
 
-
   register_rest_route ('custom/v1', 'user/assessment/(?P<id>\d+)/validate/score', array(
     'methods' => 'GET',
     'callback' => 'getAssessmentValidateScore',
   ));
-
-  register_rest_route ('custom/v1', '/communities', array(
+  
+  register_rest_route ('custom/v1', '/community/personal/(?P<id>\d+)', array(
     'methods' => 'GET',
-    'callback' => 'getCommunities',
+    'callback' => 'getCommunitiesPersonal',
   ));
 
   register_rest_route ('custom/v2', '/communities', array(
@@ -1791,10 +1806,10 @@ add_action( 'rest_api_init', function () {
     'callback' => 'cleanVideoCourse'
   ));
 
-  register_rest_route ('custom/v1', '/weekly-recommendation', array(
-    'methods' => 'GET',
-    'callback' => 'recommendedWeekly'
-  ));
+  // register_rest_route ('custom/v1', '/weekly-recommendation', array(
+  //   'methods' => 'GET',
+  //   'callback' => 'recommendedWeekly'
+  // ));
 
   register_rest_route ('custom/v1', '/update-language-courses', array(
     'methods' => 'GET',
@@ -1999,7 +2014,7 @@ add_action( 'rest_api_init', function () {
 
   register_rest_route ('custom/v1', '/candidate/myResume/update', array(
     'methods' => 'POST',
-    'callback' => 'candidateMyResumeEdit'
+    'callback' => 'candidateMyResumeEdit' 
   ));
 
   register_rest_route ('custom/v1', '/candidate/myResume/add', array(
@@ -2021,6 +2036,12 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/notification/list', array(
     'methods' => 'POST',
     'callback' => 'notifications'
+  ));
+
+  //Made by Mohamed | Subscribe
+  register_rest_route ('custom/v1', '/subscribe/new', array(
+    'methods' => 'POST',
+    'callback' => 'stripe'
   ));
 
 });

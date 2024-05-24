@@ -90,7 +90,6 @@ if ($_POST){
                            echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
                         ?>
                         <!--
-                        <div class="form-input new-form-input">
                             <form action="" method="POST" id="new-form-register-workflow">
 
                                 <div class="first-step-modal">
