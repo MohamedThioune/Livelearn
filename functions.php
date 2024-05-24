@@ -1574,6 +1574,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getUserSubtopicsStatistics',
   ));
 
+  register_rest_route('custom/v2', '/user/internal/courses', array(
+    'methods' => 'GET',
+    'callback' => 'getUserInternalCourses',
+  ));
+
   register_rest_route('custom/v2', '/user/statistics/subtopic/update', array(
     'methods' => 'POST',
     'callback' => 'updateUserSubtopicsStatistics',
