@@ -96,11 +96,13 @@ function stripe(WP_REST_Request $request){
         'after_completion' => [
             'type' => 'redirect',
             'redirect' => [
-                'url' => 'https://app.livelearn.nl/'  
+                'url' => 'https://livelearn.nl/?message=sucessful-payment'  
             ]
         ],
-        'metadata' => [
-            'wordpress_id' => $request['ID']
+        'subscription_data' => [
+            'metadata' => [
+                'UserID' => $request['ID']
+            ]
         ]
     ];
 
