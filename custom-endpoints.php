@@ -4026,7 +4026,7 @@ endif;
         
         if (!$user_id)
         {
-          $response = new WP_REST_Response("You have to fill the id of the current user !"); 
+          $response = new WP_REST_Response("You have to login with good credentials !"); 
           $response->set_status(400);
           return $response;
         }
@@ -4040,7 +4040,13 @@ endif;
         global $wpdb;
         $table = $wpdb->prefix . 'user_subtopics_statistics';
         $sql = $wpdb->prepare("SELECT * FROM $table WHERE user_id = $user_id");
-        return $wpdb->get_results($sql);
+        $stats= $wpdb->get_results($sql);
+        foreach ($stats as $stat)
+        {
+          $stat->time_spent = formatSecondes($stat->time_spent);  
+        }
+        
+        return $stats;
       }
 
       function updateUserSubtopicsStatistics(WP_REST_Request $request) 
