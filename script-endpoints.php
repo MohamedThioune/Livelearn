@@ -1,4 +1,3 @@
-
 <?php
 require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
 $GLOBALS['user_id'] = get_current_user_id();
@@ -205,4 +204,53 @@ function updateLangaugeCourses()
         if(update_field('language', detectLanguage($course->post_title), $course->ID))
             echo '<h3>language added for :'.$course->post_title.' : '.$course->ID.'</h3>';
     }
+}
+
+/**
+ * @return void
+ * @url https://localhost:8888/livelearn/wp-json/custom/v1/delete-old-course-databank?key=1
+ */
+function delete_odl_courses_databank(){
+    global $wpdb;
+    $today = new DateTime();
+    $table_databank = $wpdb->prefix . 'databank';
+    $lastMonthTeamstample = $today->sub(new DateInterval('P1M'));
+    $one_month_before = $lastMonthTeamstample->format('Y-m-d');
+    $sql = $wpdb->prepare("DELETE FROM $table_databank WHERE created_at <'$one_month_before'");
+    //$sql = $wpdb->prepare("SELECT * FROM $table_databank WHERE created_at <'$one_month_before'");
+    $courses = $wpdb->get_results($sql);
+    if ($courses){
+        echo "<h1 class='textOpleidRight text-center alert alert-danger'>Old courses deleted ! ! !</h1>";
+        return;
+    }
+    /*
+    //pagination
+    $count = count($courses);
+    define("STEP", 500);
+    $number_iteration = intval(ceil($count / STEP));
+    //var_dump($courses);
+
+    $key = 1;
+    if (isset($_GET['key'])) {
+        if ( intval($_GET['key'])) {
+            $key = intval($_GET['key']);
+            if ($key > $number_iteration) {
+                echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must not depass $number_iteration </h1>";
+                return;
+            }
+            echo  "<h1 class='textOpleidRight text-center alert alert-success'>the number of iteration are [ $key to => $number_iteration ]</h1>";
+        } else {
+            echo "<h1 class='textOpleidRight text-center alert alert-danger'>the key is not valid, key must be a number </h1>";
+            return;
+        }
+    }
+    $star_index = ($key - 1) * STEP;
+    for ($i = $star_index; ($i < $star_index + STEP && $i < $count) ; $i++) {
+        $course = $courses[$i];
+        //delete the course in databank
+        $sql = $wpdb->prepare("DELETE FROM $table_databank WHERE id = $course->id");
+        if($wpdb->get_results($sql))
+            echo "<h4>course $course->id id deleted success...</h4>";
+    }
+    */
 }
