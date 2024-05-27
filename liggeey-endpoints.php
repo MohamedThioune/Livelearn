@@ -127,8 +127,6 @@ function candidate($id){
   $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
-  return $sample;
-
   $member_since = new DateTimeImmutable($user->user_registered_at);
   $sample['member_since'] = $member_since->format('M d, Y');
 
