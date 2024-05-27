@@ -229,7 +229,7 @@ if($visibility_community){
                                         continue;
                                     $company = get_field('company_author', $value->ID);
                                     $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
-                                    $community_image = get_field('image_community', $value->ID) ?: $company_image;
+                                                                                              $community_image = get_field('image_community', $value->ID) ?: $company_image;
                         
                                     $type_groups = "";
                                     $button_join = "<input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group'>";
