@@ -47,37 +47,39 @@ function makecall($url, $type, $data = null) {
     curl_close( $ch );
 
     $datum = json_decode( $response, true );
-    $information = ['data' => (Object)$datum];
+    $information = (Object)['data' => $datum];
 
     // return data
     return $information;
 
 }
 
-// function checkin($data){
+// function create_customer_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/customers";
+//     $information = makecall($endpoint, 'POST', $data);
 
+//     return $information;
+// }
+// function create_subscription_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/subscriptions";
+//     $information = makecall($endpoint, 'POST', $data);
+//     return $information;
 // }
 
-function create_customer_stripe($data){
-    $endpoint = "https://api.stripe.com/v1/customers";
+function create_payment_link($data){
+    $endpoint = "https://api.stripe.com/v1/payment_links";
     $information = makecall($endpoint, 'POST', $data);
 
-    return $information;
-}
-
-function create_subscription_stripe($data){
-    $endpoint = "https://api.stripe.com/v1/subscriptions";
-    $information = makecall($endpoint, 'POST', $data);
     return $information;
 }
 
 function stripe(WP_REST_Request $request){
-    $product_id = "prod_Q8xu6g6y5DTgUU";
-    $price_id = "price_1PIh1OEuOtOzwPYXa9f7omP8";
+    //Constant "If required we might change it here"
+    $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
+    // $product_id = "prod_QB6e8E4wftx5Fs";
 
-    $required_parameters = ['name', 'email'];
-  
     //Check required parameters register
+    $required_parameters = ['quantity', 'ID'];
     $errors = validated($required_parameters, $request);
     if($errors):
       $response = new WP_REST_Response($errors);
@@ -85,42 +87,27 @@ function stripe(WP_REST_Request $request){
       return $response;
     endif;
   
-    //Data information | customer 
-    $data_customer = [
-        'name' => $request['name'],
-        'email' => $request['email'],
-        // 'metadata' => [
-        //     'wordpress_id' => 0,
-        // ]
+    //Data information | payment 
+    $data_payment = [
+        'line_items' => [[
+            'price' => $price_id,
+            'quantity' => $request['quantity']
+        ]],
+        'after_completion' => [
+            'type' => 'redirect',
+            'redirect' => [
+                'url' => 'https://app.livelearn.nl/'  
+            ]
+        ],
+        'metadata' => [
+            'wordpress_id' => $request['ID']
+        ]
     ];
 
-    //Create a new customer if needed
-    $information = create_customer_stripe($data_customer);
-    if(isset($information['error'])):
-        $response = new WP_REST_Response($information);
-        $response->set_status(401);
-        return $response;
-    endif;
-    //Register on database && Customer information
-    /** Instructions on here */
-    $data = $information['data'];
-    $customer_id = $data->id;
+    //Control if this user is a manager or not 
 
-    //Data information | customer 
-    $data_customer = [
-        'customer' => $customer_id,
-        'items' => [[
-            'price' => $price_id
-        ]]
-    ];
-
-    //Create a new subscription with that customer information
-    $information = create_subscription_stripe($data_customer);
-    if(isset($information['error'])):
-        $response = new WP_REST_Response($information);
-        $response->set_status(401);
-        return $response;
-    endif;
+    //Create a new payment link
+    $information = create_payment_link($data_payment);
 
     // Response
     $response = new WP_REST_Response($information);
