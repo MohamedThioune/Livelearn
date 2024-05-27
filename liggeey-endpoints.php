@@ -41,8 +41,8 @@ function artikel($id){
   foreach($main_reviews as $review):
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
-    $image_author = get_field('profile_img',  'user_' . $user->ID);
-    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $company = get_field('company',  'user_' . $user->ID);
     $title = $company[0]->post_title;
 
@@ -57,85 +57,6 @@ function artikel($id){
   $sample['comments'] = $comments;
 
   $sample = (Object)$sample;
-
-  return $sample;
-}
-
-//Detail job
-function job($id, $userApplyId = null){
-  $param_post_id = $id ?? 0;
-  $sample = array();
-  $post = get_post($param_post_id);
-
-  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
-  $sample['ID'] = $post->ID;
-  $sample['title'] = $post->post_title;
-  $sample['slug'] = $post->post_name;
-  $sample['posted_at'] = $post->post_date;
-  $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
-  $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
-  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
-  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in so far ...';
-  $sample['level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 0;
-  $sample['langues'] = get_field('job_langues', $post->ID) ?: "";
-
-  $company = get_field('job_company', $post->ID);
-  $main_company = array();
-  $main_company['ID'] = !empty($company) ? $company->ID : 0;
-  $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
-  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
-  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
-  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
-  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : 'xxxx';
-  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : 'xxxx';
-  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : 'xxxx';
-  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : 'xxxx';
-  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : 'xxxx';
-  $sample['company'] = (Object)$main_company;
-
-  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
-
-  $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
-  $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
-  $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
-
-  $sample = (Object)$sample;
-
-  // Retrieve the applied 
-  $entity = null;
-  $applied = array();
-  $status = "No data available";
-  foreach ($sample->applied as $entity):
-    $applied[] = candidate($entity->ID);
-    if($userApplyId)
-    if($userApplyId == $entity->ID)
-      $status = "Processing";
-  endforeach;
-  $sample->applied = $applied;
-
-  // Retrieve the approved 
-  $entity = null;
-  $approved = array();
-  foreach ($sample->approved as $entity): 
-    $approved[] = candidate($entity->ID);
-    if($userApplyId)
-    if($userApplyId == $entity->ID)
-      $status = "Approved";
-  endforeach;
-  $sample->approved = $approved;
-
-  // Retrieve the rejected 
-  $entity = null;
-  $rejected = array();
-  foreach ($sample->rejected as $entity): 
-    $rejected[] = candidate($entity->ID);
-    if($userApplyId)
-    if($userApplyId == $entity->ID)
-      $status = "Rejected";
-  endforeach;
-  $sample->rejected = $rejected;
-
-  $sample->status = $status;
 
   return $sample;
 }
@@ -200,8 +121,10 @@ function candidate($id){
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
+  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+  $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
   $member_since = new DateTimeImmutable($user->user_registered_at);
@@ -226,10 +149,10 @@ function candidate($id){
   $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
   $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
   $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ;
+  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ;
+  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ;
+  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ;
 
   //Get Topics
   // $topics_external = get_user_meta($user_id, 'topic');
@@ -317,6 +240,85 @@ function candidate($id){
   $sample['experiences'] = $experiences;
 
   $sample = (Object)$sample;
+  return $sample;
+}
+
+//Detail job
+function job($id, $userApplyId = null){
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['slug'] = $post->post_name;
+  $sample['posted_at'] = $post->post_date;
+  $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
+  $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
+  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
+  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in so far ...';
+  $sample['level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 0;
+  $sample['langues'] = get_field('job_langues', $post->ID) ?: "";
+
+  $company = get_field('job_company', $post->ID);
+  $main_company = array();
+  $main_company['ID'] = !empty($company) ? $company->ID : 0;
+  $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
+  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
+  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
+  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
+  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : 'xxxx';
+  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : 'xxxx';
+  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : 'xxxx';
+  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : 'xxxx';
+  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : 'xxxx';
+  $sample['company'] = (Object)$main_company;
+
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+
+  $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
+  $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
+  $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
+
+  $sample = (Object)$sample;
+
+  // Retrieve the applied 
+  $entity = null;
+  $applied = array();
+  $status = "No data available";
+  foreach ($sample->applied as $entity):
+    $applied[] = candidate($entity->ID);
+    if($userApplyId)
+    if($userApplyId == $entity->ID)
+      $status = "Processing";
+  endforeach;
+  $sample->applied = $applied;
+
+  // Retrieve the approved 
+  $entity = null;
+  $approved = array();
+  foreach ($sample->approved as $entity): 
+    $approved[] = candidate($entity->ID);
+    if($userApplyId)
+    if($userApplyId == $entity->ID)
+      $status = "Approved";
+  endforeach;
+  $sample->approved = $approved;
+
+  // Retrieve the rejected 
+  $entity = null;
+  $rejected = array();
+  foreach ($sample->rejected as $entity): 
+    $rejected[] = candidate($entity->ID);
+    if($userApplyId)
+    if($userApplyId == $entity->ID)
+      $status = "Rejected";
+  endforeach;
+  $sample->rejected = $rejected;
+
+  $sample->status = $status;
+
   return $sample;
 }
 
@@ -436,9 +438,10 @@ function homepage(){
   foreach($posts as $post):
     $sample = array();
 
-    //Hidden post
+    //Hidden post && language
+    $language = get_field('language', $post->ID);
     $hidden = get_field('visibility', $post->ID);
-    if($hidden)
+    if($hidden || $language != "en")
       continue;
     //Generic informations
     $sample['ID'] = $post->ID;
@@ -975,7 +978,8 @@ function allArtikels(WP_REST_Request $request){
     $sample['permalink'] = get_permalink($post->ID);
     $author = get_user_by('ID', $post->post_author);
     $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_field('profile_img_api',  'user_' . $post->post_author);
+    $sample['author_image'] = $sample['author_image'] ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';  
     $post_date = new DateTimeImmutable($post->post_date);
     $sample['post_date'] = $post_date->format('M d, Y');
     $reviews = get_field('reviews', $post->ID);
@@ -1132,24 +1136,24 @@ function commentByID(WP_REST_Request $request ) {
 
   // Loop through each ACF review
   foreach ($main_reviews as $review) {
-     $user = $review['user']; // Get the user associated with the review
-     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
+    $user = $review['user']; // Get the user associated with the review
+    $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
 
-     $image_author = get_field('profile_img',  'user_' . $user->ID);
-     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  
+    $rating = $review['rating'];
+    $feedback = $review['Feedback'];
 
-     $rating = $review['rating'];
-     $feedback = $review['Feedback'];
-
-     // Assemble the comment data into an array
-     $comment = array(
-         'comment_author_name' => $author_name,
-         'comment_author_image' => $image_author,
-         'rating' => $rating,
-         'feedback' => $feedback
-     );
-     // Add the comment data to the comments array
-     $comments[] = $comment;
+    // Assemble the comment data into an array
+    $comment = array(
+        'comment_author_name' => $author_name,
+        'comment_author_image' => $image_author,
+        'rating' => $rating,
+        'feedback' => $feedback
+    );
+    // Add the comment data to the comments array
+    $comments[] = $comment;
   }
   // Return the array of comments
   return $comments;
@@ -1964,10 +1968,10 @@ function updateCandidateProfil(WP_REST_Request $request) {
 
   $errors = [];
   if (!$candidate_data) {
-      $errors['errors'] = 'User not found';
-      $response = new WP_REST_Response($errors);
-      $response->set_status(401);
-      return $response;
+    $errors['errors'] = 'User not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
   }
 
   // Parameters REST request
@@ -1975,9 +1979,9 @@ function updateCandidateProfil(WP_REST_Request $request) {
 
   // Update Fields
   foreach ($updated_data as $field_name => $field_value):
-      if($field_value)
-      if($field_value != '' && $field_value != ' ')
-        update_field($field_name, $field_value, 'user_' . $user_id);
+    if($field_value)
+    if($field_value != '' && $field_value != ' ')
+      update_field($field_name, $field_value, 'user_' . $user_id);
   endforeach;
 
   // Return response
@@ -2279,7 +2283,8 @@ function candidateSkillsPassport(WP_REST_Request $request) {
             $type = get_field('type_badge', $achievement->ID);
 
             $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->ID);
+            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
+            $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
