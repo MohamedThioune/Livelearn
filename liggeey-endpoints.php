@@ -61,85 +61,6 @@ function artikel($id){
   return $sample;
 }
 
-//Detail job
-function job($id, $userApplyId = null){
-  $param_post_id = $id ?? 0;
-  $sample = array();
-  $post = get_post($param_post_id);
-
-  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
-  $sample['ID'] = $post->ID;
-  $sample['title'] = $post->post_title;
-  $sample['slug'] = $post->post_name;
-  $sample['posted_at'] = $post->post_date;
-  $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
-  $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
-  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
-  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in so far ...';
-  $sample['level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 0;
-  $sample['langues'] = get_field('job_langues', $post->ID) ?: "";
-
-  $company = get_field('job_company', $post->ID);
-  $main_company = array();
-  $main_company['ID'] = !empty($company) ? $company->ID : 0;
-  $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
-  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
-  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
-  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
-  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : 'xxxx';
-  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : 'xxxx';
-  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : 'xxxx';
-  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : 'xxxx';
-  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : 'xxxx';
-  $sample['company'] = (Object)$main_company;
-
-  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
-
-  $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
-  $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
-  $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
-
-  $sample = (Object)$sample;
-
-  // Retrieve the applied 
-  $entity = null;
-  $applied = array();
-  $status = "No data available";
-  foreach ($sample->applied as $entity):
-    $applied[] = candidate($entity->ID);
-    if($userApplyId)
-    if($userApplyId == $entity->ID)
-      $status = "Processing";
-  endforeach;
-  $sample->applied = $applied;
-
-  // Retrieve the approved 
-  $entity = null;
-  $approved = array();
-  foreach ($sample->approved as $entity): 
-    $approved[] = candidate($entity->ID);
-    if($userApplyId)
-    if($userApplyId == $entity->ID)
-      $status = "Approved";
-  endforeach;
-  $sample->approved = $approved;
-
-  // Retrieve the rejected 
-  $entity = null;
-  $rejected = array();
-  foreach ($sample->rejected as $entity): 
-    $rejected[] = candidate($entity->ID);
-    if($userApplyId)
-    if($userApplyId == $entity->ID)
-      $status = "Rejected";
-  endforeach;
-  $sample->rejected = $rejected;
-
-  $sample->status = $status;
-
-  return $sample;
-}
-
 //Detail company
 function company($id){
   $param_post_id = $id ?? 0;
@@ -203,7 +124,10 @@ function candidate($id){
   $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
   $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+  $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
+
+  return $sample;
 
   $member_since = new DateTimeImmutable($user->user_registered_at);
   $sample['member_since'] = $member_since->format('M d, Y');
@@ -227,10 +151,10 @@ function candidate($id){
   $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
   $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
   $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ;
+  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ;
+  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ;
+  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ;
 
   //Get Topics
   // $topics_external = get_user_meta($user_id, 'topic');
@@ -318,6 +242,85 @@ function candidate($id){
   $sample['experiences'] = $experiences;
 
   $sample = (Object)$sample;
+  return $sample;
+}
+
+//Detail job
+function job($id, $userApplyId = null){
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['slug'] = $post->post_name;
+  $sample['posted_at'] = $post->post_date;
+  $sample['expired_at'] = get_field('job_expiration_date', $post->ID);
+  $sample['description'] = get_field('job_description', $post->ID) ?: 'Empty till far ...';
+  $sample['responsibilities'] = get_field('job_responsibilities', $post->ID) ?: 'Empty till far ...';
+  $sample['skills_experiences'] = get_field('job_skills_experiences', $post->ID) ?: 'Nothin filled in so far ...';
+  $sample['level_of_experience'] = get_field('job_level_of_experience', $post->ID) ?: 0;
+  $sample['langues'] = get_field('job_langues', $post->ID) ?: "";
+
+  $company = get_field('job_company', $post->ID);
+  $main_company = array();
+  $main_company['ID'] = !empty($company) ? $company->ID : 0;
+  $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
+  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
+  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
+  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
+  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : 'xxxx';
+  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : 'xxxx';
+  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : 'xxxx';
+  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : 'xxxx';
+  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : 'xxxx';
+  $sample['company'] = (Object)$main_company;
+
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+
+  $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
+  $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
+  $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
+
+  $sample = (Object)$sample;
+
+  // Retrieve the applied 
+  $entity = null;
+  $applied = array();
+  $status = "No data available";
+  foreach ($sample->applied as $entity):
+    $applied[] = candidate($entity->ID);
+    if($userApplyId)
+    if($userApplyId == $entity->ID)
+      $status = "Processing";
+  endforeach;
+  $sample->applied = $applied;
+
+  // Retrieve the approved 
+  $entity = null;
+  $approved = array();
+  foreach ($sample->approved as $entity): 
+    $approved[] = candidate($entity->ID);
+    if($userApplyId)
+    if($userApplyId == $entity->ID)
+      $status = "Approved";
+  endforeach;
+  $sample->approved = $approved;
+
+  // Retrieve the rejected 
+  $entity = null;
+  $rejected = array();
+  foreach ($sample->rejected as $entity): 
+    $rejected[] = candidate($entity->ID);
+    if($userApplyId)
+    if($userApplyId == $entity->ID)
+      $status = "Rejected";
+  endforeach;
+  $sample->rejected = $rejected;
+
+  $sample->status = $status;
+
   return $sample;
 }
 

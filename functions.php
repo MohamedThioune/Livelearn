@@ -2033,8 +2033,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'notifications'
   ));
 
-  //Made by Mohamed | Subscribe
-  register_rest_route ('custom/v1', '/subscribe/new', array(
+  //Made by Mohamed | Payment link 'Subscription'
+  register_rest_route ('custom/v1', '/payment/link', array(
     'methods' => 'POST',
     'callback' => 'stripe'
   ));
