@@ -6,83 +6,110 @@ global $wpdb;
 /*
  * * Pagination
  */
-$pagination = 50;
+// $pagination = 50;
 
-if (isset($_GET['id'])) 
-    $page = intval($_GET['id']);
+// if (isset($_GET['id'])) 
+//     $page = intval($_GET['id']);
 
-if ($page) 
-    $offset = ($page - 1) * $pagination;
+// if ($page) 
+//     $offset = ($page - 1) * $pagination;
 
-if (isset($_POST['leervom'])) {
-    var_dump($_POST['leervom']);
-    switch (strtolower($_POST['leervom'][0])) {
-        case 'all':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'artikel':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Artikel' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Artikel'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'podcast':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Podcast' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Podcast'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'video': 
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'courses':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        default:
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
+// if (isset($_POST['leervom'])) {
+//     var_dump($_POST['leervom']);
+//     switch (strtolower($_POST['leervom'][0])) {
+//         case 'all':
+//             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+//             $courses = $wpdb->get_results($sql);
+//             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+//             $count = $wpdb->get_results($sql_count);
+//             $count = intval($count[0]->{'COUNT(*)'});
+//             break;
+//         case 'artikel':
+//             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Artikel' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+//             $courses = $wpdb->get_results($sql);
+//             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Artikel'");
+//             $count = $wpdb->get_results($sql_count);
+//             $count = intval($count[0]->{'COUNT(*)'});
+//             break;
+//         case 'podcast':
+//             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Podcast' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+//             $courses = $wpdb->get_results($sql);
+//             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Podcast'");
+//             $count = $wpdb->get_results($sql_count);
+//             $count = intval($count[0]->{'COUNT(*)'});
+//             break;
+//         case 'video': 
+//             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+//             $courses = $wpdb->get_results($sql);
+//             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
+//             $count = $wpdb->get_results($sql_count);
+//             $count = intval($count[0]->{'COUNT(*)'});
+//             break;
+//         case 'courses':
+//             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+//             $courses = $wpdb->get_results($sql);
+//             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar'");
+//             $count = $wpdb->get_results($sql_count);
+//             $count = intval($count[0]->{'COUNT(*)'});
+//             break;
+//         default:
+//             $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+//             $courses = $wpdb->get_results($sql);
+//             $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+//             $count = $wpdb->get_results($sql_count);
+//             $count = intval($count[0]->{'COUNT(*)'});
+//             break;
 
-    }
-}
-else {
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-  //  $courses = $wpdb->get_results($sql);
-    $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
-    $count = $wpdb->get_results($sql_count);
-    $count = intval($count[0]->{'COUNT(*)'});
-    $args=array('post_type'=>array('course','post'),
-    'post_status'=>'publish',
-    'posts_per_page'=>-1,
-    'order'=>'DESC'
-    );
-   // $courses=get_posts($args);
+//     }
+// }
+// else {
+//     $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+//     $courses = $wpdb->get_results($sql);
+//     $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+//     $count = $wpdb->get_results($sql_count);
+//     $count = intval($count[0]->{'COUNT(*)'});
+//     $args=array('post_type'=>array('course','post'),
+//     'post_status'=>'publish',
+//     'posts_per_page'=>-1,
+//     'order'=>'DESC'
+//     );
+//     $courses=get_posts($args);
 
     
 
+// }
+
+// if ($count % $pagination == 0) 
+//     $pagination_number = $count / $pagination;
+// else 
+//     $pagination_number = intval($count / $pagination) + 1;
+
+$per_page_record = 10; // Number of entries to show in a page.
+// Look for a GET variable page if not found default is 1.
+if (isset($_GET["page"])) {
+    $page = $_GET["page"];
+} else {
+    $page = 1;
 }
 
-if ($count % $pagination == 0) 
-    $pagination_number = $count / $pagination;
-else 
-    $pagination_number = intval($count / $pagination) + 1;
+$start_from = ($page - 1) * $per_page_record;
+
+// Retrieve courses using get_posts()
+$args = array(
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC'
+);
+$courses_on_current_page = get_posts($args);
+
+// Total number of courses
+$total_records = count($courses_on_current_page);
+$total_pages = ceil($total_records / $per_page_record);
+
+// Fetch records for the current page
+$offset = ($page - 1) * $per_page_record;
+$courses = array_slice($courses_on_current_page, $offset, $per_page_record);
 
 $user = wp_get_current_user();
 
@@ -178,9 +205,8 @@ $user = wp_get_current_user();
             </div>
 
             <div id="all" class="b-tab active contentBlockSetting">
-        
-         <div class="contentCardListeCourse">
-        <table class="table table-responsive" id="myTable">
+                <div class="contentCardListeCourse">
+                    <table class="table table-responsive">
                         <thead>
                         <tr>
                             <th scope="col">Image</th>
@@ -196,14 +222,8 @@ $user = wp_get_current_user();
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
-                    <tbody id="autocomplete_company_databank">
+                        <tbody id="autocomplete_company_databank">
                       <?php  
-                       $args=array('post_type'=>array('course','post'),
-    'post_status'=>'publish',
-    'posts_per_page'=>-1,
-    'order'=>'DESC'
-    );
-    $courses=get_posts($args);
                        if (!empty($courses)) {
                             foreach ($courses as $course) {
                                             //Author Image
@@ -342,10 +362,25 @@ $user = wp_get_current_user();
                            }
                         ?>
                         </tbody>
-         </table>
-                   
-                    <div id="pagination-container" class="pagination-container">
+                    </table>
+                    <div class="pagination-container">
+                       <?php
+        if ($total_pages > 1) {
+            echo "<ul class='pagination'>";
+            if ($page > 1) {
+                echo "<li><a href='index.php?page=" . ($page - 1) . "'>Previous</a></li>";
+            }
 
+            for ($i = 1; $i <= $total_pages; $i++) {
+                echo "<li><a href='index.php?page=" . $i . "'>" . $i . "</a></li>";
+            }
+
+            if ($page < $total_pages) {
+                echo "<li><a href='index.php?page=" . ($page + 1) . "'>Next</a></li>";
+            }
+            echo "</ul>";
+        }
+        ?>
 
                     </div>
                 </div>
@@ -737,7 +772,7 @@ $user = wp_get_current_user();
             });
         });
     </script>
-<!--script>
+<script>
     $(document).ready(function() {
         const itemsPerPage = 20;
         const $rows = $('.pagination-element-block');
@@ -811,166 +846,7 @@ $user = wp_get_current_user();
         showPage(currentPage);
         createPaginationButtons();
     });
-</script-->
-<script>
-    // PHP data passed to JavaScript as an array
-    
-
-    const rowsPerPage = 20;
-    let currentPage = 1;
-
-    function displayTable(page) {
-        const table = document.getElementById("myTable");
-        const tbody = document.getElementById("autocomplete_company_databank");
-        const startIndex = (page - 1) * rowsPerPage;
-        const endIndex = startIndex + rowsPerPage;
-        const slicedData = courses.slice(startIndex, endIndex);
-
-        // Clear existing table rows
-        tbody.innerHTML = "";
-
-        // Add new rows to the table
-        slicedData.forEach(course => {
-            const row = tbody.insertRow();
-            row.classList.add("pagination-element-block");
-            row.innerHTML = `
-                <td>
-                    <div class="for-img">
-                        <img src="<?php echo $course->image; ?>" alt="" srcset="">
-                    </div>
-                </td>
-                <td class="textTh text-left first-td-databank">
-                    <a style="color:#212529;font-weight:bold" href=""><?php echo $course->titel; ?></a>
-                </td>
-                <td class="textTh"><?php echo $course->type; ?></td>
-                <td class="textTh td_subtopics">
-                    ${course.prijs ? course.prijs : 'Free'}
-                </td>
-                <td class="textTh block-pointer">
-                    ${course.onderwerpen ? `
-                        <div class="d-flex content-subtopics bg-element" data-toggle="modal" data-target="#showTopics" type="button">
-                            ${course.onderwerpen.map(value => `<p>${value}</p>`).join('')}
-                        </div>
-                    ` : ''}
-                </td>
-                <td class="textTh ">
-                    <div class="bg-element">
-                        <p><?php echo $course->created_at; ?></p>
-                    </div>
-                </td>
-                <td class="textTh block-pointer">
-                    <div class="d-flex content-teacher" data-toggle="modal" data-target="#showTeacher" type="button">
-                        ${course.author_id ? `<img src="${course.image_author}" alt="image course" width="25" height="25">` : ''}
-                    </div>
-                </td>
-                <td class="textTh block-pointer">
-                    <div class="d-flex content-company" data-toggle="modal" data-target="#showCompany" type="button">
-                        ${course.company ? '' : 'company'}
-                        ${course.company ? `<img src="${course.company_logo}" alt="image course" width="25" height="25">` : '<b>No company</b>'}
-                    </div>
-                </td>
-                <td class="textTh">
-                    <div class="bg-element">
-                        <p>${course.status}</p>
-                    </div>
-                </td>
-                <td class="textTh">
-                    <div class="bg-element">
-                        <p>${course.views}</p>
-                    </div>
-                </td>
-                <td class="textTh">
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="" target="_blank">Bekijk</a></li>
-                        </ul>
-                    </div>
-                </td>
-            `;
-        });
-
-        // Update pagination
-        updatePagination(page);
-    }
-
-    function updatePagination(currentPage) {
-        const pageCount = Math.ceil(courses.length / rowsPerPage);
-        const paginationContainer = document.getElementById("pagination-container");
-        paginationContainer.innerHTML = "";
-
-        for (let i = 1; i <= pageCount; i++) {
-            const pageLink = document.createElement("a");
-            pageLink.href = "#";
-            pageLink.innerText = i;
-            pageLink.onclick = function () {
-                displayTable(i);
-            };
-            if (i === currentPage) {
-                pageLink.style.fontWeight = "bold";
-            }
-            paginationContainer.appendChild(pageLink);
-            paginationContainer.appendChild(document.createTextNode(" "));
-        }
-    }
-
-    // Initial display
-    displayTable(currentPage);
 </script>
-
-<!--script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const itemsPerPage = 10; // Nombre d'éléments par page
-        const $rows = document.querySelectorAll('.pagination-element-block');
-        const pageCount = Math.ceil($rows.length / itemsPerPage); // Nombre total de pages
-        let currentPage = 1; // Page actuelle
-
-        function showPage(page) {
-            const startIndex = (page - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-
-            $rows.forEach(function(row, index) {
-                if (index >= startIndex && index < endIndex) {
-                    row.style.display = 'table-row';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-
-        function createPaginationButtons() {
-            const $paginationContainer = document.getElementById('pagination-container');
-
-            for (let i = 1; i <= pageCount; i++) {
-                const $button = document.createElement('button');
-                $button.textContent = i;
-                $button.addEventListener('click', function() {
-                    currentPage = i;
-                    showPage(currentPage);
-                    updatePaginationButtons();
-                });
-                $paginationContainer.appendChild($button);
-            }
-        }
-
-        function updatePaginationButtons() {
-            const $buttons = document.querySelectorAll('#pagination-container button');
-            $buttons.forEach(function(button, index) {
-                if (index + 1 === currentPage) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            });
-        }
-
-        showPage(currentPage);
-        createPaginationButtons();
-    });
-</script-->
-
 
 <script>
     function openImageUploader() {
