@@ -968,7 +968,7 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/livelearn/xml-parse",
+                url: "/xml-parse",
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
