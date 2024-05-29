@@ -70,7 +70,7 @@ function create_payment_link($data){
 
 function search($data) {
     $endpoint = "https://api.stripe.com/v1/subscriptions/search";
-    $query = "status:'active' AND metadata['order_id']:'" . $data['id'] . "'";
+    $query = "status:'active' AND metadata['UserID']:'" . $data['userID'] . "'";
     $params = array( 
         'query' => $query
     );
