@@ -149,10 +149,13 @@ function candidate($id){
   $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
   $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
   $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ;
-  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ;
-  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ;
-  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ;
+  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['github'] = get_field('github',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['discord'] = get_field('discord',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['stackoverflow'] = get_field('stackoverflow',  'user_' . $user->ID) ? : '#';
 
   //Get Topics
   // $topics_external = get_user_meta($user_id, 'topic');
