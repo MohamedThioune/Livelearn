@@ -250,7 +250,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                     </div>
                     <div>
                         <p class="total-member">Members Actifs</p>
-                        <p class="number-members"><?= $count_members ?></p>
+                        <p class="number-members">0</p> <!-- $count_members -->
                     </div>
                 </div>
                 <div class="card-element-company d-flex align-items-center ">
