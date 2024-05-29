@@ -1,16 +1,12 @@
 <?php
 
-function makecall($url, $type, $data = null) {
-    // credentials
+function makecall($url, $type, $data = null, $params = null) {
+    // credentials personal + live
     $api_key = "Bearer sk_test_51JyijWEuOtOzwPYXl8Z57qbOuYURVnzEMvVFgUT0Wo7lmAWx2Qr9qQMASvyEkYpDVf1FRL25yWa0amHVSBl2KYC400iZFj6eek";
-    // $params = array( // 
-    //     'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-    //     'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-    // );
+    // $api_key = "Bearer sk_test_51MtSplHe23toRzexBAOzPcAljGx9f0mWTl687iaxjJAlneTiUFTi4NCjffnL48dvXkFOnb1HPPrthXmN9w51J8tz00YD43xgJ8";
 
     // create endpoint with params
-    $endpoint = $url;
-    // $endpoint = $url . '?' . http_build_query( $params );
+    $endpoint = (!$params) ? $url :  $url . '?' . http_build_query( $params );
 
     // initialize curl
     $ch = curl_init();
@@ -32,7 +28,6 @@ function makecall($url, $type, $data = null) {
     $response = curl_exec( $ch );
     $err = curl_errno( $ch );
     // $header = curl_getinfo( $ch );
-    // var_dump($header);
 
     if ($response === false || $err):
         $errmsg = 'Something went wrong, please try again !';
@@ -71,6 +66,20 @@ function create_payment_link($data){
     $information = makecall($endpoint, 'POST', $data);
 
     return $information;
+}
+
+function search($data) {
+    $endpoint = "https://api.stripe.com/v1/subscriptions/search";
+    $query = "status:'active' AND metadata['order_id']:'" . $data['id'] . "'";
+    $params = array( 
+        'query' => $query
+    );
+
+    $information = makecall($endpoint, 'GET', null, $params);
+
+    $response = new WP_REST_Response($information);
+    $response->set_status(200);
+    return $response;
 }
 
 function stripe(WP_REST_Request $request){
