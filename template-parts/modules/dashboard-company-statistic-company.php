@@ -350,7 +350,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                     </div>
                     <div>
                         <p class="total-member">NEW MEMBERS</p>
-                        <p class="number-members"><?=$new_members_count?></p>
+                        <p class="number-members">0</p> <!-- $new_members_count -->
                     </div>
                 </div>
                 <div class="card-element-company d-flex align-items-center bg-purple-c">
