@@ -10,6 +10,7 @@ include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
 include "script-endpoints.php";
+include "dashbord-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
@@ -2059,4 +2060,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'update'
   ));
 
+  register_rest_route ('custom/v1', '/tofollow/experts', array(
+      'methods' => 'GET',
+      'callback' => 'expertsToFollow'
+  ));
 });
