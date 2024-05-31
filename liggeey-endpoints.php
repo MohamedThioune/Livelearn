@@ -157,17 +157,6 @@ function candidate($id){
   $sample['social_network']['discord'] = get_field('discord',  'user_' . $user->ID) ? : '#';
   $sample['social_network']['stackoverflow'] = get_field('stackoverflow',  'user_' . $user->ID) ? : '#';
 
-  //Get Topics
-  // $topics_external = get_user_meta($user_id, 'topic');
-  // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
-  // $topics = array();
-  // if(!empty($topics_external))
-  //   $topics = !empty($topics_external) $topics_external;
-
-  // if(!empty($topics_internal))
-  //   foreach($topics_internal as $item)
-  //       array_push($topics, $item);
-
   $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
   "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
   Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
@@ -175,7 +164,8 @@ function candidate($id){
   $topics = array();
   $limit = 3;
   $topics = get_user_meta($user->ID, 'topic');
-  $sample['skills'] = [];
+  $skills_note = get_field('skills', 'user_' . $user->ID);
+  $skills_origin = array();
   if(!empty($topics)):
     $args = array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -184,7 +174,37 @@ function candidate($id){
         'include' => $topics,
         'post_per_page' => $limit
     );
-    $sample['skills'] = get_categories($args);
+    $main_skills = get_categories($args);
+
+    foreach ($main_skills as $main):
+      $skill_sample = [];
+
+      if (!empty($skills_note)) 
+        foreach ($skills_note as $skill) 
+          if($skill['id'] == $main->term_id){
+            $note = $skill['note'];
+            break;
+          }
+
+      $skill_sample['term_id'] = $main->term_id;
+      $skill_sample['name'] = $main->name;
+      $skill_sample['slug'] = $main->slug;
+      $skill_sample['term_taxonomy_id'] = $main->term_taxonomy_id;
+      $skill_sample['description'] = $main->description;
+      $skill_sample['term_taxonomy_id'] = $main->term_taxonomy_id;
+      $skill_sample['parent'] = $main->parent;
+      $skill_sample['cat_ID'] = $main->cat_ID;
+      $skill_sample['cat_name'] = $main->cat_name;
+      $skill_sample['category_nicename'] = $main->category_nicename;
+      $skill_sample['category_parent'] = $main->category_parent;
+      $skill_sample['note'] = $note;
+
+      //add sample
+      $skills_origin[] = (Object)$skill_sample;
+    endforeach;
+
+    //add skill complete information
+    $sample['skills'] = $skills_origin;
   endif;
 
   //Education Information
@@ -2719,6 +2739,52 @@ function notifications(WP_REST_Request $request){
   endforeach;
 
   $response = new WP_REST_Response($notifications);
+  $code_status = 201;
+  $response->set_status($code_status);
+  return $response;
+}
+
+function editSkills(WP_REST_Request $request){
+  $required_parameters = ['ID', 'skill', 'note'];
+  //Check required parameters
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif; 
+
+  $user_id = $request['ID'];
+  $skills = get_field('skills', 'user_' . $user_id);
+  $skill = array();
+  $skill['id'] = $request['skill'];
+  $skill['note'] = $request['note'];
+  $bool = false;
+  $bunch = array();
+
+  if(empty($skills))
+    $skills = array();
+
+  foreach($skills as $item){
+    if($item['id'] == $request['id']){
+        $item['note'] = $note;
+        $bool = true;
+    }
+    array_push($bunch, $item);
+  }
+
+  if(!$bool)
+    array_push($skills, $skill);
+  else
+    $skills = $bunch;
+
+  //update skills
+  update_field('skills', $skills, 'user_' . $user_id);
+
+  $skill_sample['term_id'] = $skill['id'];
+  $skill_sample['name'] = get_the_category_by_ID($skill['id']);
+  $skill_sample['note'] = $skill['note'];
+  $response = new WP_REST_Response($skill_sample);
   $code_status = 201;
   $response->set_status($code_status);
   return $response;
