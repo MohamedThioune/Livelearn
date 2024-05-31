@@ -82,6 +82,31 @@ function search($data) {
     return $response;
 }
 
+function update(WP_REST_Request $request) {
+    //Check required parameters register
+    $required_parameters = ['subscription', 'quantity', 'ID'];
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+
+    $data = [
+        'quantity' => $request['quantity'],
+        'metadata' => [
+            'UserID' => $request['ID']
+        ]   
+    ];
+
+    $endpoint = "https://api.stripe.com/v1/subscription_items/" . $request['subscription'];
+    $information = makecall($endpoint, 'POST', $data);
+
+    $response = new WP_REST_Response($information);
+    $response->set_status(200);
+    return $response;
+}
+
 function stripe(WP_REST_Request $request){
     //Constant "If required we might change it here"
     $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
@@ -116,6 +141,7 @@ function stripe(WP_REST_Request $request){
     ];
 
     //Control if this user is a manager or not 
+    /** Instructions there */
 
     //Create a new payment link
     $information = create_payment_link($data_payment);
