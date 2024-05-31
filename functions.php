@@ -2027,6 +2027,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateMyResumeDelete'
   ));
 
+  register_rest_route ('custom/v1', '/candidate/skills', array(
+    'methods' => 'POST',
+    'callback' => 'editSkills'
+  ));
+
   // Made By Fadel
   register_rest_route ('custom/v1', '/notification/create', array(
     'methods' => 'POST',
