@@ -2049,4 +2049,9 @@ add_action( 'rest_api_init', function () {
     'callback' => 'search'
   ));
 
+  register_rest_route ('custom/v1', '/update/stripe', array(
+    'methods' => 'POST',
+    'callback' => 'update'
+  ));
+
 });
