@@ -2,6 +2,8 @@
 function expertsToFollow()
 {
     $experts = get_users();
+    var_dump($experts);
+    /**
     $all_experts = array();
     foreach ($experts as $expert) {
         $expert_data = array();
@@ -17,9 +19,10 @@ function expertsToFollow()
     $response = new WP_REST_Response($all_experts);
     $response->set_status(200);
     return $response;
+     */
 }
 
-
+/**
 function get_total_followed_experts()
 {
     $current_user = $GLOBALS['user_id'];
@@ -37,4 +40,4 @@ function get_total_followed_experts()
     }
     return [];
 }
-
+*/
