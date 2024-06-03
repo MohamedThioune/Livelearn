@@ -18,12 +18,16 @@ function expertsToFollow()
     $response->set_status(200);
     return $response;
 }
-// Upcoming Schedule for the user
+/**
+ * @return WP_REST_Response
+ * @description : Upcoming Schedule for the user
+ * @url : localhost:8888/livelearn/wp-json/custom/v1/upcoming/schedule?id=5
+ */
 function upcoming_schedule_for_the_user()
 {
     $user_id = 0;
     if ($_GET['id'])
-        $user_id = $_GET['user_id'];
+        $user_id = intval($_GET['user_id']);
 
     $args = array(
         'post_type' => array('course', 'post'),
