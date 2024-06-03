@@ -21,7 +21,7 @@ function expertsToFollow()
 // Upcoming Schedule for the user
 function upcoming_schedule_for_the_user()
 {
-    $user_id = "5";
+    $user_id = 5;
     $args = array(
         'post_type' => array('course', 'post'),
         'posts_per_page' => -1,
@@ -39,8 +39,7 @@ function upcoming_schedule_for_the_user()
         $user_follow_this_course = $wpdb->get_results( $sql );
         if(!$user_follow_this_course)
             continue;
-
-        if($user_follow_this_course[0]->user_id!=$user_id)
+        if(intval($user_follow_this_course[0]->user_id)!=$user_id)
             continue;
 
         $image = get_field('preview', $schedule->ID)['url'];
@@ -66,7 +65,7 @@ function upcoming_schedule_for_the_user()
     }
     if (empty($all_schedules)) {
         $response = new WP_REST_Response(array());
-        //$response->set_status(404);
+        $response->set_status(204);
         return $response;
     }
 
