@@ -21,7 +21,10 @@ function expertsToFollow()
 // Upcoming Schedule for the user
 function upcoming_schedule_for_the_user()
 {
-    $user_id = 5;
+    $user_id = 0;
+    if ($_GET['id'])
+        $user_id = $_GET['user_id'];
+
     $args = array(
         'post_type' => array('course', 'post'),
         'posts_per_page' => -1,
