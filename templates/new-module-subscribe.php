@@ -1,16 +1,12 @@
 <?php
 
-function makecall($url, $type, $data = null) {
-    // credentials
+function makecall($url, $type, $data = null, $params = null) {
+    // credentials personal + live
     $api_key = "Bearer sk_test_51JyijWEuOtOzwPYXl8Z57qbOuYURVnzEMvVFgUT0Wo7lmAWx2Qr9qQMASvyEkYpDVf1FRL25yWa0amHVSBl2KYC400iZFj6eek";
-    // $params = array( // 
-    //     'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-    //     'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-    // );
+    // $api_key = "Bearer sk_test_51MtSplHe23toRzexBAOzPcAljGx9f0mWTl687iaxjJAlneTiUFTi4NCjffnL48dvXkFOnb1HPPrthXmN9w51J8tz00YD43xgJ8";
 
     // create endpoint with params
-    $endpoint = $url;
-    // $endpoint = $url . '?' . http_build_query( $params );
+    $endpoint = (!$params) ? $url :  $url . '?' . http_build_query( $params );
 
     // initialize curl
     $ch = curl_init();
@@ -32,7 +28,6 @@ function makecall($url, $type, $data = null) {
     $response = curl_exec( $ch );
     $err = curl_errno( $ch );
     // $header = curl_getinfo( $ch );
-    // var_dump($header);
 
     if ($response === false || $err):
         $errmsg = 'Something went wrong, please try again !';
@@ -47,37 +42,78 @@ function makecall($url, $type, $data = null) {
     curl_close( $ch );
 
     $datum = json_decode( $response, true );
-    $information = ['data' => (Object)$datum];
+    $information = (Object)['data' => $datum];
 
     // return data
     return $information;
 
 }
 
-// function checkin($data){
+// function create_customer_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/customers";
+//     $information = makecall($endpoint, 'POST', $data);
 
+//     return $information;
+// }
+// function create_subscription_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/subscriptions";
+//     $information = makecall($endpoint, 'POST', $data);
+//     return $information;
 // }
 
-function create_customer_stripe($data){
-    $endpoint = "https://api.stripe.com/v1/customers";
+function create_payment_link($data){
+    $endpoint = "https://api.stripe.com/v1/payment_links";
     $information = makecall($endpoint, 'POST', $data);
 
     return $information;
 }
 
-function create_subscription_stripe($data){
-    $endpoint = "https://api.stripe.com/v1/subscriptions";
+function search($data) {
+    $endpoint = "https://api.stripe.com/v1/subscriptions/search";
+    $query = "status:'active' AND metadata['UserID']:'" . $data['userID'] . "'";
+    $params = array( 
+        'query' => $query
+    );
+
+    $information = makecall($endpoint, 'GET', null, $params);
+
+    $response = new WP_REST_Response($information);
+    $response->set_status(200);
+    return $response;
+}
+
+function update(WP_REST_Request $request) {
+    //Check required parameters register
+    $required_parameters = ['subscription', 'quantity', 'ID'];
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+
+    $data = [
+        'quantity' => $request['quantity'],
+        'metadata' => [
+            'UserID' => $request['ID']
+        ]   
+    ];
+
+    $endpoint = "https://api.stripe.com/v1/subscription_items/" . $request['subscription'];
     $information = makecall($endpoint, 'POST', $data);
-    return $information;
+
+    $response = new WP_REST_Response($information);
+    $response->set_status(200);
+    return $response;
 }
 
 function stripe(WP_REST_Request $request){
-    $product_id = "prod_Q8xu6g6y5DTgUU";
-    $price_id = "price_1PIh1OEuOtOzwPYXa9f7omP8";
+    //Constant "If required we might change it here"
+    $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
+    // $product_id = "prod_QB6e8E4wftx5Fs";
 
-    $required_parameters = ['name', 'email'];
-  
     //Check required parameters register
+    $required_parameters = ['quantity', 'ID'];
     $errors = validated($required_parameters, $request);
     if($errors):
       $response = new WP_REST_Response($errors);
@@ -85,42 +121,30 @@ function stripe(WP_REST_Request $request){
       return $response;
     endif;
   
-    //Data information | customer 
-    $data_customer = [
-        'name' => $request['name'],
-        'email' => $request['email'],
-        // 'metadata' => [
-        //     'wordpress_id' => 0,
-        // ]
+    //Data information | payment 
+    $data_payment = [
+        'line_items' => [[
+            'price' => $price_id,
+            'quantity' => $request['quantity']
+        ]],
+        'after_completion' => [
+            'type' => 'redirect',
+            'redirect' => [
+                'url' => 'https://livelearn.nl/?message=sucessful-payment'  
+            ]
+        ],
+        'subscription_data' => [
+            'metadata' => [
+                'UserID' => $request['ID']
+            ]
+        ]
     ];
 
-    //Create a new customer if needed
-    $information = create_customer_stripe($data_customer);
-    if(isset($information['error'])):
-        $response = new WP_REST_Response($information);
-        $response->set_status(401);
-        return $response;
-    endif;
-    //Register on database && Customer information
-    /** Instructions on here */
-    $data = $information['data'];
-    $customer_id = $data->id;
+    //Control if this user is a manager or not 
+    /** Instructions there */
 
-    //Data information | customer 
-    $data_customer = [
-        'customer' => $customer_id,
-        'items' => [[
-            'price' => $price_id
-        ]]
-    ];
-
-    //Create a new subscription with that customer information
-    $information = create_subscription_stripe($data_customer);
-    if(isset($information['error'])):
-        $response = new WP_REST_Response($information);
-        $response->set_status(401);
-        return $response;
-    endif;
+    //Create a new payment link
+    $information = create_payment_link($data_payment);
 
     // Response
     $response = new WP_REST_Response($information);

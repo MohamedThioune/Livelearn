@@ -61,6 +61,211 @@ function artikel($id){
   return $sample;
 }
 
+//Detail company
+function company($id){
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  // return $param_post_id;
+
+  //assigner les champs
+  $sample['ID'] = $post->ID;
+  $sample['title'] = $post->post_title;
+  $sample['slug'] = $post->post_name;
+  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
+  $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
+  $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
+  $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
+
+  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
+  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
+
+  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
+
+  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
+  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+
+  //Open position
+  $args = array(
+    'post_type' => 'job',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'ordevalue' => $post->ID,
+    'order' => 'DESC' ,
+    'meta_key' => 'job_company',
+    'meta_value' => $post->ID
+  );
+  $main_jobs = get_posts($args);
+  $sample['count_open_jobs'] = empty($main_jobs) ? 0 : count($main_jobs);
+  $jobs = array();
+  foreach ($main_jobs as $job)
+    $jobs[] = job($job->ID);
+  $sample['open_jobs'] = $jobs;
+
+  $sample = (Object)$sample;
+
+  return $sample;
+}
+
+//Detail candidate
+function candidate($id){
+  $param_user_id = $id ?: get_current_user_id();
+  $sample = array();
+  $user = get_user_by('ID', $param_user_id);
+
+  $sample['ID'] = $user->ID;
+  $sample['first_name'] = $user->first_name;
+  $sample['last_name'] = $user->last_name;
+  $sample['email'] = $user->user_email;
+  $sample['mobile_phone'] = $user->mobile_phone;
+  $sample['city'] = $user->city;
+  $sample['adress'] = $user->adress;
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
+  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+  $sample['cv'] = get_field('cv',  'user_' . $user->ID);
+  $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
+
+  $member_since = new DateTimeImmutable($user->user_registered_at);
+  $sample['member_since'] = $member_since->format('M d, Y');
+
+  $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
+
+  $date_born = get_field('date_born',  'user_' . $user->ID);
+  if(!$date_born)
+      $age = "No birth";
+  else{
+      //explode the date to get month, day and year
+      $birthDate = explode("/", $date_born);
+      //get age from date or birthdate
+      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+          ? ((date("Y") - $birthDate[2]) - 1)
+          : (date("Y") - $birthDate[2]));
+      $age .= ' Years';
+  }
+  $sample['age'] = $age;
+  $sample['date_born'] = $date_born;
+  $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
+  $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
+  $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
+  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['github'] = get_field('github',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['discord'] = get_field('discord',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['stackoverflow'] = get_field('stackoverflow',  'user_' . $user->ID) ? : '#';
+
+  $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
+  "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
+  Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
+
+  $topics = array();
+  $limit = 3;
+  $topics = get_user_meta($user->ID, 'topic');
+  $skills_note = get_field('skills', 'user_' . $user->ID);
+  $skills_origin = array();
+  if(!empty($topics)):
+    $args = array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'include'  => $topics,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        'include' => $topics,
+        'post_per_page' => $limit
+    );
+    $main_skills = get_categories($args);
+
+    foreach ($main_skills as $main):
+      $skill_sample = [];
+
+      if (!empty($skills_note)) 
+        foreach ($skills_note as $skill) 
+          if($skill['id'] == $main->term_id){
+            $note = $skill['note'];
+            break;
+          }
+
+      $skill_sample['term_id'] = $main->term_id;
+      $skill_sample['name'] = $main->name;
+      $skill_sample['slug'] = $main->slug;
+      $skill_sample['term_taxonomy_id'] = $main->term_taxonomy_id;
+      $skill_sample['description'] = $main->description;
+      $skill_sample['term_taxonomy_id'] = $main->term_taxonomy_id;
+      $skill_sample['parent'] = $main->parent;
+      $skill_sample['cat_ID'] = $main->cat_ID;
+      $skill_sample['cat_name'] = $main->cat_name;
+      $skill_sample['category_nicename'] = $main->category_nicename;
+      $skill_sample['category_parent'] = $main->category_parent;
+      $skill_sample['note'] = $note;
+
+      //add sample
+      $skills_origin[] = (Object)$skill_sample;
+    endforeach;
+
+    //add skill complete information
+    $sample['skills'] = $skills_origin;
+  endif;
+
+  //Education Information
+  $main_education = get_field('education',  'user_' . $user->ID);
+  $educations = array();
+  foreach($main_education as $value):
+
+    $education = array();
+    if(!$value)
+      continue;
+
+    $explosion = explode(";", $value);
+
+    $year = "";
+    if(isset($explosion[2]))
+        $year = explode("-", $explosion[2])[0];
+
+    if(isset($explosion[3]))
+        if(intval($explosion[2]) != intval($explosion[3]))
+            $year = $year . "-" .  explode("-", $explosion[3])[0];
+
+    $education['diploma'] = $explosion[1];
+    $education['year'] = $year;
+    $education['school'] = $explosion[0];
+    $education['description'] = $explosion[4];
+    $educations[] = $education;
+
+  endforeach;
+  $sample['educations'] = $educations;
+
+  //Work & Experience Information
+  $main_experience = get_field('work',  'user_' . $user->ID);
+  $experiences = array();
+  foreach($main_experience as $value):
+
+    $experience = array();
+    if(!$value)
+      continue;
+
+    $explosion = explode(";", $value);
+
+    $year = "";
+    if(isset($explosion[2]))
+        $year = explode("-", $explosion[2])[0];
+
+    if(isset($explosion[3]))
+        if(intval($explosion[2]) != intval($explosion[3]))
+            $year = $year . "-" .  explode("-", $explosion[3])[0];
+
+    $experience['company'] = $explosion[1];
+    $experience['year'] = $year;
+    $experience['job'] = $explosion[0];
+    $experience['description'] = $explosion[4];
+    $experiences[] = $experience;
+  endforeach;
+  $sample['experiences'] = $experiences;
+
+  $sample = (Object)$sample;
+  return $sample;
+}
+
 //Detail job
 function job($id, $userApplyId = null){
   $param_post_id = $id ?? 0;
@@ -137,190 +342,6 @@ function job($id, $userApplyId = null){
 
   $sample->status = $status;
 
-  return $sample;
-}
-
-//Detail company
-function company($id){
-  $param_post_id = $id ?? 0;
-  $sample = array();
-  $post = get_post($param_post_id);
-
-  // return $param_post_id;
-
-  //assigner les champs
-  $sample['ID'] = $post->ID;
-  $sample['title'] = $post->post_title;
-  $sample['slug'] = $post->post_name;
-  $sample['address'] = get_field('company_address', $post->ID) ?: 'xxxxx';
-  $sample['place'] = get_field('company_place', $post->ID) ?: 'xxxx xxx';
-  $sample['country'] = get_field('company_country', $post->ID) ?: 'xxxx';
-  $sample['biography'] = get_field('company_bio', $post->ID) ?: '';
-
-  $sample['website'] =  get_field('company_website', $post->ID) ?: 'www.livelearn.nl';
-  $sample['size'] =  get_field('company_size', $post->ID) ?: 'xx';
-
-  $sample['email'] = get_field('company_email', $post->ID) ?: 'xxxxx@xxx.nl';
-
-  $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
-  $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
-
-  //Open position
-  $args = array(
-    'post_type' => 'job',
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'ordevalue' => $post->ID,
-    'order' => 'DESC' ,
-    'meta_key' => 'job_company',
-    'meta_value' => $post->ID
-  );
-  $main_jobs = get_posts($args);
-  $sample['count_open_jobs'] = empty($main_jobs) ? 0 : count($main_jobs);
-  $jobs = array();
-  foreach ($main_jobs as $job)
-    $jobs[] = job($job->ID);
-  $sample['open_jobs'] = $jobs;
-
-  $sample = (Object)$sample;
-
-  return $sample;
-}
-
-//Detail candidate
-function candidate($id){
-  $param_user_id = $id ?: get_current_user_id();
-  $sample = array();
-  $user = get_user_by('ID', $param_user_id);
-
-  $sample['ID'] = $user->ID;
-  $sample['first_name'] = $user->first_name;
-  $sample['last_name'] = $user->last_name;
-  $sample['email'] = $user->user_email;
-  $sample['mobile_phone'] = $user->mobile_phone;
-  $sample['city'] = $user->city;
-  $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
-  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
-  $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
-  $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
-
-  $member_since = new DateTimeImmutable($user->user_registered_at);
-  $sample['member_since'] = $member_since->format('M d, Y');
-
-  $sample['experience'] = get_field('experience',  'user_' . $user->ID) ? : 'N/A';
-
-  $date_born = get_field('date_born',  'user_' . $user->ID);
-  if(!$date_born)
-      $age = "No birth";
-  else{
-      //explode the date to get month, day and year
-      $birthDate = explode("/", $date_born);
-      //get age from date or birthdate
-      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
-          ? ((date("Y") - $birthDate[2]) - 1)
-          : (date("Y") - $birthDate[2]));
-      $age .= ' Years';
-  }
-  $sample['age'] = $age;
-  $sample['date_born'] = $date_born;
-  $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
-  $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
-  $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['github'] = get_field('github',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['discord'] = get_field('discord',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['stackoverflow'] = get_field('stackoverflow',  'user_' . $user->ID) ? : '#';
-
-  //Get Topics
-  // $topics_external = get_user_meta($user_id, 'topic');
-  // $topics_internal = get_user_meta($user_id, 'topic_affiliate');
-  // $topics = array();
-  // if(!empty($topics_external))
-  //   $topics = !empty($topics_external) $topics_external;
-
-  // if(!empty($topics_internal))
-  //   foreach($topics_internal as $item)
-  //       array_push($topics, $item);
-
-  $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
-  "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
-  Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
-
-  $topics = array();
-  $limit = 3;
-  $topics = get_user_meta($user->ID, 'topic');
-  $sample['skills'] = [];
-  if(!empty($topics)):
-    $args = array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'include'  => $topics,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        'include' => $topics,
-        'post_per_page' => $limit
-    );
-    $sample['skills'] = get_categories($args);
-  endif;
-
-  //Education Information
-  $main_education = get_field('education',  'user_' . $user->ID);
-  $educations = array();
-  foreach($main_education as $value):
-
-    $education = array();
-    if(!$value)
-      continue;
-
-    $explosion = explode(";", $value);
-
-    $year = "";
-    if(isset($explosion[2]))
-        $year = explode("-", $explosion[2])[0];
-
-    if(isset($explosion[3]))
-        if(intval($explosion[2]) != intval($explosion[3]))
-            $year = $year . "-" .  explode("-", $explosion[3])[0];
-
-    $education['diploma'] = $explosion[1];
-    $education['year'] = $year;
-    $education['school'] = $explosion[0];
-    $education['description'] = $explosion[4];
-    $educations[] = $education;
-
-  endforeach;
-  $sample['educations'] = $educations;
-
-  //Work & Experience Information
-  $main_experience = get_field('work',  'user_' . $user->ID);
-  $experiences = array();
-  foreach($main_experience as $value):
-
-    $experience = array();
-    if(!$value)
-      continue;
-
-    $explosion = explode(";", $value);
-
-    $year = "";
-    if(isset($explosion[2]))
-        $year = explode("-", $explosion[2])[0];
-
-    if(isset($explosion[3]))
-        if(intval($explosion[2]) != intval($explosion[3]))
-            $year = $year . "-" .  explode("-", $explosion[3])[0];
-
-    $experience['company'] = $explosion[1];
-    $experience['year'] = $year;
-    $experience['job'] = $explosion[0];
-    $experience['description'] = $explosion[4];
-    $experiences[] = $experience;
-  endforeach;
-  $sample['experiences'] = $experiences;
-
-  $sample = (Object)$sample;
   return $sample;
 }
 
@@ -2718,6 +2739,52 @@ function notifications(WP_REST_Request $request){
   endforeach;
 
   $response = new WP_REST_Response($notifications);
+  $code_status = 201;
+  $response->set_status($code_status);
+  return $response;
+}
+
+function editSkills(WP_REST_Request $request){
+  $required_parameters = ['ID', 'skill', 'note'];
+  //Check required parameters
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif; 
+
+  $user_id = $request['ID'];
+  $skills = get_field('skills', 'user_' . $user_id);
+  $skill = array();
+  $skill['id'] = $request['skill'];
+  $skill['note'] = $request['note'];
+  $bool = false;
+  $bunch = array();
+
+  if(empty($skills))
+    $skills = array();
+
+  foreach($skills as $item){
+    if($item['id'] == $request['id']){
+        $item['note'] = $note;
+        $bool = true;
+    }
+    array_push($bunch, $item);
+  }
+
+  if(!$bool)
+    array_push($skills, $skill);
+  else
+    $skills = $bunch;
+
+  //update skills
+  update_field('skills', $skills, 'user_' . $user_id);
+
+  $skill_sample['term_id'] = $skill['id'];
+  $skill_sample['name'] = get_the_category_by_ID($skill['id']);
+  $skill_sample['note'] = $skill['note'];
+  $response = new WP_REST_Response($skill_sample);
   $code_status = 201;
   $response->set_status($code_status);
   return $response;

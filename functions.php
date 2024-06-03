@@ -2028,6 +2028,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'candidateMyResumeDelete'
   ));
 
+  register_rest_route ('custom/v1', '/candidate/skills', array(
+    'methods' => 'POST',
+    'callback' => 'editSkills'
+  ));
+
   // Made By Fadel
   register_rest_route ('custom/v1', '/notification/create', array(
     'methods' => 'POST',
@@ -2039,17 +2044,26 @@ add_action( 'rest_api_init', function () {
     'callback' => 'notifications'
   ));
 
-  //Made by Mohamed | Subscribe
-  register_rest_route ('custom/v1', '/subscribe/new', array(
+  //Made by Mohamed | Payment link 'Subscription'
+  register_rest_route ('custom/v1', '/payment/link', array(
     'methods' => 'POST',
     'callback' => 'stripe'
+  ));
+
+  register_rest_route ('custom/v1', '/search/stripe/(?P<userID>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'search'
+  ));
+
+  register_rest_route ('custom/v1', '/update/stripe', array(
+    'methods' => 'POST',
+    'callback' => 'update'
   ));
 
   register_rest_route ('custom/v1', '/tofollow/experts', array(
       'methods' => 'GET',
       'callback' => 'expertsToFollow'
   ));
-
   register_rest_route ('custom/v1', '/upcoming/schedule', array(
       'methods' => 'GET',
       'callback' => 'upcoming_schedule_for_the_user'
