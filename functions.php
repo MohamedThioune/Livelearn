@@ -2049,4 +2049,9 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'expertsToFollow'
     ));
+
+    register_rest_route ('custom/v1', '/upcoming/schedule', array(
+        'methods' => 'GET',
+        'callback' => 'upcoming_schedule_for_the_user'
+    ));
 });
