@@ -48,7 +48,7 @@ $enrolled = array();
 $enrolled_courses = array();
 // $kennis_video = get_field('kennis_video', 'user_' . $user->ID);
 $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
-$expenses = 0;
+$expenses = 0; 
 
 //Orders - enrolled courses  
 $args = array(
@@ -1017,7 +1017,6 @@ $no_content = "<div class='emty-block-activity'>
                                         if($is_finish){
                                             $status_color = "green";
                                             $text_status = "Done";
-
                                         }
                                     }
 
