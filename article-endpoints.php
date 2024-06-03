@@ -48,240 +48,239 @@ function Artikel_From_Company($data)
     $users = get_users();
 
     $list_company = [
-        [
-            'WorkPlace Academy' => 'https://workplaceacademy.nl/',
-            'Ynno' => 'https://www.ynno.com/',
-            'DeZZP' => 'https://www.dezzp.nl/',
-            'Aestate' => 'https://www.aestate.nl/',
-            'Alba Concepts' => 'https://albaconcepts.nl/',
-            'AM' => 'https://www.am.nl/',
-            'DWA' => 'https://www.dwa.nl/',
-            'Van Spaendonck' => 'https://www.vanspaendonck.nl/',
-            'PTG-advies' => 'https://ptg-advies.nl/',
-            'Rever' => 'https://rever.nl/',
-        ],
-        [
-            'Reworc' => 'https://www.reworc.com/',
-            'Sweco' => 'https://www.sweco.nl/',
-            'Co-pilot' => 'https://www.copilot.nl/',
-            'Agile Scrum Group' => 'https://agilescrumgroup.nl/',
-            'Horizon' => 'https://horizontraining.nl/',
-            'Kenneth Smit' => 'https://www.kennethsmit.com/',
-            'Autoblog' => 'https://www.autoblog.nl/',
-            'Crypto university' => 'https://www.cryptouniversity.nl/',
-            'WineLife' => 'https://www.winelife.nl/',
-            'Perswijn' => 'https://perswijn.nl/',
-        ],
-        [
-            'Koken met Kennis' => 'https://www.kokenmetkennis.nl/',
-            'KIT publishers' => 'https://kitpublishers.nl/',
-            'BeByBeta' => 'https://www.betastoelen.nl/',
-            'Zooi' => 'https://zooi.nl/',
-            'Growth Factory' => 'https://www.growthfactory.nl/',
-            'Influid' => 'https://influid.nl/',
-            'MediaTest' => 'https://mediatest.nl/',
-            'MeMo2' => 'https://memo2.nl/',
-            'Impact Investor' => 'https://impact-investor.com/',
-            'Equalture' => 'https://www.equalture.com/',
-        ],
-        [
-            'Zorgmasters' => 'https://zorgmasters.nl/',
-            'AdSysco' => 'https://adsysco.nl/',
-            'Transport en Logistiek Nederland' => 'https://www.tln.nl/',
-            'Financieel Fit' => 'https://www.financieelfit.nl/',
-            'Business Insider' => 'https://www.businessinsider.nl/',
-            'Frankwatching' => 'https://www.frankwatching.com/',
-            'Search Engine Journal' => 'https://www.searchenginejournal.com/',
-            'TechCrunch' => 'https://techcrunch.com/',
-            'The Bruno Effect' => 'https://magazine.thebrunoeffect.com/',
-            'Crypto Insiders' => 'https://www.crypto-insiders.nl/',
-        ],
-        [
-            'HappyHealth' => 'https://happyhealthy.nl/',
-            'Focus' => 'https://focusmagazine.nl/',
-            'Chip Foto Magazine' => 'https://www.chipfotomagazine.nl/',
-            'Vogue' => 'https://www.vogue.nl/',
-            'TrendyStyle' => 'https://www.trendystyle.net/',
-            'WWD' => 'https://wwd.com/',
-            'Purse Blog' => 'https://www.purseblog.com/',
-            'Coursera' => 'https://blog.coursera.org/',
-            'Udemy' => 'https://blog.udemy.com/',
-            'CheckPoint' => 'https://blog.checkpoint.com/',
-        ],
-        [
-            'De laatste meter' => 'https://www.delaatstemeter.nl/',
-            'ManagementSite' => 'https://www.managementpro.nl/',
-            '1 Minute Manager' => 'https://www.1minutemanager.nl/',
-            'De Strafschop' => 'https://www.strafschop.nl/',
-            'JongeBazen' => 'https://www.jongebazen.nl/',
-            'Expeditie Duurzaam' => 'https://www.expeditieduurzaam.nl/',
-            'Pure Luxe' => 'https://pureluxe.nl/',
-            'WatchTime' => 'https://www.watchtime.com/',
-            'Monochrome' => 'https://monochrome-watches.com/',
-            'Literair Nederland' => 'https://www.literairnederland.nl/',
-        ],
-        [
-            'Tzum' => 'https://www.tzum.info/',
-            'Developer' => 'https://www.developer-tech.com/',
-            'SD Times' => 'https://sdtimes.com/',
-            'GoDaddy' => 'https://www.godaddy.com/garage/',
-            'Bouw Wereld' => 'https://www.bouwwereld.nl/',
-            'Vastgoed actueel' => 'https://vastgoedactueel.nl/',
-            'The Real Deal' => 'https://therealdeal.com/',
-            'HousingWire' => 'https://www.housingwire.com/',
-            'AfterSales' => 'https://aftersalesmagazine.nl/',
-            'CRS Consulting' => 'https://crsconsultants.nl/',
-        ],
-        [
-            'Commercial Construction & Renovation' => 'https://www.ccr-mag.com/',
-            'Training Magazine' => 'https://www.trainingmag.com/',
-            'MedCity News' => 'https://www.medcitynews.com/',
-            'Cocktail Enthusiast' => 'https://www.cocktailenthusiast.com/',
-            'Mr. Online' => 'https://www.mronline.nl/',
-            'Cash' => 'https://www.cash.nl/',
-            'Kookles thuis' => 'https://www.kooklesthuis.com/',
-            'Mediabistro' => 'https://www.mediabistro.com/',
-            'ProBlogger' => 'https://problogger.com/',
-            'Media Shift' => 'https://www.mediashift.org/',
-        ],
-        [
-            'Warehouse Totaal' => 'https://www.warehousetotaal.nl/',
-            'CS digital' => 'https://csdm.online/',
-            'Analytics Insight' => 'https://www.analyticsinsight.net/',
-            'Wissenraet' => 'https://www.vanspaendonck-wispa.nl/',
-            '9to5Mac' => 'https://9to5mac.com/',
-            'Invest International' => 'https://investinternational.nl/',
-            'Racefiets Blog' => 'https://racefietsblog.nl/',
-            'Darts actueel' => 'https://www.dartsactueel.nl/',
-            'Hockey.nl' => 'https://hockey.nl/',
-            'Hockeykrant' => 'https://hockeykrant.nl/',
-        ],
-        [
-            'Tata Nexarc' => 'https://blog.tatanexarc.com/',
-            'Incodocs' => 'https://incodocs.com/blog/',
-            'Recruitement Tech' => 'https://www.recruitmenttech.nl/',
-            'Healthcare Weekly' => 'https://healthcareweekly.com/',
-            'Wellness Mama' => 'https://wellnessmama.com/',
-            'Logistics Business' => 'https://www.logisticsbusiness.com/',
-            '20Cube' => 'https://www.20cube.com/',
-            'Outside' => 'https://velo.outsideonline.com/',
-            'Trainer Road' => 'https://www.trainerroad.com/blog/',
-            'AllOver Media' => 'https://allovermedia.com/',
-        ],
-        [
-            'The Partially Examined Life' => 'https://partiallyexaminedlife.com/',
-            'The Future Organization' => 'https://thefutureorganization.com/',
-            'Arts en Auto' => 'https://www.artsenauto.nl/',
-            'Discutafel' => 'https://discutafel.nl/',
-            'SBVO' => 'https://sbvo.nl/',
-            'Your EDM' => 'https://www.youredm.com/',
-            'Metal Injection' => 'https://metalinjection.net/',
-            'Classical Music' => 'https://www.classical-music.com/',
-            'Slipped Disc' => 'https://slippedisc.com/',
-            'The Violin Channel' => 'https://www.theviolinchannel.com/',
-        ],
-        [
-            'Carey Nieuwhof' => 'https://careynieuwhof.com/',
-            'Fresh' => 'https://www.stichtingfresh.nl/',
-            'Werf' => 'https://www.werf-en.nl/',
-            'Monday.com' => 'https://monday.com/blog/',
-            'HR Knowledge' => 'https://www.hrknowledge.com/',
-            'HRcommunity' => 'https://hrcommunity.nl/',
-            'Leeuwendaal' => 'https://www.leeuwendaal.nl/',
-            'Samhoud' => 'https://www.samhoudconsultancy.com/',
-            'Incontext' => 'https://incontext.nl/',
-            'Successday' => 'https://successday.nl/',
-        ],
-        [
-            'Hospitality Group' => 'https://www.hospitality-group.nl/',
-            'AllChiefs' => 'https://allchiefs.nl/',
-            'BTS' => 'https://bts.com/',
-            'Fakton' => 'https://www.fakton.com/',
-            'bbn' => 'https://bbn.nl/',
-            'Over morgen' => 'https://overmorgen.nl/',
-            'Beaufort' => 'https://www.beaufortconsulting.nl/',
-            'Redept' => 'https://redept.nl/',
-            'Akro' => 'https://akroconsult.nl/',
-            'AT osborne' => 'https://atosborne.nl/',
-        ],
-        [
-            'Brink' => 'https://www.brink.nl/',
-            'Magnus Digital' => 'https://www.magnus.nl/',
-            'Lybrae' => 'https://lybrae.nl/',
-            'HKA' => 'https://www.hka.com/',
-            'Flux Partners' => 'https://flux.partners/',
-            'TWST' => 'https://www.twst.nl/',
-            'Contakt' => 'https://contakt.nl/',
-            'Group Mapping' => 'https://groupmapping.org/',
-            'The house of Marketing' => 'https://thom.eu/',
-            'PPMC' => 'https://ppmc.nl/',
-        ],
-        [
-            'Newcraft' => 'https://newcraftgroup.com/',
-            'The Next Organization' => 'https://thenextorganization.com/',
-            'Salveos' => 'https://salveos.nl/',
-            'MLC' => 'https://m-lc.nl/',
-            'Artefact' => 'https://www.artefact.com/',
-             'Horeca Magazine'=>'https://horecamagazine.be/',
-            'Around the Bar'=>'https://aroundthebar.nl/',
-            'Hospitality News'=>'https://hospitalitynewsny.com/',
-            'ZOUT'=>'https://www.zoutmagazine.eu/',
-            'Tableau'=>'https://tableaumagazine.nl/',
-        ],
-        [
-          'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
-	       'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
-	       'Modern Agriculture' =>	'https://modernagriculture.ca/',
-	       'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
-	       'Farm Journal' =>	'https://www.farmjournal.com/',
-	       'Future Farming' =>	'https://www.futurefarming.com/',
-	       'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
-	       'Global Finance' =>	'https://gfmag.com/',
-	       'InFinance' =>	'https://www.infinance.nl/',
-	       'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
-        ],
-        [
-           'Computer' =>	'https://www.computer.org/',
-	       'PHP Magazine' =>	'https://phpmagazine.net/',
-	       'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
-	       'Digital DJ Tips' =>'https://www.digitaldjtips.com/',
-           'Centrum voor Conflicthantering' =>	'https://cvc.nl/',
-           'HR Morning'	 =>'https://www.hrmorning.com/',
-           'Human in Progress'  =>	'https://humaninprogress.com/',
-           'Personelle Today'	 => 'https://www.personneltoday.com/',
-           'Wccf Tech' => 'https://wccftech.com/',
-           'Kit Guru'  =>	'https://www.kitguru.net/',
-        ],
-        [
-           'CHT'  =>	'https://chtmag.com/',
-           'Intelligent Transport'	 => 'https://www.intelligenttransport.com/',
-           'Attorney at Law Magazine'  =>	'https://attorneyatlawmagazine.com/',
-           'Lawyer Monthly'  =>	'https://www.lawyer-monthly.com/',
-           'Architects Journal'  =>	'https://www.architectsjournal.co.uk/',
-           'E-architect' =>	'https://www.e-architect.com/',
-           'Construction News'	 => 'https://www.constructionnews.co.uk/',
-           'Construction Week'  =>	'https://www.constructionweekonline.com/',
-           'Threat Post'=>	'https://threatpost.com/',
-           'ARTnews'  =>	'https://www.artnews.com/',
-        ],
-        [
-           'Design Wanted'	 =>'https://designwanted.com/',
-           'Craftsmanship'	 =>'https://craftsmanship.net/',
-           'Wood and Panel'  =>	'https://www.woodandpanel.com/',
-           'Platform O' =>	'https://platformoverheid.nl/',																							
-	         'Duurzaam Ondernemen' =>	'https://www.duurzaam-ondernemen.nl/',																																											
-	         'IVVD' =>	'https://www.ivvd.nl/',																																													
-	         'De Afdeling Marketing' =>	'https://deafdelingmarketing.nl/',																																												
-	         'Neurofactor' =>	'https://neurofactor.nl/',																							
-	         'Kennisportal'	=> 'https://www.kennisportal.com/'	,																							
-	         'Orbis' =>	'https://www.orbis-software.nl/',
-        ],
-         [
-           'Onno Kleyn' =>	'https://www.onnokleyn.nl/',																						
-	         'NFCI' =>	'https://nfcihospitality.com/',																																													
-	         'SVO' =>	'https://www.svo.nl/'	
-        ],
-
+      [
+        'WorkPlace Academy' => 'https://workplaceacademy.nl/',
+        'Ynno' => 'https://www.ynno.com/',
+        'DeZZP' => 'https://www.dezzp.nl/',
+        'Aestate' => 'https://www.aestate.nl/',
+        'Alba Concepts' => 'https://albaconcepts.nl/',
+        'AM' => 'https://www.am.nl/',
+        'DWA' => 'https://www.dwa.nl/',
+        'Van Spaendonck' => 'https://www.vanspaendonck.nl/',
+        'PTG-advies' => 'https://ptg-advies.nl/',
+        'Rever' => 'https://rever.nl/'
+      ],
+      [
+        'Reworc' => 'https://www.reworc.com/',
+        'Sweco' => 'https://www.sweco.nl/',
+        'Co-pilot' => 'https://www.copilot.nl/',
+        'Agile Scrum Group' => 'https://agilescrumgroup.nl/',
+        'Horizon' => 'https://horizontraining.nl/',
+        'Kenneth Smit' => 'https://www.kennethsmit.com/',
+        'Autoblog' => 'https://www.autoblog.nl/',
+        'Crypto university' => 'https://www.cryptouniversity.nl/',
+        'WineLife' => 'https://www.winelife.nl/',
+        'Perswijn' => 'https://perswijn.nl/'
+      ],
+      [
+        'Koken met Kennis' => 'https://www.kokenmetkennis.nl/',
+        'KIT publishers' => 'https://kitpublishers.nl/',
+        'BeByBeta' => 'https://www.betastoelen.nl/',
+        'Zooi' => 'https://zooi.nl/',
+        'Growth Factory' => 'https://www.growthfactory.nl/',
+        'Influid' => 'https://influid.nl/',
+        'MediaTest' => 'https://mediatest.nl/',
+        'MeMo2' => 'https://memo2.nl/',
+        'Impact Investor' => 'https://impact-investor.com/',
+        'Equalture' => 'https://www.equalture.com/'
+      ],
+      [
+        'Zorgmasters' => 'https://zorgmasters.nl/',
+        'AdSysco' => 'https://adsysco.nl/',
+        'Transport en Logistiek Nederland' => 'https://www.tln.nl/',
+        'Financieel Fit' => 'https://www.financieelfit.nl/',
+        'Business Insider' => 'https://www.businessinsider.nl/',
+        'Frankwatching' => 'https://www.frankwatching.com/',
+        'Search Engine Journal' => 'https://www.searchenginejournal.com/',
+        'TechCrunch' => 'https://techcrunch.com/',
+        'The Bruno Effect' => 'https://magazine.thebrunoeffect.com/',
+        'Crypto Insiders' => 'https://www.crypto-insiders.nl/'
+      ],
+      [
+        'HappyHealth' => 'https://happyhealthy.nl/',
+        'Focus' => 'https://focusmagazine.nl/',
+        'Chip Foto Magazine' => 'https://www.chipfotomagazine.nl/',
+        'Vogue' => 'https://www.vogue.nl/',
+        'TrendyStyle' => 'https://www.trendystyle.net/',
+        'WWD' => 'https://wwd.com/',
+        'Purse Blog' => 'https://www.purseblog.com/',
+        'Coursera' => 'https://blog.coursera.org/',
+        'Udemy' => 'https://blog.udemy.com/',
+        'CheckPoint' => 'https://blog.checkpoint.com/'
+      ],
+      [
+        'De laatste meter' => 'https://www.delaatstemeter.nl/',
+        'ManagementSite' => 'https://www.managementpro.nl/',
+        '1 Minute Manager' => 'https://www.1minutemanager.nl/',
+        'De Strafschop' => 'https://www.strafschop.nl/',
+        'JongeBazen' => 'https://www.jongebazen.nl/',
+        'Expeditie Duurzaam' => 'https://www.expeditieduurzaam.nl/',
+        'Pure Luxe' => 'https://pureluxe.nl/',
+        'WatchTime' => 'https://www.watchtime.com/',
+        'Monochrome' => 'https://monochrome-watches.com/',
+        'Literair Nederland' => 'https://www.literairnederland.nl/'
+      ],
+      [
+        'Tzum' => 'https://www.tzum.info/',
+        'Developer' => 'https://www.developer-tech.com/',
+        'SD Times' => 'https://sdtimes.com/',
+        'GoDaddy' => 'https://www.godaddy.com/garage/',
+        'Bouw Wereld' => 'https://www.bouwwereld.nl/',
+        'Vastgoed actueel' => 'https://vastgoedactueel.nl/',
+        'The Real Deal' => 'https://therealdeal.com/',
+        'HousingWire' => 'https://www.housingwire.com/',
+        'AfterSales' => 'https://aftersalesmagazine.nl/',
+        'CRS Consulting' => 'https://crsconsultants.nl/'
+      ],
+      [
+        'Commercial Construction & Renovation' => 'https://www.ccr-mag.com/',
+        'Training Magazine' => 'https://www.trainingmag.com/',
+        'MedCity News' => 'https://www.medcitynews.com/',
+        'Cocktail Enthusiast' => 'https://www.cocktailenthusiast.com/',
+        'Mr. Online' => 'https://www.mronline.nl/',
+        'Cash' => 'https://www.cash.nl/',
+        'Kookles thuis' => 'https://www.kooklesthuis.com/',
+        'Mediabistro' => 'https://www.mediabistro.com/',
+        'ProBlogger' => 'https://problogger.com/',
+        'Media Shift' => 'https://www.mediashift.org/'
+      ],
+      [
+        'Warehouse Totaal' => 'https://www.warehousetotaal.nl/',
+        'CS digital' => 'https://csdm.online/',
+        'Analytics Insight' => 'https://www.analyticsinsight.net/',
+        'Wissenraet' => 'https://www.vanspaendonck-wispa.nl/',
+        '9to5Mac' => 'https://9to5mac.com/',
+        'Invest International' => 'https://investinternational.nl/',
+        'Racefiets Blog' => 'https://racefietsblog.nl/',
+        'Darts actueel' => 'https://www.dartsactueel.nl/',
+        'Hockey.nl' => 'https://hockey.nl/',
+        'Hockeykrant' => 'https://hockeykrant.nl/'
+      ],
+      [
+        'Tata Nexarc' => 'https://blog.tatanexarc.com/',
+        'Incodocs' => 'https://incodocs.com/blog/',
+        'Recruitement Tech' => 'https://www.recruitmenttech.nl/',
+        'Healthcare Weekly' => 'https://healthcareweekly.com/',
+        'Wellness Mama' => 'https://wellnessmama.com/',
+        'Logistics Business' => 'https://www.logisticsbusiness.com/',
+        '20Cube' => 'https://www.20cube.com/',
+        'Outside' => 'https://velo.outsideonline.com/',
+        'Trainer Road' => 'https://www.trainerroad.com/blog/',
+        'AllOver Media' => 'https://allovermedia.com/'
+      ],
+      [
+        'The Partially Examined Life' => 'https://partiallyexaminedlife.com/',
+        'The Future Organization' => 'https://thefutureorganization.com/',
+        'Arts en Auto' => 'https://www.artsenauto.nl/',
+        'Discutafel' => 'https://discutafel.nl/',
+        'SBVO' => 'https://sbvo.nl/',
+        'Your EDM' => 'https://www.youredm.com/',
+        'Metal Injection' => 'https://metalinjection.net/',
+        'Classical Music' => 'https://www.classical-music.com/',
+        'Slipped Disc' => 'https://slippedisc.com/',
+        'The Violin Channel' => 'https://www.theviolinchannel.com/'
+      ],
+      [
+        'Carey Nieuwhof' => 'https://careynieuwhof.com/',
+        'Fresh' => 'https://www.stichtingfresh.nl/',
+        'Werf' => 'https://www.werf-en.nl/',
+        'Monday.com' => 'https://monday.com/blog/',
+        'HR Knowledge' => 'https://www.hrknowledge.com/',
+        'HRcommunity' => 'https://hrcommunity.nl/',
+        'Leeuwendaal' => 'https://www.leeuwendaal.nl/',
+        'Samhoud' => 'https://www.samhoudconsultancy.com/',
+        'Incontext' => 'https://incontext.nl/',
+        'Successday' => 'https://successday.nl/'
+      ],
+      [
+        'Hospitality Group' => 'https://www.hospitality-group.nl/',
+        'AllChiefs' => 'https://allchiefs.nl/',
+        'BTS' => 'https://bts.com/',
+        'Fakton' => 'https://www.fakton.com/',
+        'bbn' => 'https://bbn.nl/',
+        'Over morgen' => 'https://overmorgen.nl/',
+        'Beaufort' => 'https://www.beaufortconsulting.nl/',
+        'Redept' => 'https://redept.nl/',
+        'Akro' => 'https://akroconsult.nl/',
+        'AT osborne' => 'https://atosborne.nl/'
+      ],
+      [
+        'Brink' => 'https://www.brink.nl/',
+        'Magnus Digital' => 'https://www.magnus.nl/',
+        'Lybrae' => 'https://lybrae.nl/',
+        'HKA' => 'https://www.hka.com/',
+        'Flux Partners' => 'https://flux.partners/',
+        'TWST' => 'https://www.twst.nl/',
+        'Contakt' => 'https://contakt.nl/',
+        'Group Mapping' => 'https://groupmapping.org/',
+        'The house of Marketing' => 'https://thom.eu/',
+        'PPMC' => 'https://ppmc.nl/'
+      ],
+      [
+        'Newcraft' => 'https://newcraftgroup.com/',
+        'The Next Organization' => 'https://thenextorganization.com/',
+        'Salveos' => 'https://salveos.nl/',
+        'MLC' => 'https://m-lc.nl/',
+        'Artefact' => 'https://www.artefact.com/',
+        'Horeca Magazine'=>'https://horecamagazine.be/',
+        'Around the Bar'=>'https://aroundthebar.nl/',
+        'Hospitality News'=>'https://hospitalitynewsny.com/',
+        'ZOUT'=>'https://www.zoutmagazine.eu/',
+        'Tableau'=>'https://tableaumagazine.nl/'
+      ],
+      [
+        'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
+        'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
+        'Modern Agriculture' =>	'https://modernagriculture.ca/',
+        'Farming Monthly' =>	'https://www.farmingmonthly.co.uk/',
+        'Farm Journal' =>	'https://www.farmjournal.com/',
+        'Future Farming' =>	'https://www.futurefarming.com/',
+        'Crop Production Magazine' =>	'https://www.cpm-magazine.co.uk/',
+        'Global Finance' =>	'https://gfmag.com/',
+        'InFinance' =>	'https://www.infinance.nl/',
+        'Financial Focus' =>	'https://financialfocus.abnamro.nl/',
+      ],
+      [
+        'Computer' =>	'https://www.computer.org/',
+        'PHP Magazine' =>	'https://phpmagazine.net/',
+        'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
+        'Digital DJ Tips' =>'https://www.digitaldjtips.com/',
+        'Centrum voor Conflicthantering' =>	'https://cvc.nl/',
+        'HR Morning'	 =>'https://www.hrmorning.com/',
+        'Human in Progress'  =>	'https://humaninprogress.com/',
+        'Personelle Today'	 => 'https://www.personneltoday.com/',
+        'Wccf Tech' => 'https://wccftech.com/',
+        'Kit Guru'  =>	'https://www.kitguru.net/',
+      ],
+      [
+        'CHT'  =>	'https://chtmag.com/',
+        'Intelligent Transport'	 => 'https://www.intelligenttransport.com/',
+        'Attorney at Law Magazine'  =>	'https://attorneyatlawmagazine.com/',
+        'Lawyer Monthly'  =>	'https://www.lawyer-monthly.com/',
+        'Architects Journal'  =>	'https://www.architectsjournal.co.uk/',
+        'E-architect' =>	'https://www.e-architect.com/',
+        'Construction News'	 => 'https://www.constructionnews.co.uk/',
+        'Construction Week'  =>	'https://www.constructionweekonline.com/',
+        'Threat Post'=>	'https://threatpost.com/',
+        'ARTnews'  =>	'https://www.artnews.com/'
+      ],
+      [
+        'Design Wanted'	 =>'https://designwanted.com/',
+        'Craftsmanship'	 =>'https://craftsmanship.net/',
+        'Wood and Panel'  =>	'https://www.woodandpanel.com/',
+        'Platform O' =>	'https://platformoverheid.nl/',																							
+        'Duurzaam Ondernemen' =>	'https://www.duurzaam-ondernemen.nl/',																																											
+        'IVVD' =>	'https://www.ivvd.nl/',																																													
+        'De Afdeling Marketing' =>	'https://deafdelingmarketing.nl/',																																												
+        'Neurofactor' =>	'https://neurofactor.nl/',																							
+        'Kennisportal'	=> 'https://www.kennisportal.com/'	,																							
+        'Orbis' =>	'https://www.orbis-software.nl/',
+      ],
+      [
+        'Onno Kleyn' =>	'https://www.onnokleyn.nl/',																						
+        'NFCI' =>	'https://nfcihospitality.com/',																																													
+        'SVO' =>	'https://www.svo.nl/'	
+      ]
     ];
 
     $args = array(
@@ -295,135 +294,135 @@ function Artikel_From_Company($data)
     // var_dump($list);
     $companies = get_posts($args);
     foreach ($list as $key => $website) {
-      // function add Author  in addAuthor.php
-        $informations=addAuthor($users,$key);
-         $author_id= $informations['author'];
-         $company_id=$informations['company'];
-        $span = $website . "wp-json/wp/v2/posts/";
+      // function -add author- [addAuthor.php]
+      $informations = addAuthor($users, $key);
+      $author_id = $informations['author'];
+      $company_id = $informations['company'];
+      $span = $website . "wp-json/wp/v2/posts/";
 
-        $artikels = json_decode(file_get_contents($span), true);
-        foreach ($artikels as $article) {
-            
-            if ($article != null) {
-                $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
-                $result_title = $wpdb->get_results($sql_title);
+      $artikels = json_decode(file_get_contents($span), true);
+      foreach ($artikels as $article) {
+          
+          if ($article != null) {
+              $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($article['title']['rendered'], 'Artikel'));
+              $result_title = $wpdb->get_results($sql_title);
+                
+              if ($article['featured_media'] != 0) {
+                  $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
+                  $images = json_decode(file_get_contents($span2), true);
+                  // $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
+                  // $result_image = $wpdb->get_results($sql_image);
+
+                  if ( /*!isset($result_image[0]) && */!isset($result_title[0])) {
+                      if (!isset($images['data']['status'])) {
+                          $status = 'extern';
+                          $datas = array(
+                              'titel' => $article['title']['rendered'],
+                              'type' => 'Artikel',
+                              'videos' => null,
+                              'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
+                              'long_description' => $article['content']['rendered'],
+                              'duration' => null,
+                              'prijs' => 0,
+                              'prijs_vat' => 0,
+                              'image_xml' => $images['guid']['rendered'],
+                              'onderwerpen' => $onderwerpen,
+                              'date_multiple' => null,
+                              'course_id' => null,
+                              'author_id' => $author_id,
+                              'company_id' => $company_id,
+                              'contributors' => null,
+                              'status' => $status,
+                              'language'=>detectLanguage($article['title']['rendered'])
+                              
+                          );
+                      } else {
+                          $status = 'extern';
+                          $datas = array(
+                              'titel' => $article['title']['rendered'],
+                              'type' => 'Artikel',
+                              'videos' => null,
+                              'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
+                              'long_description' => $article['content']['rendered'],
+                              'duration' => null,
+                              'prijs' => 0,
+                              'prijs_vat' => 0,
+                              'image_xml' => null,
+                              'onderwerpen' => $onderwerpen,
+                              'date_multiple' => null,
+                              'course_id' => null,
+                              'author_id' => $author_id,
+                              'company_id' => $company_id,
+                              'contributors' => null,
+                              'status' => $status,
+                              'language'=>detectLanguage($article['title']['rendered'])
+
+                              // 'podcasts'=> null,
+                              // 'for_who'=> null,
+                              // 'agenda'=> null,
+                              // 'results'=> null,
+                              // 'attachment_xml'=> null, 
+                              // 'location'=> null,
+                              // 'level'=> null,
+                              // 'language'=> null,
+                              // 'teacher_id'=> NULL,
+                              // 'state'=>0,
+                              // 'org'=> null,
+                              // 'optie'=> null,
+                              // 'created_at'=>null
+
+
+                              
+                              
+                          );
+                try
+              {
                   
-                if ($article['featured_media'] != 0) {
-                    $span2 = $website . "wp-json/wp/v2/media/" . $article['featured_media'];
-                    $images = json_decode(file_get_contents($span2), true);
-                    // $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
-                    // $result_image = $wpdb->get_results($sql_image);
+                  $wpdb->insert($table, $datas);
+                  $data_found=1;
+              } catch (Exception $e) {
+                  echo $e->getMessage();
+              }
+              }
+                  } else {
+                      continue;
+                  }
 
-                    if ( /*!isset($result_image[0]) && */!isset($result_title[0])) {
-                        if (!isset($images['data']['status'])) {
-                            $status = 'extern';
-                            $datas = array(
-                                'titel' => $article['title']['rendered'],
-                                'type' => 'Artikel',
-                                'videos' => null,
-                                'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
-                                'long_description' => $article['content']['rendered'],
-                                'duration' => null,
-                                'prijs' => 0,
-                                'prijs_vat' => 0,
-                                'image_xml' => $images['guid']['rendered'],
-                                'onderwerpen' => $onderwerpen,
-                                'date_multiple' => null,
-                                'course_id' => null,
-                                'author_id' => $author_id,
-                                'company_id' => $company_id,
-                                'contributors' => null,
-                                'status' => $status,
-                                'language'=>detectLanguage($article['title']['rendered'])
-                                
-                            );
-                        } else {
-                            $status = 'extern';
-                            $datas = array(
-                                'titel' => $article['title']['rendered'],
-                                'type' => 'Artikel',
-                                'videos' => null,
-                                'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
-                                'long_description' => $article['content']['rendered'],
-                                'duration' => null,
-                                'prijs' => 0,
-                                'prijs_vat' => 0,
-                                'image_xml' => null,
-                                'onderwerpen' => $onderwerpen,
-                                'date_multiple' => null,
-                                'course_id' => null,
-                                'author_id' => $author_id,
-                                'company_id' => $company_id,
-                                'contributors' => null,
-                                'status' => $status,
-                                'language'=>detectLanguage($article['title']['rendered'])
-
-                                // 'podcasts'=> null,
-                                // 'for_who'=> null,
-                                // 'agenda'=> null,
-                                // 'results'=> null,
-                                // 'attachment_xml'=> null, 
-                                // 'location'=> null,
-                                // 'level'=> null,
-                                // 'language'=> null,
-                                // 'teacher_id'=> NULL,
-                                // 'state'=>0,
-                                // 'org'=> null,
-                                // 'optie'=> null,
-                                // 'created_at'=>null
-
-
-                                
-                                
-                            );
-                 try
-                {
-                    
-                   $wpdb->insert($table, $datas);
-                   $data_found=1;
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
-                }
-                    } else {
-                        continue;
-                    }
-
-                } else {
-                    if (!isset($result_title[0])) {
-                        $status = 'extern';
-                        $datas = array(
-                            'titel' => $article['title']['rendered'],
-                            'type' => 'Artikel',
-                            'videos' => null,
-                            'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
-                            'long_description' => $article['content']['rendered'],
-                            'duration' => null,
-                            'prijs' => 0,
-                            'prijs_vat' => 0,
-                            'image_xml' => null,
-                            'onderwerpen' => $onderwerpen,
-                            'date_multiple' => null,
-                            'course_id' => null,
-                            'author_id' => $author_id,
-                            'company_id' => $company_id,
-                            'contributors' => null,
-                            'status' => $status,
-                            'language'=>detectLanguage($article['title']['rendered'])
-                        );
-                         try
-                {
-                    
-                   $wpdb->insert($table, $datas);
-                 $data_found=1;
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
-                    }
-                }
-               
-            }
-        }
+              } else {
+                  if (!isset($result_title[0])) {
+                      $status = 'extern';
+                      $datas = array(
+                          'titel' => $article['title']['rendered'],
+                          'type' => 'Artikel',
+                          'videos' => null,
+                          'short_description' => htmlspecialchars(strip_html_tags($article['excerpt']['rendered'])),
+                          'long_description' => $article['content']['rendered'],
+                          'duration' => null,
+                          'prijs' => 0,
+                          'prijs_vat' => 0,
+                          'image_xml' => null,
+                          'onderwerpen' => $onderwerpen,
+                          'date_multiple' => null,
+                          'course_id' => null,
+                          'author_id' => $author_id,
+                          'company_id' => $company_id,
+                          'contributors' => null,
+                          'status' => $status,
+                          'language'=>detectLanguage($article['title']['rendered'])
+                      );
+                        try
+              {
+                  
+                  $wpdb->insert($table, $datas);
+                $data_found=1;
+              } catch (Exception $e) {
+                  echo $e->getMessage();
+              }
+                  }
+              }
+              
+          }
+      }
     }
     if($data_found==1)
     echo "datas founded and recordered in Databank";
@@ -472,7 +471,7 @@ function Artikel_From_Company($data)
     // Fermer la session cURL
     curl_close($curl);   
      $data = json_decode($response, true);
-     echo "<h3>".$data['programs'][0]['data']['programClassification']['orgUnitId']." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
+    
      
 
      foreach($data['programs'] as $key => $data_xml){
@@ -819,12 +818,11 @@ function xmlParse($data)
 
 
  $index = $data->get_param('id');
- var_dump($index);
-   // $index = intval($data['id']);
-  
 
 
 
+    $verif=0;
+    $data_insert=0;
     global $wpdb;
     $company = null;
     $groups = array();
@@ -944,18 +942,415 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     foreach ($groups  as $key => $website) {
         //Get the URL content
           
-          $data_insert=addCourseGeneral($website);
         
        
+ $headers = [
+              'Authorization:Bearer secret-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJFZHUtRGV4IiwiaWF0IjoxNzEzNDMxMjExLCJuYmYiOjE3MTM0MzEyMTEsInN1YiI6ImVkdWRleC1hcGktdXNlciIsInNjb3BlIjoiZGF0YSIsIm5vbmNlIjoidjh2UjNmTkY4NHdWaTZOMDlfQWl5QSIsImV4cCI6MTkwMjc0MzEwMH0.RxttT9h1eA07fYIRFqDes3EJnLiDMVWaxcY0IVFIElI',
+            ];
+                    
+         $url = "https://api.edudex.nl/data/v1/organizations/livelearn/dynamiccatalogs/". $website . "/programs";
 
-        //Retrieve courses
-        // $i = 0;
-     
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch); 
+      
+        $programs = json_decode($response, true);
+        
+
+        if(isset($programs)){
+          
+
+          $data = array();
+          $data['programs']= array();
+          foreach ($programs  as $prog) {
+           // addOneCourse($prog);
+            $element=array(
+           "orgUnitId" => $prog['supplierId'],
+            "programId" => $prog['programId'],
+           "clientId" => $prog['clientId']
+            );
+            array_push($data['programs'], $element);
+            
+          
+         
+          $data_json = json_encode($data);
+        
+
+           //$data_insert=addOneCourse($data_json);
+              $url = 'https://api.edudex.nl/data/v1/programs/bulk';
+
+// En-têtes de la requête
+
+$headers = array(
+    'accept: application/json',
+    'Authorization: Bearer secret-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJFZHUtRGV4IiwiaWF0IjoxNzEzNDMxMjExLCJuYmYiOjE3MTM0MzEyMTEsInN1YiI6ImVkdWRleC1hcGktdXNlciIsInNjb3BlIjoiZGF0YSIsIm5vbmNlIjoidjh2UjNmTkY4NHdWaTZOMDlfQWl5QSIsImV4cCI6MTkwMjc0MzEwMH0.RxttT9h1eA07fYIRFqDes3EJnLiDMVWaxcY0IVFIElI',
+    'Content-Type: application/json'
+);
+
+// Initialisation de la session cURL
+   $curl = curl_init($url);
+
+    // Configuration des options cURL
+    curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $data_json,
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_SSL_VERIFYHOST => 0,
+        CURLOPT_SSL_VERIFYPEER => false
+    ));
+
+    // Exécuter la requête cURL
+    $response = curl_exec($curl);
+    
+
+    // Vérification des erreurs
+    if ($response === false) {
+        $error = curl_error($curl);
+        echo "Erreur cURL : " . $error;
     }
-    if($data_insert==1)
+
+    // Fermer la session cURL
+    curl_close($curl);   
+     $data = json_decode($response, true);
+    
+    
+     if($data['programs']!=null){
+     foreach($data['programs'] as $key => $data_xml){
+         
+      
+          
+
+        $datum=$data_xml['data'];    
+        if($datum!=null) {
+        // var_dump($datum['programDescriptions']['programName']['nl']);
+         $status = 'extern';
+         $course_type = "Opleidingen";
+         $image = "";
+        
+
+        if($datum['programDescriptions']['media']!=null){
+           foreach($datum['programDescriptions']['media'] as $media)
+       
+      
+        if($media['type'] == "image"){
+          $image = $media['url'];
+          break;
+        }
+
+        }
+       
+       
+     
+        //       //Redundance check "Image & Title"
+       
+      $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
+      $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum['programDescriptions']['programName']['nl']));
+    
+      if($image != "")
+        $check_image = $wpdb->get_results($sql_image); 
+     
+
+
+      $check_title = $wpdb->get_results($sql_title);
+        $post = array(
+        'short_description' => $datum['programDescriptions']['programSummaryText']['nl'],
+        'long_description' => null,
+        'agenda' => $datum['programDescriptions']['programDescriptionText']['nl'],
+        'url_image' => $image,
+        'prijs' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amount'],
+        'prijsvat' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amountVAT'],
+        'degree' => $datum['programClassification']['degree'],
+        'teacher_id' => $datum['programCurriculum']['teacher'][0]['id'],
+        'org' => $datum['programClassification']['orgUnitId'],
+        'duration_day' => $datum['programClassification']['programDuration'],
+      );
+       $attachment_xml = array();
+      $data_locaties_xml = array();
+
+      /*
+      ** -- Main fields --
+      */ 
+
+      $company = null;
+      $users = get_users();
+     
+     
+      
+      
+    // Fill the company if do not exist "next-version"
+       $informations = addAuthor($users, $post['org']);
+         $author_id = $informations['author'];
+        $company_id = $informations['company'] ;
+       
+
+      
+      $title = explode(' ', strval($datum['programDescriptions']['programName']['nl']));
+      $description = explode(' ', strval($datum['programDescriptions']['programSummaryText']['nl']));
+      $description_html = explode(' ', strval($datum['programDescriptions']['programSummaryHtml']['nl']));    
+     $keywords = array_merge($title, $description, $description_html);
+       if(!empty($keywords)){
+       
+        // Value : course type
+        if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
+          $course_type = "Masterclass";
+        else if(in_array('(training)', $keywords) || in_array('training', $keywords) || in_array('Training', $keywords))
+          $course_type = "Training";
+        else if(in_array('live', $keywords) && in_array('seminar', $keywords))
+          $course_type = "Webinar";
+        else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
+          $course_type = "E-learning";
+        else
+          $course_type = "Opleidingen";
+      }
+      //  var_dump($datum['programDescriptions']['programDescriptionHtml']['nl']);
+      //  var_dump('____________________');
+      //   var_dump($datum['programDescriptions']['programDescriptionText']['nl']);
+      //  if($datum['programDescriptions']['programDescriptionHtml'])
+      //   $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
+      // else
+        $descriptionHtml = $datum['programDescriptions']['programDescriptionText']['nl'];
+      
+        $tags = array();
+          $onderwerpen = "";
+          $categories = array(); 
+          $cats = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'orderby'    => 'name',
+            'exclude' => 'Uncategorized',
+            'parent'     => 0,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) );
+
+          foreach($cats as $item){
+            $cat_id = strval($item->cat_ID);
+            $item = intval($cat_id);
+            array_push($categories, $item);
+          };
+
+          $bangerichts = get_categories( array(
+              'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+              'parent'  => $categories[1],
+              'hide_empty' => 0, // change to 1 to hide categores not having a single post
+          ) );
+
+
+          $categorys = array(); 
+          foreach($categories as $categ){
+              //Topics
+              $topics = get_categories(
+                  array(
+                  'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                  'parent'  => $categ,
+                  'hide_empty' => 0, // change to 1 to hide categores not having a single post
+                  ) 
+              );
+
+              foreach ($topics as $value) {
+                  $tag = get_categories( 
+                      array(
+                      'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                      'parent'  => $value->cat_ID,
+                      'hide_empty' => 0,
+                      ) 
+                  );
+                  $categorys = array_merge($categorys, $tag);      
+              }
+          }
+
+          if($datum['programDescriptions']['searchword']['nl']!=null){
+          foreach($datum['programDescriptions']['searchword']['nl'] as $searchword){
+            $searchword = strtolower(strval($searchword));
+          
+          
+            foreach($categorys as $category){
+              $cat_slug = strval($category->slug);
+              $cat_name = strval($category->cat_name);             
+              if(strpos($searchword, $cat_slug) !== false)
+                if(!in_array($category->cat_ID, $tags))
+                    array_push($tags, $category->cat_ID);
+            }
+          }
+        }
+          if(empty($tags)){
+            $occurrence = array_count_values(array_map('strtolower', $keywords));
+            arsort($occurrence);
+            foreach($categorys as $value)
+              if($occurrence[strtolower($value->cat_name)] >= 1)
+                if(!in_array($value->cat_ID, $tags))
+                  array_push($tags, $value->cat_ID);
+          }
+
+          //Final value : categorie
+          $onderwerpen = join(',' , $tags);
+        $attachment = array();
+        if($datum['programDescriptions']['media']!=null){
+        foreach($datum['programDescriptions']['media'] as $media){
+          if($media['type'] == "image")
+            $image = $media['url'];
+          else
+            array_push($attachment, $media['url']);
+        } 
+        }
+        
+        $attachment_xml = join(',', $attachment);
+        $data_locaties_xml = array();
+        $data_locaties = null;
+      
+      if($datum['programSchedule']['programRun']!=null){
+          foreach($datum['programSchedule']['programRun'] as $program){
+            
+             
+            $info = array();
+            $infos = "";
+            $row = "";
+
+             if($program['courseDay']!=null){
+       
+              foreach($program['courseDay'] as $key => $courseDay){
+
+              $dates = explode('-',strval($courseDay['date']));
+             
+              //format date 
+              $date = $dates[2] . "/" .  $dates[1] . "/" . $dates[0];
+              
+              $info['start_date'] = $date . " ". strval($courseDay['startTime']);
+              $info['end_date'] = $date . " ". strval($courseDay['endTime']);
+              $info['location'] = strval($courseDay['location']['city']);
+              $info['adress'] = strval($courseDay['location']['address']);
+          
+              $row = $info['start_date']. '-' . $info['end_date'] . '-' . $info['location'] . '-' . $info['adress'] ;
+               
+
+              $infos .= $row ; 
+
+              $infos .= ';' ; 
+                
+            }
+             }
+           
+
+            if(substr($infos, -1) == ';')
+              $infos = rtrim($infos, ';');
+            
+            if(!empty($infos))
+              array_push($data_locaties_xml, $infos); 
+            else {
+              continue;
+            } 
+         }
+
+          $data_locaties = join('~', $data_locaties_xml);
+          
+       $language=$datum['programDescriptions']['programName']['nl']!=null?detectLanguage(strval($datum['programDescriptions']['programName']['nl'])):'';
+        
+      
+        $post = array(
+        'titel' => strval($datum['programDescriptions']['programName']['nl']),
+        'type' => $course_type,
+        'videos' => null,
+        'short_description' => strval($datum['programDescriptions']['programSummaryText']['nl']),
+        'long_description' => $descriptionHtml,
+        'duration' => strval($datum['programClassification']['programDuration']),
+        'agenda' => strval($datum['programDescriptions']['programDescriptionText']['nl']),
+        'image_xml' => strval($image),
+        'attachment_xml' => $attachment_xml,
+        'prijs' => intval($program['cost'][0]['amount']),
+        'prijs_vat' => intval($program['cost'][0]['amountVAT']),
+        'level' => strval($datum['programClassification']['degree']),
+        'teacher_id' => $datum['programCurriculum']['teacher'][0]['id'],
+        'org' => strval($datum['programClassification']['orgUnitId']),
+        'onderwerpen' => $onderwerpen, 
+        'date_multiple' => $data_locaties, 
+        'course_id' => strval($datum['programClassification']['programId']),
+        'author_id' => $author_id,
+        'company_id' => $company_id,
+        'status' => $status,
+       'language'=>$language
+      
+      );
+      
+    
+      
+        
+     $where = [ 'titel' => strval($datum['programDescriptions']['programName']['nl']) ];
+       $updated = $wpdb->update( $table, $post, $where );
+       if( !isset($check_image[0]) && !isset($check_title[0]) ){ 
+           if($wpdb->insert($table, $post)) {
+            $data_insert=1;
+            $post_id = $wpdb->insert_id;
+           
+            }
+
+        }
+         else{
+        
+          $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", $post['titel']);
+          
+          $course = $wpdb->get_results( $sql )[0];     
+         
+//           $message = 'field on change detected and applied<br><br>';
+  
+          if($post['type'] != $course->type){
+      
+            $data = [ 'type' => $post['type']]; // NULL value.
+            $where = [ 'id' => $course->id ];
+            $updated = $wpdb->update( $table, $data, $where );
+          
+
+          //  echo '****** Type of course - ' . $message;
+           
+          }
+
+          if($post['author_id'] != $course->author_id){
+            $data = [ 'author_id' => $author_id]; // NULL value.
+            $where = [ 'id' => $course->id ];
+            $updated = $wpdb->update( $table, $data, $where );
+             
+          }
+
+          if($post['company_id'] != $course->company_id){
+            $data = [ 'company_id' => $company_id]; // NULL value.
+            $where = [ 'id' => $course->id ];
+            $updated = $wpdb->update( $table, $data, $where );
+            
+          }
+            
+          
+        }
+          
+        }
+        else{
+  
+              break;
+
+        }
+         
+          
+       }
+        
+      }
+      }
+      
+        }
+         }
+
+
+         if($data_insert==1){
+          $verif=1;
+         }
+    }
+    if($verif==1)
      echo "<span class='alert alert-success'> Course - Insertion done successfully</span> <br><br>";
     else 
-      echo "<span class='alert alert-danger'>No New Data! ❌</span>";  
+      echo "<span class='alert alert-danger'>No New Data! ❌</span>";     
+   
+    
+  
 }
 
 
