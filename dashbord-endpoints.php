@@ -26,9 +26,9 @@ function expertsToFollow()
 function upcoming_schedule_for_the_user()
 {
     $user_id = 0;
-    if ($_GET['id'])
-        $user_id = intval($_GET['user_id']);
-
+    if (isset($_GET['id'])) {
+        $user_id = intval($_GET['id']);
+    }
     $args = array(
         'post_type' => array('course', 'post'),
         'posts_per_page' => -1,
@@ -78,5 +78,52 @@ function upcoming_schedule_for_the_user()
 
     $response = new WP_REST_Response($all_schedules);
     $response->set_status(200);
+    return $response;
+}
+function saveTeacher(WP_REST_Request $request){
+    $required_parameters = ['company','quantity','email','password'];
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $userdata = array(
+        'user_pass' => $request['password'],
+        'user_login' => $request['email'],
+        'user_email' => $request['email'],
+        'user_url' => $request['website'] ? : 'http://livelearn.nl/',
+        'display_name' => $request['company'],
+        'first_name' => $request['company'],
+        'last_name' => $request['company'],
+        'role' => 'Hr',
+    );
+    $user_id = wp_insert_user($userdata);
+    if (is_wp_error($user_id)) {
+        $response = new WP_REST_Response(is_wp_error($user_id));
+        $response->set_status(401);
+        return $response;
+    }
+    if ($request['phone'])
+        update_field('telnr', $request['phone'], 'user_' . $user_id);
+
+    if($request['about'])
+        update_field('biographical_info',$request['about'],'user_' . $user_id);
+
+    $company_id = wp_insert_post(
+        array(
+            'post_title' => $request['company'],
+            'post_type' => 'company',
+            'post_status' => 'publish',
+            //'post_status' => 'pending',
+        ));
+    $company = get_post($company_id);
+    update_field('company', $company, 'user_' . $user_id);
+
+    $response = new WP_REST_Response(array(
+        'message'=>'user saved succssed',
+        'quantity'=>intval($request['quantity']),
+    ));
+    $response->set_status(201);
     return $response;
 }
