@@ -1519,11 +1519,11 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'fillUpAuthor',
   ));
-    //Third apply !
-    register_rest_route('custom/v1', '/delete-old-course-databank', array(
-        'methods' => 'GET',
-        'callback' => 'delete_odl_courses_databank',
-    ));
+
+  register_rest_route('custom/v1', '/delete-old-course-databank', array(
+      'methods' => 'GET',
+      'callback' => 'delete_odl_courses_databank',
+  ));
 
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
@@ -1883,6 +1883,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'searchCoursesViaKeyWords',
   ));
 
+  //Endpoint "Liggeey"
   register_rest_route('custom/v2', '/course/filtered', array(
     'methods' => 'GET',
     'callback' => 'allCoursesOptimizedWithFilter',
@@ -2027,6 +2028,7 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'candidateMyResumeDelete'
   ));
+  //End ...
 
   register_rest_route ('custom/v1', '/candidate/skills', array(
     'methods' => 'POST',
@@ -2059,10 +2061,16 @@ add_action( 'rest_api_init', function () {
     'methods' => 'POST',
     'callback' => 'update'
   ));
+  //End ...
 
   register_rest_route ('custom/v1', '/tofollow/experts', array(
-      'methods' => 'GET',
-      'callback' => 'expertsToFollow'
+    'methods' => 'GET',
+    'callback' => 'expertsToFollow'
+  ));
+
+  register_rest_route ('custom/v1', '/user/activity/(?P<ID>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'activityUser'
   ));
   register_rest_route ('custom/v1', '/upcoming/schedule', array(
       'methods' => 'GET',

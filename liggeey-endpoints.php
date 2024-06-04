@@ -2288,11 +2288,11 @@ function candidateSkillsPassport(WP_REST_Request $request) {
 
       // Badges
       $args = array(
-          'post_type' => 'badge',
-          'author' => $user_id,
-          'orderby' => 'post_date',
-          'order' => 'DESC',
-          'posts_per_page' => -1,
+        'post_type' => 'badge',
+        'author' => $user_id,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
       );
       $achievements = get_posts($args);
       $badges = array();
@@ -2786,6 +2786,272 @@ function editSkills(WP_REST_Request $request){
   $skill_sample['note'] = $skill['note'];
   $response = new WP_REST_Response($skill_sample);
   $code_status = 201;
+  $response->set_status($code_status);
+  return $response;
+}
+
+function statut_course($post_name, $ID){
+  //Color
+  $text_status = "New";
+  $color_status = "#043356";
+  $information = array('text' => $text_status, 'color' => $color_status);
+
+  //Get read by user 
+  $args = array(
+    'post_type' => 'progression', 
+    'title' => $post_name,
+    'post_status' => 'publish',
+    'author' => $ID,
+    'posts_per_page'         => 1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+  );
+  $progressions = get_posts($args);
+
+  //Print progress
+  if(!empty($progressions)){
+    $color_status = "#ff9b00";
+    $text_status = "In progress";
+    $progression_id = $progressions[0]->ID;
+    //Finish read
+    $is_finish = get_field('state_actual', $progression_id);
+    if($is_finish){
+        $color_status = "green";
+        $text_status = "Done";
+    }
+  }
+  $information['text'] = $text_status;
+  $information['color'] = $color_status;
+
+  return $information;
+}
+
+function activity($ID){
+
+  /* * Information * */
+  $information = array( 
+    'user' => null, 
+    'courses' => null, 
+    'notifications' => null, 
+    'analytics' => 'not available !', 
+    'certificates' => null, 
+    'communities' => null,
+    'skills' => null
+  );
+
+  //User information
+  $user = ($ID) ? get_user_by('ID', $ID) : null;
+  if(!$user)
+    return 0;
+  $information['user'] = $user;
+  //End ...
+
+  //Enrolled sample - course
+  $enrolled = array();
+  $courses = array();
+  $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
+  // $enrolled_courses = array();
+  // $expenses = 0;
+  // $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video' => 0);
+  
+  //Orders 
+  $args = array(
+    'customer_id' => $user->ID,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+  );
+  $bunch_orders = wc_get_orders($args);
+  foreach($bunch_orders as $order)
+    foreach ($order->get_items() as $item_id => $item ):
+      //Get woo orders from user
+      $course_id = intval($item->get_product_id()) - 1;
+      // $prijs = get_field('price', $course_id);
+      // $expenses += $prijs; 
+      if(!in_array($course_id, $enrolled)):
+        $course = artikel($course_id);
+        //Get statut
+        $course->statut = statut_course($course->slug, $user->ID)['text'];
+        if(get_post($course_id)):
+          array_push($courses, $course);
+          array_push($enrolled, $course_id);
+        endif;
+      endif;
+    endforeach;
+  $information['courses'] = $courses;
+  //End ...  
+  
+  //Notifications
+  $notifications = array();
+  $args = array(
+      'post_type' => 'feedback',
+      'author' => $user->ID,
+      'orderby' => 'post_date',
+      'order' => 'DESC',
+      'posts_per_page' => -1,
+  );
+  $todos = get_posts($args);
+  $sample = array();
+  foreach($todos as $todo):
+    $sample = array();
+    $sample['type'] = get_field('type_feedback', $todo->ID);
+    $manager_id = get_field('manager_feedback', $todo->ID);
+    if($manager_id){
+      $manager = get_user_by('ID', $manager_id);
+      $image = get_field('profile_img',  'user_' . $manager->ID);
+      $manager_display = $manager->display_name;
+    }else{
+      $manager_display = 'A manager';
+      $image = 0;
+    }
+    if(!$image)
+        $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+    $sample['manager'] = $manager_display;
+    $sample['manager_image'] = $image;
+    if($sample['type'] == "Feedback" || $sample['type'] == "Compliment" || $sample['type'] == "Gedeelde cursus")
+      $sample['description'] = get_field('beschrijving_feedback', $todo->ID);
+    else if($sample['type'] == "Persoonlijk ontwikkelplan")
+      $sample['description'] = get_field('opmerkingen', $todo->ID);
+    else if($sample['type'] == "Beoordeling Gesprek")
+      $sample['description'] = get_field('algemene_beoordeling', $todo->ID);
+
+    array_push($notifications, (Object)$sample);
+  endforeach;
+  $information['notifications'] = $notifications;
+  //End ...
+
+  //Certificaties
+  $type_badge = 'Certificaat';
+  $args = array(
+    'post_type' => 'badge',
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    // 'ordevalue'   => $type_badge,
+    'order' => 'DESC',
+    // 'meta_key'    => 'type_badge',
+    // 'meta_value'  => $type_badge,
+    'posts_per_page' => -1
+  );
+  $achievements = get_posts($args);
+  $certificats = array();
+  if(!empty($achievements))
+    foreach($achievements as $key => $achievement):
+      $sample = array();
+      $type = get_field('type_badge', $achievement->ID);
+      if($type != $type_badge)
+        continue;
+      $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+      $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
+      $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+      if(!$image)
+          $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+      $info = array(
+        'title' => $achievement->post_title,
+        'description' => $achievement->post_content,
+        'manager' => $achievement->manager,
+        'manager_image' => $achievement->manager_image,
+        'trigger' => get_field('trigger_badge', $achievement->ID),
+      );
+      array_push($certificats, (Object)$info);
+  endforeach;
+  $information['certificats'] = $certificats;
+  //End ...
+    
+  //Communities 
+  $communities = array();
+  $args = array(
+      'post_type' => 'community',
+      'post_status' => 'publish',
+      'order' => 'DESC',
+      'posts_per_page' => -1
+  );
+  $main_communities = get_posts($args); 
+  foreach ($main_communities as $value):
+    $sample = array();
+    if(!$value)
+      continue;
+
+    $company = get_field('company_author', $value->ID);
+    $sample['company'] = $company->title;
+    $sample['company_image'] = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+    $sample['title'] = $value->title;
+    $sample['image']= get_field('image_community', $value->ID) ?: $company_image;
+
+    //Courses through custom field
+    $courses = get_field('course_community', $value->ID);
+    $max_course = 0;
+    if(!empty($courses))
+      $max_course = count($courses);
+    $sample['courses'] = $max_course;
+
+    //Followers
+    $max_follower = 0;
+    $followers = get_field('follower_community', $value->ID);
+    if(!empty($followers))
+      $max_follower = count($followers);
+    $sample['followers'] = $max_course;
+
+    $bool = false;
+    foreach ($sample['followers'] as $key => $val)
+      if($val->ID == $user->ID){
+        $bool = true;
+        break;
+      }
+
+    //add
+    array_push($communities, (Object)$sample);
+  endforeach;
+  $information['communities'] = $communities;
+  //End ...
+
+  //Topic information
+  $topics_external = get_user_meta($user->ID, 'topic');
+  $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+  $notes = get_field('skills', 'user_' . $user->ID);
+  $sample_topics = array();
+
+  if(!empty($topics_external))
+    $sample_topics = $topics_external;
+  if(!empty($topics_internal))
+    foreach($topics_internal as $value)
+      array_push($sample_topics, $value);
+
+  foreach($sample_topics as $value):
+    $sample = array();
+    if(!$value || is_wp_error(!$value))
+      continue;
+    $sample['ID'] = $value;
+    $sample['name']= get_the_category_by_ID($value);
+    $note = 0;
+    if(!empty($skills_note))
+      foreach($skills_note as $skill)
+        if($skill['id'] == $value){
+          $note = $skill['note'];
+          break;
+        }
+    $sample['note'] = $note;
+    $sample['name'] = (String)$sample['name'];
+    array_push($sample_topics, (Object)$sample);
+  endforeach;
+  $information['skills'] = $sample_topics;
+  //End ...
+
+  return $information;
+  
+}
+
+function activityUser($data){
+  $ID = $data['ID'] ?: null;
+
+  //Information 
+  $information = activity($ID);
+
+  $response = new WP_REST_Response($information);
+  $code_status = 200;
   $response->set_status($code_status);
   return $response;
 }
