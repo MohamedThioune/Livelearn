@@ -2835,7 +2835,7 @@ function activity($ID){
     'user' => null, 
     'courses' => null, 
     'notifications' => null, 
-    'analytics' => null, 
+    'analytics' => 'not available !', 
     'certificates' => null, 
     'communities' => null,
     'skills' => null
@@ -2847,7 +2847,6 @@ function activity($ID){
     return 0;
   $information['user'] = $user;
   //End ...
-
 
   //Enrolled sample - course
   $enrolled = array();
@@ -2876,8 +2875,10 @@ function activity($ID){
         $course = artikel($course_id);
         //Get statut
         $course->statut = statut_course($course->slug, $user->ID)['text'];
-        array_push($courses, $course);
-        array_push($enrolled, $course_id);
+        if(get_post($course_id)):
+          array_push($courses, $course);
+          array_push($enrolled, $course_id);
+        endif;
       endif;
     endforeach;
   $information['courses'] = $courses;
@@ -2919,6 +2920,7 @@ function activity($ID){
 
     array_push($notifications, (Object)$sample);
   endforeach;
+  $information['notifications'] = $notifications;
   //End ...
 
   //Certificaties
@@ -2927,10 +2929,10 @@ function activity($ID){
     'post_type' => 'badge',
     'author' => $user->ID,
     'orderby' => 'post_date',
+    // 'ordevalue'   => $type_badge,
     'order' => 'DESC',
-    'ordevalue'   => $type_badge,
-    'meta_key'    => 'type_badge',
-    'meta_value'  => $type_badge,
+    // 'meta_key'    => 'type_badge',
+    // 'meta_value'  => $type_badge,
     'posts_per_page' => -1
   );
   $achievements = get_posts($args);
@@ -2938,7 +2940,9 @@ function activity($ID){
   if(!empty($achievements))
     foreach($achievements as $key => $achievement):
       $sample = array();
-      // $type = get_field('type_badge', $achievement->ID);
+      $type = get_field('type_badge', $achievement->ID);
+      if($type != $type_badge)
+        continue;
       $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
       $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
       $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
@@ -2952,7 +2956,7 @@ function activity($ID){
         'manager_image' => $achievement->manager_image,
         'trigger' => get_field('trigger_badge', $achievement->ID),
       );
-      $certificats[] = (Object)$info;
+      array_push($certificats, (Object)$info);
   endforeach;
   $information['certificats'] = $certificats;
   //End ...
