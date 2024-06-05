@@ -123,6 +123,7 @@ function saveTeacher(WP_REST_Request $request){
     $response = new WP_REST_Response(array(
         'message'=>'user saved succssed',
         'quantity'=>intval($request['quantity']),
+        'id_user'=>$user_id
     ));
     $response->set_status(201);
     return $response;
