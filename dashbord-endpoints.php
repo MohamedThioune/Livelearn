@@ -80,7 +80,7 @@ function upcoming_schedule_for_the_user()
     $response->set_status(200);
     return $response;
 }
-function saveTeacher(WP_REST_Request $request){
+function saveManager(WP_REST_Request $request){
     $required_parameters = ['company','quantity','email','password'];
     $errors = validated($required_parameters, $request);
     if($errors):
