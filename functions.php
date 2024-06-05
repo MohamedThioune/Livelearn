@@ -2076,8 +2076,8 @@ add_action( 'rest_api_init', function () {
       'methods' => 'GET',
       'callback' => 'upcoming_schedule_for_the_user'
   ));
-    register_rest_route ('custom/v1', '/teacher/save', array(
+    register_rest_route ('custom/v1', '/teacher/manager', array(
         'methods' => 'POST',
-        'callback' => 'saveTeacher'
+        'callback' => 'saveManager'
     ));
 });
