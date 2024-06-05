@@ -1,7 +1,7 @@
 <?php
 function expertsToFollow()
 {
-    $experts = get_users(array('role__in' => array('expert', 'administrator')));
+    $experts = get_users(array('role__in' => array('expert', 'administrator','manager','Hr','teacher')));
     $all_experts = array();
     foreach ($experts as $expert) {
         $expert_data = array();
