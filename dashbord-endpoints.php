@@ -41,6 +41,18 @@ function upcoming_schedule_for_the_user()
         $data_locaties_xml = get_field('data_locaties_xml', $schedule->ID);
         if (!$data_locaties_xml)
             continue;
+        $courseTime = array();
+        foreach ($data_locaties_xml as $dataxml) {
+            //print_r($dataxml['value']); // 19/12/2023 10: 00: 00-19/12/2023 11: 00: 00--
+            $datetime = explode(' ', $dataxml['value']);
+            $date = explode(' ', $datetime[0])[0];
+            //print_r($date); // 19/12/2023
+            $time = explode('-', $datetime[1])[0];
+            //print_r($time); //10: 00: 00
+            $courseTime['date'][] = $date;
+            $courseTime['time'][] = $time;
+        }
+
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
         $user_follow_this_course = $wpdb->get_results( $sql );
@@ -67,11 +79,12 @@ function upcoming_schedule_for_the_user()
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
         $schedule_data['price'] = get_field('price',$schedule->ID) ?? "Gratis";
         $schedule_data['data_locaties_xml'] = $data_locaties_xml;
+        $schedule_data['courseTime'] = $courseTime;
         $all_schedules[] = $schedule_data;
 
     }
     if (empty($all_schedules)) {
-        $response = new WP_REST_Response(array());
+        $response = new WP_REST_Response($data_locaties_xml);
         $response->set_status(204);
         return $response;
     }
@@ -81,6 +94,30 @@ function upcoming_schedule_for_the_user()
     return $response;
 }
 function saveManager(WP_REST_Request $request){
+    $user_id = 1;
+    $user = get_userdata($user_id);
+    $new_role = 'administrator';
+    $user->add_role($new_role);
+    //$user->set_role('hr');
+
+    $role = $user->roles;
+    if (in_array($new_role, $role)) {
+        $response = new WP_REST_Response(array(
+            'message' => 'Role added successfully',
+            'role' => $role,
+            'new_role' => $new_role
+        ));
+        $response->set_status(200);
+        return $response;
+    }
+
+    $response = new WP_REST_Response(array(
+        'role'=>$role,
+        'user'=>$user
+    ));
+    $response->set_status(200);
+    return $response;
+    /*
     $required_parameters = ['company','quantity','email','password'];
     $errors = validated($required_parameters, $request);
     if($errors):
@@ -127,4 +164,5 @@ function saveManager(WP_REST_Request $request){
     ));
     $response->set_status(201);
     return $response;
+    */
 }
