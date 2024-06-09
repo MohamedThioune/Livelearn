@@ -854,7 +854,7 @@ $url = home_url( $wp->request );
             </nav>
             <div class="sousMenuNavMobil headSousMobilePrincipale" id="headOne">
                 <div class="block-sous-nav-mobile">
-                    <a href="/inloggen-2/" class="element-navMobile">
+                    <a href="/inloggen/" class="element-navMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/lock-open.png" alt="search">
                         Inloggen
                     </a>
