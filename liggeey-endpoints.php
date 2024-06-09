@@ -2932,10 +2932,10 @@ function activity($ID){
   );
   $achievements = get_posts($args);
   $certificats = array();
-  var_dump($achievements);
   if(!empty($achievements))
     foreach($achievements as $key => $achievement):
       $type = get_field('type_badge', $achievement->ID);
+      var_dump($type);
       if($type != $type_badge)
         continue;
       $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
