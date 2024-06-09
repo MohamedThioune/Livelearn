@@ -2317,16 +2317,15 @@ function candidateSkillsPassport(WP_REST_Request $request) {
                     array_push($badges, $achievement);
                     break;
                 case 'Certificaat':
-                        $achievement_info = array(
-                            'title' => $achievement->post_title,
-                            'description' => $achievement->post_content,
-                            'manager' => $achievement->manager,
-                            'manager_image' => $achievement->manager_image,
-                            'trigger' => get_field('trigger_badge', $achievement->ID),
-                        );
-                        $certificats[] = $achievement_info;
-
-                    break;
+                  $achievement_info = array(
+                      'title' => $achievement->post_title,
+                      'description' => $achievement->post_content,
+                      'manager' => $achievement->manager,
+                      'manager_image' => $achievement->manager_image,
+                      'trigger' => get_field('trigger_badge', $achievement->ID),
+                  );
+                  $certificats[] = $achievement_info;
+                  break;
 
                 case 'Prestatie':
                     $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
@@ -2928,18 +2927,14 @@ function activity($ID){
   $args = array(
     'post_type' => 'badge',
     'author' => $user->ID,
-    'orderby' => 'post_date',
-    // 'ordevalue'   => $type_badge,
     'order' => 'DESC',
-    // 'meta_key'    => 'type_badge',
-    // 'meta_value'  => $type_badge,
     'posts_per_page' => -1
   );
   $achievements = get_posts($args);
   $certificats = array();
+  var_dump($achievements);
   if(!empty($achievements))
     foreach($achievements as $key => $achievement):
-      $sample = array();
       $type = get_field('type_badge', $achievement->ID);
       if($type != $type_badge)
         continue;
@@ -2951,13 +2946,14 @@ function activity($ID){
 
       $info = array(
         'title' => $achievement->post_title,
-        'description' => $achievement->post_content,
+        'description' => get_field('trigger_badge', $achievement->ID),
         'manager' => $achievement->manager,
         'manager_image' => $achievement->manager_image,
-        'trigger' => get_field('trigger_badge', $achievement->ID),
+        // 'description' => $achievement->post_content,
+        // 'trigger' => get_field('trigger_badge', $achievement->ID),
       );
       array_push($certificats, (Object)$info);
-  endforeach;
+    endforeach;
   $information['certificats'] = $certificats;
   //End ...
     
@@ -2976,9 +2972,9 @@ function activity($ID){
       continue;
 
     $company = get_field('company_author', $value->ID);
-    $sample['company'] = $company->title;
+    $sample['company'] = $company->post_title;
     $sample['company_image'] = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
-    $sample['title'] = $value->title;
+    $sample['title'] = $value->post_title;
     $sample['image']= get_field('image_community', $value->ID) ?: $company_image;
 
     //Courses through custom field
