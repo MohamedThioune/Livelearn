@@ -14,7 +14,7 @@ include "dashbord-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
-require_once __DIR__ . '/templates/new-module-subscribe.php';
+require_once __DIR__ . '/templates/new-module-pay.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -33,32 +33,32 @@ function enqueue_parent_styles() {
 }
 
 function cpt_taxonomies() {
-    // Add new taxonomy, make it hierarchical (like categories)
-    $labels = array(
-        'name'              => _x( 'Categorie�n', 'course_categories', 'textdomain' ),
-        'singular_name'     => _x( 'Categorie', 'Categorie', 'textdomain' ),
-        'search_items'      => __( 'Zoek categori�n', 'textdomain' ),
-        'all_items'         => __( 'All Cats', 'textdomain' ),
-        'parent_item'       => __( 'Parent category', 'textdomain' ),
-        'parent_item_colon' => __( 'Parent category:', 'textdomain' ),
-        'edit_item'         => __( 'Edit category', 'textdomain' ),
-        'update_item'       => __( 'Update category', 'textdomain' ),
-        'add_new_item'      => __( 'Add New category', 'textdomain' ),
-        'new_item_name'     => __( 'New category Name', 'textdomain' ),
-        'menu_name'         => __( 'Category', 'textdomain' ),
-    );
+  // Add new taxonomy, make it hierarchical (like categories)
+  $labels = array(
+      'name'              => _x( 'Categorie�n', 'course_categories', 'textdomain' ),
+      'singular_name'     => _x( 'Categorie', 'Categorie', 'textdomain' ),
+      'search_items'      => __( 'Zoek categori�n', 'textdomain' ),
+      'all_items'         => __( 'All Cats', 'textdomain' ),
+      'parent_item'       => __( 'Parent category', 'textdomain' ),
+      'parent_item_colon' => __( 'Parent category:', 'textdomain' ),
+      'edit_item'         => __( 'Edit category', 'textdomain' ),
+      'update_item'       => __( 'Update category', 'textdomain' ),
+      'add_new_item'      => __( 'Add New category', 'textdomain' ),
+      'new_item_name'     => __( 'New category Name', 'textdomain' ),
+      'menu_name'         => __( 'Category', 'textdomain' ),
+  );
 
-    $args = array(
-        'hierarchical'      => true,
-        'labels'            => $labels,
-        'show_ui'           => true,
-        'show_in_rest'      => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'course_category' ),
-    );
+  $args = array(
+      'hierarchical'      => true,
+      'labels'            => $labels,
+      'show_ui'           => true,
+      'show_in_rest'      => true,
+      'show_admin_column' => true,
+      'query_var'         => true,
+      'rewrite'           => array( 'slug' => 'course_category' ),
+  );
 
-    register_taxonomy( 'course_category', array( 'course' ), $args );
+  register_taxonomy( 'course_category', array( 'course' ), $args );
 }
 add_action( 'init', 'cpt_taxonomies', 0 );
 
@@ -2068,16 +2068,21 @@ add_action( 'rest_api_init', function () {
     'callback' => 'expertsToFollow'
   ));
 
+  //Made by MaxBird
   register_rest_route ('custom/v1', '/user/activity/(?P<ID>\d+)', array(
     'methods' => 'GET',
     'callback' => 'activityUser'
   ));
+
   register_rest_route ('custom/v1', '/upcoming/schedule', array(
       'methods' => 'GET',
       'callback' => 'upcoming_schedule_for_the_user'
   ));
-    register_rest_route ('custom/v1', '/teacher/save', array(
-        'methods' => 'POST',
-        'callback' => 'saveTeacher'
-    ));
+
+  register_rest_route ('custom/v1', '/teacher/save', array( 
+      //teacher/save ; /save/manager
+      'methods' => 'POST',
+      'callback' => 'saveManager'
+  ));
+
 });
