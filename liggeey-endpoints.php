@@ -2937,11 +2937,10 @@ function activity($ID){
     foreach($achievements as $key => $achievement):
       $type = get_field('type_badge', $achievement->ID);
       $achievement->description = get_field('trigger_badge', $achievement->ID);
-      var_dump($type);
-      var_dump($achievement->post_title);
-      echo "<br>";
       if($type != $type_badge)
         continue;
+      var_dump($type);
+      var_dump($achievement->post_title);  
       $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
       $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
       $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
