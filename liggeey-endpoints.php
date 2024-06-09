@@ -2935,15 +2935,20 @@ function activity($ID){
   $certificats = array();
   if(!empty($achievements))
     foreach($achievements as $key => $achievement):
+      $sample = array();
       $type = get_field('type_badge', $achievement->ID);
-      $achievement->description = get_field('trigger_badge', $achievement->ID);
       if($type != $type_badge)
         continue;
-      $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-      $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
-      $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
-      $achievement->image = get_stylesheet_directory_uri() . '/img/Group216.png';
-      array_push($certificats, $achievement);
+      
+      $sample['title'] = $achievement->post_title;
+      $sample['description'] = get_field('trigger_badge', $achievement->ID);
+      $sample['image'] = get_stylesheet_directory_uri() . '/img/Group216.png';
+      $manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+      $manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+      $sample['manager'] = $manager;
+      $sample['manager_image'] = $manager_image;
+
+      array_push($certificats, (Object)$sample);
     endforeach;
   $information['certificates'] = $certificats;
   //End ...
