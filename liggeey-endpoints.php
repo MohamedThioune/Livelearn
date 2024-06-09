@@ -2925,17 +2925,21 @@ function activity($ID){
   //Certificaties
   $type_badge = 'Certificaat';
   $args = array(
-    'post_type' => 'badge',
+    'post_type' => 'badge', 
     'author' => $user->ID,
+    'orderby' => 'post_date',
     'order' => 'DESC',
-    'posts_per_page' => -1
+    'posts_per_page' => -1,
   );
   $achievements = get_posts($args);
   $certificats = array();
   if(!empty($achievements))
     foreach($achievements as $key => $achievement):
       $type = get_field('type_badge', $achievement->ID);
+      $achievement->description = get_field('trigger_badge', $achievement->ID);
       var_dump($type);
+      var_dump($achievement->post_title);
+      echo "<br>";
       if($type != $type_badge)
         continue;
       $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
@@ -2943,16 +2947,7 @@ function activity($ID){
       $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
       if(!$image)
           $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-
-      $info = array(
-        'title' => $achievement->post_title,
-        'description' => get_field('trigger_badge', $achievement->ID),
-        'manager' => $achievement->manager,
-        'manager_image' => $achievement->manager_image,
-        // 'description' => $achievement->post_content,
-        // 'trigger' => get_field('trigger_badge', $achievement->ID),
-      );
-      array_push($certificats, (Object)$info);
+      array_push($certificats, $achievement);
     endforeach;
   $information['certificats'] = $certificats;
   //End ...
