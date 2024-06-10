@@ -94,6 +94,7 @@ function upcoming_schedule_for_the_user()
     return $response;
 }
 function saveManager(WP_REST_Request $request){
+    /*
     $user_id = 1;
     $user = get_userdata($user_id);
     $new_role = 'administrator';
@@ -117,7 +118,7 @@ function saveManager(WP_REST_Request $request){
     ));
     $response->set_status(200);
     return $response;
-    /*
+    */
     $required_parameters = ['company','quantity','email','password'];
     $errors = validated($required_parameters, $request);
     if($errors):
@@ -164,5 +165,4 @@ function saveManager(WP_REST_Request $request){
     ));
     $response->set_status(201);
     return $response;
-    */
 }
