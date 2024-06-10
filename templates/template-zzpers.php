@@ -254,9 +254,9 @@
                             src="<?php echo get_stylesheet_directory_uri();?>/img/Image87.png" alt=""> -->
                         <h1 class="krijgText"><b>10 DeZZP-STARTERSGIDS</b></h1>
                         <stripe-buy-button
-                            buy-button-id="buy_btn_1POpyrEuOtOzwPYXZNqAd2Yq"
-                            publishable-key="pk_test_51JyijWEuOtOzwPYXpQ5PQzJGMroshnARkLBNWWJK2ZOsGaaJvF0tmh96eVkAgklzjB8L3usvqvP3229HTXx796nt00qw0X8k7y"
-                            >
+                        buy-button-id="buy_btn_1PQBdxHe23toRzexc62TABUO"
+                        publishable-key="pk_live_51MtSplHe23toRzexSa0W1OP004KXZzdCQSvkaqEatv90jpLWeQMGuRC70w5IE1NnoyOSoIhhBuOMWXj5X4EUBiZQ00odVqsFeY"
+                        >
                         </stripe-buy-button>
                     </div>
                 </div>
