@@ -93,76 +93,66 @@ function upcoming_schedule_for_the_user()
     $response->set_status(200);
     return $response;
 }
-function saveManager(WP_REST_Request $request){
-    /*
-    $user_id = 1;
-    $user = get_userdata($user_id);
-    $new_role = 'administrator';
-    $user->add_role($new_role);
-    //$user->set_role('hr');
 
-    $role = $user->roles;
-    if (in_array($new_role, $role)) {
+/**
+ * @param WP_REST_Request $request
+ * @return WP_REST_Response
+ * @url : localhost:8888/livelearn/wp-json/custom/v1/teacher/save?id=3
+ */
+function saveManager(WP_REST_Request $request){
+    $user_id = 0;
+    if (isset($_GET['id'])) {
+        $user_id = intval($_GET['id']);
+    } else {
         $response = new WP_REST_Response(array(
-            'message' => 'Role added successfully',
-            'role' => $role,
-            'new_role' => $new_role
+            'message' => 'User id is required in the request'
         ));
-        $response->set_status(200);
+        $response->set_status(401);
         return $response;
     }
-
-    $response = new WP_REST_Response(array(
-        'role'=>$role,
-        'user'=>$user
-    ));
-    $response->set_status(200);
-    return $response;
-    */
-    $required_parameters = ['company','quantity','email','password'];
+    $required_parameters = ['company','quantity','email','password','industry',];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
         $response->set_status(401);
         return $response;
     endif;
-    $userdata = array(
-        'user_pass' => $request['password'],
-        'user_login' => $request['email'],
-        'user_email' => $request['email'],
-        'user_url' => $request['website'] ? : 'http://livelearn.nl/',
-        'display_name' => $request['company'],
-        'first_name' => $request['company'],
-        'last_name' => $request['company'],
-        'role' => 'Hr',
-    );
-    $user_id = wp_insert_user($userdata);
-    if (is_wp_error($user_id)) {
-        $response = new WP_REST_Response(is_wp_error($user_id));
-        $response->set_status(401);
-        return $response;
+    //update role of  user
+    $user = get_userdata($user_id);
+    $new_role = 'manager';
+    if (!in_array($new_role, $user->roles)) {
+        $user->add_role($new_role);
     }
-    if ($request['phone'])
-        update_field('telnr', $request['phone'], 'user_' . $user_id);
-
-    if($request['about'])
-        update_field('biographical_info',$request['about'],'user_' . $user_id);
-
+    // creating new company
     $company_id = wp_insert_post(
         array(
             'post_title' => $request['company'],
             'post_type' => 'company',
             'post_status' => 'publish',
+            'post_author'=>$user_id
             //'post_status' => 'pending',
         ));
     $company = get_post($company_id);
     update_field('company', $company, 'user_' . $user_id);
 
-    $response = new WP_REST_Response(array(
-        'message'=>'user saved succssed',
+    update_field('company_sector',$request['industry'], $company_id);
+    update_field('company_address',$request['address'], $company_id);
+    update_field('company_place',$request['place'], $company_id);
+    update_field('company_country',$request['country'], $company_id);
+    update_field('company_bio',$request['about'], $company_id);
+    update_field('company_website',$request['website'], $company_id);
+    update_field('company_size',$request['quantity'], $company_id);
+    update_field('company_email',$request['email'], $company_id);
+    update_field('company_phone',$request['phone'], $company_id);
+    $response = new WP_REST_Response(
+        array(
+        'message'=>'company created',
         'quantity'=>intval($request['quantity']),
         'id_user'=>$user_id,
-    ));
+        'company'=>$company
+    )
+    );
     $response->set_status(201);
     return $response;
 }
+
