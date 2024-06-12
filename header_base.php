@@ -782,7 +782,6 @@ $url = home_url( $wp->request );
                                 </div>
                             </div>
                             <button onclick="redirect()" class="btn btn-Openen">Openen</button>
-
                         </div>
                     </div>
                 </div>

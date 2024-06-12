@@ -250,7 +250,6 @@
                                 Je gratis leeromgeving
                             </button>
                             <a href="#" class="btn btn-Functionaliteiten">ZZP startersgide 2024</a>
-
                         </div>
                     </div>
                     <div class="element-second d-flex justify-content-center">
