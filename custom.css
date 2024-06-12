@@ -10850,6 +10850,9 @@ select {
 .krijgText {
     font-size: 20px;
     line-height: 32px;
+    margin-bottom: 16px;
+}
+.krijgText-{
     margin-bottom: 45px;
 }
 .img-zzpers{
@@ -23272,6 +23275,25 @@ figure ul li {
     border-color: #023357 !important;
     padding: 6px 20px;
 }
+.first-zzpers-block .element-first{
+    width: 58.333333%;
+    padding-right: 15px;
+}
+.first-zzpers-block .element-second{
+    width: 41.666667%;
+}
+.icons-block-zzpers{
+    justify-content: space-between;
+    align-items: center;
+}
+.one-element-icon-zzpers img{
+    height: 44px;
+    margin: 0 auto 15px;
+    display: block;
+}
+.icons-block-zzpers {
+    margin: 68px 0 -12px;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -26571,7 +26593,7 @@ figure ul li {
         min-width: 134px;
         font-size: 14px;
         margin-bottom: 20px;
-        width: 55%;
+        width: 70%;
     }
     .btn-Functionaliteiten {
         padding: 9px 20px !important;
@@ -28257,6 +28279,29 @@ figure ul li {
     }
     .element-teacher {
         flex-wrap: wrap;
+    }
+    .first-zzpers-block {
+        flex-wrap: wrap;
+    }
+    .first-zzpers-block .element-first {
+        width: 100%;
+        padding-right: 0;
+    }
+    .first-zzpers-block .element-second {
+        width: 100%;
+    }
+    .first-zzpers-block .krijgText {
+        margin-bottom: 8px !important;
+    }
+    .first-zzpers-block .krijgText- {
+        margin-bottom: 45px !important;
+    }
+    .icons-block-zzpers {
+        flex-wrap: wrap;
+    }
+    .icons-block-zzpers .one-element-icon-zzpers {
+        width: 48%;
+        text-align: center;
     }
 
 
