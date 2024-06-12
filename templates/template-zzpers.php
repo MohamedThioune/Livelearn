@@ -236,28 +236,66 @@
 
         <section class="zzpersSection">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-7">
+                <div class="d-flex first-zzpers-block justify-content-between align-items-center">
+                    <div class="element-first">
                         <h1 class="zzpersTitle">ZZP'ers en Startups</h1>
                         <p class="krijgText">
                             Waarschijnlijk ben jij al druk genoeg met het draaiend houden van je bedrijf. Daarom zorgen wij als LiveLearn dat jij alle trends en ontwikkelingen direct in je eigen ontwikkelomgeving ontvangt.
                         </p>
+                        <p class="krijgText krijgText-">
+                            Daarnaast hebben we een speciale zzp-startersgids ontwikkeld om zeker te zijn dat jij perfect van start kan of het optimale uit je bedrijf kan halen. En dat alles voor de prijs van slechts 6 koppen koffie.
+                        </p>
                         <div class="d-flex flex-wrap">
-                            <a href="/voor-organisaties/" class="btn btn-al-vanaf">
-                                Al vanaf €4,95
-                            </a>
-                            <a href="/functionaliteiten/" class="btn btn-Functionaliteiten">Functionaliteiten</a>
+                            <button onclick="redirect()" class="btn btn-al-vanaf">
+                                Je gratis leeromgeving
+                            </button>
+                            <a href="#" class="btn btn-Functionaliteiten">ZZP startersgide 2024</a>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <!-- <img class="img-zzpers" style=""
-                            src="<?php echo get_stylesheet_directory_uri();?>/img/Image87.png" alt=""> -->
-                        <h1 class="krijgText"><b>10 DeZZP-STARTERSGIDS</b></h1>
+                    <div class="element-second d-flex justify-content-center">
                         <stripe-buy-button
                         buy-button-id="buy_btn_1PQD91He23toRzexhEhQtxBW"
                         publishable-key="pk_live_51MtSplHe23toRzexSa0W1OP004KXZzdCQSvkaqEatv90jpLWeQMGuRC70w5IE1NnoyOSoIhhBuOMWXj5X4EUBiZQ00odVqsFeY"
                         >
                         </stripe-buy-button>
+                    </div>
+                </div>
+                <div class="d-flex icons-block-zzpers">
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Tarief-bepalen.png" class="" alt="">
+                        <p class="">Tarief bepalen</p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Jezelf-presenteren.png" class="" alt="">
+                        <p class="">Jezelf presenteren</p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Facturen.png" class="" alt="">
+                        <p class="">Facturen</p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Belastingen.png" class="" alt="">
+                        <p class="">Belastingen</p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Loon-bepalen.png" class="" alt="">
+                        <p class="">Loon bepalen</p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Winstdeling.png" class="" alt="">
+                        <p class="">Winstdeling</p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Reservepotjes.png" class="" alt="">
+                        <p class="">Reservepotjes</p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ondersnemersrisico%20.png" class="" alt="">
+                        <p class="">Ondersnemersrisico </p>
+                    </div>
+                    <div class="one-element-icon-zzpers">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Slim-vermogen-opbouwen.png" class="" alt="">
+                        <p class="">TSlim vermogen opbouwen</p>
                     </div>
                 </div>
                 <div class="block-rating-logo">
