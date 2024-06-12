@@ -1,7 +1,12 @@
 <?php
 function expertsToFollow()
 {
-    $experts = get_users(array('role__in' => array('expert', 'administrator','manager','Hr','teacher')));
+    $experts = get_users(
+        array(
+                'role__in' => array('expert','author','teacher',
+                'posts_per_page' => -1,
+                )
+        ));
     $all_experts = array();
     foreach ($experts as $expert) {
         $expert_data = array();
@@ -10,7 +15,7 @@ function expertsToFollow()
         $expert_data['email'] = $expert->user_email;
         $expert_data['name'] = $expert->display_name;
         $expert_data['image'] = get_field('profile_img',  'user_' . $expert->ID) ?: get_field('profile_img_api',  'user_' . $expert->ID);
-        // $expert_data['image'] = get_avatar_url($expert->ID);
+        $expert_data['imageExpert'] = get_avatar_url($expert->ID);
         $all_experts[] = $expert_data;
     }
 
