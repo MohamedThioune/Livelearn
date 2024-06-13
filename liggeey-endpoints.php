@@ -2570,16 +2570,17 @@ function add_topics_to_user(WP_REST_Request $request) {
     return $response;
   endif;
 
-  //ID user
+  // ID user + Get user topics
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  //Get user topics
   $topics_external = get_user_meta($user_id, 'topic');
   $topics_internal = get_user_meta($user_id, 'topic_affiliate');
   $topics = array_merge($topics_external, $topics_internal);
   
+  // Adding topics ...
   $request_topics = ($request['topics']) ? explode(',', $request['topics']) : array();
+  $bool_added = false;
   foreach($request_topics as $topic_id):
-    //ID topic inferior to 0
+    // ID topic inferior to 0
     if ($topic_id <= 0) {
       $response = array(
           'success' => false,
@@ -2588,31 +2589,24 @@ function add_topics_to_user(WP_REST_Request $request) {
       return new WP_REST_Response($response, 400);
     }
 
-    //if topic already exists for user
+    // if topic already exists for user
     if (in_array($topic_id, $topics))
       continue;
 
     // Add topics for user
     $added = add_user_meta($user_id, 'topic', $topic_id);
 
-    // // Return response
-    // if ($added) {
-    //   $response = array(
-    //     'success' => true,
-    //     'message' => 'Topic added successfully.'
-    //   );
-    // } else {
-    //   $response = array(
-    //     'success' => false,
-    //     'message' => 'Failed to add topic.'
-    //   );
-    // }
+    // Return response
+    if ($added) 
+      $bool_added = true;
+   
   endforeach;
 
   // Response
+  $message = (!$bool_added) ? "Topic add : no news added !" :  "Topic add : action done ✅";
   $response = array(
     'success' => true,
-    'message' => 'Topics added : action done ✅'
+    'message' => $message
   );
   return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
 }
