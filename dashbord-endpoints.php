@@ -115,7 +115,7 @@ function saveManager(WP_REST_Request $request){
         $response->set_status(401);
         return $response;
     }
-    $required_parameters = ['company','quantity','email','password','industry',];
+    $required_parameters = ['company','quantity','email','industry',];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
