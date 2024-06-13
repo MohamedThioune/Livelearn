@@ -30,12 +30,9 @@ function makecall($url, $type, $data = null, $params = null) {
     // $header = curl_getinfo( $ch );
 
     if ($response === false || $err):
-        $errmsg = 'Something went wrong, please try again !';
-        if($errmsg):
-            $errmsg = curl_error( $ch );
-            $information = ['error' => $err, 'errormsg' => $errmsg];
-            return $information;
-        endif;
+        $errmsg = curl_error( $ch ) ?: 'Something went wrong, please try again !';
+        $information = ['error' => $err, 'errormsg' => $errmsg];
+        return $information;
     endif;
 
     // close curl
