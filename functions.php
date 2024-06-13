@@ -2009,7 +2009,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'countUserAppliedJobsAndFavorites'
   ));
 
-  register_rest_route ('custom/v1', '/user/skill', array(
+  register_rest_route ('custom/v1', '/user/skills', array(
     'methods' => 'POST',
     'callback' => 'add_topics_to_user'
   ));
