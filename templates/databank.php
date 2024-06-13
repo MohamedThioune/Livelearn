@@ -531,7 +531,10 @@ if (!empty($courses)) {
         $onderwerpen = array();
         //Onderwerpen
         if ($course->onderwerpen != "") {
+           
             $onderwerpen = explode(',', $course->onderwerpen);
+           
+
         }
 
         $state = $course->course_id ? 'present' : 'missing';
