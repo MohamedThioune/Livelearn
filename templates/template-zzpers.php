@@ -290,7 +290,7 @@
                         <p class="">Reservepotjes</p>
                     </div>
                     <div class="one-element-icon-zzpers">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ondersnemersrisico%20.png" class="" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ondersnemersrisico.png" class="" alt="">
                         <p class="">Ondersnemersrisico </p>
                     </div>
                     <div class="one-element-icon-zzpers">
