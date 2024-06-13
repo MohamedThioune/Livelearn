@@ -2011,7 +2011,7 @@ add_action( 'rest_api_init', function () {
 
   register_rest_route ('custom/v1', '/user/skill', array(
     'methods' => 'POST',
-    'callback' => 'add_topic_to_user'
+    'callback' => 'add_topics_to_user'
   ));
 
   register_rest_route ('custom/v1', '/candidate/myResume/update', array(

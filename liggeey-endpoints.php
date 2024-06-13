@@ -2578,7 +2578,7 @@ function add_topics_to_user(WP_REST_Request $request) {
   $topics = array_merge($topics_external, $topics_internal);
   
   $request_topics = ($request['topics']) ? explode(',', $request['topics']) : array();
-  foreach($request_topics as $key => $topic_id):
+  foreach($request_topics as $topic_id):
     //ID topic inferior to 0
     if ($topic_id <= 0) {
       $response = array(
@@ -2608,7 +2608,7 @@ function add_topics_to_user(WP_REST_Request $request) {
     //   );
     // }
   endforeach;
-  
+
   // Response
   $response = array(
     'success' => true,
