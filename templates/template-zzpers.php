@@ -295,7 +295,7 @@
                     </div>
                     <div class="one-element-icon-zzpers">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Slim-vermogen-opbouwen.png" class="" alt="">
-                        <p class="">TSlim vermogen opbouwen</p>
+                        <p class="">Slim vermogen opbouwen</p>
                     </div>
                 </div>
                 <div class="block-rating-logo">
