@@ -249,7 +249,7 @@
                             <button onclick="redirect()" class="btn btn-al-vanaf">
                                 Je gratis leeromgeving
                             </button>
-                            <a href="#" class="btn btn-Functionaliteiten">ZZP startersgide 2024</a>
+                            <a href="https://buy.stripe.com/5kAaHb9V09ex5MYfYZ" target="_blank" class="btn btn-Functionaliteiten">ZZP startersgide 2024</a>
                         </div>
                     </div>
                     <div class="element-second d-flex justify-content-center">
