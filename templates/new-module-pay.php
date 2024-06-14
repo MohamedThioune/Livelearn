@@ -29,6 +29,7 @@ function makecall($url, $type, $data = null, $params = null) {
     $err = curl_errno( $ch );
     // $header = curl_getinfo( $ch );
 
+    // error handling
     if ($response === false || $err):
         $errmsg = curl_error( $ch ) ?: 'Something went wrong, please try again !';
         $information = ['error' => $err, 'errormsg' => $errmsg];
@@ -164,30 +165,16 @@ function update(WP_REST_Request $request) {
 
 function stripe(WP_REST_Request $request){
     //Check required parameters register
-    $required_parameters = ['name', 'email', 'number', 'exp_month', 'exp_year', 'cvc', 'ID'];
+    $required_parameters = ['quantity', 'ID'];
     $errors = validated($required_parameters, $request);
     if($errors):
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
     endif;
-    $data_customer = [
-        'name' => $request['name'],
-        'email' => $request['email'],
-        'ID' => $request['ID'],
-        'number' => $request['number'],
-        'exp_month' => $request['exp_month'],
-        'exp_year' => $request['exp_year'],
-        'cvc' => $request['cvc']
-    ];
-    //Create customer
-    $information = create_customer_stripe($data_customer);
-
-    return $information;
 
     //Constant "If required we might change it here"
     $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
-    // $product_id = "prod_QB6e8E4wftx5Fs";
   
     //Data information | payment 
     $data_payment = [
@@ -198,7 +185,7 @@ function stripe(WP_REST_Request $request){
         'after_completion' => [
             'type' => 'redirect',
             'redirect' => [
-                'url' => 'https://livelearn.nl/?message=sucessful-payment'  
+                'url' => 'https://app.livelearn.nl/?message=sucessful-payment'  
             ]
         ],
         'subscription_data' => [
