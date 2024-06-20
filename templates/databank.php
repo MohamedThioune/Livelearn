@@ -7,79 +7,80 @@ global $wpdb;
 /*
  * * Pagination
  */
-$pagination = 50;
+    $pagination = 50;
 
-if (isset($_GET['id'])) 
-    $page = intval($_GET['id']);
+    if (isset($_GET['id'])) 
+        $page = intval($_GET['id']);
 
-if ($page) 
-    $offset = ($page - 1) * $pagination;
+    if ($page) 
+        $offset = ($page - 1) * $pagination;
 
-if (isset($_POST['type'])) {
-    switch (strtolower($_POST['type'])) {
-        case 'all':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'artikel':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Artikel' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Artikel'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'podcast':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Podcast' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Podcast'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'videos': 
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        case 'courses':
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar'");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
-        default:
-            $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-            $courses = $wpdb->get_results($sql);
-            $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
-            $count = $wpdb->get_results($sql_count);
-            $count = intval($count[0]->{'COUNT(*)'});
-            break;
+    if (isset($_POST['type'])) {
+        switch (strtolower($_POST['type'])) {
+            case 'all':
+                $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results($sql);
+                $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+                $count = $wpdb->get_results($sql_count);
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'artikel':
+                $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Artikel' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results($sql);
+                $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Artikel'");
+                $count = $wpdb->get_results($sql_count);
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'podcast':
+                $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Podcast' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results($sql);
+                $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Podcast'");
+                $count = $wpdb->get_results($sql_count);
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'videos': 
+                $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type = 'Videos' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results($sql);
+                $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Videos'");
+                $count = $wpdb->get_results($sql_count);
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            case 'courses':
+                $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar' ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results($sql);
+                $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0 and type='Opleidingen' or type='Workshop' or type='Training' or type='Masterclass' or type='E-learning' or type='Lezing' or type='Event' or type='Webinar'");
+                $count = $wpdb->get_results($sql_count);
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
+            default:
+                $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+                $courses = $wpdb->get_results($sql);
+                $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+                $count = $wpdb->get_results($sql_count);
+                $count = intval($count[0]->{'COUNT(*)'});
+                break;
 
+        }
     }
-}
-else {
-    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
-    $courses = $wpdb->get_results($sql);
-    $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
-    $count = $wpdb->get_results($sql_count);
-    $count = intval($count[0]->{'COUNT(*)'});
-}
+    else {
+        $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE state = %d ORDER BY id DESC LIMIT %d OFFSET %d ", array(0, $pagination, $offset));
+        $courses = $wpdb->get_results($sql);
+        $sql_count = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE state = 0");
+        $count = $wpdb->get_results($sql_count);
+        $count = intval($count[0]->{'COUNT(*)'});
+    }
 
-if ($count % $pagination == 0) 
-    $pagination_number = $count / $pagination;
-else 
-    $pagination_number = intval($count / $pagination) + 1;
+    if ($count % $pagination == 0) 
+        $pagination_number = $count / $pagination;
+    else 
+        $pagination_number = intval($count / $pagination) + 1;
 
-$user = wp_get_current_user();
-// $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
-$websites = ['smartwp', 'fmn', 'duurzaamgebouwd', 'adformatie', 'morethandrinks', 'sportnext', 'nbvt', 'vsbnetwerk', 'tvvl', 'nedverbak', 'tnw', 'changeINC', '--------------------------', 'nvab', 'vbw', 'kndb', 'fgz', 'cvah', 'nbov', 'nuvo', 'CBD', 'Hoorzaken', 'Knvvn', 'Nvtl', 'stiba', 'Nfofruit', 'Iro', 'Lto', 'cbm', 'tuinbranche', 'jagersvereniging', 'Wapned', 'Dansbelang', 'Pictoright', 'Ngb', 'Griffiers', 'Nob', 'Bijenhouders', 'BBKnet', 'AuteursBond', 'ovfd', 'Adfiz', 'nvvr', 'Veneca', 'Sloopaannemers', 'Noa'];
+    $user = wp_get_current_user();
 
-$urls =
+    // $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
+    $websites = ['smartwp', 'fmn', 'duurzaamgebouwd', 'adformatie', 'morethandrinks', 'sportnext', 'nbvt', 'vsbnetwerk', 'tvvl', 'nedverbak', 'tnw', 'changeINC', '--------------------------', 'nvab', 'vbw', 'kndb', 'fgz', 'cvah', 'nbov', 'nuvo', 'CBD', 'Hoorzaken', 'Knvvn', 'Nvtl', 'stiba', 'Nfofruit', 'Iro', 'Lto', 'cbm', 'tuinbranche', 'jagersvereniging', 'Wapned', 'Dansbelang', 'Pictoright', 'Ngb', 'Griffiers', 'Nob', 'Bijenhouders', 'BBKnet', 'AuteursBond', 'ovfd', 'Adfiz', 'nvvr', 'Veneca', 'Sloopaannemers', 'Noa'];
+
+    $urls =
     [
         'WorkPlace Academy' => 'https://workplaceacademy.nl/',
         'Ynno' => 'https://www.ynno.com/',
@@ -322,7 +323,6 @@ $urls =
     foreach ($catalogs as $catalog) 
         $file_xml[$catalog['title']] = $catalog['catalogId']; 
      
-
 ?>
 
 <?php wp_head();?>
