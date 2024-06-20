@@ -433,9 +433,58 @@ if(!$thumbnail){
     if(!$thumbnail)
          $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
+
+//   //Author Image
+//         $image_author = get_field('profile_img', 'user_' . $course->author_id);
+//         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+//         //Company
+//         $company = get_field('company', 'user_' . $course->post_author);
+
+//         $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
+//         if (!empty($company)) {
+//             $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
+//         }
+     //Author Image
+                                           $image_author = get_field('profile_img', 'user_' . $course->post_author);
+                                           $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+                                           //Company
+                                            $company = get_field('company', 'user_' . $course->post_author);
+
+                                            $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
+                                            if (!empty($company)) {
+                                                   $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
+                                            }
+       
+
                                      
-                               
-                                             //Categories
+                         $day = "<p class='text-no-date'>no date given</p>";
+                            $month = ' ';
+                            $location = ' ';
+                        
+                            $data = get_field('data_locaties', $course->ID);
+                            if($data){
+                                $date = $data[0]['data'][0]['start_date'];
+                                $day = explode(' ', $date)[0];
+                            }
+                            else{
+                                $dates = get_field('dates', $course->ID);
+                                if($dates){
+                                    $post_date = explode(' ', $dates[0]['date'])[0];
+                                    $date_immu = new DateTimeImmutable($post_date);
+                                    $day = $date_immu->format('d/m/Y');  
+                                }                              
+                                else{
+                                    $data = get_field('data_locaties_xml', $course->ID);
+                                    if(isset($data[0]['value'])){
+                                        $data = explode('-', $data[0]['value']);
+                                        $date = $data[0];
+                                        $day = explode(' ', $date)[0];
+                                    }
+                                }
+                            }       
+                    //Categories
                             $category = " ";
                             $id_category = 0;
                             $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
@@ -448,17 +497,7 @@ if(!$thumbnail){
                                 if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
                             
-                                            //Author Image
-                                           $image_author = get_field('profile_img', 'user_' . $course->post_author);
-                                           $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-                                           //Company
-                                            $company = get_field('company', 'user_' . $course->post_author);
-
-                                            $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
-                                            if (!empty($company)) {
-                                                   $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
-                                            }
+                                          
 
                                              $link = get_permalink($course->ID);
                                            
@@ -487,10 +526,14 @@ if(!$thumbnail){
 
                                  
                                 <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
-                                 
+                                    <?php
+                                     $course_subtopics = get_field('categories', $course->ID);
+                                     if($course_subtopics != null){
+                                     ?>
+                                    <div id= <?php echo $course->ID; ?> class="d-flex content-subtopics bg-element td_subtopics" >
                                 <?= $category ?>
                                 <?php
-                                $course_subtopics = get_field('categories', $course->ID);
+                               
                                 $field='';
                                 $read_topis = array();
                                 if($course_subtopics != null){
@@ -517,15 +560,17 @@ if(!$thumbnail){
                             
                            
                             ?>
+
                     
-                                    
+                                    </div> 
+                                    <?php }?>      
                             </td>
                                 <td class="textTh ">
                                     <div class="bg-element">
                                         <p> <?php 
                                     $date = new DateTime($course->post_date);
                                     $formattedDate = $date->format('d/m/Y');
-                                    echo $formattedDate ; 
+                                    echo  $day ; 
                                     ?></p>
                                     </div>
                                 </td>
@@ -533,9 +578,17 @@ if(!$thumbnail){
                                     <div id="id_authors" class="d-flex content-teacher" data-toggle="modal" data-target="#showTeacher"
                                         type="button" data-value="<?php echo $course->ID; ?>">
                                         <?php if ($course->post_author) {
-            echo '<img src="' . $image_author . '" alt="image course" width="25" height="25">';
+                                            ?>
+                                            
+            <img src="<?php echo $image_author ;?>" alt="image course" width="25" height="25">;
+            <?php
         } else {
-            echo '<img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">';
+            ?>
+
+
+            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">;
+                             <?php
+
                                         }
                                         ?>
                                         <!-- <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">
@@ -547,17 +600,15 @@ if(!$thumbnail){
                                 <td class="textTh block-pointer td_compagnies">
                                     <div class="d-flex content-company"  data-toggle="modal" data-target="#showCompany" data-value="<?php echo $course->ID ?>"
                                         type="button">
-                                        <?php if (!empty($company)) {
-                                             echo '';
-                                     } else {
-                                                echo 'company';
-                                     }
-                                     ?> <?php if (!empty($company)) {
-                                           echo '<img src="' . $company_logo . '" alt="image course" width="25" height="25">';
+                                       <?php if (!empty($company)) {
+                                        ?>
+                                           <img src="<?php echo $company_logo ;?>" alt="image course" width="25" height="25">;
+                                           <?php
                                         } else {
+                                            ?>
                                            
-                                             echo '<img src="' . get_stylesheet_directory_uri() . '" alt="image course" >';
-
+                                             <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="image course" >;
+                                    <?php
                                         }
                                       ?>
 
@@ -831,6 +882,7 @@ if(!$thumbnail){
                     <div class="block-to-add-teacher">
                          <form action="">
                         <div class="form-group mb-4">
+                            <div class="companyAutho" id="companyAuthor"></div>
                             <label class="label-sub-topics">Select Author(s) </label>
                             <div class="formModifeChoose">
                                 <select name="" id="selected_user" class="multipleSelect2" multiple="true">
@@ -1027,12 +1079,10 @@ function submitUserForm() {
    // var formData = new FormData(document.getElementById('userForm'));
     var form = document.getElementById('userForm');
 
-
+document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
     // Create a FormData object to send the file
     var formData = new FormData(form);
-    for (var pair of formData.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]); 
-}
+ 
 //     console.log("avant")
    
 //     var formData = new FormData();
@@ -1055,9 +1105,6 @@ function submitUserForm() {
       formData.append('action', 'add_users');
  
     
-    for (var pair of formData.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]); 
-}
 
     $.ajax({
         url: "/save-author-and-compagny",
@@ -1070,18 +1117,21 @@ function submitUserForm() {
         success: function(response) {
             console.log(response)
            // alert('User created successfully!');
-              document.getElementById('content-back-topicsauthor').innerHTML = response;
+              document.getElementById('content-back-topicsauthor').innerHTML =response;
             // Optionally, you can refresh the page or update the UI accordingly
+             $('#ModalTeacher').modal('hide');
         },
         error: function(response) {
             alert('Failed to create user!');
-              document.getElementById('content-back-topicsauthor').innerHTML = response;
+              document.getElementById('content-back-topicsauthor').innerHTML =response;
+               $('#ModalTeacher').modal('hide');
         }
     });
 }
 </script>
 <script>
 function submitCompanyForm() {
+    document.getElementById('content-back-topics').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>"
     var form = document.getElementById('companyForm');
     var formData = new FormData();
 
@@ -1094,10 +1144,11 @@ function submitCompanyForm() {
 
     const fileInput = document.getElementById('fileInputCompany');
     if (fileInput.files.length > 0) {
-       formData.append('profile_photo', fileInput.files[0]);
+       formData.append('company_logo', fileInput.files[0]);
     }
      
-    console.log(formData);
+    formData.append('action', 'add_compagnies');
+ 
 
     $.ajax({
         url: "/save-author-and-compagny",
@@ -1108,11 +1159,15 @@ function submitCompanyForm() {
         success: function(response) {
             console.log(response);
             document.getElementById('content-back-topics').innerHTML = response;
+            $('#ModalCompany').modal('hide');
+
+            
             // Optionally, you can refresh the page or update the UI accordingly
         },
         error: function(response) {
             alert('Failed to create company!');
             document.getElementById('content-back-topics').innerHTML = response;
+             $('#ModalCompany').modal('hide');
         }
     });
 }
@@ -1179,6 +1234,8 @@ function submitCompanyForm() {
     },
   dataType:"text",
   success: function(data){
+
+
       
   }
   })
@@ -1188,7 +1245,7 @@ function submitCompanyForm() {
     id_course = document.getElementById('id_authors').getAttribute('data-value');
   
    
-    
+        document.getElementById('companyAuthor').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
       var author = $('#selected_user').val()
       
     
@@ -1204,8 +1261,8 @@ function submitCompanyForm() {
   dataType:"text",
   success: function(data){
     console.log(data);
-      seclect-author
-      document.getElementById('seclect-author').innerHTML = data;
+      
+      document.getElementById('companyAuthor').innerHTML = data;
       
   }
   })
@@ -1215,7 +1272,7 @@ function submitCompanyForm() {
  $('.td_authors').click((e)=>{
       id_course = document.getElementById('id_authors').getAttribute('data-value');
        
-        
+    $('.block-to-show-teacher').html("<span>Wait for getting datas <i class='fas fa-spinner fa-pulse'></i></span>")
      $.ajax({
             url:"/fetch-subtopics-course-databanklive",
             method:"post",

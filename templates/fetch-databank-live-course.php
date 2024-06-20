@@ -34,23 +34,8 @@ $courses = get_posts($args);
 
 ?>
 
-<table class="table table-responsive">
-    <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Titel</th>
-            <th scope="col">Type</th>
-            <th scope="col">Price</th>
-            <th scope="col">Sub-topics</th>
-            <th scope="col">Startdate</th>
-            <th scope="col">Teachers</th>
-            <th scope="col">Company</th>
-            <th scope="col">Status</th>
-            <th scope="col">Views</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody id="autocomplete_company_databank">
+
+    
         <?php  
         if (!empty($courses)) {
             foreach ($courses as $course) {
