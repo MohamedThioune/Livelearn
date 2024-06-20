@@ -110,29 +110,53 @@ else {
       $author_id = generatorAuthor($company_name);
     
         // Associate user with company
-        if(!is_wp_error($author_id)) 
-           update_field('company', $company, 'user_' . $author_id);
+        if(!is_wp_error($author_id)) {
+              $company = get_post($company_id);
+               update_field('company', $company, 'user_' . $author_id);
+        }
+
+          
 
     // Optionally handle company logo upload
     if (!empty($_FILES['company_logo']['name'])) {
-        // Handle file upload
-        require_once(ABSPATH . 'wp-admin/includes/file.php');
-        require_once(ABSPATH . 'wp-admin/includes/image.php');
-        require_once(ABSPATH . 'wp-admin/includes/media.php');
+        $file = $_FILES['company_logo'];
+       
+        $user  = get_user_by('ID', 3);
+     
+    
+   $username = $user->user_email;
+   $password = $user->user_pass;
+    $base64_credentials = base64_encode("$username:$password");
+       $url = get_site_url() . '/wp-json/wp/v2/posts/'.$company_id;
+       $imageId= upload_image_to_media($file);
 
-        $attachment_id = media_handle_upload('company_logo', $company_id);
+       $ch = curl_init();
 
-        if (is_wp_error($attachment_id)) {
 
-            echo "<span class='alert alert-danger'>Error uploading image " . $attachment_id->get_error_message() .  "❌</span>";
-            die();
+curl_setopt($ch, CURLOPT_URL, $url );
+curl_setopt($ch, CURLOPT_POST, 1 );
+curl_setopt($ch, CURLOPT_POSTFIELDS,'
+    {
+        "acf" : {
+                  "company_logo" :'.$imageId.'
+        }  
+    }',);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+ 'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
+    'Content-Type:application/json;charset=UTF-8'
+]);
+$result = curl_exec($ch);
+
+       if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
         }
-
-        // Set the logo as the post thumbnail
-        set_post_thumbnail($company_id, $attachment_id);
-    }
-
-    // Save additional custom fields
+       curl_close($ch);
+        // Output the result
+       if (isset($error_msg)) {
+           
+           echo 'Response: ' .$error_msg;
+        } else {
     update_post_meta($company_id, 'company_country', $company_country);
     update_post_meta($company_id, 'company_city', $company_city);
     update_post_meta($company_id, 'company_address', $company_address);
@@ -140,6 +164,20 @@ else {
     // Return success response
    echo "<span class='alert alert-success'>compagny created successfully! ✔️</span>";
     die();
+            
+            
+            
+        }
+
+
+
+
+
+
+    }
+
+    // Save additional custom fields
+  
 }
     
 }    
@@ -169,7 +207,6 @@ $userdata = array(
     'user_pass' => $password,
     'role' => 'author'
 );
-
 $user_id = wp_insert_user($userdata);
 
 if (is_wp_error($user_id)) {
@@ -186,55 +223,74 @@ else{
         if (isset($_FILES['profile_photo'])) {
         $file = $_FILES['profile_photo'];
                    // $file = $_POST['profile_photo'];
+        
 
         
 
 
-          $attachment_id= upload_image_to_media($file);
-          //  echo " l'id".$attachment_id;
-          echo "<pre>";
-        print_r($attachment_id);
-        echo "</pre>";
+    $imageId= upload_image_to_media($file);
 
-          // Debugging: Print the $_FILES array
+    $user  = get_user_by('ID', 3);
+     
+    
+     $username = $user->user_email;
+     $password = $user->user_pass;
+     $base64_credentials = base64_encode("$username:$password");
+          
+        $url = get_site_url() . '/wp-json/wp/v2/users/'.$user_id;
        
-        
 
-       
-
+$ch = curl_init();
 
 
+curl_setopt($ch, CURLOPT_URL, $url );
+curl_setopt($ch, CURLOPT_POST, 1 );
+curl_setopt($ch, CURLOPT_POSTFIELDS,'
+    {
+        "acf" : {
+                  "profile_img" :'.$imageId.'
+        }  
+    }',);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
+    'Content-Type:application/json;charset=UTF-8'
+]);
+$result = curl_exec($ch);
 
-
-
-          //  echo "if".  $file ;
-
+       if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
+        }
+       curl_close($ch);
+        // Output the result
+       if (isset($error_msg)) {
            
+           echo 'Response: ' .$error_msg;
+        } else {
+            // update_field('profile_img', $imageId, 'user_' . $user_id);
+             
+            
+             echo "<span class='alert alert-success'>User created successfully! ✔️</span>";
+            
+        }
+
 
           
-                
+        
 
-                // Get the URL of the uploaded image
-                // $attachment_url = wp_get_attachment_url($attachment_id);
+       
 
 
-                // Update the user meta with the attachment ID
-                // update_user_meta($user_id, 'profile_img', $attachment_id);
-          
-                // echo "<span class='alert alert-danger'>Error uploading image ❌</span>";
-                // die();
+
+
+
+
            
         }
        
 
-        // Optionally, update ACF fields if you use ACF for user profiles
-        // if (function_exists('update_field')) {
-        //     update_field('phone_number', $phone_number, 'user_' . $user_id);
-        //     if ($attachment_url) {
-        //         update_field('profile_img', $attachment_url, 'user_' . $user_id);
-        //     }
-        // }
-         echo "<span class='alert alert-success'>User created successfully! ✔️</span>";
+      
+        
 }
 
 
