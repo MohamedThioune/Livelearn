@@ -14,7 +14,7 @@ include "dashbord-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
-require_once __DIR__ . '/templates/new-module-pay.php';
+require_once __DIR__ . '/templates/new-module-subscribe.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );

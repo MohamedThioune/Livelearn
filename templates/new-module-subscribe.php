@@ -47,76 +47,6 @@ function makecall($url, $type, $data = null, $params = null) {
 
 }
 
-function create_token_stripe($data){
-    $endpoint = "https://api.stripe.com/v1/tokens";
-    $information = makecall($endpoint, 'POST', $data);
-    
-    return $information;
-}
-
-function create_card($data){
-    $endpoint = "https://api.stripe.com/v1/customers/" . $data['customer_id'] . "/sources" ;
-    $information = makecall($endpoint, 'POST', $data);
-    
-    return $information;
-}
-
-function create_customer_stripe($data){
-    //Create customer
-    // $data_customer = [
-    //     'name' => $data['name'],
-    //     'email' => $data['email'],
-    //     'metadata' => [
-    //         'UserID' => $data['ID'],
-    //     ],
-    // ];
-    // $endpoint = "https://api.stripe.com/v1/customers";
-    // $information = makecall($endpoint, 'POST', $data_customer);
-    // if(isset($information['error']))
-    //     return $information;
-    // //Get customer ID if after creation
-    // $data['customer_id'] = $information['data']->id;
-
-    if(!isset($data['number']))
-        return $data['customer_id'];
-    $information = array();
-    $data['customer_id']= "cus_QExVc7bUQpI5X0";
-    //Create card token stripe
-    $data_card_token = [
-        'card' => [
-            'number' => $data['number'],
-            'exp_month' => $data['exp_month'],
-            'exp_year' => $data['exp_year'],
-            'cvc' => $data['cvc']
-        ]
-    ];
-    $information = create_token_stripe($data_card_token);
-    return $information;
-    if(isset($information['error']))
-        return $data['customer_id'];
-    //Get token ID if after creation
-    $data['source'] = $information['data']->id;
-
-    if(!isset($data['source']))
-        return $data['customer_id'];
-    $information = array();
-    //Create card 
-    $data_card = [
-        'source' => $data['source']
-    ];
-    $information = create_card($data_card);
-    
-    return $data['customer_id'];
-
-    // return $information;
-}
-
-// function create_subscription_stripe($data){
-//     $endpoint = "https://api.stripe.com/v1/subscriptions";
-//     $information = makecall($endpoint, 'POST', $data);
-//     return $information;
-// }
-
 function create_payment_link($data){
     $endpoint = "https://api.stripe.com/v1/payment_links";
     $information = makecall($endpoint, 'POST', $data);
@@ -188,6 +118,9 @@ function stripe(WP_REST_Request $request){
                 'url' => 'https://app.livelearn.nl/?message=sucessful-payment'  
             ]
         ],
+        'automatic_tax' => [
+            'enabled' => true,
+        ],
         'subscription_data' => [
             'metadata' => [
                 'UserID' => $request['ID']
@@ -207,41 +140,22 @@ function stripe(WP_REST_Request $request){
     return $response;
 }
 
-function pay_stripe(WP_REST_Request $request){
-    //Constant "If required we might change it here"
-    $price_id = "price_1POIFyEuOtOzwPYX4JYFoOyM";
+// function create_subscription_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/subscriptions";
+//     $information = makecall($endpoint, 'POST', $data);
+//     return $information;
+// }
 
-    //Check required parameters register
-    $required_parameters = ['ID'];
-    $errors = validated($required_parameters, $request);
-    if($errors):
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-    endif;
+// function create_token_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/tokens";
+//     $information = makecall($endpoint, 'POST', $data);
+    
+//     return $information;
+// }
 
-    //Data information | payment 
-    $data_payment = [
-        'line_items' => [[
-            'price' => $price_id,
-            'quantity' => 1
-        ]],
-        // 'after_completion' => [
-        //     'type' => 'redirect',
-        //     'redirect' => [
-        //         'url' => 'https://livelearn.nl/?message=sucessful-payment'  
-        //     ]
-        // ],
-        'subscription_data' => [
-            'metadata' => [
-                'UserID' => $request['ID']
-            ]
-        ]
-    ];
-
-    // Response
-    $response = new WP_REST_Response($information);
-    $response->set_status(200);
-    return $response;
-
-}
+// function create_card($data){
+//     $endpoint = "https://api.stripe.com/v1/customers/" . $data['customer_id'] . "/sources" ;
+//     $information = makecall($endpoint, 'POST', $data);
+    
+//     return $information;
+// }
