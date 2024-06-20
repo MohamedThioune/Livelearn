@@ -21,7 +21,7 @@
 
     // $courses = get_posts($args);
           //Author Image
-        $user_info = get_userdata($user_id); 
+        $user_info = get_userdata($course->post_author); 
         $image_author = get_field('profile_img', 'user_' . $course->post_author);
         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
         $company=get_field('company', 'user_' . $post->post_author);
@@ -259,6 +259,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                     <div class="content-add-sub-topics" >
                         
                             <div class="form-group mb-4">
+                                <div class="sava-substopics"></div>
                                 <label class="label-sub-topics">First Choose Your topics </label>
                                 <div class="formModifeChoose" id="formModifeChoose" value=<?php echo $_POST['id_course'];?>>
                                     <select name="topic" id="selectTopic" class="multipleSelect2" >
@@ -371,8 +372,17 @@ $(document).ready(function() {
                        $(document).on('click', '#save_subtopics', function() {
                             
 
-                            var subtopics  = Array.from(selectedValues);;
-                            var selectedsubtopics=JSON.parse(document.getElementById('btn-sub-topics').getAttribute('value'));
+                            var subtopics  = Array.from(selectedValues);
+                            var selectedsubtopics;
+                            var btnSubTopics = document.getElementById('btn-sub-topics');
+            if (btnSubTopics) {
+                 selectedsubtopics=JSON.parse(document.getElementById('btn-sub-topics').getAttribute('value'));
+               
+            } else {
+                console.log('The element with ID "btn-sub-topics" does not exist.');
+                selectedsubtopics=[];
+            }
+                            
                             const id_course = document.getElementById('formModifeChoose').getAttribute('value');
                            
                              var concatenatedselectedsubtopics = subtopics.concat(selectedsubtopics)
@@ -393,6 +403,7 @@ $(document).ready(function() {
       let modal=$('#myModal');
       modal.attr('style', { display: "none" });
       //modal.style.display = "none";
+       $('.sava-substopics').html(data);
       $('#'+id_course).html(data)
       //console.log(data)
   },
