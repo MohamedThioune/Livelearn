@@ -1,4 +1,10 @@
 <?php /** Template Name: expert ranking */ ?>
+<?php wp_head(); ?>
+<?php get_header(); ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<script src="https://js.stripe.com/v3/"></script>
+<script src="checkout.js" defer></script>
+
 <?php
 global $wpdb;
 $pricing = 0;
@@ -21,6 +27,7 @@ $args = array(
     'order' => 'DESC',
     'limit' => -1,
 );
+
 $bunch_orders = wc_get_orders($args);
 $today = new DateTime();
 $current_year = date('Y');
@@ -143,7 +150,7 @@ foreach($categories as $categ){
 
 ?>
 <?php get_header(); ?>
-    <div class="onze-expert-block">
+    <!-- <div class="onze-expert-block">
         <div class="container-fluid">
             <div class="headCollections">
                 <div class="dropdown show">
@@ -160,7 +167,7 @@ foreach($categories as $categ){
                     </div>
                     <div id="loader" class="spinner-border spinner-border-sm text-primary d-none" role="status"></div>
                 </div>
-                <!-- period -->
+                period 
                 <div class="dropdown show">
                     <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Over de <b id="complete-period">All time</b>
@@ -174,7 +181,7 @@ foreach($categories as $categ){
                         </select>
                     </div>
                 </div>
-                <!-- period -->
+                period 
                 <a href="/voor-opleiders/" class="zelf-block">
                     <p class="mr-2">Zelf ook een expert? </p>
                     <div class="all-expert">
@@ -343,10 +350,6 @@ foreach($categories as $categ){
                                 </div>
                                 <div class="secondBlockElementCollection">
                                     <p class="nameListeCollection"><?= $display_name ?></p>
-                                    <!-- <div class="iconeTextListCollection">
-                                       <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/ethereum.png" alt="">
-                                       <p><?php /*echo number_format(rand(0,100000), 2, '.', ','); */?></p>
-                                   </div>-->
                                     <div class="blockDetailCollection">
                                         <div class="iconeTextListCollection">
                                             <img src="<?= $company_logo ?>" alt="">
@@ -367,9 +370,108 @@ foreach($categories as $categ){
                 ?>
             </div>
         </div>
+    </div> -->
+<body>
+
+<div class="contentProfil">
+    <h1 class="titleSubscription">Checkout - sample</h1>
+    <!-- <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center> -->
+
+    <div class="contentFormSubscription">
+
+        <!-- <form action="" method="POST"> -->
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="first_name">First name</label>
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <input type="text" class="form-control" id="first_name" value="<?= $current_user->first_name ?>" placeholder="First name" name="first_name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="last_name">Last name</label>
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <input type="text" class="form-control" id="last_name" value="<?= $current_user->last_name ?>" placeholder="Last name" name="last_name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bedrjifsnaam">Email</label>
+                <i class="fas fa-building" aria-hidden="true"></i>
+                <input type="email" class="form-control" id="" value="<?= $company_connected ?>" placeholder="Email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="city">Company name</label>
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <input type="text" class="form-control" id="" value="" placeholder="Company name" name="name_company">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="phone">Phone number</label>
+                    <i class="fas fa-phone" aria-hidden="true"></i>
+                    <input type="number" class="form-control" id="phone" value="<?= $telnr ?>" placeholder="Phone number" name="phone" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="factuur_address">Factuur Adress</label>
+                <i class="fas fa-thumbtack"></i>
+                <input type="text" class="form-control" id="factuur_address" value="" placeholder="Factuur Adress" name="factuur_address">
+            </div>
+            <div class="form-group">
+                <label for="">Additional information</label>
+                <i class="fas fa-thumbtack"></i>
+                <textarea class="form-control" id="" value="" placeholder="Notes about your order ..." name="additional_info">
+                </textarea>
+            </div>
+
+            <!-- <div class="form-group">
+                <div class="checkSubs">
+                    <div class="form-check">
+                        <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" >
+                        <label class="form-check-label" for="creditcard">
+                            Credit card 
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payement" id="method_payment" value="invoice" checked>
+                        <label class="form-check-label" for="invoice">
+                            Invoice
+                        </label>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="modal-footer">
+                <button type="button" id="starter" class="btn btn-sendSubscrip">Start</button>
+                <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+            </div>
+        <!-- </form> -->
+
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+
+    function show1(){
+        document.getElementById('payementCard').style.display ='none';
+    }
+    function show2(){
+        document.getElementById('payementCard').style.display = 'block';
+    }
+
+    $(document).ready(function(){
+        $("#is_trial").change(function() {
+            if(this.checked) {
+                $("#starter").text("Start Trial");
+            } else {
+                $("#starter").text("Start")
+            }
+        });
+    });
+
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $('#topic_search').change(function(){

@@ -14,7 +14,7 @@ include "dashbord-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
-require_once __DIR__ . '/templates/new-module-pay.php';
+require_once __DIR__ . '/templates/new-module-subscribe.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -898,6 +898,18 @@ add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_
 //Hide product page 
 remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
 remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
+//Remove links
+add_filter( 'woocommerce_product_is_visible','product_invisible');
+function product_invisible(){
+    return false;
+}
+//Remove single page
+add_filter( 'woocommerce_register_post_type_product','hide_product_page',12,1);
+function hide_product_page($args){
+    $args["publicly_queryable"]=false;
+    $args["public"]=false;
+    return $args;
+}
 
 /*
 ** Endpoints - API
