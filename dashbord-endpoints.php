@@ -115,7 +115,7 @@ function saveManager(WP_REST_Request $request){
         $response->set_status(401);
         return $response;
     }
-    $required_parameters = ['company','quantity','email','password','industry',];
+    $required_parameters = ['company','quantity','email','industry',];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -161,3 +161,53 @@ function saveManager(WP_REST_Request $request){
     return $response;
 }
 
+function get_notifications()
+{
+    $args = array(
+        'post_type' => array('feedback', 'mandatory', 'badge'),
+        //'author' => 3, // id user connected
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notifications = get_posts($args);
+    $todos = array();
+    $read_feedbacks = array();
+    $read_todos = array();
+    $read_badges = array();
+    if(!empty($notifications))
+        foreach($notifications as $todo){
+
+            $read = get_field('read_feedback', $todo->ID);
+            if($read)
+                continue;
+
+            array_push($todos,$todo);
+
+            //Readed by post_type check
+            switch ($todo->post_type) {
+                case 'feedback':
+                    array_push($read_feedbacks, $todo);
+                    break;
+                case 'mandatory':
+                    array_push($read_todos, $todo);
+                    break;
+                case 'badge':
+                    array_push($read_badges, $todo);
+                    break;
+            }
+        }
+    $response = new WP_REST_Response(
+        array(
+        'alertNotification'=>count($notifications),
+        'countViewAll'=>$notifications,
+        'alertToDo'=>count($read_todos),
+        'toDo'=>$read_todos,
+        'alertBadge'=>count($read_badges),
+        'badge'=>$read_badges,
+        'alertFeedback'=>count($read_feedbacks),
+        'feedback'=>$read_feedbacks,
+    ));
+    $response->set_status(200);
+    return $response;
+}
