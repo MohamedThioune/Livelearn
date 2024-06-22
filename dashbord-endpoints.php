@@ -124,7 +124,7 @@ function saveManager(WP_REST_Request $request){
     endif;
     //update role of  user
     $user = get_userdata($user_id);
-    $new_role = 'manager';
+    $new_role = 'hr';
     if (!in_array($new_role, $user->roles)) {
         $user->add_role($new_role);
     }
