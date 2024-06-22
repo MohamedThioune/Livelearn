@@ -270,10 +270,6 @@ else
 
 $user = wp_get_current_user();
 
-   
-     
-
-
 ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -1201,8 +1197,7 @@ function submitCompanyForm() {
     var span = document.getElementsByClassName("close")[0];
     
     // When the user clicks on the button, open the modal
-    
-        modal.style.display = "block";
+    modal.style.display = "block";
     
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
@@ -1362,9 +1357,6 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
 
     });
 </script>
-
-
-
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

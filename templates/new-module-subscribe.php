@@ -95,7 +95,7 @@ function update(WP_REST_Request $request) {
 
 function stripe(WP_REST_Request $request){
     //Check required parameters register
-    $required_parameters = ['quantity', 'ID'];
+    $required_parameters = ['quantity', 'ID', 'callback'];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -115,7 +115,7 @@ function stripe(WP_REST_Request $request){
         'after_completion' => [
             'type' => 'redirect',
             'redirect' => [
-                'url' => 'https://app.livelearn.nl/?message=sucessful-payment'  
+                'url' => $request['callback'],
             ]
         ],
         'automatic_tax' => [
