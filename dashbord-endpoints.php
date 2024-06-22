@@ -163,9 +163,10 @@ function saveManager(WP_REST_Request $request){
 
 function get_notifications()
 {
+    $id_user_connected = 5;
     $args = array(
         'post_type' => array('feedback', 'mandatory', 'badge'),
-        //'author' => 3, // id user connected
+        'author' => $id_user_connected, // id user connected
         'orderby' => 'post_date',
         'order' => 'DESC',
         'posts_per_page' => -1,
