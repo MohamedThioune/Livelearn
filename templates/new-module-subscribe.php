@@ -119,7 +119,7 @@ function stripe(WP_REST_Request $request){
             ]
         ],
         'automatic_tax' => [
-            'enabled' => true,
+            'enabled' => "true",
         ],
         'subscription_data' => [
             'metadata' => [
