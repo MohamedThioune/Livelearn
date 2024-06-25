@@ -91,6 +91,8 @@ else {
     $company_country = sanitize_text_field($_POST['company_country']);
     $company_city = sanitize_text_field($_POST['company_city']);
     $company_address = sanitize_text_field($_POST['company_address']);
+    $company_industry = sanitize_text_field($_POST['company_industry']);
+    $company_size = sanitize_text_field($_POST['company_size']);
 
     // Create post data array
     $args = array(
@@ -107,28 +109,28 @@ else {
         echo "<span class='alert alert-success'>Error: " . $company_id->get_error_message() . "❌</span>";
         die();
     }
-      $author_id = generatorAuthor($company_name);
+    else {
+    echo 'Post created with ID: ' . $company_id;
+}
+    //  $author_id = generatorAuthor($company_name);
     
-        // Associate user with company
-        if(!is_wp_error($author_id)) {
-              $company = get_post($company_id);
-               update_field('company', $company, 'user_' . $author_id);
-        }
+        // // Associate user with company
+        // if(!is_wp_error($author_id)) {
+        //       $company = get_post($company_id);
+        //        update_field('company', $company, 'user_' . $author_id);
+        // }
 
           
 
     // Optionally handle company logo upload
-    if (!empty($_FILES['company_logo']['name'])) {
+    if (!empty($_FILES['company_logo'])) {
         $file = $_FILES['company_logo'];
        
-        $user  = get_user_by('ID', 3);
-     
-    
-   $username = $user->user_email;
-   $password = $user->user_pass;
-    $base64_credentials = base64_encode("$username:$password");
-       $url = get_site_url() . '/wp-json/wp/v2/posts/'.$company_id;
+       $url = get_site_url() . '/wp-json/wp/v2/company/'.$company_id;
        $imageId= upload_image_to_media($file);
+        //  update_post_meta($company_id, 'company_logo',  $imageId);
+          update_field('company_logo',$imageId, $company_id);
+        //  die();
 
        $ch = curl_init();
 
@@ -143,8 +145,10 @@ curl_setopt($ch, CURLOPT_POSTFIELDS,'
     }',);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
- 'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
-    'Content-Type:application/json;charset=UTF-8'
+//  'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
+//     'Content-Type:application/json;charset=UTF-8'
+// local
+'Authorization: Basic bmlhc3Nzc25AZ21haWwuY29tOnI4UiU5UGwmb3RDbW5td0o='
 ]);
 $result = curl_exec($ch);
 
@@ -157,9 +161,15 @@ $result = curl_exec($ch);
            
            echo 'Response: ' .$error_msg;
         } else {
-    update_post_meta($company_id, 'company_country', $company_country);
-    update_post_meta($company_id, 'company_city', $company_city);
-    update_post_meta($company_id, 'company_address', $company_address);
+         
+    // update_post_meta($company_id, 'company_country', $company_country);
+    // update_post_meta($company_id, 'company_city', $company_city);
+    // update_post_meta($company_id, 'company_address', $company_address);
+    update_field('company_sector',$company_industry, $company_id);
+     update_field('company_address',$company_address, $company_id);
+     update_field('company_city',$company_city, $company_id);
+      update_field('company_country',$company_country, $company_id);
+       update_field('company_size',$company_size, $company_id);
 
     // Return success response
    echo "<span class='alert alert-success'>compagny created successfully! ✔️</span>";
@@ -182,6 +192,7 @@ $result = curl_exec($ch);
     
 }    
  if ($_POST['action'] == 'add_users') 
+
 {  
  if (!isset($_POST['first_name']) || !isset($_POST['last_name']) || !isset($_POST['email'])) {
       // echo wp_send_json_error('Required fields are missing.');
@@ -218,7 +229,17 @@ else{
 
         // Check if a file was uploaded
 
+       if (isset($_POST['companyId'])){
+        
+            $idCompany=intval($_POST['companyId']);
+         $company = get_post($idCompany);
+    
        
+       
+           update_field('company', $company, 'user_' . $user_id);
+        
+       }
+      
 
         if (isset($_FILES['profile_photo'])) {
         $file = $_FILES['profile_photo'];
@@ -253,7 +274,9 @@ curl_setopt($ch, CURLOPT_POSTFIELDS,'
     }',);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
+   // 'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
+   // local
+'Authorization: Basic bmlhc3Nzc25AZ21haWwuY29tOnI4UiU5UGwmb3RDbW5td0o=',
     'Content-Type:application/json;charset=UTF-8'
 ]);
 $result = curl_exec($ch);
