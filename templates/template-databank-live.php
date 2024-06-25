@@ -19,118 +19,32 @@ $courses = array();
 
 // Check if the form is submitted
 if (isset($_POST['filter_databank'])) {
-    // Retrieve form values
-    $leervom = isset($_POST['leervom']) ? strtolower($_POST['leervom'][0]) : array();
-    // $min_price = isset($_POST['min']) ? intval($_POST['min']) : 0;
-    // $max_price = isset($_POST['max']) ? intval($_POST['max']) : 0;
-    $gratis = isset($_POST['gratis']) ? 1 : 0;
-    $status = isset($_POST['status']) ? $_POST['status'] : '';
-
-    // Construct the query arguments
-
-//   }    
-    
-
-    // Add leervom filter
-    if (!empty($leervom)) {
-
-  
-
-
-
-
-    switch ($leervom) {
-        case 'all':
-             $type='all';
-            break;
-        case 'artikel':
-            $type='article';
-          
-            break;
-        case 'podcast':
-           $type='podcast';
-            break;
-        case 'video': 
-             $type='video';
-           
-            break;
-        case 'opleidingen':
-            $type='course';
-           
-            break;
-        case 'training':
-            $type='training';
-           
-            break;
-        case 'workshop':
-            $type='workshop';
-           
-            break; 
-        case 'assessment':
-            $type='assessment';
-           
-            break;
-        case 'cursus':
-            $type='cursus';
-           
-            break;
-        case 'webinar':
-            $type='webinar';
-           
-            break;
-        case 'event':
-            $type='event';
-           
-            break; 
-        case 'lezing':
-            $type='reading';
-           
-            break;
-        case 'class':
-            $type='class';
-           
-            break;
-        case 'leerpad':
-            $type='leerpad';
-           
-            break;
-        case 'e-learning':
-            $type='elearning';
-           
-            break;
-        case 'masterclass':
-            $type='masterclass';
-           
-            break;                                
-                      
-
-        default:
-           
-            break;
-
-    }
+    // Sanitize and validate form values
+    $leervom = isset($_POST['leervom']) ? array_map('sanitize_text_field', $_POST['leervom']) : array();
+    $min = isset($_POST['min']) ? intval($_POST['min']) : null;
+    $max = isset($_POST['max']) ? intval($_POST['max']) : null;
+   // $gratis = isset($_POST['gratis']) ? boolval($_POST['gratis']) : false;
+      $gratis = isset($_POST['gratis']) ? 1 : 0;
+    $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
 
     $args = array(
-        
-
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'ordevalue'       => $type,
-        'order' => 'DESC' ,
-        'meta_key'         => 'course_type',
-        'meta_value' => $type
+        'posts_per_page' => 100,
+        'order' => 'DESC',
+        'meta_query' => array(),
     );
 
-  
-     }
+    // Filter by course type
+    if (!empty($leervom)) {
+        $args['meta_query'][] = array(
+            'key' => 'course_type',
+            'value' => $leervom,
+            'compare' => 'IN',
+        );
+    }
 
-    // // Add price filter
-   
-
-    // Add gratis filter
-
-
+    // Filter by price
     if ($gratis) {
             $args = array(
         
@@ -143,78 +57,47 @@ if (isset($_POST['filter_databank'])) {
       'meta_key'   => 'price',
       'meta_value' => 0
     );
-      
-    }
-      if(isset($min) || isset($max) ){
-            
-                if($min || $max){
-                    $prices = array(); 
-                    $tmp = 0;
-                    if($min != null && $max!= null){
-                        if($min > $max) {
-                            $tmp = $min;
-                            $min = $max;
-                            $max = $tmp;
-                        }
-                        //Here we got interval
-                        foreach($courses as $datum){
-                            $price = intval(get_field('price', $datum->ID));
-                            $min = intval($min);
-                            $max = intval($max);
-                            if($price >= $min)
-                                if($price <= $max)
-                                    array_push($prices,$datum);
-                        }
-                    }
-                    else{
-                        //Tested by one value 
-                        foreach($courses as $datum){
-                            $price = intval(get_field('price', $datum->ID));
-                            if($min == null){
-                                $max = intval($max);
-                                if($price <= $max)
-                                    array_push($prices,$datum);
-                            }
-                            else if($max == null){
-                                $min = intval($min);
-                                if($price >= $min)
-                                    array_push($prices,$datum);
-                            }
-                        }
-                    }
-                }
-          
-            if(isset($prices)){
-                if(!empty($prices)){
-                    $courses = $prices;
-                }
-                else{
-                    $courses = array();
-                }
-            }
+    } else if ($min !== null || $max !== null) {
+        $price_range = array('relation' => 'AND');
+        if ($min !== null) {
+            $price_range[] = array(
+                'key' => 'price',
+                'value' => $min,
+                'compare' => '>=',
+                'type' => 'NUMERIC',
+            );
         }
+        if ($max !== null) {
+            $price_range[] = array(
+                'key' => 'price',
+                'value' => $max,
+                'compare' => '<=',
+                'type' => 'NUMERIC',
+            );
+        }
+        $args['meta_query'][] = $price_range;
+    }
 
-    // Add status filter
-    if (!empty($status)) {
+    // Filter by status
+    if ($status) {
         $args['meta_query'][] = array(
-            'key'     => 'status',
-            'value'   => $status,
+            'key' => 'status',
+            'value' => $status,
             'compare' => '=',
         );
     }
 
-    // Fetch the courses based on the constructed arguments
+    // Fetch filtered courses
     $courses = get_posts($args);
+
 } else {
     // Default behavior: Fetch all published courses if no filter is applied
     $args = array(
-        
-    'post_type' => array('course', 'post'),
-    'post_status' => 'publish',
-    'posts_per_page' => 100,
-    'order' => 'DESC'
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC'
     );
-    
     $courses = get_posts($args);
 }
 
@@ -382,11 +265,11 @@ $user = wp_get_current_user();
                                     placeholder="tot Prijs">
                                     
                             </div>
-                            <div class="input-group">
+                             <div class="input-group">
                                 <label for="">Gratis</label>
-                                <input name="gratis" type="checkbox"
-                                    <?php if(isset($gratis))  echo 'checked'; else  echo  ''; ?>>
+                                <input name="gratis" type="checkbox" <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?> >
                             </div>
+                          
                         </div>
                         <select name="status">
                             <option value="" disabled selected>Status</option>
@@ -457,7 +340,14 @@ if(!$thumbnail){
                                                    $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
                                             }
        
-
+                           /*
+                            * Price 
+                            */
+                            $p = get_field('price', $course->ID);
+                            if($p != "0")
+                                $price = number_format($p, 2, '.', ',');
+                            else 
+                                $price = 'Gratis';
                                      
                          $day = "<p class='text-no-date'>no date given</p>";
                             $month = ' ';
@@ -580,7 +470,7 @@ if(!$thumbnail){
                                         <?php if ($course->post_author) {
                                             ?>
                                             
-            <img src="<?php echo $image_author ;?>" alt="image course" width="25" height="25">;
+            <img src="<?php echo $image_author?>" alt="image course" width="25" height="25">;
             <?php
         } else {
             ?>
@@ -602,7 +492,7 @@ if(!$thumbnail){
                                         type="button">
                                        <?php if (!empty($company)) {
                                         ?>
-                                           <img src="<?php echo $company_logo ;?>" alt="image course" width="25" height="25">;
+                                           <img src="<?php echo $company_logo?>" alt="image course" width="25" height="25">;
                                            <?php
                                         } else {
                                             ?>
@@ -723,11 +613,11 @@ if(!$thumbnail){
         </div>
         <div class="form-group">
             <label for="Industry">Industry</label>
-            <input type="text" class="form-control" id="Industry" name="industry" placeholder="Enter your Industry" required>
+            <input type="text" class="form-control" id="Industry" name="company_industry" placeholder="Enter your Industry" required>
         </div>
         <div class="form-group">
             <label for="People">Amount of people</label>
-            <input type="number" class="form-control" id="People" name="people" placeholder="Enter the number of people">
+            <input type="number" class="form-control" id="People" name="company_size" placeholder="Enter the number of people">
         </div>
     </form>
 </div>
@@ -777,6 +667,18 @@ if(!$thumbnail){
             <label for="Phonenumber">Phone number</label>
             <input type="text" class="form-control" id="Phonenumber" name="phone_number" placeholder="Enter her Phone number" required>
         </div>
+         <div class="form-group">
+                        <label class="label-sub-topics">Select Company</label>
+                        <select name="companyId" id="selected_company"  class="multipleSelect2" >
+                            <?php
+                                foreach($companies as $value) {
+                                   
+                                    echo "<option value='" . $value->ID . "'>" . $value->post_name . "</option>";
+                                }
+                            ?>
+                        </select>
+                    </div> 
+        
         <!-- <div class="form-group">
             <label for="Role">Role</label>
             <select name="role" id="Role" class="form-control" required>
@@ -885,7 +787,7 @@ if(!$thumbnail){
                             <div class="companyAutho" id="companyAuthor"></div>
                             <label class="label-sub-topics">Select Author(s) </label>
                             <div class="formModifeChoose">
-                                <select name="" id="selected_user" class="multipleSelect2" multiple="true">
+                                <select name="userId" id="selected_user" class="multipleSelect2" multiple="true">
                                     <?php
  
                                         foreach($author_users as $value)
@@ -1078,7 +980,10 @@ $("#removeTeacher").click(function() {
 function submitUserForm() {
    // var formData = new FormData(document.getElementById('userForm'));
     var form = document.getElementById('userForm');
+ var companyId = $('#selected_company').val()
 
+        
+      
 document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
     // Create a FormData object to send the file
     var formData = new FormData(form);
@@ -1103,6 +1008,8 @@ document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for 
 //      }
     
       formData.append('action', 'add_users');
+      formData.append('companyId', companyId);
+
  
     
 
@@ -1119,13 +1026,18 @@ document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for 
            // alert('User created successfully!');
               document.getElementById('content-back-topicsauthor').innerHTML =response;
             // Optionally, you can refresh the page or update the UI accordingly
-             $('#ModalTeacher').modal('hide');
+           //  $('#ModalTeacher').modal('hide');
         },
         error: function(response) {
             alert('Failed to create user!');
               document.getElementById('content-back-topicsauthor').innerHTML =response;
-               $('#ModalTeacher').modal('hide');
-        }
+             //  $('#ModalTeacher').modal('hide');
+        },
+        
+   complete:function(response){
+                    
+                  location.reload();
+                }
     });
 }
 </script>
@@ -1159,7 +1071,7 @@ function submitCompanyForm() {
         success: function(response) {
             console.log(response);
             document.getElementById('content-back-topics').innerHTML = response;
-            $('#ModalCompany').modal('hide');
+           // $('#ModalCompany').modal('hide');
 
             
             // Optionally, you can refresh the page or update the UI accordingly
@@ -1167,8 +1079,14 @@ function submitCompanyForm() {
         error: function(response) {
             alert('Failed to create company!');
             document.getElementById('content-back-topics').innerHTML = response;
-             $('#ModalCompany').modal('hide');
-        }
+            // $('#ModalCompany').modal('hide');
+        },
+        
+   complete:function(response){
+                    
+                  location.reload();
+                }
+
     });
 }
 </script>
@@ -1222,6 +1140,7 @@ function submitCompanyForm() {
 });
     
   $('#save_subtopics').click(()=>{
+      
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
   url:"/fetch-subtopics-course",
@@ -1264,7 +1183,15 @@ function submitCompanyForm() {
       
       document.getElementById('companyAuthor').innerHTML = data;
       
-  }
+  },
+  error:function(data){
+    document.getElementById('companyAuthor').innerHTML = data;
+  },
+   complete:function(response){
+                    
+                  location.reload();
+                }
+
   })
   }
 );
@@ -1355,7 +1282,7 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
             },
             dataType:"text",
             success: function(data){
-                console.log(data);
+                
                 $('#autocomplete_company_databank').html(data);
             }
         });
