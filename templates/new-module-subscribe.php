@@ -27,6 +27,7 @@ function makecall($url, $type, $data = null, $params = null) {
     // get response, error handling
     $response = curl_exec( $ch );
     $err = curl_errno( $ch );
+    $errmsg = curl_error( $ch );
     // $header = curl_getinfo( $ch );
 
     // error handling
@@ -50,7 +51,6 @@ function makecall($url, $type, $data = null, $params = null) {
 function create_payment_link($data){
     $endpoint = "https://api.stripe.com/v1/payment_links";
     $information = makecall($endpoint, 'POST', $data);
-
     return $information;
 }
 
@@ -119,7 +119,7 @@ function stripe(WP_REST_Request $request){
             ]
         ],
         'automatic_tax' => [
-            'enabled' => true,
+            'enabled' => "true",
         ],
         'subscription_data' => [
             'metadata' => [
