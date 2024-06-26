@@ -35,12 +35,15 @@ function upcoming_schedule_for_the_user()
         $user_id = intval($_GET['id']);
     }
     $args = array(
-        'post_type' => array('course', 'post'),
+        'post_type' => 'post',
+        'post_status' => 'publish',
         'posts_per_page' => -1,
-        'order' => 'DESC'
+        'order' => 'DESC',
+        'meta_key'   => 'data_locaties_xml',
     );
     $schedules = get_posts($args);
     $all_schedules = array();
+
     foreach ($schedules as $schedule) {
         global $wpdb;
         $data_locaties_xml = get_field('data_locaties_xml', $schedule->ID);
@@ -48,23 +51,26 @@ function upcoming_schedule_for_the_user()
             continue;
         $courseTime = array();
         foreach ($data_locaties_xml as $dataxml) {
-            //print_r($dataxml['value']); // 19/12/2023 10: 00: 00-19/12/2023 11: 00: 00--
-            $datetime = explode(' ', $dataxml['value']);
-            $date = explode(' ', $datetime[0])[0];
-            //print_r($date); // 19/12/2023
-            $time = explode('-', $datetime[1])[0];
-            //print_r($time); //10: 00: 00
-            $courseTime['date'][] = $date;
-            $courseTime['time'][] = $time;
+            if ($dataxml) {
+                $datetime = explode(' ', $dataxml['value']);
+                $date = explode(' ', $datetime[0])[0];
+                $time = explode('-', $datetime[1])[0];
+                $courseTime['date'][] = $date;
+                $courseTime['time'][] = $time;
+            }
         }
+        if (!$courseTime)
+            continue;
+
+        /** if 500 error comment this part of code with database*/
 
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
-        $sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
-        $user_follow_this_course = $wpdb->get_results( $sql );
-        if(!$user_follow_this_course)
-            continue;
-        if(intval($user_follow_this_course[0]->user_id)!=$user_id)
-            continue;
+        //$sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
+        //$user_follow_this_course = $wpdb->get_results( $sql );
+        //if(!$user_follow_this_course)
+       //     continue;
+        //if(intval($user_follow_this_course[0]->user_id)!=$user_id)
+        //    continue;
 
         $image = get_field('preview', $schedule->ID)['url'];
         if(!$image){
@@ -79,17 +85,17 @@ function upcoming_schedule_for_the_user()
         $schedule_data['title'] = $schedule->post_title;
         $schedule_data['links'] = $schedule->guid;
         $schedule_data['course_type'] = get_field('course_type', $schedule->ID);
-        //$schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
+        $schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
         $schedule_data['pathImage'] = $image;
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
-        $schedule_data['price'] = get_field('price',$schedule->ID) ?? "Gratis";
+        $schedule_data['price'] = get_field('price',$schedule->ID)!="0" ? : "Gratis";
         $schedule_data['data_locaties_xml'] = $data_locaties_xml;
         $schedule_data['courseTime'] = $courseTime;
         $all_schedules[] = $schedule_data;
 
     }
     if (empty($all_schedules)) {
-        $response = new WP_REST_Response($data_locaties_xml);
+        $response = new WP_REST_Response(array());
         $response->set_status(204);
         return $response;
     }
@@ -115,7 +121,7 @@ function saveManager(WP_REST_Request $request){
         $response->set_status(401);
         return $response;
     }
-    $required_parameters = ['company','quantity','email','password','industry',];
+    $required_parameters = ['company','quantity','email','industry',];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -124,7 +130,7 @@ function saveManager(WP_REST_Request $request){
     endif;
     //update role of  user
     $user = get_userdata($user_id);
-    $new_role = 'manager';
+    $new_role = 'hr';
     if (!in_array($new_role, $user->roles)) {
         $user->add_role($new_role);
     }
@@ -161,3 +167,54 @@ function saveManager(WP_REST_Request $request){
     return $response;
 }
 
+function get_notifications()
+{
+    $id_user_connected = 5;
+    $args = array(
+        'post_type' => array('feedback', 'mandatory', 'badge'),
+        'author' => $id_user_connected, // id user connected
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notifications = get_posts($args);
+    $todos = array();
+    $read_feedbacks = array();
+    $read_todos = array();
+    $read_badges = array();
+    if(!empty($notifications))
+        foreach($notifications as $todo){
+
+            $read = get_field('read_feedback', $todo->ID);
+            if($read)
+                continue;
+
+            array_push($todos,$todo);
+
+            //Readed by post_type check
+            switch ($todo->post_type) {
+                case 'feedback':
+                    array_push($read_feedbacks, $todo);
+                    break;
+                case 'mandatory':
+                    array_push($read_todos, $todo);
+                    break;
+                case 'badge':
+                    array_push($read_badges, $todo);
+                    break;
+            }
+        }
+    $response = new WP_REST_Response(
+        array(
+        'alertNotification'=>count($notifications),
+        'countViewAll'=>$notifications,
+        'alertToDo'=>count($read_todos),
+        'toDo'=>$read_todos,
+        'alertBadge'=>count($read_badges),
+        'badge'=>$read_badges,
+        'alertFeedback'=>count($read_feedbacks),
+        'feedback'=>$read_feedbacks,
+    ));
+    $response->set_status(200);
+    return $response;
+}

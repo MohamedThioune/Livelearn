@@ -15,6 +15,7 @@ include "dashbord-endpoints.php";
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
 require_once __DIR__ . '/templates/new-module-subscribe.php';
+// require_once __DIR__ . '/templates/checkout.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -2058,7 +2059,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'notifications'
   ));
 
-  //Made by Mohamed | Payment link 'Subscription'
+  //Made by Mohamed | 'Subscription' Payment link
   register_rest_route ('custom/v1', '/payment/link', array(
     'methods' => 'POST',
     'callback' => 'stripe'
@@ -2086,15 +2087,26 @@ add_action( 'rest_api_init', function () {
     'callback' => 'activityUser'
   ));
 
+  //Made by Mohamed | Checkout
+  register_rest_route ('custom/v1', '/checkout-stripe-ui', array(
+    'methods' => 'GET',
+    'callback' => 'session_stripe'
+  ));
+  //End ...
+
   register_rest_route ('custom/v1', '/upcoming/schedule', array(
-      'methods' => 'GET',
-      'callback' => 'upcoming_schedule_for_the_user'
+    'methods' => 'GET',
+    'callback' => 'upcoming_schedule_for_the_user'
   ));
 
   register_rest_route ('custom/v1', '/teacher/save', array( 
-      //teacher/save ; /save/manager
-      'methods' => 'POST',
-      'callback' => 'saveManager'
+    //teacher/save ; /save/manager
+    'methods' => 'POST',
+    'callback' => 'saveManager'
   ));
 
+  register_rest_route ('custom/v1', '/notifications', array(
+    'methods' => 'GET',
+    'callback' => 'get_notifications'
+  ));
 });

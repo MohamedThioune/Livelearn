@@ -302,7 +302,7 @@ if(!isset($_COOKIE["cookie_consent"])):
     });
 </script>
  
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(window).on('load', function() {
         $('#cookieModal').modal('show');
     });
@@ -314,7 +314,7 @@ if(!isset($_COOKIE["cookie_consent"])):
             $('#cookieModal').hide();
         }
     });
-</script>
+</script> -->
 
 <?php
 $site_url = get_site_url() . "/apply-cookie";
