@@ -4020,34 +4020,85 @@ endif;
         return $timeSpentinSecond;
       }
 
+      // function getUserSubtopicsStatistics($data)
+      // {
+      //   $user_id = $GLOBALS['user_id'] ?? false;
+        
+      //   if (!$user_id)
+      //   {
+      //     $response = new WP_REST_Response("You have to login with good credentials !"); 
+      //     $response->set_status(400);
+      //     return $response;
+      //   }
+      //   $user = get_user_by( 'ID', $user_id ) ?? false;
+      //   if (!$user)
+      //   {
+      //     $response = new WP_REST_Response("This user id filled doesn't exist !");
+      //     $response->set_status(400);
+      //     return $response;
+      //   }
+      //   global $wpdb;
+      //   $table = $wpdb->prefix . 'user_subtopics_statistics';
+      //   $sql = $wpdb->prepare("SELECT * FROM $table WHERE user_id = $user_id");
+      //   $stats= $wpdb->get_results($sql);
+      //   foreach ($stats as $stat)
+      //   {
+      //     $stat->time_spent = formatSecondes($stat->time_spent);  
+      //   }
+        
+      //   return $stats;
+      // }
+
       function getUserSubtopicsStatistics($data)
+    {
+      // Retrieve the user ID from the global variable and validate it
+      $user_id = $GLOBALS['user_id'] ?? false;
+
+      // Check if the user ID is provided
+      if (!$user_id) 
       {
-        $user_id = $GLOBALS['user_id'] ?? false;
-        
-        if (!$user_id)
-        {
-          $response = new WP_REST_Response("You have to login with good credentials !"); 
+          $response = new WP_REST_Response("You have to login with valid credentials!");
           $response->set_status(400);
           return $response;
-        }
-        $user = get_user_by( 'ID', $user_id ) ?? false;
-        if (!$user)
-        {
-          $response = new WP_REST_Response("This user id filled doesn't exist !");
-          $response->set_status(400);
-          return $response;
-        }
-        global $wpdb;
-        $table = $wpdb->prefix . 'user_subtopics_statistics';
-        $sql = $wpdb->prepare("SELECT * FROM $table WHERE user_id = $user_id");
-        $stats= $wpdb->get_results($sql);
-        foreach ($stats as $stat)
-        {
-          $stat->time_spent = formatSecondes($stat->time_spent);  
-        }
-        
-        return $stats;
       }
+
+      // Validate the user ID
+      $user_id = intval($user_id);
+
+      // Check if the user exists
+      $user = get_user_by('ID', $user_id);
+      if (!$user)
+      {
+          $response = new WP_REST_Response("This user ID does not exist!");
+          $response->set_status(400);
+          return $response;
+      }
+
+      // Retrieve user subtopics statistics from the database
+      global $wpdb;
+      $table = $wpdb->prefix . 'user_subtopics_statistics';
+      $sql = $wpdb->prepare("SELECT * FROM $table WHERE user_id = %d", $user_id);
+      $stats = $wpdb->get_results($sql);
+
+      // Define the allowed course types
+      $allowed_course_types = ['masterclass', 'podcast', 'video', 'workshop', 'artikel', 'opleidingen'];
+
+      // Format the time spent for each statistic
+      foreach ($stats as $stat)
+      {
+          // Format the total time spent
+          $stat->time_spent = formatSeconds($stat->time_spent);
+
+          // Format the time spent for each course type
+          foreach ($allowed_course_types as $course_type)
+          {
+              if (isset($stat->$course_type)) {
+                  $stat->$course_type = formatSeconds($stat->$course_type);
+              }
+          }
+      }
+      return $stats;
+    }
 
       // function updateUserSubtopicsStatistics(WP_REST_Request $request) 
       // {
