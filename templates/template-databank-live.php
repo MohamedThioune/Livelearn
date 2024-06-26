@@ -376,11 +376,15 @@ if(!$thumbnail){
                             $main_category_id = get_field('categories',  $course->ID);
                             $main_category_xml = get_field('category_xml',  $course->ID);
 
-                            $main_categoryd = (!empty($main_category_id)) ? $main_category_id[0]['value'] : "";
-                            $category_id = (!empty(explode(',', $main_categoryd))) ? $main_categoryd[0] : 0;  
+                            if($main_category_id)
+                                if(isset($main_category_id[0]))
+                                    if(isset($main_category_id[0]['value']))
+                                        $category_id = ($main_category_id[0]['value']) ? explode(',', $main_category_id[0]['value']) : 0;
 
-                            $main_categoryx = (!empty($main_category_xml)) ? $main_category_xml[0] : 0;
-                            $category_xml = (!empty($main_categoryx)) ? intval($main_categoryx['value']) : 0;
+                            if($main_category_xml)
+                                if(isset($main_category_xml[0]))
+                                    if(isset($main_category_xml[0]['value']))
+                                        $category_xml = ($main_category_xml[0]['value']) ? intval($main_category_xml[0]['value']) : 0;
 
                             if($category_xml)
                                 if($category_xml != 0)
