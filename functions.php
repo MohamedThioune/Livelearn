@@ -2104,5 +2104,8 @@ add_action( 'rest_api_init', function () {
       'methods' => 'POST',
       'callback' => 'saveManager'
   ));
-
+    register_rest_route ('custom/v1', '/notifications', array(
+        'methods' => 'GET',
+        'callback' => 'get_notifications'
+    ));
 });
