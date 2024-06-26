@@ -2095,17 +2095,18 @@ add_action( 'rest_api_init', function () {
   //End ...
 
   register_rest_route ('custom/v1', '/upcoming/schedule', array(
-      'methods' => 'GET',
-      'callback' => 'upcoming_schedule_for_the_user'
+    'methods' => 'GET',
+    'callback' => 'upcoming_schedule_for_the_user'
   ));
 
   register_rest_route ('custom/v1', '/teacher/save', array( 
-      //teacher/save ; /save/manager
-      'methods' => 'POST',
-      'callback' => 'saveManager'
+    //teacher/save ; /save/manager
+    'methods' => 'POST',
+    'callback' => 'saveManager'
   ));
-    register_rest_route ('custom/v1', '/notifications', array(
-        'methods' => 'GET',
-        'callback' => 'get_notifications'
-    ));
+
+  register_rest_route ('custom/v1', '/notifications', array(
+    'methods' => 'GET',
+    'callback' => 'get_notifications'
+  ));
 });
