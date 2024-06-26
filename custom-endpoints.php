@@ -4049,71 +4049,174 @@ endif;
         return $stats;
       }
 
-      function updateUserSubtopicsStatistics(WP_REST_Request $request) 
-      {
-        // Retrieve the user ID, 
-        $user_id = $request['user_id'] ?? false;
+      // function updateUserSubtopicsStatistics(WP_REST_Request $request) 
+      // {
+      //   // Retrieve the user ID, 
+      //   $user_id = $request['user_id'] ?? false;
     
+      //   // Check if the user ID is provided
+      //   if (!$user_id) {
+      //       $response = new WP_REST_Response("You have to fill the id of the current user!");
+      //       $response->set_status(400);
+      //       return $response;
+      //   }
+    
+      //   // Check if the user exists
+      //   $user = get_user_by('ID', $user_id);
+      //   if (!$user) {
+      //       $response = new WP_REST_Response("This user id filled doesn't exist!");
+      //       $response->set_status(400);
+      //       return $response;
+      //   }
+    
+      //   // Retrieve the category ID, 
+      //   $category_id = $request['category_id'] ?? false;
+      //   if (!$category_id) {
+      //       $response = new WP_REST_Response("You have to fill the category id!");
+      //       $response->set_status(400);
+      //       return $response;
+      //   }
+        
+      //   // Retrieve the category name, 
+      //   $category_name = $request['category_name'] ?? false;
+      //   if (!$category_id) {
+      //       $response = new WP_REST_Response("You have to fill the category name!");
+      //       $response->set_status(400);
+      //       return $response;
+      //   }
+    
+      //   // Retrieve the time spent, 
+      //   $time_spent = $request['time_spent'] ?? false;
+      //   if (!$time_spent) {
+      //       $response = new WP_REST_Response("You have to fill the time spent on the category!");
+      //       $response->set_status(400);
+      //       return $response;
+      //   }
+    
+      //   global $wpdb;
+    
+      //   $table = $wpdb->prefix . 'user_subtopics_statistics';
+    
+      //   // Prepare and execute the SQL statement to check for existing records
+      //   $sql = $wpdb->prepare("SELECT time_spent FROM $table WHERE user_id = %d AND category_id = %d", $user_id, $category_id);
+      //   $existing_record = $wpdb->get_row($sql);
+    
+      //   if (is_null($existing_record)) {
+      //       // No existing record, insert a new one
+      //       $data = [
+      //           'category_id' => $category_id,
+      //           'category_name' => $category_name,
+      //           'user_id' => $user_id,
+      //           'time_spent' => $time_spent
+      //       ];
+      //       $wpdb->insert($table, $data);
+      //   } else {
+      //       // Existing record found, add the new time_spent to the existing one
+      //       $new_time_spent = (int)$existing_record->time_spent + (int)$time_spent;
+      //       $sql = $wpdb->prepare("UPDATE $table SET time_spent = %d WHERE user_id = %d AND category_id = %d", $new_time_spent, $user_id, $category_id);
+      //       $wpdb->query($sql);
+      //   }
+      //   $response = new WP_REST_Response("User subtopic statistics updated successfully!");
+      //   $response->set_status(200);
+      //   return $response;
+      // }
+
+      function updateUserSubtopicsStatistics(WP_REST_Request $request) 
+      {   
+        // Retrieve the user ID
+        $user_id = $request['user_id'] ?? false;
+
         // Check if the user ID is provided
-        if (!$user_id) {
-            $response = new WP_REST_Response("You have to fill the id of the current user!");
+        if (!$user_id) 
+        {
+            $response = new WP_REST_Response("You have to fill the ID of the current user!");
             $response->set_status(400);
             return $response;
         }
-    
+
         // Check if the user exists
         $user = get_user_by('ID', $user_id);
         if (!$user) {
-            $response = new WP_REST_Response("This user id filled doesn't exist!");
+            $response = new WP_REST_Response("This user ID doesn't exist!");
             $response->set_status(400);
             return $response;
         }
-    
-        // Retrieve the category ID, 
+
+        // Retrieve the category ID
         $category_id = $request['category_id'] ?? false;
         if (!$category_id) {
-            $response = new WP_REST_Response("You have to fill the category id!");
+            $response = new WP_REST_Response("You have to fill the category ID!");
             $response->set_status(400);
             return $response;
         }
         
-        // Retrieve the category name, 
+        // Retrieve the category name
         $category_name = $request['category_name'] ?? false;
-        if (!$category_id) {
+        if (!$category_name) {
             $response = new WP_REST_Response("You have to fill the category name!");
             $response->set_status(400);
             return $response;
         }
-    
-        // Retrieve the time spent, 
+
+        // Retrieve the time spent
         $time_spent = $request['time_spent'] ?? false;
         if (!$time_spent) {
             $response = new WP_REST_Response("You have to fill the time spent on the category!");
             $response->set_status(400);
             return $response;
         }
-    
+
+        // Retrieve the course type
+        $course_type = $request['course_type'] ?? false;
+        if (!$course_type) {
+            $response = new WP_REST_Response("You have to fill the course type!");
+            $response->set_status(400);
+            return $response;
+        }
+
+        // Define allowed course types
+        $allowed_course_types = ['masterclass', 'podcast', 'video', 'workshop', 'artikel', 'opleidingen'];
+        if (!in_array($course_type, $allowed_course_types)) {
+            $response = new WP_REST_Response("Invalid course type provided!");
+            $response->set_status(400);
+            return $response;
+        }
+
         global $wpdb;
-    
+
         $table = $wpdb->prefix . 'user_subtopics_statistics';
-    
+
+        // Sanitize and validate inputs
+        $user_id = intval($user_id);
+        $category_id = intval($category_id);
+        $category_name = sanitize_text_field($category_name);
+        $time_spent = intval($time_spent);
+
         // Prepare and execute the SQL statement to check for existing records
-        $sql = $wpdb->prepare("SELECT time_spent FROM $table WHERE user_id = %d AND category_id = %d", $user_id, $category_id);
+        $sql = $wpdb->prepare("SELECT time_spent, $course_type FROM $table WHERE user_id = %d AND category_id = %d", $user_id, $category_id);
         $existing_record = $wpdb->get_row($sql);
-    
+
         if (is_null($existing_record)) {
             // No existing record, insert a new one
             $data = [
                 'category_id' => $category_id,
                 'category_name' => $category_name,
                 'user_id' => $user_id,
-                'time_spent' => $time_spent
+                'time_spent' => $time_spent,
+                'masterclass' => $course_type == 'masterclass' ? $time_spent : "0",
+                'podcast' => $course_type == 'podcast' ? $time_spent : "0",
+                'video' => $course_type == 'video' ? $time_spent : "0",
+                'workshop' => $course_type == 'workshop' ? $time_spent : "0",
+                'artikel' => $course_type == 'artikel' ? $time_spent : "0",
+                'opleidingen' => $course_type == 'opleidingen' ? $time_spent : "0",
             ];
             $wpdb->insert($table, $data);
-        } else {
+        } else 
+        {
             // Existing record found, add the new time_spent to the existing one
-            $new_time_spent = (int)$existing_record->time_spent + (int)$time_spent;
-            $sql = $wpdb->prepare("UPDATE $table SET time_spent = %d WHERE user_id = %d AND category_id = %d", $new_time_spent, $user_id, $category_id);
+            $new_time_spent = (int)$existing_record->time_spent + $time_spent;
+            $new_course_time_spent = (int)$existing_record->$course_type + $time_spent;
+            $sql = $wpdb->prepare("UPDATE $table SET time_spent = %d, $course_type = %d WHERE user_id = %d AND category_id = %d", $new_time_spent, $new_course_time_spent, $user_id, $category_id);
             $wpdb->query($sql);
         }
         $response = new WP_REST_Response("User subtopic statistics updated successfully!");
