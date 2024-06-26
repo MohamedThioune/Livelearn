@@ -370,11 +370,16 @@ if(!$thumbnail){
                                     }
                                 }
                             }       
-                    //Categories
+                            //Categories
                             $category = " ";
                             $id_category = 0;
-                            $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                            $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
+                            $main_category_id  = get_field('categories',  $course->ID);
+                            $main_category_xml  = get_field('category_xml',  $course->ID);
+
+
+                            $category_id =  (!empty($main_category_id)) ? intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]) : 0;
+                            $category_xml = (!empty($main_category_xml)) ? intval(get_field('category_xml', $course->ID)[0]['value']) : 0;
+
                             if($category_xml)
                                 if($category_xml != 0)
                                     $category = (String)get_the_category_by_ID($category_xml);
@@ -385,7 +390,7 @@ if(!$thumbnail){
                             
                                           
 
-                                             $link = get_permalink($course->ID);
+                            $link = get_permalink($course->ID);
                                            
                                               
         
