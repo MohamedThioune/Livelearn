@@ -35,12 +35,15 @@ function upcoming_schedule_for_the_user()
         $user_id = intval($_GET['id']);
     }
     $args = array(
-        'post_type' => array('course', 'post'),
+        'post_type' => 'post',
+        'post_status' => 'publish',
         'posts_per_page' => -1,
-        'order' => 'DESC'
+        'order' => 'DESC',
+        'meta_key'   => 'data_locaties_xml',
     );
     $schedules = get_posts($args);
     $all_schedules = array();
+
     foreach ($schedules as $schedule) {
         global $wpdb;
         $data_locaties_xml = get_field('data_locaties_xml', $schedule->ID);
@@ -48,23 +51,26 @@ function upcoming_schedule_for_the_user()
             continue;
         $courseTime = array();
         foreach ($data_locaties_xml as $dataxml) {
-            //print_r($dataxml['value']); // 19/12/2023 10: 00: 00-19/12/2023 11: 00: 00--
-            $datetime = explode(' ', $dataxml['value']);
-            $date = explode(' ', $datetime[0])[0];
-            //print_r($date); // 19/12/2023
-            $time = explode('-', $datetime[1])[0];
-            //print_r($time); //10: 00: 00
-            $courseTime['date'][] = $date;
-            $courseTime['time'][] = $time;
+            if ($dataxml) {
+                $datetime = explode(' ', $dataxml['value']);
+                $date = explode(' ', $datetime[0])[0];
+                $time = explode('-', $datetime[1])[0];
+                $courseTime['date'][] = $date;
+                $courseTime['time'][] = $time;
+            }
         }
+        if (!$courseTime)
+            continue;
+
+        /** if 500 error comment this part of code with database*/
 
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
-        $sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
-        $user_follow_this_course = $wpdb->get_results( $sql );
-        if(!$user_follow_this_course)
-            continue;
-        if(intval($user_follow_this_course[0]->user_id)!=$user_id)
-            continue;
+        //$sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
+        //$user_follow_this_course = $wpdb->get_results( $sql );
+        //if(!$user_follow_this_course)
+       //     continue;
+        //if(intval($user_follow_this_course[0]->user_id)!=$user_id)
+        //    continue;
 
         $image = get_field('preview', $schedule->ID)['url'];
         if(!$image){
@@ -79,17 +85,17 @@ function upcoming_schedule_for_the_user()
         $schedule_data['title'] = $schedule->post_title;
         $schedule_data['links'] = $schedule->guid;
         $schedule_data['course_type'] = get_field('course_type', $schedule->ID);
-        //$schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
+        $schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
         $schedule_data['pathImage'] = $image;
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
-        $schedule_data['price'] = get_field('price',$schedule->ID) ?? "Gratis";
+        $schedule_data['price'] = get_field('price',$schedule->ID)!="0" ? : "Gratis";
         $schedule_data['data_locaties_xml'] = $data_locaties_xml;
         $schedule_data['courseTime'] = $courseTime;
         $all_schedules[] = $schedule_data;
 
     }
     if (empty($all_schedules)) {
-        $response = new WP_REST_Response($data_locaties_xml);
+        $response = new WP_REST_Response(array());
         $response->set_status(204);
         return $response;
     }
