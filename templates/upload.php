@@ -52,10 +52,12 @@ curl_setopt( $ch, CURLOPT_POSTFIELDS, $data);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt( $ch, CURLOPT_HTTPHEADER, [
     'Content-Disposition: form-data; filename="'.  $filename .'"',
-    'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
-     //'Authorization: Basic ' . $base64_credentials,
+   // 'Authorization: Basic ZmFsbG91Lm5kaWF5ZTk1QHVuaXYtdGhpZXMuc246TGl2ZWxlQHJuMjAyNA==',
+   // local
+'Authorization: Basic bmlhc3Nzc25AZ21haWwuY29tOnI4UiU5UGwmb3RDbW5td0o=',
+    
     'Content-Type: multipart/form-data; boundary=' . $delimiter,
-   // 'Content-Type: multipart/form-data'
+  
 ] );
 $result = curl_exec( $ch );
 
@@ -73,7 +75,7 @@ if (curl_errno($ch)) {
            
             //"raw": "http://localhost/livelearn/wp-content/uploads/2024/06/WhatsApp-Image-2024-05-31-a-22.31.54_6a976b2c.jpg"
 
-            echo json_decode($result,true)['guid']['raw'];
+            
              return json_decode($result,true)['id'];
         }
 
