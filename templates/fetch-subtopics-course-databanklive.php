@@ -24,7 +24,7 @@
         $user_info = get_userdata($course->post_author); 
         $image_author = get_field('profile_img', 'user_' . $course->post_author);
         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-        $company=get_field('company', 'user_' . $post->post_author);
+        $company=get_field('company', 'user_' . $course->post_author);
         $functie = get_field('role', 'user_' . $course->post_author);
 
          $html = '';
@@ -234,7 +234,29 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                         <button class="btn btn-add-sub-topics" type="button">Add Subtopics</button>
                     </div>
                     <div class="content-sub-topics">
-                                             <?php
+                    <select class='multipleSelect2' id="selected_subtopics"   multiple='true'>
+                     <?php
+    
+    $course_subtopics = get_field('categories',$_POST['id_course']);
+    $selected_subtopics=array();
+    if (is_array($course_subtopics) || is_object($course_subtopics)){
+        foreach ($course_subtopics as $key =>  $course_subtopic) {
+            if ($course_subtopic!="" && $course_subtopic!="Array")
+                array_push($selected_subtopics,$course_subtopic['value']);
+        }
+        // check subtopics already added on this course 
+        foreach($subtopics as $value){
+            if (in_array($value->cat_ID,$selected_subtopics))
+                echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+             
+        }
+    }
+   
+    
+?>
+                    </select>
+                    
+                                             <!--?php
     
     $course_subtopics = get_field('categories',$_POST['id_course']);
     $selected_subtopics=array();
@@ -252,14 +274,14 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
         }
     }
 
-           ?>   
+           ?-->   
                         
                         
                     </div>
                     <div class="content-add-sub-topics" >
-                        
+                           <div class="topics"></div>
                             <div class="form-group mb-4">
-                                <div class="sava-substopics"></div>
+                                
                                 <label class="label-sub-topics">First Choose Your topics </label>
                                 <div class="formModifeChoose" id="formModifeChoose" value=<?php echo $_POST['id_course'];?>>
                                     <select name="topic" id="selectTopic" class="multipleSelect2" >
@@ -300,7 +322,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
     $(document).ready(function () {
         //Select2
         $(".multipleSelect2").select2({
-            placeholder: "Maak uw keuze",
+            placeholder: "Nothing for yet",
              //placeholder
         });
     });
@@ -367,21 +389,19 @@ $(document).ready(function() {
                     // Move the event listener binding inside the success callback
                     const saveButton = document.getElementById('save_subtopics');
                     
-                    
+                      //document.getElementById('topics').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
                         
                        $(document).on('click', '#save_subtopics', function() {
                             
 
                             var subtopics  = Array.from(selectedValues);
-                            var selectedsubtopics;
+                            
                             var btnSubTopics = document.getElementById('btn-sub-topics');
-            if (btnSubTopics) {
-                 selectedsubtopics=JSON.parse(document.getElementById('btn-sub-topics').getAttribute('value'));
-               
-            } else {
-                console.log('The element with ID "btn-sub-topics" does not exist.');
-                selectedsubtopics=[];
-            }
+                            var selectedsubtopics = $('#selected_subtopics').val();
+           
+              
+                
+           
                             
                             const id_course = document.getElementById('formModifeChoose').getAttribute('value');
                            
@@ -420,6 +440,10 @@ $(document).ready(function() {
                 error: function(response) {
                     alert('Failed to create user!');
                     document.getElementById('content-back-topics').innerHTML = response;
+                },
+                 complete:function(response){
+                  
+                  location.reload();
                 }
             });
         } else {
