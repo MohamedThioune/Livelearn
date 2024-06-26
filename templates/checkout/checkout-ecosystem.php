@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/templates/new-module-subscribe.php';
+// require_once __DIR__ . '/templates/new-module-subscribe.php';
 
 function create_customer_stripe($data){
     //Create customer
@@ -73,7 +73,7 @@ function session_stripe(){
 
     $return = array('clientSecret' => $client_secret);
     $response = new WP_REST_Response($return);
-    $response->set_status(402);
+    $response->set_status(201);
     return $response;
     
 }
