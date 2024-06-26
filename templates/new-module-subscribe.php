@@ -148,14 +148,12 @@ function stripe(WP_REST_Request $request){
 
 // function create_token_stripe($data){
 //     $endpoint = "https://api.stripe.com/v1/tokens";
-//     $information = makecall($endpoint, 'POST', $data);
-    
+//     $information = makecall($endpoint, 'POST', $data);  
 //     return $information;
 // }
 
 // function create_card($data){
 //     $endpoint = "https://api.stripe.com/v1/customers/" . $data['customer_id'] . "/sources" ;
-//     $information = makecall($endpoint, 'POST', $data);
-    
+//     $information = makecall($endpoint, 'POST', $data); 
 //     return $information;
 // }
