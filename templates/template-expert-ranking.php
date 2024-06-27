@@ -396,7 +396,7 @@ foreach($categories as $categ){
         </div>
     </div> -->
 
-<style>
+<!--<style>
     .HeightObserverProvider-container .App-Container {
         display: flex !important;
         justify-content: space-between;
@@ -428,7 +428,7 @@ foreach($categories as $categ){
             margin-top: 20px;
         }
     }
-</style>
+</style>-->
 <body>
 
 <div class="contentProfil">
