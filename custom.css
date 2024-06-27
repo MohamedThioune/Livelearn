@@ -23294,6 +23294,9 @@ figure ul li {
 .icons-block-zzpers {
     margin: 68px 0 -12px;
 }
+#modalPayment .modal-dialog {
+    margin-top: 70px !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
