@@ -249,7 +249,7 @@
                             <button onclick="redirect()" class="btn btn-al-vanaf">
                                 Je gratis leeromgeving
                             </button>
-                            <a href="#" class="btn btn-Functionaliteiten">ZZP startersgide 2024</a>
+                            <a href="https://buy.stripe.com/5kAaHb9V09ex5MYfYZ" target="_blank" class="btn btn-Functionaliteiten">ZZP startersgide 2024</a>
                         </div>
                     </div>
                     <div class="element-second d-flex justify-content-center">
@@ -290,12 +290,12 @@
                         <p class="">Reservepotjes</p>
                     </div>
                     <div class="one-element-icon-zzpers">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ondersnemersrisico%20.png" class="" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ondersnemersrisico.png" class="" alt="">
                         <p class="">Ondersnemersrisico </p>
                     </div>
                     <div class="one-element-icon-zzpers">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Slim-vermogen-opbouwen.png" class="" alt="">
-                        <p class="">TSlim vermogen opbouwen</p>
+                        <p class="">Slim vermogen opbouwen</p>
                     </div>
                 </div>
                 <div class="block-rating-logo">
