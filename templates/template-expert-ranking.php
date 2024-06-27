@@ -401,6 +401,7 @@ foreach($categories as $categ){
    <div class="container-fluid">
        <h1 class="titleSubscription">Checkout - sample</h1>
        <!-- <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center> -->
+
        <div class="contentFormSubscription">
 
            <!-- <form action="" method="POST"> -->
@@ -502,6 +503,7 @@ foreach($categories as $categ){
         </div>
     </div>
 </div>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
