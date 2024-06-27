@@ -23304,24 +23304,24 @@ figure ul li {
     width: 100%;
     padding: 0;
 }
-#modalPayment .modal-dialog .App-Container {
-    display: flex;
+#modalPayment .HeightObserverProvider-container .App-Container {
+    display: flex !important;
     justify-content: space-between;
     flex-wrap: wrap;
     width: 100%;
 }
-#modalPayment .modal-dialog .App-Container .TestModeNotch {
+#modalPayment .HeightObserverProvider-container .TestModeNotch {
     width: 100%;
     text-align: center;
 }
-#modalPayment .modal-dialog .App-Container .Tag{
+#modalPayment .HeightObserverProvider-container .Tag{
     display: block;
 }
-#modalPayment .modal-dialog .App-Overview {
+#modalPayment .HeightObserverProvider-container .App-Overview {
     width: 41%;
     padding-top: 30px;
 }
-#modalPayment .modal-dialog .App-Payment {
+#modalPayment .HeightObserverProvider-container .App-Payment {
     width: 55%;
     margin-top: 48px;
 }
@@ -28334,11 +28334,11 @@ figure ul li {
         width: 48%;
         text-align: center;
     }
-    #modalPayment .modal-dialog .App-Overview {
+    #modalPayment .HeightObserverProvider-container .App-Overview {
         width: 100%;
         padding-top: 30px;
     }
-    #modalPayment .modal-dialog .App-Payment {
+    #modalPayment .HeightObserverProvider-container .App-Payment {
         width: 100%;
         margin-top: 20px;
     }
