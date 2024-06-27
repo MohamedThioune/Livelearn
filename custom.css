@@ -13582,7 +13582,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background-color: #fff!important;
     padding: 35px;
     border-radius: 15px;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 }
 .content-list-amount {
@@ -25862,6 +25862,7 @@ figure ul li {
         padding: 25px;
         width: 96%;
     }
+
     .creditCardBlock {
         width: 100%;
     }
