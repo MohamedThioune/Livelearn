@@ -23297,6 +23297,34 @@ figure ul li {
 #modalPayment .modal-dialog {
     margin-top: 70px !important;
 }
+#modalPayment .modal-dialog {
+    max-width: 945px;
+}
+#modalPayment .modal-dialog .contentFormSubscription {
+    width: 100%;
+    padding: 0;
+}
+#modalPayment .modal-dialog .App-Container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+}
+#modalPayment .modal-dialog .App-Container .TestModeNotch {
+    width: 100%;
+    text-align: center;
+}
+#modalPayment .modal-dialog .App-Container .Tag{
+    display: block;
+}
+#modalPayment .modal-dialog .App-Overview {
+    width: 41%;
+    padding-top: 30px;
+}
+#modalPayment .modal-dialog .App-Payment {
+    width: 55%;
+    margin-top: 48px;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -28305,6 +28333,14 @@ figure ul li {
     .icons-block-zzpers .one-element-icon-zzpers {
         width: 48%;
         text-align: center;
+    }
+    #modalPayment .modal-dialog .App-Overview {
+        width: 100%;
+        padding-top: 30px;
+    }
+    #modalPayment .modal-dialog .App-Payment {
+        width: 100%;
+        margin-top: 20px;
     }
 
 }
