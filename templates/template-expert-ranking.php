@@ -395,6 +395,40 @@ foreach($categories as $categ){
             </div>
         </div>
     </div> -->
+
+<style>
+    .HeightObserverProvider-container .App-Container {
+        display: flex !important;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .HeightObserverProvider-container .TestModeNotch {
+        width: 100%;
+        text-align: center;
+    }
+    .HeightObserverProvider-container .Tag{
+        display: block;
+    }
+    #modalPayment .HeightObserverProvider-container .App-Overview {
+        width: 41%;
+        padding-top: 30px;
+    }
+    .HeightObserverProvider-container .App-Payment {
+        width: 55%;
+        margin-top: 48px;
+    }
+    @media all and (min-width: 300px) and (max-width: 767px){
+        .HeightObserverProvider-container .App-Overview {
+            width: 100%;
+            padding-top: 30px;
+        }
+        .HeightObserverProvider-container .App-Payment {
+            width: 100%;
+            margin-top: 20px;
+        }
+    }
+</style>
 <body>
 
 <div class="contentProfil">
