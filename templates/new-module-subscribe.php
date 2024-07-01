@@ -140,6 +140,77 @@ function stripe(WP_REST_Request $request){
     return $response;
 }
 
+function create_product($data){
+    //Create product
+    $data_product = [
+        'name' => $data['name'],
+        'description' => $data['description'],
+        'images' => [ $data['image'] ],
+        'url' => $data['url'],
+        'metadata' => [
+            'courseID' => $data['ID'],
+        ]
+    ];
+    $endpoint = "https://api.stripe.com/v1/products";
+    $information = makecall($endpoint, 'POST', $data_product);
+
+    //case : error primary
+    if(isset($information['error']))
+        return 0;
+        // return $information['error'];
+
+    //case : error internal
+    if(isset($information['data']->error))
+        return 0;
+        // return $information['data'];
+
+    $product_id = null;    
+    //case : success
+    if($information['data'])
+    if($information['data']->client_secret)
+        $product_id = $information['data']->id;
+
+    //Get product ID if after creation
+    /** Instructions here ! */
+
+    return $product_id;
+}
+
+function create_price($data){
+    $amount = $data['amount'] . "00";
+    //Create price
+    $data_price = [
+        'currency' => $data['currency'],
+        'unit_amount' => $amount,
+        'product_data' => [
+            'ID' => $data['ID'],
+        ],
+    ];
+    $endpoint = "https://api.stripe.com/v1/prices";
+    $information = makecall($endpoint, 'POST', $data_price);
+
+    //case : error primary
+    if(isset($information['error']))
+        return 0;
+        // return $information['error'];
+
+    //case : error internal
+    if(isset($information['data']->error))
+        return 0;
+        // return $information['data'];
+
+    $product_id = null;    
+    //case : success
+    if($information['data'])
+    if($information['data']->client_secret)
+        $product_id = $information['data']->id;
+
+    //Get product ID if after creation
+    /** Instructions here ! */
+
+    return $price_id;
+}
+
 // function create_subscription_stripe($data){
 //     $endpoint = "https://api.stripe.com/v1/subscriptions";
 //     $information = makecall($endpoint, 'POST', $data);
