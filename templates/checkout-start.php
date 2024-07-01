@@ -1,7 +1,7 @@
-<?php /** Template Name: start */ ?>
+<?php /** Template Name: Checkout Start */ ?>
 
 <?php
-require_once __DIR__ . '/../new-module-subscribe.php';
+require_once 'new-module-subscribe.php';
 
 // $mail_notification_invitation = '/mail-notification-invitation.php';
 // require(__DIR__ . $mail_notification_invitation); 
