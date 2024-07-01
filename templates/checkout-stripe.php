@@ -10,7 +10,7 @@ if(isset($_GET['priceID'])):
 endif;
 ?>
 <head>
-<!-- <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" /> -->
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <script src="https://js.stripe.com/v3/"></script>
 <script defer>
     // This is your test secret API key.
@@ -21,7 +21,7 @@ endif;
     // Create a Checkout Session
     async function initialize() {
     const fetchClientSecret = async () => {
-        const response = await fetch("/checkout-module", {
+        const response = await fetch("/checkout-module/?priceID="<?= $price_id ?> , {
         method: "POST",
         });
         const { clientSecret } = await response.json();
@@ -148,6 +148,20 @@ endif;
 
        </div>
    </div>
+
+   <br><br>
+    <div class="contentFormSubscription">
+        <div id='stripe-checkout-first'>
+            <h2> Hit on save once you ready !</h2>
+            <center><small>Checkout will insert the payment form here ... </small></center>
+        </div>
+        <div id='stripe-checkout-second'>
+            <h2> Pay here !</h2>
+            <div id='checkout'>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="modalPaymentLabel" aria-hidden="true">
