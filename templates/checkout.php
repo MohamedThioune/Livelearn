@@ -45,17 +45,17 @@ function session_stripe($price_id, $mode){
     else
         $data = [
             'ui_mode' => 'embedded',
-            // 'line_items' => [[
-            //     # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
-            //     'price' => $price_id,
-            //     'quantity' => 1,
-            // ]],
+            'line_items' => [[
+                # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
+                'price' => $price_id,
+                'quantity' => 1,
+            ]],
             'mode' => $mode,
             // 'return_url' => $YOUR_DOMAIN,
             'return_url' => $YOUR_DOMAIN . '/return.html?session_id={CHECKOUT_SESSION_ID}',
-            // 'automatic_tax' => [
-            //     'enabled' => "true",
-            // ],
+            'automatic_tax' => [
+                'enabled' => "true",
+            ],
         ];
 
     //Create session object
@@ -80,6 +80,6 @@ function session_stripe($price_id, $mode){
 
 //Call stripe secret
 // if(isset($_GET['priceID']) && $_GET['mode']):
-    $session_stripe_secret = session_stripe("price_1PXowhEuOtOzwPYXIXyZGzFa", 'setup');
-    var_dump($session_stripe_secret);
+    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
+    echo($session_stripe_secret);
 // endif;
