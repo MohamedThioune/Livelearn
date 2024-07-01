@@ -1,8 +1,8 @@
-<?php /** Template Name: Checkout module */ ?>
+<?php /** Template Name: Checkout Module */ ?>
 
 <?php
 
-require_once __DIR__ . '/../new-module-subscribe.php';
+require_once 'new-module-subscribe.php';
 
 // function create_customer_stripe($data){
 //     //Create customer
