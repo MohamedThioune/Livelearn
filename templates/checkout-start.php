@@ -1,4 +1,4 @@
-<?php /** Template Name: Checkout start */ ?>
+<?php /** Template Name: start */ ?>
 
 <?php
 require_once __DIR__ . '/../new-module-subscribe.php';
