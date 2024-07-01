@@ -43,9 +43,9 @@ function session_stripe($price_id, $mode){
         'mode' => $mode,
         // 'return_url' => $YOUR_DOMAIN,
         'return_url' => $YOUR_DOMAIN . '/return.html?session_id={CHECKOUT_SESSION_ID}',
-        'automatic_tax' => [
-            'enabled' => "true",
-        ],
+        // 'automatic_tax' => [
+        //     'enabled' => "true",
+        // ],
     ];
 
     //Create session object
