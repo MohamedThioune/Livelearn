@@ -1,4 +1,4 @@
-<?php /** Template Name: checkout module */ ?>
+<?php /** Template Name: Checkout module */ ?>
 
 <?php
 
