@@ -48,8 +48,10 @@ endif;
 $stripe_pay_form = 
 '<form action="/checkout-start" method="post">
     <input type="hidden" name="postID" value="' . $post->ID . '">
-    <button type="submit" class="btn btn-buy-now" name="productPrice"> <img src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe">
-    Pay with Stripe !</button>
+    <button type="submit" class="btn btn-buy-now" style="background-color:purple" name="productPrice"> 
+    <img width="30" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe">
+    Pay with Stripe !
+    </button>
 </form>';
 //Review pourcentage
 if(!empty($counting_rate)):
