@@ -29,7 +29,7 @@ function create_session($data){
     return $information;
 }
 
-function session_stripe($price_id){
+function session_stripe($price_id, $mode){
     $YOUR_DOMAIN = get_site_url();
     // $YOUR_ENDPOINT = get_site_url() . '/wp-json/custom/v1/checkout-stripe';
     $PRICE_ID = ($price_id) ?: null;
@@ -66,11 +66,10 @@ function session_stripe($price_id){
         $client_secret = $information['data']->client_secret;
 
     return json_encode(array('clientSecret' => $client_secret));
-    
 }
 
 //Call stripe secret
-// if(isset($_GET['priceID'])):
-    $session_stripe_secret = session_stripe("price_1PXowhEuOtOzwPYXIXyZGzFa");
+// if(isset($_GET['priceID']) && $_GET['mode']):
+    $session_stripe_secret = session_stripe("price_1PXowhEuOtOzwPYXIXyZGzFa", 'setup');
     var_dump($session_stripe_secret);
 // endif;

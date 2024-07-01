@@ -8,6 +8,7 @@ $price_id = '';
 if(isset($_GET['priceID'])):
     $key_password = "C@##me1995.";
     $price_id = openssl_decrypt($_GET['priceID'], "AES-128-ECB", $key_password);
+    $mode = openssl_decrypt($_GET['mode'], "AES-128-ECB", $key_password);
 endif;
 ?>
 <head>
@@ -22,7 +23,7 @@ endif;
     // Create a Checkout Session
     async function initialize() {
     const fetchClientSecret = async () => {
-        const response = await fetch("/checkout-module?priceID=<?php echo $price_id ?>" , {
+        const response = await fetch("/checkout-module?priceID=<?php echo $price_id ?>&mode=<?php echo $mode ?>" , {
             method: "POST",
         });
         const { clientSecret } = await response.json();
