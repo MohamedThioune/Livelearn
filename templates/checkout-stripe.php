@@ -154,7 +154,6 @@ endif;
                 <center><small>Checkout will insert the payment form here ... </small></center>
             </div>
             <div id='stripe-checkout-second'>
-                <h2> Pay here !</h2>
                 <div id='checkout'>
                 </div>
             </div>
