@@ -145,23 +145,22 @@ endif;
                <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
            </div>
            <!-- </form> -->
-
-       </div>
-   </div>
-
-   <br><br>
-    <div class="contentFormSubscription">
-        <div id='stripe-checkout-first'>
-            <h2> Hit on save once you ready !</h2>
-            <center><small>Checkout will insert the payment form here ... </small></center>
         </div>
-        <div id='stripe-checkout-second'>
-            <h2> Pay here !</h2>
-            <div id='checkout'>
+        
+        <br><br>
+        <div class="contentFormSubscription">
+            <div id='stripe-checkout-first'>
+                <h2> Hit on save once you ready !</h2>
+                <center><small>Checkout will insert the payment form here ... </small></center>
+            </div>
+            <div id='stripe-checkout-second'>
+                <h2> Pay here !</h2>
+                <div id='checkout'>
+                </div>
             </div>
         </div>
-    </div>
 
+   </div>
 </div>
 
 <div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="modalPaymentLabel" aria-hidden="true">
