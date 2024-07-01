@@ -1,34 +1,9 @@
+<?php /** Template Name: expert ranking */ ?>
 
 <?php get_header(); ?>
-
-<head>
-<!-- <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" /> -->
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <script src="https://js.stripe.com/v3/"></script>
-<script defer>
-    // This is your test secret API key.
-    const stripe = Stripe("pk_test_51JyijWEuOtOzwPYXpQ5PQzJGMroshnARkLBNWWJK2ZOsGaaJvF0tmh96eVkAgklzjB8L3usvqvP3229HTXx796nt00qw0X8k7y");
-
-    initialize();
-
-    // Create a Checkout Session
-    async function initialize() {
-    const fetchClientSecret = async () => {
-        const response = await fetch("/ecosystem", {
-        method: "POST",
-        });
-        const { clientSecret } = await response.json();
-        return clientSecret;
-    };
-
-    const checkout = await stripe.initEmbeddedCheckout({
-        fetchClientSecret,
-    });
-
-    // Mount Checkout
-    checkout.mount('#checkout');
-    }
-</script>
-</head>
+<script src="checkout.js" defer></script>
 
 <?php
 global $wpdb;
@@ -172,7 +147,9 @@ foreach($categories as $categ){
     }
 }
 
+
 ?>
+<?php get_header(); ?>
     <!-- <div class="onze-expert-block">
         <div class="container-fluid">
             <div class="headCollections">
@@ -419,7 +396,7 @@ foreach($categories as $categ){
             <div class="form-group">
                 <label for="bedrjifsnaam">Email</label>
                 <i class="fas fa-building" aria-hidden="true"></i>
-                <input type="email" class="form-control" id="" value="" placeholder="Email" name="email" required>
+                <input type="email" class="form-control" id="" value="<?= $company_connected ?>" placeholder="Email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="city">Company name</label>
@@ -440,7 +417,7 @@ foreach($categories as $categ){
             </div>
             <div class="form-group">
                 <label for="">Additional information</label>
-                <i class="fas fa-text"></i>
+                <i class="fas fa-thumbtack"></i>
                 <textarea class="form-control" id="" value="" placeholder="Notes about your order ..." name="additional_info">
                 </textarea>
             </div>
@@ -469,34 +446,94 @@ foreach($categories as $categ){
         <!-- </form> -->
 
     </div>
-    
-    <br><br>
-    <div class="contentFormSubscription">
-        <div id='stripe-checkout-first'>
-            <h2> Hit on save once you ready !</h2>
-            <center><small>Checkout will insert the payment form here ... </small></center>
-        </div>
-        <div id='stripe-checkout-second'>
-            <h2> Pay here !</h2>
-            <div id='checkout'>
-            </div>
-        </div>
-    </div>
+
 </div>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
-    var button = document.getElementById('starter');
-    document.getElementById('stripe-checkout-second').style.display ='none';
 
-    button.addEventListener('click', function(e) {
-        $(e.preventDefault());
-        document.getElementById('stripe-checkout-first').style.display ='none';
-        document.getElementById('stripe-checkout-second').style.display ='block';
-        // $('#stripe-checkout').html("<div id='checkout'><h2> Pay here !</h2></div>");
+    function show1(){
+        document.getElementById('payementCard').style.display ='none';
+    }
+    function show2(){
+        document.getElementById('payementCard').style.display = 'block';
+    }
+
+    $(document).ready(function(){
+        $("#is_trial").change(function() {
+            if(this.checked) {
+                $("#starter").text("Start Trial");
+            } else {
+                $("#starter").text("Start")
+            }
+        });
     });
+
 </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $('#topic_search').change(function(){
+            var topic_search = $("#topic_search option:selected").val();
+            var complete_categorieen = $("#topic_search option:selected").text();
+            $('#complete-categorien').html(complete_categorieen);
+
+            $.ajax({
+                url:"/fetch-ajax-home2",
+                method:"post",
+                data:{
+                    topic_search: topic_search,
+                },
+                dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',topic_search)
+                },
+                success: function(data){
+                    console.log('elt : ',data);
+                    $('#autocomplete_categorieen').html(data);
+                },
+                error: function (err) {
+                    console.log('error : ',err);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $('#period').change(function(){
+            var selectedOptions = $(this).find("option:selected")[0];
+            var period = selectedOptions.value;
+            var complete_period = selectedOptions.text;
+            $('#complete-period').html(complete_period);
+            $.ajax({
+                url:"/fetch-ajax-home2",
+                method:"post",
+                data:{
+                    period: period,
+                },
+                dataType: "text",
+                beforeSend:function (elt) {
+                    $('#loader').removeClass('d-none');
+                    console.log('before sending...',period)
+                },
+                success: function(data){
+                    console.log('elt');
+                    $('#autocomplete_categorieen').html(data);
+                },
+                error: function (error) {
+                    console.log('error : ',error);
+                },
+                complete:function (complete) {
+                    $('#loader').addClass('d-none');
+                    console.log(complete)
+                }
+            });
+        });
+    </script>
 
 <?php get_footer(); ?>

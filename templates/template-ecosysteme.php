@@ -1,3 +1,4 @@
+<?php /** Template Name: Ecosystem template */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
