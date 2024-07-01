@@ -40,7 +40,6 @@ function session_stripe($price_id, $mode){
             'price' => null,
             'quantity' => 1,
         ]],
-        'mode' => $mode,
         // 'return_url' => $YOUR_DOMAIN,
         'return_url' => $YOUR_DOMAIN . '/return.html?session_id={CHECKOUT_SESSION_ID}',
         'automatic_tax' => [
