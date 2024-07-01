@@ -10,8 +10,6 @@ if(isset($_GET['priceID']) && isset($_GET['mode'])):
     $key_password = "C@##me1995.";
     $price_id = openssl_decrypt($_GET['priceID'], "AES-128-ECB", $key_password);
     $mode = openssl_decrypt($_GET['mode'], "AES-128-ECB", $key_password);
-    var_dump($mode);
-    die();
 endif;
 ?>
 <head>
@@ -28,7 +26,6 @@ endif;
     const fetchClientSecret = async () => {
         const priceID = "<?php echo $price_id ?>";
         const mode = "<?php echo $mode ?>";
-        alert(mode);
         const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode, {
             method: "POST",
         });
