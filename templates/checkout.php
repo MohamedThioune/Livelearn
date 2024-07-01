@@ -70,7 +70,7 @@ function session_stripe($price_id){
 }
 
 $session_stripe_secret = session_stripe("WGw7bDLT9yYCKFk9PS2GpQ==");
-echo $session_stripe_secret;
+var_dump($session_stripe_secret);
 
 //Call stripe secret
 // if(isset($_GET['priceID'])):
