@@ -23,7 +23,10 @@ endif;
     // Create a Checkout Session
     async function initialize() {
     const fetchClientSecret = async () => {
-        const response = await fetch("/checkout-module?priceID=<?php echo $price_id ?>&mode=<?php echo $mode ?>" , {
+        const priceID = "<?php echo $price_id ?>";
+        const mode = "<?php echo $mode ?>";
+        alert(priceID);
+        const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode , {
             method: "POST",
         });
         const { clientSecret } = await response.json();
