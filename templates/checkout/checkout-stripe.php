@@ -6,8 +6,7 @@
 //Price ID
 if(isset($_GET['priceID'])):
     $key_password = "C@##me1995.";
-    $decrypted_chaine = openssl_decrypt($encrypted_chaine, "AES-128-ECB" ,
-    $key_password);    
+    $price_id = openssl_decrypt($encryptedPriceID, "AES-128-ECB", $key_password);    
 endif;
 ?>
 <head>

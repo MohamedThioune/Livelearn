@@ -1,4 +1,3 @@
-<?php /** Template Name: Community overview */ ?>
 
 <body>
 <?php wp_head(); ?>
