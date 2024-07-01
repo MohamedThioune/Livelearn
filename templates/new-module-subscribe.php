@@ -197,6 +197,8 @@ function create_price($data){
     $endpoint = "https://api.stripe.com/v1/prices";
     $information = makecall($endpoint, 'POST', $data_price);
 
+    var_dump($information);
+
     //case : error primary
     if(isset($information['error']))
         return 0;
@@ -207,11 +209,11 @@ function create_price($data){
         return 0;
         // return $information['data'];
 
-    $product_id = null;    
+    $price_id = null;    
     //case : success
     if($information['data'])
     if($information['data']->client_secret)
-        $product_id = $information['data']->id;
+        $price_id = $information['data']->id;
 
     //Get product ID if after creation
     /** Instructions here ! */
