@@ -81,5 +81,5 @@ function session_stripe($price_id, $mode){
 //Call stripe secret
 // if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
-    var_dump($session_stripe_secret);
+    echo($session_stripe_secret);
 // endif;
