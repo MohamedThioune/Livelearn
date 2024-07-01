@@ -46,7 +46,7 @@ endif;
 
 //Stripe pay 
 $stripe_pay_form = 
-'<form action="/community-overview" method="post">
+'<form action="/checkout-start" method="post">
     <input type="hidden" name="postID" value="' . $post->ID . '">
     <button type="submit" class="btn btn-buy-now" name="productPrice">Pay with Stripe !</button>
 </form>';
@@ -641,7 +641,7 @@ endif;
                                 </li>
 
                                 <?php echo $startorbuy ?>
-                                <!-- <?php  echo $stripe_pay_form ?> -->
+                                <?php  echo $stripe_pay_form ?>
 
                                 <div class="sharing-element">
                                     <?php
