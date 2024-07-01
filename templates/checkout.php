@@ -33,20 +33,30 @@ function session_stripe($price_id, $mode){
     $YOUR_DOMAIN = get_site_url();
     // $YOUR_ENDPOINT = get_site_url() . '/wp-json/custom/v1/checkout-stripe';
     $PRICE_ID = ($price_id) ?: null;
-    $data = [
-        'ui_mode' => 'embedded',
-        // 'line_items' => [[
-        //     # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
-        //     'price' => $price_id,
-        //     'quantity' => 1,
-        // ]],
-        'mode' => $mode,
-        // 'return_url' => $YOUR_DOMAIN,
-        'return_url' => $YOUR_DOMAIN . '/return.html?session_id={CHECKOUT_SESSION_ID}',
-        // 'automatic_tax' => [
-        //     'enabled' => "true",
-        // ],
-    ];
+
+    if($mode == 'setup')
+        $data = [
+            'ui_mode' => 'embedded',
+            'currency' => 'eur',
+            'mode' => $mode,
+            // 'return_url' => $YOUR_DOMAIN,
+            'return_url' => $YOUR_DOMAIN . '/return.html?session_id={CHECKOUT_SESSION_ID}',
+        ];
+    else
+        $data = [
+            'ui_mode' => 'embedded',
+            // 'line_items' => [[
+            //     # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
+            //     'price' => $price_id,
+            //     'quantity' => 1,
+            // ]],
+            'mode' => $mode,
+            // 'return_url' => $YOUR_DOMAIN,
+            'return_url' => $YOUR_DOMAIN . '/return.html?session_id={CHECKOUT_SESSION_ID}',
+            // 'automatic_tax' => [
+            //     'enabled' => "true",
+            // ],
+        ];
 
     //Create session object
     $information = create_session($data);
