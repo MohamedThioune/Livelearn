@@ -641,7 +641,7 @@ endif;
                                 </li>
 
                                 <?php echo $startorbuy ?>
-                                <?php echo $stripe_pay_form ?>
+                                <!-- <?php  echo $stripe_pay_form ?> -->
 
                                 <div class="sharing-element">
                                     <?php
