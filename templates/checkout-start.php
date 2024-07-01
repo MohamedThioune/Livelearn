@@ -53,10 +53,13 @@ if(isset($productPrice)):
     ];
     $priceID = create_price($data_price);
 
+    var_dump($priceID);
+
     // CRYPT
-    // $key_password = "C@##me1995.";
-    // $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
+    $key_password = "C@##me1995.";
+    $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
 
     $URL = "/checkout-stripe?priceID=" . $priceID;  
-    header('Location: '. $URL);
+    var_dump($URL);
+    // header('Location: '. $URL);
 endif;
