@@ -1,4 +1,4 @@
-<?php /** Template Name: Ecosystem template */ ?>
+<?php /** Template Name: checkout module */ ?>
 
 <?php
 
