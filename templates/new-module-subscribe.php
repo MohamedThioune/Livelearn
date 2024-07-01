@@ -184,10 +184,7 @@ function create_price($data){
         'unit_amount' => $amount,
         'product_data' => [
             'name' => $data['product_name'],
-            'description' => $data['product_description'],
             'statement_descriptor' => 'LIVELEARN PAY !',
-            'images' => $data['product_image'] ,
-            'url' => $data['product_url'],
             'metadata' => [
                 'courseID' => $data['ID'],
             ]
