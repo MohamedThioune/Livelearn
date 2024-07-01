@@ -101,10 +101,10 @@ function create_session($data){
     return $information;
 }
 
-function session_stripe($data){
+function session_stripe($price_id){
     $YOUR_DOMAIN = get_site_url();
     // $YOUR_ENDPOINT = get_site_url() . '/wp-json/custom/v1/checkout-stripe';
-    $PRICE_ID = ($data['price_id']) ?: null;
+    $PRICE_ID = ($price_id) ?: null;
     $data = [
         'ui_mode' => 'embedded',
         'line_items' => [[
@@ -142,5 +142,5 @@ function session_stripe($data){
 }
 
 //Call stripe secret
-$session_stripe_secret = session_stripe();
+$session_stripe_secret = session_stripe($price_id);
 echo $session_stripe_secret;

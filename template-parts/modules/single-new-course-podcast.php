@@ -44,6 +44,13 @@ else:
     $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 endif;
 
+//Stripe pay 
+$stripe_pay_form = 
+'<form action="/community-overview" method="post">
+    <input type="hidden" name="postID" value="' . $post->ID . '">
+    <button type="submit" class="btn btn-buy-now" name="productPrice">Pay with Stripe !</button>
+</form>';
+
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -634,6 +641,7 @@ endif;
                                 </li>
 
                                 <?php echo $startorbuy ?>
+                                <?php echo $stripe_pay_form ?>
 
                                 <div class="sharing-element">
                                     <?php

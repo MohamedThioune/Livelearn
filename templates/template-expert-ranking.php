@@ -1,4 +1,3 @@
-<?php /** Template Name: expert ranking */ ?>
 
 <?php get_header(); ?>
 
