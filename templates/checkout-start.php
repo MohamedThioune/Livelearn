@@ -19,37 +19,37 @@ if(isset($productPrice)):
 
     // create product
     $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
+    $prijs = get_field('short_description', $post->ID) ?: 0; 
     $permalink = get_permalink($postID); 
     $thumbnail = "";
     if(!$thumbnail):
-        $thumbnail = get_the_post_thumbnail_url($postID);
-        if(!$thumbnail)
-            $thumbnail = get_field('url_image_xml', $postID);
+        $thumbnail = get_field('url_image_xml', $post->ID);
         if(!$thumbnail)
             $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
     endif;
-    $data_product = [
-        'name' => $post->post_title,
-        'description' => $short_description,
-        'images' => [ $thumbnail ],
-        'url' => $permalink,
-        'metadata' => [
-            'courseID' => $post->ID,
-        ]
-    ];
-    $productID = create_product($data_product);
+    // $data_product = [
+    //     'name' => $post->post_title,
+    //     'description' => $short_description,
+    //     'images' => [ $thumbnail ],
+    //     'url' => $permalink,
+
+    //     'metadata' => [
+    //         'courseID' => $post->ID,
+    //     ]
+    // ];
+    // $productID = create_product($data_product);
 
     // create price 
+    $currency = 'eur';
     $data_price = [
-        'currency' => $data['currency'],
-        'unit_amount' => $amount,
-        'product_data' => [
-            'ID' => $data['ID'],
-        ],    
-        'metadata' => [
-            'courseID' => $post->ID,
-        ]
-
+        'currency' => $currency,
+        'amount' => $amount,
+        'product_name' => $post->post_title,
+        'product_description' => $short_description,
+        'statement_descriptor' => 'LIVELEARN PAY !',
+        'product_image' => $thumbnail,
+        'product_url' => $permalink,
+        'ID' => $post->ID,
     ];
     $priceID = create_price($data_price);
 
