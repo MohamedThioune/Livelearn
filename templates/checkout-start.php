@@ -19,7 +19,7 @@ if(isset($productPrice)):
 
     // create product
     $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
-    $prijs = get_field('short_description', $post->ID) ?: 0; 
+    $prijs = get_field('price', $post->ID) ?: 0; 
     $permalink = get_permalink($postID); 
     $thumbnail = "";
     if(!$thumbnail):
@@ -58,8 +58,7 @@ if(isset($productPrice)):
     $key_password = "C@##me1995.";
     $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
     $encryptedMode = openssl_encrypt($mode, "AES-128-ECB", $key_password);
-    var_dump($mode);
     $URL = "/checkout-stripe?priceID=" . $encryptedPriceID . '&mode=' . $encryptedMode;  
 
-    // header('Location: '. $URL);
+    header('Location: '. $URL);
 endif;
