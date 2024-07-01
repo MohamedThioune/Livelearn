@@ -58,8 +58,8 @@ if(isset($productPrice)):
     $key_password = "C@##me1995.";
     $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
     $encryptedMode = openssl_encrypt($mode, "AES-128-ECB", $key_password);
-
+    var_dump($mode);
     $URL = "/checkout-stripe?priceID=" . $encryptedPriceID . '&mode=' . $encryptedMode;  
 
-    header('Location: '. $URL);
+    // header('Location: '. $URL);
 endif;
