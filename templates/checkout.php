@@ -35,11 +35,11 @@ function session_stripe($price_id, $mode){
     $PRICE_ID = ($price_id) ?: null;
     $data = [
         'ui_mode' => 'embedded',
-        'line_items' => [[
-            # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
-            'price' => $price_id,
-            'quantity' => 1,
-        ]],
+        // 'line_items' => [[
+        //     # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
+        //     'price' => $price_id,
+        //     'quantity' => 1,
+        // ]],
         'mode' => $mode,
         // 'return_url' => $YOUR_DOMAIN,
         'return_url' => $YOUR_DOMAIN . '/return.html?session_id={CHECKOUT_SESSION_ID}',
