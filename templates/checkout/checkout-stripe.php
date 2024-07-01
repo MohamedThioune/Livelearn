@@ -1,4 +1,4 @@
-<?php /** Template Name: checkout stripe */ ?>
+<?php /** Template Name: Checkout stripe */ ?>
 
 <?php get_header(); ?>
 
