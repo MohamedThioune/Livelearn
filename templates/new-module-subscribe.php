@@ -207,7 +207,7 @@ function create_price($data){
     $price_id = null;    
     //case : success
     if($information['data'])
-    if($information['data']->client_secret)
+    if($information['data']->id)
         $price_id = $information['data']->id;
 
     //Get product ID if after creation
