@@ -52,12 +52,14 @@ if(isset($productPrice)):
         'ID' => $post->ID,
     ];
     $priceID = create_price($data_price);
+    $mode = ($prijs) ? 'payment' : 'setup';
 
     // CRYPT
     $key_password = "C@##me1995.";
     $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
+    $encryptedMode = openssl_encrypt($mode, "AES-128-ECB", $key_password);
 
-    $URL = "/checkout-stripe?priceID=" . $encryptedPriceID;  
-    // var_dump($URL);
+    $URL = "/checkout-stripe?priceID=" . $encryptedPriceID . '&mode=' . $encryptedMode;  
+
     header('Location: '. $URL);
 endif;
