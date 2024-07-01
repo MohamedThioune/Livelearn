@@ -6,9 +6,10 @@
 //Price ID
 $price_id = '';
 if(isset($_GET['priceID'])):
-    // $key_password = "C@##me1995.";
-    // $price_id = openssl_decrypt($_GET['priceID'], "AES-128-ECB", $key_password);
-    $price_id = $_GET['priceID'];
+    $key_password = "C@##me1995.";
+    $price_id = openssl_decrypt($_GET['priceID'], "AES-128-ECB", $key_password);
+    var_dump($price_id);
+    // $price_id = $_GET['priceID'];
 endif;
 ?>
 <head>
