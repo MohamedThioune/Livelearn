@@ -43,7 +43,7 @@ if(isset($productPrice)):
     $currency = 'eur';
     $data_price = [
         'currency' => $currency,
-        'amount' => $amount,
+        'amount' => $prijs,
         'product_name' => $post->post_title,
         'product_description' => $short_description,
         'statement_descriptor' => 'LIVELEARN PAY !',
