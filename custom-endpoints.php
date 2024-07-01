@@ -4050,7 +4050,7 @@ endif;
       // }
 
       function getUserSubtopicsStatistics($data)
-    {
+      {
       // Retrieve the user ID from the global variable and validate it
       $user_id = $GLOBALS['user_id'] ?? false;
 
@@ -4087,18 +4087,18 @@ endif;
       foreach ($stats as $stat)
       {
           // Format the total time spent
-          $stat->time_spent = formatSeconds($stat->time_spent);
+          $stat->time_spent = formatSecondes($stat->time_spent);
 
           // Format the time spent for each course type
           foreach ($allowed_course_types as $course_type)
           {
               if (isset($stat->$course_type)) {
-                  $stat->$course_type = formatSeconds($stat->$course_type);
+                  $stat->$course_type = formatSecondes($stat->$course_type);
               }
           }
       }
       return $stats;
-    }
+      }
 
       // function updateUserSubtopicsStatistics(WP_REST_Request $request) 
       // {
