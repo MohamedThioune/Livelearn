@@ -1,4 +1,4 @@
-<?php /** Template Name: Community overview */ ?>
+<?php /** Template Name: checkout start */ ?>
 
 <?php
 require_once __DIR__ . '/../new-module-subscribe.php';
@@ -57,6 +57,6 @@ if(isset($productPrice)):
     $key_password = "C@##me1995.";
     $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
 
-    $URL = "/ranking?priceID=" . $encryptedPriceID;  
+    $URL = "/checkout-stripe?priceID=" . $encryptedPriceID;  
     header('Location: '. $URL);
 endif;
