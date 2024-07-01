@@ -25,8 +25,7 @@ endif;
     const fetchClientSecret = async () => {
         const priceID = "<?php echo $price_id ?>";
         const mode = "<?php echo $mode ?>";
-        alert(priceID);
-        const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode , {
+        const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + " ", {
             method: "POST",
         });
         const { clientSecret } = await response.json();
