@@ -167,7 +167,7 @@ endif;
    </div>
 </div>
 
-<div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="modalPaymentLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="modalPaymentLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -191,12 +191,12 @@ endif;
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-<!--<script>
+<script>
     var button = document.getElementById('starter');
     document.getElementById('stripe-checkout-second').style.display ='none';
 
@@ -206,7 +206,7 @@ endif;
         document.getElementById('stripe-checkout-second').style.display ='block';
         // $('#stripe-checkout').html("<div id='checkout'><h2> Pay here !</h2></div>");
     });
-</script>-->
+</script>
 
 
 <?php get_footer(); ?>
