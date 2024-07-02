@@ -3,15 +3,68 @@
 <?php get_header(); ?>
 
 <?php
+require_once 'new-module-subscribe.php';
+
 //Price ID
 $price_id = '';
-$model = 'setup';
-if(isset($_GET['price']) && isset($_GET['mode'])):
-    $key_password = "C@##me1995.";
-    $price_id = openssl_decrypt($_GET['price'], "AES-128-ECB", $key_password);
-    // $price_id = $_GET['price'];
-    $model = $_GET['mode'];
+$mode = 'setup';
+
+extract($_POST);
+
+//create product/price 
+if(isset($productPrice)):
+    // get course
+    $post = get_post($postID);
+    $course_type = get_field('course_type', $postID);
+
+    // create product
+    $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
+    $prijs = get_field('price', $post->ID) ?: 0; 
+    $permalink = get_permalink($postID); 
+    $thumbnail = "";
+    if(!$thumbnail):
+        $thumbnail = get_field('url_image_xml', $post->ID);
+        if(!$thumbnail)
+            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+    endif;
+    // $data_product = [
+    //     'name' => $post->post_title,
+    //     'description' => $short_description,
+    //     'images' => [ $thumbnail ],
+    //     'url' => $permalink,
+
+    //     'metadata' => [
+    //         'courseID' => $post->ID,
+    //     ]
+    // ];
+    // $productID = create_product($data_product);
+
+    // create price 
+    $currency = 'eur';
+    $data_price = [
+        'currency' => $currency,
+        'amount' => $prijs,
+        'product_name' => $post->post_title,
+        'product_description' => $short_description,
+        'statement_descriptor' => 'LIVELEARN PAY !',
+        'product_image' => $thumbnail,
+        'product_url' => $permalink,
+        'ID' => $post->ID,
+    ];
+    $price_id = create_price($data_price);
+    $mode = ($prijs) ? 'payment' : 'setup';
+
+    // CRYPT
+    // $key_password = "C@##me1995.";
+    // $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
+    // $encryptedMode = openssl_encrypt($mode, "AES-128-ECB", $key_password);
+    // $URL = "/checkout-stripe?price=" . $priceID . '&mode=' . $mode;  
+
+    // header('Location: '. $URL);
 endif;
+
+//create ...
+
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -26,7 +79,7 @@ endif;
     async function initialize() {
     const fetchClientSecret = async () => {
         const priceID = "<?php echo $price_id ?>";
-        const mode = "<?php echo $model ?>";
+        const mode = "<?php echo $mode ?>";
         const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode, {
             method: "POST",
         });
