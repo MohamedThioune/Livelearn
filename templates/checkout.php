@@ -60,7 +60,7 @@ function session_stripe($price_id, $mode){
 
     //Create session object
     $information = create_session($data);
-    var_dump($information);
+    // var_dump($information);
 
     //case : error primary
     if(isset($information['error']))
@@ -80,7 +80,7 @@ function session_stripe($price_id, $mode){
 }
 
 //Call stripe secret
-// if(isset($_GET['priceID']) && $_GET['mode']):
-    $session_stripe_secret = session_stripe("price_1PY4QLEuOtOzwPYXkYQacx3q", "payment");
-    // echo($session_stripe_secret);
-// endif;
+if(isset($_GET['priceID']) && $_GET['mode']):
+    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
+    echo($session_stripe_secret);
+endif;
