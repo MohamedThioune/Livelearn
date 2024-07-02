@@ -9,10 +9,8 @@ $model = 'setup';
 if(isset($_GET['price']) && isset($_GET['mode'])):
     $key_password = "C@##me1995.";
     $price_id = openssl_decrypt($_GET['price'], "AES-128-ECB", $key_password);
-    $model = openssl_decrypt($_GET['mode'], "AES-128-ECB", $key_password);
+    $model = ($_GET['mode']);
 endif;
-var_dump($_GET['mode']);
-die();
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
