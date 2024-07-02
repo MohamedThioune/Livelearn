@@ -4,6 +4,10 @@ get_header();
 global $post;
 global $wp;
 
+//Redirection product page 
+if($post->post_type == 'product')
+    header('Location: ');
+
 $url = home_url( $wp->request );
 
 // $page = dirname(__FILE__) . '/templates/check_visibility.php'; 

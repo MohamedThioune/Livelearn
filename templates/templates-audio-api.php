@@ -1,7 +1,6 @@
 <?php /** Template Name: audio api */ ?>
 <?php // /audio-api ?>
 <?php
-require_once 'detect-language.php';
 global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
@@ -170,6 +169,7 @@ if ($audio_search){
                             <span class='h6'>$author</span>
                         </div>
                   </div>
+                  <h3 class='m-lg-3'>$language</h3>
             </div>
         ";
         }
@@ -216,7 +216,7 @@ if ($audio_search){
             curl_close($ch2);
             $content_podcasts = $content;
         }
-        foreach ($content_podcasts as $key => $pod) {
+        foreach ($content_podcasts as $key => $pod)
             if ($pod->enclosure->attributes()->url) {
                 $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
@@ -226,8 +226,8 @@ if ($audio_search){
 
                 $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio^";
             }
-        }
-        //wich table will I do the request to show the list of podcast ?
+
+
         $data = array(
             //'titel' => htmlentities($title,ENT_NOQUOTES),
             'titel' => $title,
@@ -246,13 +246,14 @@ if ($audio_search){
             'author_id' => $user_id,
             'status' => 'extern',
             'company_id' => $company_id,
-            'language'=>detectLanguage($title)
+            'language'=>$language,
         );
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
-        if ($post_id) {
+        if ($post_id)
             $message = "$title saved in platform success ✅✅✅";
-        }
+        else
+            $message = $wpdb->last_error;
     }
     echo $message;
 }

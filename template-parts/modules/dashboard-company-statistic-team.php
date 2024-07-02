@@ -1,5 +1,5 @@
 <?php
-
+global $wpdb;
 
 
 /* Information user */
@@ -110,6 +110,7 @@ $args = array(
     'limit' => -1,
 );
 $bunch_orders = wc_get_orders($args);
+
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         //Get woo orders from user
@@ -186,6 +187,8 @@ $count_assessments = count($assessments);
 $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
 $assessment_not_started = 100;
 $assessment_completed = 0;
+$members_active = 0;
+$members_inactive = 0;
 if($count_assessments > 0){
     $not_started_assessment = $count_assessments - $assessment_validated;
     $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
@@ -198,7 +201,7 @@ $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_t
 $topic_views = $wpdb->get_results($sql);
 
 //Show link by scope 
-$status_content_link .= "";
+$status_content_link = "";
 if(isset($company_name))
     $status_content_link .= '<li class="nav-one"><a href="/dashboard/company/statistic-company">Company</a></li>';
 
@@ -247,7 +250,7 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                     </div>
                     <div>
                         <p class="total-member">Members Actifs</p>
-                        <p class="number-members"><?= $count_members ?></p>
+                        <p class="number-members">0</p> <!-- $count_members -->
                     </div>
                 </div>
                 <div class="card-element-company d-flex align-items-center ">
@@ -299,11 +302,10 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         </select> -->
                     </div>
                     <div>
-                        <!-- <canvas id="ChartEngagement"></canvas> -->
-                        <span>No data enough !</span>
+                        <canvas id="ChartEngagement"></canvas>
+                        <!-- <span>No data enough !</span> -->
                     </div>
-                </div> 
-               
+                </div>
                 <div class="card-circular-bar">
                     <div class="head d-flex justify-content-between align-items-center">
                         <h2 >User progress in the courses <span>(<?= $count_enrolled_courses ?>) :</span></h2>
@@ -384,10 +386,32 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
                         
                         $department = get_field('department', 'user_' . $user->ID);
 
-                        $is_login = get_field('is_first_login', 'user_' . $user->ID);
+                        //$is_login = get_field('is_first_login', 'user_' . $user->ID);
 
-                        $status = ($is_login) ? 'actif' : 'actif inactif';
-                        $status_text = ($is_login) ? 'Active' : 'Inactive';
+                        $is_login = false;
+
+                            $date = new DateTime();
+                            $date_last_month = $date->sub(new DateInterval('P2M'))->format('Y-m-d');
+                            $date_this_month = date('Y-m-d');
+                            $table_tracker_views = $wpdb->prefix . 'tracker_views';
+                            $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+                            $if_user_actif = count($wpdb->get_results($sql));
+
+                            if ($if_user_actif)
+                                $is_login = true;
+
+                        //$status = ($is_login) ? 'actif' : 'actif inactif';
+                        //$status_text = ($is_login) ? 'Active' : 'Inactive';
+                            if ($is_login) {
+                                $status_text = 'Active';
+                                $members_active++;
+                                $status = 'actif';
+                            }
+                            else {
+                                $status_text = 'Inactive';
+                                $members_inactive++;
+                                $status = 'actif inactif';
+                            }
 
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $current_user->ID;
                         
@@ -462,8 +486,8 @@ if(in_array('administrator', $current_user->roles) || in_array('hr', $current_us
         data: {
             labels: ["Active",	"Inactive"],
             datasets: [{
-                data: [90,	10], // Specify the data values array
-
+                data: [<?=$members_active?>,<?=$members_inactive?>], // Specify the data values array
+                //data: [67,17], // Specify the data values array
                 borderColor: ['#47A99E', '#FF0000'], // Add custom color border
                 backgroundColor: ['#47A99E', '#FF0000'], // Add custom color background (Points and Fill)
             }]},
