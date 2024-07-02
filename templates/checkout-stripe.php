@@ -62,9 +62,6 @@ if(isset($productPrice)):
 
     // header('Location: '. $URL);
 endif;
-var_dump($price_id);
-echo '00';
-var_dump($mode);
 
 
 //create ...
