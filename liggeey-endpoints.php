@@ -1571,7 +1571,7 @@ function deleteJobUser(WP_REST_Request $request) {
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
 
-  $required_parameters = ['jobId'];
+  $required_parameters = ['jobID'];
   // Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
