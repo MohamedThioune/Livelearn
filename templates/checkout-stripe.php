@@ -10,6 +10,8 @@ if(isset($_GET['priceID']) && isset($_GET['mode'])):
     $key_password = "C@##me1995.";
     $price_id = openssl_decrypt($_GET['priceID'], "AES-128-ECB", $key_password);
     $mode = openssl_decrypt($_GET['mode'], "AES-128-ECB", $key_password);
+    var_dump($mode);
+    die();
 endif;
 ?>
 <head>
