@@ -49,7 +49,7 @@ $stripe_pay_form =
 '<form action="/checkout-start" method="post">
     <input type="hidden" name="postID" value="' . $post->ID . '">
     <button type="submit" class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
-    <img width="40" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe">
+    <img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe">
     Pay with Stripe !
     </button>
 </form>';
