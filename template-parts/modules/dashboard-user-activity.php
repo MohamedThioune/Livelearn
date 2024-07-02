@@ -16,11 +16,9 @@ if(isset($_GET['session_id'])):
                             
                             We appreciate your business! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.
 
-                            If you have any questions, please email <a href="mailto:info@livelearn.nl">info@livelearn.nl</a>.
+                            If you have any questions, please email <a href="mailto:info@livelearn.nl" style="text-decoration:none">info@livelearn.nl</a>.
                             </p>
                         </section><br><br>';
-
-    var_dump($status_stripe);
 endif;
 /*
 * * Information user
