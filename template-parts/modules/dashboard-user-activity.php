@@ -11,7 +11,7 @@ if(isset($_GET['session_id'])):
     
     if(isset($status_stripe['status']))
         if($status_stripe['status'] == 'complete')
-            $message = '<section id="success" class="hidden" style="background-color:green; color:white">
+            $message = '<section id="success" class="hidden" style="background-color:green; color:white; border-radius: 2px">
                             <p>
                             
                             We appreciate your business! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.
@@ -220,10 +220,10 @@ $no_content = "<div class='emty-block-activity'>
 <body>
 <div class="content-activity2">
     <div class="advert-course-Block d-flex">
-        <?php
-            echo (isset($message)) ? $message : '';
-        ?>
         <div class="advert-one d-flex">
+            <?php
+                echo (isset($message)) ? $message : '';
+            ?>
             <div class="blockTextAdvert">
                 <p class="name">Hello <span> <?= $full_name_user ?></span> !</p>
                 <p class="description">Welcome to our e-learning platform's activity page! Here, you'll find a variety of engaging activities to help you, reinforce your learning .</p>
