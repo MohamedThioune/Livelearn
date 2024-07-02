@@ -1,7 +1,7 @@
 <html lang="en">
 <?php
 
-require __DIR__ . '/../templates/checkout.php';
+require_once  '../../templates/checkout.php';
 
 //Stripe return callback
 if(isset($_GET['session_id'])):

@@ -30,7 +30,7 @@ function create_session($data){
 }
 
 function session_stripe($price_id, $mode){
-    $YOUR_DOMAIN = get_site_url() . '/dashboard/user';
+    $YOUR_DOMAIN = get_site_url() . '/dashboard/user/activity/';
     // $YOUR_ENDPOINT = get_site_url() . '/wp-json/custom/v1/checkout-stripe';
     $PRICE_ID = ($price_id) ?: null;
 
