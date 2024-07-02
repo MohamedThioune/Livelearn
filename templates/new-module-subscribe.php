@@ -177,7 +177,7 @@ function stripe(WP_REST_Request $request){
 // }
 
 function create_price($data){
-    $amount =  ($amount) ? $data['amount'] . "00" : 0;
+    $amount = ($data['amount']) ? $data['amount'] . "00" : 0;
     //Create price
     $data_price = [
         'currency' => $data['currency'],
