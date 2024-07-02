@@ -60,6 +60,7 @@ function session_stripe($price_id, $mode){
 
     //Create session object
     $information = create_session($data);
+    var_dump($information);
 
     //case : error primary
     if(isset($information['error']))
