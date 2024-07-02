@@ -11,7 +11,7 @@ if(isset($_GET['price']) && isset($_GET['mode'])):
     $price_id = openssl_decrypt($_GET['price'], "AES-128-ECB", $key_password);
     $model = openssl_decrypt($_GET['mode'], "AES-128-ECB", $key_password);
 endif;
-var_dump($model);
+var_dump($_GET['mode']);
 die();
 ?>
 <head>
