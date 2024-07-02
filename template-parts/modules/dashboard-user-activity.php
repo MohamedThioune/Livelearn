@@ -1,7 +1,7 @@
 <html lang="en">
 <?php
 
-require_once dirname(__FILE__ , 2) . '/templates/checkout.php';
+require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
 
 //Stripe return callback
 if(isset($_GET['session_id'])):
