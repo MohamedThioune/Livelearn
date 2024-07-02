@@ -9,10 +9,13 @@ include "article-endpoints.php";
 include "podcast-endpoints.php";
 include "video-endpoints.php";
 include "liggeey-endpoints.php";
-include "script-to-update-author.php";
+include "script-endpoints.php";
+include "dashbord-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
+require_once __DIR__ . '/templates/new-module-subscribe.php';
+// require_once __DIR__ . '/templates/checkout.php';
 
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -31,32 +34,32 @@ function enqueue_parent_styles() {
 }
 
 function cpt_taxonomies() {
-    // Add new taxonomy, make it hierarchical (like categories)
-    $labels = array(
-        'name'              => _x( 'Categorie�n', 'course_categories', 'textdomain' ),
-        'singular_name'     => _x( 'Categorie', 'Categorie', 'textdomain' ),
-        'search_items'      => __( 'Zoek categori�n', 'textdomain' ),
-        'all_items'         => __( 'All Cats', 'textdomain' ),
-        'parent_item'       => __( 'Parent category', 'textdomain' ),
-        'parent_item_colon' => __( 'Parent category:', 'textdomain' ),
-        'edit_item'         => __( 'Edit category', 'textdomain' ),
-        'update_item'       => __( 'Update category', 'textdomain' ),
-        'add_new_item'      => __( 'Add New category', 'textdomain' ),
-        'new_item_name'     => __( 'New category Name', 'textdomain' ),
-        'menu_name'         => __( 'Category', 'textdomain' ),
-    );
+  // Add new taxonomy, make it hierarchical (like categories)
+  $labels = array(
+      'name'              => _x( 'Categorie�n', 'course_categories', 'textdomain' ),
+      'singular_name'     => _x( 'Categorie', 'Categorie', 'textdomain' ),
+      'search_items'      => __( 'Zoek categori�n', 'textdomain' ),
+      'all_items'         => __( 'All Cats', 'textdomain' ),
+      'parent_item'       => __( 'Parent category', 'textdomain' ),
+      'parent_item_colon' => __( 'Parent category:', 'textdomain' ),
+      'edit_item'         => __( 'Edit category', 'textdomain' ),
+      'update_item'       => __( 'Update category', 'textdomain' ),
+      'add_new_item'      => __( 'Add New category', 'textdomain' ),
+      'new_item_name'     => __( 'New category Name', 'textdomain' ),
+      'menu_name'         => __( 'Category', 'textdomain' ),
+  );
 
-    $args = array(
-        'hierarchical'      => true,
-        'labels'            => $labels,
-        'show_ui'           => true,
-        'show_in_rest'      => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'course_category' ),
-    );
+  $args = array(
+      'hierarchical'      => true,
+      'labels'            => $labels,
+      'show_ui'           => true,
+      'show_in_rest'      => true,
+      'show_admin_column' => true,
+      'query_var'         => true,
+      'rewrite'           => array( 'slug' => 'course_category' ),
+  );
 
-    register_taxonomy( 'course_category', array( 'course' ), $args );
+  register_taxonomy( 'course_category', array( 'course' ), $args );
 }
 add_action( 'init', 'cpt_taxonomies', 0 );
 
@@ -657,6 +660,51 @@ function custom_post_type() {
 
     register_post_type( 'job', $job_args );
 
+    /**  
+      Liggeey notifications cpt By Fadel
+    **/
+    $notifications = array(
+      'name'                => _x( 'Notifications', 'Notifications', 'notification' ),
+      'singular_name'       => _x( 'Notifications', 'Notification', 'notification' ),
+      'menu_name'           => __( 'Notifications', 'notification' ),
+      //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+      'all_items'           => __( 'All notifications', 'notification' ),
+      'view_item'           => __( 'View notification', 'view_notification' ),
+      'add_new_item'        => __( 'New notification', 'add_new_notification' ),
+      'add_new'             => __( 'New notification', 'text_domain' ),
+      'edit_item'           => __( 'Edit Item', 'text_domain' ),
+      'update_item'         => __( 'Update Item', 'text_domain' ),
+      'search_items'        => __( 'Search Item', 'text_domain' ),
+      'not_found'           => __( 'Not found', 'text_domain' ),
+      'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+  );
+
+  $notification_args = array(
+      'label'               => __( 'notification', 'text_domain' ),
+      'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+      'labels'              => $notifications,
+      'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+      //'taxonomies'          => array('course_category'),
+      'hierarchical'        => false,
+      'public'              => true,
+      'show_ui'             => true,
+      'show_in_rest'        => false,
+      'show_in_menu'        => true,
+      'show_in_nav_menus'   => true,
+      'show_in_admin_bar'   => true,
+      'menu_position'       => 5,
+      'menu_icon'           => '',
+      'can_export'          => true,
+      'rewrite'             => array('slug' => 'notification'),
+      'has_archive'         => true,
+      'exclude_from_search' => false,
+      'publicly_queryable'  => true,
+      'capability_type'     => 'page',
+
+  );
+
+  register_post_type( 'notification', $notification_args );
+
 }
 add_action( 'init', 'custom_post_type', 0 );
 
@@ -851,6 +899,18 @@ add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_
 //Hide product page 
 remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
 remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
+//Remove links
+add_filter( 'woocommerce_product_is_visible','product_invisible');
+function product_invisible(){
+    return false;
+}
+//Remove single page
+add_filter( 'woocommerce_register_post_type_product','hide_product_page',12,1);
+function hide_product_page($args){
+    $args["publicly_queryable"]=false;
+    $args["public"]=false;
+    return $args;
+}
 
 /*
 ** Endpoints - API
@@ -1229,28 +1289,28 @@ function notification_display(){
     */
 
     $args = array(
-        'post_type' => 'feedback', 
-        'author' => $user->ID,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'posts_per_page' => -1,
+      'post_type' => 'feedback', 
+      'author' => $user->ID,
+      'orderby' => 'post_date',
+      'order' => 'DESC',
+      'posts_per_page' => -1,
     );
 
     $notifications = get_posts($args);
     $todos = array();
 
     if(!empty($notifications))
-        foreach($notifications as $todo){
-            $read = get_field('read_feedback', $todo->ID);
-            if($read)
-                continue;
-            array_push($todos,$todo);
-        }
+      foreach($notifications as $todo){
+          $read = get_field('read_feedback', $todo->ID);
+          if($read)
+              continue;
+          array_push($todos,$todo);
+      }
 
     if(!empty($todos))
-        return $todos;
+      return $todos;
     else
-        return ['error' => 'No notification you didn\'t see yet !'];
+      return ['error' => 'No notification you didn\'t see yet !'];
 }
 
 function notification($data){
@@ -1473,6 +1533,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'fillUpAuthor',
   ));
 
+  register_rest_route('custom/v1', '/delete-old-course-databank', array(
+      'methods' => 'GET',
+      'callback' => 'delete_odl_courses_databank',
+  ));
+
   register_rest_route( 'custom/v1', '/topics/subtopics', array(
     'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
@@ -1508,6 +1573,11 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getExpertCourseOptimized',
   ));
 
+  register_rest_route('custom/v2', '/topic/(?P<id>\d+)/courses', array(
+    'methods' => 'GET',
+    'callback' => 'getTopicCoursesOptimized',
+  ));
+
   register_rest_route('custom/v2', '/user/(?P<user_id>\d+)/statistics', array(
     'methods' => 'GET',
     'callback' => 'timeSpentOnAllCourseType',
@@ -1516,6 +1586,21 @@ add_action( 'rest_api_init', function () {
   register_rest_route('custom/v2', '/user/statistics', array(
     'methods' => 'PUT',
     'callback' => 'updateTimeSpentOnCourseType',
+  ));
+
+  register_rest_route('custom/v2', '/user/subtopic/statistics', array(
+    'methods' => 'GET',
+    'callback' => 'getUserSubtopicsStatistics',
+  ));
+
+  register_rest_route('custom/v2', '/user/internal/courses', array(
+    'methods' => 'GET',
+    'callback' => 'getUserInternalCourses',
+  ));
+
+  register_rest_route('custom/v2', '/user/statistics/subtopic/update', array(
+    'methods' => 'POST',
+    'callback' => 'updateUserSubtopicsStatistics',
   ));
 
   register_rest_route('custom/v2', '/user/courses/statistics', array(
@@ -1605,15 +1690,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'answerAssessment',
   ));
 
-
   register_rest_route ('custom/v1', 'user/assessment/(?P<id>\d+)/validate/score', array(
     'methods' => 'GET',
     'callback' => 'getAssessmentValidateScore',
   ));
-
-  register_rest_route ('custom/v1', '/communities', array(
+  
+  register_rest_route ('custom/v1', '/community/personal/(?P<id>\d+)', array(
     'methods' => 'GET',
-    'callback' => 'getCommunities',
+    'callback' => 'getCommunitiesPersonal',
   ));
 
   register_rest_route ('custom/v2', '/communities', array(
@@ -1736,9 +1820,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'cleanVideoCourse'
   ));
 
-  register_rest_route ('custom/v1', '/weekly-recommendation', array(
+  // register_rest_route ('custom/v1', '/weekly-recommendation', array(
+  //   'methods' => 'GET',
+  //   'callback' => 'recommendedWeekly'
+  // ));
+
+  register_rest_route ('custom/v1', '/update-language-courses', array(
     'methods' => 'GET',
-    'callback' => 'recommendedWeekly'
+    'callback' => 'updateLangaugeCourses'
   ));
 
   //Liggeey
@@ -1802,6 +1891,17 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allCoursesOptimized',
   ));
 
+  register_rest_route('custom/v2', '/course/search/(?P<keywords>[-\w]+)', array(
+    'methods' => 'GET',
+    'callback' => 'searchCoursesViaKeyWords',
+  ));
+
+  //Endpoint "Liggeey"
+  register_rest_route('custom/v2', '/course/filtered', array(
+    'methods' => 'GET',
+    'callback' => 'allCoursesOptimizedWithFilter',
+  ));
+
   register_rest_route ('custom/v1', '/apply', array( 
     'methods' => 'POST',
     'callback' => 'jobUser'
@@ -1859,12 +1959,17 @@ add_action( 'rest_api_init', function () {
 
   register_rest_route ('custom/v1', '/user/application', array(
     'methods' => 'POST',
-    'callback' => 'jobUserApprove'
+    'callback' => 'jobUserApproval'
   ));
 
   register_rest_route ('custom/v1', '/user/trash/favourite', array(
     'methods' => 'POST',
     'callback' => 'trashFavouriteCandidate'
+  ));
+
+  register_rest_route ('custom/v1', '/user/trash/job', array(
+    'methods' => 'POST',
+    'callback' => 'trashFavouriteJob'
   ));
 
   // register_rest_route ('custom/v1', '/candidate/profil', array(
@@ -1883,11 +1988,6 @@ add_action( 'rest_api_init', function () {
   ));
 
   register_rest_route ('custom/v1', '/candidate/applieds', array(
-    'methods' => 'POST',
-    'callback' => 'candidateAppliedJobs'
-  ));
-
-  register_rest_route ('custom/v1', '/candidate/AppliedJobs', array(
     'methods' => 'POST',
     'callback' => 'candidateAppliedJobs'
   ));
@@ -1922,9 +2022,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'countUserAppliedJobsAndFavorites'
   ));
 
+  register_rest_route ('custom/v1', '/user/skills', array(
+    'methods' => 'POST',
+    'callback' => 'add_topics_to_user'
+  ));
+
   register_rest_route ('custom/v1', '/candidate/myResume/update', array(
     'methods' => 'POST',
-    'callback' => 'candidateMyResumeEdit'
+    'callback' => 'candidateMyResumeEdit' 
   ));
 
   register_rest_route ('custom/v1', '/candidate/myResume/add', array(
@@ -1935,5 +2040,73 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/candidate/myResume/delete', array(
     'methods' => 'POST',
     'callback' => 'candidateMyResumeDelete'
+  ));
+  //End ...
+
+  register_rest_route ('custom/v1', '/candidate/skills', array(
+    'methods' => 'POST',
+    'callback' => 'editSkills'
+  ));
+
+  // Made By Fadel
+  register_rest_route ('custom/v1', '/notification/create', array(
+    'methods' => 'POST',
+    'callback' => 'sendNotificationBetweenLiggeyActors'
+  ));
+
+  register_rest_route ('custom/v1', '/notification/list', array(
+    'methods' => 'POST',
+    'callback' => 'notifications'
+  ));
+
+  //Made by Mohamed | 'Subscription' Payment link
+  register_rest_route ('custom/v1', '/payment/link', array(
+    'methods' => 'POST',
+    'callback' => 'stripe'
+  ));
+
+  register_rest_route ('custom/v1', '/search/stripe/(?P<userID>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'search'
+  ));
+
+  register_rest_route ('custom/v1', '/update/stripe', array(
+    'methods' => 'POST',
+    'callback' => 'update'
+  ));
+  //End ...
+
+  register_rest_route ('custom/v1', '/tofollow/experts', array(
+    'methods' => 'GET',
+    'callback' => 'expertsToFollow'
+  ));
+
+  //Made by MaxBird
+  register_rest_route ('custom/v1', '/user/activity/(?P<ID>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'activityUser'
+  ));
+
+  //Made by Mohamed | Checkout
+  register_rest_route ('custom/v1', '/checkout-stripe-ui', array(
+    'methods' => 'GET',
+    'callback' => 'session_stripe'
+  ));
+  //End ...
+
+  register_rest_route ('custom/v1', '/upcoming/schedule', array(
+    'methods' => 'GET',
+    'callback' => 'upcoming_schedule_for_the_user'
+  ));
+
+  register_rest_route ('custom/v1', '/teacher/save', array( 
+    //teacher/save ; /save/manager
+    'methods' => 'POST',
+    'callback' => 'saveManager'
+  ));
+
+  register_rest_route ('custom/v1', '/notifications', array(
+    'methods' => 'GET',
+    'callback' => 'get_notifications'
   ));
 });

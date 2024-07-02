@@ -59,7 +59,6 @@
                                 $redirect = $_GET['redirect'];
                             }
                             ?>
-
                             <?php
                             wp_login_form([
                                 'redirect' => $redirect,

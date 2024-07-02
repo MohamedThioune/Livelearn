@@ -1,6 +1,5 @@
 <?php
-define( 'WP_CACHE', false ); // Added by WP Rocket
-
+define('WP_CACHE', false); // WP-Optimize Cache
 /**
  * The base configuration for WordPress
  *
@@ -19,27 +18,19 @@ define( 'WP_CACHE', false ); // Added by WP Rocket
  *
  * @package WordPress
  */
-
-
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define( 'DB_NAME', 'influid_wp161' );
-
 /** MySQL database username */
 define( 'DB_USER', 'influid_wp161' );
-
 /** MySQL database password */
 define( 'DB_PASSWORD', 'SG08[9M]ip' );
-
 /** MySQL hostname */
 define( 'DB_HOST', 'localhost' );
-
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8mb4' );
-
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
-
 /**#@+
  * Authentication unique keys and salts.
  *
@@ -59,9 +50,7 @@ define( 'AUTH_SALT',        'iwh4nl09bzhh7xisgq6f4t7suu52ftbgd3vrqkr5u0rhlsshts8
 define( 'SECURE_AUTH_SALT', 'xg9gglbjpnygvhrbzfouqwet7bl9afcxbpd88qpd2ha1qwoltsgxwuztnfxzohf8' );
 define( 'LOGGED_IN_SALT',   '9xfdgecppvkigneqp4fkhnwspouasggml37zmavtg2rdcze2ooupanr5utz871jr' );
 define( 'NONCE_SALT',       'uzr593wkf4ydwl2rtqg92k0r9tutc0wizpmdh2gyppipdr0uix5dyehllncb1jur' );
-
 /**#@-*/
-
 /**
  * WordPress database table prefix.
  *
@@ -69,7 +58,6 @@ define( 'NONCE_SALT',       'uzr593wkf4ydwl2rtqg92k0r9tutc0wizpmdh2gyppipdr0uix5
  * a unique prefix. Only numbers, letters, and underscores please!
  */
 $table_prefix = 'wpe7_';
-
 /**
  * For developers: WordPress debugging mode.
  *
@@ -82,26 +70,19 @@ $table_prefix = 'wpe7_';
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
-
 // Enable WP_DEBUG mode
-define( 'WP_DEBUG', false );
-
+define( 'WP_DEBUG', true );
 // Enable Debug logging to the /wp-content/debug.log file
-define( 'WP_DEBUG_LOG', false );
+define( 'WP_DEBUG_LOG', true );
 // define( 'WP_DEBUG_LOG', '/logs/errors.log' );
-
 // Disable display of errors and warnings
-define( 'WP_DEBUG_DISPLAY', false );
+define( 'WP_DEBUG_DISPLAY', true );
 @ini_set( 'display_errors', 0 );
-
 /* Add any custom values between this line and the "stop editing" line. */
-
 /* That's all, stop editing! Happy publishing. */
-
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );
 }
-
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';

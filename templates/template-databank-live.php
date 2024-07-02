@@ -284,10 +284,6 @@ else
 
 $user = wp_get_current_user();
 
-   
-     
-
-
 ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -505,11 +501,22 @@ if(!$thumbnail){
                                     }
                                 }
                             }       
-                    //Categories
+                            //Categories
                             $category = " ";
                             $id_category = 0;
-                            $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                            $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
+                            $main_category_id = get_field('categories',  $course->ID);
+                            $main_category_xml = get_field('category_xml',  $course->ID);
+
+                            if($main_category_id)
+                                if(isset($main_category_id[0]))
+                                    if(isset($main_category_id[0]['value']))
+                                        $category_id = ($main_category_id[0]['value']) ? explode(',', $main_category_id[0]['value']) : 0;
+
+                            if($main_category_xml)
+                                if(isset($main_category_xml[0]))
+                                    if(isset($main_category_xml[0]['value']))
+                                        $category_xml = ($main_category_xml[0]['value']) ? intval($main_category_xml[0]['value']) : 0;
+
                             if($category_xml)
                                 if($category_xml != 0)
                                     $category = (String)get_the_category_by_ID($category_xml);
@@ -520,7 +527,7 @@ if(!$thumbnail){
                             
                                           
 
-                                             $link = get_permalink($course->ID);
+                            $link = get_permalink($course->ID);
                                            
                                               
         
@@ -1312,8 +1319,7 @@ function submitCompanyForm() {
     var span = document.getElementsByClassName("close")[0];
     
     // When the user clicks on the button, open the modal
-    
-        modal.style.display = "block";
+    modal.style.display = "block";
     
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
@@ -1482,9 +1488,6 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
 
     });
 </script>
-
-
-
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
