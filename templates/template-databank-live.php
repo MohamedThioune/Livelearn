@@ -37,11 +37,103 @@ if (isset($_POST['filter_databank'])) {
 
     // Filter by course type
     if (!empty($leervom)) {
-        $args['meta_query'][] = array(
-            'key' => 'course_type',
-            'value' => $leervom,
-            'compare' => 'IN',
-        );
+        $courseType=strtolower($leervom[0]);
+       switch ($courseType) {
+          case 'artikel':
+            $type='article';
+          
+            break;
+        case 'podcast':
+           $type='podcast';
+            break;
+        case 'video': 
+             $type='video';
+           
+            break;
+        case 'opleidingen':
+            $type='course';
+           
+            break;
+        case 'training':
+            $type='training';
+           
+            break;
+        case 'workshop':
+            $type='workshop';
+           
+            break; 
+        case 'assessment':
+            $type='assessment';
+           
+            break;
+        case 'cursus':
+            $type='cursus';
+           
+            break;
+        case 'webinar':
+            $type='webinar';
+           
+            break;
+        case 'event':
+            $type='event';
+           
+            break; 
+        case 'lezing':
+            $type='reading';
+           
+            break;
+        case 'class':
+            $type='class';
+           
+            break;
+        case 'leerpad':
+            $type='leerpad';
+           
+            break;
+        case 'e-learning':
+            $type='elearning';
+           
+            break;
+        case 'masterclass':
+            $type='masterclass';
+           
+            break;                                
+                      
+
+        default:
+           
+            break;
+
+    }
+
+    
+
+
+
+
+
+       
+        if($courseType=="all"){
+        $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC'
+    );
+        }
+        else{
+       $args = array(
+        
+
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'ordevalue'       => $type,
+        'order' => 'DESC' ,
+        'meta_key'         => 'course_type',
+        'meta_value' => $type
+    );
+        }
     }
 
     // Filter by price
@@ -54,28 +146,67 @@ if (isset($_POST['filter_databank'])) {
         'posts_per_page' => -1,
         'ordevalue'       => 0,
         'order' => 'DESC' ,
-      'meta_key'   => 'price',
-      'meta_value' => 0
+        'meta_key'   => 'price',
+        'meta_value' => 0
     );
-    } else if ($min !== null || $max !== null) {
-        $price_range = array('relation' => 'AND');
-        if ($min !== null) {
-            $price_range[] = array(
-                'key' => 'price',
-                'value' => $min,
-                'compare' => '>=',
-                'type' => 'NUMERIC',
-            );
+    } 
+    if ($min !==null && $max !== null) {
+        $args = array(
+    'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+	    'meta_query' => array(
+		array(
+			'key' => 'price',
+            'value' => array( $min, $max ),
+			'type' => 'numeric',
+			'compare' => 'BETWEEN'
+			
+		)
+	)
+);
+    }
+    if ($min == null || $max == null) {
+    
+
+        // $price_range = array('relation' => 'AND');
+    if ($min !== null) {
+           
+    $args = array(
+    'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+	    'meta_query' => array(
+		array(
+			'key' => 'price',
+			'value' => $min,
+			'type' => 'numeric', // specify it for numeric values
+			'compare' => '>='
+		)
+	)
+);
+
         }
-        if ($max !== null) {
-            $price_range[] = array(
-                'key' => 'price',
-                'value' => $max,
-                'compare' => '<=',
-                'type' => 'NUMERIC',
-            );
-        }
-        $args['meta_query'][] = $price_range;
+         if ($max !== null) {
+       
+           $args = array(
+    'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+	    'meta_query' => array(
+		array(
+			'key' => 'price',
+			'value' => $max,
+			'type' => 'numeric', // specify it for numeric values
+			'compare' => '<='
+		)
+	)
+);
+         }
+        // $args['meta_query'][] = $price_range;
     }
 
     // Filter by status
@@ -210,7 +341,7 @@ $user = wp_get_current_user();
                         <p class="textFilter">Filter :</p>
                         <button class="btn hideBarFilterBlock"><i class="fa fa-close"></i></button>
                         <select name="leervom[]">
-                            <option value="" disabled>Leervoom</option>
+                            <option value="All">All</option>
                             <option value="Opleidingen"
                                 <?php if(isset($leervom) && in_array('Opleidingen', $leervom)) echo "selected"; ?>>
                                 Opleidingen</option>
@@ -267,7 +398,7 @@ $user = wp_get_current_user();
                             </div>
                              <div class="input-group">
                                 <label for="">Gratis</label>
-                                <input name="gratis" type="checkbox" <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?> >
+                                <input name="gratis" type="checkbox" >
                             </div>
                           
                         </div>
@@ -544,9 +675,71 @@ if(!$thumbnail){
                         </tbody>
                     </table>
                     
-                <div class="pagination-container">
-                    <!-- Les boutons de pagination seront ajoutés ici -->
-                </div>
+                    <center>
+                    <?php
+                        if($pagination_number>10){
+                            if ($_GET['id']>1) {
+                                echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
+                            }
+
+                            if($_GET['id']+5<=$pagination_number && $_GET['id']-5>=1){
+                                foreach (range($_GET['id']-5,$_GET['id']+5) as $number) {
+                                    if (isset($_GET['id'])) {
+                                        if ($_GET['id'] == $number) {
+                                            echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                        } else {
+                                            echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                        }
+                                    } else {
+                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                    }
+                                }
+                            }else if ($_GET['id']+5>=$pagination_number) {
+                                foreach (range($_GET['id']-5, $pagination_number) as $number) {
+                                    if (isset($_GET['id'])) {
+                                        if ($_GET['id'] == $number) {
+                                            echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                        } else {
+                                            echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                        }
+                                    } else {
+                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                    }
+                                }
+                            }else if ($_GET['id']-5<=1) {
+                                foreach (range(1, $_GET['id']+5) as $number) {
+                                    if (isset($_GET['id'])) {
+                                        if ($_GET['id'] == $number) {
+                                            echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                        } else {
+                                            echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                        }
+                                    } else {
+                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                    }
+                                }
+                            }
+                            if($_GET['id'] < $pagination_number){ 
+                                echo '<a href="?id='.($_GET['id']+1).'" class="textLiDashboard">next&nbsp;&nbsp;&nbsp;</a>';
+                            }
+                        }else {
+                            if ($_GET['id']>1) {
+                                echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
+                            }
+                            foreach (range(1, $pagination_number) as $number) {
+                                if (isset($_GET['id'])) {
+                                    if ($_GET['id'] == $number) {
+                                        echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                    } else {
+                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                    }
+                                } else {
+                                    echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
+                                }
+                            }
+                        }
+                    ?>
+                    </center>
 
 
                 </div>
