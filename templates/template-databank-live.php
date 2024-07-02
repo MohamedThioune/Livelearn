@@ -1,3 +1,4 @@
+
 <?php /** Template Name: databank live */ ?>
 <?php
 require_once 'add-author.php';
@@ -6,39 +7,42 @@ global $wpdb;
 /*
  * * Pagination
  */
-$pagination = 50;
+$posts_per_page = 50; // Number of posts to show on each page.
+$current_page = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 1;
 
-if (isset($_GET['id'])) 
-    $page = intval($_GET['id']);
-
-if ($page) 
-    $offset = ($page - 1) * $pagination;
 
 
 $courses = array();
 
 // Check if the form is submitted
 if (isset($_POST['filter_databank'])) {
+    
     // Sanitize and validate form values
     $leervom = isset($_POST['leervom']) ? array_map('sanitize_text_field', $_POST['leervom']) : array();
+
     $min = isset($_POST['min']) ? intval($_POST['min']) : null;
     $max = isset($_POST['max']) ? intval($_POST['max']) : null;
    // $gratis = isset($_POST['gratis']) ? boolval($_POST['gratis']) : false;
       $gratis = isset($_POST['gratis']) ? 1 : 0;
     $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
 
-    $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => 100,
-        'order' => 'DESC',
-        'meta_query' => array(),
-    );
+    // $args = array(
+    //     'post_type' => array('course', 'post'),
+    //     'post_status' => 'publish',
+    //     'posts_per_page' => 100,
+    //     'order' => 'DESC',
+    //     'meta_query' => array(),
+    // );
 
     // Filter by course type
     if (!empty($leervom)) {
         $courseType=strtolower($leervom[0]);
+        
        switch ($courseType) {
+        case 'all':
+            $type='all';
+          
+            break;
           case 'artikel':
             $type='article';
           
@@ -113,21 +117,20 @@ if (isset($_POST['filter_databank'])) {
 
 
        
-        if($courseType=="all"){
+    if($courseType=="all"){
         $args = array(
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC'
     );
-        }
-        else{
+    }
+    else{
        $args = array(
         
-
+        'posts_per_page' => -1,
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
         'ordevalue'       => $type,
         'order' => 'DESC' ,
         'meta_key'         => 'course_type',
@@ -150,9 +153,9 @@ if (isset($_POST['filter_databank'])) {
         'meta_value' => 0
     );
     } 
-    if ($min !==null && $max !== null) {
+    if ($min !=null && $max != null) {
         $args = array(
-    'post_type' => array('course', 'post'),
+       'post_type' => array('course', 'post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
@@ -167,11 +170,11 @@ if (isset($_POST['filter_databank'])) {
 	)
 );
     }
-    if ($min == null || $max == null) {
+    else if ($min != null || $max != null) {
     
 
         // $price_range = array('relation' => 'AND');
-    if ($min !== null) {
+    if ($min != null) {
            
     $args = array(
     'post_type' => array('course', 'post'),
@@ -220,16 +223,43 @@ if (isset($_POST['filter_databank'])) {
 
     // Fetch filtered courses
     $courses = get_posts($args);
+    
+   $total_posts = count($courses);
+
+// Calculate the total number of pages.
+$total_pages = ceil($total_posts / $posts_per_page);
+$args['posts_per_page'] = $posts_per_page;
+$args['paged'] = $current_page;
+$courses = get_posts($args);
 
 } else {
     // Default behavior: Fetch all published courses if no filter is applied
+  
+
+
     $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC'
-    );
-    $courses = get_posts($args);
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC'
+);
+  $courses_on_current_page = get_posts($args);
+  $count = count($courses_on_current_page);
+  $total_posts = $count;
+
+// Calculate the total number of pages.
+$total_pages = ceil($total_posts / $posts_per_page);
+// Query the posts for the current page.
+$args = array(
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'posts_per_page' => $posts_per_page,
+    'paged' => $current_page,
+    'order' => 'DESC',
+);
+
+
+$courses = get_posts($args);
 }
 
 
@@ -246,6 +276,14 @@ $args = array(
 );
 return count(get_posts($args));
  }
+   $args = array(
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC'
+);
+  $courses_on_current_page = get_posts($args);
+  $count = count($courses_on_current_page);
  $countVideos = countTypeCourse('video');
  $countArtikles = countTypeCourse('article');
  $countPodcasts=countTypeCourse('podcast');
@@ -254,14 +292,7 @@ return count(get_posts($args));
 
 
 // // Retrieve courses using get_posts()
-$args = array(
-    'post_type' => array('course', 'post'),
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC'
-);
- $courses_on_current_page = get_posts($args);
-  $count = count($courses_on_current_page);
+
 
   // get compagnies:
    $args = array(
@@ -277,10 +308,8 @@ $args = array(
    $author_users = get_users(array('role_in' => ['author','administrator']));
 
 
-if ($count % $pagination == 0) 
-    $pagination_number = $count / $pagination;
-else 
-    $pagination_number = intval($count / $pagination) + 1;
+
+
 
 $user = wp_get_current_user();
 
@@ -290,6 +319,45 @@ $user = wp_get_current_user();
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+ <style>
+        
+       
+        .pagination {
+            list-style-type: none;
+            padding: 10px 0;
+            display: inline-flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+        .pagination li {
+            box-sizing: border-box;
+            padding-right: 10px;
+        }
+        .pagination li a {
+            box-sizing: border-box;
+            background-color: #e2e6e6;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            color: #616872;
+            border-radius: 4px;
+        }
+        .pagination li a:hover {
+            background-color: #d4dada;
+        }
+        .pagination .next a, .pagination .prev a {
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        .pagination .currentpage a {
+            background-color: #518acb;
+            color: #fff;
+        }
+        .pagination .currentpage a:hover {
+            background-color: #518acb;
+        }
+    </style>
 
 
 <div class="new-content-databank">
@@ -472,7 +540,7 @@ if(!$thumbnail){
                             */
                             $p = get_field('price', $course->ID);
                             if($p != "0")
-                                $price = number_format($p, 2, '.', ',');
+                                $price = number_format((float)$p, 2, '.', ',');
                             else 
                                 $price = 'Gratis';
                                      
@@ -503,9 +571,10 @@ if(!$thumbnail){
                             }       
                             //Categories
                             $category = " ";
-                            $id_category = 0;
+                            $category_id = 0;
                             $main_category_id = get_field('categories',  $course->ID);
                             $main_category_xml = get_field('category_xml',  $course->ID);
+                            $category_xml=0;
 
                             if($main_category_id)
                                 if(isset($main_category_id[0]))
@@ -545,7 +614,7 @@ if(!$thumbnail){
                                     </div>
                                 </td>
                                 <td class="textTh text-left first-td-databank"><a style="color:#212529;font-weight:bold"
-                                        href=""><?php echo $course->post_title; ?></a></td>
+                                        href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                                 <td class="textTh"><?= get_field('course_type', $course->ID);?></td>
                                 <td id="" class="textTh td_subtopics">
                                     <?php echo empty(get_field('price', $course->ID)) ? 'Gratis':  get_field('price', $course->ID); ?>
@@ -682,71 +751,47 @@ if(!$thumbnail){
                         </tbody>
                     </table>
                     
-                    <center>
-                    <?php
-                        if($pagination_number>10){
-                            if ($_GET['id']>1) {
-                                echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
-                            }
+                     <center>
+                     <?php if ($total_pages > 1): ?>
+        <ul class="pagination">
+            <?php if ($current_page > 1): ?>
+                <li class="prev"><a href="?id=<?php echo $current_page - 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard">Prev</a></li>
+            <?php endif; ?>
 
-                            if($_GET['id']+5<=$pagination_number && $_GET['id']-5>=1){
-                                foreach (range($_GET['id']-5,$_GET['id']+5) as $number) {
-                                    if (isset($_GET['id'])) {
-                                        if ($_GET['id'] == $number) {
-                                            echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                        } else {
-                                            echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                        }
-                                    } else {
-                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                    }
-                                }
-                            }else if ($_GET['id']+5>=$pagination_number) {
-                                foreach (range($_GET['id']-5, $pagination_number) as $number) {
-                                    if (isset($_GET['id'])) {
-                                        if ($_GET['id'] == $number) {
-                                            echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                        } else {
-                                            echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                        }
-                                    } else {
-                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                    }
-                                }
-                            }else if ($_GET['id']-5<=1) {
-                                foreach (range(1, $_GET['id']+5) as $number) {
-                                    if (isset($_GET['id'])) {
-                                        if ($_GET['id'] == $number) {
-                                            echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                        } else {
-                                            echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                        }
-                                    } else {
-                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                    }
-                                }
-                            }
-                            if($_GET['id'] < $pagination_number){ 
-                                echo '<a href="?id='.($_GET['id']+1).'" class="textLiDashboard">next&nbsp;&nbsp;&nbsp;</a>';
-                            }
-                        }else {
-                            if ($_GET['id']>1) {
-                                echo '<a href="?id='.($_GET['id']-1).'" class="textLiDashboard">prev&nbsp;&nbsp;&nbsp;</a>';
-                            }
-                            foreach (range(1, $pagination_number) as $number) {
-                                if (isset($_GET['id'])) {
-                                    if ($_GET['id'] == $number) {
-                                        echo '<a href="?id=' . $number . '" style="color: #DB372C; font-weight: bold" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                    } else {
-                                        echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                    }
-                                } else {
-                                    echo '<a href="?id=' . $number . '" class="textLiDashboard">' . $number . '&nbsp;&nbsp;&nbsp;</a>';
-                                }
-                            }
-                        }
-                    ?>
-                    </center>
+            <?php if ($current_page > 3): ?>
+                <li class="start"><a href="?id=1" style="color: #DB372C; font-weight: bold" class="textLiDashboard">1</a></li>
+                <li class="dots">...</li>
+            <?php endif; ?>
+
+            <?php if ($current_page - 2 > 0): ?>
+                <li class="page"><a href="?id=<?php echo $current_page - 2; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page - 2; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+            <?php if ($current_page - 1 > 0): ?>
+                <li class="page"><a href="?id=<?php echo $current_page - 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page - 1; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+
+            <li class="currentpage"><a href="?id=<?php echo $current_page; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page; ?>&nbsp;&nbsp;&nbsp;</a></li>
+
+            <?php if ($current_page + 1 <= $total_pages): ?>
+                <li class="page"><a href="?id=<?php echo $current_page + 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page + 1; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+            <?php if ($current_page + 2 <= $total_pages): ?>
+                <li class="page"><a href="?id=<?php echo $current_page + 2; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page + 2; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+
+            <?php if ($current_page < $total_pages - 2): ?>
+                <li class="dots">...</li>
+                <li class="end"><a href="?id=<?php echo $total_pages; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $total_pages; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+
+            <?php if ($current_page < $total_pages): ?>
+                <li class="next"><a href="?id=<?php echo $current_page + 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard">Next</a></li>
+            <?php endif; ?>
+        </ul>
+    <?php endif; ?>
+                     
+                     </center>
+                   
 
 
                 </div>
