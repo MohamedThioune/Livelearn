@@ -1,5 +1,25 @@
 <html lang="en">
 <?php
+
+require __DIR__ . '/../templates/checkout.php';
+
+//Stripe return callback
+if(isset($_GET['session_id'])):
+    $status_stripe = stripe_status($_GET['session_id']);
+    if(isset($status_stripe['error']))
+        $message = "<p>Something wrong through the processs payment, please try again later !</p>";
+    
+    if(isset($status_stripe['status']))
+        if($status_stripe['status'] == 'complete')
+            $message = '<section id="success" class="hidden">
+                            <p>
+                            We appreciate your business! A confirmation email will be sent to <span id="customer-email">' . $session['customer_email'] . '</span>.
+
+                            If you have any questions, please email <a href="mailto:info@livelearn.nl">info@livelearn.nl</a>.
+                            </p>
+                        </section>';
+
+endif;
 /*
 * * Information user
 */
@@ -200,6 +220,9 @@ $no_content = "<div class='emty-block-activity'>
 <body>
 <div class="content-activity2">
     <div class="advert-course-Block d-flex">
+        <?php
+            echo (isset($message)) ? $message : '';
+        ?>
         <div class="advert-one d-flex">
             <div class="blockTextAdvert">
                 <p class="name">Hello <span> <?= $full_name_user ?></span> !</p>

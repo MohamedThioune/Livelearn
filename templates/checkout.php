@@ -78,6 +78,46 @@ function session_stripe($price_id, $mode){
     return json_encode(array('clientSecret' => $client_secret));
 }
 
+function retrieve_session($session_id){
+    //case : session_id null
+    if(!$session_id)
+        return 0;
+
+    $endpoint = "https://api.stripe.com/v1/checkout/sessions/" . $session_id;
+    $information = makecall($endpoint, 'GET');
+
+    return $information;
+}
+
+function stripe_status($data){
+    //Call retrieve_session
+    $session = null;
+    $return_session = null;
+    $information = retrieve_session($data);
+
+    //case : error primary
+    if(isset($information['error']))
+        return 0;
+
+    //case : error internal
+    if(isset($information['data']->error))
+        return 0;
+
+    if($information['data'])
+        $session = $information['data'];
+
+    //case : session status
+    try {
+        $return_session = ['status' => $session->status, 'customer_email' => $session->customer_details->email];
+        return $return_session;
+        // http_response_code(200);
+    } catch (Error $e) {
+        $return_session = ['error' => $e->getMessage()];
+        return $return_session;
+        // http_response_code(500);
+    }
+}
+
 //Call stripe secret
 if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
