@@ -11,7 +11,7 @@ if(isset($_GET['session_id'])):
     
     if(isset($status_stripe['status']))
         if($status_stripe['status'] == 'complete')
-            $message = '<section id="success" class="hidden" style="background-color:green; color:white; border-radius: 2px">
+            $message = '<section id="success" class="hidden" style="background-color:#26E4E4; border-radius: 2px">
                             <p>
                             
                             We appreciate your business! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.
