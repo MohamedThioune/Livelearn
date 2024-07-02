@@ -11,14 +11,14 @@ if(isset($_GET['session_id'])):
     
     if(isset($status_stripe['status']))
         if($status_stripe['status'] == 'complete')
-            $message = '<section id="success" class="hidden">
+            $message = '<section id="success" class="hidden" style="background-color:green; color:white">
                             <p>
-                            We appreciate your business! A confirmation email will be sent to <span id="customer-email">' . $session['customer_email'] . '</span>.
+                            
+                            We appreciate your business! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.
 
                             If you have any questions, please email <a href="mailto:info@livelearn.nl">info@livelearn.nl</a>.
                             </p>
-                        </section>';
-
+                        </section><br><br>';
 endif;
 /*
 * * Information user
