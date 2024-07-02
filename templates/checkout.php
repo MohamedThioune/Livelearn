@@ -109,12 +109,11 @@ function stripe_status($data){
     //case : session status
     try {
         $return_session = ['status' => $session->status, 'customer_email' => $session->customer_details->email];
+        var_dump($return_session);
         return $return_session;
-        // http_response_code(200);
     } catch (Error $e) {
         $return_session = ['error' => $e->getMessage()];
         return $return_session;
-        // http_response_code(500);
     }
 }
 
