@@ -54,6 +54,9 @@ if(isset($productPrice)):
     $price_id = create_price($data_price);
     $mode = ($prijs) ? 'payment' : 'setup';
 
+    var_dump($price_id);
+    var_dump($mode);
+
     // CRYPT
     // $key_password = "C@##me1995.";
     // $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
