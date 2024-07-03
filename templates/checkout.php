@@ -108,8 +108,8 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
 
     //Create session object
     $information = create_session($data);
-    // var_dump($information);
-    // return 0;
+    var_dump($information);
+    return 0;
 
     //case : error primary
     if(isset($information['error']))
@@ -167,12 +167,14 @@ function stripe_status($data){
 }
 
 //Call stripe secret
-// $_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
-// $_GET['mode'] = 'payment';
-$postID = isset($_GET['postID']) ? $_GET['postID'] : null;
-$userID = isset($_GET['userID']) ? $_GET['userID'] : null;
+$_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
+$_GET['mode'] = 'payment';
+$postID = 10799;
+$userID = 3;
+// $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
+// $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
 
 if(isset($_GET['priceID']) && $_GET['mode']):
-    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID );
+    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
     echo($session_stripe_secret);
 endif;
