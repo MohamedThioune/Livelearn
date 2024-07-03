@@ -88,7 +88,6 @@ endif;
         const mode = "<?php echo $mode ?>";
         const postID = "<?php echo $postID ?>";
         const userID = "<?php echo $userID ?>";
-        alert(postID, userID);
         const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID +  "&userID=" + userID, {
             method: "POST",
         });
