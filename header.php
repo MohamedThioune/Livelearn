@@ -87,6 +87,7 @@ foreach($bangerichts as $key1=>$tag){
     }
 
 }
+$row_functies='';
 
 foreach($functies as $key1 =>$tag)
 {
@@ -109,7 +110,7 @@ foreach($functies as $key1 =>$tag)
         $row_functies.= '</div>';
     }
 }
-
+$row_skills='';
 foreach($skills as $key1=>$tag){
     //Topics
     $cats_skills = get_categories( array(
@@ -129,7 +130,7 @@ foreach($skills as $key1=>$tag){
     }
 
 }
-
+$row_interesses='';
 foreach($interesses as $key1=>$tag){
     //Topics
     $cats_interesses = get_categories( array(
