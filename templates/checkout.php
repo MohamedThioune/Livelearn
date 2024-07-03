@@ -85,6 +85,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
             'automatic_tax' => [
                 'enabled' => "true",
             ],
+            'customer_creation' => 'if_required',
             'metadata' => [
                 'userID' => $user->ID,
                 'postID' => $post->ID,
@@ -168,7 +169,10 @@ function stripe_status($data){
 //Call stripe secret
 // $_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
 // $_GET['mode'] = 'payment';
+$postID = isset($_GET['postID']) ? $_GET['postID'] : null;
+$userID = isset($_GET['userID']) ? $_GET['userID'] : null;
+
 if(isset($_GET['priceID']) && $_GET['mode']):
-    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
+    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID );
     echo($session_stripe_secret);
 endif;
