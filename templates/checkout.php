@@ -29,10 +29,40 @@ function create_session($data){
     return $information;
 }
 
-function session_stripe($price_id, $mode){
+function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
     $YOUR_DOMAIN = get_site_url() . '/dashboard/user/activity/';
-    // $YOUR_ENDPOINT = get_site_url() . '/wp-json/custom/v1/checkout-stripe';
     $PRICE_ID = ($price_id) ?: null;
+
+    //Get post information
+    $post = array(
+        'ID' => null, 
+        'name' => null, 
+        'description' => null,
+        'prijs' => null,
+        'permalink' => null,   
+        'image' => null
+    );
+    $post_data = ($post_id) ? get_post($post_id) : array();
+    $standard_text = 'Your adventure begins now with Livelearn !'; 
+    if(!empty($post_data)):
+        $course_type = get_field('course_type', $post_data->ID);
+        $post['ID'] = $post_data->ID;
+        $post['name'] = $post_data->post_title;
+        $post['description'] = get_field('short_description', $post_data->ID) ?: $standard_text;
+        $post['prijs'] = get_field('price', $post_data->ID) ?: 0; 
+        $post['permalink'] = get_permalink($post_data->ID); 
+        $thumbnail = "";
+        if(!$thumbnail):
+            $thumbnail = get_field('url_image_xml', $post_data->ID);
+            if(!$thumbnail)
+                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        endif;
+        $post['image'] = $thumbnail;
+    endif;
+    $post = (Object)$post_data;
+
+    //Get User information
+    $user = get_user_by('ID', $user_id);
 
     if($mode == 'setup')
         $data = [
@@ -51,15 +81,34 @@ function session_stripe($price_id, $mode){
                 'quantity' => 1,
             ]],
             'mode' => $mode,
-            // 'return_url' => $YOUR_DOMAIN,
             'return_url' => $YOUR_DOMAIN . '/?session_id={CHECKOUT_SESSION_ID}',
             'automatic_tax' => [
                 'enabled' => "true",
+            ],
+            'metadata' => [
+                'userID' => $user->ID,
+                'postID' => $post->ID,
+            ],
+            'invoice_creation' => [
+                'enabled' => "true",
+                'invoice_data' => [
+                    'custom_fields' => [
+                        'name' => $user->display_name,
+                        'email' => $user->user_email,
+                    ],
+                    'description' => $post->name,
+                    'metadata' => [
+                        'userID' => $user->ID,
+                        'postID' => $post->ID,
+                    ],
+                ],
             ],
         ];
 
     //Create session object
     $information = create_session($data);
+    var_dump($information);
+    return 0;
 
     //case : error primary
     if(isset($information['error']))
@@ -117,7 +166,8 @@ function stripe_status($data){
 }
 
 //Call stripe secret
-if(isset($_GET['priceID']) && $_GET['mode']):
-    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
+// if(isset($_GET['priceID']) && $_GET['mode']):
+    $session_stripe_secret = session_stripe("price_1PYBukEuOtOzwPYXUiCztgKa", "payment");
+    // $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
     echo($session_stripe_secret);
-endif;
+// endif;
