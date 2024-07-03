@@ -10,6 +10,7 @@ $price_id = '';
 $mode = 'setup';
 $postID = '';
 $userID = '';
+$prijs = 0;
 
 extract($_POST);
 
@@ -215,6 +216,9 @@ endif;
         </div>
 
         <br><br>
+        <?php
+        if($prijs):
+        ?>
         <div class="contentFormSubscription">
             <div id='stripe-checkout-first'>
                 <h2> Hit on save once you ready !</h2>
@@ -225,6 +229,9 @@ endif;
                 </div>
             </div>
         </div>
+        <?php
+        endif;
+        ?>
 
    </div>
 </div>
