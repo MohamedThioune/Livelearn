@@ -8,6 +8,8 @@ require_once 'new-module-subscribe.php';
 //Price ID
 $price_id = '';
 $mode = 'setup';
+$postID = '';
+$userID = '';
 
 extract($_POST);
 
@@ -16,6 +18,9 @@ if(isset($productPrice)):
     // get course
     $post = get_post($postID);
     $course_type = get_field('course_type', $postID);
+
+    // get user 
+    $userID = get_current_user_id();
 
     // create product
     $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
@@ -63,7 +68,6 @@ if(isset($productPrice)):
     // header('Location: '. $URL);
 endif;
 
-
 //create ...
 
 ?>
@@ -81,7 +85,10 @@ endif;
     const fetchClientSecret = async () => {
         const priceID = "<?php echo $price_id ?>";
         const mode = "<?php echo $mode ?>";
-        const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode, {
+        const postID = "<?php echo $postID ?>";
+        const userID = "<?php echo $userID ?>";
+        alert(postID, userID);
+        const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID +  "&userID=" + userID, {
             method: "POST",
         });
         const { clientSecret } = await response.json();

@@ -215,7 +215,6 @@ $no_content = "<div class='emty-block-activity'>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
-
 <body>
 <div class="content-activity2">
     <div class="advert-course-Block d-flex">

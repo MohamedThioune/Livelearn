@@ -193,7 +193,7 @@ function create_price($data){
     ];
     $endpoint = "https://api.stripe.com/v1/prices";
     $information = makecall($endpoint, 'POST', $data_price);
-
+ 
     //case : error primary
     if(isset($information['error']))
         return 0;
