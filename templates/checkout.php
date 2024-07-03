@@ -34,7 +34,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
     $PRICE_ID = ($price_id) ?: null;
 
     //Get post information
-    $post = array(
+    $sample = array(
         'ID' => null, 
         'name' => null, 
         'description' => null,
@@ -46,11 +46,11 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
     $standard_text = 'Your adventure begins now with Livelearn !'; 
     if(!empty($post_data)):
         $course_type = get_field('course_type', $post_data->ID);
-        $post['ID'] = $post_data->ID;
-        $post['name'] = $post_data->post_title;
-        $post['description'] = get_field('short_description', $post_data->ID) ?: $standard_text;
-        $post['prijs'] = get_field('price', $post_data->ID) ?: 0; 
-        $post['permalink'] = get_permalink($post_data->ID); 
+        $sample['ID'] = $post_data->ID;
+        $sample['name'] = $post_data->post_title;
+        $sample['description'] = get_field('short_description', $post_data->ID) ?: $standard_text;
+        $sample['prijs'] = get_field('price', $post_data->ID) ?: 0; 
+        $sample['permalink'] = get_permalink($post_data->ID); 
         $thumbnail = "";
         if(!$thumbnail):
             $thumbnail = get_field('url_image_xml', $post_data->ID);
@@ -59,7 +59,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
         endif;
         $post['image'] = $thumbnail;
     endif;
-    $post = (Object)$post_data;
+    $post = (Object)$sample;
 
     //Get User information
     $user = get_user_by('ID', $user_id);
