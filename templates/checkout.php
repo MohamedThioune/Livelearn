@@ -93,10 +93,10 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
             'invoice_creation' => [
                 'enabled' => "true",
                 'invoice_data' => [
-                    'custom_fields' => [
-                        'name' => $user->display_name,
-                        'email' => $user->user_email,
-                    ],
+                    // 'custom_fields' => [
+                    //     'name' => $user->display_name,
+                    //     'email' => $user->user_email,
+                    // ],
                     'description' => $post->name,
                     'metadata' => [
                         'userID' => $user->ID,
