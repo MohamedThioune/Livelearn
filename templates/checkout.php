@@ -166,8 +166,9 @@ function stripe_status($data){
 }
 
 //Call stripe secret
-// if(isset($_GET['priceID']) && $_GET['mode']):
-    // $session_stripe_secret = session_stripe("price_1PYBukEuOtOzwPYXUiCztgKa", "payment");
+// $_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
+// $_GET['mode'] = 'payment';
+if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode']);
     echo($session_stripe_secret);
-// endif;
+endif;
