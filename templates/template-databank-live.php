@@ -740,23 +740,13 @@ if(!$thumbnail){
                                     }
                                 }
                             }       
-                            //Categories
+                            // //Categories
+                           
+                             //Categories
                             $category = " ";
-                            $category_id = 0;
-                            $main_category_id = get_field('categories',  $course->ID);
-                            $main_category_xml = get_field('category_xml',  $course->ID);
-                            $category_xml=0;
-
-                            if($main_category_id)
-                                if(isset($main_category_id[0]))
-                                    if(isset($main_category_id[0]['value']))
-                                        $category_id = ($main_category_id[0]['value']) ? explode(',', $main_category_id[0]['value']) : 0;
-
-                            if($main_category_xml)
-                                if(isset($main_category_xml[0]))
-                                    if(isset($main_category_xml[0]['value']))
-                                        $category_xml = ($main_category_xml[0]['value']) ? intval($main_category_xml[0]['value']) : 0;
-
+                            $id_category = 0;
+                            $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                            $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
                             if($category_xml)
                                 if($category_xml != 0)
                                     $category = (String)get_the_category_by_ID($category_xml);
@@ -764,7 +754,6 @@ if(!$thumbnail){
                             if($category_id)
                                 if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
-                            
                                           
 
                             $link = get_permalink($course->ID);
