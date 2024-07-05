@@ -57,7 +57,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
             if(!$thumbnail)
                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
         endif;
-        $post['image'] = $thumbnail;
+        $sample['image'] = $thumbnail;
     endif;
     $post = (Object)$sample;
 
