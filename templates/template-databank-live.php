@@ -14,31 +14,29 @@ $current_page = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 1;
 
 $courses = array();
 
+
 // Check if the form is submitted
 if (isset($_POST['filter_databank'])) {
-    
     // Sanitize and validate form values
     $leervom = isset($_POST['leervom']) ? array_map('sanitize_text_field', $_POST['leervom']) : array();
-
     $min = isset($_POST['min']) ? intval($_POST['min']) : null;
     $max = isset($_POST['max']) ? intval($_POST['max']) : null;
-   // $gratis = isset($_POST['gratis']) ? boolval($_POST['gratis']) : false;
-      $gratis = isset($_POST['gratis']) ? 1 : 0;
+    $gratis = isset($_POST['gratis']) ? 1 : 0;
     $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
 
-    // $args = array(
-    //     'post_type' => array('course', 'post'),
-    //     'post_status' => 'publish',
-    //     'posts_per_page' => 100,
-    //     'order' => 'DESC',
-    //     'meta_query' => array(),
-    // );
+    // Define the base arguments for WP_Query
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        'meta_query' => array()
+    );
 
     // Filter by course type
     if (!empty($leervom)) {
-        $courseType=strtolower($leervom[0]);
-        
-       switch ($courseType) {
+        $courseType = strtolower($leervom[0]);
+               switch ($courseType) {
         case 'all':
             $type='all';
           
@@ -109,24 +107,10 @@ if (isset($_POST['filter_databank'])) {
             break;
 
     }
+        //$type = ($courseType == 'all') ? 'all' : $courseType;
 
-    
-
-
-
-
-
-       
-    if($courseType=="all"){
-        $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC'
-    );
-    }
-    else{
-       $args = array(
+        if ($type != "all") {
+           $args = array(
         
         'posts_per_page' => -1,
         'post_type' => array('course', 'post'),
@@ -141,75 +125,32 @@ if (isset($_POST['filter_databank'])) {
 
     // Filter by price
     if ($gratis) {
-            $args = array(
-        
-
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'ordevalue'       => 0,
-        'order' => 'DESC' ,
-        'meta_key'   => 'price',
-        'meta_value' => 0
-    );
-    } 
-    if ($min !=null && $max != null) {
-        $args = array(
-       'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-	    'meta_query' => array(
-		array(
-			'key' => 'price',
-            'value' => array( $min, $max ),
-			'type' => 'numeric',
-			'compare' => 'BETWEEN'
-			
-		)
-	)
-);
-    }
-    else if ($min != null || $max != null) {
-    
-
-        // $price_range = array('relation' => 'AND');
-    if ($min != null) {
-           
-    $args = array(
-    'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-	    'meta_query' => array(
-		array(
-			'key' => 'price',
-			'value' => $min,
-			'type' => 'numeric', // specify it for numeric values
-			'compare' => '>='
-		)
-	)
-);
-
-        }
-         if ($max !== null) {
-       
-           $args = array(
-    'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-	    'meta_query' => array(
-		array(
-			'key' => 'price',
-			'value' => $max,
-			'type' => 'numeric', // specify it for numeric values
-			'compare' => '<='
-		)
-	)
-);
-         }
-        // $args['meta_query'][] = $price_range;
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => 0,
+            'compare' => '='
+        );
+    } elseif ($min !== null && $max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => array($min, $max),
+            'type' => 'numeric',
+            'compare' => 'BETWEEN'
+        );
+    } elseif ($min !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $min,
+            'type' => 'numeric',
+            'compare' => '>='
+        );
+    } elseif ($max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $max,
+            'type' => 'numeric',
+            'compare' => '<='
+        );
     }
 
     // Filter by status
@@ -217,50 +158,280 @@ if (isset($_POST['filter_databank'])) {
         $args['meta_query'][] = array(
             'key' => 'status',
             'value' => $status,
-            'compare' => '=',
+            'compare' => '='
         );
     }
 
     // Fetch filtered courses
     $courses = get_posts($args);
-    
-   $total_posts = count($courses);
 
-// Calculate the total number of pages.
-$total_pages = ceil($total_posts / $posts_per_page);
-$args['posts_per_page'] = $posts_per_page;
-$args['paged'] = $current_page;
-$courses = get_posts($args);
+    // Calculate pagination values
+    $total_posts = count($courses);
+    $total_pages = ceil($total_posts / $posts_per_page);
+    $args['posts_per_page'] = $posts_per_page;
+    $args['paged'] = $current_page;
+    $courses = get_posts($args);
 
 } else {
     // Default behavior: Fetch all published courses if no filter is applied
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => $posts_per_page,
+        'paged' => $current_page,
+        'order' => 'DESC'
+    );
+
+    $courses = get_posts($args);
+    $total_posts = wp_count_posts('course')->publish + wp_count_posts('post')->publish;
+    $total_pages = ceil($total_posts / $posts_per_page);
+}
+//  if (isset($_POST['filter_databank'])) {
+    
+//     // Sanitize and validate form values
+//     $leervom = isset($_POST['leervom']) ? array_map('sanitize_text_field', $_POST['leervom']) : array();
+
+//     $min = isset($_POST['min']) ? intval($_POST['min']) : null;
+//     $max = isset($_POST['max']) ? intval($_POST['max']) : null;
+//    // $gratis = isset($_POST['gratis']) ? boolval($_POST['gratis']) : false;
+//       $gratis = isset($_POST['gratis']) ? 1 : 0;
+//     $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
+
+//     // $args = array(
+//     //     'post_type' => array('course', 'post'),
+//     //     'post_status' => 'publish',
+//     //     'posts_per_page' => 100,
+//     //     'order' => 'DESC',
+//     //     'meta_query' => array(),
+//     // );
+
+//     // Filter by course type
+//     if (!empty($leervom)) {
+//         $courseType=strtolower($leervom[0]);
+        
+//        switch ($courseType) {
+//         case 'all':
+//             $type='all';
+          
+//             break;
+//           case 'artikel':
+//             $type='article';
+          
+//             break;
+//         case 'podcast':
+//            $type='podcast';
+//             break;
+//         case 'video': 
+//              $type='video';
+           
+//             break;
+//         case 'opleidingen':
+//             $type='course';
+           
+//             break;
+//         case 'training':
+//             $type='training';
+           
+//             break;
+//         case 'workshop':
+//             $type='workshop';
+           
+//             break; 
+//         case 'assessment':
+//             $type='assessment';
+           
+//             break;
+//         case 'cursus':
+//             $type='cursus';
+           
+//             break;
+//         case 'webinar':
+//             $type='webinar';
+           
+//             break;
+//         case 'event':
+//             $type='event';
+           
+//             break; 
+//         case 'lezing':
+//             $type='reading';
+           
+//             break;
+//         case 'class':
+//             $type='class';
+           
+//             break;
+//         case 'leerpad':
+//             $type='leerpad';
+           
+//             break;
+//         case 'e-learning':
+//             $type='elearning';
+           
+//             break;
+//         case 'masterclass':
+//             $type='masterclass';
+           
+//             break;                                
+                      
+
+//         default:
+           
+//             break;
+
+//     }
+
+    
+
+
+
+
+
+       
+//     if($courseType=="all"){
+//         $args = array(
+//         'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC'
+//     );
+//     }
+//     else{
+//        $args = array(
+        
+//         'posts_per_page' => -1,
+//         'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'ordevalue'       => $type,
+//         'order' => 'DESC' ,
+//         'meta_key'         => 'course_type',
+//         'meta_value' => $type
+//     );
+//         }
+//     }
+
+//     // Filter by price
+//     if ($gratis) {
+//             $args = array(
+        
+
+//         'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'ordevalue'       => 0,
+//         'order' => 'DESC' ,
+//         'meta_key'   => 'price',
+//         'meta_value' => 0
+//     );
+//     } 
+//     if ($min !=null && $max != null) {
+//         $args = array(
+//        'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC',
+// 	    'meta_query' => array(
+// 		array(
+// 			'key' => 'price',
+//             'value' => array( $min, $max ),
+// 			'type' => 'numeric',
+// 			'compare' => 'BETWEEN'
+			
+// 		)
+// 	)
+// );
+//     }
+//     else if ($min != null || $max != null) {
+    
+
+//         // $price_range = array('relation' => 'AND');
+//     if ($min != null) {
+           
+//     $args = array(
+//     'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC',
+// 	    'meta_query' => array(
+// 		array(
+// 			'key' => 'price',
+// 			'value' => $min,
+// 			'type' => 'numeric', // specify it for numeric values
+// 			'compare' => '>='
+// 		)
+// 	)
+// );
+
+//         }
+//          if ($max !== null) {
+       
+//            $args = array(
+//     'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC',
+// 	    'meta_query' => array(
+// 		array(
+// 			'key' => 'price',
+// 			'value' => $max,
+// 			'type' => 'numeric', // specify it for numeric values
+// 			'compare' => '<='
+// 		)
+// 	)
+// );
+//          }
+//         // $args['meta_query'][] = $price_range;
+//     }
+
+//     // Filter by status
+//     if ($status) {
+//         $args['meta_query'][] = array(
+//             'key' => 'status',
+//             'value' => $status,
+//             'compare' => '=',
+//         );
+//     }
+
+//     // Fetch filtered courses
+//     $courses = get_posts($args);
+    
+//    $total_posts = count($courses);
+
+// // Calculate the total number of pages.
+// $total_pages = ceil($total_posts / $posts_per_page);
+// $args['posts_per_page'] = $posts_per_page;
+// $args['paged'] = $current_page;
+// $courses = get_posts($args);
+
+// } else {
+//     // Default behavior: Fetch all published courses if no filter is applied
   
 
 
-    $args = array(
-    'post_type' => array('course', 'post'),
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC'
-);
-  $courses_on_current_page = get_posts($args);
-  $count = count($courses_on_current_page);
-  $total_posts = $count;
+//     $args = array(
+//     'post_type' => array('course', 'post'),
+//     'post_status' => 'publish',
+//     'posts_per_page' => -1,
+//     'order' => 'DESC'
+// );
+//   $courses_on_current_page = get_posts($args);
+//   $count = count($courses_on_current_page);
+//   $total_posts = $count;
 
-// Calculate the total number of pages.
-$total_pages = ceil($total_posts / $posts_per_page);
-// Query the posts for the current page.
-$args = array(
-    'post_type' => array('course', 'post'),
-    'post_status' => 'publish',
-    'posts_per_page' => $posts_per_page,
-    'paged' => $current_page,
-    'order' => 'DESC',
-);
+// // Calculate the total number of pages.
+// $total_pages = ceil($total_posts / $posts_per_page);
+// // Query the posts for the current page.
+// $args = array(
+//     'post_type' => array('course', 'post'),
+//     'post_status' => 'publish',
+//     'posts_per_page' => $posts_per_page,
+//     'paged' => $current_page,
+//     'order' => 'DESC',
+// );
 
 
-$courses = get_posts($args);
-}
+// $courses = get_posts($args);
+// }
 
 
  function countTypeCourse($course_type){
@@ -569,23 +740,13 @@ if(!$thumbnail){
                                     }
                                 }
                             }       
-                            //Categories
+                            // //Categories
+                           
+                             //Categories
                             $category = " ";
-                            $category_id = 0;
-                            $main_category_id = get_field('categories',  $course->ID);
-                            $main_category_xml = get_field('category_xml',  $course->ID);
-                            $category_xml=0;
-
-                            if($main_category_id)
-                                if(isset($main_category_id[0]))
-                                    if(isset($main_category_id[0]['value']))
-                                        $category_id = ($main_category_id[0]['value']) ? explode(',', $main_category_id[0]['value']) : 0;
-
-                            if($main_category_xml)
-                                if(isset($main_category_xml[0]))
-                                    if(isset($main_category_xml[0]['value']))
-                                        $category_xml = ($main_category_xml[0]['value']) ? intval($main_category_xml[0]['value']) : 0;
-
+                            $id_category = 0;
+                            $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                            $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
                             if($category_xml)
                                 if($category_xml != 0)
                                     $category = (String)get_the_category_by_ID($category_xml);
@@ -593,7 +754,6 @@ if(!$thumbnail){
                             if($category_id)
                                 if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
-                            
                                           
 
                             $link = get_permalink($course->ID);
