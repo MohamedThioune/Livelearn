@@ -192,8 +192,8 @@ $_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
 $_GET['mode'] = 'payment';
 $postID = 10799;
 $userID = 3;
-$postID = isset($_GET['postID']) ? $_GET['postID'] : null;
-$userID = isset($_GET['userID']) ? $_GET['userID'] : null;
+// $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
+// $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
 
 if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
