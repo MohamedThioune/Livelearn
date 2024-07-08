@@ -30,8 +30,8 @@ $author = get_user_by('id', $post->post_author);
 $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
 $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-$author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
-$author_role =  get_field('role',  'user_' . $post->post_author);
+$author_bio = get_field('biographical_info',  'user_' . $post->post_author);
+$author_role = get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
@@ -44,7 +44,10 @@ else:
     $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 endif;
 
+
 //Stripe pay 
+$stripe_pay_form = "";
+if($user_id)
 $stripe_pay_form = 
 '<form action="/checkout-stripe" method="post">
     <input type="hidden" name="postID" value="' . $post->ID . '">
@@ -53,6 +56,7 @@ $stripe_pay_form =
     Pay with Stripe !
     </button>
 </form>';
+
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
