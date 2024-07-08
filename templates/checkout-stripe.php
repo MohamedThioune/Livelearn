@@ -68,7 +68,6 @@ if(isset($productPrice)):
 
     // header('Location: '. $URL);
 endif;
-
 //create ...
 
 ?>
@@ -77,7 +76,8 @@ endif;
 <script src="https://js.stripe.com/v3/"></script>
 <script defer>
     // This is your test secret API key.
-    const stripe = Stripe("pk_test_51JyijWEuOtOzwPYXpQ5PQzJGMroshnARkLBNWWJK2ZOsGaaJvF0tmh96eVkAgklzjB8L3usvqvP3229HTXx796nt00qw0X8k7y");
+    const stripePublicKey = "<?php echo $stripePublicKey ?>"
+    const stripe = Stripe(stripePublicKey);
 
     initialize();
 
@@ -142,7 +142,7 @@ endif;
 
 <div class="contentProfil">
    <div class="container-fluid">
-       <h1 class="titleSubscription">Checkout - sample</h1>
+       <h1 class="titleSubscription">Sample</h1>
        <!-- <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center> -->
 
        <div class="contentFormSubscription">
@@ -161,11 +161,11 @@ endif;
                    <input type="text" class="form-control" id="last_name" value="<?= $current_user->last_name ?>" placeholder="Last name" name="last_name" required>
                </div>
            </div>
-           <div class="form-group">
+           <!-- <div class="form-group">
                <label for="bedrjifsnaam">Email</label>
                <i class="fas fa-building" aria-hidden="true"></i>
                <input type="email" class="form-control" id="" value="" placeholder="Email" name="email" required>
-           </div>
+           </div> -->
            <div class="form-group">
                <label for="city">Company name</label>
                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
