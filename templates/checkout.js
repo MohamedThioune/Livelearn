@@ -5,18 +5,18 @@ initialize();
 
 // Create a Checkout Session
 async function initialize() {
-  const fetchClientSecret = async () => {
-    const response = await fetch("/checkout.php", {
-      method: "POST",
+const fetchClientSecret = async () => {
+    const response = await fetch("/ecosystem", {
+        method: "POST",
     });
     const { clientSecret } = await response.json();
     return clientSecret;
-  };
+};
 
-  const checkout = await stripe.initEmbeddedCheckout({
+const checkout = await stripe.initEmbeddedCheckout({
     fetchClientSecret,
-  });
+});
 
-  // Mount Checkout
-  checkout.mount('#checkout');
+// Mount Checkout
+checkout.mount('#checkout');
 }
