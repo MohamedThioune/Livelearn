@@ -13582,7 +13582,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background-color: #fff!important;
     padding: 35px;
     border-radius: 15px;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 }
 .content-list-amount {
@@ -23294,6 +23294,17 @@ figure ul li {
 .icons-block-zzpers {
     margin: 68px 0 -12px;
 }
+#modalPayment .modal-dialog {
+    margin-top: 70px !important;
+}
+#modalPayment .modal-dialog {
+    max-width: 745px;
+}
+#modalPayment .modal-dialog .contentFormSubscription {
+    width: 100%;
+    padding: 0;
+}
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -28303,6 +28314,7 @@ figure ul li {
         width: 48%;
         text-align: center;
     }
+
 
 }
 
