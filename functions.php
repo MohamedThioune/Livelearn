@@ -1760,6 +1760,16 @@ add_action( 'rest_api_init', function () {
     'callback' => 'update_user_progression_course',
   ));
 
+  register_rest_route ('custom/v2', '/user/progression/(?P<course_title>[-\w]+)', array(
+    'methods' => 'POST',
+    'callback' => 'getUserProgressionWithLastPosition',
+  ));
+
+  register_rest_route ('custom/v2', '/user/progression/(?P<course_title>[-\w]+)', array(
+    'methods' => 'PUT',
+    'callback' => 'updateUserProgressionWithLastPosition',
+  ));
+
   register_rest_route ('custom/v1', '/user/cart/signups', array(
     'methods' => 'GET',
     'callback' => 'get_user_signups',
