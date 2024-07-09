@@ -163,23 +163,29 @@ $see_experts = get_users(
 </head>
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-625166739%22%3E"></script>
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-625166739%22%3E"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
     gtag('config', 'AW-625166739');
+</script> -->
+<!-- End Google tag (gtag.js) -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1DQ4HH625M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1DQ4HH625M');
 </script>
 <!-- End Google tag (gtag.js) -->
 
 <body class="header-user canhas">
-<!-- Google Tag Manager (noscript)
-<noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
-End Google Tag Manager (noscript) -->
+
 
 <!-- Modal -->
 <div class="modal fade  modal-dialog-scrollable" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="bedrijfsprofiel_modalModalLabel" aria-hidden="true">
