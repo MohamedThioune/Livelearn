@@ -110,6 +110,14 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
                     ],
                     'type' => 'numeric',
                 ],
+                [
+                    'key' => 'additional_information',
+                    'label' => [
+                      'type' => 'custom',
+                      'custom' => 'Additional information',
+                    ],
+                    'type' => 'text',
+                ],
             ],
             'invoice_creation' => [
                 'enabled' => "true",
