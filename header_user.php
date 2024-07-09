@@ -163,17 +163,6 @@ $see_experts = get_users(
 </head>
 
 <!-- Google tag (gtag.js) -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-625166739%22%3E"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'AW-625166739');
-</script> -->
-<!-- End Google tag (gtag.js) -->
-
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1DQ4HH625M"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
