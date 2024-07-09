@@ -142,7 +142,7 @@ endif;
 
 <div class="contentProfil">
    <div class="container-fluid">
-       <h1 class="titleSubscription">Sample</h1>
+       <!-- <h1 class="titleSubscription">Sample</h1> -->
        <!-- <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center> -->
 
         <!--
@@ -214,7 +214,7 @@ endif;
         </div> 
         -->
 
-        <br><br>
+        <!-- <br><br> -->
         <div class="contentFormSubscription">
             <!-- <div id='stripe-checkout-first'>
                 <h2> Hit on save once you ready !</h2>
