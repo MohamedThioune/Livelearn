@@ -3141,7 +3141,7 @@ function save_user_views(WP_REST_Request $request)
   }
 
   function updateUserProgressionWithLastPosition($request)
-  { 
+{
     $course_title = $request['course_title'] ?? false;
     if (!$course_title) {
         $response = new WP_REST_Response('You have to fill in the course title');
@@ -3164,6 +3164,8 @@ function save_user_views(WP_REST_Request $request)
         return $response;
     }
 
+    $last_position = $request['last_position'] ?? '';
+
     $args = array(
         'post_type' => 'progression', 
         'title' => $course_title,
@@ -3179,39 +3181,45 @@ function save_user_views(WP_REST_Request $request)
 
     $lesson_reads = get_field('lesson_actual_read', $progression->ID) ?: [];
     $is_found = false;
-    if (count($lesson_reads) != 0) {
+
+    if (!empty($lesson_reads)) {
         foreach ($lesson_reads as $key => $lesson) {
-            $key_index = $lesson['key_lesson'][0];
-            if ($key_index == $key_lesson["key_lesson"][0]) {
-                $lesson_reads[$key] = $key_lesson;
+            if (isset($lesson['key_lesson']) && $lesson['key_lesson'] == $key_lesson[0]['key_lesson']) {
+                $lesson_reads[$key] = $key_lesson[0];
                 $is_found = true;
+                break;
             }
         }
     }
 
     if (!$is_found) {
-        array_push($lesson_reads, $key_lesson);
+        $lesson_reads[] = $key_lesson[0];
     }
 
     update_field('lesson_actual_read', $lesson_reads, $progression->ID);
 
-    // Get last position
-    $last_position = get_field('last_position', $progression->ID) ?: '';
+    if ($last_position !== '') {
+        update_field('last_position', $last_position, $progression->ID);
+    }
+
+    // Get the updated last position
+    $updated_last_position = get_field('last_position', $progression->ID) ?: '';
 
     // Format lesson reads for response
     $formatted_lessons = array_map(function($lesson) {
-        return ['key_lesson' => $lesson['key_lesson'][0]];
+        return ['key_lesson' => $lesson['key_lesson']];
     }, $lesson_reads);
 
     $response_data = [
         'lesson_keys' => $formatted_lessons,
-        'last_position' => $last_position
+        'last_position' => $updated_last_position
     ];
 
     $response = new WP_REST_Response($response_data);
     $response->set_status(200);
     return $response;
-  }
+}
+
 
   function getUserProgressionWithLastPosition($request)
   {
