@@ -68,7 +68,6 @@ if(isset($productPrice)):
 
     // header('Location: '. $URL);
 endif;
-
 //create ...
 
 ?>
@@ -77,7 +76,8 @@ endif;
 <script src="https://js.stripe.com/v3/"></script>
 <script defer>
     // This is your test secret API key.
-    const stripe = Stripe("pk_test_51JyijWEuOtOzwPYXpQ5PQzJGMroshnARkLBNWWJK2ZOsGaaJvF0tmh96eVkAgklzjB8L3usvqvP3229HTXx796nt00qw0X8k7y");
+    const stripePublicKey = "<?php echo $stripePublicKey ?>"
+    const stripe = Stripe(stripePublicKey);
 
     initialize();
 
@@ -142,14 +142,13 @@ endif;
 
 <div class="contentProfil">
    <div class="container-fluid">
-       <h1 class="titleSubscription">Checkout - sample</h1>
+       <!-- <h1 class="titleSubscription">Sample</h1> -->
        <!-- <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center> -->
 
-       <div class="contentFormSubscription">
+        <!--
+        <div class="contentFormSubscription"> -->
 
-           <!-- <form action="" method="POST"> -->
-
-           <div class="form-row">
+           <!-- <div class="form-row">
                <div class="form-group col-md-6">
                    <label for="first_name">First name</label>
                    <i class="fas fa-user" aria-hidden="true"></i>
@@ -188,7 +187,7 @@ endif;
                <i class="fas fa-text"></i>
                <textarea class="form-control" id="" value="" placeholder="Notes about your order ..." name="additional_info">
                 </textarea>
-           </div>
+           </div> -->
 
            <!-- <div class="form-group">
                <div class="checkSubs">
@@ -207,31 +206,34 @@ endif;
                </div>
            </div> -->
 
-           <div class="modal-footer">
+           <!-- <div class="modal-footer">
                <button type="button" id="starter" class="btn btn-sendSubscrip" data-toggle="modal" data-target="#modalPayment">Start</button>
                <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-           </div>
-           <!-- </form> -->
-        </div>
+           </div> -->
+           <!-- </form> 
+        </div> 
+        -->
 
-        <br><br>
-        <?php
-        if($prijs):
-        ?>
+        <!-- <br><br> -->
         <div class="contentFormSubscription">
-            <div id='stripe-checkout-first'>
+            <!-- <div id='stripe-checkout-first'>
                 <h2> Hit on save once you ready !</h2>
                 <center><small>Checkout will insert the payment form here ... </small></center>
-            </div>
-            <div id='stripe-checkout-second'>
+            </div> -->
+            <?php
+            if($prijs):
+            ?>
+            <div id='stripe-checkout'>
                 <div id='checkout'>
                 </div>
             </div>
+            <?php
+            else:
+                // Form free course 
+                /** Instructions here */
+            endif;
+            ?>
         </div>
-        <?php
-        endif;
-        ?>
-
    </div>
 </div>
 
@@ -266,13 +268,12 @@ endif;
 
 <script>
     var button = document.getElementById('starter');
-    document.getElementById('stripe-checkout-second').style.display ='none';
+    // document.getElementById('stripe-checkout-second').style.display ='none';
 
     button.addEventListener('click', function(e) {
         $(e.preventDefault());
         document.getElementById('stripe-checkout-first').style.display ='none';
         document.getElementById('stripe-checkout-second').style.display ='block';
-        // $('#stripe-checkout').html("<div id='checkout'><h2> Pay here !</h2></div>");
     });
 </script>
 
