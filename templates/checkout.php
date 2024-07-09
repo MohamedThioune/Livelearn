@@ -24,7 +24,7 @@ require_once 'new-module-subscribe.php';
 
 function create_session($data){
     $endpoint = "https://api.stripe.com/v1/checkout/sessions";
-    $information = makecall($endpoint, 'POST', $data, null, $stripeSecretKey);
+    $information = makecall($endpoint, 'POST', $data);
 
     return $information;
 }
@@ -108,7 +108,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
                       'type' => 'custom',
                       'custom' => 'Phone',
                     ],
-                    'type' => 'phone',
+                    'type' => 'numeric',
                 ],
             ],
             'invoice_creation' => [
@@ -129,8 +129,8 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
 
     //Create session object
     $information = create_session($data);
-    var_dump($information);
-    return 0;
+    // var_dump($information);
+    // return 0;
 
     //case : error primary
     if(isset($information['error']))
@@ -155,7 +155,7 @@ function retrieve_session($session_id){
         return 0;
 
     $endpoint = "https://api.stripe.com/v1/checkout/sessions/" . $session_id;
-    $information = makecall($endpoint, 'GET', null, null, $stripeSecretKey);
+    $information = makecall($endpoint, 'GET', null);
 
     return $information;
 }
@@ -188,15 +188,15 @@ function stripe_status($data){
 }
 
 //Call stripe secret
-$_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
-$_GET['mode'] = 'payment';
-$postID = 10799;
-$userID = 3;
-// $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
-// $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
+// $_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
+// $_GET['mode'] = 'payment';
+// $postID = 10799;
+// $userID = 3;
+$postID = isset($_GET['postID']) ? $_GET['postID'] : null;
+$userID = isset($_GET['userID']) ? $_GET['userID'] : null;
 
 if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
-    // echo($session_stripe_secret);
-    var_dump($session_stripe_secret);
+    echo($session_stripe_secret);
+    // var_dump($session_stripe_secret);
 endif;
