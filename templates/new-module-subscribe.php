@@ -1,8 +1,13 @@
 <?php
 
+require_once 'stripe-secrets.php';
+
 function makecall($url, $type, $data = null, $params = null) {
+    global $stripeSecretKey;
+
     // credentials personal + live
-    $api_key = "Bearer sk_test_51JyijWEuOtOzwPYXl8Z57qbOuYURVnzEMvVFgUT0Wo7lmAWx2Qr9qQMASvyEkYpDVf1FRL25yWa0amHVSBl2KYC400iZFj6eek";
+    $api_key = "Bearer " . $stripeSecretKey ;
+    // $api_key = "Bearer sk_test_51JyijWEuOtOzwPYXl8Z57qbOuYURVnzEMvVFgUT0Wo7lmAWx2Qr9qQMASvyEkYpDVf1FRL25yWa0amHVSBl2KYC400iZFj6eek";
     // $api_key = "Bearer sk_test_51MtSplHe23toRzexBAOzPcAljGx9f0mWTl687iaxjJAlneTiUFTi4NCjffnL48dvXkFOnb1HPPrthXmN9w51J8tz00YD43xgJ8";
 
     // create endpoint with params
@@ -138,6 +143,82 @@ function stripe(WP_REST_Request $request){
     $response = new WP_REST_Response($information);
     $response->set_status(200);
     return $response;
+}
+
+// function create_product($data){
+//     //Create product
+//     $data_product = [
+//         'name' => $data['name'],
+//         'description' => $data['description'],
+//         'images' => [ $data['image'] ],
+//         'url' => $data['url'],
+//         'metadata' => [
+//             'courseID' => $data['ID'],
+//         ]
+//     ];
+//     $endpoint = "https://api.stripe.com/v1/products";
+//     $information = makecall($endpoint, 'POST', $data_product);
+
+//     //case : error primary
+//     if(isset($information['error']))
+//         return 0;
+//         // return $information['error'];
+
+//     //case : error internal
+//     if(isset($information['data']->error))
+//         return 0;
+//         // return $information['data'];
+
+//     $product_id = null;    
+//     //case : success
+//     if($information['data'])
+//     if($information['data']->client_secret)
+//         $product_id = $information['data']->id;
+
+//     //Get product ID if after creation
+//     /** Instructions here ! */
+
+//     return $product_id;
+// }
+
+function create_price($data){
+    $amount = ($data['amount']) ? $data['amount'] . "00" : 0;
+    //Create price
+    $data_price = [
+        'currency' => $data['currency'],
+        'unit_amount' => $amount,
+        'product_data' => [
+            'name' => $data['product_name'],
+            'statement_descriptor' => 'LIVELEARN PAY !',
+            'metadata' => [
+                'courseID' => $data['ID'],
+            ]
+        ],
+        'tax_behavior' => 'exclusive'
+    ];
+    $endpoint = "https://api.stripe.com/v1/prices";
+    $information = makecall($endpoint, 'POST', $data_price);
+ 
+    //case : error primary
+    if(isset($information['error']))
+        return 0;
+        // return $information['error'];
+
+    //case : error internal
+    if(isset($information['data']->error))
+        return 0;
+        // return $information['data'];
+
+    $price_id = null;    
+    //case : success
+    if($information['data'])
+    if($information['data']->id)
+        $price_id = $information['data']->id;
+
+    //Get product ID if after creation
+    /** Instructions here ! */
+
+    return $price_id;
 }
 
 // function create_subscription_stripe($data){
