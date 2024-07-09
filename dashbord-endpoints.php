@@ -50,15 +50,19 @@ function upcoming_schedule_for_the_user()
         if (!$data_locaties_xml)
             continue;
         $courseTime = array();
+        $temps = array();
         foreach ($data_locaties_xml as $dataxml) {
             if ($dataxml) {
                 $datetime = explode(' ', $dataxml['value']);
+
                 $date = explode(' ', $datetime[0])[0];
                 $time = explode('-', $datetime[1])[0];
-                $courseTime['date'][] = $date;
-                $courseTime['time'][] = $time;
+                //$courseTime['date'][] = $date;
+                //$courseTime['time'][] = $time;
+                $courseTime[] = array('date'=>$date,'time'=>$time);
             }
         }
+
         if (!$courseTime)
             continue;
 
@@ -88,9 +92,10 @@ function upcoming_schedule_for_the_user()
         $schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
         $schedule_data['pathImage'] = $image;
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
-        $schedule_data['price'] = get_field('price',$schedule->ID)!="0" ? : "Gratis";
+        $schedule_data['price'] = get_field('price',$schedule->ID)!="0" ? get_field('price',$schedule->ID) : "Gratis";
         $schedule_data['data_locaties_xml'] = $data_locaties_xml;
         $schedule_data['courseTime'] = $courseTime;
+        $schedule_data['author'] = get_user_by('ID', $schedule->post_author);
         $all_schedules[] = $schedule_data;
 
     }
