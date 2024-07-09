@@ -1,3 +1,4 @@
+
 <?php /** Template Name: databank live */ ?>
 <?php
 require_once 'add-author.php';
@@ -6,44 +7,41 @@ global $wpdb;
 /*
  * * Pagination
  */
-$pagination = 50;
+$posts_per_page = 50; // Number of posts to show on each page.
+$current_page = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 1;
 
-if (isset($_GET['id'])) 
-    $page = intval($_GET['id']);
-
-if ($page) 
-    $offset = ($page - 1) * $pagination;
 
 
 $courses = array();
 
+
 // Check if the form is submitted
 if (isset($_POST['filter_databank'])) {
-    // Retrieve form values
-    $leervom = isset($_POST['leervom']) ? strtolower($_POST['leervom'][0]) : array();
-    // $min_price = isset($_POST['min']) ? intval($_POST['min']) : 0;
-    // $max_price = isset($_POST['max']) ? intval($_POST['max']) : 0;
+    // Sanitize and validate form values
+    $leervom = isset($_POST['leervom']) ? array_map('sanitize_text_field', $_POST['leervom']) : array();
+    $min = isset($_POST['min']) ? intval($_POST['min']) : null;
+    $max = isset($_POST['max']) ? intval($_POST['max']) : null;
     $gratis = isset($_POST['gratis']) ? 1 : 0;
-    $status = isset($_POST['status']) ? $_POST['status'] : '';
+    $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
 
-    // Construct the query arguments
+    // Define the base arguments for WP_Query
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        'meta_query' => array()
+    );
 
-//   }    
-    
-
-    // Add leervom filter
+    // Filter by course type
     if (!empty($leervom)) {
-
-  
-
-
-
-
-    switch ($leervom) {
+        $courseType = strtolower($leervom[0]);
+               switch ($courseType) {
         case 'all':
-             $type='all';
+            $type='all';
+          
             break;
-        case 'artikel':
+          case 'artikel':
             $type='article';
           
             break;
@@ -109,114 +107,331 @@ if (isset($_POST['filter_databank'])) {
             break;
 
     }
+        //$type = ($courseType == 'all') ? 'all' : $courseType;
 
-    $args = array(
+        if ($type != "all") {
+           $args = array(
         
-
+        'posts_per_page' => -1,
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
         'ordevalue'       => $type,
         'order' => 'DESC' ,
         'meta_key'         => 'course_type',
         'meta_value' => $type
     );
-
-  
-     }
-
-    // // Add price filter
-   
-
-    // Add gratis filter
-
-
-    if ($gratis) {
-            $args = array(
-        
-
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'ordevalue'       => 0,
-        'order' => 'DESC' ,
-      'meta_key'   => 'price',
-      'meta_value' => 0
-    );
-      
-    }
-      if(isset($min) || isset($max) ){
-            
-                if($min || $max){
-                    $prices = array(); 
-                    $tmp = 0;
-                    if($min != null && $max!= null){
-                        if($min > $max) {
-                            $tmp = $min;
-                            $min = $max;
-                            $max = $tmp;
-                        }
-                        //Here we got interval
-                        foreach($courses as $datum){
-                            $price = intval(get_field('price', $datum->ID));
-                            $min = intval($min);
-                            $max = intval($max);
-                            if($price >= $min)
-                                if($price <= $max)
-                                    array_push($prices,$datum);
-                        }
-                    }
-                    else{
-                        //Tested by one value 
-                        foreach($courses as $datum){
-                            $price = intval(get_field('price', $datum->ID));
-                            if($min == null){
-                                $max = intval($max);
-                                if($price <= $max)
-                                    array_push($prices,$datum);
-                            }
-                            else if($max == null){
-                                $min = intval($min);
-                                if($price >= $min)
-                                    array_push($prices,$datum);
-                            }
-                        }
-                    }
-                }
-          
-            if(isset($prices)){
-                if(!empty($prices)){
-                    $courses = $prices;
-                }
-                else{
-                    $courses = array();
-                }
-            }
         }
+    }
 
-    // Add status filter
-    if (!empty($status)) {
+    // Filter by price
+    if ($gratis) {
         $args['meta_query'][] = array(
-            'key'     => 'status',
-            'value'   => $status,
-            'compare' => '=',
+            'key' => 'price',
+            'value' => 0,
+            'compare' => '='
+        );
+    } elseif ($min !== null && $max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => array($min, $max),
+            'type' => 'numeric',
+            'compare' => 'BETWEEN'
+        );
+    } elseif ($min !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $min,
+            'type' => 'numeric',
+            'compare' => '>='
+        );
+    } elseif ($max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $max,
+            'type' => 'numeric',
+            'compare' => '<='
         );
     }
 
-    // Fetch the courses based on the constructed arguments
+    // Filter by status
+    if ($status) {
+        $args['meta_query'][] = array(
+            'key' => 'status',
+            'value' => $status,
+            'compare' => '='
+        );
+    }
+
+    // Fetch filtered courses
     $courses = get_posts($args);
+
+    // Calculate pagination values
+    $total_posts = count($courses);
+    $total_pages = ceil($total_posts / $posts_per_page);
+    $args['posts_per_page'] = $posts_per_page;
+    $args['paged'] = $current_page;
+    $courses = get_posts($args);
+
 } else {
     // Default behavior: Fetch all published courses if no filter is applied
     $args = array(
-        
-    'post_type' => array('course', 'post'),
-    'post_status' => 'publish',
-    'posts_per_page' => 100,
-    'order' => 'DESC'
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => $posts_per_page,
+        'paged' => $current_page,
+        'order' => 'DESC'
     );
-    
+
     $courses = get_posts($args);
+    $total_posts = wp_count_posts('course')->publish + wp_count_posts('post')->publish;
+    $total_pages = ceil($total_posts / $posts_per_page);
 }
+//  if (isset($_POST['filter_databank'])) {
+    
+//     // Sanitize and validate form values
+//     $leervom = isset($_POST['leervom']) ? array_map('sanitize_text_field', $_POST['leervom']) : array();
+
+//     $min = isset($_POST['min']) ? intval($_POST['min']) : null;
+//     $max = isset($_POST['max']) ? intval($_POST['max']) : null;
+//    // $gratis = isset($_POST['gratis']) ? boolval($_POST['gratis']) : false;
+//       $gratis = isset($_POST['gratis']) ? 1 : 0;
+//     $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
+
+//     // $args = array(
+//     //     'post_type' => array('course', 'post'),
+//     //     'post_status' => 'publish',
+//     //     'posts_per_page' => 100,
+//     //     'order' => 'DESC',
+//     //     'meta_query' => array(),
+//     // );
+
+//     // Filter by course type
+//     if (!empty($leervom)) {
+//         $courseType=strtolower($leervom[0]);
+        
+//        switch ($courseType) {
+//         case 'all':
+//             $type='all';
+          
+//             break;
+//           case 'artikel':
+//             $type='article';
+          
+//             break;
+//         case 'podcast':
+//            $type='podcast';
+//             break;
+//         case 'video': 
+//              $type='video';
+           
+//             break;
+//         case 'opleidingen':
+//             $type='course';
+           
+//             break;
+//         case 'training':
+//             $type='training';
+           
+//             break;
+//         case 'workshop':
+//             $type='workshop';
+           
+//             break; 
+//         case 'assessment':
+//             $type='assessment';
+           
+//             break;
+//         case 'cursus':
+//             $type='cursus';
+           
+//             break;
+//         case 'webinar':
+//             $type='webinar';
+           
+//             break;
+//         case 'event':
+//             $type='event';
+           
+//             break; 
+//         case 'lezing':
+//             $type='reading';
+           
+//             break;
+//         case 'class':
+//             $type='class';
+           
+//             break;
+//         case 'leerpad':
+//             $type='leerpad';
+           
+//             break;
+//         case 'e-learning':
+//             $type='elearning';
+           
+//             break;
+//         case 'masterclass':
+//             $type='masterclass';
+           
+//             break;                                
+                      
+
+//         default:
+           
+//             break;
+
+//     }
+
+    
+
+
+
+
+
+       
+//     if($courseType=="all"){
+//         $args = array(
+//         'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC'
+//     );
+//     }
+//     else{
+//        $args = array(
+        
+//         'posts_per_page' => -1,
+//         'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'ordevalue'       => $type,
+//         'order' => 'DESC' ,
+//         'meta_key'         => 'course_type',
+//         'meta_value' => $type
+//     );
+//         }
+//     }
+
+//     // Filter by price
+//     if ($gratis) {
+//             $args = array(
+        
+
+//         'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'ordevalue'       => 0,
+//         'order' => 'DESC' ,
+//         'meta_key'   => 'price',
+//         'meta_value' => 0
+//     );
+//     } 
+//     if ($min !=null && $max != null) {
+//         $args = array(
+//        'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC',
+// 	    'meta_query' => array(
+// 		array(
+// 			'key' => 'price',
+//             'value' => array( $min, $max ),
+// 			'type' => 'numeric',
+// 			'compare' => 'BETWEEN'
+			
+// 		)
+// 	)
+// );
+//     }
+//     else if ($min != null || $max != null) {
+    
+
+//         // $price_range = array('relation' => 'AND');
+//     if ($min != null) {
+           
+//     $args = array(
+//     'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC',
+// 	    'meta_query' => array(
+// 		array(
+// 			'key' => 'price',
+// 			'value' => $min,
+// 			'type' => 'numeric', // specify it for numeric values
+// 			'compare' => '>='
+// 		)
+// 	)
+// );
+
+//         }
+//          if ($max !== null) {
+       
+//            $args = array(
+//     'post_type' => array('course', 'post'),
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'order' => 'DESC',
+// 	    'meta_query' => array(
+// 		array(
+// 			'key' => 'price',
+// 			'value' => $max,
+// 			'type' => 'numeric', // specify it for numeric values
+// 			'compare' => '<='
+// 		)
+// 	)
+// );
+//          }
+//         // $args['meta_query'][] = $price_range;
+//     }
+
+//     // Filter by status
+//     if ($status) {
+//         $args['meta_query'][] = array(
+//             'key' => 'status',
+//             'value' => $status,
+//             'compare' => '=',
+//         );
+//     }
+
+//     // Fetch filtered courses
+//     $courses = get_posts($args);
+    
+//    $total_posts = count($courses);
+
+// // Calculate the total number of pages.
+// $total_pages = ceil($total_posts / $posts_per_page);
+// $args['posts_per_page'] = $posts_per_page;
+// $args['paged'] = $current_page;
+// $courses = get_posts($args);
+
+// } else {
+//     // Default behavior: Fetch all published courses if no filter is applied
+  
+
+
+//     $args = array(
+//     'post_type' => array('course', 'post'),
+//     'post_status' => 'publish',
+//     'posts_per_page' => -1,
+//     'order' => 'DESC'
+// );
+//   $courses_on_current_page = get_posts($args);
+//   $count = count($courses_on_current_page);
+//   $total_posts = $count;
+
+// // Calculate the total number of pages.
+// $total_pages = ceil($total_posts / $posts_per_page);
+// // Query the posts for the current page.
+// $args = array(
+//     'post_type' => array('course', 'post'),
+//     'post_status' => 'publish',
+//     'posts_per_page' => $posts_per_page,
+//     'paged' => $current_page,
+//     'order' => 'DESC',
+// );
+
+
+// $courses = get_posts($args);
+// }
 
 
  function countTypeCourse($course_type){
@@ -232,6 +447,14 @@ $args = array(
 );
 return count(get_posts($args));
  }
+   $args = array(
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC'
+);
+  $courses_on_current_page = get_posts($args);
+  $count = count($courses_on_current_page);
  $countVideos = countTypeCourse('video');
  $countArtikles = countTypeCourse('article');
  $countPodcasts=countTypeCourse('podcast');
@@ -240,14 +463,7 @@ return count(get_posts($args));
 
 
 // // Retrieve courses using get_posts()
-$args = array(
-    'post_type' => array('course', 'post'),
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC'
-);
- $courses_on_current_page = get_posts($args);
-  $count = count($courses_on_current_page);
+
 
   // get compagnies:
    $args = array(
@@ -263,10 +479,8 @@ $args = array(
    $author_users = get_users(array('role_in' => ['author','administrator']));
 
 
-if ($count % $pagination == 0) 
-    $pagination_number = $count / $pagination;
-else 
-    $pagination_number = intval($count / $pagination) + 1;
+
+
 
 $user = wp_get_current_user();
 
@@ -276,6 +490,45 @@ $user = wp_get_current_user();
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+ <style>
+        
+       
+        .pagination {
+            list-style-type: none;
+            padding: 10px 0;
+            display: inline-flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+        .pagination li {
+            box-sizing: border-box;
+            padding-right: 10px;
+        }
+        .pagination li a {
+            box-sizing: border-box;
+            background-color: #e2e6e6;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            color: #616872;
+            border-radius: 4px;
+        }
+        .pagination li a:hover {
+            background-color: #d4dada;
+        }
+        .pagination .next a, .pagination .prev a {
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        .pagination .currentpage a {
+            background-color: #518acb;
+            color: #fff;
+        }
+        .pagination .currentpage a:hover {
+            background-color: #518acb;
+        }
+    </style>
 
 
 <div class="new-content-databank">
@@ -323,7 +576,7 @@ $user = wp_get_current_user();
                         <p class="textFilter">Filter :</p>
                         <button class="btn hideBarFilterBlock"><i class="fa fa-close"></i></button>
                         <select name="leervom[]">
-                            <option value="" disabled>Leervoom</option>
+                            <option value="All">All</option>
                             <option value="Opleidingen"
                                 <?php if(isset($leervom) && in_array('Opleidingen', $leervom)) echo "selected"; ?>>
                                 Opleidingen</option>
@@ -378,11 +631,11 @@ $user = wp_get_current_user();
                                     placeholder="tot Prijs">
                                     
                             </div>
-                            <div class="input-group">
+                             <div class="input-group">
                                 <label for="">Gratis</label>
-                                <input name="gratis" type="checkbox"
-                                    <?php if(isset($gratis))  echo 'checked'; else  echo  ''; ?>>
+                                <input name="gratis" type="checkbox" >
                             </div>
+                          
                         </div>
                         <select name="status">
                             <option value="" disabled selected>Status</option>
@@ -453,7 +706,14 @@ if(!$thumbnail){
                                                    $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
                                             }
        
-
+                           /*
+                            * Price 
+                            */
+                            $p = get_field('price', $course->ID);
+                            if($p != "0")
+                                $price = number_format((float)$p, 2, '.', ',');
+                            else 
+                                $price = 'Gratis';
                                      
                          $day = "<p class='text-no-date'>no date given</p>";
                             $month = ' ';
@@ -480,7 +740,9 @@ if(!$thumbnail){
                                     }
                                 }
                             }       
-                    //Categories
+                            // //Categories
+                           
+                             //Categories
                             $category = " ";
                             $id_category = 0;
                             $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
@@ -492,10 +754,9 @@ if(!$thumbnail){
                             if($category_id)
                                 if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
-                            
                                           
 
-                                             $link = get_permalink($course->ID);
+                            $link = get_permalink($course->ID);
                                            
                                               
         
@@ -513,7 +774,7 @@ if(!$thumbnail){
                                     </div>
                                 </td>
                                 <td class="textTh text-left first-td-databank"><a style="color:#212529;font-weight:bold"
-                                        href=""><?php echo $course->post_title; ?></a></td>
+                                        href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                                 <td class="textTh"><?= get_field('course_type', $course->ID);?></td>
                                 <td id="" class="textTh td_subtopics">
                                     <?php echo empty(get_field('price', $course->ID)) ? 'Gratis':  get_field('price', $course->ID); ?>
@@ -576,7 +837,7 @@ if(!$thumbnail){
                                         <?php if ($course->post_author) {
                                             ?>
                                             
-            <img src="<?php echo $image_author ;?>" alt="image course" width="25" height="25">;
+            <img src="<?php echo $image_author?>" alt="image course" width="25" height="25">;
             <?php
         } else {
             ?>
@@ -598,7 +859,7 @@ if(!$thumbnail){
                                         type="button">
                                        <?php if (!empty($company)) {
                                         ?>
-                                           <img src="<?php echo $company_logo ;?>" alt="image course" width="25" height="25">;
+                                           <img src="<?php echo $company_logo?>" alt="image course" width="25" height="25">;
                                            <?php
                                         } else {
                                             ?>
@@ -650,9 +911,47 @@ if(!$thumbnail){
                         </tbody>
                     </table>
                     
-                <div class="pagination-container">
-                    <!-- Les boutons de pagination seront ajoutés ici -->
-                </div>
+                     <center>
+                     <?php if ($total_pages > 1): ?>
+        <ul class="pagination">
+            <?php if ($current_page > 1): ?>
+                <li class="prev"><a href="?id=<?php echo $current_page - 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard">Prev</a></li>
+            <?php endif; ?>
+
+            <?php if ($current_page > 3): ?>
+                <li class="start"><a href="?id=1" style="color: #DB372C; font-weight: bold" class="textLiDashboard">1</a></li>
+                <li class="dots">...</li>
+            <?php endif; ?>
+
+            <?php if ($current_page - 2 > 0): ?>
+                <li class="page"><a href="?id=<?php echo $current_page - 2; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page - 2; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+            <?php if ($current_page - 1 > 0): ?>
+                <li class="page"><a href="?id=<?php echo $current_page - 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page - 1; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+
+            <li class="currentpage"><a href="?id=<?php echo $current_page; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page; ?>&nbsp;&nbsp;&nbsp;</a></li>
+
+            <?php if ($current_page + 1 <= $total_pages): ?>
+                <li class="page"><a href="?id=<?php echo $current_page + 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page + 1; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+            <?php if ($current_page + 2 <= $total_pages): ?>
+                <li class="page"><a href="?id=<?php echo $current_page + 2; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $current_page + 2; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+
+            <?php if ($current_page < $total_pages - 2): ?>
+                <li class="dots">...</li>
+                <li class="end"><a href="?id=<?php echo $total_pages; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard"><?php echo $total_pages; ?>&nbsp;&nbsp;&nbsp;</a></li>
+            <?php endif; ?>
+
+            <?php if ($current_page < $total_pages): ?>
+                <li class="next"><a href="?id=<?php echo $current_page + 1; ?>" style="color: #DB372C; font-weight: bold" class="textLiDashboard">Next</a></li>
+            <?php endif; ?>
+        </ul>
+    <?php endif; ?>
+                     
+                     </center>
+                   
 
 
                 </div>
@@ -719,11 +1018,11 @@ if(!$thumbnail){
         </div>
         <div class="form-group">
             <label for="Industry">Industry</label>
-            <input type="text" class="form-control" id="Industry" name="industry" placeholder="Enter your Industry" required>
+            <input type="text" class="form-control" id="Industry" name="company_industry" placeholder="Enter your Industry" required>
         </div>
         <div class="form-group">
             <label for="People">Amount of people</label>
-            <input type="number" class="form-control" id="People" name="people" placeholder="Enter the number of people">
+            <input type="number" class="form-control" id="People" name="company_size" placeholder="Enter the number of people">
         </div>
     </form>
 </div>
@@ -773,6 +1072,18 @@ if(!$thumbnail){
             <label for="Phonenumber">Phone number</label>
             <input type="text" class="form-control" id="Phonenumber" name="phone_number" placeholder="Enter her Phone number" required>
         </div>
+         <div class="form-group">
+                        <label class="label-sub-topics">Select Company</label>
+                        <select name="companyId" id="selected_company"  class="multipleSelect2" >
+                            <?php
+                                foreach($companies as $value) {
+                                   
+                                    echo "<option value='" . $value->ID . "'>" . $value->post_name . "</option>";
+                                }
+                            ?>
+                        </select>
+                    </div> 
+        
         <!-- <div class="form-group">
             <label for="Role">Role</label>
             <select name="role" id="Role" class="form-control" required>
@@ -881,7 +1192,7 @@ if(!$thumbnail){
                             <div class="companyAutho" id="companyAuthor"></div>
                             <label class="label-sub-topics">Select Author(s) </label>
                             <div class="formModifeChoose">
-                                <select name="" id="selected_user" class="multipleSelect2" multiple="true">
+                                <select name="userId" id="selected_user" class="multipleSelect2" multiple="true">
                                     <?php
  
                                         foreach($author_users as $value)
@@ -1074,7 +1385,10 @@ $("#removeTeacher").click(function() {
 function submitUserForm() {
    // var formData = new FormData(document.getElementById('userForm'));
     var form = document.getElementById('userForm');
+ var companyId = $('#selected_company').val()
 
+        
+      
 document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
     // Create a FormData object to send the file
     var formData = new FormData(form);
@@ -1099,6 +1413,8 @@ document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for 
 //      }
     
       formData.append('action', 'add_users');
+      formData.append('companyId', companyId);
+
  
     
 
@@ -1115,13 +1431,18 @@ document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for 
            // alert('User created successfully!');
               document.getElementById('content-back-topicsauthor').innerHTML =response;
             // Optionally, you can refresh the page or update the UI accordingly
-             $('#ModalTeacher').modal('hide');
+           //  $('#ModalTeacher').modal('hide');
         },
         error: function(response) {
             alert('Failed to create user!');
               document.getElementById('content-back-topicsauthor').innerHTML =response;
-               $('#ModalTeacher').modal('hide');
-        }
+             //  $('#ModalTeacher').modal('hide');
+        },
+        
+   complete:function(response){
+                    
+                  location.reload();
+                }
     });
 }
 </script>
@@ -1155,7 +1476,7 @@ function submitCompanyForm() {
         success: function(response) {
             console.log(response);
             document.getElementById('content-back-topics').innerHTML = response;
-            $('#ModalCompany').modal('hide');
+           // $('#ModalCompany').modal('hide');
 
             
             // Optionally, you can refresh the page or update the UI accordingly
@@ -1163,8 +1484,14 @@ function submitCompanyForm() {
         error: function(response) {
             alert('Failed to create company!');
             document.getElementById('content-back-topics').innerHTML = response;
-             $('#ModalCompany').modal('hide');
-        }
+            // $('#ModalCompany').modal('hide');
+        },
+        
+   complete:function(response){
+                    
+                  location.reload();
+                }
+
     });
 }
 </script>
@@ -1217,6 +1544,7 @@ function submitCompanyForm() {
 });
     
   $('#save_subtopics').click(()=>{
+      
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
   url:"/fetch-subtopics-course",
@@ -1259,7 +1587,15 @@ function submitCompanyForm() {
       
       document.getElementById('companyAuthor').innerHTML = data;
       
-  }
+  },
+  error:function(data){
+    document.getElementById('companyAuthor').innerHTML = data;
+  },
+   complete:function(response){
+                    
+                  location.reload();
+                }
+
   })
   }
 );
@@ -1350,7 +1686,7 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
             },
             dataType:"text",
             success: function(data){
-                console.log(data);
+                
                 $('#autocomplete_company_databank').html(data);
             }
         });

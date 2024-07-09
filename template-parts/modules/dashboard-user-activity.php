@@ -1,5 +1,24 @@
 <html lang="en">
 <?php
+
+require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
+
+//Stripe return callback
+if(isset($_GET['session_id'])):
+    $status_stripe = stripe_status($_GET['session_id']);
+    if(isset($status_stripe['error']))
+        $message = "<p>Something wrong through the processs payment, please try again later !</p>";
+    
+    if(isset($status_stripe['status']))
+        if($status_stripe['status'] == 'complete')
+            $message = '<section id="success" class="hidden" style="background-color:white; color:green; border-radius: 2px">
+                            <p>
+                            We appreciate your interest in our courses ! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.<br>
+
+                            If you have any questions, please email <a href="mailto:info@livelearn.nl" style="text-decoration:underline">info@livelearn.nl</a>.
+                            </p>
+                        </section><br><br>';
+endif;
 /*
 * * Information user
 */
@@ -196,7 +215,6 @@ $no_content = "<div class='emty-block-activity'>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
-
 <body>
 <div class="content-activity2">
     <div class="advert-course-Block d-flex">
@@ -224,7 +242,9 @@ $no_content = "<div class='emty-block-activity'>
     </div>
 
     <div id="tab-url1">
-
+        <?php
+            echo (isset($message)) ? $message : '';
+        ?>
         <ul class="nav">
             <li class="nav-one"><a href="#All" class="current">All</a></li>
             <li class="nav-two"><a href="#Course">Courses</a></li>
