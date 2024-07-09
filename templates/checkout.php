@@ -90,6 +90,35 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
                 'userID' => $user->ID,
                 'postID' => $post->ID,
             ],
+            'shipping_address_collection' => [
+                'allowed_countries' => ['US', 'FR', 'NL', 'SN']
+            ],
+            'custom_fields' => [
+                [
+                    'key' => 'company_name',
+                    'label' => [
+                        'type' => 'custom',
+                        'custom' => 'Company',
+                    ],
+                    'type' => 'text',
+                ],
+                [
+                    'key' => 'phone_number',
+                    'label' => [
+                      'type' => 'custom',
+                      'custom' => 'Phone',
+                    ],
+                    'type' => 'numeric',
+                ],
+                [
+                    'key' => 'additional_information',
+                    'label' => [
+                      'type' => 'custom',
+                      'custom' => 'Additional information',
+                    ],
+                    'type' => 'text',
+                ],
+            ],
             'invoice_creation' => [
                 'enabled' => "true",
                 'invoice_data' => [
@@ -134,7 +163,7 @@ function retrieve_session($session_id){
         return 0;
 
     $endpoint = "https://api.stripe.com/v1/checkout/sessions/" . $session_id;
-    $information = makecall($endpoint, 'GET');
+    $information = makecall($endpoint, 'GET', null);
 
     return $information;
 }
@@ -177,4 +206,5 @@ $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
 if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
     echo($session_stripe_secret);
+    // var_dump($session_stripe_secret);
 endif;
