@@ -167,9 +167,14 @@ function saveManager(WP_REST_Request $request){
     return $response;
 }
 
-function get_notifications()
+function get_notifications($data)
 {
-    $id_user_connected = 5;
+    $id_user_connected = intval($data['ID']);
+    if (!$id_user_connected)
+        return new WP_REST_Response(array('message' => 'User id is required in the request'), 401);
+
+    $managed_id = get_field('ismanaged', 'user_' . $id_user_connected);
+    $manager_profile = get_field('profile_img','user_'.$managed_id) ? : get_stylesheet_directory_uri() . '/img' . '/Group216.png' ;
     $args = array(
         'post_type' => array('feedback', 'mandatory', 'badge'),
         'author' => $id_user_connected, // id user connected
@@ -178,43 +183,74 @@ function get_notifications()
         'posts_per_page' => -1,
     );
     $notifications = get_posts($args);
-    $todos = array();
-    $read_feedbacks = array();
-    $read_todos = array();
-    $read_badges = array();
-    if(!empty($notifications))
-        foreach($notifications as $todo){
+    //Feedbacks
+    $args = array(
+        'post_type' => 'feedback',
+        //'author' => $id_user_connected,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notification_feedbacks = get_posts($args);
 
-            $read = get_field('read_feedback', $todo->ID);
-            if($read)
-                continue;
+    //Mandatories
+        $args = array(
+            'post_type' => 'mandatory',
+            //'author' => $id_user_connected,
+            'orderby' => 'post_date',
+            'order' => 'DESC',
+            'posts_per_page' => -1,
+        );
+        $notification_mandatories = get_posts($args);
 
-            array_push($todos,$todo);
+    //Badges
+        $args = array(
+        'post_type' => 'badge',
+        //'author' => $id_user_connected,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notification_badges = get_posts($args);
+    foreach($notification_feedbacks as $notification):
+        $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+        $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+        $manager = get_user_by('ID', $notification_id_manager);
+        $notification->manager_company = get_field('company', 'user_' . $manager->ID)[0]->post_title ? : 'Livelearn';
+        $notification->manager_image = get_field('profile_img',  'user_' . $manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+        $notification->manager_name = ($manager->display_name) ?: 'Livelearn';
+        $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
 
-            //Readed by post_type check
-            switch ($todo->post_type) {
-                case 'feedback':
-                    array_push($read_feedbacks, $todo);
-                    break;
-                case 'mandatory':
-                    array_push($read_todos, $todo);
-                    break;
-                case 'badge':
-                    array_push($read_badges, $todo);
-                    break;
-            }
-        }
-    $response = new WP_REST_Response(
+        $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+        endforeach;
+    foreach($notification_mandatories as $notification):
+        $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+        $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+        $manager = get_user_by('ID', $notification_id_manager);
+        $notification->manager_company = get_field('company', 'user_' . $manager->ID)[0]->post_title ? : 'Livelearn';
+        $notification->manager_image = get_field('profile_img',  'user_' . $manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+        $notification->manager_name = ($manager->display_name) ?: 'Livelearn';
+        $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
+
+        $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+        endforeach;
+    foreach($notification_badges as $notification):
+        $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+        $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+        $manager = get_user_by('ID', $notification_id_manager);
+        $notification->manager_company = get_field('company', 'user_' . $manager->ID)[0]->post_title ? : 'Livelearn';
+        $notification->manager_image = get_field('profile_img',  'user_' . $manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+        $notification->manager_name = ($manager->display_name) ?: 'Livelearn';
+        $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
+
+        $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+        endforeach;
+
+    return new WP_REST_Response(
         array(
-        'alertNotification'=>count($notifications),
-        'countViewAll'=>$notifications,
-        'alertToDo'=>count($read_todos),
-        'toDo'=>$read_todos,
-        'alertBadge'=>count($read_badges),
-        'badge'=>$read_badges,
-        'alertFeedback'=>count($read_feedbacks),
-        'feedback'=>$read_feedbacks,
-    ));
-    $response->set_status(200);
-    return $response;
+            'achievement'=>$notification_badges,
+            'feedback'=>$notification_feedbacks,
+            'todo'=>$notification_mandatories,
+
+        ), 200);
 }
