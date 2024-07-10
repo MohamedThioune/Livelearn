@@ -259,3 +259,67 @@ function get_notifications($data)
 
         ), 200);
 }
+
+function companyPeople($data){
+    $users = get_users();
+    $members = array();
+    $user_connected = intval($data['ID']);
+    if (!$user_connected)
+        return new WP_REST_Response(array('message' => 'User id is required in the request'), 401);
+
+    $company = get_field('company',  'user_' . $user_connected);
+
+    if(!empty($company))
+        $company_connected = $company[0]->ID;
+
+    $step = 1000;
+    $key = 3;
+    $star_index = ($key - 1) * $step;
+
+    //for ($i = $star_index; $i < $star_index + $step && $i < count($users) ; $i++) {
+    foreach($users as $user){
+        //$user = $users[$i];
+
+
+
+        if($user_connected != $user->ID ){
+            $company = get_field('company',  'user_' . $user->ID);
+            $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+            $user->department = get_field('departments', $company[0]->ID);
+            $user->phone = get_field('telnr',  'user_' . $user->ID);
+            //people you manages
+            $people_managed_by_me = array();
+            //$people_you_manage = ['3','5','6','7'];
+            $people_you_manage = get_field('managed',$user->ID);
+            if($people_you_manage)
+                foreach ($people_you_manage as $persone_id){
+                    $persone = get_user_by('ID', $persone_id);
+                    if(!$persone)
+                        continue;
+                    $company = get_field('company',  'user_' . $persone_id);
+                    $persone->data->company = $company;
+                    $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
+                    $persone->data->department = get_field('departments', $company[0]->ID);
+                    $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
+
+                    $people_managed_by_me[] = $persone->data;
+                }
+            $user->people_you_manage = $people_managed_by_me;
+            $user->company = $company[0];
+
+            if(!empty($company)){
+                $company = $company[0]->ID;
+                if($company == $company_connected)  // compare ID
+                    array_push($members, $user);
+            }
+        }
+    }
+
+    $response = new WP_REST_Response(
+        array(
+            'people'=>$members,
+            'count'=>count($members),
+        ));
+    $response->set_status(200);
+    return $response;
+}
