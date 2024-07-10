@@ -3,6 +3,7 @@
 <?php
 
 require_once 'new-module-subscribe.php';
+require_once 'orders-stripe.php';
 
 // function create_customer_stripe($data){
 //     //Create customer
@@ -100,6 +101,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
                         'type' => 'custom',
                         'custom' => 'Company',
                     ],
+                    'optional' => 'true',
                     'type' => 'text',
                 ],
                 [
@@ -116,6 +118,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
                       'type' => 'custom',
                       'custom' => 'Additional information',
                     ],
+                    'optional' => 'true',
                     'type' => 'text',
                 ],
             ],
@@ -187,6 +190,23 @@ function stripe_status($data){
 
     //case : session status
     try {
+        $success = "complete";
+        $somethin_wrong = "<small>The payment was applied but communication with Stripe was suddenly interrupted.<br>
+        Please contact us at <a href='mailto:contact@livelearn.nl'>contact@livelearn.nl</a></small>";
+        $data_order = array(
+            'session_id' => $session->id, 
+            'course_id' => $session->metadata['postID'], 
+            'status' => $success, 
+            'auth_id' => $session->metadata['userID'],  
+            'owner_id' => $session->metadata['userID'], 
+        );
+
+        //create a order information
+        $order_stripe = create_order($data_order);
+
+        if(!$order_stripe)
+            echo $somethin_wrong;
+
         $return_session = ['status' => $session->status, 'customer_email' => $session->customer_details['email']];
         return $return_session;
     } catch (Error $e) {
