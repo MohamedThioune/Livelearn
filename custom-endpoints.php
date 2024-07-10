@@ -727,6 +727,9 @@ for($i=0; $i < count($courses) ;  $i++)
  return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
 
+ 
+
+  
 function allCoursesOptimizedWithFilter($data)
 {
     $current_user_id = $GLOBALS['user_id'];
@@ -736,7 +739,10 @@ function allCoursesOptimizedWithFilter($data)
     $tags = array();
     $experts = array();
     $languages = $data['languages'] ?? '';
-    $languages = is_array($languages) ? $languages : explode(',', $languages); // Convert to array if it's a string
+
+    if (!is_array($languages)) {
+        $languages = explode(',', $languages); // Convert to array if it's a string
+    }
 
     $args = array(
         'post_type' => array('course'),
@@ -745,7 +751,7 @@ function allCoursesOptimizedWithFilter($data)
         'orderby' => 'date',
         'order' => 'DESC',
         'meta_query' => array(
-            'relation' => 'OR',
+            'relation' => 'AND', // Changed to AND to ensure both conditions must be met
             array(
                 'key' => 'language',
                 'value' => $languages,
@@ -837,6 +843,7 @@ function allCoursesOptimizedWithFilter($data)
     }
     return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
+
 
 
 
@@ -3067,169 +3074,97 @@ function save_user_views(WP_REST_Request $request)
   return $lesson_reads;    
   }
 
-  function update_user_progression_course($request)
+
+  function updateUserProgressionWithLastPosition($request)
   {
-    $request['course_title'];
-    $course_title = $request['course_title'] ?? false;
-    if ($course_title == false)
-    {
-      $response = new WP_REST_Response('You have to fill in the course title');
-      $response->set_status(400);
-      return $response;
-    }
-
-    $user_id = $request['user_id'] ?? 0;
-    $user = get_user_by( 'ID', $user_id );
-
-    if ($user == false)
-    {
-      $response = new WP_REST_Response('This user doesn\'t exist');
-      $response->set_status(400);
-      return $response;
-    }
-
-    $key_lesson = $request['key_lesson'] ?? [];
-    if (empty($key_lesson))
-      {
-        $response = new WP_REST_Response('You have to fill in the user progression');
-        $response->set_status(400);
-        return $response;
+      $course_title = $request['course_title'] ?? false;
+      if ($course_title == false) {
+          $response = new WP_REST_Response('You have to fill in the course title');
+          $response->set_status(400);
+          return $response;
       }
-
+  
+      $user_id = $request['user_id'] ?? 0;
+      $user = get_user_by('ID', $user_id);
+  
+      if ($user == false) {
+          $response = new WP_REST_Response('This user doesn\'t exist');
+          $response->set_status(400);
+          return $response;
+      }
+  
+      $key_lesson = $request['key_lesson'] ?? [];
+      if (empty($key_lesson)) {
+          $response = new WP_REST_Response('You have to fill in the user progression');
+          $response->set_status(400);
+          return $response;
+      }
+  
+      $last_position = $request['last_position'] ?? '00:00';
+      if (empty($last_position)) {
+          $last_position = '00:00';
+      }
+  
       $args = array(
-        'post_type' => 'progression', 
-        'title' => $course_title,
-        'post_status' => 'publish',
-        'author' => $user->ID,
-        'posts_per_page'         => 1,
-        'no_found_rows'          => true,
-        'ignore_sticky_posts'    => true,
-        'update_post_term_cache' => false,
-        'update_post_meta_cache' => false,
+          'post_type' => 'progression',
+          'title' => $course_title,
+          'post_status' => 'publish',
+          'author' => $user->ID,
+          'posts_per_page' => 1,
+          'no_found_rows' => true,
+          'ignore_sticky_posts' => true,
+          'update_post_term_cache' => false,
+          'update_post_meta_cache' => false,
       );
       $progression = get_posts($args)[0];
-      $lesson_reads = get_field('lesson_actual_read', $progression->ID) == null || get_field('lesson_actual_read', $progression->ID) == false ? [] : get_field('lesson_actual_read', $progression->ID);
-      $is_found= false;
-      if (count($lesson_reads)!=0)
+      $lesson_reads = get_field('lesson_actual_read', $progression->ID) ?: [];
+  
+      $is_found = false;
       foreach ($lesson_reads as $key => $lesson) {
-         $key_index = $lesson['key_lesson'][0];
-         if ($key_index == $key_lesson["key_lesson"][0]){
-          $lesson_reads[$key] = $key_lesson;
-          $is_found = true;
-        }
-       }
-      //array_search($key_lesson,$lesson_reads);
-    
-      if ($is_found == false)
-        array_push($lesson_reads,$key_lesson);
-
+          $key_index = $lesson['key_lesson'][0];
+          if ($key_index == $key_lesson["key_lesson"][0]) {
+              $lesson_reads[$key] = $key_lesson;
+              $is_found = true;
+          }
+      }
+  
+      if ($is_found == false) {
+          array_push($lesson_reads, $key_lesson);
+      }
+  
       update_field('lesson_actual_read', $lesson_reads, $progression->ID);
-      $response = new WP_REST_Response($lesson_reads);
+      update_field('last_position', $last_position, $progression->ID);
+  
+      $response_data = [
+          'lesson_keys' => $lesson_reads,
+          'last_position' => $last_position
+      ];
+  
+      $response = new WP_REST_Response($response_data);
       $response->set_status(200);
       return $response;
   }
-
-  function updateUserProgressionWithLastPosition($request)
-{
-    $course_title = $request['course_title'] ?? false;
-    if (!$course_title) {
-        $response = new WP_REST_Response('You have to fill in the course title');
-        $response->set_status(400);
-        return $response;
-    }
-
-    $user_id = $request['user_id'] ?? 0;
-    $user = get_user_by('ID', $user_id);
-    if (!$user) {
-        $response = new WP_REST_Response('This user doesn\'t exist');
-        $response->set_status(400);
-        return $response;
-    }
-
-    $key_lesson = $request['key_lesson'] ?? [];
-    if (empty($key_lesson)) {
-        $response = new WP_REST_Response('You have to fill in the user progression');
-        $response->set_status(400);
-        return $response;
-    }
-
-    $last_position = $request['last_position'] ?? '';
-
-    $args = array(
-        'post_type' => 'progression', 
-        'title' => $course_title,
-        'post_status' => 'publish',
-        'author' => $user->ID,
-        'posts_per_page' => 1,
-        'no_found_rows' => true,
-        'ignore_sticky_posts' => true,
-        'update_post_term_cache' => false,
-        'update_post_meta_cache' => false,
-    );
-    $progression = get_posts($args)[0];
-
-    $lesson_reads = get_field('lesson_actual_read', $progression->ID) ?: [];
-    $is_found = false;
-
-    if (!empty($lesson_reads)) {
-        foreach ($lesson_reads as $key => $lesson) {
-            if (isset($lesson['key_lesson']) && $lesson['key_lesson'] == $key_lesson[0]['key_lesson']) {
-                $lesson_reads[$key] = $key_lesson[0];
-                $is_found = true;
-                break;
-            }
-        }
-    }
-
-    if (!$is_found) {
-        $lesson_reads[] = $key_lesson[0];
-    }
-
-    update_field('lesson_actual_read', $lesson_reads, $progression->ID);
-
-    if ($last_position !== '') {
-        update_field('last_position', $last_position, $progression->ID);
-    }
-
-    // Get the updated last position
-    $updated_last_position = get_field('last_position', $progression->ID) ?: '';
-
-    // Format lesson reads for response
-    $formatted_lessons = array_map(function($lesson) {
-        return ['key_lesson' => $lesson['key_lesson']];
-    }, $lesson_reads);
-
-    $response_data = [
-        'lesson_keys' => $formatted_lessons,
-        'last_position' => $updated_last_position
-    ];
-
-    $response = new WP_REST_Response($response_data);
-    $response->set_status(200);
-    return $response;
-}
-
+  
 
   function getUserProgressionWithLastPosition($request)
   {
     $course_title = $request['course_title'] ?? false;
-    if (!$course_title) {
+    if ($course_title == false) {
         $response = new WP_REST_Response('You have to fill in the course title');
         $response->set_status(400);
         return $response;
     }
-    
+
     $user_id = $request['user_id'] ?? 0;
     $user = get_user_by('ID', $user_id);
-    if (!$user) {
+    if ($user == false) {
         $response = new WP_REST_Response('This user doesn\'t exist');
         $response->set_status(400);
         return $response;
     }
-    
-    // Get posts searching by title
+
     $args = array(
-        'post_type' => 'progression', 
+        'post_type' => 'progression',
         'title' => $course_title,
         'post_status' => 'publish',
         'author' => $user->ID,
@@ -3239,11 +3174,9 @@ function save_user_views(WP_REST_Request $request)
         'update_post_term_cache' => false,
         'update_post_meta_cache' => false,
     );
-
-    $progressions = get_posts($args);
+    $progressions = get_posts($args) ?? [];
 
     if (empty($progressions)) {
-        // Create progression if it doesn't exist
         $post_data = array(
             'post_title' => $course_title,
             'post_author' => $user->ID,
@@ -3255,26 +3188,19 @@ function save_user_views(WP_REST_Request $request)
         $progression_id = $progressions[0]->ID;
     }
 
-    // Get lesson reads
     $lesson_reads = get_field('lesson_actual_read', $progression_id) ?: [];
-
-    // Ensure the response format is an array of objects with key_lesson properties
-    $formatted_lessons = array_map(function($lesson) {
-        return ['key_lesson' => $lesson['key_lesson'][0]];
-    }, $lesson_reads);
-
-    // Get last position
-    $last_position = get_field('last_position', $progression_id) ?: '';
+    $last_position = get_field('last_position', $progression_id) ?: '00:00';
 
     $response_data = [
-        'lesson_keys' => $formatted_lessons,
+        'lesson_keys' => $lesson_reads,
         'last_position' => $last_position
     ];
 
     $response = new WP_REST_Response($response_data);
     $response->set_status(200);
-    return $response;    
+    return $response;
   }
+
   
    
   function matchin_topics()
