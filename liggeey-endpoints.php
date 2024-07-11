@@ -2764,7 +2764,7 @@ function editSkills(WP_REST_Request $request){
 
   if(empty($skills))
     $skills = array();
-  var_dump($request['note'], 'Before !');
+  var_dump($skills, 'Before !');
   foreach($skills as $item):
     var_dump($request['skill']);
     var_dump($request['note']);    
