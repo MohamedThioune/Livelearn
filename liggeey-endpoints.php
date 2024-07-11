@@ -2766,6 +2766,8 @@ function editSkills(WP_REST_Request $request){
     $skills = array();
   var_dump($request['note'], 'Before !');
   foreach($skills as $item){
+    var_dump($item['id']);
+    var_dump($skill['id']);    
     if($item['id'] == $skill['id']){
       $item['note'] = $skill['note'];
       $bool = true;
