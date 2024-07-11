@@ -33,40 +33,24 @@ if(isset($productPrice)):
         if(!$thumbnail)
             $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
     endif;
-    // $data_product = [
-    //     'name' => $post->post_title,
-    //     'description' => $short_description,
-    //     'images' => [ $thumbnail ],
-    //     'url' => $permalink,
 
-    //     'metadata' => [
-    //         'courseID' => $post->ID,
-    //     ]
-    // ];
-    // $productID = create_product($data_product);
+    if($prijs):
+        // create price 
+        $currency = 'eur';
+        $data_price = [
+            'currency' => $currency,
+            'amount' => $prijs,
+            'product_name' => $post->post_title,
+            'product_description' => $short_description,
+            'statement_descriptor' => 'LIVELEARN PAY !',
+            'product_image' => $thumbnail,
+            'product_url' => $permalink,
+            'ID' => $post->ID,
+        ];
+        $price_id = create_price($data_price);
+        $mode = ($prijs) ? 'payment' : 'setup';
+    endif;
 
-    // create price 
-    $currency = 'eur';
-    $data_price = [
-        'currency' => $currency,
-        'amount' => $prijs,
-        'product_name' => $post->post_title,
-        'product_description' => $short_description,
-        'statement_descriptor' => 'LIVELEARN PAY !',
-        'product_image' => $thumbnail,
-        'product_url' => $permalink,
-        'ID' => $post->ID,
-    ];
-    $price_id = create_price($data_price);
-    $mode = ($prijs) ? 'payment' : 'setup';
-
-    // CRYPT
-    // $key_password = "C@##me1995.";
-    // $encryptedPriceID = openssl_encrypt($priceID, "AES-128-ECB", $key_password);
-    // $encryptedMode = openssl_encrypt($mode, "AES-128-ECB", $key_password);
-    // $URL = "/checkout-stripe?price=" . $priceID . '&mode=' . $mode;  
-
-    // header('Location: '. $URL);
 endif;
 //create ...
 
@@ -231,6 +215,40 @@ endif;
             else:
                 // Form free course 
                 /** Instructions here */
+            ?>
+                <h3>Register information :</h3>
+                <form method="POST" action="/checkout-module">
+                    <input type="hidden" name="postID" value="<?= $postID ?>" class="" id="" placeholder="">
+                    <input type="hidden" name="authID" value="<?= $userID ?>" class="" id="" placeholder="">
+
+                    <div class="form-group">
+                        <label for="additional_name">Full name</label>
+                        <input type="text" name="additional_name" class="form-control" id="additional_name" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="additional_email">Email address</label>
+                        <input type="email" name="additional_email" class="form-control" id="additional_email" aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="additional_company">Company</label>
+                        <input type="text" name="additional_company" class="form-control" id="additional_company" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="additional_phone">Phone</label>
+                        <input type="number" name="additional_phone" class="form-control" id="additional_phone" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="additional_adress">Adress</label>
+                        <input type="text" name="additional_adress" class="form-control" id="additional_adress" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="additional_information">Additionnal Information</label>
+                        <textarea name="additional_information" rows="8" id="additional_information"></textarea>
+                    </div>
+                    <button type="submit" name="order_free" class="btn btn-primary">Save</button>
+                </form>
+            <?php
             endif;
             ?>
         </div>

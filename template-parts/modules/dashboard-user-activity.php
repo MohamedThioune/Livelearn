@@ -19,6 +19,9 @@ if(isset($_GET['session_id'])):
                             </p>
                         </section><br><br>';
 endif;
+
+if(!isset($message))
+    $message = (isset($_GET['message'])) ? $_GET['message'] : null;
 /*
 * * Information user
 */
@@ -68,7 +71,7 @@ $enrolled_courses = array();
 // $kennis_video = get_field('kennis_video', 'user_' . $user->ID);
 $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
 $expenses = 0; 
-
+$enrolled_stripe = array();
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
@@ -89,6 +92,7 @@ foreach($bunch_orders as $order){
             array_push($enrolled, $course_id);
     }
 }
+
 if(!empty($enrolled))
 {
     $args = array(
@@ -114,6 +118,11 @@ $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video'
 /*
 * * End
 */
+
+//Enrolled with Stripe
+$enrolled_stripe = list_orders($user->ID)['posts'];
+$enrolled_courses = (!empty($enrolled_courses)) ? array_merge($enrolled_stripe, $enrolled_courses) : $enrolled_stripe;
+$your_count_courses = (!empty($enrolled_courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
 
 /** Mandatories **/
 $args = array(
@@ -181,7 +190,6 @@ if(!empty($view_user)){
 //Profile view by 
 $redundance_profile = array(); 
 foreach ($users as $element) {
-    
     //Views  
     $args = array(
         'post_type' => 'view', 
@@ -243,7 +251,7 @@ $no_content = "<div class='emty-block-activity'>
 
     <div id="tab-url1">
         <?php
-            echo (isset($message)) ? $message : '';
+            echo ($message) ?: '';
         ?>
         <ul class="nav">
             <li class="nav-one"><a href="#All" class="current">All</a></li>
