@@ -31,7 +31,7 @@ if ($_POST){
             ));
         $company = get_post($company_id);
         update_field('company', $company, 'user_' . $user_id);
-        header("Location: ".$url."?message=<div class='alert alert-success text-center'>user saved success</div>");
+        header("Location: ". $url ."?message=<div class='alert alert-success text-center'>user saved success</div>");
 
         /*
         //connect the new user with the new company
