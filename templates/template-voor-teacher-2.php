@@ -183,7 +183,7 @@
             }
 
             $.ajax({
-                url: '/livelearn/workflow-subscription/',
+                url: '/workflow-subscription/',
                 type: 'POST',
                 data: {
                     'firstName':firsname,
