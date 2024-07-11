@@ -3,6 +3,7 @@
 <?php
 
 require_once 'new-module-subscribe.php';
+require_once 'orders-stripe.php';
 
 // function create_customer_stripe($data){
 //     //Create customer
@@ -100,6 +101,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
                         'type' => 'custom',
                         'custom' => 'Company',
                     ],
+                    'optional' => 'true',
                     'type' => 'text',
                 ],
                 [
@@ -116,6 +118,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
                       'type' => 'custom',
                       'custom' => 'Additional information',
                     ],
+                    'optional' => 'true',
                     'type' => 'text',
                 ],
             ],
@@ -187,6 +190,24 @@ function stripe_status($data){
 
     //case : session status
     try {
+        $success = "complete";
+        $somethin_wrong = "<small>The payment was applied but communication with Stripe was suddenly interrupted.<br>
+        Please contact us at <a href='mailto:contact@livelearn.nl'>contact@livelearn.nl</a></small>";
+        $data_order = array(
+            'session_id' => $session->id, 
+            'course_id' => $session->metadata['postID'], 
+            'status' => $success, 
+            'prijs' => 'true',
+            'auth_id' => $session->metadata['userID'],  
+            'owner_id' => $session->metadata['userID'], 
+        );
+
+        //create a order information
+        $order_stripe = create_order($data_order);
+
+        if(!$order_stripe)
+            echo $somethin_wrong;
+
         $return_session = ['status' => $session->status, 'customer_email' => $session->customer_details['email']];
         return $return_session;
     } catch (Error $e) {
@@ -203,8 +224,34 @@ function stripe_status($data){
 $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
 $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
 
+//Checkout session stripe
 if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
     echo($session_stripe_secret);
     // var_dump($session_stripe_secret);
+endif;
+
+//Create order 
+if(isset($_POST['order_free'])):
+    $success = 'complete';
+    $data_order = array(
+        'course_id' => $_POST['postID'], 
+        'status' => $success, 
+        'prijs' => 'false',
+        'auth_id' => $_POST['authID'],  
+        'owner_id' => $_POST['authID'], 
+        'additional_name' => $_POST['additional_name'],
+        'additional_email' => $_POST['additional_email'],
+        'additional_company' => $_POST['additional_company'],
+        'additional_phone' => $_POST['additional_phone'],
+        'additional_adress' => $_POST['additional_adress'],
+        'additional_information' => $_POST['additional_information'],
+    );
+
+    var_dump($data_order);
+    //create a order information
+    $order_stripe = create_order($data_order);
+    $success = ($order_stripe) ? "Information filled up successfully !" : "Something went wrong !";
+
+    header('Location: /dashboard/user/activity/?message=' . $success);
 endif;
