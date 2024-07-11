@@ -22,7 +22,7 @@ if ($_POST){
         if ($_POST['phone'])
             update_field('telnr', $_POST['phone'], 'user_' . $user_id);
 
-        //create a new company the new user
+        //create a new company for the new user
         $company_id = wp_insert_post(
             array(
                 'post_title' => $_POST['company'],

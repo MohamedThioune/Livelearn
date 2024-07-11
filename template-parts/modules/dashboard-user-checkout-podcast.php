@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_directory_uri();?>/green-audio-player.css">
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php
+require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
 
 $post = 0;
 
@@ -96,6 +97,12 @@ foreach($bunch_orders as $order){
             array_push($enrolled, $course_id);
     }
 }
+
+//Enrolled with Stripe
+$enrolled_stripe = list_orders($user->ID)['ids'];
+if(!empty($enrolled_stripe))
+if(in_array($post->ID, $enrolled_stripe))
+    $bool = 1;
 
 if(!$bool)
     header('Location: /dashboard/user/activity?message=You need to register at this course first !' );
@@ -574,7 +581,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
         </div>
         <div class="group-card-strat-block">
             <div class="card-strat-block">
-                <a href="" class="btn btn-strat">Strat</a>
+                <a href="" class="btn btn-strat">Start</a>
                 <ul>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_outline-play-arrow.png" alt="">0 hours on-demand video</li>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ph_files-light.png" alt=""><?= $count_podcasts; ?> downloadable resources</li>

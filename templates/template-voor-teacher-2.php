@@ -5,7 +5,6 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
 //ini_set('memory_limit', '256M');
-
 ?>
 <meta name="description" content="Fluidify">
 <meta name='keywords' content="fluidify">
