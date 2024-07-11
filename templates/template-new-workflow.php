@@ -13,6 +13,7 @@ if ($_POST){
         'last_name' => $_POST['lastName'],
         'role' => 'Manager',
     );
+
     $user_id = wp_insert_user($userdata);
     if (is_wp_error($user_id)) {
         echo "<div class='alert alert-danger text-center'>" .$user_id->get_error_message()." </div>";
