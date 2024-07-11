@@ -2752,6 +2752,8 @@ function editSkills(WP_REST_Request $request){
     return $response;
   endif; 
 
+  $request['ID'] = 479;
+
   $user_id = $request['ID'];
   $skills = get_field('skills', 'user_' . $user_id);
   $skill = array();
@@ -2765,8 +2767,8 @@ function editSkills(WP_REST_Request $request){
 
   foreach($skills as $item){
     if($item['id'] == $request['id']){
-        $item['note'] = $note;
-        $bool = true;
+      $item['note'] = $request['note'];
+      $bool = true;
     }
     array_push($bunch, $item);
   }
@@ -2782,6 +2784,7 @@ function editSkills(WP_REST_Request $request){
   $skill_sample['term_id'] = $skill['id'];
   $skill_sample['name'] = get_the_category_by_ID($skill['id']);
   $skill_sample['note'] = $skill['note'];
+  
   $response = new WP_REST_Response($skill_sample);
   $code_status = 201;
   $response->set_status($code_status);
