@@ -2765,16 +2765,17 @@ function editSkills(WP_REST_Request $request){
   if(empty($skills))
     $skills = array();
   var_dump($request['note'], 'Before !');
-  foreach($skills as $item){
-    var_dump($item['id']);
-    var_dump($skill['id']);    
-    if($item['id'] == $skill['id']){
+  foreach($skills as $item):
+    var_dump($request['skill']);
+    var_dump($request['note']);    
+    if($item['id'] == $request['skill']){
       $item['note'] = $skill['note'];
       $bool = true;
       var_dump($item['note'], 'Current ...');
     }
     array_push($bunch, $item);
-  }
+  endforeach;
+
   if(!$bool)
     array_push($skills, $skill);
   else
