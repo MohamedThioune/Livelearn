@@ -2017,11 +2017,6 @@ add_action( 'rest_api_init', function () {
     'callback' => 'updateCompanyProfil'
   ));
 
-  register_rest_route ('custom/v1', '/candidate/skills_passport', array(
-    'methods' => 'POST',
-    'callback' => 'candidateSkillsPassport'
-  ));
-
   register_rest_route ('custom/v1', '/company/updateProfil', array(
     'methods' => 'POST',
     'callback' => 'updateCompanyProfil'

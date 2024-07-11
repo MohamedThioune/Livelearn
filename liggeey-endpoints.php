@@ -178,7 +178,7 @@ function candidate($id){
 
     foreach ($main_skills as $main):
       $skill_sample = [];
-
+      $note = 0;
       if (!empty($skills_note)) 
         foreach ($skills_note as $skill) 
           if($skill['id'] == $main->term_id){
@@ -2762,14 +2762,13 @@ function editSkills(WP_REST_Request $request){
 
   if(empty($skills))
     $skills = array();
-
-  foreach($skills as $item){
-    if($item['id'] == $request['id']){
-        $item['note'] = $note;
-        $bool = true;
+  foreach($skills as $item):
+    if($item['id'] == $skill['id']){
+      $item['note'] = $skill['note'];
+      $bool = true;
     }
     array_push($bunch, $item);
-  }
+  endforeach;
 
   if(!$bool)
     array_push($skills, $skill);
@@ -2782,6 +2781,7 @@ function editSkills(WP_REST_Request $request){
   $skill_sample['term_id'] = $skill['id'];
   $skill_sample['name'] = get_the_category_by_ID($skill['id']);
   $skill_sample['note'] = $skill['note'];
+
   $response = new WP_REST_Response($skill_sample);
   $code_status = 201;
   $response->set_status($code_status);
