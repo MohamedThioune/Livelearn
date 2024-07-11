@@ -120,6 +120,7 @@ $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video'
 */
 
 //Enrolled with Stripe
+$enrolled_stripe = array();
 $enrolled_stripe = list_orders($user->ID)['posts'];
 if(!empty($enrolled_stripe)):
     $enrolled_courses = (!empty($enrolled_courses)) ? array_merge($enrolled_stripe, $enrolled_courses) : $enrolled_stripe;
