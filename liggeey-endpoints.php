@@ -178,7 +178,7 @@ function candidate($id){
 
     foreach ($main_skills as $main):
       $skill_sample = [];
-
+      $note = 0;
       if (!empty($skills_note)) 
         foreach ($skills_note as $skill) 
           if($skill['id'] == $main->term_id){
