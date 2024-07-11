@@ -13,6 +13,7 @@ if ($_POST){
         'last_name' => $_POST['lastName'],
         'role' => 'Manager',
     );
+
     $user_id = wp_insert_user($userdata);
     if (is_wp_error($user_id)) {
         echo "<div class='alert alert-danger text-center'>" .$user_id->get_error_message()." </div>";
@@ -22,7 +23,7 @@ if ($_POST){
         if ($_POST['phone'])
             update_field('telnr', $_POST['phone'], 'user_' . $user_id);
 
-        //create a new company the new user
+        //create a new company for the new user
         $company_id = wp_insert_post(
             array(
                 'post_title' => $_POST['company'],
