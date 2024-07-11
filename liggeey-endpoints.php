@@ -2752,8 +2752,6 @@ function editSkills(WP_REST_Request $request){
     return $response;
   endif; 
 
-  $request['ID'] = 479;
-
   $user_id = $request['ID'];
   $skills = get_field('skills', 'user_' . $user_id);
   $skill = array();
@@ -2764,14 +2762,10 @@ function editSkills(WP_REST_Request $request){
 
   if(empty($skills))
     $skills = array();
-  var_dump($skills, 'Before !');
   foreach($skills as $item):
-    var_dump($request['skill']);
-    var_dump($request['note']);    
-    if($item['id'] == $request['skill']){
+    if($item['id'] == $skill['id']){
       $item['note'] = $skill['note'];
       $bool = true;
-      var_dump($item['note'], 'Current ...');
     }
     array_push($bunch, $item);
   endforeach;
