@@ -1,54 +1,12 @@
 <?php /** Template Name: Voor teacher2 */ ?>
-<?php
-global $wp;
+<?php global $wp; ?>
 
-$url = home_url( $wp->request );
-if ($_POST){
-    $userdata = array(
-        'user_pass' => $_POST['password'],
-        'user_login' => $_POST['username'],
-        'user_email' => $_POST['email'],
-        'user_url' => 'http://livelearn.nl/',
-        'display_name' => $_POST['firstName'] . ' ' . $_POST['lastName'],
-        'first_name' => $_POST['firstName'],
-        'last_name' => $_POST['lastName'],
-        'role' => 'Manager',
-    );
-    $user_id = wp_insert_user($userdata);
-    if (is_wp_error($user_id)) {
-        header("Location: $url?message=<div class='alert alert-danger'>$user_id->get_error_message() </div>");
-    } else {
-        //update phone number
-        if ($_POST['phone'])
-            update_field('telnr', $_POST['phone'], 'user_' . $user_id);
+<?php wp_head();
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+//ini_set('memory_limit', '256M');
 
-        //create a new company the new user
-        $company_id = wp_insert_post(
-            array(
-                'post_title' => $_POST['company'],
-                'post_type' => 'company',
-                'post_status' => 'pending',
-            ));
-        $company = get_post($company_id);
-        update_field('company', $company, 'user_' . $user_id);
-        header("Location: ".$url."?message=<div class='alert alert-success text-center'>user saved success</div>");
-
-        /*
-        //connect the new user with the new company
-        $creds = array();
-        $creds['user_login'] = $_POST['username'];
-        $creds['user_password'] = $_POST['password'];
-        $creds['remember'] = true;
-        $user = wp_signon( $creds, false );
-        if ( is_wp_error($user) )
-            header("Location: $url?message=<div class='alert alert-danger'>$user->get_error_message()</div>");
-        else
-            header('Location'.$url);
-        */
-    }
-}
 ?>
-<?php wp_head(); ?>
 <meta name="description" content="Fluidify">
 <meta name='keywords' content="fluidify">
 <meta charset="utf-8">
@@ -68,6 +26,10 @@ if ($_POST){
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/livelearn-logo-blanc.png" class="" alt="">
         </a>
     </div>
+    <!-- that was here just for test
+    <div id="back-request">
+    </div>
+    -->
     <section class="firstSection">
         <div class="container-fluid">
             <div class="row">
@@ -84,18 +46,18 @@ if ($_POST){
                 <div class="col-md-5">
                     <div class="blockForm2">
                         <p><b>Aanmelden expert of opleider</b></p>
+
                         <?php
                         if (isset($_GET['message']))
                             echo $_GET['message'];
-                           echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                           //echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
                         ?>
-                        <!--
-                            <form action="" method="POST" id="new-form-register-workflow">
+                        <form action="" method="POST" id="new-form-register-workflow">
 
                                 <div class="first-step-modal">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required autofocus>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required>
                                     </div>
                                     <button type="button" class="btn btn-connection" id="create-account-step">Create Account</button>
                                 </div>
@@ -137,7 +99,8 @@ if ($_POST){
                                 </div>
                             </form>
                         </div>
-                        -->
+
+
                     </div>
                 </div>
             </div>
@@ -205,13 +168,50 @@ if ($_POST){
     </script>
     <script>
         $("#new-form-register-workflow").submit((e)=>{
+            e.preventDefault();
             const formData = new FormData(e.currentTarget);
             password = formData.get('password')
             password2 = formData.get('password2')
+            username = formData.get('username')
+            firsname = formData.get('firstName')
+            lastname = formData.get('lastName')
+            email = formData.get('email')
+            phone = formData.get('phone')
+            company = formData.get('company')
             if (password !== password2){
                 e.preventDefault();
                 alert('passwords not matched')
             }
+
+            $.ajax({
+                url: '/livelearn/workflow-subscription/',
+                type: 'POST',
+                data: {
+                    'firstName':firsname,
+                    'lastName':lastname,
+                    'email':email,
+                    'phone':phone,
+                    'company':company,
+                    'username':username,
+                    'password':password,
+                    'password2':password2
+                },
+                beforeSend: function () {
+                    console.log('before sending');
+                    $('#back-request').html('');
+                },
+                success: function (data) {
+                    console.log('success')
+                    console.log(data)
+                    //alert('subscription done successfully')
+                    $('#back-request').html(data);
+                },
+                error: function (error) {
+                    console.log('status error : ',error)
+                    //$('#back-request').html(error.responseText)
+                    $('#back-request').html('<div class="alert alert-danger text-center">error during subscription</div>')
+                }
+            })
         })
     </script>
 <?php get_footer(); ?>
