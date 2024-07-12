@@ -204,6 +204,7 @@
                     console.log(data)
                     //alert('subscription done successfully')
                     $('#back-request').html(data);
+                    window.reload();
                 },
                 error: function (error) {
                     console.log('status error : ',error)
