@@ -3111,32 +3111,42 @@ function save_user_views(WP_REST_Request $request)
         'update_post_term_cache' => false,
         'update_post_meta_cache' => false,
     );
-    $progression = get_posts($args)[0];
-    $lesson_reads = get_field('lesson_actual_read', $progression->ID) ?: [];
 
-    foreach ($lesson_keys as $new_lesson_key) {
-        $is_found = false;
-        foreach ($lesson_reads as $key => $lesson) {
-            if ($lesson['key_lesson'] == $new_lesson_key['key_lesson']) {
-                $lesson_reads[$key] = $new_lesson_key;
-                $is_found = true;
+    $progression = get_posts($args)[0];
+    $lesson_reads = get_field('lesson_actual_read', $progression->ID) ?? [];
+    $updated_lesson_reads = [];
+
+    // Ajouter ou mettre à jour les leçons basées sur les nouvelles données
+    foreach ($lesson_keys as $new_lesson) 
+    {
+        $new_key_lesson = $new_lesson['key_lesson'];
+        $new_key_lesson_base = explode('-', $new_key_lesson)[0];
+        $updated = false;
+
+        foreach ($lesson_reads as $index => $lesson) {
+            $existing_key_lesson = $lesson['key_lesson'];
+            $existing_key_lesson_base = explode('-', $existing_key_lesson)[0];
+
+            if ($existing_key_lesson_base == $new_key_lesson_base) {
+                $lesson_reads[$index] = $new_lesson; // Mettre à jour la leçon existante
+                $updated = true;
                 break;
             }
         }
-        if (!$is_found) {
-            array_push($lesson_reads, $new_lesson_key);
+
+        if (!$updated) {
+            $lesson_reads[] = $new_lesson; // Ajouter une nouvelle leçon
         }
     }
 
     update_field('lesson_actual_read', $lesson_reads, $progression->ID);
 
-    $response_data = [
+    $response = new WP_REST_Response([
         'lesson_keys' => $lesson_reads,
-    ];
-
-    $response = new WP_REST_Response($response_data);
+    ]);
     $response->set_status(200);
     return $response;
+  
   }
   
   function getUserProgressionWithLastPosition($request)
