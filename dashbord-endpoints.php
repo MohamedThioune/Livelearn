@@ -35,36 +35,46 @@ function upcoming_schedule_for_the_user()
         $user_id = intval($_GET['id']);
     }
     $args = array(
-        'post_type' => array('course', 'post'),
+        'post_type' => 'post',
+        'post_status' => 'publish',
         'posts_per_page' => -1,
-        'order' => 'DESC'
+        'order' => 'DESC',
+        'meta_key'   => 'data_locaties_xml',
     );
     $schedules = get_posts($args);
     $all_schedules = array();
+
     foreach ($schedules as $schedule) {
         global $wpdb;
         $data_locaties_xml = get_field('data_locaties_xml', $schedule->ID);
         if (!$data_locaties_xml)
             continue;
         $courseTime = array();
+        $temps = array();
         foreach ($data_locaties_xml as $dataxml) {
-            //print_r($dataxml['value']); // 19/12/2023 10: 00: 00-19/12/2023 11: 00: 00--
-            $datetime = explode(' ', $dataxml['value']);
-            $date = explode(' ', $datetime[0])[0];
-            //print_r($date); // 19/12/2023
-            $time = explode('-', $datetime[1])[0];
-            //print_r($time); //10: 00: 00
-            $courseTime['date'][] = $date;
-            $courseTime['time'][] = $time;
+            if ($dataxml) {
+                $datetime = explode(' ', $dataxml['value']);
+
+                $date = explode(' ', $datetime[0])[0];
+                $time = explode('-', $datetime[1])[0];
+                //$courseTime['date'][] = $date;
+                //$courseTime['time'][] = $time;
+                $courseTime[] = array('date'=>$date,'time'=>$time);
+            }
         }
 
+        if (!$courseTime)
+            continue;
+
+        /** if 500 error comment this part of code with database*/
+
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
-        $sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
-        $user_follow_this_course = $wpdb->get_results( $sql );
-        if(!$user_follow_this_course)
-            continue;
-        if(intval($user_follow_this_course[0]->user_id)!=$user_id)
-            continue;
+        //$sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
+        //$user_follow_this_course = $wpdb->get_results( $sql );
+        //if(!$user_follow_this_course)
+       //     continue;
+        //if(intval($user_follow_this_course[0]->user_id)!=$user_id)
+        //    continue;
 
         $image = get_field('preview', $schedule->ID)['url'];
         if(!$image){
@@ -79,17 +89,18 @@ function upcoming_schedule_for_the_user()
         $schedule_data['title'] = $schedule->post_title;
         $schedule_data['links'] = $schedule->guid;
         $schedule_data['course_type'] = get_field('course_type', $schedule->ID);
-        //$schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
+        $schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
         $schedule_data['pathImage'] = $image;
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
-        $schedule_data['price'] = get_field('price',$schedule->ID) ?? "Gratis";
+        $schedule_data['price'] = get_field('price',$schedule->ID)!="0" ? get_field('price',$schedule->ID) : "Gratis";
         $schedule_data['data_locaties_xml'] = $data_locaties_xml;
         $schedule_data['courseTime'] = $courseTime;
+        $schedule_data['author'] = get_user_by('ID', $schedule->post_author);
         $all_schedules[] = $schedule_data;
 
     }
     if (empty($all_schedules)) {
-        $response = new WP_REST_Response($data_locaties_xml);
+        $response = new WP_REST_Response(array());
         $response->set_status(204);
         return $response;
     }
@@ -124,7 +135,7 @@ function saveManager(WP_REST_Request $request){
     endif;
     //update role of  user
     $user = get_userdata($user_id);
-    $new_role = 'manager';
+    $new_role = 'hr';
     if (!in_array($new_role, $user->roles)) {
         $user->add_role($new_role);
     }
@@ -161,3 +172,154 @@ function saveManager(WP_REST_Request $request){
     return $response;
 }
 
+function get_notifications($data)
+{
+    $id_user_connected = intval($data['ID']);
+    if (!$id_user_connected)
+        return new WP_REST_Response(array('message' => 'User id is required in the request'), 401);
+
+    $managed_id = get_field('ismanaged', 'user_' . $id_user_connected);
+    $manager_profile = get_field('profile_img','user_'.$managed_id) ? : get_stylesheet_directory_uri() . '/img' . '/Group216.png' ;
+    $args = array(
+        'post_type' => array('feedback', 'mandatory', 'badge'),
+        'author' => $id_user_connected, // id user connected
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notifications = get_posts($args);
+    //Feedbacks
+    $args = array(
+        'post_type' => 'feedback',
+        //'author' => $id_user_connected,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notification_feedbacks = get_posts($args);
+
+    //Mandatories
+        $args = array(
+            'post_type' => 'mandatory',
+            //'author' => $id_user_connected,
+            'orderby' => 'post_date',
+            'order' => 'DESC',
+            'posts_per_page' => -1,
+        );
+        $notification_mandatories = get_posts($args);
+
+    //Badges
+        $args = array(
+        'post_type' => 'badge',
+        //'author' => $id_user_connected,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notification_badges = get_posts($args);
+    foreach($notification_feedbacks as $notification):
+        $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+        $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+        $manager = get_user_by('ID', $notification_id_manager);
+        $notification->manager_company = get_field('company', 'user_' . $manager->ID)[0]->post_title ? : 'Livelearn';
+        $notification->manager_image = get_field('profile_img',  'user_' . $manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+        $notification->manager_name = ($manager->display_name) ?: 'Livelearn';
+        $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
+
+        $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+        endforeach;
+    foreach($notification_mandatories as $notification):
+        $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+        $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+        $manager = get_user_by('ID', $notification_id_manager);
+        $notification->manager_company = get_field('company', 'user_' . $manager->ID)[0]->post_title ? : 'Livelearn';
+        $notification->manager_image = get_field('profile_img',  'user_' . $manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+        $notification->manager_name = ($manager->display_name) ?: 'Livelearn';
+        $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
+
+        $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+        endforeach;
+    foreach($notification_badges as $notification):
+        $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
+        $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
+        $manager = get_user_by('ID', $notification_id_manager);
+        $notification->manager_company = get_field('company', 'user_' . $manager->ID)[0]->post_title ? : 'Livelearn';
+        $notification->manager_image = get_field('profile_img',  'user_' . $manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+        $notification->manager_name = ($manager->display_name) ?: 'Livelearn';
+        $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
+
+        $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+        endforeach;
+
+    return new WP_REST_Response(
+        array(
+            'achievement'=>$notification_badges,
+            'feedback'=>$notification_feedbacks,
+            'todo'=>$notification_mandatories,
+
+        ), 200);
+}
+
+function companyPeople($data){
+    $users = get_users();
+    $members = array();
+    $user_connected = intval($data['ID']);
+    if (!$user_connected)
+        return new WP_REST_Response(array('message' => 'User id is required in the request'), 401);
+
+    $company = get_field('company',  'user_' . $user_connected);
+
+    if(!empty($company))
+        $company_connected = $company[0]->ID;
+
+    $step = 1000;
+    $key = 3;
+    $star_index = ($key - 1) * $step;
+
+    //for ($i = $star_index; $i < $star_index + $step && $i < count($users) ; $i++) {
+    foreach($users as $user){
+        //$user = $users[$i];
+
+
+
+        if($user_connected != $user->ID ){
+            $company = get_field('company',  'user_' . $user->ID);
+            $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+            $user->department = get_field('departments', $company[0]->ID);
+            $user->phone = get_field('telnr',  'user_' . $user->ID);
+            //people you manages
+            $people_managed_by_me = array();
+            //$people_you_manage = ['3','5','6','7'];
+            $people_you_manage = get_field('managed',$user->ID);
+            if($people_you_manage)
+                foreach ($people_you_manage as $persone_id){
+                    $persone = get_user_by('ID', $persone_id);
+                    if(!$persone)
+                        continue;
+                    $company = get_field('company',  'user_' . $persone_id);
+                    $persone->data->company = $company;
+                    $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
+                    $persone->data->department = get_field('departments', $company[0]->ID);
+                    $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
+
+                    $people_managed_by_me[] = $persone->data;
+                }
+            $user->people_you_manage = $people_managed_by_me;
+            $user->company = $company[0];
+
+            if(!empty($company)){
+                $company = $company[0]->ID;
+                if($company == $company_connected)  // compare ID
+                    array_push($members, $user);
+            }
+        }
+    }
+
+    $response = new WP_REST_Response(
+        array(
+            'people'=>$members,
+            'count'=>count($members),
+        ));
+    $response->set_status(200);
+    return $response;
+}

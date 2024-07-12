@@ -1,5 +1,27 @@
 <html lang="en">
 <?php
+
+require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
+
+//Stripe return callback
+if(isset($_GET['session_id'])):
+    $status_stripe = stripe_status($_GET['session_id']);
+    if(isset($status_stripe['error']))
+        $message = "<p>Something wrong through the processs payment, please try again later !</p>";
+    
+    if(isset($status_stripe['status']))
+        if($status_stripe['status'] == 'complete')
+            $message = '<section id="success" class="hidden" style="background-color:white; color:green; border-radius: 2px">
+                            <p>
+                            We appreciate your interest in our courses ! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.<br>
+
+                            If you have any questions, please email <a href="mailto:info@livelearn.nl" style="text-decoration:underline">info@livelearn.nl</a>.
+                            </p>
+                        </section><br><br>';
+endif;
+
+if(!isset($message))
+    $message = (isset($_GET['message'])) ? $_GET['message'] : null;
 /*
 * * Information user
 */
@@ -49,7 +71,7 @@ $enrolled_courses = array();
 // $kennis_video = get_field('kennis_video', 'user_' . $user->ID);
 $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
 $expenses = 0; 
-
+$enrolled_stripe = array();
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
@@ -70,6 +92,7 @@ foreach($bunch_orders as $order){
             array_push($enrolled, $course_id);
     }
 }
+
 if(!empty($enrolled))
 {
     $args = array(
@@ -95,6 +118,18 @@ $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video'
 /*
 * * End
 */
+
+//Enrolled with Stripe
+$enrolled_stripe = array();
+$enrolled_stripe = list_orders($user->ID)['posts'];
+if(!empty($enrolled_stripe)):
+    try {
+        $enrolled_courses = array_merge($enrolled_stripe, $enrolled_courses);
+        $your_count_courses = (!empty($enrolled_courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
+    } catch (Error $e) {
+        echo "";
+    }
+endif;
 
 /** Mandatories **/
 $args = array(
@@ -162,7 +197,6 @@ if(!empty($view_user)){
 //Profile view by 
 $redundance_profile = array(); 
 foreach ($users as $element) {
-    
     //Views  
     $args = array(
         'post_type' => 'view', 
@@ -196,7 +230,6 @@ $no_content = "<div class='emty-block-activity'>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
-
 <body>
 <div class="content-activity2">
     <div class="advert-course-Block d-flex">
@@ -224,7 +257,9 @@ $no_content = "<div class='emty-block-activity'>
     </div>
 
     <div id="tab-url1">
-
+        <?php
+            echo ($message) ?: '';
+        ?>
         <ul class="nav">
             <li class="nav-one"><a href="#All" class="current">All</a></li>
             <li class="nav-two"><a href="#Course">Courses</a></li>

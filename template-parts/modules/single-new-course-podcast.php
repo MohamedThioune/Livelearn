@@ -30,19 +30,33 @@ $author = get_user_by('id', $post->post_author);
 $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
 $author_image = get_field('profile_img',  'user_' . $post->post_author);
 $author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-$author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
-$author_role =  get_field('role',  'user_' . $post->post_author);
+$author_bio = get_field('biographical_info',  'user_' . $post->post_author);
+$author_role = get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
- if (!$user_id){
-     $read_status_icon = '<button class="btn" data-toggle="modal" data-target="#modal-login-with-podcast"></button>';
-     $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#modal-login-with-podcast"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
-     $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#modal-login-with-podcast" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
-}else {
-$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-}
+if (!$user_id):
+    $read_status_icon = '<button class="btn" data-toggle="modal" data-target="#modal-login-with-podcast"></button>';
+    $startorbuy = (!$statut_bool) ? '<button type="button"  data-toggle="modal" data-target="#modal-login-with-podcast"  aria-label="Close" data-dismiss="modal"  class="btn btn-buy-now">Buy Now</button>' : '<button  data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>';
+    $startorbuy = ($price == 'Gratis') ? '<button type="button" data-toggle="modal" data-target="#modal-login-with-podcast" aria-label="Close" data-dismiss="modal" class="btn btn-stratNow">Start Now</button>' : $startorbuy;
+else:
+    $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-podcast/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+    $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
+endif;
+
+
+//Stripe pay 
+$stripe_pay_form = "";
+if($user_id)
+$stripe_pay_form = 
+'<form action="/checkout-stripe" method="post">
+    <input type="hidden" name="postID" value="' . $post->ID . '">
+    <button type="submit" class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+    <img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe">
+    Pay with Stripe !
+    </button>
+</form>';
+
 //Review pourcentage
 if(!empty($counting_rate)):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
@@ -633,6 +647,7 @@ endif;
                                 </li>
 
                                 <?php echo $startorbuy ?>
+                                <?php  echo $stripe_pay_form ?>
 
                                 <div class="sharing-element">
                                     <?php

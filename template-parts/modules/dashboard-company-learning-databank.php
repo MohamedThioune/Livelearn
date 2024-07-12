@@ -426,6 +426,8 @@
                         
                             if(!$course_type)
                                 $course_type = 'Artikel';
+                        // course image
+
 
                         ?>
                         <tr class="pagination-element-block">
@@ -525,7 +527,7 @@
 
 
     <!-- The Modal -->
-    <div id="myModal" class="modal">
+       <div id="myModal" class="modal">
            <!-- Modal content -->
        
             <!-- <div id="modal-content"> -->
@@ -551,8 +553,8 @@
                         </div>
                     </div>
                 </div>
-            <!-- </div> -->
-          </div>
+               <!-- </div> -->
+            </div>
        </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -639,6 +641,7 @@
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
+        
      $.ajax({
             url:"/fetch-subtopics-course",
             method:"post",

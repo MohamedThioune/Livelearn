@@ -1,8 +1,13 @@
 <?php
 
+require_once 'stripe-secrets.php';
+
 function makecall($url, $type, $data = null, $params = null) {
+    global $stripeSecretKey;
+
     // credentials personal + live
-    $api_key = "Bearer sk_test_51JyijWEuOtOzwPYXl8Z57qbOuYURVnzEMvVFgUT0Wo7lmAWx2Qr9qQMASvyEkYpDVf1FRL25yWa0amHVSBl2KYC400iZFj6eek";
+    $api_key = "Bearer " . $stripeSecretKey ;
+    // $api_key = "Bearer sk_test_51JyijWEuOtOzwPYXl8Z57qbOuYURVnzEMvVFgUT0Wo7lmAWx2Qr9qQMASvyEkYpDVf1FRL25yWa0amHVSBl2KYC400iZFj6eek";
     // $api_key = "Bearer sk_test_51MtSplHe23toRzexBAOzPcAljGx9f0mWTl687iaxjJAlneTiUFTi4NCjffnL48dvXkFOnb1HPPrthXmN9w51J8tz00YD43xgJ8";
 
     // create endpoint with params
@@ -27,44 +32,30 @@ function makecall($url, $type, $data = null, $params = null) {
     // get response, error handling
     $response = curl_exec( $ch );
     $err = curl_errno( $ch );
+    $errmsg = curl_error( $ch );
     // $header = curl_getinfo( $ch );
 
+    // error handling
     if ($response === false || $err):
-        $errmsg = 'Something went wrong, please try again !';
-        if($errmsg):
-            $errmsg = curl_error( $ch );
-            $information = ['error' => $err, 'errormsg' => $errmsg];
-            return $information;
-        endif;
+        $errmsg = curl_error( $ch ) ?: 'Something went wrong, please try again !';
+        $information = ['error' => $err, 'errormsg' => $errmsg];
+        return $information;
     endif;
 
     // close curl
     curl_close( $ch );
 
     $datum = json_decode( $response, true );
-    $information = (Object)['data' => $datum];
+    $information = ['data' => (Object)$datum];
 
     // return data
     return $information;
 
 }
 
-// function create_customer_stripe($data){
-//     $endpoint = "https://api.stripe.com/v1/customers";
-//     $information = makecall($endpoint, 'POST', $data);
-
-//     return $information;
-// }
-// function create_subscription_stripe($data){
-//     $endpoint = "https://api.stripe.com/v1/subscriptions";
-//     $information = makecall($endpoint, 'POST', $data);
-//     return $information;
-// }
-
 function create_payment_link($data){
     $endpoint = "https://api.stripe.com/v1/payment_links";
     $information = makecall($endpoint, 'POST', $data);
-
     return $information;
 }
 
@@ -108,18 +99,17 @@ function update(WP_REST_Request $request) {
 }
 
 function stripe(WP_REST_Request $request){
-    //Constant "If required we might change it here"
-    $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
-    // $product_id = "prod_QB6e8E4wftx5Fs";
-
     //Check required parameters register
-    $required_parameters = ['quantity', 'ID'];
+    $required_parameters = ['quantity', 'ID', 'callback'];
     $errors = validated($required_parameters, $request);
     if($errors):
-      $response = new WP_REST_Response($errors);
-      $response->set_status(401);
-      return $response;
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
     endif;
+
+    //Constant "If required we might change it here"
+    $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
   
     //Data information | payment 
     $data_payment = [
@@ -130,8 +120,11 @@ function stripe(WP_REST_Request $request){
         'after_completion' => [
             'type' => 'redirect',
             'redirect' => [
-                'url' => 'https://livelearn.nl/?message=sucessful-payment'  
+                'url' => $request['callback'],
             ]
+        ],
+        'automatic_tax' => [
+            'enabled' => "true",
         ],
         'subscription_data' => [
             'metadata' => [
@@ -151,3 +144,97 @@ function stripe(WP_REST_Request $request){
     $response->set_status(200);
     return $response;
 }
+
+// function create_product($data){
+//     //Create product
+//     $data_product = [
+//         'name' => $data['name'],
+//         'description' => $data['description'],
+//         'images' => [ $data['image'] ],
+//         'url' => $data['url'],
+//         'metadata' => [
+//             'courseID' => $data['ID'],
+//         ]
+//     ];
+//     $endpoint = "https://api.stripe.com/v1/products";
+//     $information = makecall($endpoint, 'POST', $data_product);
+
+//     //case : error primary
+//     if(isset($information['error']))
+//         return 0;
+//         // return $information['error'];
+
+//     //case : error internal
+//     if(isset($information['data']->error))
+//         return 0;
+//         // return $information['data'];
+
+//     $product_id = null;    
+//     //case : success
+//     if($information['data'])
+//     if($information['data']->client_secret)
+//         $product_id = $information['data']->id;
+
+//     //Get product ID if after creation
+//     /** Instructions here ! */
+
+//     return $product_id;
+// }
+
+function create_price($data){
+    $amount = ($data['amount']) ? $data['amount'] . "00" : 0;
+    //Create price
+    $data_price = [
+        'currency' => $data['currency'],
+        'unit_amount' => $amount,
+        'product_data' => [
+            'name' => $data['product_name'],
+            'statement_descriptor' => 'LIVELEARN PAY !',
+            'metadata' => [
+                'courseID' => $data['ID'],
+            ]
+        ],
+        'tax_behavior' => 'exclusive'
+    ];
+    $endpoint = "https://api.stripe.com/v1/prices";
+    $information = makecall($endpoint, 'POST', $data_price);
+ 
+    //case : error primary
+    if(isset($information['error']))
+        return 0;
+        // return $information['error'];
+
+    //case : error internal
+    if(isset($information['data']->error))
+        return 0;
+        // return $information['data'];
+
+    $price_id = null;    
+    //case : success
+    if($information['data'])
+    if($information['data']->id)
+        $price_id = $information['data']->id;
+
+    //Get product ID if after creation
+    /** Instructions here ! */
+
+    return $price_id;
+}
+
+// function create_subscription_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/subscriptions";
+//     $information = makecall($endpoint, 'POST', $data);
+//     return $information;
+// }
+
+// function create_token_stripe($data){
+//     $endpoint = "https://api.stripe.com/v1/tokens";
+//     $information = makecall($endpoint, 'POST', $data);  
+//     return $information;
+// }
+
+// function create_card($data){
+//     $endpoint = "https://api.stripe.com/v1/customers/" . $data['customer_id'] . "/sources" ;
+//     $information = makecall($endpoint, 'POST', $data); 
+//     return $information;
+// }

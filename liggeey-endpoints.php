@@ -178,7 +178,7 @@ function candidate($id){
 
     foreach ($main_skills as $main):
       $skill_sample = [];
-
+      $note = 0;
       if (!empty($skills_note)) 
         foreach ($skills_note as $skill) 
           if($skill['id'] == $main->term_id){
@@ -1571,7 +1571,7 @@ function deleteJobUser(WP_REST_Request $request) {
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
 
-  $required_parameters = ['jobId'];
+  $required_parameters = ['jobID'];
   // Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
@@ -2317,16 +2317,15 @@ function candidateSkillsPassport(WP_REST_Request $request) {
                     array_push($badges, $achievement);
                     break;
                 case 'Certificaat':
-                        $achievement_info = array(
-                            'title' => $achievement->post_title,
-                            'description' => $achievement->post_content,
-                            'manager' => $achievement->manager,
-                            'manager_image' => $achievement->manager_image,
-                            'trigger' => get_field('trigger_badge', $achievement->ID),
-                        );
-                        $certificats[] = $achievement_info;
-
-                    break;
+                  $achievement_info = array(
+                      'title' => $achievement->post_title,
+                      'description' => $achievement->post_content,
+                      'manager' => $achievement->manager,
+                      'manager_image' => $achievement->manager_image,
+                      'trigger' => get_field('trigger_badge', $achievement->ID),
+                  );
+                  $certificats[] = $achievement_info;
+                  break;
 
                 case 'Prestatie':
                     $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
@@ -2493,8 +2492,7 @@ function candidateMyResumeEdit(WP_REST_Request $request) {
 }
 
 //[Delete]Dashboard My_Resume
-function candidateMyResumeDelete(WP_REST_Request $request) 
-{
+function candidateMyResumeDelete(WP_REST_Request $request) {
   $required_parameters = ['userApplyId'];
   // Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -2562,60 +2560,59 @@ function candidateMyResumeDelete(WP_REST_Request $request)
 }
 
 //[Post]Add skill
-function add_topic_to_user(WP_REST_Request $request) {
+function add_topics_to_user(WP_REST_Request $request) {
+  $required_parameters = ['userApplyId', 'topics'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
 
+  // ID user + Get user topics
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-
-  // ID topic
-  $topic_id = isset($request['topic_id']) ? intval($request['topic_id']) : 0;
-
-  // ID validated
-  if ($topic_id <= 0) {
+  $topics_external = get_user_meta($user_id, 'topic');
+  $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+  $topics = array_merge($topics_external, $topics_internal);
+  
+  // Adding topics ...
+  $request_topics = ($request['topics']) ? explode(',', $request['topics']) : array();
+  $bool_added = false;
+  foreach($request_topics as $topic_id):
+    // ID topic inferior to 0
+    if ($topic_id <= 0) {
       $response = array(
           'success' => false,
           'message' => 'Invalid topic ID.'
       );
       return new WP_REST_Response($response, 400);
-  }
+    }
 
-  $topics_external = get_user_meta($user_id, 'topic');
-  $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+    // if topic already exists for user
+    if (in_array($topic_id, $topics))
+      continue;
 
-  // topics external and et topics_internal
-  $topics = array_merge($topics_external, $topics_internal);
+    // Add topics for user
+    $added = add_user_meta($user_id, 'topic', $topic_id);
 
-  // if topic already exists for user
-  if (in_array($topic_id, $topics)) {
-      $response = array(
-          'success' => false,
-          'message' => 'Topic already exists for the user.'
-      );
-      return new WP_REST_Response($response, 400);
-  }
-
-  // Add topics for user
-  $added = add_user_meta($user_id, 'topic', $topic_id);
-
-  // Return response
-  if ($added) {
-      $response = array(
-          'success' => true,
-          'message' => 'Topic added successfully.'
-      );
-  } else {
-      $response = array(
-          'success' => false,
-          'message' => 'Failed to add topic.'
-      );
-  }
+    // Return response
+    if ($added) 
+      $bool_added = true;
+   
+  endforeach;
 
   // Response
+  $message = (!$bool_added) ? "Topic add : no news added !" :  "Topic add : action done ✅";
+  $response = array(
+    'success' => true,
+    'message' => $message
+  );
   return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
 }
 
 //Made By Fadel
-function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
-{
+function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   $code_status = 400;
 
   /** Checking parameters **/
@@ -2696,6 +2693,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request)
 }
 
 function notifications(WP_REST_Request $request){
+  //Information
   $required_parameters = ['userApplyId'];
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $user_apply = get_user_by( 'ID', $user_id );
@@ -2764,14 +2762,13 @@ function editSkills(WP_REST_Request $request){
 
   if(empty($skills))
     $skills = array();
-
-  foreach($skills as $item){
-    if($item['id'] == $request['id']){
-        $item['note'] = $note;
-        $bool = true;
+  foreach($skills as $item):
+    if($item['id'] == $skill['id']){
+      $item['note'] = $skill['note'];
+      $bool = true;
     }
     array_push($bunch, $item);
-  }
+  endforeach;
 
   if(!$bool)
     array_push($skills, $skill);
@@ -2784,6 +2781,7 @@ function editSkills(WP_REST_Request $request){
   $skill_sample['term_id'] = $skill['id'];
   $skill_sample['name'] = get_the_category_by_ID($skill['id']);
   $skill_sample['note'] = $skill['note'];
+
   $response = new WP_REST_Response($skill_sample);
   $code_status = 201;
   $response->set_status($code_status);
@@ -2829,7 +2827,6 @@ function statut_course($post_name, $ID){
 }
 
 function activity($ID){
-
   /* * Information * */
   $information = array( 
     'user' => null, 
@@ -2926,14 +2923,11 @@ function activity($ID){
   //Certificaties
   $type_badge = 'Certificaat';
   $args = array(
-    'post_type' => 'badge',
+    'post_type' => 'badge', 
     'author' => $user->ID,
     'orderby' => 'post_date',
-    // 'ordevalue'   => $type_badge,
     'order' => 'DESC',
-    // 'meta_key'    => 'type_badge',
-    // 'meta_value'  => $type_badge,
-    'posts_per_page' => -1
+    'posts_per_page' => -1,
   );
   $achievements = get_posts($args);
   $certificats = array();
@@ -2943,22 +2937,18 @@ function activity($ID){
       $type = get_field('type_badge', $achievement->ID);
       if($type != $type_badge)
         continue;
-      $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-      $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
-      $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
-      if(!$image)
-          $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-      $info = array(
-        'title' => $achievement->post_title,
-        'description' => $achievement->post_content,
-        'manager' => $achievement->manager,
-        'manager_image' => $achievement->manager_image,
-        'trigger' => get_field('trigger_badge', $achievement->ID),
-      );
-      array_push($certificats, (Object)$info);
-  endforeach;
-  $information['certificats'] = $certificats;
+      $sample['title'] = $achievement->post_title;
+      $sample['description'] = get_field('trigger_badge', $achievement->ID);
+      $sample['image'] = get_stylesheet_directory_uri() . '/img/Group216.png';
+      $manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+      $manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+      $sample['manager'] = $manager;
+      $sample['manager_image'] = $manager_image;
+
+      array_push($certificats, (Object)$sample);
+    endforeach;
+  $information['certificates'] = $certificats;
   //End ...
     
   //Communities 
@@ -2976,9 +2966,9 @@ function activity($ID){
       continue;
 
     $company = get_field('company_author', $value->ID);
-    $sample['company'] = $company->title;
+    $sample['company'] = $company->post_title;
     $sample['company_image'] = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
-    $sample['title'] = $value->title;
+    $sample['title'] = $value->post_title;
     $sample['image']= get_field('image_community', $value->ID) ?: $company_image;
 
     //Courses through custom field
@@ -3045,9 +3035,8 @@ function activity($ID){
 }
 
 function activityUser($data){
-  $ID = $data['ID'] ?: null;
-
   //Information 
+  $ID = $data['ID'] ?: null;
   $information = activity($ID);
 
   $response = new WP_REST_Response($information);
@@ -3055,6 +3044,5 @@ function activityUser($data){
   $response->set_status($code_status);
   return $response;
 }
-
 
 /* * End Liggeey * */

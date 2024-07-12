@@ -5,6 +5,7 @@ main-user.js
 main.css
 main.js
 composer.lock
+/templates/stripe-secrets.php
 
 /vendor/
 /.idea/
