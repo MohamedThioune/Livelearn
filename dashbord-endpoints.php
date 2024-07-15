@@ -43,23 +43,30 @@ function upcoming_schedule_for_the_user()
     );
     $schedules = get_posts($args);
     $all_schedules = array();
-
+    $exceptCourses = ['Artikel','Podcast','Video'];
     foreach ($schedules as $schedule) {
         global $wpdb;
         $data_locaties_xml = get_field('data_locaties_xml', $schedule->ID);
         if (!$data_locaties_xml)
             continue;
         $courseTime = array();
-        $temps = array();
+        $coursType = get_field('courseType', $schedule->ID);
+        if (in_array($coursType, $exceptCourses))
+            continue;
+
         foreach ($data_locaties_xml as $dataxml) {
             if ($dataxml) {
                 $datetime = explode(' ', $dataxml['value']);
 
                 $date = explode(' ', $datetime[0])[0];
                 $time = explode('-', $datetime[1])[0];
-                //$courseTime['date'][] = $date;
-                //$courseTime['time'][] = $time;
                 $courseTime[] = array('date'=>$date,'time'=>$time);
+
+                $date = date('Y-m-d', strtotime($date));
+                $current_date = date('Y-m-d');
+
+                if ($date < $current_date)
+                    continue;
             }
         }
 
@@ -88,7 +95,7 @@ function upcoming_schedule_for_the_user()
         $schedule_data['id'] = $schedule->ID;
         $schedule_data['title'] = $schedule->post_title;
         $schedule_data['links'] = $schedule->guid;
-        $schedule_data['course_type'] = get_field('course_type', $schedule->ID);
+        $schedule_data['course_type'] = $coursType;
         $schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
         $schedule_data['pathImage'] = $image;
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
@@ -280,8 +287,6 @@ function companyPeople($data){
     foreach($users as $user){
         //$user = $users[$i];
 
-
-
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
@@ -322,4 +327,24 @@ function companyPeople($data){
         ));
     $response->set_status(200);
     return $response;
+}
+function learn_modules($data){
+    $users_companie = array();
+    $user_connected = $data['ID'];
+    $users = get_users();
+
+    foreach($users as $user) {
+        $company_user = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_connected) && !empty($company_user))
+            if($company_user[0]->post_title == $company_connected[0]->post_title)
+                array_push($users_companie,$user->ID);
+    }
+    $company_connected = get_field('company',  'user_' . $user_connected);
+    $args = array(
+        'post_type' => array('course','post','leerpad','assessment'),
+        'posts_per_page' => 1000,
+        'author__in' => $users_companie,
+    );
+
+    $courses = get_posts($args);
 }
