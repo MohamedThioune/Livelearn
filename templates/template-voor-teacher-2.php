@@ -1,10 +1,47 @@
 <?php /** Template Name: Voor teacher2 */ ?>
 <?php global $wp; ?>
 
-<?php wp_head();
+<?php
+get_header(); 
+
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
 //ini_set('memory_limit', '256M');
+
+if(isset($_GET['maxbird'])){
+    $userdata = array(
+        'user_pass' => $_POST['password'],
+        'user_login' => $_POST['username'],
+        'user_email' => $_POST['email'],
+        'user_url' => 'http://livelearn.nl/',
+        'display_name' => $_POST['firstName'] . ' ' . $_POST['lastName'],
+        'first_name' => $_POST['firstName'],
+        'last_name' => $_POST['lastName'],
+        'role' => 'Manager',
+    );
+
+    $user_id = wp_insert_user($userdata);
+    if (is_wp_error($user_id)) {
+        echo "<div class='alert alert-danger text-center'>" .$user_id->get_error_message()." </div>";
+        return 0;
+    } else {
+        //update phone number
+        if ($_POST['phone'])
+            update_field('telnr', $_POST['phone'], 'user_' . $user_id);
+
+        //create a new company for the new user
+        $company_id = wp_insert_post(
+            array(
+                'post_title' => $_POST['company'],
+                'post_type' => 'company',
+                'post_status' => 'pending',
+            ));
+        $company = get_post($company_id);
+        update_field('company', $company, 'user_' . $user_id);
+        echo "<div class='alert alert-success text-center'>user saved success and company $company->post_title already created.</div>";
+    }
+}
+
 ?>
 <meta name="description" content="Fluidify">
 <meta name='keywords' content="fluidify">
@@ -49,55 +86,56 @@
                         <?php
                         if (isset($_GET['message']))
                             echo $_GET['message'];
-                           //echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                            //echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                            //id="new-form-register-workflow"
                         ?>
-                        <form action="" method="POST" id="new-form-register-workflow">
+                        
+                        <form action="/voor-opleiders" method="GET" id="new-form-register-workflow">
+                            <div class="first-step-modal">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required>
+                                </div>
+                                <button type="button" class="btn btn-connection" id="create-account-step">Create Account</button>
+                            </div>
 
-                                <div class="first-step-modal">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address" required>
-                                    </div>
-                                    <button type="button" class="btn btn-connection" id="create-account-step">Create Account</button>
+                            <div class="second-step-modal">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
                                 </div>
 
-                                <div class="second-step-modal">
-                                    <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="First-name">First name</label>
-                                        <input type="text" class="form-control" id="First-name" name="firstName" placeholder="Enter your First name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="last-name">Last name</label>
-                                        <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter your last name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="company">Company</label>
-                                        <input type="text" class="form-control" id="company" name="company" placeholder="Enter your Company name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone-number">phone number</label>
-                                        <input type="text" class="form-control" id="phone-number" name="phone" placeholder="Enter your phone-number">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Password-workflow">Password</label>
-                                        <input type="password" class="form-control" id="Password-workflow" name="password" placeholder="Enter your Password" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Password2-workflow">Password</label>
-                                        <input type="password" class="form-control" id="Password2-workflow" name="password2" placeholder="Confirm your Password" required>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <button class="btn btn-switch-email d-none mb-2" type="button">Return on Email</button>
-                                        <button type="submit" class="btn btn-connection" id="">Create Acccount</button>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="First-name">First name</label>
+                                    <input type="text" class="form-control" id="First-name" name="firstName" placeholder="Enter your First name" required>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last name</label>
+                                    <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter your last name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="company">Company</label>
+                                    <input type="text" class="form-control" id="company" name="company" placeholder="Enter your Company name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone-number">phone number</label>
+                                    <input type="text" class="form-control" id="phone-number" name="phone" placeholder="Enter your phone-number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Password-workflow">Password</label>
+                                    <input type="password" class="form-control" id="Password-workflow" name="password" placeholder="Enter your Password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Password2-workflow">Password</label>
+                                    <input type="password" class="form-control" id="Password2-workflow" name="password2" placeholder="Confirm your Password" required>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-switch-email d-none mb-2" type="button">Return on Email</button>
+                                    <button type="submit" class="btn btn-connection" id="" name="maxbird" value="1">Create Acccount</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
 
                     </div>
@@ -165,7 +203,7 @@
             $(".create-account-block").hide();
         });
     </script>
-    <script>
+    <!-- <script>
         $("#new-form-register-workflow").submit((e)=>{
             e.preventDefault();
             const formData = new FormData(e.currentTarget);
@@ -183,9 +221,10 @@
             }
 
             $.ajax({
-                url: '/workflow-subscription/',
+                url: '/dashboard/user/',
                 type: 'POST',
                 data: {
+                    'workflowSub': "/about";
                     'firstName':firsname,
                     'lastName':lastname,
                     'email':email,
@@ -213,6 +252,6 @@
                 }
             })
         })
-    </script>
+    </script> -->
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
