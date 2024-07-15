@@ -5,6 +5,7 @@ main-user.js
 main.css
 main.js
 composer.lock
+composer.json
 /templates/stripe-secrets.php
 
 /vendor/
