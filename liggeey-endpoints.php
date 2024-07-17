@@ -1262,7 +1262,7 @@ function HomeUser(WP_REST_Request $request){
   );
   $jobs = get_posts($args);
   $sample['open_jobs'] = $jobs;
-  $sample['count_open_jobs'] = $company->count_open_jobs;
+  $sample['count_open_jobs'] = !empty($jobs) ? count($jobs) : 0;
   foreach($sample['open_jobs'] as $post):
     $job_appliants = get_field('job_appliants', $post->ID);
     $application = (!empty($job_appliants)) ? array_merge($application, $job_appliants) : $application;
@@ -1386,7 +1386,7 @@ function ApplicantsUser(WP_REST_Request $request){
   );
   $jobs = get_posts($args);
   $sample['open_jobs'] = $jobs;
-  $sample['count_open_jobs'] = $company->count_open_jobs;
+  $sample['count_open_jobs'] = !empty($jobs) ? count($jobs) : 0;
   $application = array();
   foreach($sample['open_jobs'] as $post):
     $job_appliants = get_field('job_appliants', $post->ID);
