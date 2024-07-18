@@ -323,3 +323,113 @@ function companyPeople($data){
     $response->set_status(200);
     return $response;
 }
+function learn_modules($data){
+    $users_companie = array();
+    //$user_connected =get_user_by('ID', $data['ID']); //$user_in
+    $users = get_users();
+    foreach($users as $user) {
+        $company_user = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_connected) && !empty($company_user))
+            if($company_user[0]->post_title == $company_connected[0]->post_title)
+                array_push($users_companie,$user->ID);
+    }
+    //$company_connected = get_field('company',  'user_' . $user_connected);
+    $args = array(
+        'post_type' => array('course','post','leerpad','assessment'),
+        'posts_per_page' => 1000,
+        'author__in' => $users_companie,
+        'ORDER BY' => 'post_date',
+    );
+
+    //bought courses
+    $order_args = array(
+        'customer_id' => get_current_user_id(),
+        'post_status' => array_keys(wc_get_order_statuses()),
+        'post_status' => array('wc-processing'),
+    );
+    $bunch_orders = wc_get_orders($order_args);
+    $enrolled_user = array();
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+            if(!empty($course))
+                array_push($enrolled_user, $course->ID);
+        }
+    }
+
+    $courses = get_posts($args);
+    $all_subtopics = array();
+    $subtopics = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => (int)'expert',
+        'hide_empty' => false, // change to 1 to hide categores not having a single post
+    )) ?? false;
+    if ($subtopics != false)
+        $all_subtopics = array_merge($all_subtopics,$subtopics);
+
+    foreach ($courses as $course){
+        $all_subtopics = array();
+            $subtopics = get_categories( array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent' => (int)'expert',
+                'hide_empty' => false, // change to 1 to hide categores not having a single post
+            )) ?? false;
+            if ($subtopics != false)
+                $all_subtopics = array_merge($all_subtopics,$subtopics);
+
+        $price = get_field('price',$course->ID);
+        $course->price = $price ? : 'Gratis';
+        $course->startDate = date('d/m/Y',strtotime($course->post_date));
+        $course->courseType = get_field('course_type',$course->ID);
+        $course->subects = $all_subtopics[0]->name;
+        $course->sales = in_array($course->ID, $enrolled_user); //true or false
+
+    }
+    $response = new WP_REST_Response($courses);
+    $response->set_status(200);
+    return $response;
+}
+function learnning_database(){
+$args = array(
+        'post_type' => array('course','post','leerpad','assessment'),
+        'posts_per_page' => 1000,
+        'ORDER BY' => 'post_date',
+    );
+    $order_args = array(
+        'customer_id' => get_current_user_id(),
+        'post_status' => array_keys(wc_get_order_statuses()),
+        'post_status' => array('wc-processing'),
+    );
+    $bunch_orders = wc_get_orders($order_args);
+    $enrolled_user = array();
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+            if(!empty($course))
+                array_push($enrolled_user, $course->ID);
+        }
+    }
+    $courses = get_posts($args);
+    foreach ($courses as $course){
+        $all_subtopics = array();
+        $subtopics = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => (int)'expert',
+            'hide_empty' => false, // change to 1 to hide categores not having a single post
+        )) ?? false;
+        if ($subtopics != false)
+            $all_subtopics = array_merge($all_subtopics,$subtopics);
+
+        $price = get_field('price',$course->ID);
+        $course->price = $price ? : 'Gratis';
+        $course->startDate = date('d/m/Y',strtotime($course->post_date));
+        $course->courseType = get_field('course_type',$course->ID);
+        $course->subects = $all_subtopics[2]->name;
+        $course->sales = in_array($course->ID, $enrolled_user); //true or false
+    }
+    $response = new WP_REST_Response($courses);
+    $response->set_status(200);
+    return $response;
+}
