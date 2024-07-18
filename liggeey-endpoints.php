@@ -1253,11 +1253,16 @@ function HomeUser(WP_REST_Request $request){
   endif;
 
   //Job company
-  $post = get_field('company', 'user_' . $user_apply_id);
-  $post_id = $post->ID;
-  $company = company($post[0]->ID);
-  $sample['open_jobs'] = $company->open_jobs;
-  $sample['count_open_jobs'] = $company->count_open_jobs;
+  $args = array(
+    'post_type' => 'job',  
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author' => $user_apply_id,
+    'order' => 'DESC' ,
+  );
+  $jobs = get_posts($args);
+  $sample['open_jobs'] = $jobs;
+  $sample['count_open_jobs'] = !empty($jobs) ? count($jobs) : 0;
   foreach($sample['open_jobs'] as $post):
     $job_appliants = get_field('job_appliants', $post->ID);
     $application = (!empty($job_appliants)) ? array_merge($application, $job_appliants) : $application;
@@ -1372,11 +1377,16 @@ function ApplicantsUser(WP_REST_Request $request){
   endif;
 
   //Job company
-  $post = get_field('company', 'user_' . $user_apply_id);
-  $post_id = $post->ID;
-  $company = company($post[0]->ID);
-  $sample['open_jobs'] = $company->open_jobs;
-  $sample['count_open_jobs'] = $company->count_open_jobs;
+  $args = array(
+    'post_type' => 'job',  
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author' => $user_apply_id,
+    'order' => 'DESC' ,
+  );
+  $jobs = get_posts($args);
+  $sample['open_jobs'] = $jobs;
+  $sample['count_open_jobs'] = !empty($jobs) ? count($jobs) : 0;
   $application = array();
   foreach($sample['open_jobs'] as $post):
     $job_appliants = get_field('job_appliants', $post->ID);
