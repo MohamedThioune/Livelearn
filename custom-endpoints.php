@@ -99,11 +99,10 @@ class Badge
 
  function __construct($badge)
   {
-      $this->id = $badge->ID;
-      $this->image_badge = $badge->image_badge;
-      $this->trigger_badge = $badge->trigger_badge;
-      $this->state_read_badge = $badge->state_read_badge;
-      
+    $this->id = $badge->ID;
+    $this->image_badge = $badge->image_badge;
+    $this->trigger_badge = $badge->trigger_badge;
+    $this->state_read_badge = $badge->state_read_badge;
   }
 }
 
