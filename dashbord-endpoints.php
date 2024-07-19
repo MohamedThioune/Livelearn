@@ -43,23 +43,30 @@ function upcoming_schedule_for_the_user()
     );
     $schedules = get_posts($args);
     $all_schedules = array();
-
+    $exceptCourses = ['Artikel','Podcast','Video'];
     foreach ($schedules as $schedule) {
         global $wpdb;
         $data_locaties_xml = get_field('data_locaties_xml', $schedule->ID);
         if (!$data_locaties_xml)
             continue;
         $courseTime = array();
-        $temps = array();
+        $coursType = get_field('courseType', $schedule->ID);
+        if (in_array($coursType, $exceptCourses))
+            continue;
+
         foreach ($data_locaties_xml as $dataxml) {
             if ($dataxml) {
                 $datetime = explode(' ', $dataxml['value']);
 
                 $date = explode(' ', $datetime[0])[0];
                 $time = explode('-', $datetime[1])[0];
-                //$courseTime['date'][] = $date;
-                //$courseTime['time'][] = $time;
                 $courseTime[] = array('date'=>$date,'time'=>$time);
+
+                $date = date('Y-m-d', strtotime($date));
+                $current_date = date('Y-m-d');
+
+                if ($date < $current_date)
+                    continue;
             }
         }
 
@@ -88,7 +95,7 @@ function upcoming_schedule_for_the_user()
         $schedule_data['id'] = $schedule->ID;
         $schedule_data['title'] = $schedule->post_title;
         $schedule_data['links'] = $schedule->guid;
-        $schedule_data['course_type'] = get_field('course_type', $schedule->ID);
+        $schedule_data['course_type'] = $coursType;
         $schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
         $schedule_data['pathImage'] = $image;
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
@@ -280,8 +287,6 @@ function companyPeople($data){
     foreach($users as $user){
         //$user = $users[$i];
 
-
-
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
@@ -430,6 +435,33 @@ $args = array(
         $course->sales = in_array($course->ID, $enrolled_user); //true or false
     }
     $response = new WP_REST_Response($courses);
+    $response->set_status(200);
+    return $response;
+}
+
+function get_detail_notification($data){
+    $id_notification = intval($data['id']);
+    $notification = get_post($id_notification);
+    if(!$notification)
+        return new WP_REST_Response(array('message' => 'Notification not found'), 404);
+
+    $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
+    $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+    $notification->notification_type = get_post_type($notification->ID);
+    $notification->notification_title = $notification->post_title;
+    $notification->notification_content = get_field('content',$notification->ID);
+    $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
+    $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
+    $notification->notification_manager = get_user_by('ID', $notification->notification_manager)->data;
+    $notification->notification_manager->company = get_field('company', 'user_' . $notification->notification_manager->ID)[0]->post_title ? : 'Livelearn';
+    $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+    $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
+    $notification->notification_author = get_user_by('ID', $notification->post_author)->data;
+    $notification->notification_author->company = get_field('company', 'user_' . $notification->post_author)[0]->post_title ? : 'Livelearn';
+    $notification->notification_author->image = get_field('profile_img',  'user_' . $notification->post_author) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+
+
+    $response = new WP_REST_Response($notification);
     $response->set_status(200);
     return $response;
 }
