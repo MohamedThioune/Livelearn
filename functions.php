@@ -2126,4 +2126,8 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'learnning_database'
     ));
+    register_rest_route ('custom/v1', '/details-notification/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'get_detail_notification'
+    ));
 });
