@@ -1830,10 +1830,10 @@ add_action( 'rest_api_init', function () {
     'callback' => 'cleanVideoCourse'
   ));
 
-  // register_rest_route ('custom/v1', '/weekly-recommendation', array(
-  //   'methods' => 'GET',
-  //   'callback' => 'recommendedWeekly'
-  // ));
+  register_rest_route ('custom/v1', '/weekly-recommendation', array(
+    'methods' => 'GET',
+    'callback' => 'recommendedWeekly'
+  ));
 
   register_rest_route ('custom/v1', '/update-language-courses', array(
     'methods' => 'GET',

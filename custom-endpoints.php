@@ -4511,33 +4511,284 @@ endif;
     }
     return $infos['following_topics'];
   }
-    
+
   //* Max Bird *//
   function recommendedWeekly()
   {
     //Get all users 
-    $users = get_users();
-    $i = 0;
+    $args = array(
+            // 'role__in' => ['admin', 'hr', 'manager', 'subscriber', 'klant'],
+            'search'  => 'daniel@livelearn.nl',
+            'search_columns' => array( 'user_login', 'user_email' ),
+            'posts_per_page' => -1,
+          );
+    $users = get_users($args);
 
-    //Iterate users platform for recommendation
     foreach($users as $user):
-      $i++;
-      if($i >= 50)
-        break;
 
       //Recommendation courses
-      $infos = recommendation($user->ID, 300, 7);
+      $infos = recommendation($user->ID, 300, 50);
       $recommended_courses = $infos['recommended'];
+      shuffle($recommended_courses);
+      $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'others' => 0];
+      $content['article'] = '<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0"
+                                      class="row-content stack" role="presentation"
+                                      style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 600px; margin: 0 auto;"
+                                      width="600">
+                                      <tbody>
+                                        <tr>
+                                          <td class="column column-1"
+                                            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 15px; padding-top: 15px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                                            width="100%">
+                                            <table border="0" cellpadding="10" cellspacing="0"
+                                              class="divider_block block-1" role="presentation"
+                                              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                              width="100%">
+                                              <tr>
+                                                <td class="pad">
+                                                  <div align="center" class="alignment">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                      role="presentation"
+                                                      style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                                      width="100%">
+                                                      <tr>
+                                                        <td class="divider_inner"
+                                                          style="font-size: 1px; line-height: 1px; border-top: 1px solid #dddddd;">
+                                                          <span> </span>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                            <table border="0" cellpadding="0" cellspacing="0"
+                                              class="heading_block block-2" role="presentation"
+                                              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                              width="100%">
+                                              <tr>
+                                                <td class="pad"
+                                                  style="padding-left:25px;padding-right:25px;padding-top:5px;text-align:center;width:100%;">
+                                                  <h1
+                                                    style="margin: 0; color: #00a89d; direction: ltr; font-family: \'Montserrat\', \'Trebuchet MS\', \'Lucida Grande\', \'Lucida Sans Unicode\',\'Lucida Sans\', Tahoma, sans-serif; font-size: 25px; font-weight: 400; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 37.5px;">
+                                                    <strong><span class="tinyMce-placeholder">Your
+                                                        <u>articles</u> this week!</span></strong>
+                                                  </h1>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>';
+      $content['podcast'] = '<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <table align="center" border="0" cellpadding="0" cellspacing="0"
+                                        class="row-content stack" role="presentation"
+                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 600px; margin: 0 auto;"
+                                        width="600">
+                                        <tbody>
+                                          <tr>
+                                            <td class="column column-1"
+                                              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 15px; padding-top: 15px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                                              width="100%">
+                                              <table border="0" cellpadding="10" cellspacing="0"
+                                                class="divider_block block-1" role="presentation"
+                                                style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                                width="100%">
+                                                <tr>
+                                                  <td class="pad">
+                                                    <div align="center" class="alignment">
+                                                      <table border="0" cellpadding="0" cellspacing="0"
+                                                        role="presentation"
+                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                                        width="100%">
+                                                        <tr>
+                                                          <td class="divider_inner"
+                                                            style="font-size: 1px; line-height: 1px; border-top: 1px solid #dddddd;">
+                                                            <span> </span>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                              <table border="0" cellpadding="0" cellspacing="0"
+                                                class="heading_block block-2" role="presentation"
+                                                style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                                width="100%">
+                                                <tr>
+                                                  <td class="pad"
+                                                    style="padding-left:25px;padding-right:25px;padding-top:5px;text-align:center;width:100%;">
+                                                    <h1
+                                                      style="margin: 0; color: #00a89d; direction: ltr; font-family: \'Montserrat\', \'Trebuchet MS\', \'Lucida Grande\', \'Lucida Sans Unicode\',\'Lucida Sans\', Tahoma, sans-serif; font-size: 25px; font-weight: 400; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 37.5px;">
+                                                      <strong><span class="tinyMce-placeholder">Your
+                                                          <u>podcasts</u> this week!</span></strong>
+                                                    </h1>
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>';
+      $content['video'] = '<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0"
+                                      class="row-content stack" role="presentation"
+                                      style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 600px; margin: 0 auto;"
+                                      width="600">
+                                      <tbody>
+                                        <tr>
+                                          <td class="column column-1"
+                                            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 15px; padding-top: 15px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                                            width="100%">
+                                            <table border="0" cellpadding="10" cellspacing="0"
+                                              class="divider_block block-1" role="presentation"
+                                              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                              width="100%">
+                                              <tr>
+                                                <td class="pad">
+                                                  <div align="center" class="alignment">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                      role="presentation"
+                                                      style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                                      width="100%">
+                                                      <tr>
+                                                        <td class="divider_inner"
+                                                          style="font-size: 1px; line-height: 1px; border-top: 1px solid #dddddd;">
+                                                          <span> </span>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                            <table border="0" cellpadding="0" cellspacing="0"
+                                              class="heading_block block-2" role="presentation"
+                                              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                              width="100%">
+                                              <tr>
+                                                <td class="pad"
+                                                  style="padding-left:25px;padding-right:25px;padding-top:5px;text-align:center;width:100%;">
+                                                  <h1
+                                                    style="margin: 0; color: #00a89d; direction: ltr; font-family: \'Montserrat\', \'Trebuchet MS\', \'Lucida Grande\', \'Lucida Sans Unicode\',\'Lucida Sans\', Tahoma, sans-serif; font-size: 25px; font-weight: 400; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 37.5px;">
+                                                    <strong><span class="tinyMce-placeholder">Your
+                                                        <u>videos</u> this week!</span></strong>
+                                                  </h1>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                           </table>';
+      $content['others'] = '<table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <table align="center" border="0" cellpadding="0" cellspacing="0"
+                                      class="row-content stack" role="presentation"
+                                      style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 600px; margin: 0 auto;"
+                                      width="600">
+                                      <tbody>
+                                        <tr>
+                                          <td class="column column-1"
+                                            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 15px; padding-top: 15px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                                            width="100%">
+                                            <table border="0" cellpadding="10" cellspacing="0"
+                                              class="divider_block block-1" role="presentation"
+                                              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                              width="100%">
+                                              <tr>
+                                                <td class="pad">
+                                                  <div align="center" class="alignment">
+                                                    <table border="0" cellpadding="0" cellspacing="0"
+                                                      role="presentation"
+                                                      style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                                      width="100%">
+                                                      <tr>
+                                                        <td class="divider_inner"
+                                                          style="font-size: 1px; line-height: 1px; border-top: 1px solid #dddddd;">
+                                                          <span> </span>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                            <table border="0" cellpadding="0" cellspacing="0"
+                                              class="heading_block block-2" role="presentation"
+                                              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                                              width="100%">
+                                              <tr>
+                                                <td class="pad"
+                                                  style="padding-left:25px;padding-right:25px;padding-top:5px;text-align:center;width:100%;">
+                                                  <h1
+                                                    style="margin: 0; color: #00a89d; direction: ltr; font-family: \'Montserrat\', \'Trebuchet MS\', \'Lucida Grande\', \'Lucida Sans Unicode\',\'Lucida Sans\', Tahoma, sans-serif; font-size: 25px; font-weight: 400; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 37.5px;">
+                                                    <strong><span class="tinyMce-placeholder">Your
+                                                        <u>courses</u> this week!</span></strong>
+                                                  </h1>
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-19" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+          <tbody>
+            <tr>
+              <td>
+                <table align="center" border="0" cellpadding="0" cellspacing="0"
+                  class="row-content stack" role="presentation"
+                  style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #e0eff4; color: #000000; border-bottom: 1px solid #FFFFFF; border-left: 1px solid #FFFFFF; border-radius: 0; border-right: 1px solid #FFFFFF; border-top: 1px solid #FFFFFF; width: 600px; margin: 0 auto;"
+                  width="600">
+                  <tbody>
+                    <tr>';
+
+      $final_content = "";
 
       //Mailing
       $first_name = $user->first_name ?: $user->display_name;
       $email = $user->user_email;
-      $subject = 'Hello '. $first_name .' this week , some courses for you !';
+      $subject = 'Hello '. $first_name .', your weekly learnings !';
       $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
 
       $content_course = null;
+      $i = 0;
       foreach($recommended_courses as $post):
+        $text = "";
         $course_type = get_field('course_type', $post->ID);
+
+        //Information course
         $thumbnail = get_field('preview', $post->ID)['url'];
         if(!$thumbnail):
           $thumbnail = get_the_post_thumbnail_url($post->ID);
@@ -4547,74 +4798,272 @@ endif;
             $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
         endif;
         $title = $post->post_title;
-        $short_description = get_field('short_description', $post->ID) ?: 'xxxxxxxx';
+        $short_description = get_field('short_description', $post->ID) ?: 'No description available';
+        $short_description = substr($short_description, 0, 100) . '...';
+        // $short_description = (strlen($short_description) > 50) ? $short_description . '...' : $short_description;
+        $link = get_permalink($post->ID);
+        //End information
 
-        $content_course .= ' 
-        <tr>
-          <td
-            style="direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-left:0px;padding-right:0px;text-align:center;">
-            <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:150px;" ><![endif]-->
-            <div class="mj-column-per-25 mj-outlook-group-fix"
-              style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                width="100%">
-                <tbody>
-                  <tr>
-                    <td align="center"
-                      style="font-size:0px;padding:10px 25px 10px 25px;padding-right:25px;padding-left:25px;word-break:break-word;">
-                      <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                        style="border-collapse:collapse;border-spacing:0px;">
-                        <tbody>
+        $row_first = $i + 5;
+        $row_second = $i + 6;
+        $text = '
+        <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+          <tbody>
+            <tr>
+              <td>
+                <table align="center" border="0" cellpadding="0" cellspacing="0"
+                  class="row-content stack" role="presentation"
+                  style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; color: #000000; width: 600px; margin: 0 auto;"
+                  width="600">
+                  <tbody>
+                    <tr>
+                      <td class="column column-1"
+                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; border-bottom: 5px solid #FFFFFF; border-left: 5px solid #FFFFFF; border-right: 5px solid #FFFFFF; border-top: 5px solid #FFFFFF; padding-left: 10px; padding-right: 10px; vertical-align: top;"
+                        width="50%">
+                        <table border="0" cellpadding="0" cellspacing="0"
+                          class="image_block block-1" role="presentation"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                          width="100%">
                           <tr>
-                            <td style="width:100px;"><img alt="" height="auto"
-                                src="' . $thumbnail . '"
-                                style="border:none;border-radius:25px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                width="100"></td>
+                            <td class="pad"
+                              style="width:100%;padding-right:0px;padding-left:0px;">
+                              <div align="center" class="alignment"
+                                style="line-height:10px">
+                                <div class="fullWidth" style="max-width: 270px;">
+                                  <img alt="' . $title . '"
+                                    src="' . $thumbnail . '"
+                                    style="display: block; height: auto; border: 0; width: 100%;"
+                                    title="' . $title . '" width="270" />
+                                </div>
+                              </div>
+                            </td>
                           </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div><!--[if mso | IE]></td><td class="" style="vertical-align:top;width:450px;" ><![endif]-->
-            <div class="mj-column-per-75 mj-outlook-group-fix"
-              style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-              <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                width="100%">
-                <tbody>
-                
-                  <tr>
-                    <td align="left"
-                      style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
-                      <div
-                        style="font-family:Arial, sans-serif;font-size:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;">
-                        <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
-                          style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $title . '</b></span></p>
-                        <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
-                          style="margin: 10px 0; margin-bottom: 10px;"><span style="font-family:Arial;">' . $short_description . '</span></p>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div><!--[if mso | IE]></td></tr></table><![endif]-->
-          </td>
-        </tr>';
-        
+                        </table>
+                      </td>
+                      <td class="column column-2"
+                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; border-bottom: 5px solid #FFFFFF; border-left: 5px solid #FFFFFF; border-right: 5px solid #FFFFFF; border-top: 5px solid #FFFFFF; padding-left: 10px; padding-right: 10px; vertical-align: top;"
+                        width="50%">
+                        <table border="0" cellpadding="0" cellspacing="0"
+                          class="heading_block block-1" role="presentation"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                          width="100%">
+                          <tr>
+                            <td class="pad"
+                              style="padding-bottom:10px;padding-left:15px;padding-right:15px;padding-top:30px;text-align:center;width:100%;">
+                              <h1
+                                style="margin: 0; color: #023356; direction: ltr; font-family: \'Montserrat\', \'Trebuchet MS\', \'Lucida Grande\', \'Lucida Sans Unicode\', \'Lucida Sans\', Tahoma, sans-serif; font-size: 20px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 24px;">
+                                <strong>' . $title . '</strong>
+                              </h1>
+                            </td>
+                          </tr>
+                        </table>
+                        <table border="0" cellpadding="0" cellspacing="0"
+                          class="paragraph_block block-2" role="presentation"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
+                          width="100%">
+                          <tr>
+                            <td class="pad"
+                              style="padding-bottom:5px;padding-left:15px;padding-right:15px;padding-top:5px;">
+                              <div
+                                style="color:#023356;font-family:\'Open Sans\',\'Helvetica Neue\',Helvetica,Arial,sans-serif;font-size:14px;line-height:150%;text-align:left;mso-line-height-alt:21px;">
+                                <p style="margin: 0; word-break: break-word;">
+                                  <span>' . $short_description . '</span>
+                                </p>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                        <table border="0" cellpadding="0" cellspacing="0"
+                          class="button_block block-3" role="presentation"
+                          style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+                          width="100%">
+                          <tr>
+                            <td class="pad" style="padding-bottom:15px;padding-left:10px;padding-right:10px;padding-top:15px;text-align:left;">
+                              <div align="left" class="alignment"><!--[if mso]>
+                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="example.com" style="height:44px;width:163px;v-text-anchor:middle;" arcsize="137%" stroke="false" fillcolor="#00a89d">
+                                <w:anchorlock/>
+                                <v:textbox inset="0px,0px,0px,0px">
+                                <center style="color:#ffffff; font-family:Tahoma, Verdana, sans-serif; font-size:15px">
+                                <![endif]-->
+                                <a href="' . $link . '" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#00a89d;border-radius:60px;width:auto;border-top:0px solid #8a3b8f;font-weight:400;border-right:0px solid #8a3b8f;border-bottom:0px solid #8a3b8f;border-left:0px solid #8a3b8f;padding-top:7px;padding-bottom:7px;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:15px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
+                                  <span style="padding-left:40px;padding-right:40px;font-size:15px;display:inline-block;letter-spacing:normal;">
+                                    <span style="word-break:break-word;">
+                                      <span data-mce-style=""
+                                        style="line-height: 30px;"><strong>
+                                          Read more !</strong>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </a>
+                                <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6"
+          role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+          <tbody>
+            <tr>
+              <td>
+                <table align="center" border="0" cellpadding="0" cellspacing="0"
+                  class="row-content stack" role="presentation"
+                  style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 600px; margin: 0 auto;"
+                  width="600">
+                  <tbody>
+                    <tr>
+                      <td class="column column-1"
+                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                        width="100%">
+                        <div class="spacer_block block-1"
+                          style="height:15px;line-height:15px;font-size:1px;"> </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>';
+
+        $text_others = '
+        <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; border-bottom: 5px solid #FFFFFF; border-left: 5px solid #FFFFFF; border-right: 5px solid #FFFFFF; border-top: 5px solid #FFFFFF; padding-bottom: 30px; padding-left: 15px; padding-right: 15px; padding-top: 35px; vertical-align: top;" width="50%">
+          <table border="0" cellpadding="0" cellspacing="0"
+            class="heading_block block-1" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+            width="100%">
+            <tr>
+              <td class="pad"
+                style="padding-bottom:10px;padding-left:15px;padding-right:15px;padding-top:5px;text-align:center;width:100%;">
+                <h1
+                  style="margin: 0; color: #39374e; direction: ltr; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1px; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 18px;">
+                  <strong>' . $title . '</strong>
+                </h1>
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellpadding="0" cellspacing="0"
+            class="paragraph_block block-2" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
+            width="100%">
+            <tr>
+              <td class="pad"
+                style="padding-bottom:5px;padding-left:15px;padding-right:15px;padding-top:5px;">
+                <div
+                  style="color:#39374e;font-family:\'Open Sans\',\'Helvetica Neue\',Helvetica,Arial,sans-serif;font-size:15px;line-height:150%;text-align:center;mso-line-height-alt:22.5px;">
+                  <p style="margin: 0; word-break: break-word;">
+                    <span>'. $short_description .'</span>
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <table border="0" cellpadding="10" cellspacing="0"
+            class="button_block block-3" role="presentation"
+            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
+            width="100%">
+            <tr>
+              <td class="pad">
+                <div align="center" class="alignment"><!--[if mso]>
+                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="'. $link .'" style="height:54px;width:164px;v-text-anchor:middle;" arcsize="125%" strokeweight="1.5pt" strokecolor="#00A89D" fill="false">
+                <w:anchorlock/>
+                <v:textbox inset="0px,0px,0px,0px">
+                <center style="color:#00a89d; font-family:Tahoma, Verdana, sans-serif; font-size:15px">
+                <![endif]-->
+                <a href="' . $link . '" style="text-decoration:none;display:inline-block;color:#00a89d;background-color:transparent;border-radius:60px;width:auto;border-top:2px solid #00A89D;font-weight:400;border-right:2px solid #00A89D;border-bottom:2px solid #00A89D;border-left:2px solid #00A89D;padding-top:7px;padding-bottom:7px;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:15px;text-align:center;mso-border-alt:none;word-break:keep-all;"
+                    target="_blank"><span
+                      style="padding-left:40px;padding-right:40px;font-size:15px;display:inline-block;letter-spacing:normal;"><span
+                        style="word-break:break-word;"><span
+                          data-mce-style=""
+                          style="line-height: 30px;"><strong>See
+                            Course</strong></span></span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
+                  </div>
+                </td>
+            </tr>
+          </table>
+        </td>
+        ';
+
+        //Switch case for 
+        switch ($course_type) {
+          case 'Artikel':
+            if($numTypos['article'] >= 2)
+              break;
+            $content['article'] .= $text;
+            $numTypos['article'] += 1;
+            $i++;
+            break;
+
+          case 'Podcast':
+            if($numTypos['podcast'] >= 2)
+              break;
+            $content['podcast'] .= $text;
+            $numTypos['podcast'] += 1;
+            $i++;
+            break;
+          
+          case 'Video':
+            if($numTypos['video'] >= 2)
+              break;
+            $content['video'] .= $text;
+            $numTypos['video'] += 1;
+            $i++;
+            break;
+          
+          default:
+            if($numTypos['others'] >= 2)
+              break;
+            // var_dump("others",$text);
+            $content['others'] .= $text_others;
+            $numTypos['others'] += 1;
+            $i++;
+            break;
+        }
+      //Switch 
+      
+      //Break out of loop
+      // if($i >= 8)
+      //   break;
+
       endforeach;
 
-      require __DIR__ . "/templates/mail-weekly-recommendation.php";
+      //content others
+      $content['others'] .= '
+        </tr>
+        </tbody>
+        </table>
+        </td>
+      </tr>
+      </tbody>
+      </table>';
+
+      //Combine content
+      if($numTypos['article'])
+        $final_content = $content['article'];
+      if($numTypos['podcast'])
+        $final_content .= $content['podcast'];
+      if($numTypos['video'])
+        $final_content .= $content['video'];
+      if($numTypos['others'])
+        $final_content .= $content['others'];
+
+      //Require  
+      require __DIR__ . "/templates/mail-weekly/weekly-mailing-livelearn.php";
+      //var_dump($mail_weekly_course_body);
       wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
-      
-      // break;
-      // endif;
 
     endforeach;
     //End Iterate recommendation 
 
     $statusResponse = "OK | Recommended Weekly";
-    $response = new WP_REST_Response($statusResponse);
+    $response = new WP_REST_Response(['email_to' => $email , 'subject' => $subject, 'status' => $statusResponse]);
     $response->set_status(200);
     return $response;
   }
