@@ -165,7 +165,7 @@ $mail_weekly_course_body =
 																<div align="center" class="alignment"
 																	style="line-height:10px">
 																	<div style="max-width: 203px;"><img alt="Logo"
-																			src="images/LiveLearn_logo.png"
+																			src="' . get_stylesheet_directory_uri() . '/img/LiveLearn_logo.png"
 																			style="display: block; height: auto; border: 0; width: 100%;"
 																			title="Logo" width="203" /></div>
 																</div>
@@ -474,7 +474,7 @@ $mail_weekly_course_body =
 																					href="https://www.facebook.com"
 																					target="_blank"><img alt="Facebook"
 																						height="32"
-																						src="images/facebook2x.png"
+																						src="' . get_stylesheet_directory_uri() . '/img/facebook2x.png"
 																						style="display: block; height: auto; border: 0;"
 																						title="Facebook"
 																						width="32" /></a></td>
@@ -482,7 +482,7 @@ $mail_weekly_course_body =
 																					href="https://www.twitter.com"
 																					target="_blank"><img alt="Twitter"
 																						height="32"
-																						src="images/twitter2x.png"
+																						src="' . get_stylesheet_directory_uri() . '/img/twitter2x.png"
 																						style="display: block; height: auto; border: 0;"
 																						title="Twitter"
 																						width="32" /></a></td>
@@ -490,7 +490,7 @@ $mail_weekly_course_body =
 																					href="https://www.instagram.com"
 																					target="_blank"><img alt="Instagram"
 																						height="32"
-																						src="images/instagram2x.png"
+																						src="' . get_stylesheet_directory_uri() . '/img/instagram2x.png"
 																						style="display: block; height: auto; border: 0;"
 																						title="Instagram"
 																						width="32" /></a></td>
@@ -498,7 +498,7 @@ $mail_weekly_course_body =
 																					href="https://www.youtube.com"
 																					target="_blank"><img alt="YouTube"
 																						height="32"
-																						src="images/youtube2x.png"
+																						src="' . get_stylesheet_directory_uri() . '/img/youtube2x.png"
 																						style="display: block; height: auto; border: 0;"
 																						title="YouTube"
 																						width="32" /></a></td>
@@ -560,7 +560,7 @@ $mail_weekly_course_body =
 																								align="center"
 																								alt="Beefree Logo"
 																								class="icon" height="32"
-																								src="images/Beefree-logo.png"
+																								src="' . get_stylesheet_directory_uri() . '/img/Beefree-logo.png"
 																								style="display: block; height: auto; margin: 0 auto; border: 0;"
 																								width="34" /></a>
 																					</td>
