@@ -438,3 +438,30 @@ $args = array(
     $response->set_status(200);
     return $response;
 }
+
+function get_detail_notification($data){
+    $id_notification = intval($data['id']);
+    $notification = get_post($id_notification);
+    if(!$notification)
+        return new WP_REST_Response(array('message' => 'Notification not found'), 404);
+
+    $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
+    $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+    $notification->notification_type = get_post_type($notification->ID);
+    $notification->notification_title = $notification->post_title;
+    $notification->notification_content = get_field('content',$notification->ID);
+    $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
+    $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
+    $notification->notification_manager = get_user_by('ID', $notification->notification_manager)->data;
+    $notification->notification_manager->company = get_field('company', 'user_' . $notification->notification_manager->ID)[0]->post_title ? : 'Livelearn';
+    $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+    $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
+    $notification->notification_author = get_user_by('ID', $notification->post_author)->data;
+    $notification->notification_author->company = get_field('company', 'user_' . $notification->post_author)[0]->post_title ? : 'Livelearn';
+    $notification->notification_author->image = get_field('profile_img',  'user_' . $notification->post_author) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+
+
+    $response = new WP_REST_Response($notification);
+    $response->set_status(200);
+    return $response;
+}
