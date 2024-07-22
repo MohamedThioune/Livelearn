@@ -4518,7 +4518,7 @@ endif;
     //Get all users 
     $args = array(
             'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
-            'number' => 100
+	    'number' => 100
           );
     $users = get_users($args);
     var_dump(count($users), $users);
