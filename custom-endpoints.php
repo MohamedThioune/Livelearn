@@ -4517,11 +4517,14 @@ endif;
   {
     //Get all users 
     $args = array(
-            'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
-            'number' => 100
+            // 'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+            // 'order' => 'DESC',
+            // 'number' => 200
+            'search'  => 'daniel@livelearn.nl',
+            'search_columns' => array( 'user_login', 'user_email' ),
+            'posts_per_page' => -1,
           );
     $users = get_users($args);
-    var_dump(count($users), $users);
 
     foreach($users as $user):
 
