@@ -4522,7 +4522,7 @@ endif;
             // 'number' => 200
             'search'  => 'daniel@livelearn.nl',
             'search_columns' => array( 'user_login', 'user_email' ),
-            'posts_per_page' => -1,
+            'posts_per_page' => -1
           );
     $users = get_users($args);
 
