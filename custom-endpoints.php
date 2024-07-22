@@ -4517,12 +4517,12 @@ endif;
   {
     //Get all users 
     $args = array(
-            // 'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
-            // 'order' => 'DESC',
-            // 'number' => 200
-            'search'  => 'mokhouthioune96@gmail.com',
-            'search_columns' => array( 'user_login', 'user_email' ),
-            'posts_per_page' => -1
+            'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+            'order' => 'DESC',
+            'number' => 200
+            // 'search'  => 'mokhouthioune96@gmail.com',
+            // 'search_columns' => array( 'user_login', 'user_email' ),
+            // 'posts_per_page' => -1
           );
     $users = get_users($args);
 
@@ -5058,7 +5058,7 @@ endif;
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      // wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
 
     endforeach;
     //End Iterate recommendation 
