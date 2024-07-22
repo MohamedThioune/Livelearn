@@ -5058,7 +5058,7 @@ endif;
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      // wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
 
     endforeach;
     //End Iterate recommendation 
