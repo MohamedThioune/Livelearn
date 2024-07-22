@@ -4512,22 +4512,21 @@ endif;
     return $infos['following_topics'];
   }
 
-  //* Max Bird *//
+  //* Max Bird | Mailing recommendation *//
   function recommendedWeekly()
   {
     //Get all users 
     $args = array(
-            // 'role__in' => ['admin', 'hr', 'manager', 'subscriber', 'klant'],
-            'search'  => 'daniel@livelearn.nl',
-            'search_columns' => array( 'user_login', 'user_email' ),
-            'posts_per_page' => -1,
+            'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+            'number' => 100
           );
     $users = get_users($args);
+    var_dump(count($users), $users);
 
     foreach($users as $user):
 
       //Recommendation courses
-      $infos = recommendation($user->ID, 300, 50);
+      $infos = recommendation($user->ID, 350, 70);
       $recommended_courses = $infos['recommended'];
       shuffle($recommended_courses);
       $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'others' => 0];
@@ -5055,15 +5054,14 @@ endif;
         $final_content .= $content['others'];
 
       //Require  
-      require __DIR__ . "/templates/mail-weekly/weekly-mailing-livelearn.php";
-      //var_dump($mail_weekly_course_body);
-      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      require __DIR__ . "/templates/mail-weekly-livelearn.php";
+      // wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
 
     endforeach;
     //End Iterate recommendation 
 
     $statusResponse = "OK | Recommended Weekly";
-    $response = new WP_REST_Response(['email_to' => $email , 'subject' => $subject, 'status' => $statusResponse]);
+    $response = new WP_REST_Response($statusResponse);
     $response->set_status(200);
     return $response;
   }
