@@ -547,32 +547,6 @@ $mail_weekly_course_body =
 																			style="vertical-align: middle; text-align: center;">
 																			<!--[if vml]><table align="center" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
 																			<!--[if !vml]><!-->
-																			<table cellpadding="0" cellspacing="0"
-																				class="icons-inner" role="presentation"
-																				style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; margin-right: -4px; padding-left: 0px; padding-right: 0px;">
-																				<!--<![endif]-->
-																				<tr>
-																					<td
-																						style="vertical-align: middle; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;">
-																						<a href="http://designedwithbeefree.com/"
-																							style="text-decoration: none;"
-																							target="_blank"><img
-																								align="center"
-																								alt="Beefree Logo"
-																								class="icon" height="32"
-																								src="' . get_stylesheet_directory_uri() . '/img/Beefree-logo.png"
-																								style="display: block; height: auto; margin: 0 auto; border: 0;"
-																								width="34" /></a>
-																					</td>
-																					<td
-																						style="font-family: \'Inter\', sans-serif; font-size: 15px; font-weight: undefined; color: #1e0e4b; vertical-align: middle; letter-spacing: undefined; text-align: center;">
-																						<a href="http://designedwithbeefree.com/"
-																							style="color: #1e0e4b; text-decoration: none;"
-																							target="_blank">Designed
-																							with Beefree</a>
-																					</td>
-																				</tr>
-																			</table>
 																		</td>
 																	</tr>
 																</table>
