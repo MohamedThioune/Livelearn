@@ -4517,7 +4517,8 @@ endif;
   {
     //Get all users 
     $args = array(
-            'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+            // 'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+            'role__in' => ['administrator'],
             'order' => 'DESC',
             'number' => 200
             // 'search'  => 'mokhouthioune96@gmail.com',
@@ -4525,6 +4526,9 @@ endif;
             // 'posts_per_page' => -1
           );
     $users = get_users($args);
+
+    // var_dump(count($users), $users);
+    // die();
 
     foreach($users as $user):
 

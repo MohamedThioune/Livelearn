@@ -436,28 +436,31 @@ $mail_weekly_course_body =
 																</div>
 															</td>
 														</tr>
-													</table>
-													<table border="0" cellpadding="0" cellspacing="0"
-														class="paragraph_block block-2" role="presentation"
-														style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-														width="100%">
-														<tr>
-															<td class="pad"
-																style="padding-bottom:20px;padding-left:10px;padding-right:10px;padding-top:10px;">
-																<div
-																	style="color:#ffffff;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:12px;line-height:120%;text-align:center;mso-line-height-alt:14.399999999999999px;">
-																	<p style="margin: 0; word-break: break-word;"><span
-																			style="color: #39374e;"><span>Changed your
-																				mind?</span> <strong><a href="*|UNSUB|*"
-																					rel="noopener"
-																					style="color: #023356;"
-																					target="_blank">Unsubscribe</a></strong></span>
-																	</p>
-																</div>
-															</td>
-														</tr>
-													</table>
-													<table border="0" cellpadding="0" cellspacing="0"
+													</table>/' . 
+
+													''
+													// '<table border="0" cellpadding="0" cellspacing="0"
+													// 	class="paragraph_block block-2" role="presentation"
+													// 	style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
+													// 	width="100%">
+													// 	<tr>
+													// 		<td class="pad"
+													// 			style="padding-bottom:20px;padding-left:10px;padding-right:10px;padding-top:10px;">
+													// 			<div
+													// 				style="color:#ffffff;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;font-size:12px;line-height:120%;text-align:center;mso-line-height-alt:14.399999999999999px;">
+													// 				<p style="margin: 0; word-break: break-word;"><span
+													// 						style="color: #39374e;"><span>Changed your
+													// 							mind?</span> <strong><a href="*|UNSUB|*"
+													// 								rel="noopener"
+													// 								style="color: #023356;"
+													// 								target="_blank">Unsubscribe</a></strong></span>
+													// 				</p>
+													// 			</div>
+													// 		</td>
+													// 	</tr>
+													// </table>' 
+
+													.'<table border="0" cellpadding="0" cellspacing="0"
 														class="social_block block-3" role="presentation"
 														style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
 														width="100%">
@@ -471,7 +474,7 @@ $mail_weekly_course_body =
 																		width="184px">
 																		<tr>
 																			<td style="padding:0 7px 0 7px;"><a
-																					href="https://www.facebook.com"
+																					href="https://www.facebook.com/LiveLearnHQ/"
 																					target="_blank"><img alt="Facebook"
 																						height="32"
 																						src="' . get_stylesheet_directory_uri() . '/img/facebook2x.png"
@@ -479,7 +482,7 @@ $mail_weekly_course_body =
 																						title="Facebook"
 																						width="32" /></a></td>
 																			<td style="padding:0 7px 0 7px;"><a
-																					href="https://www.twitter.com"
+																					href="https://x.com/i/flow/login?redirect_after_login=/LiveLearnHQ"
 																					target="_blank"><img alt="Twitter"
 																						height="32"
 																						src="' . get_stylesheet_directory_uri() . '/img/twitter2x.png"
@@ -487,21 +490,14 @@ $mail_weekly_course_body =
 																						title="Twitter"
 																						width="32" /></a></td>
 																			<td style="padding:0 7px 0 7px;"><a
-																					href="https://www.instagram.com"
+																					href="https://www.instagram.com/livelearn.app/"
 																					target="_blank"><img alt="Instagram"
 																						height="32"
 																						src="' . get_stylesheet_directory_uri() . '/img/instagram2x.png"
 																						style="display: block; height: auto; border: 0;"
 																						title="Instagram"
-																						width="32" /></a></td>
-																			<td style="padding:0 7px 0 7px;"><a
-																					href="https://www.youtube.com"
-																					target="_blank"><img alt="YouTube"
-																						height="32"
-																						src="' . get_stylesheet_directory_uri() . '/img/youtube2x.png"
-																						style="display: block; height: auto; border: 0;"
-																						title="YouTube"
-																						width="32" /></a></td>
+																						width="32" /></a>
+																			</td>
 																		</tr>
 																	</table>
 																</div>
