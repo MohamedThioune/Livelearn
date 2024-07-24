@@ -46,8 +46,7 @@ endif;
 
 
 //Stripe pay 
-$stripe_pay_form = "";
-if($user_id)
+// $stripe_pay_form = "";
 $stripe_pay_form = 
 '<form action="/checkout-stripe" method="post">
     <input type="hidden" name="postID" value="' . $post->ID . '">
