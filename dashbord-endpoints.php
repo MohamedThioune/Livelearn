@@ -1,4 +1,5 @@
 <?php
+global $wpdb;
 function expertsToFollow()
 {
     $experts = get_users(
@@ -243,8 +244,9 @@ function get_notifications($data)
         $notification->manager_image = get_field('profile_img',  'user_' . $manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
         $notification->manager_name = ($manager->display_name) ?: 'Livelearn';
         $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
-
         $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
+        $notification->post_type = 'todo';
+
         endforeach;
     foreach($notification_badges as $notification):
         $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
@@ -268,6 +270,7 @@ function get_notifications($data)
 }
 
 function companyPeople($data){
+    global $wpdb;
     $users = get_users();
     $members = array();
     $user_connected = intval($data['ID']);
@@ -283,10 +286,7 @@ function companyPeople($data){
     $key = 3;
     $star_index = ($key - 1) * $step;
 
-    //for ($i = $star_index; $i < $star_index + $step && $i < count($users) ; $i++) {
     foreach($users as $user){
-        //$user = $users[$i];
-
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
@@ -294,7 +294,6 @@ function companyPeople($data){
             $user->phone = get_field('telnr',  'user_' . $user->ID);
             //people you manages
             $people_managed_by_me = array();
-            //$people_you_manage = ['3','5','6','7'];
             $people_you_manage = get_field('managed',$user->ID);
             if($people_you_manage)
                 foreach ($people_you_manage as $persone_id){
@@ -318,6 +317,24 @@ function companyPeople($data){
                     array_push($members, $user);
             }
         }
+    }
+    foreach ($members as $user){
+        $is_login = false;
+        $date = new DateTime();
+        $date_this_month = date('Y-m-d');
+        $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
+        $table_tracker_views = $wpdb->prefix . 'tracker_views';
+        $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+        $if_user_actif = count($wpdb->get_results($sql));
+
+        if ((new DateTime($user->user_registered))->format('Y-m-d') <= $date_last_month)
+            $new_members_count++;
+
+        if ($if_user_actif)
+            $is_login = true;
+        $members_active = $is_login ? $members_active + 1 : $members_active;
+
+        $is_login ? $members_active ++ : $members_inactive++;
     }
 
     $response = new WP_REST_Response(
@@ -445,9 +462,12 @@ function get_detail_notification($data){
     if(!$notification)
         return new WP_REST_Response(array('message' => 'Notification not found'), 404);
 
+    $notification_type = get_post_type($notification->ID);
+    $notification_type = ($notification_type == 'mandatory') ? 'todo' : $notification_type;
     $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
     $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
-    $notification->notification_type = get_post_type($notification->ID);
+    $notification->notification_type = $notification_type;
+    $notification->post_type = $notification_type;
     $notification->notification_title = $notification->post_title;
     $notification->notification_content = get_field('content',$notification->ID);
     $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
@@ -465,3 +485,342 @@ function get_detail_notification($data){
     $response->set_status(200);
     return $response;
 }
+
+function get_number_for_month($month, $plateform='web'){
+    global $wpdb;
+    $number_of_month = 0;
+    $year = intval(date('Y'));
+    $actual_month = intval(date('m'));
+    switch ($month){
+        case 'Jan' :
+            $number_of_month = 1;
+            break;
+        case 'Feb' :
+            $number_of_month = 2;
+            break;
+        case 'March' :
+            $number_of_month = 3;
+            break;
+        case 'Apr' :
+            $number_of_month = 4;
+            break;
+        case 'May' :
+            $number_of_month = 5;
+            break;
+        case 'Jun' :
+            $number_of_month = 6;
+            break;
+        case 'Jul' :
+            $number_of_month = 7;
+            break;
+        case 'Aug' :
+            $number_of_month = 8;
+            break;
+        case 'Sep' :
+            $number_of_month = 9;
+            break;
+        case 'Oct' :
+            $number_of_month = 10;
+            break;
+        case 'Nov' :
+            $number_of_month = 11;
+            break;
+        case 'Dec' :
+            $number_of_month = 12;
+            break;
+    }
+    if ($number_of_month>$actual_month)
+        $year = $year-1;
+
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $sql = $wpdb->prepare("SELECT COUNT(*) FROM $table_tracker_views WHERE MONTH(updated_at) = $number_of_month AND YEAR(updated_at) = $year AND platform = '".$plateform."'");
+    $number_statistics = $wpdb->get_results($sql)[0]->{'COUNT(*)'};
+    return intval($number_statistics);
+}
+
+function company_statistic($data)
+{
+    global $wpdb;
+    $current_user = intval($data['ID']);
+    $company = get_field('company',  'user_' . $current_user);
+    $user_connected = get_user_by('ID', $current_user)->data;
+    $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
+    $user_connected->user_company = $company[0];
+    $company_connected = $company[0]->ID;
+    $users = get_users();
+    $assessment_validated = array();
+    $enrolled_courses = array();
+    $desktop_vs_mobile = array(
+        'desktop'=>array(),
+        'mobile'=>array()
+    );
+    $members_active = 5;
+    $members_inactive = 5;
+    $most_topics_view = array();
+    $budget_spent = 0;
+    $count_mandatories_video = 0;
+    foreach ($users as $user ) {
+        $company = get_field('company',  'user_' . $user->ID);
+
+        if(!empty($company))
+            if($company[0]->ID == $company_connected) {
+                $numbers[] = $user->ID;
+                $members[] = $user;
+                if($user->user_registered)
+
+                    // Assessment
+                    $validated = get_user_meta($user->ID, 'assessment_validated');
+                foreach($validated as $assessment)
+                    if(!in_array($assessment, $assessment_validated))
+                        array_push($assessment_validated, $assessment);
+            }
+    }
+    //Topic views
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
+    $topic_views = $wpdb->get_results($sql);
+
+    foreach ($topic_views as $topic){
+        $subtopic = array();
+        $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
+        $subtopic['occurence'] = $topic->occurence;
+        $image_topic = get_field('image', 'category_'. $topic->data_id);
+        $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
+        $most_topics_view[] = $subtopic;
+    }
+
+    /* Assessment */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments = get_posts($args);
+    $count_assessments = count($assessments);
+    $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
+    $assessment_not_started = 0;
+    $assessment_completed = 0;
+    if($count_assessments > 0){
+        $not_started_assessment = abs($count_assessments - $assessment_validated);
+        $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
+        $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
+    }
+    /* assessment doing by this user */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'author' => $user_connected->ID,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments_created = get_posts($args);
+    $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
+
+    /* Mandatories */
+    $args = array(
+        'post_type' => 'mandatory',
+        'post_status' => 'publish',
+        'author__in' => $user_connected->ID,
+        'posts_per_page'         => -1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false
+    );
+    $mandatories = get_posts($args);
+    $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
+
+    /* Members course */
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'author__in' => $numbers,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $member_courses = get_posts($args);
+    $member_courses_id = array_column($member_courses, 'ID');
+    $progress_courses = array(
+        'not_started' => 0,
+        'in_progress' => 0,
+        'done' => 0,
+    );
+    $enrolled_all_courses = array();
+    $args = array(
+        'post_status' => array('wc-processing', 'wc-completed'),
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'limit' => -1,
+    );
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            //Get woo orders from user
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+
+            $prijs = get_field('price', $course_id);
+            $budget_spent += $prijs;
+            if(in_array($course_id, $member_courses_id)){
+                array_push($enrolled_all_courses, $course_id);
+                if(!in_array($course_id, $enrolled)){
+                    array_push($enrolled, $course_id);
+                    array_push($enrolled_courses, $course);
+                    //Get progresssion this course
+                    $args = array(
+                        'post_type' => 'progression',
+                        'title' => $course->post_name,
+                        'post_status' => 'publish',
+                        'posts_per_page'         => -1,
+                        'no_found_rows'          => true,
+                        'ignore_sticky_posts'    => true,
+                        'update_post_term_cache' => false,
+                        'update_post_meta_cache' => false
+                    );
+                    $progressions = get_posts($args);
+                    if(!empty($progressions))
+                        foreach ($progressions as $progression) {
+                            $status = "in_progress";
+                            $progression_id = $progression->ID;
+                            //Finish read
+                            $is_finish = get_field('state_actual', $progression_id);
+                            if($is_finish)
+                                $status = "done";
+
+                            switch ($status) {
+
+                                case 'in_progress':
+                                    $progress_courses['in_progress'] += 1;
+                                    break;
+
+                                case 'done':
+                                    $progress_courses['done'] += 1;
+                                    //course finished
+                                    array_push($course_finished, $course->ID);
+                                    break;
+                            }
+                        }
+                }
+            }
+        }
+    }
+    $count_enrolled_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
+    $progress_courses['not_started'] = abs($count_enrolled_courses - ($progress_courses['in_progress'] + $progress_courses['done']));
+    if($count_enrolled_courses > 0){
+        $progress_courses['not_started'] = intval(($progress_courses['not_started'] / $count_enrolled_courses) * 100);
+        $progress_courses['in_progress'] = intval(($progress_courses['in_progress'] / $count_enrolled_courses) * 100);
+        $progress_courses['done'] = intval(($progress_courses['done'] / $count_enrolled_courses) * 100);
+    }
+    else
+        $progress_courses['not_started'] = 100;
+
+    // Most popular
+    $most_popular = array_count_values($enrolled_all_courses);
+    arsort($most_popular);
+    $args = array(
+        'post_type' => 'course',
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'include' => $most_popular,
+    );
+    $most_popular_course = get_posts($args);
+    $desktop_vs_mobile = array(
+        'desktop' => array(
+            'Jan'=>get_number_for_month('Jan'),
+            'Feb'=>get_number_for_month('Feb'),
+            'March'=>get_number_for_month('March'),
+            'Apr'=>get_number_for_month('Apr'),
+            'May'=>get_number_for_month('May'),
+            'Jun'=>get_number_for_month('Jun'),
+            'Jul'=>get_number_for_month('Jul'),
+            'Aug'=>get_number_for_month('Aug'),
+            'Sep'=>get_number_for_month('Sep'),
+            'Oct'=>get_number_for_month('Oct'),
+            'Nov'=>get_number_for_month('Nov'),
+            'Dec'=>get_number_for_month('Dec'),
+        ),
+
+        'mobile' => array(
+            'Jan'=>get_number_for_month('Jan','mobile'),
+            'Feb'=>get_number_for_month('Feb','mobile'),
+            'March'=>get_number_for_month('March','mobile'),
+            'Apr'=>get_number_for_month('Apr','mobile'),
+            'May'=>get_number_for_month('May','mobile'),
+            'Jun'=>get_number_for_month('Jun','mobile'),
+            'Jul'=>get_number_for_month('Jul','mobile'),
+            'Aug'=>get_number_for_month('Aug','mobile'),
+            'Sep'=>get_number_for_month('Sep','mobile'),
+            'Oct'=>get_number_for_month('Oct','mobile'),
+            'Nov'=>get_number_for_month('Nov','mobile'),
+            'Dec'=>get_number_for_month('Dec','mobile'),
+        ),
+    );
+
+    $response = new WP_REST_Response(
+        array(
+            'user_profile'=>$user_connected,
+            'indivudual'=>array(
+                'team_first_card'=>array(
+                    'budget_spent'=>$budget_spent,
+                    'course_in_progress'=>$progress_courses['not_started'],
+                    'your_courses'=>$count_enrolled_courses,
+                    'course_done'=>$progress_courses['done'],
+                    'assessment_created'=>$count_assessments_created,
+                    'mandatories_received'=>$count_mandatories_video,
+                ),
+                'most_topics_view'=>$most_topics_view,
+                'progress_courses'=>array(
+                    'user_engagement'=>array(
+                        'active'=>$members_active,
+                        'inactive'=>$members_inactive
+                    ),
+                    'user_progress_the_courses'=>$progress_courses,
+                    'assesment'=>array(
+                        'not_started'=>$assessment_not_started,
+                        'completed'=>$assessment_completed,
+                    ),
+                ),
+                'other_members'=>$members
+            ),
+            'company' => array(
+                //'total_members'=>$members,
+                //'assessment_validated'=>$assessment_validated,
+                //'enrolled_courses'=>$enrolled_courses,
+                    'progress_courses'=>array(
+                        'user_engagement'=>array(
+                            'active'=>$members_active,
+                            'inactive'=>$members_inactive
+                        ),
+                        'user_progress_the_courses'=>$progress_courses,
+                        'assesment'=>array(
+                            'not_started'=>$assessment_not_started,
+                            'completed'=>$assessment_completed,
+                            ),
+                    ),
+                'desktop_vs_mobile'=>$desktop_vs_mobile,
+                'popular_course'=>$most_popular_course,
+                'most_topics_view'=>$most_topics_view,
+            ),
+            'team'=>array(
+                'team_first_card'=>array(
+                    'total_members'=>count($members),
+                    'all_courses'=>$count_enrolled_courses,
+                    'assessment'=>$assessment_validated,
+                    'courses_done'=>$progress_courses['done'],
+                    'mandatories'=>$count_mandatories_video,
+                    'member_actif'=>5
+                ),
+                'user_progress_the_courses'=>$progress_courses,
+                'desktop_vs_mobile'=>$desktop_vs_mobile,
+                'team_managed'=>$members
+            )
+        ), 200);
+    return $response;
+}
+
