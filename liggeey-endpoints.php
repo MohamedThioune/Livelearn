@@ -399,7 +399,7 @@ function homepage(){
 
   //Category information
   $no_content = "Some information missing !";
-  $slugdefined = 'zakelijke-applicaties';
+  $slugdefined = 'business-applications';
   // $slugdefined = 'digital';
   $digital_category = get_categories(array('taxonomy' => 'course_category', 'slug' => $slugdefined, 'hide_empty' => 0) )[0];
   if(is_wp_error($digital_category)):
