@@ -17,7 +17,7 @@ require_once __DIR__ . '/templates/new-module-subscribe.php';
 // require_once __DIR__ . '/templates/checkout.php';
 
 function enqueue_parent_styles() {
-    wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
+    wp_enqueue_style( 'bootstrap-s', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_directory_uri().'/style-main.css' );
     wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', array(), null, true);
     //wp_enqueue_style( 'inl-style', get_stylesheet_directory_uri().'/inl.css' );
@@ -2101,10 +2101,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'saveManager'
     ));
+    
     register_rest_route ('custom/v1', '/notifications/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'get_notifications'
     ));
+
     register_rest_route ('custom/v1', '/company/people/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'companyPeople'
@@ -2114,8 +2116,19 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'learn_modules'
     ));
+
     register_rest_route ('custom/v1', '/learnDatabase/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'learnning_database'
+    ));
+
+    register_rest_route ('custom/v1', '/details-notification/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'get_detail_notification'
+    ));
+
+    register_rest_route ('custom/v1', '/company-statistic/(?P<ID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'company_statistic'
     ));
 });
