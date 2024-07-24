@@ -13,23 +13,7 @@ $userID = 0;
 $prijs = 0;
 
 extract($_POST);
-//Login
-if($stripe_login):
-    $login = wp_signon(array(
-        'user_email' => $_POST['email'],
-        'user_pass' => $_POST['password'],
-        'remember' => true,
-    ));
-
-    if(is_wp_error($login)):
-        $danger = $login->get_error_message();
-        header("location: /checkout-stripe?message=" . $danger . "&single=0");
-    else:
-        header("location: /checkout-stripe?message=" . $success . "&single= " . $postID);
-    endif;
-
-//Register
-elseif($stripe_register):
+if($_POST['stripe_register']):
 endif;
 
 //After Login/Register
@@ -86,25 +70,18 @@ endif;
 //create ...
 
 //Form login 
-$login_form = '
-<h4>Login</h4>
-<form action="" method="POST">
-    <input type="hidden" name="postID" value="' . $postID .'" class="" id="" placeholder="">
-    <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email !">
-        <small id="emailHelp" class="form-text text-muted">We\'ll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" class="form-control" id="additional_company" placeholder="Enter your password !">
-    </div>
-    <button type="submit" name="stripe_login" class="btn btn-primary">Login</button>
-</form>';
+$redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $postID;
+$login_form = wp_login_form([
+    'redirect' => $redirect_success,
+    'remember' => false,
+    'label_username' => 'Wat is je e-mailadres?',
+    'placeholder_email' => 'E-mailadress',
+    'label_password' => 'Wat is je wachtwoord?'
+]);
 
 //Form register 
 $register_form = '
-<h4>Register</h4>
+<h4>REGISTER</h4>
 <form action="" method="POST">
     <input type="hidden" name="postID" value="' . $postID .'" class="" id="" placeholder="">
     <div class="form-group">
@@ -164,7 +141,7 @@ $register_form = '
 <body>
 <div class="contentProfil">
    <div class="container-fluid">
-       <h1 class="titleSubscription">Sample</h1>
+       <!-- <h1 class="titleSubscription">Sample</h1> -->
        <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center>
         <!-- <br><br> -->
         <div class="contentFormSubscription">
@@ -217,10 +194,10 @@ $register_form = '
                     <?php
                 endif;
             else:
+                echo $login_form;
                 if(isset($status_connnected))
                 if($status_connnected)
-            ?>
-            <?php
+                    echo $register_form;
             endif;
             ?>
         </div>
