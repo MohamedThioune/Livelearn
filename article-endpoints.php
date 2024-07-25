@@ -762,6 +762,7 @@ function Artikel_From_Company($data)
           return  $data_insert;
         
        } 
+
 function xmlParse($data)
 {
 
@@ -787,9 +788,9 @@ function xmlParse($data)
     
     'Authorization:Bearer secret-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJFZHUtRGV4IiwiaWF0IjoxNzEzNDMxMjExLCJuYmYiOjE3MTM0MzEyMTEsInN1YiI6ImVkdWRleC1hcGktdXNlciIsInNjb3BlIjoiZGF0YSIsIm5vbmNlIjoidjh2UjNmTkY4NHdWaTZOMDlfQWl5QSIsImV4cCI6MTkwMjc0MzEwMH0.RxttT9h1eA07fYIRFqDes3EJnLiDMVWaxcY0IVFIElI',
     
-];
+    ];
 
-      $website_urls = [];
+    $website_urls = [];
       $file_xml= [];
 
 $ch = curl_init();
@@ -927,17 +928,15 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             );
             
             array_push($data['programs'], $element);
-             $i++;
-          //     if($i==37){
-          //        $data_json = json_encode($data);
-        
-
-          //  $data_insert=addOneCourse($data_json);
-          //  $data = array();
-          // $data['programs']= array();
-          // $i=0;
-          //        usleep(2000);
-          //     }
+            $i++;
+            if($i==37){
+              $data_json = json_encode($data);
+              $data_insert=addOneCourse($data_json);
+              $data = array();
+              $data['programs']= array();
+              $i=0;
+              usleep(2000);
+            }
               
           }
           
