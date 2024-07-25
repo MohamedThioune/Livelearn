@@ -2,15 +2,14 @@
 
 $GLOBALS['id_user'] = get_current_user_id();
 
-require_once __DIR__.'/liggeey-endpoints.php';
-require_once __DIR__ .'/templates/check_visibility.php';
-require_once __DIR__.'/custom-endpoints.php';
-require_once __DIR__.'/article-endpoints.php';
-require_once __DIR__.'/podcast-endpoints.php';
-require_once __DIR__.'/video-endpoints.php';
-require_once __DIR__.'/script-endpoints.php';
-require_once __DIR__.'/dashbord-endpoints.php';
-
+require_once __DIR__ . '/liggeey-endpoints.php';
+require_once __DIR__ . '/templates/check_visibility.php';
+require_once __DIR__ . '/custom-endpoints.php';
+require_once __DIR__ . '/article-endpoints.php';
+require_once __DIR__ . '/podcast-endpoints.php';
+require_once __DIR__ . '/video-endpoints.php';
+require_once __DIR__ . '/script-endpoints.php';
+require_once __DIR__ . '/dashbord-endpoints.php';
 require_once __DIR__ . '/templates/recommendation-module.php';
 require_once __DIR__ . '/templates/search-module.php';
 require_once __DIR__ . '/templates/new-module-subscribe.php';
@@ -1475,7 +1474,6 @@ add_action( 'rest_api_init', function () {
         'callback' => 'allArticles',
     ));
 
-
     register_rest_route('custom/v2', '/similar/article/category/(?P<category_id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'get_related_articles_by_category',
@@ -1495,7 +1493,6 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'allOfflineCoursesOptimized',
     ));
-
 
     register_rest_route('custom/v1', '/authors', array(
         'methods' => 'GET',
@@ -1609,7 +1606,6 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserAttempts',
     ));
-
 
 
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
@@ -2101,7 +2097,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'saveManager'
     ));
-    
+
     register_rest_route ('custom/v1', '/notifications/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'get_notifications'
