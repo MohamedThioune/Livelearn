@@ -9,7 +9,8 @@ require_once 'new-module-subscribe.php';
 $price_id = '';
 $mode = 'setup';
 $postID = '';
-$userID = 0;
+// get user 
+$userID = get_current_user_id();
 $prijs = 0;
 
 extract($_POST);
@@ -33,9 +34,6 @@ if(isset($productPrice)):
     // get course
     $post = get_post($postID);
     $course_type = get_field('course_type', $postID);
-
-    // get user 
-    $userID = get_current_user_id();
 
     // create product
     $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
@@ -70,14 +68,15 @@ endif;
 //create ...
 
 //Form login 
+$success = "Login successful !";
 $redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $postID;
-$login_form = wp_login_form([
+$login_form = (!$userID) ? wp_login_form([
     'redirect' => $redirect_success,
     'remember' => false,
     'label_username' => 'Wat is je e-mailadres?',
     'placeholder_email' => 'E-mailadress',
     'label_password' => 'Wat is je wachtwoord?'
-]);
+]) : "";
 
 //Form register 
 $register_form = '
@@ -193,12 +192,11 @@ $register_form = '
                     </form>
                     <?php
                 endif;
-            else:
-                echo $login_form;
-                if(isset($status_connnected))
-                if($status_connnected)
-                    echo $register_form;
             endif;
+            echo $login_form;
+            if(isset($status_connnected))
+            if($status_connnected)
+                echo $register_form;
             ?>
         </div>
    </div>
