@@ -14,7 +14,7 @@ include "dashbord-endpoints.php";
 
 require __DIR__ . '/templates/recommendation-module.php';
 require __DIR__ . '/templates/search-module.php';
-//require_once __DIR__ . '/templates/new-module-subscribe.php';
+require_once __DIR__ . '/templates/new-module-subscribe.php';
 // require_once __DIR__ . '/templates/checkout.php';
 
 function enqueue_parent_styles() {
