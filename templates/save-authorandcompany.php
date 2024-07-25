@@ -7,10 +7,7 @@ require_once 'upload.php';
 if (isset($_POST['connect_authortoCourse']) && !empty($_POST['connect_authortoCourse']) && $_POST['action'] == 'connect_authortoCourse') 
 { 
 
-  
         $author_ids = array_map('intval', $_POST['connect_authortoCourse']);
-
-       
 
         $course_id  = intval($_POST['id_course']);
 
