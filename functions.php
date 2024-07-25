@@ -1767,7 +1767,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'reserve_course',
     ));
 
-
+    /** Endpoint - Databank */
     register_rest_route ('custom/v1', '/databank/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'Artikel_From_Company'
@@ -1792,6 +1792,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'updateYoutube'
     ));
+    /** Endpoint */
 
     register_rest_route ('custom/v1', '/matching-topic-course', array(
         'methods' => 'GET',
@@ -1808,16 +1809,17 @@ add_action( 'rest_api_init', function () {
         'callback' => 'register_company'
     ));
 
-    register_rest_route ('custom/v1', '/update-youtube', array(
-        'methods' => 'GET',
-        'callback' => 'updateYoutube'
-    ));
-
     register_rest_route ('custom/v1', '/clean-video', array(
         'methods' => 'GET',
         'callback' => 'cleanVideoCourse'
     ));
 
+    register_rest_route('custom/v2', '/course/filtered', array(
+        'methods' => 'GET',
+        'callback' => 'allCoursesOptimizedWithFilter',
+    ));
+
+    //Weekly mail livelearn
     register_rest_route ('custom/v1', '/weekly-recommendation', array(
         'methods' => 'GET',
         'callback' => 'recommendedWeekly'
@@ -1828,7 +1830,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'updateLangaugeCourses'
     ));
 
-    //Liggeey
+    /** Endpoint - Liggeey */
     register_rest_route ('custom/v1', '/homepage', array(
         'methods' => 'GET',
         'callback' => 'homepage'
@@ -1892,12 +1894,6 @@ add_action( 'rest_api_init', function () {
     register_rest_route('custom/v2', '/course/search/(?P<keywords>[-\w]+)', array(
         'methods' => 'GET',
         'callback' => 'searchCoursesViaKeyWords',
-    ));
-
-    //Endpoint "Liggeey"
-    register_rest_route('custom/v2', '/course/filtered', array(
-        'methods' => 'GET',
-        'callback' => 'allCoursesOptimizedWithFilter',
     ));
 
     register_rest_route ('custom/v1', '/apply', array( 
@@ -1970,11 +1966,6 @@ add_action( 'rest_api_init', function () {
         'callback' => 'trashFavouriteJob'
     ));
 
-    // register_rest_route ('custom/v1', '/candidate/profil', array(
-    //   'methods' => 'GET',
-    //   'callback' => 'candidateProfil'
-    // ));
-
     register_rest_route ('custom/v1', '/candidate/home', array(
         'methods' => 'POST',
         'callback' => 'HomeCandidate'
@@ -2034,12 +2025,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'candidateMyResumeDelete'
     ));
-    //End ...
 
     register_rest_route ('custom/v1', '/candidate/skills', array(
         'methods' => 'POST',
         'callback' => 'editSkills'
     ));
+    /** Endpoint */
 
     // Made By Fadel
     register_rest_route ('custom/v1', '/notification/create', array(
