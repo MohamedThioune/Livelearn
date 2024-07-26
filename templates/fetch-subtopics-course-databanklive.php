@@ -1,7 +1,3 @@
-
-
-
-
 <?php /** Template Name: Fetch subtopics course DatabankLive */ ?>
 
 <?php

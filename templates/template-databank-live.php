@@ -1517,8 +1517,7 @@ function submitCompanyForm() {
             $('.modal-content').html(data)
     
             // Get the button that opens the modal
-            
-            
+        
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];
             
