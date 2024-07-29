@@ -1465,7 +1465,7 @@ function FavoritesUser(WP_REST_Request $request){
 
 //[POST]Dashboard User | Post Job
 function postJobUser(WP_REST_Request $request){
-  $required_parameters = ['userApplyId', 'title', 'job_description', 'job_langues', 'skills'];
+  $required_parameters = ['userApplyId', 'title', 'job_description', 'job_responsibilities', 'job_skills_experiences', 'job_langues', 'skills'];
 
   // Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -1478,6 +1478,7 @@ function postJobUser(WP_REST_Request $request){
   // Get input
   $title = $request['title'];
   $job_description = $request['job_description'];
+  $job_responsibilities = $request['job_responsibilities'];
   $job_contract = ($request['job_contract']) ?: 'Full Time';
   $job_level_experience = ($request['job_level_of_experience']) ?: '';
   $job_language = ($request['job_langues']) ?: 'English';
@@ -1485,6 +1486,16 @@ function postJobUser(WP_REST_Request $request){
   $skills = ($request['skills']) ?: null;
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
+
+
+  //Job skill & experiences 
+  $job_skills_experiences = array();
+  $skill_experiences = ($request['job_skills_experiences']) ?: array();
+  foreach ($skill_experiences as $value) {
+    $skill_exp = array();
+    $skill_exp['row'] = $value;
+    array_push($job_skills_experiences, $skill_exp);
+  }
 
   // Find the user company
   $company = get_field('company',  'user_' . $user_apply_id);
@@ -1517,6 +1528,8 @@ function postJobUser(WP_REST_Request $request){
   // Add custom fields 
   update_field('job_company', $company, $job_id);
   update_field('job_description', $job_description, $job_id);
+  update_field('job_responsibilities', $job_responsibilities, $job_id);
+  update_field('job_skills_experiences', $job_skills_experiences, $job_id);
   update_field('job_contract', $job_contract, $job_id);
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
