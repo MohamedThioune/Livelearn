@@ -4533,7 +4533,7 @@ endif;
     foreach($users as $user):
 
       //Recommendation courses
-      $infos = recommendation($user->ID, 350, 70);
+      $infos = recommendation($user->ID, 350, 100);
       $recommended_courses = $infos['recommended'];
       shuffle($recommended_courses);
       $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'others' => 0];
@@ -5062,7 +5062,7 @@ endif;
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      // wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
 
     endforeach;
     //End Iterate recommendation 
