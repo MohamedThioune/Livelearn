@@ -1,7 +1,3 @@
-
-
-
-
 <?php /** Template Name: Fetch subtopics course DatabankLive */ ?>
 
 <?php
@@ -362,7 +358,7 @@ $(document).ready(function() {
                 method: "post",
                 data: {
                     topic_id: selectedTopic,
-                     action:'get_subtopics'
+                    action:'get_subtopics'
                 },
                 dataType: "text",
                 success: function(response) {
