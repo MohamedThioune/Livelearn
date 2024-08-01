@@ -12,11 +12,15 @@ function expertsToFollow()
     foreach ($experts as $expert) {
         $expert_data = array();
         $roles = $expert->roles;
+        $image = get_field('profile_img',  'user_' . $expert->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+
         $expert_data['id'] = $expert->ID;
         $expert_data['email'] = $expert->user_email;
         $expert_data['name'] = $expert->display_name;
-        $expert_data['image'] = get_field('profile_img',  'user_' . $expert->ID) ?: get_field('profile_img_api',  'user_' . $expert->ID);
+        $expert_data['image'] = $image;
         $expert_data['imageExpert'] = get_avatar_url($expert->ID);
+        $expert_data['role'] = $roles[0];
+
         $all_experts[] = $expert_data;
     }
 
@@ -823,4 +827,233 @@ function company_statistic($data)
         ), 200);
     return $response;
 }
+function get_emploees($data)
+{
+    $users = get_users();
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    if(!empty($company))
+        $company_connected_id = $company[0]->ID;
 
+    $members = array();
+    foreach($users as $user)
+        if($user_connected != $user->ID ){
+            $company = get_field('company',  'user_' . $user->ID);
+            if(!empty($company)){
+                $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+                $departement = get_field('departments', $company[0]->ID);
+                $company_id = $company[0]->ID;
+                if($company_id == $company_connected_id) {
+                    $user->data->role = $user->roles[0];
+                    $user->data->image = $image;
+                    $user->data->departement = $departement[0]['name'];
+
+                    array_push($members, $user->data);
+                }
+            }
+        }
+    $response = new WP_REST_Response(
+        array(
+            'count'=>count($members),
+            'employees'=>$members,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function add_departement($data)
+{
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $department['name'] = $data['name'];
+    $departments = get_field('departments', $company[0]->ID) ? : array();
+    $departments[] = $department;
+    $isInsert = update_field('departments', $departments, $company[0]->ID);
+    if (!$isInsert)
+        return new WP_REST_Response(array('message' => 'Error while adding department'), 401);
+
+    $response = new WP_REST_Response(
+    array(
+        'message'=>'Department added successfully to the company !',
+        'departments'=>$departments,
+    ));
+    $response->set_status(200);
+    return $response;
+}
+function get_departements($data)
+{
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+
+    $departments = get_field('departments', $company[0]->ID)? : array();
+    $response = new WP_REST_Response(
+        array(
+            'departments'=>$departments,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function remove_departement($data)
+{
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $department['name'] = $data['name']; // departement to remove
+    $departments = get_field('departments', $company[0]->ID) ? : array();
+    $key = array_search($department, $departments);
+    if($key !== false)
+        unset($departments[$key]);
+
+    $isInsert = update_field('departments', $departments, $company[0]->ID);
+    if (!$isInsert)
+        return new WP_REST_Response(array('message' => 'Error while removing department'), 401);
+
+    $response = new WP_REST_Response(
+        array(
+            'message'=>'Department removed successfully from the company !',
+            'departments'=>$departments,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+function Selecteer_experts($data)
+{
+    $users = get_users();
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $company_connected_id = $company[0]->ID;
+    $members = array();
+    foreach($users as $user){
+        $member = array();
+        if(!in_array('manager', $user->roles) && !in_array('author', $user->roles) )
+            continue;
+
+        $company = get_field('company',  'user_' . $user->ID);
+
+        if(!empty($company) && $user_connected != $user->ID ){
+            $company_id = $company[0]->ID;
+
+            if($company_id == $company_connected_id) {
+                $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+                $name = ($user->first_name) ?  $user->first_name . ' ' . $user->last_name : $user->user_email ;
+
+                $is_manager = (in_array('manager', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                $is_author = (in_array('author', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+
+                $departement = get_field('departments', $company[0]->ID);
+                $member['ID'] = $user->ID;
+                $member['role'] = $user->roles[0];
+                $member['name'] = $name;
+                $member['image'] = $image;
+                $member['manager'] = $is_manager;
+                $member['teacher'] = $is_author;
+                $member['departement'] = $departement[0]['name'];
+
+                array_push($members, $member);
+            }
+       }
+    }
+    $response = new WP_REST_Response(
+        array(
+            'Selecteer_je_experts'=>$members
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+/**
+ * @param $data
+ * @return WP_REST_Response
+ */
+function people_managed($data)
+{
+    $users = get_users();
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $company_connected_id = $company[0]->ID;
+    $people_to_manage = array();
+    $people_managed =  array();
+    $id_people_managed = get_field('managed', 'user_'.$user_connected);
+
+    if (!empty($id_people_managed))
+        foreach ($id_people_managed as $id_person) {
+            if ($id_person == $user_connected)
+                continue;
+            $image = get_field('profile_img',  'user_' . $id_person) ? : get_stylesheet_directory_uri() . '/img/user.png';
+            $person = get_user_by('ID', $id_person);
+            if (!$person->data)
+                continue;
+            $person = $person->data;
+            $person->image = $image;
+            unset($person->user_pass);
+            $people_managed[] = $person;
+        }
+
+    foreach($users as $user){
+        $person_to_manage = array();
+        //$person_managed = array();
+        if(in_array('administrator', $user->roles) || in_array('hr', $user->roles) || in_array('manager', $user->roles))
+            continue;
+        if(!empty($id_people_managed))
+            if(in_array($user->ID, $id_people_managed))
+                continue;
+
+        $company = get_field('company',  'user_' . $user->ID);
+        if (!empty($company) && $user_connected != $user->ID ) {
+            if ($company[0]->ID == $company_connected_id) {
+                $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+                $name = ($user->first_name) ?  $user->first_name . ' ' . $user->last_name : $user->user_email ;
+
+                $person_to_manage['ID'] = $user->ID;
+                $person_to_manage['name'] = $name;
+                $person_to_manage['email'] = $user->user_email;
+
+                array_push($people_to_manage, $person_to_manage);
+                //if(!empty($person_managed))
+                  //  array_push($people_managed, $person_to_manage);
+            }
+        }
+    }
+
+    $response = new WP_REST_Response(
+        array(
+            'Select_the_people_you_want_to_manage'=>$people_to_manage,
+            'people_you_manage'=>$people_managed
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+/**
+ * @param WP_REST_Request $data
+ * @return WP_REST_Response 'people_id' this field must an array of ID people to manage
+ */
+function add_people_to_manage(WP_REST_Request $data)
+{
+    $required_parameters = ['people_id'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $user_connected = intval($data['id']);
+
+    $people_id = $data['people_id'];
+    foreach ($people_id as $id_person)
+        update_field('ismanaged', $user_connected, 'user_' . $id_person);
+
+    $people_managed = get_field('managed', 'user_'.$user_connected) ? : array();
+    $people_managed = array_merge($people_managed,$people_id);
+    $isInsert = update_field('managed', $people_managed, 'user_'.$user_connected);
+    if (!$isInsert)
+        return new WP_REST_Response(array('message' => 'Error while adding people to manage'), 401);
+
+    $response = new WP_REST_Response(
+        array(
+            'message'=>'People added successfully to manage !',
+            'people_managed'=>$people_managed,
+        ));
+    $response->set_status(200);
+    return $response;
+}
