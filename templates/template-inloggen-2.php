@@ -1,6 +1,6 @@
 <?php /** Template Name: Inloggen 2 */ ?>
 
-<?php wp_head(); ?>
+<?php get_header(); ?>
 <meta name="description" content="Fluidify">
 <meta name='keywords' content="fluidify">
 <meta charset="utf-8">
@@ -49,6 +49,7 @@
                             <h2>Sign into Your Account</h2>
 
                             <?php
+                        
                             $redirect = "/dashboard/user/";
                             if(isset($_GET['login'])) {
                                 if ($_GET['login'] == 'failed')

@@ -1,7 +1,29 @@
 <?php /** Template Name: Inloggen-new */ ?>
 
+<?php get_header(); ?>
 
-<?php wp_head(); ?>
+<?php
+require_once 'checkout.php';
+
+//Stripe return callback
+if(isset($_GET['session_id'])):
+    $status_stripe = stripe_status($_GET['session_id']);
+    if(isset($status_stripe['error']))
+        $message = "<p>Something wrong through the processs payment, please try again later !</p>";
+    
+    if(isset($status_stripe['status']))
+        if($status_stripe['status'] == 'complete')
+            $message = '<section id="success" class="hidden" style="background-color:white; color:green; border-radius: 2px">
+                            <p>
+                            We appreciate your interest in our courses ! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.<br>
+                            If you have any questions, please email <a href="mailto:info@livelearn.nl" style="text-decoration:underline">info@livelearn.nl</a>.
+                            </p>
+                        </section>' . $status_stripe['register_message'];
+endif;
+
+if(!isset($message))
+    $message = (isset($_GET['message'])) ? $_GET['message'] : null;
+?>
 <meta name="description" content="Fluidify">
 <meta name='keywords' content="fluidify">
 <meta charset="utf-8">
@@ -87,6 +109,9 @@
                         </form> 
                         -->
                         <?php
+                        //echo alert message
+                        echo ($message) ?: '';
+
                         $redirect = "/dashboard/user/";
                         if(isset($_GET['login'])) {
                             if ($_GET['login'] == 'failed')
