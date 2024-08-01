@@ -111,27 +111,27 @@ $url = home_url( $wp->request );
         //Categories
         $bangerichts = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent'  => $categories[1],
+            'parent'  => $categories[2],
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ));
-
+        ) );
+    
         $functies = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categories[0],
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ));
-
+        ) );
+    
         $skills = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categories[1],
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) );
+    
+        $interesses = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categories[3],
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ));
-
-        $interesses = get_categories( array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent'  => $categories[2],
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ));
+        ) );
 
         $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
 
