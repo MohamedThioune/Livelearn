@@ -19,13 +19,13 @@ endif;
 
 //After Login/Register
 if(isset($_GET['single'])):
-    $register_instruction = "<br><small>Please register a account !</small>";
     $post = get_post($_GET['single']);
     $message = (isset($_GET['message'])) ? $_GET['message'] . $register_instruction : $register_instruction;
     if($post):
         $postID = $_GET['single'];
         $productPrice = 1;
-    else:
+        if($_GET['after'])  
+            $userID = 'null';      
     endif;
 endif;
 
@@ -78,29 +78,9 @@ $login_form = (!$userID) ? wp_login_form([
     'label_password' => 'Wat is je wachtwoord?'
 ]) : "";
 
-//Form register 
-$register_form = '
-<h4>REGISTER</h4>
-<form action="" method="POST">
-    <input type="hidden" name="postID" value="' . $postID .'" class="" id="" placeholder="">
-    <div class="form-group">
-        <label for="first_name">First name</label>
-        <input type="text" name="first_name" class="form-control" id="first_name" placeholder="">
-        <label for="last_name">Last name</label>
-        <input type="text" name="last_name" class="form-control" id="last_name" placeholder="">
-    </div>
-    <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email !">
-        <small id="emailHelp" class="form-text text-muted">We\'ll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" class="form-control" id="additional_company" placeholder="Enter your password !">
-        <input type="password" name="password" class="form-control" id="additional_company" placeholder="Confirm your password !
-    </div>
-    <button type="submit" name="stripe_register" class="btn btn-primary">Login</button>
-</form>';
+//Form register
+$redirect_register = "?single=" . $postID ."&after=1";  
+$login_form .= "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 ?>
 
 <head>
@@ -120,6 +100,7 @@ $register_form = '
             const mode = "<?php echo $mode ?>";
             const postID = "<?php echo $postID ?>";
             const userID = "<?php echo $userID ?>";
+            // alert(userID);
             const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID +  "&userID=" + userID, {
                 method: "POST",
             });
@@ -192,11 +173,10 @@ $register_form = '
                     </form>
                     <?php
                 endif;
+            else:
+                // echo '<h3>LOGIN</h3>' . $login_form;
+                echo $login_form;
             endif;
-            echo $login_form;
-            if(isset($status_connnected))
-            if($status_connnected)
-                echo $register_form;
             ?>
         </div>
    </div>

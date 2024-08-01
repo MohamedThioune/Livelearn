@@ -14,7 +14,6 @@ if(isset($_GET['session_id'])):
             $message = '<section id="success" class="hidden" style="background-color:white; color:green; border-radius: 2px">
                             <p>
                             We appreciate your interest in our courses ! A confirmation email will be sent to <span id="customer-email">' . $status_stripe['customer_email'] . '</span>.<br>
-
                             If you have any questions, please email <a href="mailto:info@livelearn.nl" style="text-decoration:underline">info@livelearn.nl</a>.
                             </p>
                         </section><br><br>';

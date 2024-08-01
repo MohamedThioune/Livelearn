@@ -31,7 +31,7 @@ function create_session($data){
 }
 
 function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
-    $YOUR_DOMAIN = get_site_url() . '/dashboard/user/activity/';
+    $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ?  get_site_url() . '/inloggen' : get_site_url() . '/dashboard/user/activity';
     $PRICE_ID = ($price_id) ?: null;
 
     //Get post information
@@ -188,6 +188,33 @@ function stripe_status($data){
     if($information['data'])
         $session = $information['data'];
 
+    $register_message = '';
+    if(!isset($session->metadata['userID']) || $session->metadata['userID'] == "null"):
+        //Check if email match record on database 
+        /** Instructions here ! */
+
+        //Register this user
+        $password = 'L1vele@rn2024';
+        $userdata = array(
+            'user_pass' => $password,
+            'user_login' => $session->customer_details['email'],
+            'user_email' => $session->customer_details['email'],
+            'user_url' => 'http://livelearn.nl/',
+            'display_name' => $session->customer_details['name'],
+            'first_name' => $session->customer_details['name'],
+            'last_name' => "",
+            'role' => 'subscriber'
+        );
+
+        $userID = wp_insert_user($userdata);
+        if (is_wp_error($userID)):
+            $register_message = $userID->get_error_message();
+        else:
+            $session->metadata['userID'] = $userID;
+            $register_message = "Your account has been registered successfully with : <br> email : " . $session->customer_details['email'] . " temporary password : " . $password;
+        endif;
+    endif;
+
     //case : session status
     try {
         $success = "complete";
@@ -208,7 +235,7 @@ function stripe_status($data){
         if(!$order_stripe)
             echo $somethin_wrong;
 
-        $return_session = ['status' => $session->status, 'customer_email' => $session->customer_details['email']];
+        $return_session = ['status' => $session->status, 'customer_email' => $session->customer_details['email'], 'register_message' => $register_message];
         return $return_session;
     } catch (Error $e) {
         $return_session = ['error' => $e->getMessage()];
