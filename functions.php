@@ -2118,6 +2118,18 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'company_statistic'
     ));
+    register_rest_route ('custom/v1', '/statistic/company/(?P<ID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'statistic_company'
+    ));
+    register_rest_route ('custom/v1', '/statistic/individual/(?P<ID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'statistic_individual'
+    ));
+    register_rest_route ('custom/v1', '/statistic/team/(?P<ID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'statistic_team'
+    ));
     register_rest_route ('custom/v1', '/employes/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'get_emploees'
