@@ -1587,6 +1587,18 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getUserInternalCourses',
     ));
 
+    register_rest_route('custom/v2', '/user/intern/courses', array(
+        'methods' => 'GET',
+        'callback' => 'optimizeFetchInternalCourses',
+    ));
+
+    register_rest_route('custom/v2', '/user/intern/courses', array(
+        'methods' => 'POST',
+        'callback' => 'createInternalCourses',
+    ));
+
+    
+
     register_rest_route('custom/v2', '/user/statistics/subtopic/update', array(
         'methods' => 'POST',
         'callback' => 'updateUserSubtopicsStatistics',
