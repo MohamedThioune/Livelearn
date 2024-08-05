@@ -3907,24 +3907,137 @@ endif;
    {
       global $wpdb;
 
+    $current_user_id = $GLOBALS['user_id'] ?? 0;
+    if ($current_user_id == 0)
+    {
+      $response = new WP_REST_Response("You have to login with good credentials !"); 
+      $response->set_status(400);
+      return $response;
+    }
+
+    
+
+    // Préparer la réponse
+    $response = array(
+      'all' => array(),
+      'department' => array(),
+      'individual' => array(),
+  );
+
+    $current_user = get_user_by('id', (int) $current_user_id);
+    $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+
+    
+
+    $users = get_users();
+    $teamates = array();
+    foreach ($users as $key => $user)
+    {
+      $user_company =  get_field('company', 'user_' . (int) $user->ID)[0];
+      if ($user_company->ID == $current_user_company->ID)
+        array_push($teamates,$user->ID);
+    }
+    array_push($teamates,$current_user_id);
+    $query =
+      array(
+        'post_type' => array('post','course'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        'author__in' => $teamates
+      );
+    $courses = get_posts($query);
+    
+    foreach ($courses as $key => $course) {
+      $course->visibility = get_field('visibility',$course->ID) ?? [];
+      if ($course->visibility != [])
+      {
+          $course->visibility = get_field('visibility',$course->ID) ?? [];
+          $author = get_user_by( 'ID', $course -> post_author  );
+          $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+          if ($course->visibility != []) 
+            if ($author_company != $current_user_company)
+              continue;
+            $author = get_user_by( 'ID', $course -> post_author  );
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $course-> author = new Expert ($author , $author_img);
+            $course->longDescription = get_field('long_description',$course->ID);
+            $course->shortDescription = get_field('short_description',$course->ID);
+            $course->courseType = get_field('course_type',$course->ID);
+            //Image - article
+            $image = get_field('preview', $course->ID)['url'];
+            if(!$image){
+                $image = get_the_post_thumbnail_url($course->ID);
+                if(!$image)
+                    $image = get_field('url_image_xml', $course->ID);
+                        if(!$image)
+                            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+            }
+            $course->pathImage = $image;
+            $course->price = get_field('price',$course->ID);
+            $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+            if (strtolower($course->courseType) == 'podcast')
+              {
+                $podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+                if (!empty($podcasts))
+                    $course->podcasts = $podcasts;
+                  else {
+                    $podcasts = get_field('podcasts_index',$course->ID) ? get_field('podcasts_index',$course->ID) : [];
+                    if (!empty($podcasts))
+                    {
+                      $course->podcasts = array();
+                      foreach ($podcasts as $key => $podcast) 
+                      { 
+                        $item= array(
+                          "course_podcast_title"=>$podcast['podcast_title'], 
+                          "course_podcast_intro"=>$podcast['podcast_description'],
+                          "course_podcast_url" => $podcast['podcast_url'],
+                          "course_podcast_image" => $podcast['podcast_image'],
+                        );
+                        array_push ($course->podcasts,($item));
+                      }
+                    }
+                }
+              }
+            $course->podcasts = $course->podcasts ?? [];
+            $course->visibility = get_field('visibility',$course->ID);
+            $course->connectedProduct = get_field('connected_product',$course->ID);
+            $tags = get_field('categories',$course->ID) ?? [];
+            $course->tags= array();
+            if($tags)
+              if (!empty($tags))
+                foreach ($tags as $key => $category) 
+                  if(isset($category['value'])){
+                    $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                    array_push($course->tags,$tag);
+                  }
+                 
+            array_push($response["all"]  ,new Course($course));
+            
+      }
+     
+    }
+    
+    
       // Get params
-      $company_id = $request->get_param('company_id');
-      $departement_value = $request->get_param('departement');
-      $individual_value = $request->get_param('individual');
+      $company_id = $current_user_company->ID;
+      $departement_value = get_field('department', 'user_' . (int) $current_user_id);
+      $individual_value = $current_user->ID;
+      
 
       
       $query_all = $wpdb->prepare(
-          "SELECT * FROM wp_internal_courses WHERE company_id = %d AND type = 'all'",
+          "SELECT * FROM wpe7_internal_courses WHERE company_id = %d AND type = 'all'",
           $company_id
       );
 
       $query_departement = $wpdb->prepare(
-          "SELECT * FROM wp_internal_courses WHERE type = 'department' AND data_value = %s",
+          "SELECT * FROM wpe7_internal_courses WHERE type = 'department' AND data_value = %s",
           $departement_value
       );
 
       $query_individual = $wpdb->prepare(
-          "SELECT * FROM wp_internal_courses WHERE type = 'individual' AND data_value = %s",
+          "SELECT * FROM wpe7_internal_courses WHERE type = 'individual' AND data_value = %s",
           $individual_value
       );
 
@@ -3933,12 +4046,9 @@ endif;
       $results_departement = $wpdb->get_results($query_departement);
       $results_individual = $wpdb->get_results($query_individual);
 
-      // Préparer la réponse
-      $response = array(
-          'all' => array(),
-          'department' => array(),
-          'individual' => array(),
-      );
+
+      
+      
 
       $results_all_ids = array();
 
@@ -3960,8 +4070,7 @@ endif;
     foreach ($courses as $key => $course) 
     {
       $course->visibility = get_field('visibility',$course->ID) ?? [];
-      if ($course->visibility != [])
-      {
+      
           $course->visibility = get_field('visibility',$course->ID) ?? [];
           $author = get_user_by( 'ID', $course -> post_author  );
           $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
@@ -4022,7 +4131,7 @@ endif;
                     array_push($course->tags,$tag);
                   }
             array_push($response["all"] ,new Course($course));
-      }
+      
     }
 
 
@@ -4042,9 +4151,7 @@ endif;
     // Get internal courses with "departemnt" type from db
     foreach ($courses as $key => $course) 
     {
-      $course->visibility = get_field('visibility',$course->ID) ?? [];
-      if ($course->visibility != [])
-      {
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
           $course->visibility = get_field('visibility',$course->ID) ?? [];
           $author = get_user_by( 'ID', $course -> post_author  );
           $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
@@ -4105,13 +4212,13 @@ endif;
                     array_push($course->tags,$tag);
                   }
             array_push($response["department"] ,new Course($course));
-      }
+      
     }
       
     $results_individual_ids = array();
 
       foreach ($results_individual as $row) {
-        array_push($ $results_individual_ids,$row->course_id);
+        array_push($results_individual_ids,$row->course_id);
       }
 
       $courses = get_posts(
@@ -4124,9 +4231,7 @@ endif;
     // Get internal courses with "individual" type from db
     foreach ($courses as $key => $course) 
     {
-      $course->visibility = get_field('visibility',$course->ID) ?? [];
-      if ($course->visibility != [])
-      {
+          $course->visibility = get_field('visibility',$course->ID) ?? [];
           $course->visibility = get_field('visibility',$course->ID) ?? [];
           $author = get_user_by( 'ID', $course -> post_author  );
           $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
@@ -4187,7 +4292,7 @@ endif;
                     array_push($course->tags,$tag);
                   }
             array_push($response["individual"] ,new Course($course));
-      }
+      
     }  
 
     return rest_ensure_response($response);
@@ -4214,7 +4319,7 @@ endif;
     $errors = [];
 
     foreach ($course_ids as $course_id) {
-        $result = $wpdb->insert('wp_internal_courses', array(
+        $result = $wpdb->insert('wpe7_internal_courses', array(
             'company_id' => $company_id,
             'course_id' => $course_id,
             'type' => $type,
@@ -4242,7 +4347,7 @@ endif;
     return rest_ensure_response(
       array(
         'success' => true,
-        'message' => 'Courses créés avec succès.',
+        'message' => 'Successfully added',
         'inserted_courses' => $inserted_courses,
     ));
    }
