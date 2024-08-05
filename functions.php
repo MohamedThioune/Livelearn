@@ -2118,4 +2118,52 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'company_statistic'
     ));
+    register_rest_route ('custom/v1', '/statistic/company/(?P<ID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'statistic_company'
+    ));
+    register_rest_route ('custom/v1', '/statistic/individual/(?P<ID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'statistic_individual'
+    ));
+    register_rest_route ('custom/v1', '/statistic/team/(?P<ID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'statistic_team'
+    ));
+    register_rest_route ('custom/v1', '/employes/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'get_emploees'
+    ));
+    register_rest_route ('custom/v1', '/departements/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'get_departements'
+    ));
+    register_rest_route ('custom/v1', '/addDepartement/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'add_departement'
+    ));
+    register_rest_route ('custom/v1', '/removeDepartement/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'remove_departement'
+    ));
+    register_rest_route ('custom/v1', '/SelecteerExperts/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'Selecteer_experts'
+    ));
+    register_rest_route ('custom/v1', '/peopleManaged/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'people_managed'
+    ));
+    register_rest_route ('custom/v1', '/addPeopleToManaged/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'add_people_to_manage'
+    ));
+    register_rest_route ('custom/v1', '/addOnePersone/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addOnePeople'
+    ));
+    register_rest_route ('custom/v1', '/addManyPersone/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addManyPeople'
+    ));
 });

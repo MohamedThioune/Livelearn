@@ -3,7 +3,10 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
-
+<?php
+if (isset($_GET['email']) && isset($_GET['firstName']) && isset($_GET['lastName']) && isset($_GET['company']) && isset($_GET['size']) && isset($_GET['phone']))
+    var_dump($_GET);
+?>
 
 <div class="VoorOrganisaties">
     <div class="container">
@@ -24,10 +27,69 @@
                 <div class="blockForm2">
                     <p><b>Activeer zakelijke Leeromgeving</b> <br>het is gratis </p>
                         <?php
-                            echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
+                            //echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
                         ?>
+                    <!--
+                    <form action="" method="POST" id="new-form-register-workflow">
+                        <div class="first-step-modal">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your email address">
+                            </div>
+                            <button type="button" class="btn btn-connection text-white" id="create-account-step">Create Account</button>
+                        </div>
+
+                        <div class="second-step-modal">
+                            <div class="form-group">
+                                <label for="First-name">First name</label>
+                                <input type="text" class="form-control" id="First-name" name="firstName" placeholder="Enter your First name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last name</label>
+                                <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter your last name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company Name</label>
+                                <input type="text" class="form-control" id="company" name="company" placeholder="Enter your Company name">
+                            </div>
+                            <div class="form-group">
+                                <label for="size">Number of people</label>
+                                <input type="number" class="form-control" id="size" name="size" placeholder="Enter your phone-number">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone-number">phone number</label>
+                                <input type="text" class="form-control" id="phone-number" name="phone" placeholder="Enter your phone-number">
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button class="btn btn-switch-email d-none mb-2 text-white" type="button">Return on Email</button>
+                                <button type="submit" class="btn btn-connection text-white">Create Acccount</button>
+                            </div>
+                        </div>
+                    </form>
+                    -->
                 </div>
             </div>
+            <form action="/livelearn/voor-test-company/" method="POST" class="border-2">
+                <label for="exampleInputEmail1">Email address</label> <br>
+                <input type="email" id="exampleInputEmail1" name="email" placeholder="Enter your email address"><br>
+
+                <label for="First-name">First name</label><br>
+                <input type="text" id="First-name" name="firstName" placeholder="Enter your First name"><br>
+
+                <label for="last-name">Last name</label><br>
+                <input type="text" id="last-name" name="lasstName" placeholder="Enter your Last name"><br>
+
+                <label for="First-name">company name</label><br>
+                <input type="text" id="company" name="company" placeholder="Enter your company name"><br>
+
+                <label for="size">size company</label><br>
+                <input type="number" id="size" name="size" placeholder="Enter your number of empoyer"><br>
+
+                <label for="First-name">telephone number</label><br>
+                <input type="text" id="First-name" name="firstName" placeholder="Enter your telephone number"><br>
+
+                <button class="submit btn-round-full" id="submit">submit</button>
+            </form>
         </div>
     </div>
 </div>
@@ -219,6 +281,26 @@
         </div>
     </div>
 </div> -->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $("#create-account-step").click(function() {
+            $(".btn-switch-email").removeClass('d-none');
+            $(".first-step-modal").hide();
+            $(".second-step-modal").show();
+        });
+        $(".btn-switch-login").click(function() {
+            $(".register-block").hide();
+            $(".create-account-block").show();
+        });
+        $(".btn-switch-email").click(function() {
+            $(".btn-switch-email").addClass('d-none');
+            $(".second-step-modal").hide();
+            $(".first-step-modal").show();
+        });
+        $(".btn-Sign-Up").click(function() {
+            $(".register-block").show();
+            $(".create-account-block").hide();
+        });
+    </script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
