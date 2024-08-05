@@ -2158,4 +2158,5 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'add_people_to_manage'
     ));
+
 });
