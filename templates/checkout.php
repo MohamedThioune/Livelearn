@@ -190,28 +190,39 @@ function stripe_status($data){
 
     $register_message = '';
     if(!isset($session->metadata['userID']) || $session->metadata['userID'] == "null"):
-        //Check if email match record on database 
-        /** Instructions here ! */
-
-        //Register this user
-        $password = 'L1vele@rn2024';
-        $userdata = array(
-            'user_pass' => $password,
-            'user_login' => $session->customer_details['email'],
-            'user_email' => $session->customer_details['email'],
-            'user_url' => 'http://livelearn.nl/',
-            'display_name' => $session->customer_details['name'],
-            'first_name' => $session->customer_details['name'],
-            'last_name' => "",
-            'role' => 'subscriber'
+        //Check if email match record on our database 
+        $args = array(
+            'search'  => $session->customer_details['email'],
+            'search_columns' => array( 'user_login', 'user_email' ),
         );
+        $users_search = get_users($args);
+        $userSearch = isset($users_search[0]) ? $users_search[0] : null;
+        $userID = isset($userSearch->ID) ? $userSearch->ID : null;
 
-        $userID = wp_insert_user($userdata);
-        if (is_wp_error($userID)):
-            $register_message = $userID->get_error_message();
-        else:
+        //Use existing email
+        if($userID) :
             $session->metadata['userID'] = $userID;
-            $register_message = "Your account has been registered successfully with : <br> email : " . $session->customer_details['email'] . " temporary password : " . $password;
+            $register_message = "We find on our records a email already corresponding to email : " . $session->customer_details['email'] . "<br>We have therefore taken the liberty of assigning this command to this user.";
+        else : 
+        //Register this user
+            $password = 'L1vele@rn2024';
+            $userdata = array(
+                'user_pass' => $password,
+                'user_login' => $session->customer_details['email'],
+                'user_email' => $session->customer_details['email'],
+                'user_url' => 'http://livelearn.nl/',
+                'display_name' => $session->customer_details['name'],
+                'first_name' => $session->customer_details['name'],
+                'last_name' => "",
+                'role' => 'subscriber'
+            );
+            $userID = wp_insert_user($userdata);
+            if (is_wp_error($userID)):
+                $register_message = $userID->get_error_message();
+            else:
+                $session->metadata['userID'] = $userID;
+                $register_message = "Your account has been registered successfully with : <br> email : " . $session->customer_details['email'] . " temporary password : " . $password;
+            endif;
         endif;
     endif;
 
@@ -255,7 +266,7 @@ $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
 if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
     echo($session_stripe_secret);
-    // var_dump($session_stripe_secret);
+    //var_dump($session_stripe_secret);
 endif;
 
 //Create order 
@@ -275,10 +286,51 @@ if(isset($_POST['order_free'])):
         'additional_information' => $_POST['additional_information'],
     );
 
-    var_dump($data_order);
+    //Check existing user information "MAKE IT AS A FUNCTION !"
+    $register_message = 0;
+    if($_POST['authID'] == "null"):
+        //Check if email match record on our database 
+        $args = array(
+            'search'  => $_POST['additional_email'],
+            'search_columns' => array( 'user_login', 'user_email' ),
+        );
+        $users_search = get_users($args);
+        $userSearch = isset($users_search[0]) ? $users_search[0] : null;
+        $userID = isset($userSearch->ID) ? $userSearch->ID : null;
+
+        //Use existing email
+        if($userID) :
+            $data_order['auth_id'] = $userID;
+            $data_order['owner_id'] = $userID;
+            $register_message = "We find on our records a email already corresponding to email : " . $_POST['additional_email'] . "<br>We have therefore taken the liberty of assigning this command to this user.";
+        else : 
+        //Register this user
+            $password = 'L1vele@rn2024';
+            $userdata = array(
+                'user_pass' => $password,
+                'user_login' => $_POST['additional_email'],
+                'user_email' => $_POST['additional_email'],
+                'user_url' => 'http://livelearn.nl/',
+                'display_name' => $_POST['additional_name'],
+                'first_name' => $_POST['additional_name'],
+                'last_name' => "",
+                'role' => 'subscriber'
+            );
+            $userID = wp_insert_user($userdata);
+            if (is_wp_error($userID)):
+                $register_message = $userID->get_error_message();
+            else:
+                $data_order['auth_id'] = $userID;
+                $data_order['owner_id'] = $userID;    
+                $register_message = "Your account has been registered successfully with : <br> email : " . $_POST['additional_email'] . " temporary password : " . $password;
+            endif;
+        endif;
+    endif;
+
     //create a order information
     $order_stripe = create_order($data_order);
     $success = ($order_stripe) ? "Information filled up successfully !" : "Something went wrong !";
+    $final_message  = ($register_message) ? '/inloggen/?message=' . $register_message : '/dashboard/user/activity/?message=' . $success;
 
-    header('Location: /dashboard/user/activity/?message=' . $success);
+    header('Location: ' . $final_message);
 endif;
