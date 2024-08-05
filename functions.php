@@ -2158,5 +2158,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'add_people_to_manage'
     ));
-
+    register_rest_route ('custom/v1', '/addOnePersone/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addOnePeople'
+    ));
+    register_rest_route ('custom/v1', '/addManyPersone/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addManyPeople'
+    ));
 });
