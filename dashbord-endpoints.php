@@ -2415,10 +2415,12 @@ function addOnePeople(WP_REST_Request $data)
             'role' => 'subscriber'
         );
         $user_id = wp_insert_user(wp_slash($userdata));
-        if(is_wp_error($user_id)){
-            $danger = $user_id->get_error_message();
-            return new WP_REST_Response(array('message' => $danger), 401);
-        }
+        if(is_wp_error($user_id))
+            return new WP_REST_Response(
+                array(
+                    'message' => "An error occurred while creating the emails, please ensure that all emails do not already exist."
+                ), 401);
+
 
         $guest = get_user_by('ID', $user_connected);
         $company = get_field('company',  'user_' . $guest->ID);
