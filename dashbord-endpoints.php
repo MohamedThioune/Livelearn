@@ -547,7 +547,7 @@ function get_number_for_month($month, $plateform='web'){
 /**
  * @return string
  */
-function RandomString(){
+function RandomStringBis(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randstring = '';
     for ($i = 0; $i < 10; $i++) {
@@ -2401,7 +2401,7 @@ function addOnePeople(WP_REST_Request $data)
     $first_name = $data['first_name'];
     $last_name = $data['last_name'];
 
-        $login = RandomString();
+        $login = RandomStringBis();
         $password = "Livelearn".date('Y');
 
         $userdata = array(
@@ -2449,9 +2449,9 @@ function addManyPeople(WP_REST_Request $data)
 
     if(!empty($emails))
         foreach($emails as $email){
-            $login = RandomString();
-            $first_name = RandomString();
-            $last_name = RandomString();
+            $login = RandomStringBis();
+            $first_name = RandomStringBis();
+            $last_name = RandomStringBis();
 
             $password = "Livelearn".date('Y');
 
