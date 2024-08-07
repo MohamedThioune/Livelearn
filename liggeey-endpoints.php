@@ -653,7 +653,7 @@ function candidateDetail(WP_REST_Request $request){
   if($userID):
     $saves = get_field('save_liggeey', 'user_' . $userID);
     foreach($saves as $save)
-      if($save['type'] == 'candidate' && $save['ID'] == $param_user_id)
+      if($save['type'] == 'candidate' && $save['id'] == $param_user_id)
         $favorited = true;
   endif;
   $sample->favorited = $favorited;
@@ -884,7 +884,7 @@ function jobDetail(WP_REST_Request $request){
   if($userID):
     $saves = get_field('save_liggeey', 'user_' . $userID);
     foreach($saves as $save)
-      if($save['type'] == 'job' && $save['ID'] == $job->ID)
+      if($save['type'] == 'job' && $save['id'] == $job->ID)
         $favorited = true;
   endif;
 
