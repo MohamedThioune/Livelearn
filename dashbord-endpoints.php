@@ -1,5 +1,7 @@
 <?php
 global $wpdb;
+require('templates/mail-notification-invitation.php');
+
 function expertsToFollow()
 {
     $experts = get_users(
@@ -12,11 +14,15 @@ function expertsToFollow()
     foreach ($experts as $expert) {
         $expert_data = array();
         $roles = $expert->roles;
+        $image = get_field('profile_img',  'user_' . $expert->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+
         $expert_data['id'] = $expert->ID;
         $expert_data['email'] = $expert->user_email;
         $expert_data['name'] = $expert->display_name;
-        $expert_data['image'] = get_field('profile_img',  'user_' . $expert->ID) ?: get_field('profile_img_api',  'user_' . $expert->ID);
+        $expert_data['image'] = $image;
         $expert_data['imageExpert'] = get_avatar_url($expert->ID);
+        $expert_data['role'] = $roles[0];
+
         $all_experts[] = $expert_data;
     }
 
@@ -538,6 +544,541 @@ function get_number_for_month($month, $plateform='web'){
     return intval($number_statistics);
 }
 
+/**
+ * @return string
+ */
+function RandomStringBis(){
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;
+    }
+    return $randstring;
+}
+function sendEmail($id_user, $email, $name)
+{
+    $guest = get_user_by('ID', $id_user);
+    $name_guest = (($guest->first_name) ?: $guest->display_name);
+    $first_name = $name;
+    $company = get_field('company',  'user_' . $id_user);
+    $mail_invitation_body =
+        '<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <title>' . $first_name  . ', je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style type="text/css">
+    #outlook a {
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+  </style><!--<![endif]-->
+  <style type="text/css">
+    @media only screen and (min-width:480px) {
+      .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+    }
+  </style>
+  <style media="screen and (min-width:480px)">
+    .moz-text-html .mj-column-per-100 {
+      width: 100% !important;
+      max-width: 100%;
+    }
+  </style>
+  <style type="text/css">
+    [owa] .mj-column-per-100 {
+      width: 100% !important;
+      max-width: 100%;
+    }
+  </style>
+  <style type="text/css">
+    @media only screen and (max-width:480px) {
+      table.mj-full-width-mobile {
+        width: 100% !important;
+      }
+
+      td.mj-full-width-mobile {
+        width: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body style="word-spacing:normal;background-color:#e0eff4;">
+  <div style="background-color:#e0eff4;">
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p class="text-build-content"
+                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                            data-testid="Y0h44Pmw76d">Uitnodiging voor een bedrijfs leeromgeving</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" vertical-align="top"
+                        style="background:#023356;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+                        <p style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:20px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="border-collapse:collapse;border-spacing:0px;">
+                          <tbody>
+                            <tr>
+                              <td style="width:50px;"><a href="http://app.livelearn.nl" target="_blank"><img alt=""
+                                    height="auto" src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/lurx1/l0xh.png"
+                                    style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                    width="50"></a></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <h1 class="text-build-content"
+                            style="text-align:center;; margin-top: 10px; font-weight: normal;"
+                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>Uitnodiging</b></span></h1>
+                          <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
+                            data-testid="RJMLrMvA0Rh">Je <span style="font-size:14px;">krijgt toegang tot alle content
+                              vanuit '. $company[0]->post_title .'</span></p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                            style="margin: 10px 0; margin-top: 10px;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
+                              </b>,</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je bent
+                              uitgenodigd om onderdeel te worden van ' . $company[0]->post_title . '. Vanaf nu kan je gebruik maken
+                              van alle content die er beschikbaar gesteld wordt vanuit het
+                              bedrijf.&nbsp;</span><br><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Uiteraard houd je
+                              ook gewoon toegang tot alle content die vanuit LiveLearn of partners wordt
+                              aangeboden.</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Jouw
+                                gegevens</b></i></span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Gebruikersnaam:
+                              ' . $email . '</span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Tijdelijk
+                              wachtwoord: Livelearn2023</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Uitnodiging</b></i></span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Door: ' . $name_guest . '
+                              </span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Bedrijf:&nbsp;' . $company[0]->post_title. '
+                              </span><br><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Ben je niet
+                              bekend met dit bedrijf of de persoon? Neem dan </span><a class="link-build-content"
+                              style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons
+                              op.</span><br>&nbsp;</p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Succes
+                              namens,</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Het LiveLearn
+                              team</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                            style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" vertical-align="middle"
+                        style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="border-collapse:separate;line-height:100%;">
+                          <tbody>
+                            <tr>
+                              <td align="center" bgcolor="#023356" role="presentation"
+                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
+                                valign="middle"><a href="https://livelearn.nl/inloggen/"
+                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
+                                  target="_blank"><span
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" vertical-align="top"
+                        style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                        <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td><![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="float:none;display:inline-table;">
+                          <tbody>
+                            <tr>
+                              <td style="padding:4px;vertical-align:middle;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                  style="background:#3B5998;border-radius:3px;width:20px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                          height="20"
+                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"
+                                          style="border-radius:3px;display:block;" width="20"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table><!--[if mso | IE]></td><td><![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="float:none;display:inline-table;">
+                          <tbody>
+                            <tr>
+                              <td style="padding:4px;vertical-align:middle;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                  style="background:#1DA1F2;border-radius:3px;width:20px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                          height="20"
+                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/twitter.png"
+                                          style="border-radius:3px;display:block;" width="20"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table><!--[if mso | IE]></td><td><![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="float:none;display:inline-table;">
+                          <tbody>
+                            <tr>
+                              <td style="padding:4px;vertical-align:middle;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                  style="background:#DD4B39;border-radius:3px;width:20px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                          height="20"
+                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/google-plus.png"
+                                          style="border-radius:3px;display:block;" width="20"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table><!--[if mso | IE]></td><td><![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="float:none;display:inline-table;">
+                          <tbody>
+                            <tr>
+                              <td style="padding:4px;vertical-align:middle;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                  style="background:#BD081C;border-radius:3px;width:20px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                          height="20"
+                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/pinterest.png"
+                                          style="border-radius:3px;display:block;" width="20"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table><!--[if mso | IE]></td><td><![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="float:none;display:inline-table;">
+                          <tbody>
+                            <tr>
+                              <td style="padding:4px;vertical-align:middle;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                  style="background:#0077B5;border-radius:3px;width:20px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                          height="20"
+                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/linkedin.png"
+                                          style="border-radius:3px;display:block;" width="20"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table><!--[if mso | IE]></td><td><![endif]-->
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="float:none;display:inline-table;">
+                          <tbody>
+                            <tr>
+                              <td style="padding:4px;vertical-align:middle;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                  style="background:#405DE6;border-radius:3px;width:20px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                          height="20"
+                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png"
+                                          style="border-radius:3px;display:block;" width="20"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table><!--[if mso | IE]></td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p class="text-build-content"
+                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                            data-testid="p1wGkfjeZKT7"><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
+                              sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
+                              messages from this series, </span><a class="link-build-content"
+                              style="color:inherit;; text-decoration: none;" target="_blank"
+                              href="[[WORKFLOW_EXIT_LINK_EN]]"><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
+                                unsubscribe here</span></a><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">.</span></p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span
+                              style="font-size:16px;text-align:center;color:#55575d;font-family:Arial;line-height:22px;">
+                              NL</span></p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!--[if mso | IE]></td></tr></table><![endif]-->
+  </div>
+</body>
+
+</html>';
+    $subject = 'Your LiveLearn registration has arrived! ✨';
+    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+    return wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
+}
+
 function company_statistic($data)
 {
     global $wpdb;
@@ -789,9 +1330,6 @@ function company_statistic($data)
                 'other_members'=>$members
             ),
             'company' => array(
-                //'total_members'=>$members,
-                //'assessment_validated'=>$assessment_validated,
-                //'enrolled_courses'=>$enrolled_courses,
                     'progress_courses'=>array(
                         'user_engagement'=>array(
                             'active'=>$members_active,
@@ -824,3 +1362,1127 @@ function company_statistic($data)
     return $response;
 }
 
+function statistic_company($data)
+{
+    global $wpdb;
+    $current_user = intval($data['ID']);
+    $company = get_field('company',  'user_' . $current_user);
+    $user_connected = get_user_by('ID', $current_user)->data;
+    $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
+    $user_connected->user_company = $company[0];
+    unset($user_connected->user_pass);
+    $progress_courses = array(
+        'not_started' => 100,
+        'in_progress' => 40,
+        'done' => 30,
+    );
+    $members_active = 5;
+    $members_inactive = 5;
+
+
+    if (!empty($company))
+        $company_connected = $company[0]->ID;
+    $users = get_users();
+    $assessment_validated = array();
+    $members = [];
+    $new_members = [];
+    $date = new DateTime();
+    $date_this_month = date('Y-m-d');
+    $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    foreach ($users as $user ) {
+        $company = get_field('company',  'user_' . $user->ID);
+        if(!empty($company))
+            if($company[0]->ID == $company_connected) {
+                $numbers[] = $user->ID;
+                $members[] = $user->data;
+                if($user->user_registered < date('Y-m-d', strtotime('-1 month')))
+                    $new_members[] = $user;
+                    // Assessment
+                    $validated = get_user_meta($user->ID, 'assessment_validated');
+                foreach($validated as $assessment)
+                    if(!in_array($assessment, $assessment_validated))
+                        array_push($assessment_validated, $assessment);
+            }
+        $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+        $if_user_actif = count($wpdb->get_results($sql));
+        if ($if_user_actif) {
+            $status = 'Active';
+            $members_active = $members_active + 1;
+        }
+        else
+            $members_inactive = $members_inactive + 1;
+    }
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'author'=>$current_user,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $total_courses = count(get_posts($args));
+    /*****************************************************/
+    //Topic views
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
+    $topic_views = $wpdb->get_results($sql);
+
+    foreach ($topic_views as $topic){
+        $subtopic = array();
+        $subtopic['id'] = $topic->data_id;
+        $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
+        $subtopic['occurence'] = $topic->occurence;
+        $image_topic = get_field('image', 'category_'. $topic->data_id);
+        $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
+        $most_topics_view[] = $subtopic;
+    }
+    /* Assessment */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments = get_posts($args);
+    $count_assessments = count($assessments);
+    $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
+    $assessment_not_started = 0;
+    $assessment_completed = 0;
+    if($count_assessments > 0){
+        $not_started_assessment = abs($count_assessments - $assessment_validated);
+        $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
+        $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
+    }
+    /* assessment doing by this user */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'author' => $user_connected->ID,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments_created = get_posts($args);
+    $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
+
+    /* Mandatories */
+    $args = array(
+        'post_type' => 'mandatory',
+        'post_status' => 'publish',
+        'author__in' => $user_connected->ID,
+        'posts_per_page'         => -1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false
+    );
+    $mandatories = get_posts($args);
+    $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
+
+    /* Members course */
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'author__in' => $numbers,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $member_courses = get_posts($args);
+    $member_courses_id = array_column($member_courses, 'ID');
+
+    $enrolled_all_courses = array();
+    $args = array(
+        'post_status' => array('wc-processing', 'wc-completed'),
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'limit' => -1,
+    );
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
+    $course_finished = array();
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            //Get woo orders from user
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+
+            $prijs = get_field('price', $course_id);
+            $budget_spent += $prijs;
+            if(in_array($course_id, $member_courses_id)){
+                array_push($enrolled_all_courses, $course_id);
+                if(!in_array($course_id, $enrolled)){
+                    array_push($enrolled, $course_id);
+                    array_push($enrolled_courses, $course);
+                    //Get progresssion this course
+                    $args = array(
+                        'post_type' => 'progression',
+                        'title' => $course->post_name,
+                        'post_status' => 'publish',
+                        'posts_per_page'         => -1,
+                        'no_found_rows'          => true,
+                        'ignore_sticky_posts'    => true,
+                        'update_post_term_cache' => false,
+                        'update_post_meta_cache' => false
+                    );
+                    $progressions = get_posts($args);
+                    if(!empty($progressions))
+                        foreach ($progressions as $progression) {
+                            $status = "in_progress";
+                            $progression_id = $progression->ID;
+                            //Finish read
+                            $is_finish = get_field('state_actual', $progression_id);
+                            if($is_finish)
+                                $status = "done";
+
+                            switch ($status) {
+
+                                case 'in_progress':
+                                    $progress_courses['in_progress'] += 1;
+                                    break;
+
+                                case 'done':
+                                    $progress_courses['done'] += 1;
+                                    //course finished
+                                    array_push($course_finished, $course->ID);
+                                    break;
+                            }
+                        }
+                }
+            }
+        }
+    }
+    $count_enrolled_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
+    $progress_courses['not_started'] = abs($count_enrolled_courses - ($progress_courses['in_progress'] + $progress_courses['done']));
+    if($count_enrolled_courses > 0){
+        $progress_courses['not_started'] = intval(($progress_courses['not_started'] / $count_enrolled_courses) * 100);
+        $progress_courses['in_progress'] = intval(($progress_courses['in_progress'] / $count_enrolled_courses) * 100);
+        $progress_courses['done'] = intval(($progress_courses['done'] / $count_enrolled_courses) * 100);
+    }
+    else
+        $progress_courses['not_started'] = 100;
+
+    // Most popular
+    $most_popular = array_count_values($enrolled_all_courses);
+    arsort($most_popular);
+    $args = array(
+        'post_type' => 'course',
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'include' => $most_popular,
+        'author'=>$current_user
+    );
+    $most_popular_course = get_posts($args);
+    $popular_course = array();
+    foreach ($most_popular_course as $course){
+        $course->in_progress = $progress_courses['in_progress'];
+        $course->done = $progress_courses['done'];
+        $course->not_started = $progress_courses['not_started'];
+        $course->instructor = get_user_by('ID', $course->post_author)->data->display_name ? : get_user_by('ID', $course->post_author)->data->user_email;
+        $course->price = get_field('price',$course->ID) ? : 'Gratis';
+        $popular_course[] = $course;
+    }
+    $desktop_vs_mobile = array(
+        'desktop' => array(
+            'Jan'=>get_number_for_month('Jan'),
+            'Feb'=>get_number_for_month('Feb'),
+            'March'=>get_number_for_month('March'),
+            'Apr'=>get_number_for_month('Apr'),
+            'May'=>get_number_for_month('May'),
+            'Jun'=>get_number_for_month('Jun'),
+            'Jul'=>get_number_for_month('Jul'),
+            'Aug'=>get_number_for_month('Aug'),
+            'Sep'=>get_number_for_month('Sep'),
+            'Oct'=>get_number_for_month('Oct'),
+            'Nov'=>get_number_for_month('Nov'),
+            'Dec'=>get_number_for_month('Dec'),
+        ),
+
+        'mobile' => array(
+            'Jan'=>get_number_for_month('Jan','mobile'),
+            'Feb'=>get_number_for_month('Feb','mobile'),
+            'March'=>get_number_for_month('March','mobile'),
+            'Apr'=>get_number_for_month('Apr','mobile'),
+            'May'=>get_number_for_month('May','mobile'),
+            'Jun'=>get_number_for_month('Jun','mobile'),
+            'Jul'=>get_number_for_month('Jul','mobile'),
+            'Aug'=>get_number_for_month('Aug','mobile'),
+            'Sep'=>get_number_for_month('Sep','mobile'),
+            'Oct'=>get_number_for_month('Oct','mobile'),
+            'Nov'=>get_number_for_month('Nov','mobile'),
+            'Dec'=>get_number_for_month('Dec','mobile'),
+        ),
+    );
+    /*****************************************************/
+    /*                      ///                      */
+    $read_category = array();
+    foreach($course_finished as $course){
+        $category_default = get_field('categories', $course);
+        $category_xml = get_field('category_xml', $course);
+        if(!empty($category_default))
+            foreach($category_default as $item) {
+                if ($item) {
+                    $values = explode(',', $item['value']);
+                    $read_category = (!empty($values)) ? array_merge($read_category, $values) : $read_category;
+                } else if (!empty($category_xml))
+                    foreach ($category_xml as $item)
+                        if ($item)
+                            array_push($read_category, $item['value']);
+            }
+    }
+    $read_category = array_count_values($read_category);
+    $count_members = count($members);
+    $courses_categories = array();
+    if(!empty($read_category)):
+        $i = 0;
+    foreach ($read_category as $value => $occurence) :
+        $name_topic = (String)get_the_category_by_ID($value);
+        $pourcentage = ($count_members > $occurence) ? intval(($occurence/$count_members) * 100) : 100;
+        $courses_categories[] = array(
+            'name'=>$name_topic,
+            'pourcentage'=>$pourcentage
+        );
+        $i += 1;
+        if($i == 10)
+            break;
+    endforeach;
+    endif;
+
+    /*                      ///                      */
+    $respons = new WP_REST_Response(
+        array(
+        'user_connected'=>$user_connected,
+            'firs_tab'=>array(
+                'total_members'=>count($members),
+                'new_members'=>count($new_members),
+                'total_courses'=>$total_courses,
+            ),
+            'course_categories_topics_finished'=>$courses_categories,
+            'progress_courses'=>array(
+                'user_engagement'=>array(
+                    'active'=>$members_active,
+                    'inactive'=>$members_inactive
+                ),
+                'user_progress_the_courses'=>$progress_courses,
+                'assesment'=>array(
+                    'not_started'=>$assessment_not_started,
+                    'completed'=>$assessment_completed,
+                ),
+            ),
+         'desktop_vs_mobile'=>$desktop_vs_mobile,
+        'most_topics_view'=>$most_topics_view,
+        'popular_course'=>$popular_course,
+        ));
+    $respons->set_status(200);
+    return $respons;
+}
+
+function statistic_individual($data)
+{
+    global $wpdb;
+    $current_user = intval($data['ID']);
+    $company = get_field('company',  'user_' . $current_user);
+    $user_connected = get_user_by('ID', $current_user)->data;
+    $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
+    $user_connected->user_company = $company[0];
+    unset($user_connected->user_pass);
+    $progress_courses = array(
+        'not_started' => 0,
+        'in_progress' => 8,
+        'done' => 4,
+    );
+    $members_active = 5;
+    $members_inactive = 3;
+    $budget_spent = 0;
+    $numbers = array();
+    $most_topics_view = array();
+
+    if (!empty($company))
+        $company_connected = $company[0]->ID;
+
+    $users = get_users();
+    $assessment_validated = array();
+    $members = [];
+    $date = new DateTime();
+    $date_this_month = date('Y-m-d');
+    $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    foreach ($users as $user ) {
+        $company = get_field('company',  'user_' . $user->ID);
+        $status = 'Inactive';
+
+        $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+        $if_user_actif = count($wpdb->get_results($sql));
+        if ($if_user_actif) {
+            $status = 'Active';
+            $members_active = $members_active + 1;
+        }
+        else
+            $members_inactive = $members_inactive + 1;
+
+        if(!empty($company))
+            if($company[0]->ID == $company_connected) {
+                $departments = get_field('departments', $company[0]->ID) ? : array();
+                $numbers[] = $user->ID;
+                $user->data->status = $status;
+                if(empty($departments))
+                    $user->data->departement = 'IT';
+                else
+                    $user->data->departement = $departments[0]['name'];
+                $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
+                unset($user->data->user_pass);
+                $members[] = $user->data;
+                    $validated = get_user_meta($user->ID, 'assessment_validated');
+                foreach($validated as $assessment)
+                    if(!in_array($assessment, $assessment_validated))
+                        array_push($assessment_validated, $assessment);
+            }
+    }
+
+    /*****************************************************/
+    /* Members course */
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'author__in' => $numbers,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $member_courses = get_posts($args);
+    $member_courses_id = array_column($member_courses, 'ID');
+
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            //Get woo orders from user
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+
+            $prijs = get_field('price', $course_id);
+            $budget_spent += $prijs;
+            if(in_array($course_id, $member_courses_id)){
+                array_push($enrolled_all_courses, $course_id);
+                if(!in_array($course_id, $enrolled)){
+                    array_push($enrolled, $course_id);
+                    array_push($enrolled_courses, $course);
+                    //Get progresssion this course
+                    $args = array(
+                        'post_type' => 'progression',
+                        'title' => $course->post_name,
+                        'post_status' => 'publish',
+                        'posts_per_page'         => -1,
+                        'no_found_rows'          => true,
+                        'ignore_sticky_posts'    => true,
+                        'update_post_term_cache' => false,
+                        'update_post_meta_cache' => false
+                    );
+                    $progressions = get_posts($args);
+                    if(!empty($progressions))
+                        foreach ($progressions as $progression) {
+                            $status = "in_progress";
+                            $progression_id = $progression->ID;
+                            //Finish read
+                            $is_finish = get_field('state_actual', $progression_id);
+                            if($is_finish)
+                                $status = "done";
+
+                            switch ($status) {
+
+                                case 'in_progress':
+                                    $progress_courses['in_progress'] += 1;
+                                    break;
+
+                                case 'done':
+                                    $progress_courses['done'] += 1;
+                                    //course finished
+                                    array_push($course_finished, $course->ID);
+                                    break;
+                            }
+                        }
+                }
+            }
+        }
+    }
+    $count_enrolled_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
+    $progress_courses['not_started'] = abs($count_enrolled_courses - ($progress_courses['in_progress'] + $progress_courses['done']));
+    if($count_enrolled_courses > 0){
+        $progress_courses['not_started'] = intval(($progress_courses['not_started'] / $count_enrolled_courses) * 100);
+        $progress_courses['in_progress'] = intval(($progress_courses['in_progress'] / $count_enrolled_courses) * 100);
+        $progress_courses['done'] = intval(($progress_courses['done'] / $count_enrolled_courses) * 100);
+    }
+    else
+        $progress_courses['not_started'] = 100;
+    /* assessment doing by this user */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'author' => $current_user,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments_created = get_posts($args);
+    $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
+
+    /* Mandatories */
+    $args = array(
+        'post_type' => 'mandatory',
+        'post_status' => 'publish',
+        'author__in' => $current_user,
+        'posts_per_page'         => -1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false
+    );
+    $mandatories = get_posts($args);
+    $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
+    /* Assessment */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments = get_posts($args);
+    $count_assessments = count($assessments);
+    $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
+
+    $assessment_not_started = 3;
+    $assessment_completed = 2;
+    if($count_assessments > 0){
+        $not_started_assessment = abs($count_assessments - $assessment_validated);
+        $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
+        $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
+    }
+
+    //Topic views
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
+    $topic_views = $wpdb->get_results($sql);
+
+    foreach ($topic_views as $topic){
+        $subtopic = array();
+        $subtopic['id'] = $topic->data_id;
+        $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
+        $subtopic['occurence'] = $topic->occurence;
+        $image_topic = get_field('image', 'category_'. $topic->data_id);
+        $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
+        $most_topics_view[] = $subtopic;
+    }
+    $respons = new WP_REST_Response(
+        array(
+            'firs_tab'=>array(
+                'budget_spent'=>$budget_spent,
+                'course_in_progress'=>$progress_courses['not_started'],
+                'your_courses'=>$count_enrolled_courses,
+                'course_done'=>$progress_courses['done'],
+                'assessment_created'=>$count_assessments_created,
+                'mandatories_received'=>$count_mandatories_video,
+            ),
+            'progress_courses'=>array(
+                'user_engagement'=>array(
+                    'active'=>$members_active,
+                    'inactive'=>$members_inactive
+                ),
+                'user_progress_the_courses'=>$progress_courses,
+                'assesment'=>array(
+                    'not_started'=>$assessment_not_started,
+                    'completed'=>$assessment_completed,
+                ),
+            ),            'most_topics_view'=>$most_topics_view,
+            'other_membre'=>$members
+        ));
+    $respons->set_status(200);
+    return $respons;
+}
+
+function statistic_team($data)
+{
+    global $wpdb;
+    $users = get_users();
+    $numbers = array();
+    $members = array();
+    $current_user = intval($data['ID']);
+    $company_user = get_field('company',  'user_' . $current_user);
+    $assessment_validated = array();
+    $desktop_vs_mobile = array();
+    $member_active = 0;
+    $progress_courses = array(
+        'not_started' => 7,
+        'in_progress' => 3,
+        'done' => 10,
+    );
+    $members_active = 5;
+    $members_inactive = 5;
+    $date = new DateTime();
+    $date_this_month = date('Y-m-d');
+    $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    /* Mandatories */
+    $args = array(
+        'post_type' => 'mandatory',
+        'post_status' => 'publish',
+        'author' => $current_user,
+        'posts_per_page'         => -1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false
+    );
+    $mandatories = get_posts($args);
+    $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
+    /*****************************************************/
+    /* Members course */
+    $args = array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'author__in' => $numbers,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $member_courses = get_posts($args);
+    $member_courses_id = array_column($member_courses, 'ID');
+    if (!empty($company_user))
+        $company_connected = $company_user[0]->ID;
+
+    foreach ($users as $user ) {
+        $company = get_field('company',  'user_' . $user->ID);
+
+        if(!empty($company))
+            if($company[0]->ID == $company_connected) {
+                $prijs = get_field('price', $user->ID);
+                $budget_spent = $prijs;
+                $departments = get_field('departments', $company[0]->ID) ? : array();
+                $numbers[] = $user->ID;
+                $status = 'Inactive';
+
+                $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+                $if_user_actif = count($wpdb->get_results($sql));
+                if ($if_user_actif) {
+                    $status = 'Active';
+                    $member_active++;
+                }
+
+                if(empty($departments))
+                    $user->data->departement = 'IT';
+                else
+                    $user->data->departement = $departments[0]['name'];
+                $user->data->status = $status;
+                $user->data->personel_budget = $budget_spent ? : 0;
+
+                $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
+                unset($user->data->user_pass);
+                $members[] = $user->data;
+                $validated = get_user_meta($user->ID, 'assessment_validated');
+                foreach($validated as $assessment)
+                    if(!in_array($assessment, $assessment_validated))
+                        array_push($assessment_validated, $assessment);
+            }
+    }
+    //Topic views
+    //$table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
+    $topic_views = $wpdb->get_results($sql);
+
+    foreach ($topic_views as $topic){
+        $subtopic = array();
+        $subtopic['id'] = $topic->data_id;
+        $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
+        $subtopic['occurence'] = $topic->occurence;
+        $image_topic = get_field('image', 'category_'. $topic->data_id);
+        $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
+        $most_topics_view[] = $subtopic;
+    }
+    $bunch_orders = array();
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            //Get woo orders from user
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+
+            $prijs = get_field('price', $course_id);
+            $budget_spent += $prijs;
+            if(in_array($course_id, $member_courses_id)){
+                array_push($enrolled_all_courses, $course_id);
+                if(!in_array($course_id, $enrolled)){
+                    array_push($enrolled, $course_id);
+                    array_push($enrolled_courses, $course);
+                    //Get progresssion this course
+                    $args = array(
+                        'post_type' => 'progression',
+                        'title' => $course->post_name,
+                        'post_status' => 'publish',
+                        'posts_per_page'         => -1,
+                        'no_found_rows'          => true,
+                        'ignore_sticky_posts'    => true,
+                        'update_post_term_cache' => false,
+                        'update_post_meta_cache' => false
+                    );
+                    $progressions = get_posts($args);
+                    if(!empty($progressions))
+                        foreach ($progressions as $progression) {
+                            $status = "in_progress";
+                            $progression_id = $progression->ID;
+                            //Finish read
+                            $is_finish = get_field('state_actual', $progression_id);
+                            if($is_finish)
+                                $status = "done";
+
+                            switch ($status) {
+
+                                case 'in_progress':
+                                    $progress_courses['in_progress'] += 1;
+                                    break;
+
+                                case 'done':
+                                    $progress_courses['done'] += 1;
+                                    //course finished
+                                    array_push($course_finished, $course->ID);
+                                    break;
+                            }
+                        }
+                }
+            }
+        }
+    }
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'author'=>$current_user,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $total_courses = count(get_posts($args));
+    /* Assessment */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments = get_posts($args);
+    $count_assessments = count($assessments);
+    $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
+    $assessment_not_started = 3;
+    $assessment_completed = 2;
+    if($count_assessments > 0){
+        $not_started_assessment = abs($count_assessments - $assessment_validated);
+        $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
+        $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
+    }
+    /* assessment doing by this user */
+    $args = array(
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'author' => $current_user,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $assessments_created = get_posts($args);
+    $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
+
+    $desktop_vs_mobile = array(
+        'desktop' => array(
+            'Jan'=>get_number_for_month('Jan'),
+            'Feb'=>get_number_for_month('Feb'),
+            'March'=>get_number_for_month('March'),
+            'Apr'=>get_number_for_month('Apr'),
+            'May'=>get_number_for_month('May'),
+            'Jun'=>get_number_for_month('Jun'),
+            'Jul'=>get_number_for_month('Jul'),
+            'Aug'=>get_number_for_month('Aug'),
+            'Sep'=>get_number_for_month('Sep'),
+            'Oct'=>get_number_for_month('Oct'),
+            'Nov'=>get_number_for_month('Nov'),
+            'Dec'=>get_number_for_month('Dec'),
+        ),
+
+        'mobile' => array(
+            'Jan'=>get_number_for_month('Jan','mobile'),
+            'Feb'=>get_number_for_month('Feb','mobile'),
+            'March'=>get_number_for_month('March','mobile'),
+            'Apr'=>get_number_for_month('Apr','mobile'),
+            'May'=>get_number_for_month('May','mobile'),
+            'Jun'=>get_number_for_month('Jun','mobile'),
+            'Jul'=>get_number_for_month('Jul','mobile'),
+            'Aug'=>get_number_for_month('Aug','mobile'),
+            'Sep'=>get_number_for_month('Sep','mobile'),
+            'Oct'=>get_number_for_month('Oct','mobile'),
+            'Nov'=>get_number_for_month('Nov','mobile'),
+            'Dec'=>get_number_for_month('Dec','mobile'),
+        ),
+    );
+
+
+    $response = new WP_REST_Response(
+        array(
+            'team_first_card'=>array(
+                'total_members'=>count($members),
+                'all_courses'=>$total_courses,
+                'assessment'=>($assessment_validated),
+                'courses_done'=>$progress_courses['done'] ? : 6,
+                'mandatories'=>$count_mandatories_video ? : 8,
+                'member_actif'=> $member_active ? : 3,
+            ),
+            'progress_courses'=>array(
+                'user_engagement'=>array(
+                    'active'=>$members_active,
+                    'inactive'=>$members_inactive
+                ),
+                'user_progress_the_courses'=>$progress_courses,
+                'assesment'=>array(
+                    'not_started'=>$assessment_not_started,
+                    'completed'=>$assessment_completed,
+                ),
+            ),
+            'desktop_vs_mobile'=>$desktop_vs_mobile,
+            'team_managed'=>$members,
+            'most_topics_view'=>$most_topics_view,
+        )
+    );
+    $response->set_status(200);
+    return $response;
+}
+
+function get_emploees($data)
+{
+    $users = get_users();
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    if(!empty($company))
+        $company_connected_id = $company[0]->ID;
+
+    $members = array();
+    foreach($users as $user)
+        if($user_connected != $user->ID ){
+            $company = get_field('company',  'user_' . $user->ID);
+            if(!empty($company)){
+                $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+                $departement = get_field('departments', $company[0]->ID);
+                $company_id = $company[0]->ID;
+                if($company_id == $company_connected_id) {
+                    $user->data->role = $user->roles[0];
+                    $user->data->image = $image;
+                    $user->data->departement = $departement[0]['name'];
+
+                    array_push($members, $user->data);
+                }
+            }
+        }
+    $response = new WP_REST_Response(
+        array(
+            'count'=>count($members),
+            'employees'=>$members,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function add_departement($data)
+{
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $department['name'] = $data['name'];
+    $departments = get_field('departments', $company[0]->ID) ? : array();
+    $departments[] = $department;
+    $isInsert = update_field('departments', $departments, $company[0]->ID);
+    if (!$isInsert)
+        return new WP_REST_Response(array('message' => 'Error while adding department'), 401);
+
+    $response = new WP_REST_Response(
+    array(
+        'message'=>'Department added successfully to the company !',
+        'departments'=>$departments,
+    ));
+    $response->set_status(200);
+    return $response;
+}
+
+function get_departements($data)
+{
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+
+    $departments = get_field('departments', $company[0]->ID)? : array();
+    $response = new WP_REST_Response(
+        array(
+            'departments'=>$departments,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function remove_departement($data)
+{
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $department['name'] = $data['name']; // departement to remove
+    $departments = get_field('departments', $company[0]->ID) ? : array();
+    $key = array_search($department, $departments);
+    if($key !== false)
+        unset($departments[$key]);
+
+    $isInsert = update_field('departments', $departments, $company[0]->ID);
+    if (!$isInsert)
+        return new WP_REST_Response(array('message' => 'Error while removing department'), 401);
+
+    $response = new WP_REST_Response(
+        array(
+            'message'=>'Department removed successfully from the company !',
+            'departments'=>$departments,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function Selecteer_experts($data)
+{
+    $users = get_users();
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $company_connected_id = $company[0]->ID;
+    $members = array();
+    foreach($users as $user){
+        $member = array();
+        if(!in_array('manager', $user->roles) && !in_array('author', $user->roles) )
+            continue;
+
+        $company = get_field('company',  'user_' . $user->ID);
+
+        if(!empty($company) && $user_connected != $user->ID ){
+            $company_id = $company[0]->ID;
+
+            if($company_id == $company_connected_id) {
+                $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+                $name = ($user->first_name) ?  $user->first_name . ' ' . $user->last_name : $user->user_email ;
+
+                $is_manager = (in_array('manager', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                $is_author = (in_array('author', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+
+                $departement = get_field('departments', $company[0]->ID);
+                $member['ID'] = $user->ID;
+                $member['role'] = $user->roles[0];
+                $member['name'] = $name;
+                $member['image'] = $image;
+                $member['manager'] = $is_manager;
+                $member['teacher'] = $is_author;
+                $member['departement'] = $departement[0]['name'];
+
+                array_push($members, $member);
+            }
+       }
+    }
+    $response = new WP_REST_Response(
+        array(
+            'Selecteer_je_experts'=>$members
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+/**
+ * @param $data
+ * @return WP_REST_Response
+ */
+function people_managed($data)
+{
+    $users = get_users();
+    $user_connected = intval($data['id']);
+    $company = get_field('company',  'user_' . $user_connected);
+    $company_connected_id = $company[0]->ID;
+    $people_to_manage = array();
+    $people_managed =  array();
+    $id_people_managed = get_field('managed', 'user_'.$user_connected);
+
+    if (!empty($id_people_managed))
+        foreach ($id_people_managed as $id_person) {
+            if ($id_person == $user_connected)
+                continue;
+            $image = get_field('profile_img',  'user_' . $id_person) ? : get_stylesheet_directory_uri() . '/img/user.png';
+            $person = get_user_by('ID', $id_person);
+            if (!$person->data)
+                continue;
+            $person = $person->data;
+            $person->image = $image;
+            unset($person->user_pass);
+            $people_managed[] = $person;
+        }
+
+    foreach($users as $user){
+        $person_to_manage = array();
+        //$person_managed = array();
+        if(in_array('administrator', $user->roles) || in_array('hr', $user->roles) || in_array('manager', $user->roles))
+            continue;
+        if(!empty($id_people_managed))
+            if(in_array($user->ID, $id_people_managed))
+                continue;
+
+        $company = get_field('company',  'user_' . $user->ID);
+        if (!empty($company) && $user_connected != $user->ID ) {
+            if ($company[0]->ID == $company_connected_id) {
+                $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+                $name = ($user->first_name) ?  $user->first_name . ' ' . $user->last_name : $user->user_email ;
+
+                $person_to_manage['ID'] = $user->ID;
+                $person_to_manage['name'] = $name;
+                $person_to_manage['email'] = $user->user_email;
+
+                array_push($people_to_manage, $person_to_manage);
+                //if(!empty($person_managed))
+                  //  array_push($people_managed, $person_to_manage);
+            }
+        }
+    }
+
+    $response = new WP_REST_Response(
+        array(
+            'Select_the_people_you_want_to_manage'=>$people_to_manage,
+            'people_you_manage'=>$people_managed
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+/**
+ * @param WP_REST_Request $data
+ * @return WP_REST_Response 'people_id' this field must an array of ID people to manage
+ */
+function add_people_to_manage(WP_REST_Request $data)
+{
+    $required_parameters = ['people_id'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $user_connected = intval($data['id']);
+
+    $people_id = $data['people_id'];
+    foreach ($people_id as $id_person)
+        update_field('ismanaged', $user_connected, 'user_' . $id_person);
+
+    $people_managed = get_field('managed', 'user_'.$user_connected) ? : array();
+    $people_managed = array_merge($people_managed,$people_id);
+    $isInsert = update_field('managed', $people_managed, 'user_'.$user_connected);
+    if (!$isInsert)
+        return new WP_REST_Response(array('message' => 'Error while adding people to manage'), 401);
+
+    $response = new WP_REST_Response(
+        array(
+            'message'=>'People added successfully to manage !',
+            'people_managed'=>$people_managed,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function addOnePeople(WP_REST_Request $data)
+{
+    $required_parameters = ['email','first_name','last_name'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $email = $data['email'];
+    $user_connected = intval($data['id']);
+    $first_name = $data['first_name'];
+    $last_name = $data['last_name'];
+
+        $login = RandomStringBis();
+        $password = "Livelearn".date('Y');
+
+        $userdata = array(
+            'user_pass' => $password,
+            'user_login' => $login,
+            'user_email' => $email,
+            'user_url' => 'https://app.livelearn.nl/login',
+            'display_name' => $first_name,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'role' => 'subscriber'
+        );
+        $user_id = wp_insert_user(wp_slash($userdata));
+        if(is_wp_error($user_id)){
+            $danger = $user_id->get_error_message();
+            return new WP_REST_Response(array('message' => $danger), 401);
+        }
+
+        $guest = get_user_by('ID', $user_connected);
+        $company = get_field('company',  'user_' . $guest->ID);
+        //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
+        update_field('company', $company[0], 'user_'.$user_id);
+
+        //sendEmail($user_connected,$email,$first_name);
+        $response = new WP_REST_Response(
+                    array(
+                        'message' => 'You have successfully created a new employee ✔️'
+                    ));
+        $response->set_status(200);
+        return $response;
+}
+function addManyPeople(WP_REST_Request $data)
+{
+    $user_connected = intval($data['id']);
+    $required_parameters = ['emails'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $emails = $data['emails'];
+
+    if(!empty($emails))
+        foreach($emails as $email){
+            $login = RandomStringBis();
+            $first_name = RandomStringBis();
+            $last_name = RandomStringBis();
+
+            $password = "Livelearn".date('Y');
+
+            $userdata = array(
+                'user_pass' => $password,
+                'user_login' => $login,
+                'user_email' => $email,
+                'user_url' => 'https://app.livelearn.nl/login',
+                'display_name' => $first_name,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'role' => 'subscriber'
+            );
+
+            $user_id = wp_insert_user(wp_slash($userdata));
+            if(is_wp_error($user_id)){
+                $danger = "An error occurred while creating the emails, please ensure that all emails do not already exist.";
+                return new WP_REST_Response(array(
+                    'message' => $danger
+                ), 401);
+            }
+
+            $company = get_field('company',  'user_' . $user_connected);
+            //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
+            update_field('company', $company[0], 'user_'.$user_id);
+
+            // send email new user
+            sendEmail($user_connected, $email, $first_name);
+        }
+    $response = new WP_REST_Response(
+        array(
+            'message' => 'You have successfully created new employees ✔️'
+        ));
+    $response->set_status(200);
+    return $response;
+}
