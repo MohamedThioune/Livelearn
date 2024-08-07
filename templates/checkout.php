@@ -255,18 +255,16 @@ function stripe_status($data){
 }
 
 //Call stripe secret
-// $_GET['priceID'] = "price_1PYBukEuOtOzwPYXUiCztgKa";
+// $_GET['priceID'] = "price_1Pkr41EuOtOzwPYX855Zgcbr";
 // $_GET['mode'] = 'payment';
 // $postID = 10799;
 // $userID = 3;
 $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
 $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
-
 //Checkout session stripe
 if(isset($_GET['priceID']) && $_GET['mode']):
     $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
     echo($session_stripe_secret);
-    //var_dump($session_stripe_secret);
 endif;
 
 //Create order 

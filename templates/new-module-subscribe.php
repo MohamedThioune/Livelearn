@@ -145,41 +145,22 @@ function stripe(WP_REST_Request $request){
     return $response;
 }
 
-// function create_product($data){
-//     //Create product
-//     $data_product = [
-//         'name' => $data['name'],
-//         'description' => $data['description'],
-//         'images' => [ $data['image'] ],
-//         'url' => $data['url'],
-//         'metadata' => [
-//             'courseID' => $data['ID'],
-//         ]
-//     ];
-//     $endpoint = "https://api.stripe.com/v1/products";
-//     $information = makecall($endpoint, 'POST', $data_product);
+function search_price($postID) {
+    $endpoint = "https://api.stripe.com/v1/prices/search";
+    $query = "active:'true' AND metadata['postID']:'" . $postID . "'";
+    $params = array( 
+        'query' => $query
+    );
 
-//     //case : error primary
-//     if(isset($information['error']))
-//         return 0;
-//         // return $information['error'];
+    $data = makecall($endpoint, 'GET', null, $params);
+    $information = $data['data']->data;
 
-//     //case : error internal
-//     if(isset($information['data']->error))
-//         return 0;
-//         // return $information['data'];
-
-//     $product_id = null;    
-//     //case : success
-//     if($information['data'])
-//     if($information['data']->client_secret)
-//         $product_id = $information['data']->id;
-
-//     //Get product ID if after creation
-//     /** Instructions here ! */
-
-//     return $product_id;
-// }
+    $price_id = 0;    
+    //case : success
+    if($information[0])
+        $price_id = (isset($information[0]['id'])) ? $information[0]['id'] : $price_id;
+    return $price_id;
+}
 
 function create_price($data){
     $amount = ($data['amount']) ? $data['amount'] . "00" : 0;
@@ -191,8 +172,11 @@ function create_price($data){
             'name' => $data['product_name'],
             'statement_descriptor' => 'LIVELEARN PAY !',
             'metadata' => [
-                'courseID' => $data['ID'],
+                'postID' => $data['ID'],
             ]
+        ],
+        'metadata' => [
+            'postID' => $data['ID'],
         ],
         'tax_behavior' => 'exclusive'
     ];

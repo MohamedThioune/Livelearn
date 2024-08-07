@@ -624,6 +624,7 @@ function candidateDetail(WP_REST_Request $request){
   $errors = [];
   $param_user_id = $request['id'] ? $request['id'] : get_current_user_id();
   $required_parameters = ['id'];
+  $userID = isset($request['userID']) ? $request['userID'] : 0;
 
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -646,6 +647,16 @@ function candidateDetail(WP_REST_Request $request){
   endif;
 
   $sample = candidate($param_user_id);
+
+  //Favorited course or not
+  $favorited = false;
+  if($userID):
+    $saves = get_field('save_liggeey', 'user_' . $userID);
+    foreach($saves as $save)
+      if($save['type'] == 'candidate' && $save['ID'] == $param_user_id)
+        $favorited = true;
+  endif;
+  $sample->favorited = $favorited;
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -845,6 +856,8 @@ function allJobs(){
 function jobDetail(WP_REST_Request $request){
   $param_post_id = $request['slug'] ?? 0;
   $required_parameters = ['slug'];
+
+  $userID = isset($request['userID']) ? $request['userID'] : 0;
   
   //Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -866,6 +879,15 @@ function jobDetail(WP_REST_Request $request){
 
   $sample = job($job->ID);
 
+  //Favorited course or not
+  $favorited = false;
+  if($userID):
+    $saves = get_field('save_liggeey', 'user_' . $userID);
+    foreach($saves as $save)
+      if($save['type'] == 'job' && $save['ID'] == $job->ID)
+        $favorited = true;
+  endif;
+
   // Retrieve the latest job posts
     $args = array(
       'post_type'      => 'job',
@@ -882,6 +904,7 @@ function jobDetail(WP_REST_Request $request){
 
   $sample->other_jobs = $jobs;
 
+  $sample->favorited = $favorited;
   //Response
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
