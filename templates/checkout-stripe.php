@@ -59,7 +59,8 @@ if(isset($productPrice)):
             'product_url' => $permalink,
             'ID' => $post->ID,
         ];
-        $price_id = create_price($data_price);
+        $price_id = (search_price($data_price['ID'])) ?: create_price($data_price);  
+
         $mode = ($prijs) ? 'payment' : 'setup';
     endif;
 
@@ -100,7 +101,6 @@ $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . 
             const mode = "<?php echo $mode ?>";
             const postID = "<?php echo $postID ?>";
             const userID = "<?php echo $userID ?>";
-            // alert(userID);
             const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID +  "&userID=" + userID, {
                 method: "POST",
             });
