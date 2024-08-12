@@ -2183,6 +2183,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
       'limit' => -1,
   );
   $bunch_orders = wc_get_orders($args);
+  //$bunch_orders = array();
 
   foreach($bunch_orders as $order)
     foreach ($order->get_items() as $item_id => $item ) {
@@ -2396,6 +2397,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         'badges' => $badges,
          'certificats' => $certificats,
          'courses_info' => $courses_combined,
+        'other_data'=>detailsPeople()->data
 
     );
 
