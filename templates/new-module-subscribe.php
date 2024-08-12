@@ -73,6 +73,41 @@ function search($data) {
     return $response;
 }
 
+function get_invoice_by_subscription($data){
+    $endpoint = "https://api.stripe.com/v1/invoices";
+    $customer = isset($data['customer']) ? $data['customer'] : null;
+    $subscription = isset($data['subscription']) ? $data['subscription'] : null;
+    //test customer,subscription
+    if(!$customer || !$subscription)
+        return false;
+
+    $params = array( 
+        'customer' => $customer,
+        'subscription' => $subscription
+    );
+    $datum = makecall($endpoint, 'GET', null, $params);
+    $information = $datum['data'];
+    return $information;
+}
+
+function search_invoices($data){
+    $datum = search($data);
+    $information = $datum->data['data']->data;
+
+    $customer = 0;
+    //get customer if not empty
+    if($information[0]):
+        $subscription = (isset($information[0]['id'])) ? $information[0]['id'] : $customer;
+        $customer = (isset($information[0]['customer'])) ? $information[0]['customer'] : $customer;
+    endif;
+    
+    //get invoices in success
+    $query_invoice = ['customer' => $customer, 'subscription' => $subscription];
+    $invoices = get_invoice_by_subscription($query_invoice);
+    
+    return $invoices;
+}
+
 function update(WP_REST_Request $request) {
     //Check required parameters register
     $required_parameters = ['subscription', 'quantity', 'ID'];
