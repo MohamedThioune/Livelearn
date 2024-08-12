@@ -2141,11 +2141,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'get_detail_notification'
     ));
-
+    /*
     register_rest_route ('custom/v1', '/company-statistic/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'company_statistic'
     ));
+    */
     register_rest_route ('custom/v1', '/statistic/company/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'statistic_company'
