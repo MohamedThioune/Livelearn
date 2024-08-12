@@ -5136,41 +5136,43 @@ endif;
 
       function getUserSubtopicsStatistics($data)
       {
-      // Retrieve the user ID from the global variable and validate it
-      $user_id = $GLOBALS['user_id'] ?? false;
 
-      // Check if the user ID is provided
-      if (!$user_id) 
-      {
+        // Retrieve the user ID from the global variable and validate it
+        $user_id = false;
+        $user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
+
+        // Check if the user ID is provided
+        if (!$user_id) 
+        {
           $response = new WP_REST_Response("You have to login with valid credentials!");
           $response->set_status(400);
           return $response;
-      }
+        }
 
-      // Validate the user ID
-      $user_id = intval($user_id);
+        // Validate the user ID
+        $user_id = intval($user_id);
 
-      // Check if the user exists
-      $user = get_user_by('ID', $user_id);
-      if (!$user)
-      {
-          $response = new WP_REST_Response("This user ID does not exist!");
-          $response->set_status(400);
-          return $response;
-      }
+        // Check if the user exists
+        $user = get_user_by('ID', $user_id);
+        if (!$user)
+        {
+            $response = new WP_REST_Response("This user ID does not exist!");
+            $response->set_status(400);
+            return $response;
+        }
 
-      // Retrieve user subtopics statistics from the database
-      global $wpdb;
-      $table = $wpdb->prefix . 'user_subtopics_statistics';
-      $sql = $wpdb->prepare("SELECT * FROM $table WHERE user_id = %d", $user_id);
-      $stats = $wpdb->get_results($sql);
+        // Retrieve user subtopics statistics from the database
+        global $wpdb;
+        $table = $wpdb->prefix . 'user_subtopics_statistics';
+        $sql = $wpdb->prepare("SELECT * FROM $table WHERE user_id = %d", $user_id);
+        $stats = $wpdb->get_results($sql);
 
-      // Define the allowed course types
-      $allowed_course_types = ['masterclass', 'podcast', 'video', 'workshop', 'artikel', 'opleidingen'];
+        // Define the allowed course types
+        $allowed_course_types = ['masterclass', 'podcast', 'video', 'workshop', 'artikel', 'opleidingen'];
 
-      // Format the time spent for each statistic
-      foreach ($stats as $stat)
-      {
+        // Format the time spent for each statistic
+        foreach ($stats as $stat)
+        {
           // Format the total time spent
           $stat->time_spent = formatSecondes($stat->time_spent);
 
@@ -5181,8 +5183,8 @@ endif;
                   $stat->$course_type = formatSecondes($stat->$course_type);
               }
           }
-      }
-      return $stats;
+        }
+        return $stats;
       }
 
       // function updateUserSubtopicsStatistics(WP_REST_Request $request) 
