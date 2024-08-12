@@ -1581,6 +1581,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
+    register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getUserSubtopicsStatistics',
+    ));
 
     register_rest_route('custom/v2', '/user/internal/courses', array(
         'methods' => 'GET',
