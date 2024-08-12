@@ -1078,7 +1078,7 @@ function sendEmail($id_user, $email, $name)
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     return wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
 }
-
+/*
 function company_statistic($data)
 {
     global $wpdb;
@@ -1130,7 +1130,7 @@ function company_statistic($data)
         $most_topics_view[] = $subtopic;
     }
 
-    /* Assessment */
+    // Assessment
     $args = array(
         'post_type' => 'assessment',
         'post_status' => 'publish',
@@ -1148,7 +1148,7 @@ function company_statistic($data)
         $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
         $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
     }
-    /* assessment doing by this user */
+    // assessment doing by this user
     $args = array(
         'post_type' => 'assessment',
         'post_status' => 'publish',
@@ -1160,7 +1160,7 @@ function company_statistic($data)
     $assessments_created = get_posts($args);
     $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
 
-    /* Mandatories */
+    // Mandatories
     $args = array(
         'post_type' => 'mandatory',
         'post_status' => 'publish',
@@ -1174,7 +1174,7 @@ function company_statistic($data)
     $mandatories = get_posts($args);
     $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
 
-    /* Members course */
+    // Members course
     $args = array(
         'post_type' => array('course', 'post'),
         'post_status' => 'publish',
@@ -1361,6 +1361,7 @@ function company_statistic($data)
         ), 200);
     return $response;
 }
+*/
 
 function statistic_company($data)
 {
@@ -1390,10 +1391,15 @@ function statistic_company($data)
     $date_this_month = date('Y-m-d');
     $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $topic_in_company = array();
     foreach ($users as $user ) {
         $company = get_field('company',  'user_' . $user->ID);
-        if(!empty($company))
+        if($company)
             if($company[0]->ID == $company_connected) {
+                $topic_for_this_user = get_user_meta($user->ID, 'topic');
+                if (!empty($topic_for_this_user))
+                    $topic_in_company[] = $topic_for_this_user;
+
                 $numbers[] = $user->ID;
                 $members[] = $user->data;
                 if($user->user_registered < date('Y-m-d', strtotime('-1 month')))
@@ -1618,49 +1624,35 @@ function statistic_company($data)
     );
     /*****************************************************/
     /*                      ///                      */
-    $read_category = array();
-    foreach($course_finished as $course){
-        $category_default = get_field('categories', $course);
-        $category_xml = get_field('category_xml', $course);
-        if(!empty($category_default))
-            foreach($category_default as $item) {
-                if ($item) {
-                    $values = explode(',', $item['value']);
-                    $read_category = (!empty($values)) ? array_merge($read_category, $values) : $read_category;
-                } else if (!empty($category_xml))
-                    foreach ($category_xml as $item)
-                        if ($item)
-                            array_push($read_category, $item['value']);
-            }
-    }
-    $read_category = array_count_values($read_category);
-    $count_members = count($members);
-    $courses_categories = array();
-    if(!empty($read_category)):
-        $i = 0;
-    foreach ($read_category as $value => $occurence) :
-        $name_topic = (String)get_the_category_by_ID($value);
-        $pourcentage = ($count_members > $occurence) ? intval(($occurence/$count_members) * 100) : 100;
-        $courses_categories[] = array(
-            'name'=>$name_topic,
-            'pourcentage'=>$pourcentage
-        );
-        $i += 1;
-        if($i == 10)
-            break;
-    endforeach;
-    endif;
+    $topic_avairage = array();
+    $is_topic_in_company = array();
+    foreach ($topic_in_company as $id_topics)
+        if (!empty($id_topics))
+            foreach ($id_topics as $id_topic)
+                $is_topic_in_company[] = $id_topic;
 
+    $occurence = array_count_values($is_topic_in_company);
+    $total_occurences = array_sum($occurence);
+
+    $avairages_topics_company = array();
+    foreach ($occurence as $key => $value){
+        $avairages_topics_company[] = array(
+            'name'=>get_the_category_by_ID($key),
+            'occurence'=>$value,
+            'percentage'=>intval(($value / $total_occurences) * 100)
+        );
+    }
     /*                      ///                      */
     $respons = new WP_REST_Response(
         array(
         'user_connected'=>$user_connected,
+        'course_categories_topics_finished'=>$avairages_topics_company,
             'firs_tab'=>array(
                 'total_members'=>count($members),
                 'new_members'=>count($new_members),
                 'total_courses'=>$total_courses,
             ),
-            'course_categories_topics_finished'=>$courses_categories,
+            //'course_categories_topics_finished'=>$courses_categories,
             'progress_courses'=>array(
                 'user_engagement'=>array(
                     'active'=>$members_active,
@@ -1816,7 +1808,7 @@ function statistic_individual($data)
         $progress_courses['done'] = intval(($progress_courses['done'] / $count_enrolled_courses) * 100);
     }
     else
-        $progress_courses['not_started'] = 100;
+        $progress_courses['not_started'] = $current_user % 10;
     /* assessment doing by this user */
     $args = array(
         'post_type' => 'assessment',
