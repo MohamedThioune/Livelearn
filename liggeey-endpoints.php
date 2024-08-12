@@ -889,7 +889,7 @@ function jobDetail(WP_REST_Request $request){
   endif;
 
   // Retrieve the latest job posts
-    $args = array(
+    $args = array( 
       'post_type'      => 'job',
       'posts_per_page' => 3,
       'order'          => 'DESC',
