@@ -2073,16 +2073,16 @@ add_action( 'rest_api_init', function () {
         'callback' => 'search'
     ));
 
+    register_rest_route ('custom/v1', '/search/stripe/invoices/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'search_invoices'
+    ));
+
     register_rest_route ('custom/v1', '/update/stripe', array(
         'methods' => 'POST',
         'callback' => 'update'
     ));
     //End ...
-
-    register_rest_route ('custom/v1', '/tofollow/experts', array(
-        'methods' => 'GET',
-        'callback' => 'expertsToFollow'
-    ));
 
     //Made by MaxBird
     register_rest_route ('custom/v1', '/user/activity/(?P<ID>\d+)', array(
@@ -2090,12 +2090,17 @@ add_action( 'rest_api_init', function () {
         'callback' => 'activityUser'
     ));
 
-    //Made by Mohamed | Checkout
+    //Made by MaxBird | Checkout
     register_rest_route ('custom/v1', '/checkout-stripe-ui', array(
         'methods' => 'GET',
         'callback' => 'session_stripe'
     ));
     //End ...
+
+    register_rest_route ('custom/v1', '/tofollow/experts', array(
+        'methods' => 'GET',
+        'callback' => 'expertsToFollow'
+    ));
 
     register_rest_route ('custom/v1', '/upcoming/schedule', array(
         'methods' => 'GET',
