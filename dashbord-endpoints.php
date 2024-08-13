@@ -2920,7 +2920,6 @@ function coursesTeacher($data)
     $id = intval($data['id']);
     $courses = array();
     $enrolled = array();
-    var_dump("it's work");die();
 //Orders - enrolled courses
     $args = array(
         'post_status' => array('wc-processing', 'wc-completed'),
@@ -2928,7 +2927,8 @@ function coursesTeacher($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
 
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item ) {
@@ -2940,17 +2940,17 @@ function coursesTeacher($data)
                 array_push($enrolled, $course_id);
         }
     }
-    if(!empty($enrolled)) {
+    //if(!empty($enrolled)) {
         $args = array(
             'post_type' => array('post', 'course'),
             'posts_per_page' => -1,
             'orderby' => 'post_date',
             'order' => 'DESC',
-            'include' => $enrolled,
+            //'include' => $enrolled,
             'author' => $id
         );
         $courses = get_posts($args);
-    }
+    //}
     $response = new WP_REST_Response(
         array(
             'courses'=>$courses
