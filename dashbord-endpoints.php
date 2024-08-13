@@ -2914,3 +2914,47 @@ ORDER BY MONTH(created_at)
 
     return new WP_REST_Response($dataResponse,200);
 }
+
+function coursesTeacher($data)
+{
+    $id = intval($data['id']);
+    $courses = array();
+    $enrolled = array();
+    var_dump("it's work");die();
+//Orders - enrolled courses
+    $args = array(
+        'post_status' => array('wc-processing', 'wc-completed'),
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'limit' => -1,
+    );
+    $bunch_orders = wc_get_orders($args);
+
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item ) {
+            //Get woo orders from user
+            $course_id = intval($item->get_product_id()) - 1;
+            $prijs = get_field('price', $course_id);
+            $expenses += $prijs;
+            if(!in_array($course_id, $enrolled))
+                array_push($enrolled, $course_id);
+        }
+    }
+    if(!empty($enrolled)) {
+        $args = array(
+            'post_type' => array('post', 'course'),
+            'posts_per_page' => -1,
+            'orderby' => 'post_date',
+            'order' => 'DESC',
+            'include' => $enrolled,
+            'author' => $id
+        );
+        $courses = get_posts($args);
+    }
+    $response = new WP_REST_Response(
+        array(
+            'courses'=>$courses
+        ));
+    $response->set_status(200);
+    return $response;
+}
