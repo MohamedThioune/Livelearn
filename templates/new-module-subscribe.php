@@ -59,20 +59,6 @@ function create_payment_link($data){
     return $information;
 }
 
-function search($data) {
-    $endpoint = "https://api.stripe.com/v1/subscriptions/search";
-    $query = "status:'active' AND metadata['UserID']:'" . $data['userID'] . "'";
-    $params = array( 
-        'query' => $query
-    );
-
-    $information = makecall($endpoint, 'GET', null, $params);
-
-    $response = new WP_REST_Response($information);
-    $response->set_status(200);
-    return $response;
-}
-
 function get_invoice_by_subscription($data){
     $endpoint = "https://api.stripe.com/v1/invoices";
     $customer = isset($data['customer']) ? $data['customer'] : null;
@@ -106,6 +92,20 @@ function search_invoices($data){
     $invoices = get_invoice_by_subscription($query_invoice);
     
     return $invoices;
+}
+
+function search($data) {
+    $endpoint = "https://api.stripe.com/v1/subscriptions/search";
+    $query = "status:'active' AND metadata['UserID']:'" . $data['userID'] . "'";
+    $params = array( 
+        'query' => $query
+    );
+
+    $information = makecall($endpoint, 'GET', null, $params);
+
+    $response = new WP_REST_Response($information);
+    $response->set_status(200);
+    return $response;
 }
 
 function update(WP_REST_Request $request) {
