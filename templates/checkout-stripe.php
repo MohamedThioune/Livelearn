@@ -9,13 +9,13 @@ require_once 'new-module-subscribe.php';
 $price_id = '';
 $mode = 'setup';
 $postID = '';
+$offline = null; 
+
 // get user 
 $userID = get_current_user_id();
 $prijs = 0;
 
 extract($_POST);
-if($_POST['stripe_register']):
-endif;
 
 //After Login/Register
 if(isset($_GET['single'])):
@@ -64,6 +64,9 @@ if(isset($productPrice)):
         $mode = ($prijs) ? 'payment' : 'setup';
     endif;
 
+    //meta data
+    $offline = ($metadata) ?: $offline; 
+
     // $free_form = null; 
 endif;
 //create ...
@@ -101,8 +104,8 @@ $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . 
             const mode = "<?php echo $mode ?>";
             const postID = "<?php echo $postID ?>";
             const userID = "<?php echo $userID ?>";
-            const metadata = "<?php echo $metadata ?>";
-            const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID + "&userID=" + userID + "&metadata=" + metadata, {
+            const offline = "<?php echo $offline ?>";
+            const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID + "&userID=" + userID + "&metadata=" + offline, {
                 method: "POST",
             });
             const { clientSecret } = await response.json();
