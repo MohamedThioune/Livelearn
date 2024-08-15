@@ -1639,7 +1639,7 @@ function statistic_company($data)
         $avairages_topics_company[] = array(
             'name'=>get_the_category_by_ID($key),
             'occurence'=>$value,
-            'percentage'=>intval(($value / $total_occurences) * 100)
+            'percentage'=>round(($value / $total_occurences) * 100, 2),
         );
     }
     /*                      ///                      */
@@ -2915,46 +2915,36 @@ ORDER BY MONTH(created_at)
     return new WP_REST_Response($dataResponse,200);
 }
 
-function coursesTeacher($data)
+function newCoursesByTeacher(WP_REST_Request $data)
 {
     $id = intval($data['id']);
-    $courses = array();
-    $enrolled = array();
-//Orders - enrolled courses
     $args = array(
-        'post_status' => array('wc-processing', 'wc-completed'),
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'limit' => -1,
-    );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
-
-    foreach($bunch_orders as $order){
-        foreach ($order->get_items() as $item ) {
-            //Get woo orders from user
-            $course_id = intval($item->get_product_id()) - 1;
-            $prijs = get_field('price', $course_id);
-            $expenses += $prijs;
-            if(!in_array($course_id, $enrolled))
-                array_push($enrolled, $course_id);
-        }
-    }
-    //if(!empty($enrolled)) {
-        $args = array(
-            'post_type' => array('post', 'course'),
-            'posts_per_page' => -1,
-            'orderby' => 'post_date',
-            'order' => 'DESC',
-            //'include' => $enrolled,
-            'author' => $id
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'post_title' => $data['title'],
+            'post_author' => $id,
         );
-        $courses = get_posts($args);
-    //}
+    $id_post = wp_insert_post($args, true);
+    if(is_wp_error($id_post)){
+        $error = new WP_Error($id_post);
+        return new WP_REST_Response(
+            array(
+            'message' => $error->get_error_message($id_post),
+        ),401);
+    }
+    $contributors = array("3","5","30");
+
+    update_field('article_itself', $data['article_content'], $id_post);
+    update_field('price', $data['price'], $id_post);
+    update_field('experts', $contributors, $id_post);
+    update_field('course_type', 'article' , $id_post);
+
     $response = new WP_REST_Response(
-        array(
-            'courses'=>$courses
-        ));
-    $response->set_status(200);
+    array(
+        //'new_courses'=>file_get_contents('/wp-json/custom/v2/article/'.$id_post),
+        'new_courses'=>get_post($id_post,true),
+        'message'=> 'articles saved success',
+    ));
+    $response->set_status(201);
     return $response;
 }
