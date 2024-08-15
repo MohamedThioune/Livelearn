@@ -729,7 +729,8 @@ function create_product_for_course($post_id){
     $product_registrated_id = get_field('connected_product',$post_id);
 
 
-    $product = wc_get_product( $product_registrated_id );
+    //$product = wc_get_product( $product_registrated_id );
+    $product = array();
 
     if($product){
         //product exist, only update price if nesseccary
@@ -2141,11 +2142,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'get_detail_notification'
     ));
-
+    /*
     register_rest_route ('custom/v1', '/company-statistic/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'company_statistic'
     ));
+    */
     register_rest_route ('custom/v1', '/statistic/company/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'statistic_company'
@@ -2193,5 +2195,9 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/addManyPersone/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'addManyPeople'
+    ));
+    register_rest_route ('custom/v1', '/teacher/new-course/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'newCoursesByTeacher'
     ));
 });

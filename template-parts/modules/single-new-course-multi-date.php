@@ -22,13 +22,11 @@ $author_role =  get_field('role',  'user_' . $post->post_author);
 $post_date = new DateTimeImmutable($post->post_date);
 
 //Start or Buy
-// if (!$user_id) {
-//     $startorbuy ="<button type='button' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-buy-now'>Buy Now</button>";
-//     $startorbuy ="<button type='button' data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' class='btn btn-stratNow'>Start Now</button>";
-// } else {
-    $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
-    $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-// }
+$startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+$startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
+
+//Stripe pay 
+$button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -208,18 +206,19 @@ endif;
                                                                 <h3>Cursus</h3>
                                                                 <?php
                                                                 for($i = 0; $i < count($datum['data']); $i++) {
-                                                                $date_start = $datum['data'][$i]['start_date'];
-                                                                $location = $datum['data'][$i]['location'];
-                                                                if($date_start != null) {
-                                                                    $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
-                                                                    $hour = explode(' ', $date_start)[1];
-                                                                    ?>
-                                                                    <div class="blockDateEvens d-flex">
-                                                                        <input type="checkbox">
-                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
-                                                                    </div>
-                                                                    <?php
-                                                                }
+                                                                    $metadata = null;
+                                                                    $date_start = $datum['data'][$i]['start_date'];
+                                                                    $location = $datum['data'][$i]['location'];
+                                                                    if($date_start != null) {
+                                                                        $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                                                                        $hour = explode(' ', $date_start)[1];
+                                                                        ?>
+                                                                        <div class="blockDateEvens d-flex">
+                                                                            <input type="checkbox">
+                                                                            <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location; ?></p>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
                                                                 }
                                                                 ?>
                                                             </div>
@@ -245,38 +244,48 @@ endif;
                                                                 </table>
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
-                                                                    if($product):
                                                                     $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start . ', ' . $year_start;
+                                                                    if($product):
+                                                                        echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
-                                                                    echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
+                                                                        do_action( 'woocommerce_before_add_to_cart_form' );
+                                                                        ?>
+                                                                        <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            <?php
+                                                                            do_action( 'woocommerce_before_add_to_cart_button' );
+                                                                            do_action( 'woocommerce_before_add_to_cart_quantity' );
 
-                                                                    do_action( 'woocommerce_before_add_to_cart_form' );
-                                                                    ?>
-                                                                    <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            woocommerce_quantity_input(
+                                                                                array(
+                                                                                    'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                    'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                    'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                )
+                                                                            );
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_quantity' );
+
+                                                                            if($user_id == 0)
+                                                                                echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                            else if($user_id != $post->post_author)
+                                                                                echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                        </form>
                                                                         <?php
-                                                                        do_action( 'woocommerce_before_add_to_cart_button' );
-                                                                        do_action( 'woocommerce_before_add_to_cart_quantity' );
-
-                                                                        woocommerce_quantity_input(
-                                                                            array(
-                                                                                'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                                                                'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                                                                'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                                                            )
-                                                                        );
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_quantity' );
-
-                                                                        if($user_id == 0)
-                                                                            echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                                                        else if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_button' ); ?>
-                                                                    </form>
-                                                                    <?php
-                                                                    do_action( 'woocommerce_after_add_to_cart_form' );
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' );
                                                                     endif;
+
+                                                                    //Stripe pay form
+                                                                    $stripe_pay_form = 
+                                                                    '<form action="/checkout-stripe" method="post">
+                                                                        <input type="hidden" name="postID" value="' . $post->ID . '">
+                                                                        <input type="hidden" name="metadata" value="' . $dateNameStart . '">
+                                                                        <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
+                                                                        ' . $button_pay . '
+                                                                        </button>
+                                                                    </form>';
+                                                                    echo $stripe_pay_form;
                                                                     ?>
                                                                 </div>
                                                             </div>
@@ -382,40 +391,50 @@ endif;
                                                                 </table>
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
-                                                                    if($product):
                                                                     $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start . ', ' . $year_start;
+                                                                    if($product):
+                                                                        //Reserveren action
+                                                                        echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
-                                                                    //Reserveren action
-                                                                    echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
+                                                                        do_action( 'woocommerce_before_add_to_cart_form' );
+                                                                        ?>
+                                                                        <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            <?php
+                                                                            do_action( 'woocommerce_before_add_to_cart_button' );
+                                                                            do_action( 'woocommerce_before_add_to_cart_quantity' );
 
-                                                                    do_action( 'woocommerce_before_add_to_cart_form' );
-                                                                    ?>
-                                                                    <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            woocommerce_quantity_input(
+                                                                                array(
+                                                                                    'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                    'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                    'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                )
+                                                                            );
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_quantity' );
+
+                                                                            if($user_id == 0)
+                                                                                echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                            else if($user_id != $post->post_author)
+                                                                                echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                        </form>
                                                                         <?php
-                                                                        do_action( 'woocommerce_before_add_to_cart_button' );
-                                                                        do_action( 'woocommerce_before_add_to_cart_quantity' );
 
-                                                                        woocommerce_quantity_input(
-                                                                            array(
-                                                                                'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                                                                'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                                                                'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                                                            )
-                                                                        );
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_quantity' );
-
-                                                                        if($user_id == 0)
-                                                                            echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                                                        else if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_button' ); ?>
-                                                                    </form>
-                                                                    <?php
-
-                                                                    do_action( 'woocommerce_after_add_to_cart_form' );
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' );
                                                                     endif;
+
+                                                                    //Stripe pay form
+                                                                    $stripe_pay_form = 
+                                                                    '<form action="/checkout-stripe" method="post">
+                                                                        <input type="hidden" name="postID" value="' . $post->ID . '">
+                                                                        <input type="hidden" name="metadata" value="' . $dateNameStart . '">
+                                                                        <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
+                                                                        ' . $button_pay . '
+                                                                        </button>
+                                                                    </form>';
+                                                                    echo $stripe_pay_form;
                                                                     ?>
 
                                                                 </div>
@@ -491,39 +510,49 @@ endif;
                                                                 </table>
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
-                                                                    if($product):
                                                                     $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start  . ', ' . $year_start;
+                                                                    if($product):
+                                                                        //Reserveren action
+                                                                        echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
-                                                                    //Reserveren action
-                                                                    echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
+                                                                        do_action( 'woocommerce_before_add_to_cart_form' );
+                                                                        ?>
+                                                                        <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            <?php
+                                                                            do_action( 'woocommerce_before_add_to_cart_button' );
+                                                                            do_action( 'woocommerce_before_add_to_cart_quantity' );
 
-                                                                    do_action( 'woocommerce_before_add_to_cart_form' );
-                                                                    ?>
-                                                                    <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            woocommerce_quantity_input(
+                                                                                array(
+                                                                                    'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                    'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                    'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                )
+                                                                            );
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_quantity' );
+
+                                                                            if($user_id == 0)
+                                                                                echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                            else if($user_id != $post->post_author)
+                                                                                echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                        </form>
                                                                         <?php
-                                                                        do_action( 'woocommerce_before_add_to_cart_button' );
-                                                                        do_action( 'woocommerce_before_add_to_cart_quantity' );
-
-                                                                        woocommerce_quantity_input(
-                                                                            array(
-                                                                                'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                                                                'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                                                                'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                                                            )
-                                                                        );
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_quantity' );
-
-                                                                        if($user_id == 0)
-                                                                            echo "<button type='button' data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                                                        else if($user_id != $post->post_author)
-                                                                            echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_button' ); ?>
-                                                                    </form>
-                                                                    <?php
-                                                                    do_action( 'woocommerce_after_add_to_cart_form' );
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' );
                                                                     endif;
+
+                                                                    //Stripe pay form
+                                                                    $stripe_pay_form = 
+                                                                    '<form action="/checkout-stripe" method="post">
+                                                                        <input type="hidden" name="postID" value="' . $post->ID . '">
+                                                                        <input type="hidden" name="metadata" value="' . $dateNameStart . '">
+                                                                        <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
+                                                                        ' . $button_pay . '
+                                                                        </button>
+                                                                    </form>';
+                                                                    echo $stripe_pay_form;
                                                                     ?>
                                                                 </div>
                                                             </div>

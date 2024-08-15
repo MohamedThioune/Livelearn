@@ -30,7 +30,7 @@ function create_session($data){
     return $information;
 }
 
-function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
+function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $offline = null){
     $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ?  get_site_url() . '/inloggen' : get_site_url() . '/dashboard/user/activity';
     $PRICE_ID = ($price_id) ?: null;
 
@@ -90,6 +90,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null){
             'metadata' => [
                 'userID' => $user->ID,
                 'postID' => $post->ID,
+                'offline' => $offline
             ],
             'shipping_address_collection' => [
                 'allowed_countries' => ['US', 'FR', 'NL', 'SN']
@@ -238,6 +239,7 @@ function stripe_status($data){
             'prijs' => 'true',
             'auth_id' => $session->metadata['userID'],  
             'owner_id' => $session->metadata['userID'], 
+            'metadata' =>  $session->metadata['offline'], 
         );
 
         //create a order information
@@ -261,11 +263,12 @@ function stripe_status($data){
 // $userID = 3;
 $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
 $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
+$metadata = isset($_GET['metadata']) ? $_GET['metadata'] : null;
 //Checkout session stripe
 if(isset($_GET['priceID']) && $_GET['mode']):
-    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID);
+    $session_stripe_secret = session_stripe($_GET['priceID'], $_GET['mode'], $postID, $userID, $metadata);
     echo($session_stripe_secret);
-endif;
+endif; 
 
 //Create order 
 if(isset($_POST['order_free'])):
