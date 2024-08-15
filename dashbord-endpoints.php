@@ -1368,6 +1368,21 @@ function statistic_company($data)
     global $wpdb;
     $current_user = intval($data['ID']);
     $company = get_field('company',  'user_' . $current_user);
+    $id_current_company = $company[0]->ID;
+    $image =  get_field('company_logo',$id_current_company);
+    if(!$image)
+        $image = get_the_post_thumbnail_url($id_current_company);
+
+    if(!$image)
+        $image = get_field('preview', $id_current_company)['url'];
+
+    if(!$image)
+        $image = get_field('url_image_xml', $id_current_company);
+
+    if(!$image)
+        $image = get_stylesheet_directory_uri() . '/img/placeholder.png';
+
+    $company[0]->company_image = $image;
     $user_connected = get_user_by('ID', $current_user)->data;
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
     $user_connected->user_company = $company[0];
@@ -2938,11 +2953,12 @@ function newCoursesByTeacher(WP_REST_Request $data)
     update_field('price', $data['price'], $id_post);
     update_field('experts', $contributors, $id_post);
     update_field('course_type', 'article' , $id_post);
+    //update_field('categories', $onderwerpen, $id_post);
 
     $response = new WP_REST_Response(
     array(
         //'new_courses'=>file_get_contents('/wp-json/custom/v2/article/'.$id_post),
-        'new_courses'=>get_post($id_post,true),
+        'new_course_added'=>get_post($id_post,true),
         'message'=> 'articles saved success',
     ));
     $response->set_status(201);
