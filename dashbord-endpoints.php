@@ -1368,6 +1368,21 @@ function statistic_company($data)
     global $wpdb;
     $current_user = intval($data['ID']);
     $company = get_field('company',  'user_' . $current_user);
+    $id_current_company = $company[0]->ID;
+    $image =  get_field('company_logo',$id_current_company);
+    if(!$image)
+        $image = get_the_post_thumbnail_url($id_current_company);
+
+    if(!$image)
+        $image = get_field('preview', $id_current_company)['url'];
+
+    if(!$image)
+        $image = get_field('url_image_xml', $id_current_company);
+
+    if(!$image)
+        $image = get_stylesheet_directory_uri() . '/img/placeholder.png';
+
+    $company[0]->company_image = $image;
     $user_connected = get_user_by('ID', $current_user)->data;
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
     $user_connected->user_company = $company[0];
@@ -1639,7 +1654,7 @@ function statistic_company($data)
         $avairages_topics_company[] = array(
             'name'=>get_the_category_by_ID($key),
             'occurence'=>$value,
-            'percentage'=>intval(($value / $total_occurences) * 100)
+            'percentage'=>round(($value / $total_occurences) * 100, 2),
         );
     }
     /*                      ///                      */
@@ -2913,4 +2928,39 @@ ORDER BY MONTH(created_at)
     );
 
     return new WP_REST_Response($dataResponse,200);
+}
+
+function newCoursesByTeacher(WP_REST_Request $data)
+{
+    $id = intval($data['id']);
+    $args = array(
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'post_title' => $data['title'],
+            'post_author' => $id,
+        );
+    $id_post = wp_insert_post($args, true);
+    if(is_wp_error($id_post)){
+        $error = new WP_Error($id_post);
+        return new WP_REST_Response(
+            array(
+            'message' => $error->get_error_message($id_post),
+        ),401);
+    }
+    $contributors = array("3","5","30");
+
+    update_field('article_itself', $data['article_content'], $id_post);
+    update_field('price', $data['price'], $id_post);
+    update_field('experts', $contributors, $id_post);
+    update_field('course_type', 'article' , $id_post);
+    //update_field('categories', $onderwerpen, $id_post);
+
+    $response = new WP_REST_Response(
+    array(
+        //'new_courses'=>file_get_contents('/wp-json/custom/v2/article/'.$id_post),
+        'new_course_added'=>get_post($id_post,true),
+        'message'=> 'articles saved success',
+    ));
+    $response->set_status(201);
+    return $response;
 }
