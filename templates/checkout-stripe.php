@@ -101,7 +101,8 @@ $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . 
             const mode = "<?php echo $mode ?>";
             const postID = "<?php echo $postID ?>";
             const userID = "<?php echo $userID ?>";
-            const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID +  "&userID=" + userID, {
+            const metadata = "<?php echo $metadata ?>";
+            const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID + "&userID=" + userID + "&metadata=" + metadata, {
                 method: "POST",
             });
             const { clientSecret } = await response.json();
