@@ -51,12 +51,12 @@ $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('conn
 $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 
 //Stripe pay 
+$button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
 $stripe_pay_form = 
 '<form action="/checkout-stripe" method="post">
     <input type="hidden" name="postID" value="' . $post->ID . '">
     <button type="submit" class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
-    <img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe">
-    Pay with Stripe !
+    ' . $button_pay . '
     </button>
 </form>';
 
