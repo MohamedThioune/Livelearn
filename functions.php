@@ -729,7 +729,8 @@ function create_product_for_course($post_id){
     $product_registrated_id = get_field('connected_product',$post_id);
 
 
-    $product = wc_get_product( $product_registrated_id );
+    //$product = wc_get_product( $product_registrated_id );
+    $product = array();
 
     if($product){
         //product exist, only update price if nesseccary
@@ -1581,6 +1582,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
+    register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getUserSubtopicsStatistics',
+    ));
 
     register_rest_route('custom/v2', '/user/internal/courses', array(
         'methods' => 'GET',
@@ -1769,6 +1774,20 @@ add_action( 'rest_api_init', function () {
         'methods' => 'PUT',
         'callback' => 'updateUserProgressionWithLastPosition',
     ));
+
+    register_rest_route ('custom/v3', '/user/course/progression', array(
+        'methods' => 'GET',
+        'callback' => 'get_all_user_progress',
+    ));
+
+
+    register_rest_route ('custom/v3', '/user/course/progression/update', array(
+        'methods' => 'PUT',
+        'callback' => 'update_user_progress',
+    ));
+
+    
+    
 
     register_rest_route ('custom/v1', '/user/cart/signups', array(
         'methods' => 'GET',
@@ -2073,16 +2092,16 @@ add_action( 'rest_api_init', function () {
         'callback' => 'search'
     ));
 
+    register_rest_route ('custom/v1', '/search/stripe/invoices/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'search_invoices'
+    ));
+
     register_rest_route ('custom/v1', '/update/stripe', array(
         'methods' => 'POST',
         'callback' => 'update'
     ));
     //End ...
-
-    register_rest_route ('custom/v1', '/tofollow/experts', array(
-        'methods' => 'GET',
-        'callback' => 'expertsToFollow'
-    ));
 
     //Made by MaxBird
     register_rest_route ('custom/v1', '/user/activity/(?P<ID>\d+)', array(
@@ -2090,12 +2109,17 @@ add_action( 'rest_api_init', function () {
         'callback' => 'activityUser'
     ));
 
-    //Made by Mohamed | Checkout
+    //Made by MaxBird | Checkout
     register_rest_route ('custom/v1', '/checkout-stripe-ui', array(
         'methods' => 'GET',
         'callback' => 'session_stripe'
     ));
     //End ...
+
+    register_rest_route ('custom/v1', '/tofollow/experts', array(
+        'methods' => 'GET',
+        'callback' => 'expertsToFollow'
+    ));
 
     register_rest_route ('custom/v1', '/upcoming/schedule', array(
         'methods' => 'GET',
@@ -2132,11 +2156,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'get_detail_notification'
     ));
-
+    /*
     register_rest_route ('custom/v1', '/company-statistic/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'company_statistic'
     ));
+    */
     register_rest_route ('custom/v1', '/statistic/company/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'statistic_company'
@@ -2184,5 +2209,9 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/addManyPersone/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'addManyPeople'
+    ));
+    register_rest_route ('custom/v1', '/teacher/new-course/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'newCoursesByTeacher'
     ));
 });
