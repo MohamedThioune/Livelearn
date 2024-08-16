@@ -47,12 +47,18 @@ if(!$read_video)
     $read_video = "<img class='blockImgCour' src='" . $thumbnail . "' alt='preview image'>";
 
 //Start or Buy
-// if (!$user_id)
-//     $startorbuy ='<button type="button" class="btn btn-buy-now" data-toggle="modal" data-target="#SignInWithEmail" aria-label="Close" data-dismiss="modal">Start Now</button>';
-// else {
 $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href="/dashboard/user/checkout-video/?post=' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
 $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
-// }
+
+//Stripe pay 
+$button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
+$stripe_pay_form = 
+'<form action="/checkout-stripe" method="post">
+    <input type="hidden" name="postID" value="' . $post->ID . '">
+    <button type="submit" class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+    ' . $button_pay . '
+    </button>
+</form>';
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -650,6 +656,7 @@ endif;
                                 </li>
                                 <div class="d-block">
                                     <?php echo $startorbuy; ?>
+                                    <?php echo $stripe_pay_form ?>
                                 </div>
                                 <div class="sharing-element">
                                     <?php
@@ -753,7 +760,6 @@ endif;
 
     </div>
 </div>
-
 
 <!-- modal register / login -->
 <!--

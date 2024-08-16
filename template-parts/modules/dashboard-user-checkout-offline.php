@@ -1,6 +1,7 @@
 <html lang="en">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 <?php
+require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
 
 $post = 0;
 
@@ -20,6 +21,7 @@ if($post):
 
 // Coursetype
 $course_type = get_field('course_type', $post->ID);
+
 // Image
 $image = get_field('preview', $post->ID)['url'];
 if(!$image):
@@ -87,6 +89,13 @@ foreach($bunch_orders as $order){
             array_push($enrolled, $course_id);
     }
 }
+
+//Enrolled with Stripe
+$enrolled_stripe = list_orders($user->ID)['ids'];
+if(!empty($enrolled_stripe))
+if(in_array($post->ID, $enrolled_stripe))
+    $bool = 1;
+
 if(!$bool)
     header('Location: /dashboard/user/activity?message=You need to register at this course first !' );
 
@@ -104,6 +113,24 @@ if(!empty($enrolled))
 $locationenr = "Online";
 $yearenr = date("Y");
 
+//Check with stripe | metadata
+if(!$datenr):
+    global $wpdb;
+    $table = $wpdb->prefix . 'stripe_order';
+
+    $sql_orders_stripe = $wpdb->prepare("SELECT course_id FROM $table WHERE owner_id = $user->ID AND course_id = $post->ID");
+    $orders_stripe = $wpdb->get_results($sql_orders_stripe);
+    if(isset($orders_stripe[0])):
+        $orderStripe = $orders_stripe[0];
+        if($orderStripe->course_id):
+            $postStripe = get_post($orderStripe->course_id);
+            if($postStripe)
+                $datenr = $orderStripe->metadata;
+        endif;
+    endif;
+endif;
+
+
 if($datenr){
     $datenrs = explode(",", $datenr);
     $dayenr = explode(" ", $datenrs[0])[0]; 
@@ -115,6 +142,7 @@ if($datenr){
         if($datenrs[3])
             $yearenr = $datenrs[3];
 }
+
 
 // Saved courses
 $favorite = '<button type="button" id="' . $user->ID ."_". $post->ID . '_course" class="btn btnFavorite btn_favourite">
