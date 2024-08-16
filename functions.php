@@ -1775,6 +1775,20 @@ add_action( 'rest_api_init', function () {
         'callback' => 'updateUserProgressionWithLastPosition',
     ));
 
+    register_rest_route ('custom/v3', '/user/course/progression', array(
+        'methods' => 'GET',
+        'callback' => 'get_all_user_progress',
+    ));
+
+
+    register_rest_route ('custom/v3', '/user/course/progression/update', array(
+        'methods' => 'PUT',
+        'callback' => 'update_user_progress',
+    ));
+
+    
+    
+
     register_rest_route ('custom/v1', '/user/cart/signups', array(
         'methods' => 'GET',
         'callback' => 'get_user_signups',
