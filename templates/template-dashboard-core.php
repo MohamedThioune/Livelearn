@@ -186,6 +186,7 @@ function purchase_badges(){
         'limit' => -1,
     );
     $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
 
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
