@@ -1582,6 +1582,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
+    register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getUserSubtopicsStatistics',
+    ));
 
     register_rest_route('custom/v2', '/user/internal/courses', array(
         'methods' => 'GET',
@@ -1770,6 +1774,20 @@ add_action( 'rest_api_init', function () {
         'methods' => 'PUT',
         'callback' => 'updateUserProgressionWithLastPosition',
     ));
+
+    register_rest_route ('custom/v3', '/user/course/progression', array(
+        'methods' => 'GET',
+        'callback' => 'get_all_user_progress',
+    ));
+
+
+    register_rest_route ('custom/v3', '/user/course/progression/update', array(
+        'methods' => 'PUT',
+        'callback' => 'update_user_progress',
+    ));
+
+    
+    
 
     register_rest_route ('custom/v1', '/user/cart/signups', array(
         'methods' => 'GET',
