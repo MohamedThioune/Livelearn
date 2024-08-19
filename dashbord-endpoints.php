@@ -383,6 +383,22 @@ function editPeopleCompany($data){
         ));
 
 }
+
+function removePeopleCompany($data)
+{
+    $user_id = intval($data['ID']);
+    $isRemoved = update_field('company', null ,'user_' . $user_id);
+    if ($isRemoved)
+        return new WP_REST_Response(
+            array(
+                'message'=>'User removed from company...',
+            ));
+    return new WP_REST_Response(
+        array(
+            'message'=>'User not removed from company...',
+            'id_user'=>$user_id,
+        ));
+}
 function learn_modules($data){
     $users_companie = array();
     //$user_connected =get_user_by('ID', $data['ID']); //$user_in
