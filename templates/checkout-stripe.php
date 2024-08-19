@@ -178,7 +178,6 @@ $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . 
                     <?php
                 endif;
             else:
-                // echo '<h3>LOGIN</h3>' . $login_form;
                 echo $login_form;
             endif;
             ?>
