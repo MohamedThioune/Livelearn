@@ -127,6 +127,21 @@ function candidate($id){
   $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
 
+  //company
+  $company = get_field('company',  'user_' . $user->ID) ? get_field('company',  'user_' . $user->ID)[0] : array();
+  $main_company = array();
+  $main_company['ID'] = !empty($company) ? $company->ID : 0;
+  $main_company['title'] = !empty($company) ? $company->post_title : 'xxxx';
+  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
+  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
+  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : 'xxxx';
+  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : 'xxxx';
+  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : 'xxxx';
+  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : 'xxxx';
+  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : 'xxxx';
+  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : 'xxxx';
+  $sample['company'] = (Object)$main_company;
+
   $member_since = new DateTimeImmutable($user->user_registered_at);
   $sample['member_since'] = $member_since->format('M d, Y');
 
@@ -161,18 +176,19 @@ function candidate($id){
   "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
   Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.";
 
+  //skills
   $topics = array();
-  $limit = 3;
+  // $limit = 3;
   $topics = get_user_meta($user->ID, 'topic');
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
   if(!empty($topics)):
     $args = array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'include'  => $topics,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        'include' => $topics,
-        'post_per_page' => $limit
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'include'  => $topics,
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+      'include' => $topics,
+      // 'post_per_page' => $limit
     );
     $main_skills = get_categories($args);
 
@@ -205,6 +221,39 @@ function candidate($id){
 
     //add skill complete information
     $sample['skills'] = $skills_origin;
+  endif;
+
+  //experts
+  $experts = array();
+  $experts = get_user_meta($user->ID, 'expert');
+  $experts_origin = array();
+  $read_one = array();
+  if(!empty($experts)):
+    foreach($experts as $value):
+      $expert_sample = [];
+      if(!$value || in_array($value, $read_one))
+        continue;
+
+      array_push($read_one, $value);
+      $user_expert = get_user_by('ID', $value);
+
+      if($user_expert->ID != $user->ID)
+        $expert_sample['name'] = ($user_expert->first_name) ? : $user_expert->display_name;
+      else
+        $expert_sample['name'] = "Ikzelf";
+
+      if(!$expert_sample['name'])
+        continue;
+
+      $image_user = get_field('profile_img',  'user_' . $user_expert->ID);
+      $expert_sample['image']= $image_user ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      
+      //add sample
+      $experts_origin[] = (Object)$expert_sample;
+    endforeach;
+
+    //add skill complete information
+    $sample['experts'] = $experts_origin;
   endif;
 
   //Education Information
@@ -2395,9 +2444,9 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         'state' => $state,
         'topics' => $topics_with_notes,
         'badges' => $badges,
-         'certificats' => $certificats,
-         'courses_info' => $courses_combined,
-        'other_data'=>detailsPeople()->data
+        'certificats' => $certificats,
+        'courses_info' => $courses_combined,
+        // 'other_data'=>detailsPeople()->data
 
     );
 
