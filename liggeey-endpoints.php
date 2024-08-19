@@ -2444,9 +2444,9 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         'state' => $state,
         'topics' => $topics_with_notes,
         'badges' => $badges,
-         'certificats' => $certificats,
-         'courses_info' => $courses_combined,
-        'other_data'=>detailsPeople()->data
+        'certificats' => $certificats,
+        'courses_info' => $courses_combined,
+        // 'other_data'=>detailsPeople()->data
 
     );
 
