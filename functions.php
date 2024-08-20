@@ -2146,6 +2146,14 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'companyPeople'
     ));
+    register_rest_route ('custom/v1', '/company/people/update/(?P<ID>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'editPeopleCompany'
+    ));
+    register_rest_route ('custom/v1', '/company/people/remove/(?P<ID>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'removePeopleCompany'
+    ));
 
     register_rest_route ('custom/v1', '/learnModules/(?P<ID>\d+)', array(
         'methods' => 'GET',
@@ -2218,5 +2226,9 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/teacher/new-course/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'newCoursesByTeacher'
+    ));
+    register_rest_route ('custom/v1', '/teacher/update-course/(?P<id_course>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'updateCoursesByTeacher'
     ));
 });
