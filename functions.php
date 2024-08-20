@@ -419,7 +419,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -462,7 +462,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -505,7 +505,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -2027,6 +2027,11 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/candidate/skillsPassport', array(
         'methods' => 'POST',
         'callback' => 'candidateSkillsPassport'
+    ));
+
+    register_rest_route ('custom/v1', '/candidate/skillsPassport/advanced', array(
+        'methods' => 'POST',
+        'callback' => 'candidateSkillsPassportAdvanced'
     ));
 
     register_rest_route ('custom/v1', '/user/profil/update', array(
