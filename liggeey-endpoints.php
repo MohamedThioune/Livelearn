@@ -151,13 +151,13 @@ function candidate($id){
   if(!$date_born)
       $age = "No birth";
   else{
-      //explode the date to get month, day and year
-      $birthDate = explode("/", $date_born);
-      //get age from date or birthdate
-      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
-          ? ((date("Y") - $birthDate[2]) - 1)
-          : (date("Y") - $birthDate[2]));
-      $age .= ' Years';
+    //explode the date to get month, day and year
+    $birthDate = explode("/", $date_born);
+    //get age from date or birthdate
+    $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+        ? ((date("Y") - $birthDate[2]) - 1)
+        : (date("Y") - $birthDate[2]));
+    $age .= ' Years';
   }
   $sample['age'] = $age;
   $sample['date_born'] = $date_born;
@@ -178,7 +178,6 @@ function candidate($id){
 
   //skills
   $topics = array();
-  // $limit = 3;
   $topics = get_user_meta($user->ID, 'topic');
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
@@ -187,7 +186,6 @@ function candidate($id){
       'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
       'include'  => $topics,
       'hide_empty' => 0, // change to 1 to hide categores not having a single post
-      'include' => $topics,
       // 'post_per_page' => $limit
     );
     $main_skills = get_categories($args);
@@ -221,6 +219,52 @@ function candidate($id){
 
     //add skill complete information
     $sample['skills'] = $skills_origin;
+  endif;
+
+  //skills | internal
+  $topics_internal = array();
+  $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+  $skills_note = get_field('skills', 'user_' . $user->ID);
+  $skills_origin = array();
+  $main_skills = array();
+  if(!empty($topics_internal)):
+    $args = array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'include'  => $topics_internal,
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+      // 'post_per_page' => $limit
+    );
+    $main_skills = get_categories($args);
+
+    foreach ($main_skills as $main):
+      $skill_sample = [];
+      $note = 0;
+      if (!empty($skills_note)) 
+        foreach ($skills_note as $skill) 
+          if($skill['id'] == $main->term_id){
+            $note = $skill['note'];
+            break;
+          }
+
+      $skill_sample['term_id'] = $main->term_id;
+      $skill_sample['name'] = $main->name;
+      $skill_sample['slug'] = $main->slug;
+      $skill_sample['term_taxonomy_id'] = $main->term_taxonomy_id;
+      $skill_sample['description'] = $main->description;
+      $skill_sample['term_taxonomy_id'] = $main->term_taxonomy_id;
+      $skill_sample['parent'] = $main->parent;
+      $skill_sample['cat_ID'] = $main->cat_ID;
+      $skill_sample['cat_name'] = $main->cat_name;
+      $skill_sample['category_nicename'] = $main->category_nicename;
+      $skill_sample['category_parent'] = $main->category_parent;
+      $skill_sample['note'] = $note;
+
+      //add sample
+      $skills_origin[] = (Object)$skill_sample;
+    endforeach;
+
+    //add skill complete information
+    $sample['internal_skills'] = $skills_origin;
   endif;
 
   //experts
@@ -2297,13 +2341,13 @@ function candidateSkillsPassport(WP_REST_Request $request) {
   //favorite course
   $courses_saved = get_user_meta($user_id, 'course') ?? false;
   $courses = get_posts(
-      array(
-          'post_type' => array('course', 'post'),
-          'post_status' => 'publish',
-          'posts_per_page' => -1,
-          'order' => 'DESC',
-          'include' => $courses_saved
-      )
+    array(
+        'post_type' => array('course', 'post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        'include' => $courses_saved
+    )
   );
 
   $courses_combined = array();
@@ -2722,7 +2766,65 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
       }
     endforeach;
   //End
-  
+    
+  //Feedbacks
+  $args = array(
+    'post_type' => 'feedback', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+  );
+  $todos = get_posts($args);
+
+  $feedbacks = array();
+  $persoonlijk_ontwikkelplan = array();
+  $beoordeling_gesprek = array();
+  $compliments = array();
+  $gedeelde_cursus = array();
+  $verplichte_cursus = array();
+  if(!empty($todos))
+    foreach($todos as $key=>$todo):
+        $rating = null;
+
+        $type = get_field('type_feedback', $todo->ID);
+        $todo->manager = get_user_by('ID', get_field('manager_feedback', $todo->ID));
+
+        $todo->manager_image = get_field('profile_img',  'user_' . $todo->manager->ID);
+        if(!$image)
+            $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+        $rating = get_field('rating_feedback', $todo->ID);
+        $todo->rating = ($rating) ? str_repeat("⭐ ", $rating) : '✖️';
+
+        switch ($type) {
+            case 'Feedback':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($feedbacks, $todo);
+                break;
+            case 'Compliment':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($compliments, $todo);
+                break;
+            case 'Persoonlijk ontwikkelplan':
+                $todo->beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                array_push($persoonlijk_ontwikkelplan, $todo);
+                break;
+            case 'Beoordeling Gesprek':
+                $todo->beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                array_push($beoordeling_gesprek, $todo);
+                break;
+            case 'Gedeelde cursus':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($gedeelde_cursus, $todo);
+                break;
+            case 'Verplichte cursus':
+                $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                array_push($verplichte_cursus, $todo);
+                break;
+        }
+    endforeach;
+  //End
+
   // Informations 
   $data = array(
     'user' => $user,
@@ -2738,6 +2840,14 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
       'certificats' => $certificats,
       'prestaties' => $prestaties,
       'diplomas' => $diplomas,
+    ],
+    'feedbacks' => [
+      'feedback' => $feedbacks,
+      'ontwikkelplan' => $persoonlijk_ontwikkelplan,
+      'beoordeling' => $beoordeling_gesprek,
+      'compliment' => $compliments,
+      'gedeelde' => $gedeelde_cursus,
+      'verplichte' => $verplichte_cursus
     ],
   );
 
