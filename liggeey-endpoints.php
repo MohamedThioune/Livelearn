@@ -2662,7 +2662,6 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
           array_push($todos_cursus, $mandatory);
           break;
     }
-
   endforeach;
   //End
 
