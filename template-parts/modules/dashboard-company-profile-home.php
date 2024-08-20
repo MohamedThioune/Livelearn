@@ -910,7 +910,6 @@ $canva_data_member_read = is_array($data_member_read) ? join(',', $data_member_r
                                             
                                     endif;
 
-
                                     //Onderwerpen : situation
                                     if($type == 'Onderwerpen'):
                                         $skill_todo = get_field('onderwerpen_todo', $todo->ID);
@@ -924,7 +923,6 @@ $canva_data_member_read = is_array($data_member_read) ? join(',', $data_member_r
                                                     break;
                                                 }
                                     endif;
-                            
 
                                     ?>
                                     <tr>

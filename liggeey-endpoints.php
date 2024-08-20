@@ -2406,6 +2406,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
             $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+            $achievement_info = array();
 
             switch ($type) {
                 case 'Genuine':
@@ -2414,11 +2415,11 @@ function candidateSkillsPassport(WP_REST_Request $request) {
                     break;
                 case 'Certificaat':
                   $achievement_info = array(
-                      'title' => $achievement->post_title,
-                      'description' => $achievement->post_content,
-                      'manager' => $achievement->manager,
-                      'manager_image' => $achievement->manager_image,
-                      'trigger' => get_field('trigger_badge', $achievement->ID),
+                    'title' => $achievement->post_title,
+                    'description' => $achievement->post_content,
+                    'manager' => $achievement->manager,
+                    'manager_image' => $achievement->manager_image,
+                    'trigger' => get_field('trigger_badge', $achievement->ID),
                   );
                   $certificats[] = $achievement_info;
                   break;
@@ -2445,6 +2446,8 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         'topics' => $topics_with_notes,
         'badges' => $badges,
         'certificats' => $certificats,
+        'prestatie' => $prestaties,
+        'diploma' => $diplomas,
         'courses_info' => $courses_combined,
         // 'other_data'=>detailsPeople()->data
 
@@ -2454,6 +2457,295 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     $response = new WP_REST_Response($data);
     $response->set_status(200);
     return $response;
+}
+
+//[POST]Dashboard Candidate | Skills passport
+function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
+  $required_parameters = ['userApplyId'];
+  //Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif; 
+
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+  $required_parameters = ['userApplyId'];
+  $errors = ['errors' => '', 'error_data' => ''];
+  $validated = validated($required_parameters, $request);
+
+  $errors = [];
+  $user_apply = get_user_by('ID', $user_id);
+  if (!$user_apply) {
+    $errors['errors'] = 'User not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  } 
+  else 
+    $user_id = $user_apply->ID;
+
+  //Informations user 
+  $user = candidate($user_id);
+
+  $enrolled = array();
+  $enrolled_courses = array();
+  //Orders - enrolled courses
+  $args = array(
+      'customer_id' => $user->ID,
+      'post_status' => array('wc-processing', 'wc-completed'),
+      'orderby' => 'date',
+      'order' => 'DESC',
+      'limit' => -1,
+  );
+  $bunch_orders = wc_get_orders($args);
+  foreach($bunch_orders as $order)
+    foreach ($order->get_items() as $item_id => $item ) {
+      //Get woo orders from user
+      $id_course = intval($item->get_product_id()) - 1;
+      if(!in_array($id_course, $enrolled))
+          array_push($enrolled, $id_course);
+    }
+  
+  if(!empty($enrolled))
+  {
+      $args = array(
+          'post_type' => 'course',
+          'posts_per_page' => -1,
+          'orderby' => 'post_date',
+          'order' => 'DESC',
+          'include' => $enrolled,
+      );
+      $enrolled_courses = get_posts($args);
+  }
+  $state = array('new' => 0, 'progress' => 0, 'done' => 0);
+  foreach($enrolled_courses as $key => $course) :
+    /* * State actual details * */
+    $status = "new";
+    //Get read by user
+    $args = array(
+      'post_type' => 'progression',
+      'title' => $course->post_name,
+      'post_status' => 'publish',
+      'author' => $user_id,
+      'posts_per_page'         => 1,
+      'no_found_rows'          => true,
+      'ignore_sticky_posts'    => true,
+      'update_post_term_cache' => false,
+      'update_post_meta_cache' => false
+    );
+    $progressions = get_posts($args);
+    if(!empty($progressions)){
+        $status = "progress";
+        $progression_id = $progressions[0]->ID;
+        //Finish read
+        $is_finish = get_field('state_actual', $progression_id);
+        if($is_finish)
+            $status = "done";
+    }
+
+    // Analytics
+    switch ($status) {
+        case 'new':
+            $state['new']++;
+            break;
+        case 'progress':
+            $state['progress']++;
+            break;
+        case 'done':
+            $state['done']++;
+            break;
+    }
+  endforeach;
+
+  //Todo's
+  $todos_feedback = array();
+  $todos_onderwerpen = array();
+  $todos_plannen = array();
+  $todos_cursus = array();
+  // $count_mandatories = 0;
+  /* Mandatories */
+  $args = array(
+    'post_type' => 'mandatory', 
+    'post_status' => 'publish',
+    'author' => $user->ID,
+    'posts_per_page'         => -1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+  );
+  $mandatories = get_posts($args);
+  $count_mandatory_done = 0;
+  // $count_mandatories = (!empty($mandatories)) ? count($mandatories) : 0;
+  //course mandatory finished 
+  foreach($mandatories as $mandatory):
+    $pourcentage = 0;
+    //Get read by user 
+    $progressions = array();
+    $args = array(
+      'post_type' => 'progression',
+      'title' => $mandatory->post_title,
+      'post_status' => 'publish',
+      'author' => $user_id,
+      'posts_per_page'         => 1,
+      'no_found_rows'          => true,
+      'ignore_sticky_posts'    => true,
+      'update_post_term_cache' => false,
+      'update_post_meta_cache' => false
+    );
+    $progressions = get_posts($args);
+    if(!empty($progressions)):
+      $progression_id = $progressions[0]->ID;
+      //Finish read
+      $is_finish = get_field('state_actual', $progression_id);
+      if($is_finish){
+        $count_mandatory_done += 1;
+        $pourcentage = 100;
+      }
+
+      $post = get_page_by_path($mandatory->post_title, OBJECT, 'course');
+      $type_post = ($post) ? get_field('course_type', $post->ID) : 'NaN';
+      // var_dump($type_post);
+      
+      if($type_post == 'Video'){
+          $courses = get_field('data_virtual', $post->ID);
+          $youtube_videos = get_field('youtube_videos', $post->ID);
+          if(!empty($courses))
+              $count_lesson = count($courses);
+          else if(!empty($youtube_videos))
+              $count_lesson = count($youtube_videos);
+      }
+      else if($type_post == 'Podcast'){
+          $podcasts = get_field('podcasts', $post->ID);
+          $podcast_index = get_field('podcasts_index', $post->ID);
+          if(!empty($podcasts))
+              $count_lesson = count($podcasts);
+          else if(!empty($podcast_index))
+              $count_lesson = count($podcast_index);
+      }
+      else{
+          $count_lesson = 0;
+      }
+
+      //Pourcentage
+      $lesson_reads = get_field('lesson_actual_read', $progression_id);
+      $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+      if($count_lesson)
+          $pourcentage = ($count_lesson) ? ($count_lesson_reads / $count_lesson) * 100 : 0;                
+    endif;
+    $mandatory->pourcentage = intval($pourcentage);
+
+    $type = get_field('type_feedback', $mandatory->ID);
+    $mandatory->manager = get_user_by('ID', get_field('manager_feedback', $mandatory->ID));
+    $mandatory->manager_image = get_field('profile_img',  'user_' . $mandatory->manager->ID);
+    if(!$image)
+      $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+    switch ($type) {
+      case 'Feedback':
+          $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+          array_push($todos_feedback, $mandatory);
+          break;
+      case 'Persoonlijk ontwikkelplan':
+          $mandatory->beschrijving_feedback = get_field('opmerkingen', $mandatory->ID);
+          array_push($todos_plannen, $mandatory);
+          break;
+      case 'Onderwerpen':
+          $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+          array_push($todos_onderwerpen, $mandatory);
+          break;
+      case 'Verplichte cursus':
+          $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+          array_push($todos_cursus, $mandatory);
+          break;
+    }
+
+  endforeach;
+  //End
+
+  //Badges
+  $args = array(
+    'post_type' => 'badge',
+    'author' => $user_id,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+  );
+  $achievements = get_posts($args);
+  $badges = array();
+  $certificats = array();
+  $performances = array();
+  $prestaties = array();
+  $diplomas = array();
+  $image = '';
+  if(!empty($achievements))
+    foreach($achievements as $key=>$achievement):
+      $type = get_field('type_badge', $achievement->ID);
+
+      $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+      $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
+      $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+      if(!$image)
+          $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+      $achievement_info = array();
+
+      switch ($type) {
+          case 'Genuine':
+              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+              array_push($badges, $achievement);
+              break;
+          case 'Certificaat':
+            $achievement_info = array(
+              'title' => $achievement->post_title,
+              'description' => $achievement->post_content,
+              'manager' => $achievement->manager,
+              'manager_image' => $achievement->manager_image,
+              'trigger' => get_field('trigger_badge', $achievement->ID),
+            );
+            $certificats[] = $achievement_info;
+            break;
+
+          case 'Prestatie':
+              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+              array_push($prestaties, $achievement);
+              break;
+          case 'Diploma':
+              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+              array_push($diplomas, $achievement);
+              break;
+          default:
+              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+              array_push($badges, $achievement);
+              break;
+      }
+    endforeach;
+  //End
+  
+  // Informations 
+  $data = array(
+    'user' => $user,
+    'state' => $state,
+    'todos' => [
+      'feedback' => $todos_feedback,
+      'onderwerpen' => $todos_onderwerpen,
+      'plannen' => $todos_plannen,
+      'cursus' => $todos_cursus,
+    ],
+    'achievements' => [
+      'badges' => $badges,
+      'certificats' => $certificats,
+      'prestaties' => $prestaties,
+      'diplomas' => $diplomas,
+    ],
+  );
+
+  // Response
+  $response = new WP_REST_Response($data);
+  $response->set_status(200);
+  return $response;
 }
 
 //[Add]Dashboard My_Resume

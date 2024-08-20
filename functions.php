@@ -419,7 +419,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -462,7 +462,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -505,7 +505,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -2029,6 +2029,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'candidateSkillsPassport'
     ));
 
+    register_rest_route ('custom/v1', '/candidate/skillsPassport/advanced', array(
+        'methods' => 'POST',
+        'callback' => 'candidateSkillsPassportAdvanced'
+    ));
+
     register_rest_route ('custom/v1', '/user/profil/update', array(
         'methods' => 'POST',
         'callback' => 'updateCompanyProfil'
@@ -2141,6 +2146,14 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'companyPeople'
     ));
+    register_rest_route ('custom/v1', '/company/people/update/(?P<ID>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'editPeopleCompany'
+    ));
+    register_rest_route ('custom/v1', '/company/people/remove/(?P<ID>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'removePeopleCompany'
+    ));
 
     register_rest_route ('custom/v1', '/learnModules/(?P<ID>\d+)', array(
         'methods' => 'GET',
@@ -2213,5 +2226,9 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/teacher/new-course/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'newCoursesByTeacher'
+    ));
+    register_rest_route ('custom/v1', '/teacher/update-course/(?P<id_course>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'updateCoursesByTeacher'
     ));
 });
