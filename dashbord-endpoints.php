@@ -296,6 +296,7 @@ function companyPeople($data){
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+            $user->function = get_field('role',  'user_' . $user->ID)? : '';
             $user->department = get_field('departments', $company[0]->ID);
             $user->phone = get_field('telnr',  'user_' . $user->ID);
             //people you manages
@@ -311,6 +312,7 @@ function companyPeople($data){
                     $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
                     $persone->data->department = get_field('departments', $company[0]->ID);
                     $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
+                    $persone->data->function = get_field('role',  'user_' . $persone->ID);
 
                     $people_managed_by_me[] = $persone->data;
                 }
@@ -350,6 +352,52 @@ function companyPeople($data){
         ));
     $response->set_status(200);
     return $response;
+}
+function editPeopleCompany($data){
+    $user_id = intval($data['ID']);
+    $telephone = $data['phone'];
+    $function = $data['function'];
+    $department['name'] = $data['name_department'];
+    $company = get_field('company',  'user_' . $user_id);
+    $departments = array();
+
+    if ($department) {
+        $departments = get_field('departments', $company[0]->ID);
+        $key = array_search($department, $departments);
+        if($key !== false)
+            unset($departments[$key]);
+
+        array_push($departments, $department);
+        update_field('departments', $departments ,'user_' . $user_id);
+    }
+    if ($telephone)
+        update_field('telnr', $telephone ,'user_' . $user_id);
+    if ($function)
+        update_field('role', $function ,'user_' . $user_id);
+
+    return new WP_REST_Response(
+        array(
+            'message'=>'User updated...',
+            'id_user'=>$user_id,
+            'departement'=>array_reverse($departments)
+        ));
+
+}
+
+function removePeopleCompany($data)
+{
+    $user_id = intval($data['ID']);
+    $isRemoved = update_field('company', null ,'user_' . $user_id);
+    if ($isRemoved)
+        return new WP_REST_Response(
+            array(
+                'message'=>'User removed from company...',
+            ));
+    return new WP_REST_Response(
+        array(
+            'message'=>'User not removed from company...',
+            'id_user'=>$user_id,
+        ));
 }
 function learn_modules($data){
     $users_companie = array();
@@ -1370,17 +1418,18 @@ function statistic_company($data)
     $company = get_field('company',  'user_' . $current_user);
     $id_current_company = $company[0]->ID;
     $image =  get_field('company_logo',$id_current_company);
-    if(!$image)
+    if(!$image) {
         $image = get_the_post_thumbnail_url($id_current_company);
 
-    if(!$image)
-        $image = get_field('preview', $id_current_company)['url'];
+        if (!$image)
+            $image = get_field('preview', $id_current_company)['url'];
 
-    if(!$image)
-        $image = get_field('url_image_xml', $id_current_company);
+        if (!$image)
+            $image = get_field('url_image_xml', $id_current_company);
 
-    if(!$image)
-        $image = get_stylesheet_directory_uri() . '/img/placeholder.png';
+        if (!$image)
+            $image = get_stylesheet_directory_uri() . '/img/placeholder.png';
+    }
 
     $company[0]->company_image = $image;
     $user_connected = get_user_by('ID', $current_user)->data;
@@ -2223,7 +2272,7 @@ function get_departements($data)
     $departments = get_field('departments', $company[0]->ID)? : array();
     $response = new WP_REST_Response(
         array(
-            'departments'=>$departments,
+            'departments'=>array_reverse($departments),
         ));
     $response->set_status(200);
     return $response;
@@ -2933,8 +2982,26 @@ ORDER BY MONTH(created_at)
 function newCoursesByTeacher(WP_REST_Request $data)
 {
     $id = intval($data['id']);
+    $course_type = $data['course_type'];
+    $required_parameters = ['course_type'];
+    $price = $data['price'];
+
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+
+    if (!get_user_by('ID', $id))
+        return new WP_REST_Response(
+            array(
+                'message' => 'User not found',
+            ),401 );
+    $types = ['Assessment' => 'assessment', 'Article'=>'post', 'Video' => 'course','Podcast'=>'course'];
+    $type = $types[$course_type];
     $args = array(
-            'post_type' => 'post',
+            'post_type' => $type,
             'post_status' => 'publish',
             'post_title' => $data['title'],
             'post_author' => $id,
@@ -2947,20 +3014,66 @@ function newCoursesByTeacher(WP_REST_Request $data)
             'message' => $error->get_error_message($id_post),
         ),401);
     }
-    $contributors = array("3","5","30");
-
-    update_field('article_itself', $data['article_content'], $id_post);
-    update_field('price', $data['price'], $id_post);
-    update_field('experts', $contributors, $id_post);
-    update_field('course_type', 'article' , $id_post);
-    //update_field('categories', $onderwerpen, $id_post);
+    update_field('course_type', $course_type , $id_post);
+    if ($price)
+        update_field('price', $price , $id_post);
 
     $response = new WP_REST_Response(
     array(
-        //'new_courses'=>file_get_contents('/wp-json/custom/v2/article/'.$id_post),
         'new_course_added'=>get_post($id_post,true),
-        'message'=> 'articles saved success',
+        'message'=> 'course saved success...',
     ));
     $response->set_status(201);
     return $response;
+}
+function updateCoursesByTeacher(WP_REST_Request $data)
+{
+    $id_course = $data['id_course'];
+    $type_course = get_field('course_type',$id_course);
+    $course_type = $data['course_type'];
+    $isCourseUpdated = false;
+    $article_content = $data['article_content'];
+    $categories = $data['categories'];
+    $experts = $data['experts'];
+    $course = get_post($id_course);
+    $questions = $data['questions']; // for assessments
+    // $question_from_course = get_field('question', $id_course);
+    // var_dump($question_from_course);die;
+
+    if (!$course)
+        return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
+    if ($article_content) {
+        update_field('article_itself', $article_content, $id_course);
+        $isCourseUpdated = true;
+    }
+
+    if ($categories){
+        update_field('categories', $categories , $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($experts){
+        update_field('experts', $experts, $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($questions){
+        update_field('question', $questions, $id_course);
+        $isCourseUpdated = true;
+    }
+
+    //$args = array(
+    //    'ID' => $id_course,
+    //    'post_title' => $data['title'],
+    //);
+    //$id_course = wp_update_post($args, true);
+
+    if ($isCourseUpdated) {
+        $response = new WP_REST_Response(
+            array(
+                'message' => 'course updated success...',
+                'course' => get_post($id_course,true),
+            ));
+        $response->set_status(201);
+        return $response;
+    }
+    return new WP_REST_Response( array('message' => 'course not updated...',), 401);
 }
