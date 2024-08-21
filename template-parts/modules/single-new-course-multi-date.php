@@ -284,7 +284,10 @@ endif;
                                                                         <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
                                                                         ' . $button_pay . '
                                                                         </button>
-                                                                    </form>';
+                                                                    </form>
+                                                                    <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
+                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
+                                                                    ';
                                                                     echo $stripe_pay_form;
                                                                     ?>
                                                                 </div>
@@ -433,7 +436,10 @@ endif;
                                                                         <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
                                                                         ' . $button_pay . '
                                                                         </button>
-                                                                    </form>';
+                                                                    </form>
+                                                                    <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
+                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
+                                                                    ';
                                                                     echo $stripe_pay_form;
                                                                     ?>
 
@@ -551,7 +557,10 @@ endif;
                                                                         <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
                                                                         ' . $button_pay . '
                                                                         </button>
-                                                                    </form>';
+                                                                    </form>
+                                                                    <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
+                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
+                                                                    ';
                                                                     echo $stripe_pay_form;
                                                                     ?>
                                                                 </div>
@@ -936,6 +945,50 @@ endif;
         </div>
     </div>
 </div>
+
+
+<div class="modal modalLoginCheckout fade" id="SignInCheckout" tabindex="-1" role="dialog" aria-labelledby="SignInCheckoutLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                                                                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body  px-md-5 px-4">
+                <div class="mb-4">
+                    <div class="text-center">
+                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                    </div>
+                    <h3 class="text-center my-2">Sign In</h3>
+                    <div class="text-center">
+                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                              data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
+                    </div>
+                </div>
+
+                <?php
+                wp_login_form([
+                    'redirect' => '',
+                    'remember' => false,
+                    'label_username' => 'What is your email address ?',
+                    'placeholder_email' => 'E-mail address',
+                    'label_password' => 'What is your password ?'
+                ]);
+                ?>
+                <div class="text-center">
+                    <a href="" class="watchword-text">Forgot password</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
 
 
 <script>
