@@ -14,6 +14,7 @@ $userID = get_current_user_id();
 $prijs = 0;
 
 
+
 extract($_POST);
 if($_POST['stripe_register']):
 endif;
