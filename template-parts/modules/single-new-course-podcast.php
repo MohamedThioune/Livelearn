@@ -796,7 +796,6 @@ endif;
     </div>
 </div>
 
-s
 
 <script>
     var sections = $('.section-tabs')

@@ -947,6 +947,7 @@ endif;
 </div>
 
 
+
 <div class="modal modalLoginCheckout fade" id="SignInCheckout" tabindex="-1" role="dialog" aria-labelledby="SignInCheckoutLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
                                                                 box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
