@@ -660,7 +660,8 @@ endif;
                                 </div>
                                 <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
                                         data-toggle="modal" data-target="#SignInCheckout">new modal</button>
-                                <div class="sharing-element"> 
+                                <div class="sharing-element">
+
                                     <?php
                                     $subject = $post->post_title;
                                     $permalink = get_permalink($post->ID);
