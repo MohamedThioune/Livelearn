@@ -796,6 +796,8 @@ endif;
     </div>
 </div>
 
+
+
 <script>
     var sections = $('.section-tabs')
         , nav = $('.content-tabs-scroll')

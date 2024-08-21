@@ -15,6 +15,7 @@ $prijs = 0;
 
 
 
+
 extract($_POST);
 if($_POST['stripe_register']):
 endif;
