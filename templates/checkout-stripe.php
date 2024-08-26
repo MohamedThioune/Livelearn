@@ -77,9 +77,9 @@ $redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $postI
 $login_form = (!$userID) ? wp_login_form([
     'redirect' => $redirect_success,
     'remember' => false,
-    'label_username' => 'Wat is je e-mailadres?',
-    'placeholder_email' => 'E-mailadress',
-    'label_password' => 'Wat is je wachtwoord?'
+    'label_username' => 'What is your email address ?',
+    'placeholder_email' => 'E-mail address',
+    'label_password' => 'What is your password ?'
 ]) : "";
 
 //Form register
