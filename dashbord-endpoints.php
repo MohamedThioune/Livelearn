@@ -41,8 +41,11 @@ function upcoming_schedule_for_the_user()
     if (isset($_GET['id'])) {
         $user_id = intval($_GET['id']);
     }
+    global $wpdb;
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $current_date = date('d/m/Y');
     $args = array(
-        'post_type' => 'post',
+        //'post_type' => 'post',
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
@@ -50,39 +53,36 @@ function upcoming_schedule_for_the_user()
     );
     $schedules = get_posts($args);
     $all_schedules = array();
-    $exceptCourses = ['Artikel','Podcast','Video'];
+    $exceptCourses = ['Artikel','Podcast','Video',''];
     foreach ($schedules as $schedule) {
-        global $wpdb;
+        $coursType = get_field('course_type', $schedule->ID);
+        if (in_array($coursType, $exceptCourses))
+            continue;
+
         $data_locaties_xml = get_field('data_locaties_xml', $schedule->ID);
         if (!$data_locaties_xml)
             continue;
         $courseTime = array();
-        $coursType = get_field('courseType', $schedule->ID);
-        if (in_array($coursType, $exceptCourses))
-            continue;
-
-        foreach ($data_locaties_xml as $dataxml) {
+        foreach ($data_locaties_xml as $dataxml)
             if ($dataxml) {
                 $datetime = explode(' ', $dataxml['value']);
 
                 $date = explode(' ', $datetime[0])[0];
+                //var_dump( "is course date less current date " ,$date < $current_date ); //The best compare
                 $time = explode('-', $datetime[1])[0];
                 $courseTime[] = array('date'=>$date,'time'=>$time);
 
                 $date = date('Y-m-d', strtotime($date));
-                $current_date = date('Y-m-d');
 
-                if ($date < $current_date)
+                if ($date > $current_date)
                     continue;
             }
-        }
 
         if (!$courseTime)
             continue;
 
         /** if 500 error comment this part of code with database*/
 
-        $table_tracker_views = $wpdb->prefix . 'tracker_views';
         //$sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
         //$user_follow_this_course = $wpdb->get_results( $sql );
         //if(!$user_follow_this_course)
@@ -326,12 +326,12 @@ function companyPeople($data){
             }
         }
     }
+    $table_tracker_views = $wpdb->prefix . 'tracker_views';
     foreach ($members as $user){
         $is_login = false;
         $date = new DateTime();
         $date_this_month = date('Y-m-d');
         $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
-        $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
         $if_user_actif = count($wpdb->get_results($sql));
 
