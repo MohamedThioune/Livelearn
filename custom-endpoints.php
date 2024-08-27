@@ -2312,24 +2312,34 @@ function getTopicCoursesOptimized($data)
   
   /**
    * Assessment Endpoints
-   */
+  */
+  function getAssessments($data)
+  {
+    // Retrieve the user ID from the global variable and validate it
+    $user_id = false;
+    $user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
 
-  function getAssessments()
-{
-    $user_id = $GLOBALS['user_id'];
+    // Check if the user ID is provided
+    if (!$user_id) 
+    {
+      $response = new WP_REST_Response("You have to login with valid credentials!");
+      $response->set_status(400);
+      return $response;
+    }
+    
     $assessments_validated = get_user_meta( $user_id, 'assessment_validated') ?? false;
     $args = array(
       'post_type' => 'assessment',
       'post_status' => 'publish',
       'posts_per_page' => -1
     );
-  $assessments = get_posts($args) ?? [];
-     if (empty ($assessments))
-        return [];
-     foreach ($assessments as $key => $assessment) 
+    $assessments = get_posts($args) ?? [];
+    if (empty ($assessments))
+      return [];
+    foreach ($assessments as $key => $assessment) 
     {
-        $assessment -> is_connected_user_succed = (in_array($assessment, $assessments_validated)) ? true : false ;
-         
+      $assessment -> is_connected_user_succed = (in_array($assessment, $assessments_validated)) ? true : false ;
+        
       $questions= get_field('question',$assessment->ID);  
       if (!empty($questions))
       {
@@ -2355,11 +2365,11 @@ function getTopicCoursesOptimized($data)
       }
       $assessment ->image = $image;
       $assessment ->level = get_field('difficulty_assessment', $assessment->ID);
+    }
+    return $assessments;
   }
-  return $assessments;
-}
 
-function answerAssessment (WP_REST_Request $request)
+  function answerAssessment (WP_REST_Request $request)
   {
     if (isset ($request) && !empty($request))
     {
@@ -2400,37 +2410,36 @@ function answerAssessment (WP_REST_Request $request)
     }
   }
 
-
   function getAssessmentValidateScore($data)
-{
-    $user_id = $GLOBALS['user_id'];
-    $idAssessment =  $data['id'] ?? 0;
-    $assessment = get_post($idAssessment) ?? false;
-    if (!$assessment)
-      return ["error" => "This assessment does not exist !"];
-    
-    $args = array(
-      'post_type' => array('response_assessment'),
-      'post_status' => 'publish',
-      'posts_per_page' => -1,
-      'order' => 'DESC',
-      'post_author' => '$user_id' 
-      );
+  {
+      $user_id = $GLOBALS['user_id'];
+      $idAssessment =  $data['id'] ?? 0;
+      $assessment = get_post($idAssessment) ?? false;
+      if (!$assessment)
+        return ["error" => "This assessment does not exist !"];
+      
+      $args = array(
+        'post_type' => array('response_assessment'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        'post_author' => '$user_id' 
+        );
 
-    $responses = get_posts($args) ?? [];
-    if (!empty($responses))
-      foreach ($responses as $key => $response) {
-        $assessment_related = get_field('assessment_id',$response ->ID) ?? 0;
-        if ($assessment_related == $idAssessment)
-        {
-          $response -> score = get_field('score',$response ->ID);
-          $assessment_questions = get_field('question',$assessment->ID) ?? [];
-          $count_questions = count($assessment_questions);
-          $response -> count_question = $count_questions;
-          return $response;
+      $responses = get_posts($args) ?? [];
+      if (!empty($responses))
+        foreach ($responses as $key => $response) {
+          $assessment_related = get_field('assessment_id',$response ->ID) ?? 0;
+          if ($assessment_related == $idAssessment)
+          {
+            $response -> score = get_field('score',$response ->ID);
+            $assessment_questions = get_field('question',$assessment->ID) ?? [];
+            $count_questions = count($assessment_questions);
+            $response -> count_question = $count_questions;
+            return $response;
+          }
         }
-      }
-}
+  }
 
 /**
  * Communities Endpoints
@@ -2602,9 +2611,20 @@ function getCommunitiesPersonal($data) {
 
 }
 
-function getCommunitiesOptimized()
+function getCommunitiesOptimized($data)
 {
-  $user_id = $GLOBALS['user_id'];
+  // Retrieve the user ID from the global variable and validate it
+  $user_id = false;
+  $user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
+
+  // Check if the user ID is provided
+  if (!$user_id) 
+  {
+    $response = new WP_REST_Response("You have to login with valid credentials!");
+    $response->set_status(400);
+    return $response;
+  }
+
   //All communities
   $args = array(
     'post_type' => 'community',
@@ -4774,11 +4794,7 @@ endif;
     ));
   }
 
-
-
-
-
-  function getUserInternalCourses()
+  function getUserInternalCourses($data)
   {
     
   //   $current_user_id = $GLOBALS['user_id'];
@@ -4961,28 +4977,27 @@ endif;
   //   return $internal_courses;
   
   global $wpdb;
+  // Retrieve the user ID from the global variable and validate it
+  $current_user_id = false;
+  $current_user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
 
-  $current_user_id = $GLOBALS['user_id'] ?? 0;
-  if ($current_user_id == 0)
+  // Check if the user ID is provided
+  if (!$current_user_id) 
   {
-    $response = new WP_REST_Response("You have to login with good credentials !"); 
+    $response = new WP_REST_Response("You have to login with valid credentials!");
     $response->set_status(400);
     return $response;
   }
-
-  
 
   // Préparer la réponse
   $response = array(
     'all' => array(),
     'team' => array(),
     'mandatored' => array(),
-);
+  );
 
   $current_user = get_user_by('id', (int) $current_user_id);
   $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-
-  
 
   $users = get_users();
   $teamates = array();
@@ -5070,7 +5085,6 @@ endif;
           array_push($response["all"]  ,new Course($course));
           
     }
-   
   }
 
   
