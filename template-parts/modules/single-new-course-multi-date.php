@@ -284,11 +284,15 @@ endif;
                                                                         <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
                                                                         ' . $button_pay . '
                                                                         </button>
-                                                                    </form>
-                                                                    <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
-                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
-                                                                    ';
-                                                                    echo $stripe_pay_form;
+                                                                    </form>';
+                                                                    if(!$user_id)
+                                                                        echo 
+                                                                        '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
+                                                                            class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+                                                                        ' . $button_pay . '
+                                                                        </button>';
+                                                                    else
+                                                                        echo $stripe_pay_form;
                                                                     ?>
                                                                 </div>
                                                             </div>

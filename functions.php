@@ -1685,7 +1685,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'community_share',
     ));
 
-    register_rest_route ('custom/v1', '/assessments', array(
+    register_rest_route ('custom/v1', '/assessments/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getAssessments',
     ));
@@ -1705,7 +1705,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getCommunitiesPersonal',
     ));
 
-    register_rest_route ('custom/v2', '/communities', array(
+    register_rest_route ('custom/v2', '/communities/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getCommunitiesOptimized',
     ));

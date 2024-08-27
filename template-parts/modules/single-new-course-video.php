@@ -51,6 +51,8 @@ $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('conn
 $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 
 //Stripe pay 
+$success = "Login successful !";
+$redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $post->ID;
 $button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
 $stripe_pay_form = 
 '<form action="/checkout-stripe" method="post">
@@ -59,6 +61,8 @@ $stripe_pay_form =
     ' . $button_pay . '
     </button>
 </form>';
+$redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
+$register_link = "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -655,8 +659,17 @@ endif;
                                     <p class="detail">Fulltime</p>
                                 </li>
                                 <div class="d-block">
-                                    <?php echo $startorbuy; ?>
-                                    <?php echo $stripe_pay_form ?>
+                                    <?php 
+                                    echo $startorbuy; 
+                                    if(!$user_id)
+                                        echo 
+                                        '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
+                                            class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+                                        ' . $button_pay . '
+                                        </button>';
+                                    else
+                                        echo $stripe_pay_form;
+                                    ?>
                                 </div>
                                 <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
                                         data-toggle="modal" data-target="#SignInCheckout">new modal</button>
