@@ -54,7 +54,7 @@ function upcoming_schedule_for_the_user()
     );
     $schedules = get_posts($args);
     $all_schedules = array();
-    $exceptCourses = ['Artikel','Podcast','Video',''];
+    $exceptCourses = ['Artikel','Podcast','Video'];
     foreach ($schedules as $schedule) {
         $coursType = get_field('course_type', $schedule->ID);
         if (in_array($coursType, $exceptCourses))
@@ -513,8 +513,22 @@ $args = array(
     return $response;
 }
 
+/**
+ * @param $data
+ * @return WP_REST_Response
+ * @user_id id user connected getting via GET request
+ */
 function get_detail_notification($data){
+    //$id_notification = intval($data['id']);
     $id_notification = intval($data['id']);
+    $user_id = $_GET['user_id'];
+    $args = array(
+        'post_type' => array('feedback','manadatory','badge'),
+        'author' => $user_id,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
     $notification = get_post($id_notification);
     if(!$notification)
         return new WP_REST_Response(array('message' => 'Notification not found'), 404);
@@ -534,6 +548,8 @@ function get_detail_notification($data){
     $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
     $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
     $notification->notification_author = get_user_by('ID', $notification->post_author)->data;
+    unset($notification->notification_author->user_pass);
+    unset($notification->notification_manager->user_pass);
     $notification->notification_author->company = get_field('company', 'user_' . $notification->post_author)[0]->post_title ? : 'Livelearn';
     $notification->notification_author->image = get_field('profile_img',  'user_' . $notification->post_author) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
 
@@ -3040,8 +3056,9 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $experts = $data['experts'];
     $course = get_post($id_course);
     $questions = $data['questions']; // for assessments
-    // $question_from_course = get_field('question', $id_course);
-    // var_dump($question_from_course);die;
+    $how_it_works = $data['how_it_works'];
+    $languageAssessment = $data['language_assessment'];
+    $difficultyAssessment = $data['difficulty_assessment'];
 
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
@@ -3062,7 +3079,18 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         update_field('question', $questions, $id_course);
         $isCourseUpdated = true;
     }
-
+    if ($how_it_works){
+        update_field('how_it_works',$how_it_works,$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($languageAssessment){
+        update_field('language_assessment', $languageAssessment, $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($difficultyAssessment){
+        update_field('difficulty_assessment', $difficultyAssessment, $id_course);
+        $isCourseUpdated = true;
+    }
     //$args = array(
     //    'ID' => $id_course,
     //    'post_title' => $data['title'],
