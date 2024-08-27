@@ -45,7 +45,7 @@ function upcoming_schedule_for_the_user()
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     $current_date = date('d/m/Y');
     $args = array(
-        //'post_type' => 'post',
+        'post_type' => 'post',
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
