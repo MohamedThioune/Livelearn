@@ -43,6 +43,7 @@ function upcoming_schedule_for_the_user()
     }
     global $wpdb;
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    //$current_date = date('Y-m-d');
     $current_date = date('d/m/Y');
     $args = array(
         'post_type' => 'post',
@@ -66,22 +67,21 @@ function upcoming_schedule_for_the_user()
         foreach ($data_locaties_xml as $dataxml)
             if ($dataxml) {
                 $datetime = explode(' ', $dataxml['value']);
+                $date = $datetime[0];
 
-                $date = explode(' ', $datetime[0])[0];
-                //var_dump( "is course date less current date " ,$date < $current_date ); //The best compare
-                $time = explode('-', $datetime[1])[0];
-                $courseTime[] = array('date'=>$date,'time'=>$time);
+                //$date = date('Y-m-d', strtotime($date));
+                if ($date) {
+                    if ($current_date >= $date)  // the best choice compare
+                        continue;
 
-                $date = date('Y-m-d', strtotime($date));
-
-                if ($date > $current_date)
-                    continue;
+                    $time = explode('-', $datetime[1])[0];
+                    $courseTime[] = array('date' => $date, 'time' => $time);
+                }
             }
-
         if (!$courseTime)
             continue;
 
-        /** if 500 error comment this part of code with database*/
+        /** if 500 error comment this part of code with database */
 
         //$sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
         //$user_follow_this_course = $wpdb->get_results( $sql );
@@ -90,7 +90,10 @@ function upcoming_schedule_for_the_user()
         //if(intval($user_follow_this_course[0]->user_id)!=$user_id)
         //    continue;
 
-        $image = get_field('preview', $schedule->ID)['url'];
+        $image = get_field('preview', $schedule->ID) ? : '';
+        if ($image)
+            $image = $image['url'];
+
         if(!$image){
             $image = get_the_post_thumbnail_url($schedule->ID);
             if(!$image)
@@ -106,7 +109,7 @@ function upcoming_schedule_for_the_user()
         $schedule_data['data_locaties'] = get_field('data_locaties', $schedule->ID);
         $schedule_data['pathImage'] = $image;
         $schedule_data['for_who'] = get_field('for_who', $schedule->ID) ? (get_field('for_who', $schedule->ID)) : "" ;
-        $schedule_data['price'] = get_field('price',$schedule->ID)!="0" ? get_field('price',$schedule->ID) : "Gratis";
+        $schedule_data['price'] = get_field('price',$schedule->ID) ? : "Gratis";
         $schedule_data['data_locaties_xml'] = $data_locaties_xml;
         $schedule_data['courseTime'] = $courseTime;
         $schedule_data['author'] = get_user_by('ID', $schedule->post_author);
