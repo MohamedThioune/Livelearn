@@ -2674,11 +2674,11 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
           $count_lesson = 0;
       }
 
-      //Pourcentage
-      $lesson_reads = get_field('lesson_actual_read', $progression_id);
-      $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
-      if($count_lesson)
-          $pourcentage = ($count_lesson) ? ($count_lesson_reads / $count_lesson) * 100 : 0;                
+    //Pourcentage
+    $lesson_reads = get_field('lesson_actual_read', $progression_id);
+    $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+    if($count_lesson)
+        $pourcentage = ($count_lesson) ? ($count_lesson_reads / $count_lesson) * 100 : 0;                
     endif;
     $mandatory->pourcentage = intval($pourcentage);
 
@@ -2742,6 +2742,7 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
               break;
           case 'Certificaat':
             $achievement_info = array(
+              'ID' => $achievement->ID,
               'title' => $achievement->post_title,
               'description' => $achievement->post_content,
               'manager' => $achievement->manager,
