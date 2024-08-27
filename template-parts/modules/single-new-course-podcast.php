@@ -7,14 +7,6 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
 <?php
-//$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
-//$url = "https://anchor.fm/s/878cadd4/podcast/rss";
-//$url = "https://feeds.buzzsprout.com/2145970.rss";
-//$url = "https://aod.nrjaudio.fm/xml/169.xml";
-//$xml = simplexml_load_file($url);
-?>
-
-<?php
 extract($_GET);
 if(empty($podcast_index))
     if(isset($lesson))
@@ -46,6 +38,8 @@ endif;
 
 
 //Stripe pay 
+$success = "Login successful !";
+$redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $post->ID;
 $button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
 $stripe_pay_form = 
 '<form action="/checkout-stripe" method="post">
@@ -54,6 +48,8 @@ $stripe_pay_form =
     ' . $button_pay . '
     </button>
 </form>';
+$redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
+$register_link = "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -644,12 +640,17 @@ endif;
                                     <p class="detail">Fulltime</p>
                                 </li>
 
-                                <?php echo $startorbuy ?>
-                                <?php  echo $stripe_pay_form ?>
-
-                                <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
-                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
-
+                                <?php 
+                                echo $startorbuy; 
+                                if(!$user_id)
+                                    echo 
+                                    '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
+                                        class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+                                    ' . $button_pay . '
+                                    </button>';
+                                else
+                                    echo $stripe_pay_form;
+                             ?>
                                 <div class="sharing-element">
                                     <?php
                                     $subject = $post->post_title;
@@ -779,16 +780,17 @@ endif;
 
                 <?php
                 wp_login_form([
-                    'redirect' => '',
+                    'redirect' => $redirect_success,
                     'remember' => false,
                     'label_username' => 'What is your email address ?',
                     'placeholder_email' => 'E-mail address',
                     'label_password' => 'What is your password ?'
-                ]);
+                ]);                
+                echo $register_link;
                 ?>
-                <div class="text-center">
+                <!-- <div class="text-center">
                     <a href="" class="watchword-text">Forgot password</a>
-                </div>
+                </div> -->
             </div>
         </div>
 
