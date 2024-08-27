@@ -51,6 +51,8 @@ $startorbuy = (!$statut_bool) ? '<a href="/cart/?add-to-cart=' . get_field('conn
 $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-stratNow">Start Now</a>' : $startorbuy;
 
 //Stripe pay 
+$success = "Login successful !";
+$redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $post->ID;
 $button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
 $stripe_pay_form = 
 '<form action="/checkout-stripe" method="post">
@@ -59,6 +61,8 @@ $stripe_pay_form =
     ' . $button_pay . '
     </button>
 </form>';
+$redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
+$register_link = "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -655,9 +659,20 @@ endif;
                                     <p class="detail">Fulltime</p>
                                 </li>
                                 <div class="d-block">
-                                    <?php echo $startorbuy; ?>
-                                    <?php echo $stripe_pay_form ?>
+                                    <?php 
+                                    echo $startorbuy; 
+                                    if(!$user_id)
+                                        echo 
+                                        '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
+                                            class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+                                        ' . $button_pay . '
+                                        </button>';
+                                    else
+                                        echo $stripe_pay_form;
+                                    ?>
                                 </div>
+                                <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
+                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
                                 <div class="sharing-element">
                                     <?php
                                     $subject = $post->post_title;
@@ -760,6 +775,50 @@ endif;
 
     </div>
 </div>
+
+
+<div class="modal modalLoginCheckout fade" id="SignInCheckout" tabindex="-1" role="dialog" aria-labelledby="SignInCheckoutLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                                                                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body  px-md-5 px-4">
+                <div class="mb-4">
+                    <div class="text-center">
+                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                    </div>
+                    <h3 class="text-center my-2">Sign In</h3>
+                    <div class="text-center">
+                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                              data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
+                    </div>
+                </div>
+
+                <?php
+                wp_login_form([
+                    'redirect' => '',
+                    'remember' => false,
+                    'label_username' => 'What is your email address ?',
+                    'placeholder_email' => 'E-mail address',
+                    'label_password' => 'What is your password ?'
+                ]);
+                ?>
+                <div class="text-center">
+                    <a href="" class="watchword-text">Forgot password</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
 
 <!-- modal register / login -->
 <!--

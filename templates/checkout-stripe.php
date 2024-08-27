@@ -9,13 +9,14 @@ require_once 'new-module-subscribe.php';
 $price_id = '';
 $mode = 'setup';
 $postID = '';
-$offline = null; 
-
-// get user 
+// get user
 $userID = get_current_user_id();
 $prijs = 0;
 
+
 extract($_POST);
+if($_POST['stripe_register']):
+endif;
 
 //After Login/Register
 if(isset($_GET['single'])):
@@ -24,12 +25,12 @@ if(isset($_GET['single'])):
     if($post):
         $postID = $_GET['single'];
         $productPrice = 1;
-        if($_GET['after'])  
-            $userID = 'null';      
+        if($_GET['after'])
+            $userID = 'null';
     endif;
 endif;
 
-//create product/price 
+//create product/price
 if(isset($productPrice)):
     // get course
     $post = get_post($postID);
@@ -37,8 +38,8 @@ if(isset($productPrice)):
 
     // create product
     $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
-    $prijs = get_field('price', $post->ID) ?: 0; 
-    $permalink = get_permalink($postID); 
+    $prijs = get_field('price', $post->ID) ?: 0;
+    $permalink = get_permalink($postID);
     $thumbnail = "";
     if(!$thumbnail):
         $thumbnail = get_field('url_image_xml', $post->ID);
@@ -47,7 +48,7 @@ if(isset($productPrice)):
     endif;
 
     if($prijs):
-        // create price 
+        // create price
         $currency = 'eur';
         $data_price = [
             'currency' => $currency,
@@ -59,31 +60,28 @@ if(isset($productPrice)):
             'product_url' => $permalink,
             'ID' => $post->ID,
         ];
-        $price_id = (search_price($data_price['ID'])) ?: create_price($data_price);  
+        $price_id = (search_price($data_price['ID'])) ?: create_price($data_price);
 
         $mode = ($prijs) ? 'payment' : 'setup';
     endif;
 
-    //meta data
-    $offline = ($metadata) ?: $offline; 
-
-    // $free_form = null; 
+    // $free_form = null;
 endif;
 //create ...
 
-//Form login 
+//Form login
 $success = "Login successful !";
 $redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $postID;
 $login_form = (!$userID) ? wp_login_form([
     'redirect' => $redirect_success,
     'remember' => false,
-    'label_username' => 'Wat is je e-mailadres?',
-    'placeholder_email' => 'E-mailadress',
-    'label_password' => 'Wat is je wachtwoord?'
+    'label_username' => 'What is your email address ?',
+    'placeholder_email' => 'E-mail address',
+    'label_password' => 'What is your password ?'
 ]) : "";
 
 //Form register
-$redirect_register = "?single=" . $postID ."&after=1";  
+$redirect_register = "?single=" . $postID ."&after=1";
 $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 ?>
 
@@ -99,38 +97,37 @@ $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . 
 
         // Create a Checkout Session
         async function initialize() {
-        const fetchClientSecret = async () => {
-            const priceID = "<?php echo $price_id ?>";
-            const mode = "<?php echo $mode ?>";
-            const postID = "<?php echo $postID ?>";
-            const userID = "<?php echo $userID ?>";
-            const offline = "<?php echo $offline ?>";
-            const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID + "&userID=" + userID + "&metadata=" + offline, {
-                method: "POST",
+            const fetchClientSecret = async () => {
+                const priceID = "<?php echo $price_id ?>";
+                const mode = "<?php echo $mode ?>";
+                const postID = "<?php echo $postID ?>";
+                const userID = "<?php echo $userID ?>";
+                const response = await fetch("/checkout-module/?priceID=" + priceID + "&mode=" + mode + "&postID=" + postID +  "&userID=" + userID, {
+                    method: "POST",
+                });
+                const { clientSecret } = await response.json();
+                return clientSecret;
+            };
+
+            const checkout = await stripe.initEmbeddedCheckout({
+                fetchClientSecret,
             });
-            const { clientSecret } = await response.json();
-            return clientSecret;
-        };
 
-        const checkout = await stripe.initEmbeddedCheckout({
-            fetchClientSecret,
-        });
-
-        // Mount Checkout
-        checkout.mount('#checkout');
+            // Mount Checkout
+            checkout.mount('#checkout');
         }
     </script>
 </head>
 
 <body>
 <div class="contentProfil">
-   <div class="container-fluid">
-       <!-- <h1 class="titleSubscription">Sample</h1> -->
-       <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center>
+    <div class="container-fluid">
+        <!-- <h1 class="titleSubscription">Sample</h1> -->
+        <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center>
         <!-- <br><br> -->
         <div class="contentFormSubscription">
             <?php
-            //User connected or not 
+            //User connected or not
             if($userID):
                 //Prijs or free
                 if($prijs):
@@ -140,7 +137,7 @@ $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . 
                             </div>
                         </div>";
                 else:
-                    // Form free course 
+                    // Form free course
                     /** Instructions here */
                     ?>
                     <h3>Register information :</h3>
@@ -175,14 +172,14 @@ $login_form .= "<span>I don't have a account, <a href='" . $redirect_register . 
                         </div>
                         <button type="submit" name="order_free" class="btn btn-primary">Save</button>
                     </form>
-                    <?php
+                <?php
                 endif;
             else:
                 echo $login_form;
             endif;
             ?>
         </div>
-   </div>
+    </div>
 </div>
 
 </body>

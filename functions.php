@@ -419,7 +419,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -462,7 +462,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -505,7 +505,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
-        'show_in_rest'        => false,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -1582,9 +1582,16 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
+    
+    //(Bis) Statistics topics
     register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
+    ));
+    //(Bis) Internal 
+    register_rest_route('custom/v2', '/user/internal/courses/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getUserInternalCourses',
     ));
 
     register_rest_route('custom/v2', '/user/internal/courses', array(
@@ -1685,6 +1692,12 @@ add_action( 'rest_api_init', function () {
         'callback' => 'community_share',
     ));
 
+    //(Bis) Assessments
+    register_rest_route ('custom/v1', '/assessments/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getAssessments',
+    ));
+
     register_rest_route ('custom/v1', '/assessments', array(
         'methods' => 'GET',
         'callback' => 'getAssessments',
@@ -1703,6 +1716,12 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/community/personal/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getCommunitiesPersonal',
+    ));
+
+    //(Bis) Community
+    register_rest_route ('custom/v2', '/communities/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getCommunitiesOptimized',
     ));
 
     register_rest_route ('custom/v2', '/communities', array(
@@ -2027,6 +2046,11 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/candidate/skillsPassport', array(
         'methods' => 'POST',
         'callback' => 'candidateSkillsPassport'
+    ));
+
+    register_rest_route ('custom/v1', '/candidate/skillsPassport/advanced', array(
+        'methods' => 'POST',
+        'callback' => 'candidateSkillsPassportAdvanced'
     ));
 
     register_rest_route ('custom/v1', '/user/profil/update', array(
