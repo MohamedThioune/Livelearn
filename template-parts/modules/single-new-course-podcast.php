@@ -7,14 +7,6 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
 <?php
-//$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
-//$url = "https://anchor.fm/s/878cadd4/podcast/rss";
-//$url = "https://feeds.buzzsprout.com/2145970.rss";
-//$url = "https://aod.nrjaudio.fm/xml/169.xml";
-//$xml = simplexml_load_file($url);
-?>
-
-<?php
 extract($_GET);
 if(empty($podcast_index))
     if(isset($lesson))
@@ -46,6 +38,8 @@ endif;
 
 
 //Stripe pay 
+$success = "Login successful !";
+$redirect_success = "/checkout-stripe?message=" . $success . "&single=" . $post->ID;
 $button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
 $stripe_pay_form = 
 '<form action="/checkout-stripe" method="post">
@@ -54,6 +48,8 @@ $stripe_pay_form =
     ' . $button_pay . '
     </button>
 </form>';
+$redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
+$register_link = "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -644,9 +640,17 @@ endif;
                                     <p class="detail">Fulltime</p>
                                 </li>
 
-                                <?php echo $startorbuy ?>
-                                <?php  echo $stripe_pay_form ?>
-
+                                <?php 
+                                echo $startorbuy; 
+                                if(!$user_id)
+                                    echo 
+                                    '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
+                                        class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+                                    ' . $button_pay . '
+                                    </button>';
+                                else
+                                    echo $stripe_pay_form;
+                             ?>
                                 <div class="sharing-element">
                                     <?php
                                     $subject = $post->post_title;
@@ -750,6 +754,49 @@ endif;
     </div>
 </div>
 
+
+
+<div class="modal modalLoginCheckout fade" id="SignInCheckout" tabindex="-1" role="dialog" aria-labelledby="SignInCheckoutLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                                                                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body  px-md-5 px-4">
+                <div class="mb-4">
+                    <div class="text-center">
+                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                    </div>
+                    <h3 class="text-center my-2">Sign In</h3>
+                    <div class="text-center">
+                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                              data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
+                    </div>
+                </div>
+
+                <?php
+                wp_login_form([
+                    'redirect' => $redirect_success,
+                    'remember' => false,
+                    'label_username' => 'What is your email address ?',
+                    'placeholder_email' => 'E-mail address',
+                    'label_password' => 'What is your password ?'
+                ]);                
+                echo $register_link;
+                ?>
+                <!-- <div class="text-center">
+                    <a href="" class="watchword-text">Forgot password</a>
+                </div> -->
+            </div>
+        </div>
+
+
+    </div>
+</div>
 
 <script>
     var sections = $('.section-tabs')

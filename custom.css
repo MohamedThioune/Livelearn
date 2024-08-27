@@ -23304,7 +23304,35 @@ figure ul li {
     width: 100%;
     padding: 0;
 }
+.new-checkout-element #loginform {
+    width: 75%;
+    margin: 0 auto 0;
+    position: absolute;
+    right: 0;
+    top: 95px;
+    left: 0;
+}
+.new-checkout-element .right-block-connection .h2-modife{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.new-checkout-element .block-first-connect, .new-checkout-element .block-second-connect {
+    width: 50%;
+    min-height: 735px;
+}
+.new-checkout-element .block-connection {
+    padding: 131px 15px 30px;
+}
+.new-checkout-element .block-reverse .carousel-indicators {
+    bottom: 35px !important;
+}
 
+.modalLoginCheckout #loginform #wp-submit, .modalLoginCheckout .ur-submit-button {
+    margin-top: 15px;
+}
+.modalLoginCheckout {
+    background: #00000094 !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -28313,6 +28341,24 @@ figure ul li {
     .icons-block-zzpers .one-element-icon-zzpers {
         width: 48%;
         text-align: center;
+    }
+    .new-checkout-element .block-first-connect, .new-checkout-element .block-second-connect {
+        width: 100%;
+        min-height: unset;
+    }
+    .new-checkout-element .block-connection {
+        padding: 50px 15px 30px;
+    }
+    .new-checkout-element #loginform {
+        width: 95%;
+        margin: 0 auto 0;
+        position: absolute;
+        right: 0;
+        top: 95px;
+        left: 0
+    }
+    .right-block-connection h2 {
+        font-size: 17px;
     }
 
 
