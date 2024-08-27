@@ -1582,9 +1582,16 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
+    
+    //(Bis) Statistics topics
     register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
+    ));
+    //(Bis) Internal 
+    register_rest_route('custom/v2', '/user/internal/courses/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getUserInternalCourses',
     ));
 
     register_rest_route('custom/v2', '/user/internal/courses', array(
@@ -1685,7 +1692,13 @@ add_action( 'rest_api_init', function () {
         'callback' => 'community_share',
     ));
 
-    register_rest_route ('custom/v1', '/assessments/(?P<id>\d+)', array(
+    //(Bis) Assessments
+    register_rest_route ('custom/v1', '/assessments/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getAssessments',
+    ));
+
+    register_rest_route ('custom/v1', '/assessments', array(
         'methods' => 'GET',
         'callback' => 'getAssessments',
     ));
@@ -1705,7 +1718,13 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getCommunitiesPersonal',
     ));
 
-    register_rest_route ('custom/v2', '/communities/(?P<id>\d+)', array(
+    //(Bis) Community
+    register_rest_route ('custom/v2', '/communities/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getCommunitiesOptimized',
+    ));
+
+    register_rest_route ('custom/v2', '/communities', array(
         'methods' => 'GET',
         'callback' => 'getCommunitiesOptimized',
     ));

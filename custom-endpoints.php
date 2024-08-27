@@ -4794,11 +4794,7 @@ endif;
     ));
   }
 
-
-
-
-
-  function getUserInternalCourses()
+  function getUserInternalCourses($data)
   {
     
   //   $current_user_id = $GLOBALS['user_id'];
@@ -4981,28 +4977,27 @@ endif;
   //   return $internal_courses;
   
   global $wpdb;
+  // Retrieve the user ID from the global variable and validate it
+  $current_user_id = false;
+  $current_user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
 
-  $current_user_id = $GLOBALS['user_id'] ?? 0;
-  if ($current_user_id == 0)
+  // Check if the user ID is provided
+  if (!$current_user_id) 
   {
-    $response = new WP_REST_Response("You have to login with good credentials !"); 
+    $response = new WP_REST_Response("You have to login with valid credentials!");
     $response->set_status(400);
     return $response;
   }
-
-  
 
   // Préparer la réponse
   $response = array(
     'all' => array(),
     'team' => array(),
     'mandatored' => array(),
-);
+  );
 
   $current_user = get_user_by('id', (int) $current_user_id);
   $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-
-  
 
   $users = get_users();
   $teamates = array();
@@ -5090,7 +5085,6 @@ endif;
           array_push($response["all"]  ,new Course($course));
           
     }
-   
   }
 
   
