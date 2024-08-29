@@ -3556,6 +3556,7 @@ function checkoutAPI(WP_REST_Request $request){
   $metadata = $request['metadata'] ?: null;
   $price_id = null;
 
+  var_dump($postID, $userID);
   /** Create or first price ID */
     // get course
     $post = get_post($postID);

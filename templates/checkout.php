@@ -35,7 +35,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
     $PRICE_ID = ($price_id) ?: null;
     $offline = ($offline) ?: null;
     $ui_mode = ($ui_mode) ? 'hosted': 'embedded';
-    $key_return = ($ui_mode) ? 'success_url': 'return_url';
+    $key_return = ($ui_mode == 'hosted') ? 'success_url': 'return_url';
 
     //Get post information
     $sample = array(
@@ -146,6 +146,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
 
     //Create session object
     $information = create_session($data);
+    // var_dump($information);
 
     //case : error primary
     if(isset($information['error']))
@@ -268,14 +269,14 @@ function stripe_status($data){
 }
 
 //Call stripe secret
-// $_GET['priceID'] = "price_1Pkr41EuOtOzwPYX855Zgcbr";
-// $_GET['mode'] = 'payment';
-// $postID = 10799;
-// $userID = 3;
-// $metadata = null;
-$postID = isset($_GET['postID']) ? $_GET['postID'] : null;
-$userID = isset($_GET['userID']) ? $_GET['userID'] : null;
-$metadata = isset($_GET['metadata']) ? $_GET['metadata'] : null;
+$_GET['priceID'] = "price_1Pkr41EuOtOzwPYX855Zgcbr";
+$_GET['mode'] = 'payment';
+$postID = 10799;
+$userID = 3;
+$metadata = null;
+// $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
+// $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
+// $metadata = isset($_GET['metadata']) ? $_GET['metadata'] : null;
 
 //Checkout session stripe
 if(isset($_GET['priceID']) && $_GET['mode']):
