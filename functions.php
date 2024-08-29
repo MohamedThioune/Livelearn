@@ -2134,9 +2134,9 @@ add_action( 'rest_api_init', function () {
     ));
 
     //Made by MaxBird | Checkout
-    register_rest_route ('custom/v1', '/checkout-stripe-ui', array(
+    register_rest_route ('custom/v1', '/checkout/stripe/hosted/(?P<postID>\d+)/(?P<userID>\d+)', array(
         'methods' => 'GET',
-        'callback' => 'session_stripe'
+        'callback' => 'checkoutAPI'
     ));
     //End ...
 
