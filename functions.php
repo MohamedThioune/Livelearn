@@ -2138,6 +2138,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'checkoutAPI'
     ));
+    register_rest_route ('custom/v1', '/checkout/stripe/hosted', array(
+        'methods' => 'POST',
+        'callback' => 'checkoutAPI'
+    ));
     //End ...
 
     register_rest_route ('custom/v1', '/tofollow/experts', array(

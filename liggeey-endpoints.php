@@ -3549,10 +3549,10 @@ function activityUser($data){
 }
 
 //Create session stripe | API
-function checkoutAPI($data){
+function checkoutAPI(WP_REST_Request $request){
   //GET POST request
-  $postID = $data['postID'] ?: null;
-  $userID = $data['userID'] ?: null;
+  $postID = $request['post_id'] ?: null;
+  $userID = $request['user_id'] ?: null;
   $metadata = $request['metadata'] ?: null;
   $price_id = null;
 
