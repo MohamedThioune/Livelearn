@@ -30,10 +30,12 @@ function create_session($data){
     return $information;
 }
 
-function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $offline = null){
+function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $offline = null, $ui_mode = null){
     $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ?  get_site_url() . '/inloggen' : get_site_url() . '/dashboard/user/activity';
     $PRICE_ID = ($price_id) ?: null;
     $offline = ($offline) ?: null;
+    $ui_mode = ($ui_mode) ? 'hosted': 'embedded';
+    $key_return = ($ui_mode) ? 'success_url': 'return_url';
 
     //Get post information
     $sample = array(
@@ -63,27 +65,29 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
     endif;
     $post = (Object)$sample;
 
+    //Except course type [Artikel]
+
     //Get User information
     $user = get_user_by('ID', $user_id);
 
     if($mode == 'setup')
         $data = [
-            'ui_mode' => 'embedded',
+            'ui_mode' => $ui_mode,
             'currency' => 'eur',
             'mode' => $mode,
             // 'return_url' => $YOUR_DOMAIN,
-            'return_url' => $YOUR_DOMAIN . '/?session_id={CHECKOUT_SESSION_ID}',
+            $key_return => $YOUR_DOMAIN . '/?session_id={CHECKOUT_SESSION_ID}',
         ];
     else
         $data = [
-            'ui_mode' => 'embedded',
+            'ui_mode' => $ui_mode,
             'line_items' => [[
                 # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
                 'price' => $price_id,
                 'quantity' => 1,
             ]],
             'mode' => $mode,
-            'return_url' => $YOUR_DOMAIN . '/?session_id={CHECKOUT_SESSION_ID}',
+            $key_return => $YOUR_DOMAIN . '/?session_id={CHECKOUT_SESSION_ID}',
             'automatic_tax' => [
                 'enabled' => "true",
             ],
@@ -142,7 +146,6 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
 
     //Create session object
     $information = create_session($data);
-    // return 0;
 
     //case : error primary
     if(isset($information['error']))
@@ -152,8 +155,16 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
     if(isset($information['data']->error))
         return $information['data'];
 
+    //case : success - hosted 
+    if($ui_mode == 'hosted')
+        if($information['data'])
+        if($information['data']->url):
+            $url = $information['data']->url;
+            return array('message' => 'Session successfully created !', 'url' => $url);
+        endif;
+
     $client_secret = null;    
-    //case : success
+    //case : success - embedded
     if($information['data'])
     if($information['data']->client_secret)
         $client_secret = $information['data']->client_secret;
