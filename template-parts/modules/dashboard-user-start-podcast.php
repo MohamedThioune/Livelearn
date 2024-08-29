@@ -32,7 +32,7 @@ if(!$image):
 endif;
 
 //Podcasts
-$podcasts = get_field('podcasts', $post->ID);
+$podcasts = get_field('podcasts', $post->ID) ?: get_field('podcasts_index', $post->ID);
 $count_podcasts = 0;
 if(!empty($podcasts))
     $count_podcasts = count($podcasts);
