@@ -3549,14 +3549,13 @@ function activityUser($data){
 }
 
 //Create session stripe | API
-function checkoutAPI(WP_REST_Request $request){
+function checkoutAPI($data){
   //GET POST request
-  $postID = $request['post_id'] ?: null;
-  $userID = $request['user_id'] ?: null;
-  $metadata = $request['metadata'] ?: null;
+  $postID = $data['postID'] ?: null;
+  $userID = $data['userID'] ?: null;
+  $metadata = $data['metadata'] ?: null;
   $price_id = null;
 
-  var_dump($postID, $userID);
   /** Create or first price ID */
     // get course
     $post = get_post($postID);
@@ -3593,7 +3592,7 @@ function checkoutAPI(WP_REST_Request $request){
   /** End */
 
   //create session 
-  $session_stripe = session_stripe($price_id, 'payment', $postID, $userID, $metadata, 1);
+  $session_stripe = session_stripe($price_id, 'payment', $postID, $userID, $metadata, 'hosted');
   $response = new WP_REST_Response($session_stripe);
   $response->set_status(201);
   return $response;
