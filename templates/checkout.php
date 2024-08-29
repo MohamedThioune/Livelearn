@@ -269,14 +269,14 @@ function stripe_status($data){
 }
 
 //Call stripe secret
-$_GET['priceID'] = "price_1Pkr41EuOtOzwPYX855Zgcbr";
-$_GET['mode'] = 'payment';
-$postID = 10799;
-$userID = 3;
-$metadata = null;
-// $postID = isset($_GET['postID']) ? $_GET['postID'] : null;
-// $userID = isset($_GET['userID']) ? $_GET['userID'] : null;
-// $metadata = isset($_GET['metadata']) ? $_GET['metadata'] : null;
+// $_GET['priceID'] = "price_1Pkr41EuOtOzwPYX855Zgcbr";
+// $_GET['mode'] = 'payment';
+// $postID = 10799;
+// $userID = 3;
+// $metadata = null;
+$postID = isset($_GET['postID']) ? $_GET['postID'] : null;
+$userID = isset($_GET['userID']) ? $_GET['userID'] : null;
+$metadata = isset($_GET['metadata']) ? $_GET['metadata'] : null;
 
 //Checkout session stripe
 if(isset($_GET['priceID']) && $_GET['mode']):
