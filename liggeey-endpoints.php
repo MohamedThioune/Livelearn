@@ -1,5 +1,7 @@
 <?php
 
+require_once 'templates/checkout.php';
+
 /* * Liggeey * */
 
 // Function
@@ -3324,7 +3326,9 @@ function statut_course($post_name, $ID){
 
   return $information;
 }
+/* * End Liggeey * */
 
+//Activity 
 function activity($ID){
   /* * Information * */
   $information = array( 
@@ -3532,7 +3536,7 @@ function activity($ID){
   return $information;
   
 }
-
+//Activity User
 function activityUser($data){
   //Information 
   $ID = $data['ID'] ?: null;
@@ -3544,4 +3548,52 @@ function activityUser($data){
   return $response;
 }
 
-/* * End Liggeey * */
+//Create session stripe | API
+function checkoutAPI(WP_REST_Request $request){
+  //GET POST request
+  $postID = $request['post_id'] ?: null;
+  $userID = $request['user_id'] ?: null;
+  $metadata = $request['metadata'] ?: null;
+  $price_id = null;
+
+  /** Create or first price ID */
+    // get course
+    $post = get_post($postID);
+    $course_type = get_field('course_type', $post->ID);
+
+    // create product
+    $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
+    $prijs = get_field('price', $post->ID) ?: 0;
+    $permalink = get_permalink($postID);
+    $thumbnail = "";
+    if(!$thumbnail):
+        $thumbnail = get_field('url_image_xml', $post->ID);
+        if(!$thumbnail)
+            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+    endif;
+
+    if($prijs):
+      // create price
+      $currency = 'eur';
+      $data_price = [
+          'currency' => $currency,
+          'amount' => $prijs,
+          'product_name' => $post->post_title,
+          'product_description' => $short_description,
+          'statement_descriptor' => 'LIVELEARN PAY !',
+          'product_image' => $thumbnail,
+          'product_url' => $permalink,
+          'ID' => $post->ID,
+      ];
+      $price_id = (search_price($data_price['ID'])) ?: create_price($data_price);
+
+      $mode = ($prijs) ? 'payment' : 'setup';
+    endif;
+  /** End */
+
+  //create session 
+  $session_stripe = session_stripe($price_id, 'payment', $postID, $userID, $metadata, 1);
+  $response = new WP_REST_Response($session_stripe);
+  $response->set_status(201);
+  return $response;
+}
