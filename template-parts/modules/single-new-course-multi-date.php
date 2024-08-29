@@ -27,6 +27,7 @@ $startorbuy = ($price == 'Gratis') ? '<a href="/cart/?add-to-cart=' . get_field(
 
 //Stripe pay 
 $button_pay = ($price == 'Gratis') ? 'Buy free !' : '<img width="50" src="'. get_stylesheet_directory_uri() . '/img/stripe-logo.png" alt="logo stripe"> Pay with Stripe !';
+$redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -288,7 +289,7 @@ endif;
                                                                     if(!$user_id)
                                                                         echo 
                                                                         '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
-                                                                            class="btn btn-buy-now" style="background-color:#635BFF" name="productPrice"> 
+                                                                            class="single_add_to_cart_button button alt" style="background-color:#635BFF" name="productPrice"> 
                                                                         ' . $button_pay . '
                                                                         </button>';
                                                                     else
@@ -441,12 +442,16 @@ endif;
                                                                         ' . $button_pay . '
                                                                         </button>
                                                                     </form>
-                                                                    <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
-                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
                                                                     ';
-                                                                    echo $stripe_pay_form;
+                                                                    if(!$user_id)
+                                                                        echo 
+                                                                        '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
+                                                                            class="single_add_to_cart_button button alt" style="background-color:#635BFF" name="productPrice"> 
+                                                                        ' . $button_pay . '
+                                                                        </button>';
+                                                                    else
+                                                                        echo $stripe_pay_form;                                                                    
                                                                     ?>
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -562,10 +567,15 @@ endif;
                                                                         ' . $button_pay . '
                                                                         </button>
                                                                     </form>
-                                                                    <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
-                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
                                                                     ';
-                                                                    echo $stripe_pay_form;
+                                                                    if(!$user_id)
+                                                                        echo 
+                                                                        '<button data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target="#SignInCheckout" 
+                                                                            class="single_add_to_cart_button button alt" style="background-color:#635BFF" name="productPrice"> 
+                                                                        ' . $button_pay . '
+                                                                        </button>';
+                                                                    else
+                                                                        echo $stripe_pay_form;
                                                                     ?>
                                                                 </div>
                                                             </div>
@@ -967,23 +977,25 @@ endif;
                     </div>
                     <h3 class="text-center my-2">Sign In</h3>
                     <div class="text-center">
-                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                              data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
+                        <p>
+                            Not an account? 
+                            <a href="<?= $redirect_register ?>" class="text-primary">&nbsp; Sign up </a>
+                        </p>
                     </div>
                 </div>
 
                 <?php
                 wp_login_form([
-                    'redirect' => '',
+                    'redirect' => $redirect_register,
                     'remember' => false,
                     'label_username' => 'What is your email address ?',
                     'placeholder_email' => 'E-mail address',
                     'label_password' => 'What is your password ?'
                 ]);
                 ?>
-                <div class="text-center">
+                <!-- <div class="text-center">
                     <a href="" class="watchword-text">Forgot password</a>
-                </div>
+                </div> -->
             </div>
         </div>
 
