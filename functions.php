@@ -2188,12 +2188,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'get_detail_notification'
     ));
-    /*
-    register_rest_route ('custom/v1', '/company-statistic/(?P<ID>\d+)', array(
-        'methods' => 'GET',
-        'callback' => 'company_statistic'
-    ));
-    */
+
     register_rest_route ('custom/v1', '/statistic/company/(?P<ID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'statistic_company'
@@ -2249,5 +2244,9 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/teacher/update-course/(?P<id_course>\d+)', array(
         'methods' => 'POST',
         'callback' => 'updateCoursesByTeacher'
+    ));
+    register_rest_route ('custom/v1', '/delete-course/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'deleteCourse'
     ));
 });
