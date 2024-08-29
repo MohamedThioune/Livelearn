@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_directory_uri();?>/green-audio-player.css">
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php
-require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
+// require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
 
 $post = 0;
 
