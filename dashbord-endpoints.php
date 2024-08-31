@@ -553,7 +553,9 @@ function get_detail_notification($data){
     $notification->notification_type = $notification_type;
     $notification->post_type = $notification_type;
     $notification->notification_title = $notification->post_title;
-    $notification->notification_content = get_field('content',$notification->ID);
+    $notification->notification_content = get_field('content',$notification->ID)?:$notification->content;
+    $notification->beschrijving_feedback = $beschrijving_feedback;
+
     $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
     $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
     $notification->notification_manager = get_user_by('ID', $notification->notification_manager)->data;
@@ -567,7 +569,6 @@ function get_detail_notification($data){
     unset($notification->notification_manager->user_pass);
     $notification->notification_author->company = get_field('company', 'user_' . $notification->post_author)[0]->post_title ? : 'Livelearn';
     $notification->notification_author->image = get_field('profile_img',  'user_' . $notification->post_author) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
-    $notification->beschrijving_feedback = $beschrijving_feedback;
 
     $response = new WP_REST_Response($notification);
     $response->set_status(200);
@@ -2784,16 +2785,22 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     //$course_type = $data['course_type'];
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
+    $visibility = $data['visibility']; // checkbox : true or false ?
     $categories = $data['categories'];
     $course = get_post($id_course);
     $questions = $data['questions']; // for assessments
     $how_it_works = $data['how_it_works'];
     $languageAssessment = $data['language_assessment'];
     $difficultyAssessment = $data['difficulty_assessment'];
-    $long_description = $data['long_description'];
+    $long_description = $data['long_description']; //Totale beschrijving,
     $short_description = $data['short_description'];
-    $experts = $data['experts']; // Must be an array ["875","98489",""]...
-
+    $experts = $data['experts']; // Must be an array ["875","98489"]...
+    $for_who = $data['for_who']; //for_who, Voor wie,
+    $agenda = $data['agenda']; // Programma, agenda
+    $results = $data['results']; // Resultaten, results
+    $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
+    $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
+    $btwKlasse = $data['btw-klasse'];
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
 
@@ -2801,12 +2808,19 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         update_field('article_itself', $article_content, $id_course);
         $isCourseUpdated = true;
     }
-
+    if ($visibility) {
+        update_field('visibility', $visibility, $id_course);
+        $isCourseUpdated = true;
+    }
     if ($categories){
         update_field('categories', $categories , $id_course);
         $isCourseUpdated = true;
     }
     if ($experts){
+        $all_experts = get_filed('experts', $id_course) ? : [];
+        $experts = array_merge($experts,$all_experts);
+        $experts = array_unique($experts);
+        update_field('experts', null, $id_course);
         update_field('experts', $experts, $id_course);
         $isCourseUpdated = true;
     }
@@ -2832,6 +2846,18 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     }
     if ($long_description){
         update_field('long_description', $long_description, $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($for_who){
+        update_field('for_who', $for_who, $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($agenda){
+        update_field('agenda', $agenda, $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($results){
+        update_field('results', $results, $id_course);
         $isCourseUpdated = true;
     }
 
