@@ -49,7 +49,6 @@ $stripe_pay_form =
     </button>
 </form>';
 $redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
-$register_link = "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -773,8 +772,10 @@ endif;
                     </div>
                     <h3 class="text-center my-2">Sign In</h3>
                     <div class="text-center">
-                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                              data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
+                        <p>
+                            Not an account ? 
+                            <a href="<?= $redirect_register ?>" class="text-primary">&nbsp; Sign up </a>
+                        </p>
                     </div>
                 </div>
 
@@ -786,7 +787,6 @@ endif;
                     'placeholder_email' => 'E-mail address',
                     'label_password' => 'What is your password ?'
                 ]);                
-                echo $register_link;
                 ?>
                 <!-- <div class="text-center">
                     <a href="" class="watchword-text">Forgot password</a>

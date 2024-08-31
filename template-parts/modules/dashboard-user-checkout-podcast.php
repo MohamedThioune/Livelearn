@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_directory_uri();?>/green-audio-player.css">
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <?php
-require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
+// require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
 
 $post = 0;
 
@@ -579,11 +579,14 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
 
             </div>
         </div>
+        <?php
+            $first_lesson = "/dashboard/user/start-podcast?post=" . $post->post_name . "&lesson=0";
+        ?>
         <div class="group-card-strat-block">
             <div class="card-strat-block">
-                <a href="" class="btn btn-strat">Start</a>
+                <a href="<?= $first_lesson ?>" class="btn btn-strat">Start</a>
                 <ul>
-                    <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_outline-play-arrow.png" alt="">0 hours on-demand video</li>
+                    <!-- <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_outline-play-arrow.png" alt="">0 hours on-demand video</li> -->
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ph_files-light.png" alt=""><?= $count_podcasts; ?> downloadable resources</li>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ph_key-light.png" alt="">Full lifetime access</li>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/certificate-regular.png" alt="">Certificate of Completion</li>

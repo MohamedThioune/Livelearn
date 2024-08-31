@@ -1,7 +1,7 @@
 <html lang="en">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 <?php
-require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
+// require_once dirname(__FILE__ , 3) . '/templates/checkout.php';
 
 $post = 0;
 
