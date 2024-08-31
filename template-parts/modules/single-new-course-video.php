@@ -62,7 +62,6 @@ $stripe_pay_form =
     </button>
 </form>';
 $redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
-$register_link = "<span>I don't have a account, <a href='" . $redirect_register . "'>create one !</a> </span>";
 
 //Review pourcentage
 if(!empty($counting_rate)):
@@ -671,8 +670,6 @@ endif;
                                         echo $stripe_pay_form;
                                     ?>
                                 </div>
-                                <button class="btn btn-stratNow" data-dismiss="modal" aria-label="Close"
-                                        data-toggle="modal" data-target="#SignInCheckout">new modal</button>
                                 <div class="sharing-element">
                                     <?php
                                     $subject = $post->post_title;
@@ -794,23 +791,25 @@ endif;
                     </div>
                     <h3 class="text-center my-2">Sign In</h3>
                     <div class="text-center">
-                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                              data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
+                        <p>
+                            Not an account? 
+                            <a href="<?= $redirect_register ?>" class="text-primary">&nbsp; Sign up </a>
+                        </p>
                     </div>
                 </div>
 
                 <?php
                 wp_login_form([
-                    'redirect' => '',
+                    'redirect' => $redirect_register,
                     'remember' => false,
                     'label_username' => 'What is your email address ?',
                     'placeholder_email' => 'E-mail address',
                     'label_password' => 'What is your password ?'
                 ]);
                 ?>
-                <div class="text-center">
+                <!-- <div class="text-center">
                     <a href="" class="watchword-text">Forgot password</a>
-                </div>
+                </div> -->
             </div>
         </div>
 
