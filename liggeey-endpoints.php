@@ -3618,9 +3618,6 @@ function checkoutAPI(WP_REST_Request $request){
   $userID = $request['userID'] ?: null;
   $metadata = $request['metadata'] ?: null;
   $price_id = null;
-
-  var_dump($postID);
-
   /** Create or first price ID */
     // get course
     $post = get_post($postID);
@@ -3672,8 +3669,6 @@ function checkoutFreeAPI(WP_REST_Request $request){
     $response->set_status(400);
     return $response;
   endif;
-
-  var_dump($postID);
 
   $success = 'complete';
   //GET POST request
