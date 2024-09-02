@@ -411,12 +411,14 @@ function job($id, $userApplyId = null){
   $additionnals = get_field('job_additionnal', $post->ID);
   foreach ($sample->applied as $entity):
     $tmpUser = candidate($entity->ID);
-    $x = $entity->ID;
-    $additional = array_filter($additionnals, function ($value) use ($entity)  {
-      if($value['userid']->ID == $entity->ID)
-        return $value;
-    });
-    $tmpUser->motivation = $additional[0]['motivation'];
+    $tmpUser->motivation = '';
+    if(!empty($additionals)):
+      $additional = array_filter($additionnals, function ($value) use ($entity)  {
+        if($value['userid']->ID == $entity->ID)
+          return $value;
+      });
+      $tmpUser->motivation = $additional[0]['motivation'];
+    endif;
     $applied[] = $tmpUser;
     if($userApplyId)
     if($userApplyId == $entity->ID)
