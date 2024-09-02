@@ -2378,10 +2378,6 @@ add_action( 'rest_api_init', function () {
     ));
 
     //Made by MaxBird | Checkout
-    register_rest_route ('custom/v1', '/checkout/stripe/hosted/(?P<postID>\d+)/(?P<userID>\d+)/(?P<metadata>[-\w]+)', array(
-        'methods' => 'GET',
-        'callback' => 'checkoutAPI'
-    ));
     register_rest_route ('custom/v1', '/checkout/stripe/hosted', array(
         'methods' => 'POST',
         'callback' => 'checkoutAPI'
