@@ -397,14 +397,26 @@ function job($id, $userApplyId = null){
   $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
   $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
 
+  $sample['skills_passport'] = get_field('job_topics', $post->ID) ?: false;
+  $sample['assessments'] = get_field('job_assessments', $post->ID) ?: false;
+  $sample['motivational'] = get_field('job_motivation', $post->ID) ?: false;
+
   $sample = (Object)$sample;
 
   // Retrieve the applied 
   $entity = null;
   $applied = array();
   $status = "No data available";
+  $additionnals = get_field('job_additionnal', $post->ID);
   foreach ($sample->applied as $entity):
-    $applied[] = candidate($entity->ID);
+    $tmpUser = candidate($entity->ID);
+    $x = $entity->ID;
+    $additional = array_filter($additionnals, function ($value) use ($entity)  {
+      if($value['userid']->ID == $entity->ID)
+        return $value;
+    });
+    $tmpUser->motivation = $additional[0]['motivation'];
+    $applied[] = $tmpUser;
     if($userApplyId)
     if($userApplyId == $entity->ID)
       $status = "Processing";
@@ -982,10 +994,10 @@ function jobDetail(WP_REST_Request $request){
   endif;
 
   // Retrieve the latest job posts
-    $args = array( 
-      'post_type'      => 'job',
-      'posts_per_page' => 3,
-      'order'          => 'DESC',
+  $args = array( 
+    'post_type'      => 'job',
+    'posts_per_page' => 3,
+    'order'          => 'DESC',
   );
 
   $job_posts = get_posts($args);
@@ -1163,6 +1175,7 @@ function jobUser(WP_REST_Request $request){
   //Get inputs
   $user_apply_id = $request['userApplyId'];
   $job_applied_id = $request['jobAppliedId'];
+  $motivation = $request['motivation'] ?: null;
 
   $user_apply = get_user_by('ID', $user_apply_id);
   $job_apply = get_post($job_applied_id);
@@ -1195,12 +1208,30 @@ function jobUser(WP_REST_Request $request){
   array_push($user_appliants, $user_apply);
 
   //Update the 'job_appliants'
-  update_field('job_appliants', $user_appliants, $job_applied_id);
+  // update_field('job_appliants', $user_appliants, $job_applied_id);
+
+  //Add additional information
+  $additional = array();
+  if($motivation):
+    $user_additionnal = get_field('job_additionnal', $job_applied_id);
+    $user_additionnal = ($user_additionnal) ?: array();
+
+    // Create a additional entry for a job
+    $additional['userid'] = $user_apply;
+    $additional['motivation'] = $motivation;
+
+    // Update the favorites array
+    array_push($user_additionnal, $additional);
+
+    // Update the save liggeey entries
+    update_field('job_additionnal', $user_additionnal, $job_applied_id);
+  endif;
 
   //Informations returned "candidate" + "job"
   $infos['candidate'] = $user_apply;
   $infos['chief'] = get_user_by('ID', $job_apply->post_author);
   $infos['job'] = job($job_applied_id);
+  $infos['job'] = ['motivation' => $motivation];
 
   $response = new WP_REST_Response($infos);
   $response->set_status(200);
@@ -1600,9 +1631,12 @@ function postJobUser(WP_REST_Request $request){
   $job_language = ($request['job_langues']) ?: 'English';
   $job_application_deadline = ($request['job_expiration_date']);
   $skills = ($request['skills']) ?: null;
+  $topicSkills = ($request['skill_passport']) ?: array();
+  $assessment = ($request['assessment']) ?: array();
+  $motivation = ($request['motivation']) ?: null;
+
   $user_apply_id = $request['userApplyId'];
   $user_apply = get_user_by('ID', $user_apply_id);
-
 
   //Job skill & experiences 
   $job_skills_experiences = array();
@@ -1641,6 +1675,25 @@ function postJobUser(WP_REST_Request $request){
   if($skills)
     wp_set_post_terms($job_id, $skills, 'course_category');
 
+
+  //Add skills passport topics
+  $args = array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'include'  => $topicSkills,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    // 'post_per_page' => $limit
+  );
+  $skillsPassport = get_categories($args);
+
+  //Add assessments
+  $args = array(
+    'post_type' => 'assessment',  
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC' ,
+  );
+  $assessments = get_posts($args);
+
   // Add custom fields 
   update_field('job_company', $company, $job_id);
   update_field('job_description', $job_description, $job_id);
@@ -1650,6 +1703,9 @@ function postJobUser(WP_REST_Request $request){
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
   update_field('job_expiration_date', $job_application_deadline, $job_id);
+  update_field('job_topics', $skillsPassport, $job_id);
+  update_field('job_assessments', $assessments, $job_id);
+  update_field('job_motivation', $motivation, $job_id);
 
   // Return the job
   $job = job($job_id);
@@ -3617,6 +3673,8 @@ function checkoutFreeAPI(WP_REST_Request $request){
     return $response;
   endif;
 
+  var_dump($postID);
+
   $success = 'complete';
   //GET POST request
   $userID = $request['userID'] ?: null;
@@ -3636,49 +3694,49 @@ function checkoutFreeAPI(WP_REST_Request $request){
   );
 
   //Check existing user information "MAKE IT AS A FUNCTION !"
-  $register_message = 0;
-  if($userID == "null"):
-    //Check if email match record on our database 
-    $args = array(
-        'search'  => $request['email'],
-        'search_columns' => array('user_login', 'user_email'),
-    );
-    $users_search = get_users($args);
-    $userSearch = isset($users_search[0]) ? $users_search[0] : null;
-    $userID = isset($userSearch->ID) ? $userSearch->ID : null;
+  // $register_message = 0;
+  // if($userID == "null"):
+  //   //Check if email match record on our database 
+  //   $args = array(
+  //       'search'  => $request['email'],
+  //       'search_columns' => array('user_login', 'user_email'),
+  //   );
+  //   $users_search = get_users($args);
+  //   $userSearch = isset($users_search[0]) ? $users_search[0] : null;
+  //   $userID = isset($userSearch->ID) ? $userSearch->ID : null;
 
-    //Use existing email
-    if($userID) :
-        $data_order['auth_id'] = $userID;
-        $data_order['owner_id'] = $userID;
-        $register_message = "We find on our records a email already corresponding to email : " . $request['email'] . "<br>We have therefore taken the liberty of assigning this command to this user.";
-    else : 
-    //Register this user
-      $password = 'L1vele@rn2024';
-      $userdata = array(
-          'user_pass' => $password,
-          'user_login' => $request['email'],
-          'user_email' => $request['email'],
-          'user_url' => 'http://livelearn.nl/',
-          'display_name' => $request['name'],
-          'first_name' => $request['name'],
-          'last_name' => "",
-          'role' => 'subscriber'
-      );
-      $userID = wp_insert_user($userdata);
-      if (is_wp_error($userID)):
-          $register_message = $userID->get_error_message();
-      else:
-          $data_order['auth_id'] = $userID;
-          $data_order['owner_id'] = $userID;    
-          $register_message = "Your account has been registered successfully with : <br> email : " . $request['email'] . " temporary password : " . $password;
-      endif;
-    endif;
-  endif;
+  //   //Use existing email
+  //   if($userID) :
+  //       $data_order['auth_id'] = $userID;
+  //       $data_order['owner_id'] = $userID;
+  //       $register_message = "We find on our records a email already corresponding to email : " . $request['email'] . "<br>We have therefore taken the liberty of assigning this command to this user.";
+  //   else : 
+  //   //Register this user
+  //     $password = 'L1vele@rn2024';
+  //     $userdata = array(
+  //         'user_pass' => $password,
+  //         'user_login' => $request['email'],
+  //         'user_email' => $request['email'],
+  //         'user_url' => 'http://livelearn.nl/',
+  //         'display_name' => $request['name'],
+  //         'first_name' => $request['name'],
+  //         'last_name' => "",
+  //         'role' => 'subscriber'
+  //     );
+  //     $userID = wp_insert_user($userdata);
+  //     if (is_wp_error($userID)):
+  //         $register_message = $userID->get_error_message();
+  //     else:
+  //         $data_order['auth_id'] = $userID;
+  //         $data_order['owner_id'] = $userID;    
+  //         $register_message = "Your account has been registered successfully with : <br> email : " . $request['email'] . " temporary password : " . $password;
+  //     endif;
+  //   endif;
+  // endif;
 
   //create a order information
   $order_stripe = create_order($data_order);
   $success = ($order_stripe) ? "Information filled up successfully !" : "Something went wrong !";
 
-  $information = array('message' => $success, 'register' => $register_message);
+  $information = array('message' => $success);
 }
