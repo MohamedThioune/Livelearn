@@ -1,6 +1,7 @@
 <?php
 
 /* * Liggeey * */
+require_once __DIR__ . '/templates/orders-stripe.php';
 
 // Function
 
@@ -3673,7 +3674,6 @@ function checkoutFreeAPI(WP_REST_Request $request){
   $success = 'complete';
   //GET POST request
   $userID = $request['userID'] ?: null;
-  $success = 'complete';
   $data_order = array(
     'course_id' => $request['postID'], 
     'status' => $success, 
@@ -3688,50 +3688,15 @@ function checkoutFreeAPI(WP_REST_Request $request){
     'additional_information' => $request['additional_information'],
   );
 
-  //Check existing user information "MAKE IT AS A FUNCTION !"
-  // $register_message = 0;
-  // if($userID == "null"):
-  //   //Check if email match record on our database 
-  //   $args = array(
-  //       'search'  => $request['email'],
-  //       'search_columns' => array('user_login', 'user_email'),
-  //   );
-  //   $users_search = get_users($args);
-  //   $userSearch = isset($users_search[0]) ? $users_search[0] : null;
-  //   $userID = isset($userSearch->ID) ? $userSearch->ID : null;
-
-  //   //Use existing email
-  //   if($userID) :
-  //       $data_order['auth_id'] = $userID;
-  //       $data_order['owner_id'] = $userID;
-  //       $register_message = "We find on our records a email already corresponding to email : " . $request['email'] . "<br>We have therefore taken the liberty of assigning this command to this user.";
-  //   else : 
-  //   //Register this user
-  //     $password = 'L1vele@rn2024';
-  //     $userdata = array(
-  //         'user_pass' => $password,
-  //         'user_login' => $request['email'],
-  //         'user_email' => $request['email'],
-  //         'user_url' => 'http://livelearn.nl/',
-  //         'display_name' => $request['name'],
-  //         'first_name' => $request['name'],
-  //         'last_name' => "",
-  //         'role' => 'subscriber'
-  //     );
-  //     $userID = wp_insert_user($userdata);
-  //     if (is_wp_error($userID)):
-  //         $register_message = $userID->get_error_message();
-  //     else:
-  //         $data_order['auth_id'] = $userID;
-  //         $data_order['owner_id'] = $userID;    
-  //         $register_message = "Your account has been registered successfully with : <br> email : " . $request['email'] . " temporary password : " . $password;
-  //     endif;
-  //   endif;
-  // endif;
-
   //create a order information
   $order_stripe = create_order($data_order);
   $success = ($order_stripe) ? "Information filled up successfully !" : "Something went wrong !";
 
   $information = array('message' => $success);
+
+  // Return the response 
+  $response = new WP_REST_Response($information);
+  $response->set_status(200);
+  return $response;
+  
 }
