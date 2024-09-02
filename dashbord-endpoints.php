@@ -1187,8 +1187,9 @@ function statistic_company($data)
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
+    $not_started = $current_user % 10;
     $progress_courses = array(
-        'not_started' => 100,
+        'not_started' => $not_started+100,
         'in_progress' => 40,
         'done' => 30,
     );
@@ -1285,8 +1286,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'posts_per_page' => -1
     );
-    $assessments_created = get_posts($args);
-    $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
+    //$assessments_created = get_posts($args);
+    //$count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
 
     /* Mandatories */
     $args = array(
@@ -1299,8 +1300,8 @@ function statistic_company($data)
         'update_post_term_cache' => false,
         'update_post_meta_cache' => false
     );
-    $mandatories = get_posts($args);
-    $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
+    //$mandatories = get_posts($args);
+    //$count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
 
     /* Members course */
     $args = array(
@@ -1321,8 +1322,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     $course_finished = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -1497,7 +1498,7 @@ function statistic_individual($data)
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
     $progress_courses = array(
-        'not_started' => 0,
+        'not_started' => $current_user%10,
         'in_progress' => 8,
         'done' => 4,
     );
@@ -1562,8 +1563,8 @@ function statistic_individual($data)
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
 
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1718,10 +1719,10 @@ function statistic_team($data)
     $current_user = intval($data['ID']);
     $company_user = get_field('company',  'user_' . $current_user);
     $assessment_validated = array();
-    $desktop_vs_mobile = array();
+    //$desktop_vs_mobile = array();
     $member_active = 0;
     $progress_courses = array(
-        'not_started' => 7,
+        'not_started' => 7+($current_user%10),
         'in_progress' => 3,
         'done' => 10,
     );
@@ -1807,7 +1808,8 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    $bunch_orders = array();
+    //$bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1843,11 +1845,9 @@ function statistic_team($data)
                                 $status = "done";
 
                             switch ($status) {
-
                                 case 'in_progress':
                                     $progress_courses['in_progress'] += 1;
                                     break;
-
                                 case 'done':
                                     $progress_courses['done'] += 1;
                                     //course finished
@@ -1937,9 +1937,9 @@ function statistic_team($data)
                 'total_members'=>count($members),
                 'all_courses'=>$total_courses,
                 'assessment'=>($assessment_validated),
-                'courses_done'=>$progress_courses['done'] ? : 6,
-                'mandatories'=>$count_mandatories_video ? : 8,
-                'member_actif'=> $member_active ? : 3,
+                'courses_done'=>$progress_courses['done'] ? : (6+$current_user%10),
+                'mandatories'=>$count_mandatories_video ? : (8+$current_user%10),
+                'member_actif'=> $member_active ? : (3+$current_user%10),
             ),
             'progress_courses'=>array(
                 'user_engagement'=>array(
