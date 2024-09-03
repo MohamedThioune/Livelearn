@@ -2907,7 +2907,23 @@ function search_courses()
     $courses_founded = get_posts($args);
     $courses_searched = array();
     foreach ($courses_founded as $course){
-        $course_type = get_field('course_type', $course->ID);
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        $author = get_user_by( 'ID', $course -> post_author  );
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course-> author = new Expert ($author , $author_img);
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = get_field('preview', $course->ID)['url'];
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
 
         $new_course = new Course($course);
         array_push($courses_searched, $new_course);
