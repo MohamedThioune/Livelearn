@@ -18,11 +18,11 @@ if (($_POST["course_searched"])) {
             foreach ($course_founded as $key => $course){
                 $course_type = get_field('course_type', $course->ID);
 
-                $thumbnail = get_field('preview', $post->ID)['url'];
+                $thumbnail = get_field('preview', $course->ID)['url'];
                 if(!$thumbnail){
-                    $thumbnail = get_the_post_thumbnail_url($post->ID);
+                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                     if(!$thumbnail)
-                        $thumbnail = get_field('url_image_xml', $post->ID);
+                        $thumbnail = get_field('url_image_xml', $course->ID);
                     if(!$thumbnail)
                         $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                 }
