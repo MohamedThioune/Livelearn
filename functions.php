@@ -2497,4 +2497,8 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'deleteCourse'
     ));
+    register_rest_route ('custom/v1', '/search-course', array(
+        'methods' => 'GET',
+        'callback' => 'search_courses'
+    ));
 });
