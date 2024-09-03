@@ -403,30 +403,32 @@ function removePeopleCompany($data)
         ));
 }
 function learn_modules($data){
-    $users_companie = array();
-    //$user_connected =get_user_by('ID', $data['ID']); //$user_in
+    $users_companies = array();
+    $user_connected = intval($data['ID']); //$user_in
+    $company_connected = get_field('company',  'user_' . $user_connected);
     $users = get_users();
     foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
         if(!empty($company_connected) && !empty($company_user))
-            if($company_user[0]->post_title == $company_connected[0]->post_title)
-                array_push($users_companie,$user->ID);
+            if($company_user[0]->ID == $company_connected[0]->ID)
+                array_push($users_companies,$user->ID);
     }
     //$company_connected = get_field('company',  'user_' . $user_connected);
     $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => 1000,
-        'author__in' => $users_companie,
+        'posts_per_page' => -1,
+        'author__in' => $users_companies,
         'ORDER BY' => 'post_date',
     );
 
     //bought courses
     $order_args = array(
         'customer_id' => get_current_user_id(),
-        'post_status' => array_keys(wc_get_order_statuses()),
+        //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = wc_get_orders($order_args);
+    $bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -472,15 +474,16 @@ function learn_modules($data){
 function learnning_database(){
 $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => 1000,
+        'posts_per_page' => -1,
         'ORDER BY' => 'post_date',
     );
     $order_args = array(
         'customer_id' => get_current_user_id(),
-        'post_status' => array_keys(wc_get_order_statuses()),
+        //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = wc_get_orders($order_args);
+    $bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -519,7 +522,6 @@ $args = array(
  * @user_id id user connected getting via GET request
  */
 function get_detail_notification($data){
-    //$id_notification = intval($data['id']);
     $id_notification = intval($data['id']);
     $user_id = $_GET['user_id'];
     /*
@@ -1439,8 +1441,8 @@ function statistic_company($data)
         ),
     );
     /*****************************************************/
-    /*                      ///                      */
-    $topic_avairage = array();
+    /*                      /begin topic in  /                      */
+
     $is_topic_in_company = array();
     foreach ($topic_in_company as $id_topics)
         if (!empty($id_topics))
@@ -1458,7 +1460,7 @@ function statistic_company($data)
             'percentage'=>round(($value / $total_occurences) * 100, 2),
         );
     }
-    /*                      ///                      */
+    /*                      / /                      */
     $respons = new WP_REST_Response(
         array(
         'user_connected'=>$user_connected,
@@ -1468,7 +1470,6 @@ function statistic_company($data)
                 'new_members'=>count($new_members),
                 'total_courses'=>$total_courses,
             ),
-            //'course_categories_topics_finished'=>$courses_categories,
             'progress_courses'=>array(
                 'user_engagement'=>array(
                     'active'=>$members_active,
@@ -2884,4 +2885,35 @@ function deleteCourse($data)
                     200);
 
         return new WP_REST_Response(array('message'=>"course not deleted ! ! !"),401);
+}
+
+function search_courses()
+{
+    $search = $_GET['search'];
+    if (!$search)
+        return new WP_REST_Response(
+            array(
+            'message' => 'key search must be signed in the url'
+        ),401 );
+
+    $args = array(
+        'post_type' => array('course', 'post','assessment'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        's' => $search,
+        'orderby' => 'date',
+        'order' => 'ASC',
+    );
+    $courses_founded = get_posts($args);
+    $courses_searched = array();
+    foreach ($courses_founded as $course){
+        $course_type = get_field('course_type', $course->ID);
+
+        $new_course = new Course($course);
+        array_push($courses_searched, $new_course);
+    }
+    return new WP_REST_Response( array(
+        'count_courses' => count($courses_searched),
+        'courses' => $courses_searched,
+    ), 200);
 }
