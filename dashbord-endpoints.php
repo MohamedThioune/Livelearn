@@ -403,30 +403,32 @@ function removePeopleCompany($data)
         ));
 }
 function learn_modules($data){
-    $users_companie = array();
-    //$user_connected =get_user_by('ID', $data['ID']); //$user_in
+    $users_companies = array();
+    $user_connected = intval($data['ID']); //$user_in
+    $company_connected = get_field('company',  'user_' . $user_connected);
     $users = get_users();
     foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
         if(!empty($company_connected) && !empty($company_user))
-            if($company_user[0]->post_title == $company_connected[0]->post_title)
-                array_push($users_companie,$user->ID);
+            if($company_user[0]->ID == $company_connected[0]->ID)
+                array_push($users_companies,$user->ID);
     }
     //$company_connected = get_field('company',  'user_' . $user_connected);
     $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => 1000,
-        'author__in' => $users_companie,
+        'posts_per_page' => -1,
+        'author__in' => $users_companies,
         'ORDER BY' => 'post_date',
     );
 
     //bought courses
     $order_args = array(
         'customer_id' => get_current_user_id(),
-        'post_status' => array_keys(wc_get_order_statuses()),
+        //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = wc_get_orders($order_args);
+    $bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -472,15 +474,16 @@ function learn_modules($data){
 function learnning_database(){
 $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => 1000,
+        'posts_per_page' => -1,
         'ORDER BY' => 'post_date',
     );
     $order_args = array(
         'customer_id' => get_current_user_id(),
-        'post_status' => array_keys(wc_get_order_statuses()),
+        //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = wc_get_orders($order_args);
+    $bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -519,7 +522,6 @@ $args = array(
  * @user_id id user connected getting via GET request
  */
 function get_detail_notification($data){
-    //$id_notification = intval($data['id']);
     $id_notification = intval($data['id']);
     $user_id = $_GET['user_id'];
     /*
@@ -553,7 +555,9 @@ function get_detail_notification($data){
     $notification->notification_type = $notification_type;
     $notification->post_type = $notification_type;
     $notification->notification_title = $notification->post_title;
-    $notification->notification_content = get_field('content',$notification->ID);
+    $notification->notification_content = get_field('content',$notification->ID)?:$notification->content;
+    $notification->beschrijving_feedback = $beschrijving_feedback;
+
     $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
     $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
     $notification->notification_manager = get_user_by('ID', $notification->notification_manager)->data;
@@ -567,7 +571,6 @@ function get_detail_notification($data){
     unset($notification->notification_manager->user_pass);
     $notification->notification_author->company = get_field('company', 'user_' . $notification->post_author)[0]->post_title ? : 'Livelearn';
     $notification->notification_author->image = get_field('profile_img',  'user_' . $notification->post_author) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
-    $notification->beschrijving_feedback = $beschrijving_feedback;
 
     $response = new WP_REST_Response($notification);
     $response->set_status(200);
@@ -1186,8 +1189,9 @@ function statistic_company($data)
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
+    $not_started = $current_user % 10;
     $progress_courses = array(
-        'not_started' => 100,
+        'not_started' => $not_started+100,
         'in_progress' => 40,
         'done' => 30,
     );
@@ -1284,8 +1288,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'posts_per_page' => -1
     );
-    $assessments_created = get_posts($args);
-    $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
+    //$assessments_created = get_posts($args);
+    //$count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
 
     /* Mandatories */
     $args = array(
@@ -1298,8 +1302,8 @@ function statistic_company($data)
         'update_post_term_cache' => false,
         'update_post_meta_cache' => false
     );
-    $mandatories = get_posts($args);
-    $count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
+    //$mandatories = get_posts($args);
+    //$count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
 
     /* Members course */
     $args = array(
@@ -1320,8 +1324,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     $course_finished = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -1437,8 +1441,8 @@ function statistic_company($data)
         ),
     );
     /*****************************************************/
-    /*                      ///                      */
-    $topic_avairage = array();
+    /*                      /begin topic in  /                      */
+
     $is_topic_in_company = array();
     foreach ($topic_in_company as $id_topics)
         if (!empty($id_topics))
@@ -1456,7 +1460,7 @@ function statistic_company($data)
             'percentage'=>round(($value / $total_occurences) * 100, 2),
         );
     }
-    /*                      ///                      */
+    /*                      / /                      */
     $respons = new WP_REST_Response(
         array(
         'user_connected'=>$user_connected,
@@ -1466,7 +1470,6 @@ function statistic_company($data)
                 'new_members'=>count($new_members),
                 'total_courses'=>$total_courses,
             ),
-            //'course_categories_topics_finished'=>$courses_categories,
             'progress_courses'=>array(
                 'user_engagement'=>array(
                     'active'=>$members_active,
@@ -1496,7 +1499,7 @@ function statistic_individual($data)
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
     $progress_courses = array(
-        'not_started' => 0,
+        'not_started' => $current_user%10,
         'in_progress' => 8,
         'done' => 4,
     );
@@ -1561,8 +1564,8 @@ function statistic_individual($data)
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
 
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1717,10 +1720,10 @@ function statistic_team($data)
     $current_user = intval($data['ID']);
     $company_user = get_field('company',  'user_' . $current_user);
     $assessment_validated = array();
-    $desktop_vs_mobile = array();
+    //$desktop_vs_mobile = array();
     $member_active = 0;
     $progress_courses = array(
-        'not_started' => 7,
+        'not_started' => 7+($current_user%10),
         'in_progress' => 3,
         'done' => 10,
     );
@@ -1806,7 +1809,8 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    $bunch_orders = array();
+    //$bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1842,11 +1846,9 @@ function statistic_team($data)
                                 $status = "done";
 
                             switch ($status) {
-
                                 case 'in_progress':
                                     $progress_courses['in_progress'] += 1;
                                     break;
-
                                 case 'done':
                                     $progress_courses['done'] += 1;
                                     //course finished
@@ -1936,9 +1938,9 @@ function statistic_team($data)
                 'total_members'=>count($members),
                 'all_courses'=>$total_courses,
                 'assessment'=>($assessment_validated),
-                'courses_done'=>$progress_courses['done'] ? : 6,
-                'mandatories'=>$count_mandatories_video ? : 8,
-                'member_actif'=> $member_active ? : 3,
+                'courses_done'=>$progress_courses['done'] ? : (6+$current_user%10),
+                'mandatories'=>$count_mandatories_video ? : (8+$current_user%10),
+                'member_actif'=> $member_active ? : (3+$current_user%10),
             ),
             'progress_courses'=>array(
                 'user_engagement'=>array(
@@ -2784,16 +2786,22 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     //$course_type = $data['course_type'];
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
+    $visibility = $data['visibility']; // checkbox : true or false ?
     $categories = $data['categories'];
     $course = get_post($id_course);
     $questions = $data['questions']; // for assessments
     $how_it_works = $data['how_it_works'];
     $languageAssessment = $data['language_assessment'];
     $difficultyAssessment = $data['difficulty_assessment'];
-    $long_description = $data['long_description'];
+    $long_description = $data['long_description']; //Totale beschrijving,
     $short_description = $data['short_description'];
-    $experts = $data['experts']; // Must be an array ["875","98489",""]...
-
+    $experts = $data['experts']; // Must be an array ["875","98489"]...
+    $for_who = $data['for_who']; //for_who, Voor wie,
+    $agenda = $data['agenda']; // Programma, agenda
+    $results = $data['results']; // Resultaten, results
+    $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
+    $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
+    $btwKlasse = $data['btw-klasse'];
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
 
@@ -2801,12 +2809,19 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         update_field('article_itself', $article_content, $id_course);
         $isCourseUpdated = true;
     }
-
+    if ($visibility) {
+        update_field('visibility', $visibility, $id_course);
+        $isCourseUpdated = true;
+    }
     if ($categories){
         update_field('categories', $categories , $id_course);
         $isCourseUpdated = true;
     }
     if ($experts){
+        $all_experts = get_filed('experts', $id_course) ? : [];
+        $experts = array_merge($experts,$all_experts);
+        $experts = array_unique($experts);
+        update_field('experts', null, $id_course);
         update_field('experts', $experts, $id_course);
         $isCourseUpdated = true;
     }
@@ -2834,6 +2849,18 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         update_field('long_description', $long_description, $id_course);
         $isCourseUpdated = true;
     }
+    if ($for_who){
+        update_field('for_who', $for_who, $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($agenda){
+        update_field('agenda', $agenda, $id_course);
+        $isCourseUpdated = true;
+    }
+    if ($results){
+        update_field('results', $results, $id_course);
+        $isCourseUpdated = true;
+    }
 
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
@@ -2858,4 +2885,51 @@ function deleteCourse($data)
                     200);
 
         return new WP_REST_Response(array('message'=>"course not deleted ! ! !"),401);
+}
+
+function search_courses()
+{
+    $search = $_GET['search'];
+    if (!$search)
+        return new WP_REST_Response(
+            array(
+            'message' => 'key search must be signed in the url'
+        ),401 );
+
+    $args = array(
+        'post_type' => array('course', 'post','assessment'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        's' => $search,
+        'orderby' => 'date',
+        'order' => 'ASC',
+    );
+    $courses_founded = get_posts($args);
+    $courses_searched = array();
+    foreach ($courses_founded as $course){
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        $author = get_user_by( 'ID', $course -> post_author  );
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course-> author = new Expert ($author , $author_img);
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = get_field('preview', $course->ID)['url'];
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
+
+        $new_course = new Course($course);
+        array_push($courses_searched, $new_course);
+    }
+    return new WP_REST_Response( array(
+        'count_courses' => count($courses_searched),
+        'courses' => $courses_searched,
+    ), 200);
 }
