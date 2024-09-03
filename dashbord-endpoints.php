@@ -427,8 +427,8 @@ function learn_modules($data){
         //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    //$bunch_orders = wc_get_orders($order_args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -482,8 +482,8 @@ $args = array(
         //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    //$bunch_orders = wc_get_orders($order_args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
