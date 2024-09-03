@@ -1324,8 +1324,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     $course_finished = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -1460,6 +1460,10 @@ function statistic_company($data)
             'percentage'=>round(($value / $total_occurences) * 100, 2),
         );
     }
+
+    usort($avairages_topics_company, function($a, $b) {
+        return $b['percentage'] <=> $a['percentage'];
+    });
     /*                      / /                      */
     $respons = new WP_REST_Response(
         array(
@@ -1720,7 +1724,6 @@ function statistic_team($data)
     $current_user = intval($data['ID']);
     $company_user = get_field('company',  'user_' . $current_user);
     $assessment_validated = array();
-    //$desktop_vs_mobile = array();
     $member_active = 0;
     $progress_courses = array(
         'not_started' => 7+($current_user%10),
@@ -1809,8 +1812,8 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    //$bunch_orders = array();
-    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
