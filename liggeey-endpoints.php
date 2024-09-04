@@ -2998,50 +2998,50 @@ function candidateMyResumeEdit(WP_REST_Request $request) {
 
   // Update Work
   if(isset($request['work_index'], $request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
-      // Work entry index
-      $updated_work_index = $request['work_index'];
-      // updated work entry
-      $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
-      $works = get_field('work', 'user_' . $user_id);
-      if(isset($works[$updated_work_index])) {
-          $works[$updated_work_index] = $updated_work;
-          update_field('work', $works, 'user_' . $user_id);
-          $response_data['updated_work'] = $updated_work;
-      } else {
-          $response_data['error'] = 'Work entry with specified index does not exist.';
-      }
+    // Work entry index
+    $updated_work_index = $request['work_index'];
+    // updated work entry
+    $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
+    $works = get_field('work', 'user_' . $user_id);
+    if(isset($works[$updated_work_index])) {
+        $works[$updated_work_index] = $updated_work;
+        update_field('work', $works, 'user_' . $user_id);
+        $response_data['updated_work'] = $updated_work;
+    } else {
+        $response_data['error'] = 'Work entry with specified index does not exist.';
+    }
   }
 
   // Update Education
   if(isset($request['education_index'], $request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
-      // Education entry index
-      $updated_education_index = $request['education_index'];
-      // Updated education entry
-      $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
-      $educations = get_field('education', 'user_' . $user_id);
-      if(isset($educations[$updated_education_index])) {
-          $educations[$updated_education_index] = $updated_education;
-          update_field('education', $educations, 'user_' . $user_id);
-          $response_data['updated_education'] = $updated_education;
-      } else {
-          $response_data['error'] = 'Education entry with specified index does not exist.';
-      }
+    // Education entry index
+    $updated_education_index = $request['education_index'];
+    // Updated education entry
+    $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
+    $educations = get_field('education', 'user_' . $user_id);
+    if(isset($educations[$updated_education_index])) {
+        $educations[$updated_education_index] = $updated_education;
+        update_field('education', $educations, 'user_' . $user_id);
+        $response_data['updated_education'] = $updated_education;
+    } else {
+        $response_data['error'] = 'Education entry with specified index does not exist.';
+    }
   }
 
   // Update Award
   if(isset($request['award_index'], $request['title'], $request['description'], $request['date'])) {
-      // Award entry index
-      $updated_award_index = $request['award_index'];
-      // Updated award entry
-      $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
-      $awards = get_field('awards', 'user_' . $user_id);
-      if(isset($awards[$updated_award_index])) {
-          $awards[$updated_award_index] = $updated_award;
-          update_field('awards', $awards, 'user_' . $user_id);
-          $response_data['updated_award'] = $updated_award;
-      } else {
-          $response_data['error'] = 'Award entry with specified index does not exist.';
-      }
+    // Award entry index
+    $updated_award_index = $request['award_index'];
+    // Updated award entry
+    $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
+    $awards = get_field('awards', 'user_' . $user_id);
+    if(isset($awards[$updated_award_index])) {
+        $awards[$updated_award_index] = $updated_award;
+        update_field('awards', $awards, 'user_' . $user_id);
+        $response_data['updated_award'] = $updated_award;
+    } else {
+        $response_data['error'] = 'Award entry with specified index does not exist.';
+    }
   }
 
   // Return the response data
@@ -3608,6 +3608,7 @@ function activity($ID){
   return $information;
   
 }
+
 //Activity User
 function activityUser($data){
   //Information 
