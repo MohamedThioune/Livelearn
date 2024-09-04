@@ -16,6 +16,7 @@ function artikel($id){
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
   $sample['slug'] = $post->post_name;
+  $sample['type'] = $course_type;
   //Image information
   $thumbnail = get_field('preview', $post->ID)['url'];
   if(!$thumbnail){
@@ -3409,10 +3410,7 @@ function activity($ID){
   $enrolled = array();
   $courses = array();
   $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
-  // $enrolled_courses = array();
-  // $expenses = 0;
-  // $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video' => 0);
-  
+
   //Orders 
   $args = array(
     'customer_id' => $user->ID,
@@ -3438,8 +3436,20 @@ function activity($ID){
         endif;
       endif;
     endforeach;
+
+  //Enrolled with Stripe
+  $enrolled_stripe = array();
+  $enrolled_stripe = list_orders($user->ID)['posts'];
+  if(!empty($enrolled_stripe)):
+    try {
+      $courses = array_merge($enrolled_stripe, $courses);
+      // $your_count_courses = (!empty($courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
+    } catch (Error $e) {
+      //Went wrong !
+      $error = true;
+    }
+  endif;
   $information['courses'] = $courses;
-  //End ...  
   
   //Notifications
   $notifications = array();
