@@ -3442,6 +3442,11 @@ function activity($ID){
   $enrolled_stripe = list_orders($user->ID)['posts'];
   if(!empty($enrolled_stripe)):
     try {
+      foreach ($enrolled_stripe as $post)
+        if($post):
+          $course = artikel($post->ID);
+          array_push($enrolled_stripe, $course);
+        endif;
       $courses = array_merge($enrolled_stripe, $courses);
       // $your_count_courses = (!empty($courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
     } catch (Error $e) {
