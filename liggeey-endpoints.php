@@ -2652,15 +2652,15 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
 
     // Analytics
     switch ($status) {
-        case 'new':
-            $state['new']++;
-            break;
-        case 'progress':
-            $state['progress']++;
-            break;
-        case 'done':
-            $state['done']++;
-            break;
+      case 'new':
+          $state['new']++;
+          break;
+      case 'progress':
+          $state['progress']++;
+          break;
+      case 'done':
+          $state['done']++;
+          break;
     }
   endforeach;
 
