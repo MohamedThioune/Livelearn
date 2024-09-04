@@ -561,10 +561,15 @@ function get_detail_notification($data){
 
     $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
     $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
-    $notification->notification_manager = get_user_by('ID', $notification->notification_manager)->data;
-    //$notification->notification_manager->role = get_field('role',  'user_' . $notification->notification_manager);
+    $notification->notification_manager = get_user_by('ID', $notification->notification_manager);
+    //$notification->notification_manager->data->role = get_field('role',  'user_' . $notification->notification_manager);
 
-    $notification->notification_manager->company = get_field('company', 'user_' . $notification->notification_manager->ID)[0]->post_title ? : 'Livelearn';
+    $company_manager = get_field('company',  'user_' . $notification->notification_manager->ID);
+    if ($company_manager)
+        $notification->notification_manager->company = $company_manager[0]->post_title;
+    else
+        $notification->notification_manager->company = 'Livelearn';
+
     $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
     $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
     $notification->notification_author = get_user_by('ID', $notification->post_author)->data;
