@@ -523,7 +523,7 @@ $args = array(
  */
 function get_detail_notification($data){
     $id_notification = intval($data['id']);
-    $user_id = $_GET['user_id'];
+    //$user_id = $_GET['user_id'];
     /*
     $args = array(
         'post_type' => array('feedback','manadatory','badge'),
@@ -535,7 +535,8 @@ function get_detail_notification($data){
     */
     $notification = get_post($id_notification);
     if(!$notification)
-        return new WP_REST_Response(array('message' => 'Notification not found'), 404);
+        return new WP_REST_Response(array('message' => 'Notification not found, maybe id is not correct'), 404);
+
     $type = get_field('type_feedback', $id_notification) ?: $notification->post_type;
 
     if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
