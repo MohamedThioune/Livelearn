@@ -290,17 +290,15 @@ function companyPeople($data){
 
     if(!empty($company))
         $company_connected = $company[0]->ID;
-
-    $step = 1000;
-    $key = 3;
-    $star_index = ($key - 1) * $step;
+    else
+        $company_connected = 0;
 
     foreach($users as $user){
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
-            $user->department = get_field('departments', $company[0]->ID);
+            $user->department = get_field('department', $user->ID)?:'';
             $user->phone = get_field('telnr',  'user_' . $user->ID);
             //people you manages
             $people_managed_by_me = array();
@@ -313,7 +311,7 @@ function companyPeople($data){
                     $company = get_field('company',  'user_' . $persone_id);
                     $persone->data->company = $company;
                     $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
-                    $persone->data->department = get_field('departments', $company[0]->ID);
+                    $persone->data->department = get_field('department', $persone_id);
                     $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
                     $persone->data->function = get_field('role',  'user_' . $persone->ID);
 
@@ -360,10 +358,10 @@ function editPeopleCompany($data){
     $user_id = intval($data['ID']);
     $telephone = $data['phone'];
     $function = $data['function'];
-    $department['name'] = $data['name_department'];
-    $company = get_field('company',  'user_' . $user_id);
-    $departments = array();
-
+    $department = $data['name_department'];
+    //$company = get_field('company',  'user_' . $user_id);
+    //$departments = array();
+    /*
     if ($department) {
         $departments = get_field('departments', $company[0]->ID);
         $key = array_search($department, $departments);
@@ -372,6 +370,11 @@ function editPeopleCompany($data){
 
         array_push($departments, $department);
         update_field('departments', $departments ,'user_' . $user_id);
+    }
+    */
+    if ($department) {
+        update_field('department', null, 'user_' . $user_id);
+        update_field('department', $department, 'user_' . $user_id);
     }
     if ($telephone)
         update_field('telnr', $telephone ,'user_' . $user_id);
@@ -382,9 +385,8 @@ function editPeopleCompany($data){
         array(
             'message'=>'User updated...',
             'id_user'=>$user_id,
-            'departement'=>array_reverse($departments)
+            // 'departement'=>array_reverse($departments)
         ));
-
 }
 
 function removePeopleCompany($data)
@@ -427,8 +429,8 @@ function learn_modules($data){
         //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    //$bunch_orders = wc_get_orders($order_args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -482,8 +484,8 @@ $args = array(
         //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    //$bunch_orders = wc_get_orders($order_args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -523,7 +525,7 @@ $args = array(
  */
 function get_detail_notification($data){
     $id_notification = intval($data['id']);
-    $user_id = $_GET['user_id'];
+    //$user_id = $_GET['user_id'];
     /*
     $args = array(
         'post_type' => array('feedback','manadatory','badge'),
@@ -535,7 +537,8 @@ function get_detail_notification($data){
     */
     $notification = get_post($id_notification);
     if(!$notification)
-        return new WP_REST_Response(array('message' => 'Notification not found'), 404);
+        return new WP_REST_Response(array('message' => 'Notification not found, maybe id is not correct'), 404);
+
     $type = get_field('type_feedback', $id_notification) ?: $notification->post_type;
 
     if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
@@ -560,10 +563,15 @@ function get_detail_notification($data){
 
     $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
     $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
-    $notification->notification_manager = get_user_by('ID', $notification->notification_manager)->data;
-    //$notification->notification_manager->role = get_field('role',  'user_' . $notification->notification_manager);
+    $notification->notification_manager = get_user_by('ID', $notification->notification_manager);
+    //$notification->notification_manager->data->role = get_field('role',  'user_' . $notification->notification_manager);
 
-    $notification->notification_manager->company = get_field('company', 'user_' . $notification->notification_manager->ID)[0]->post_title ? : 'Livelearn';
+    $company_manager = get_field('company',  'user_' . $notification->notification_manager->ID);
+    if ($company_manager)
+        $notification->notification_manager->company = $company_manager[0]->post_title;
+    else
+        $notification->notification_manager->company = 'Livelearn';
+
     $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
     $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
     $notification->notification_author = get_user_by('ID', $notification->post_author)->data;
@@ -1324,8 +1332,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     $course_finished = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -1460,6 +1468,10 @@ function statistic_company($data)
             'percentage'=>round(($value / $total_occurences) * 100, 2),
         );
     }
+
+    usort($avairages_topics_company, function($a, $b) {
+        return $b['percentage'] <=> $a['percentage'];
+    });
     /*                      / /                      */
     $respons = new WP_REST_Response(
         array(
@@ -1720,7 +1732,6 @@ function statistic_team($data)
     $current_user = intval($data['ID']);
     $company_user = get_field('company',  'user_' . $current_user);
     $assessment_validated = array();
-    //$desktop_vs_mobile = array();
     $member_active = 0;
     $progress_courses = array(
         'not_started' => 7+($current_user%10),
@@ -1809,8 +1820,8 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    //$bunch_orders = array();
-    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
