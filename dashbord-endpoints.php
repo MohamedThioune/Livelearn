@@ -299,11 +299,11 @@ function companyPeople($data){
             $image = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
             $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
-            $user->department = get_field('department', $user->ID)?:'';
+            $user->department = get_field('department','user_'. $user->ID)?:'';
             $user->phone = get_field('telnr',  'user_' . $user->ID);
             //people you manages
             $people_managed_by_me = array();
-            $people_you_manage = get_field('managed',$user->ID);
+            $people_you_manage = get_field('managed','user_'.$user->ID);
             if($people_you_manage)
                 foreach ($people_you_manage as $persone_id){
                     $persone = get_user_by('ID', $persone_id);
@@ -312,10 +312,10 @@ function companyPeople($data){
                     $company = get_field('company',  'user_' . $persone_id);
                     $persone->data->company = $company;
                     $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
-                    $persone->data->department = get_field('department', $persone_id);
+                    $persone->data->department = get_field('department','user_'.$persone_id);
                     $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
                     $persone->data->function = get_field('role',  'user_' . $persone->ID);
-
+                    unset($persone->data->user_pass);
                     $people_managed_by_me[] = $persone->data;
                 }
             $user->people_you_manage = $people_managed_by_me;
