@@ -3443,7 +3443,8 @@ function activity($ID){
   if(!empty($enrolled_stripe)):
     try {
       foreach ($enrolled_stripe as $post)
-        if($post):
+        if($post)
+        if($post->title):
           $course = artikel($post->ID);
           array_push($courses, $course);
         endif;
