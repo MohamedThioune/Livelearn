@@ -3444,7 +3444,7 @@ function activity($ID){
     try {
       foreach ($enrolled_stripe as $post)
         if($post)
-        if($post->title):
+        if($post->title && $post->title != ''):
           $course = artikel($post->ID);
           array_push($courses, $course);
         endif;
