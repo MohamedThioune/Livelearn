@@ -294,15 +294,16 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
-        if($user_connected != $user->ID ){
+        //if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
-            $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+            $image = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+            $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
-            $user->department = get_field('department', $user->ID)?:'';
+            $user->department = get_field('department','user_'. $user->ID)?:'';
             $user->phone = get_field('telnr',  'user_' . $user->ID);
             //people you manages
             $people_managed_by_me = array();
-            $people_you_manage = get_field('managed',$user->ID);
+            $people_you_manage = get_field('managed','user_'.$user->ID);
             if($people_you_manage)
                 foreach ($people_you_manage as $persone_id){
                     $persone = get_user_by('ID', $persone_id);
@@ -311,10 +312,10 @@ function companyPeople($data){
                     $company = get_field('company',  'user_' . $persone_id);
                     $persone->data->company = $company;
                     $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
-                    $persone->data->department = get_field('department', $persone_id);
+                    $persone->data->department = get_field('department','user_'.$persone_id);
                     $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
                     $persone->data->function = get_field('role',  'user_' . $persone->ID);
-
+                    unset($persone->data->user_pass);
                     $people_managed_by_me[] = $persone->data;
                 }
             $user->people_you_manage = $people_managed_by_me;
@@ -325,7 +326,7 @@ function companyPeople($data){
                 if($company == $company_connected)  // compare ID
                     array_push($members, $user);
             }
-        }
+       // }
     }
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     foreach ($members as $user){
@@ -373,7 +374,7 @@ function editPeopleCompany($data){
     }
     */
     if ($department) {
-        update_field('department', null, 'user_' . $user_id);
+        //update_field('department', null, 'user_' . $user_id);
         update_field('department', $department, 'user_' . $user_id);
     }
     if ($telephone)
@@ -565,12 +566,14 @@ function get_detail_notification($data){
     $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
     $notification->notification_manager = get_user_by('ID', $notification->notification_manager);
     //$notification->notification_manager->data->role = get_field('role',  'user_' . $notification->notification_manager);
-
+    /*
     $company_manager = get_field('company',  'user_' . $notification->notification_manager->ID);
     if ($company_manager)
         $notification->notification_manager->company = $company_manager[0]->post_title;
     else
         $notification->notification_manager->company = 'Livelearn';
+     */
+    $notification->notification_manager->company = 'Livelearn';
 
     $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
     $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
