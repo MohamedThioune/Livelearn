@@ -290,17 +290,15 @@ function companyPeople($data){
 
     if(!empty($company))
         $company_connected = $company[0]->ID;
-
-    $step = 1000;
-    $key = 3;
-    $star_index = ($key - 1) * $step;
+    else
+        $company_connected = 0;
 
     foreach($users as $user){
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $user->imagePersone = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
-            $user->department = get_field('departments', $company[0]->ID);
+            $user->department = get_field('department', $user->ID)?:'';
             $user->phone = get_field('telnr',  'user_' . $user->ID);
             //people you manages
             $people_managed_by_me = array();
@@ -313,7 +311,7 @@ function companyPeople($data){
                     $company = get_field('company',  'user_' . $persone_id);
                     $persone->data->company = $company;
                     $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
-                    $persone->data->department = get_field('departments', $company[0]->ID);
+                    $persone->data->department = get_field('department', $persone_id);
                     $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
                     $persone->data->function = get_field('role',  'user_' . $persone->ID);
 
@@ -360,10 +358,10 @@ function editPeopleCompany($data){
     $user_id = intval($data['ID']);
     $telephone = $data['phone'];
     $function = $data['function'];
-    $department['name'] = $data['name_department'];
-    $company = get_field('company',  'user_' . $user_id);
-    $departments = array();
-
+    $department = $data['name_department'];
+    //$company = get_field('company',  'user_' . $user_id);
+    //$departments = array();
+    /*
     if ($department) {
         $departments = get_field('departments', $company[0]->ID);
         $key = array_search($department, $departments);
@@ -372,6 +370,11 @@ function editPeopleCompany($data){
 
         array_push($departments, $department);
         update_field('departments', $departments ,'user_' . $user_id);
+    }
+    */
+    if ($department) {
+        update_field('department', null, 'user_' . $user_id);
+        update_field('department', $department, 'user_' . $user_id);
     }
     if ($telephone)
         update_field('telnr', $telephone ,'user_' . $user_id);
@@ -382,9 +385,8 @@ function editPeopleCompany($data){
         array(
             'message'=>'User updated...',
             'id_user'=>$user_id,
-            'departement'=>array_reverse($departments)
+            // 'departement'=>array_reverse($departments)
         ));
-
 }
 
 function removePeopleCompany($data)
