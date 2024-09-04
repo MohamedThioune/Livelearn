@@ -3445,9 +3445,8 @@ function activity($ID){
       foreach ($enrolled_stripe as $post)
         if($post):
           $course = artikel($post->ID);
-          array_push($enrolled_stripe, $course);
+          array_push($courses, $course);
         endif;
-      $courses = array_merge($enrolled_stripe, $courses);
       // $your_count_courses = (!empty($courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
     } catch (Error $e) {
       //Went wrong !
