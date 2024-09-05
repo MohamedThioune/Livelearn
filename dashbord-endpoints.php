@@ -563,28 +563,27 @@ function get_detail_notification($data){
     $notification->beschrijving_feedback = $beschrijving_feedback;
 
 
-    $manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
-    $notification->notification_manager = $manager ? : get_field('manager_must', $notification->ID);
-    $manager  = $manager ? : get_user_by('ID', $notification->notification_manager);
+    $manager_id = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
+    $notification->notification_manager = $manager_id ? : get_field('manager_must', $notification->ID);
+    $manager  =  get_user_by('ID', $manager_id)->data;
+    //var_dump($manager);
     $manager ->role = get_field('role',  'user_' . $notification->notification_manager);
     //$notification->notification_manager->data->role = get_field('role',  'user_' . $notification->notification_manager);
 
-    $company_manager = get_field('company',  'user_' . $notification->notification_manager->ID);
+    $company_manager = get_field('company',  'user_' . $manager->ID);
     if ($company_manager)
         $manager->company  = $company_manager[0]->post_title;
     else
         $manager->company = 'Livelearn';
 
-    //$notification->notification_manager->company = 'Livelearn';
 
-    $manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
-    $manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
+    $manager->image = get_field('profile_img',  'user_' . $notification->notification_manager) ? : get_stylesheet_directory_uri() . '/img/user.png';
     $notification->notification_manager = $manager;
     $notification->notification_author = get_user_by('ID', $notification->post_author)->data;
     unset($notification->notification_author->user_pass);
     unset($notification->notification_manager->user_pass);
     $notification->notification_author->company = get_field('company', 'user_' . $notification->post_author)[0]->post_title ? : 'Livelearn';
-    $notification->notification_author->image = get_field('profile_img',  'user_' . $notification->post_author) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+    $notification->notification_author->image = get_field('profile_img',  'user_' . $notification->post_author) ?: get_stylesheet_directory_uri() . '/img/user.png';
 
     $response = new WP_REST_Response($notification);
     $response->set_status(200);
