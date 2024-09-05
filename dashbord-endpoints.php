@@ -566,8 +566,8 @@ function get_detail_notification($data){
     $manager_id = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
     $notification->notification_manager = $manager_id ? : get_field('manager_must', $notification->ID);
     $manager  =  get_user_by('ID', $manager_id)->data;
-    //var_dump($manager);
-    $manager ->role = get_field('role',  'user_' . $notification->notification_manager);
+
+    $manager->role = get_field('role',  'user_' . $notification->notification_manager);
     //$notification->notification_manager->data->role = get_field('role',  'user_' . $notification->notification_manager);
 
     $company_manager = get_field('company',  'user_' . $manager->ID);
@@ -575,7 +575,6 @@ function get_detail_notification($data){
         $manager->company  = $company_manager[0]->post_title;
     else
         $manager->company = 'Livelearn';
-
 
     $manager->image = get_field('profile_img',  'user_' . $notification->notification_manager) ? : get_stylesheet_directory_uri() . '/img/user.png';
     $notification->notification_manager = $manager;
