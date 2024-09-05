@@ -2671,6 +2671,7 @@ ORDER BY MONTH(created_at)
         endforeach;
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
     $read_learning = array();
+    if(!empty($topics_internal))
     foreach($topics_internal as $key => $learning):
         if(!$learning && !in_array($learning, $read_learning))
             continue;
