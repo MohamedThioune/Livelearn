@@ -2501,4 +2501,8 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'search_courses'
     ));
+    register_rest_route ('custom/v1', '/details-people-statistic', array(
+        'methods' => 'GET',
+        'callback' => 'detailsPeopleSkillsPassport'
+    ));
 });
