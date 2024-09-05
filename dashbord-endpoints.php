@@ -573,7 +573,7 @@ function get_detail_notification($data){
     else
         $notification->notification_manager->company = 'Livelearn';
      */
-    $notification->notification_manager->company = 'Livelearn';
+    //$notification->notification_manager->company = 'Livelearn';
 
     $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
     $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
