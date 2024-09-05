@@ -16,6 +16,7 @@ function artikel($id){
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
   $sample['slug'] = $post->post_name;
+  $sample['type'] = $course_type;
   //Image information
   $thumbnail = get_field('preview', $post->ID)['url'];
   if(!$thumbnail){
@@ -2651,15 +2652,15 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
 
     // Analytics
     switch ($status) {
-        case 'new':
-            $state['new']++;
-            break;
-        case 'progress':
-            $state['progress']++;
-            break;
-        case 'done':
-            $state['done']++;
-            break;
+      case 'new':
+          $state['new']++;
+          break;
+      case 'progress':
+          $state['progress']++;
+          break;
+      case 'done':
+          $state['done']++;
+          break;
     }
   endforeach;
 
@@ -2997,50 +2998,50 @@ function candidateMyResumeEdit(WP_REST_Request $request) {
 
   // Update Work
   if(isset($request['work_index'], $request['job_title'], $request['company'], $request['work_start_date'], $request['work_end_date'], $request['work_description'])) {
-      // Work entry index
-      $updated_work_index = $request['work_index'];
-      // updated work entry
-      $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
-      $works = get_field('work', 'user_' . $user_id);
-      if(isset($works[$updated_work_index])) {
-          $works[$updated_work_index] = $updated_work;
-          update_field('work', $works, 'user_' . $user_id);
-          $response_data['updated_work'] = $updated_work;
-      } else {
-          $response_data['error'] = 'Work entry with specified index does not exist.';
-      }
+    // Work entry index
+    $updated_work_index = $request['work_index'];
+    // updated work entry
+    $updated_work = $request['job_title'] . ';' . $request['company'] . ';' . $request['work_start_date'] . ';' . $request['work_end_date'] . ';' . $request['work_description'];
+    $works = get_field('work', 'user_' . $user_id);
+    if(isset($works[$updated_work_index])) {
+        $works[$updated_work_index] = $updated_work;
+        update_field('work', $works, 'user_' . $user_id);
+        $response_data['updated_work'] = $updated_work;
+    } else {
+        $response_data['error'] = 'Work entry with specified index does not exist.';
+    }
   }
 
   // Update Education
   if(isset($request['education_index'], $request['school'], $request['degree'], $request['start_date'], $request['end_date'], $request['commentary'])) {
-      // Education entry index
-      $updated_education_index = $request['education_index'];
-      // Updated education entry
-      $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
-      $educations = get_field('education', 'user_' . $user_id);
-      if(isset($educations[$updated_education_index])) {
-          $educations[$updated_education_index] = $updated_education;
-          update_field('education', $educations, 'user_' . $user_id);
-          $response_data['updated_education'] = $updated_education;
-      } else {
-          $response_data['error'] = 'Education entry with specified index does not exist.';
-      }
+    // Education entry index
+    $updated_education_index = $request['education_index'];
+    // Updated education entry
+    $updated_education = $request['school'] . ';' . $request['degree'] . ';' . $request['start_date'] . ';' . $request['end_date'] . ';' . $request['commentary'];
+    $educations = get_field('education', 'user_' . $user_id);
+    if(isset($educations[$updated_education_index])) {
+        $educations[$updated_education_index] = $updated_education;
+        update_field('education', $educations, 'user_' . $user_id);
+        $response_data['updated_education'] = $updated_education;
+    } else {
+        $response_data['error'] = 'Education entry with specified index does not exist.';
+    }
   }
 
   // Update Award
   if(isset($request['award_index'], $request['title'], $request['description'], $request['date'])) {
-      // Award entry index
-      $updated_award_index = $request['award_index'];
-      // Updated award entry
-      $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
-      $awards = get_field('awards', 'user_' . $user_id);
-      if(isset($awards[$updated_award_index])) {
-          $awards[$updated_award_index] = $updated_award;
-          update_field('awards', $awards, 'user_' . $user_id);
-          $response_data['updated_award'] = $updated_award;
-      } else {
-          $response_data['error'] = 'Award entry with specified index does not exist.';
-      }
+    // Award entry index
+    $updated_award_index = $request['award_index'];
+    // Updated award entry
+    $updated_award = $request['title'] . ';' . $request['description'] . ';' . $request['date'];
+    $awards = get_field('awards', 'user_' . $user_id);
+    if(isset($awards[$updated_award_index])) {
+        $awards[$updated_award_index] = $updated_award;
+        update_field('awards', $awards, 'user_' . $user_id);
+        $response_data['updated_award'] = $updated_award;
+    } else {
+        $response_data['error'] = 'Award entry with specified index does not exist.';
+    }
   }
 
   // Return the response data
@@ -3409,10 +3410,7 @@ function activity($ID){
   $enrolled = array();
   $courses = array();
   $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
-  // $enrolled_courses = array();
-  // $expenses = 0;
-  // $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video' => 0);
-  
+
   //Orders 
   $args = array(
     'customer_id' => $user->ID,
@@ -3438,8 +3436,25 @@ function activity($ID){
         endif;
       endif;
     endforeach;
+
+  //Enrolled with Stripe
+  $enrolled_stripe = array();
+  $enrolled_stripe = list_orders($user->ID)['posts'];
+  if(!empty($enrolled_stripe)):
+    try {
+      foreach ($enrolled_stripe as $post)
+        if($post)
+        if($post->title && $post->title != ''):
+          $course = artikel($post->ID);
+          array_push($courses, $course);
+        endif;
+      // $your_count_courses = (!empty($courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
+    } catch (Error $e) {
+      //Went wrong !
+      $error = true;
+    }
+  endif;
   $information['courses'] = $courses;
-  //End ...  
   
   //Notifications
   $notifications = array();
@@ -3593,6 +3608,7 @@ function activity($ID){
   return $information;
   
 }
+
 //Activity User
 function activityUser($data){
   //Information 
