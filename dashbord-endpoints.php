@@ -562,21 +562,24 @@ function get_detail_notification($data){
     $notification->notification_content = get_field('content',$notification->ID)?:$notification->content;
     $notification->beschrijving_feedback = $beschrijving_feedback;
 
-    $notification->notification_manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
-    $notification->notification_manager = $notification->notification_manager ? : get_field('manager_must', $notification->ID);
-    $notification->notification_manager = get_user_by('ID', $notification->notification_manager);
+
+    $manager = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
+    $notification->notification_manager = $manager ? : get_field('manager_must', $notification->ID);
+    $manager  = $manager ? : get_user_by('ID', $notification->notification_manager);
+    $manager ->role = get_field('role',  'user_' . $notification->notification_manager);
     //$notification->notification_manager->data->role = get_field('role',  'user_' . $notification->notification_manager);
-    /*
+
     $company_manager = get_field('company',  'user_' . $notification->notification_manager->ID);
     if ($company_manager)
-        $notification->notification_manager->company = $company_manager[0]->post_title;
+        $manager->company  = $company_manager[0]->post_title;
     else
-        $notification->notification_manager->company = 'Livelearn';
-     */
-    $notification->notification_manager->company = 'Livelearn';
+        $manager->company = 'Livelearn';
 
-    $notification->notification_manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
-    $notification->notification_manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
+    //$notification->notification_manager->company = 'Livelearn';
+
+    $manager->image = get_field('profile_img',  'user_' . $notification->notification_manager->ID) ?: get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+    $manager->name = ($notification->notification_manager->display_name) ?: 'Livelearn';
+    $notification->notification_manager = $manager;
     $notification->notification_author = get_user_by('ID', $notification->post_author)->data;
     unset($notification->notification_author->user_pass);
     unset($notification->notification_manager->user_pass);
@@ -2311,7 +2314,7 @@ function addManyPeople(WP_REST_Request $data)
     return $response;
 }
 
-function detailsPeople(){
+function detailsPeopleSkillsPassport(){
     global $wpdb;
     $id_user = $_GET['userApplyId'];
     $user = get_users(array('include'=> $id_user))[0]->data;
@@ -2345,8 +2348,8 @@ function detailsPeople(){
         if(!empty($company))
             if($company[0]->ID == $company_connected_id) {
                 $numbers[] = $user->ID;
-                    // Assessment
-                    $validated = get_user_meta($user->ID, 'assessment_validated');
+                // Assessment
+                $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
@@ -2490,8 +2493,8 @@ function detailsPeople(){
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             $progressions = array();
@@ -2603,11 +2606,13 @@ function detailsPeople(){
     $external_learning_opportunities = 0;
     foreach ($course_views as $value) {
         $course = get_post($value->data_id);
-        $company_author_course = get_field('company',  'user_' . $course->post_author);
-        $company_author_course = $company_author_course ? $company_author_course[0]->post_title : 'Livelearn';
+        if ($course) {
+            $company_author_course = get_field('company', 'user_' . $course->post_author);
+            $company_author_course = $company_author_course ? $company_author_course[0]->post_title : 'Livelearn';
 
-        if($company_name != $company_author_course)
-            $external_learning_opportunities += 1;
+            if ($company_name != $company_author_course)
+                $external_learning_opportunities += 1;
+        }
     }
 
 //Graph stat web-mobile
@@ -2654,9 +2659,6 @@ ORDER BY MONTH(created_at)
     );
     $achievements = get_posts($args);
     $badges = array();
-    $certificats = array();
-    $prestaties = array();
-    $diplomas = array();
     if($achievements)
         foreach($achievements as $achievement):
             $type = get_field('type_badge', $achievement->ID);
@@ -2665,35 +2667,18 @@ ORDER BY MONTH(created_at)
             $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->manager->ID);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-            switch ($type) {
-                case 'Genuine':
-                    $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-                    array_push($badges, $achievement);
-                    break;
-                case 'Certificaat':
-                    $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-                    array_push($certificats, $achievement);
-                    break;
-                case 'Prestatie':
-                    $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-                    array_push($prestaties, $achievement);
-                    break;
-                case 'Diploma':
-                    $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-                    array_push($diplomas, $achievement);
-                    break;
-                default:
-                    $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-                    array_push($badges, $achievement);
-                    break;
+            if ($type) {
+                $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+                array_push($badges, $achievement);
             }
         endforeach;
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
     $read_learning = array();
+    if(!empty($topics_internal))
     foreach($topics_internal as $key => $learning):
         if(!$learning && !in_array($learning, $read_learning))
             continue;
-        $learning->link_stat = get_category_link($learning);
+        //$learning->link_stat = get_category_link($learning);
         array_push($read_learning, $learning);
     endforeach;
     foreach ($badges as $key => $badge):
@@ -2704,7 +2689,31 @@ ORDER BY MONTH(created_at)
         $badge->trigger_badge = get_field('trigger_badge', $badge->ID);
         $badge->level_badge = get_field('level_badge', $badge->ID);
     endforeach;
+    /* // */
 
+    $followed_topics = array();
+
+    //Get Topics
+    $topics_external = get_user_meta($id_user, 'topic');
+    $topics_internal = get_user_meta($id_user, 'topic_affiliate');
+    $topics = array();
+    if(!empty($topics_external))
+        $topics = $topics_external;
+
+    if(!empty($topics_internal))
+        foreach($topics_internal as $item)
+            array_push($topics, $item);
+
+    if(!empty($topics)){
+        $args = array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'include'  => $topics,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        );
+        $followed_topics = get_categories($args);
+
+    }
+    /* // */
 
     $dataResponse = array(
         'statistic'=>array(
@@ -2722,28 +2731,21 @@ ORDER BY MONTH(created_at)
             'badge' =>$achievements,
             'most_popular_courses'=>$most_popular_course,
             'most_viewed_topics'=>$read_learning,
-            'key_skill_development_progress'=>array(
-                'skills'=>$key_skills_note,
-            ),
+            'key_skill_development_progress'=>$key_skills_note,
             'tab_after_skills_dev'=>array(
                 'learning_delivery_metho'=>$count_course_views,
                 'count_feedback_received'=>$count_feedback_received,
                 'count_feedback_given'=>$count_feedback_given,
                 'latest_badges'=>$badges,
             ),
-            'followed_topics'=>'refer to endpoint in dashboard user !!!'
+            //'followed_topics'=>'refer to endpoint in dashboard user !!!',
+            'followed_topics'=>$followed_topics
         ),
-        'certificates'=>array(
-            'badges'=>$badges,
-            'certificats'=>$certificats,
-            'prestaties'=>$prestaties,
-            'diplomas'=>$diplomas
-        ),
-        //'message' => 'remove $bunch_orders = wc_get_orders($args); before push',
     );
 
     return new WP_REST_Response($dataResponse,200);
 }
+
 
 function newCoursesByTeacher(WP_REST_Request $data)
 {
