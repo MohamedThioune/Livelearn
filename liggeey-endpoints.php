@@ -2931,10 +2931,14 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
     endforeach;
   //End
 
+  //Statistique
+  $statistique = detailsPeopleSkillsPassport(array('userID' => $user_id));
+
   // Informations 
   $data = array(
     'user' => $user,
     'state' => $state,
+    'statistique' => $statistique,
     'todos' => [
       'feedback' => $todos_feedback,
       'onderwerpen' => $todos_onderwerpen,
@@ -2955,6 +2959,7 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
       'gedeelde' => $gedeelde_cursus,
       'verplichte' => $verplichte_cursus
     ],
+
   );
 
   // Response
@@ -3018,6 +3023,7 @@ function candidateMyResumeAdd(WP_REST_Request $request) {
     $response_data['new_work'] = $new_work;
   }
   
+
   //var_dump($response_data);
   // Return the response data
   $response = new WP_REST_Response($response_data);

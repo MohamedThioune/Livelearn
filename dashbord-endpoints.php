@@ -2314,14 +2314,14 @@ function addManyPeople(WP_REST_Request $data)
     return $response;
 }
 
-function detailsPeopleSkillsPassport(){
+function detailsPeopleSkillsPassport($data){
     global $wpdb;
-    $id_user = $_GET['userApplyId'];
+    $id_user = $data['userID'] ?: null;      
     $user = get_users(array('include'=> $id_user))[0]->data;
     $progress_courses = array(
-        'not_started' => 3,
-        'in_progress' => 5,
-        'done' => 2,
+        'not_started' => 0,
+        'in_progress' => 0,
+        'done' => 0,
     );
     $company_connected = get_field('company',  'user_' . $id_user);
     $company_connected_id = $company_connected[0]->ID;
@@ -2649,29 +2649,39 @@ ORDER BY MONTH(created_at)
 
     $canva_data_web = join(',', $data_web);
     $canva_data_mobile = join(',', $data_mobile);
-    // Badges
-    $args = array(
-        'post_type' => 'badge',
-        'author' => $id_user,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'posts_per_page' => -1,
-    );
-    $achievements = get_posts($args);
-    $badges = array();
-    if($achievements)
-        foreach($achievements as $achievement):
-            $type = get_field('type_badge', $achievement->ID);
-            $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+    // // Badges
+    // $args = array(
+    //     'post_type' => 'badge',
+    //     'author' => $id_user,
+    //     'orderby' => 'post_date',
+    //     'order' => 'DESC',
+    //     'posts_per_page' => -1,
+    // );
+    // $achievements = get_posts($args);
+    // $badges = array();
+    // if($achievements)
+    //     foreach($achievements as $achievement):
+    //         $type = get_field('type_badge', $achievement->ID);
+    //         $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
 
-            $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->manager->ID);
-            if(!$image)
-                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-            if ($type) {
-                $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-                array_push($badges, $achievement);
-            }
-        endforeach;
+    //         $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->manager->ID);
+    //         if(!$image)
+    //             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+    //         if ($type) {
+    //             $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
+    //             array_push($badges, $achievement);
+    //         }
+    //     endforeach;
+     // foreach ($badges as $key => $badge):
+    //     if($key == 3)
+    //         break;
+    //     // Image + trigger
+    //     $badge->image_badge = get_field('image_badge', $badge->ID);
+    //     $badge->trigger_badge = get_field('trigger_badge', $badge->ID);
+    //     $badge->level_badge = get_field('level_badge', $badge->ID);
+    // endforeach;
+    /* // */
+
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
     $read_learning = array();
     if(!empty($topics_internal))
@@ -2681,18 +2691,8 @@ ORDER BY MONTH(created_at)
         //$learning->link_stat = get_category_link($learning);
         array_push($read_learning, $learning);
     endforeach;
-    foreach ($badges as $key => $badge):
-        if($key == 3)
-            break;
-        // Image + trigger
-        $badge->image_badge = get_field('image_badge', $badge->ID);
-        $badge->trigger_badge = get_field('trigger_badge', $badge->ID);
-        $badge->level_badge = get_field('level_badge', $badge->ID);
-    endforeach;
-    /* // */
-
+   
     $followed_topics = array();
-
     //Get Topics
     $topics_external = get_user_meta($id_user, 'topic');
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
@@ -2717,29 +2717,28 @@ ORDER BY MONTH(created_at)
 
     $dataResponse = array(
         'statistic'=>array(
-            'training_costs'=> $budget_spent,
+            'training_costs' => $budget_spent,
             'courses_progression'=> $progress_courses,
             'mandatory_courses_done'=> $count_mandatory_done . "/" . $count_mandatories,
             'assessments_done' => $assessment_validated,
-            'self_assessment_of_skills'=>$count_skills_note,
-            'external_learning_opportunities'=> $external_learning_opportunities,
-            'average_feedback_given_me_team'=>$score_rate_feedback ."/". $score_rate_feedback_company,
-            'usage_desktop_vs_mobile_app'=>array(
-                'web'=>$canva_data_web,
-                'mobile'=>$canva_data_mobile
+            'self_assessment_of_skills'=> $count_skills_note,
+            'external_learning_opportunities' => $external_learning_opportunities,
+            'average_feedback_given_me_team'=> $score_rate_feedback ."/". $score_rate_feedback_company,
+            'usage_desktop_vs_mobile_app' => array(
+                'web' => $canva_data_web,
+                'mobile' => $canva_data_mobile
             ),
-            'badge' =>$achievements,
-            'most_popular_courses'=>$most_popular_course,
-            'most_viewed_topics'=>$read_learning,
-            'key_skill_development_progress'=>$key_skills_note,
-            'tab_after_skills_dev'=>array(
-                'learning_delivery_metho'=>$count_course_views,
-                'count_feedback_received'=>$count_feedback_received,
-                'count_feedback_given'=>$count_feedback_given,
-                'latest_badges'=>$badges,
+            // 'badge' =>$achievements,
+            'most_popular_courses' => $most_popular_course,
+            'most_viewed_topics' => $read_learning,
+            'key_skill_development_progress' => $key_skills_note,
+            'tab_after_skills_dev' => array(
+                'learning_delivery_method' => $count_course_views,
+                'count_feedback_received' => $count_feedback_received,
+                'count_feedback_given' => $count_feedback_given,
+                // 'latest_badges'=>$badges,
             ),
-            //'followed_topics'=>'refer to endpoint in dashboard user !!!',
-            'followed_topics'=>$followed_topics
+            'followed_topics' => $followed_topics
         ),
     );
 
