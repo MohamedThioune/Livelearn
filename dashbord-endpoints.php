@@ -2675,7 +2675,7 @@ ORDER BY MONTH(created_at)
     foreach($topics_internal as $key => $learning):
         if(!$learning && !in_array($learning, $read_learning))
             continue;
-        $learning->link_stat = get_category_link($learning);
+        //$learning->link_stat = get_category_link($learning);
         array_push($read_learning, $learning);
     endforeach;
     foreach ($badges as $key => $badge):
