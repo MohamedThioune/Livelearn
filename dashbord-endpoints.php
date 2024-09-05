@@ -565,9 +565,9 @@ function get_detail_notification($data){
 
     $manager_id = get_field('manager_feedback', $notification->ID) ? : get_field('manager_badge', $notification->ID);
     $manager_id = $manager_id ? : get_field('manager_must', $notification->ID);
-    $manager  =  get_user_by('ID', $manager_id)->data;
+    $manager  =  get_user_by('ID', $manager_id);
 
-    $manager->role = get_field('role',  'user_' . $manager_id);
+    $manager->role = get_field('role',  'user_' . $manager_id) ? : '';
     //$notification->notification_manager->data->role = get_field('role',  'user_' . $notification->notification_manager);
 
     $company_manager = get_field('company',  'user_' . $manager->ID);
