@@ -294,6 +294,9 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
+        if ($user->ID == $user_connected)
+            continue;
+
         //if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $image = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
@@ -319,16 +322,20 @@ function companyPeople($data){
                     $people_managed_by_me[] = $persone->data;
                 }
             $user->people_you_manage = $people_managed_by_me;
-            $user->company = $company[0];
 
             if(!empty($company)){
-                $company = $company[0]->ID;
-                if($company == $company_connected)  // compare ID
+                $user->company = $company[0];
+                $company_id = $company[0]->ID;
+                if($company_id == $company_connected)  // compare ID
                     array_push($members, $user);
             }
        // }
     }
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    $new_members_count = 0 ;
+    $members_active = 0;
+    $members_inactive = 0;
+
     foreach ($members as $user){
         $is_login = false;
         $date = new DateTime();
@@ -343,14 +350,12 @@ function companyPeople($data){
         if ($if_user_actif)
             $is_login = true;
         $members_active = $is_login ? $members_active + 1 : $members_active;
-
-        $is_login ? $members_active ++ : $members_inactive++;
     }
 
     $response = new WP_REST_Response(
         array(
-            'people'=>$members,
             'count'=>count($members),
+            'people'=>$members,
         ));
     $response->set_status(200);
     return $response;
@@ -1520,8 +1525,8 @@ function statistic_individual($data)
         'in_progress' => 8,
         'done' => 4,
     );
-    $members_active = 5;
-    $members_inactive = 3;
+    $members_active = 0;
+    $members_inactive = 0;
     $budget_spent = 0;
     $numbers = array();
     $most_topics_view = array();
@@ -1560,7 +1565,9 @@ function statistic_individual($data)
                     $user->data->departement = $departments[0]['name'];
                 $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
                 unset($user->data->user_pass);
-                $members[] = $user->data;
+                if ($user->ID != $current_user)
+                        $members[] = $user->data;
+                // Assessment
                     $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
@@ -1581,8 +1588,8 @@ function statistic_individual($data)
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
 
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1778,6 +1785,8 @@ function statistic_team($data)
         $company_connected = $company_user[0]->ID;
 
     foreach ($users as $user ) {
+        if ($user->ID == $current_user)
+            continue;
         $company = get_field('company',  'user_' . $user->ID);
 
         if(!empty($company))
