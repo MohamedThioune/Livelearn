@@ -2598,11 +2598,11 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
   $enrolled_courses = array();
   //Orders - enrolled courses
   $args = array(
-      'customer_id' => $user->ID,
-      'post_status' => array('wc-processing', 'wc-completed'),
-      'orderby' => 'date',
-      'order' => 'DESC',
-      'limit' => -1,
+    'customer_id' => $user->ID,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
   );
   $bunch_orders = wc_get_orders($args);
   foreach($bunch_orders as $order)
@@ -2625,7 +2625,7 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
       $enrolled_courses = get_posts($args);
   }
   $state = array('new' => 0, 'progress' => 0, 'done' => 0);
-  foreach($enrolled_courses as $key => $course) :
+  foreach($enrolled_courses as $key => $course):
     /* * State actual details * */
     $status = "new";
     //Get read by user
@@ -2683,8 +2683,6 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
   );
   $mandatories = get_posts($args);
   $count_mandatory_done = 0;
-  // $count_mandatories = (!empty($mandatories)) ? count($mandatories) : 0;
-  //course mandatory finished 
   foreach($mandatories as $mandatory):
     $pourcentage = 0;
     //Get read by user 
@@ -2734,10 +2732,10 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
           $count_lesson = 0;
       }
 
-    //Pourcentage
-    $lesson_reads = get_field('lesson_actual_read', $progression_id);
-    $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
-    if($count_lesson)
+      //Pourcentage
+      $lesson_reads = get_field('lesson_actual_read', $progression_id);
+      $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+      if($count_lesson)
         $pourcentage = ($count_lesson) ? ($count_lesson_reads / $count_lesson) * 100 : 0;                
     endif;
     $mandatory->pourcentage = intval($pourcentage);
@@ -2745,26 +2743,31 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
     $type = get_field('type_feedback', $mandatory->ID);
     $mandatory->manager = get_user_by('ID', get_field('manager_feedback', $mandatory->ID));
     $mandatory->manager_image = get_field('profile_img',  'user_' . $mandatory->manager->ID);
-    if(!$image)
-      $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+    $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
     switch ($type) {
       case 'Feedback':
-          $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
-          array_push($todos_feedback, $mandatory);
-          break;
+        $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+        $due_date = get_field('welke_datum_feedback', $mandatory->ID);
+        $mandatory->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+        array_push($todos_feedback, $mandatory);
+        break;
       case 'Persoonlijk ontwikkelplan':
-          $mandatory->beschrijving_feedback = get_field('opmerkingen', $mandatory->ID);
-          array_push($todos_plannen, $mandatory);
-          break;
+        $due_date = get_field('welke_datum_feedback', $mandatory->ID);
+        $mandatory->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+        $mandatory->beschrijving_feedback = get_field('opmerkingen', $mandatory->ID);
+        array_push($todos_plannen, $mandatory);
+        break;
       case 'Onderwerpen':
-          $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
-          array_push($todos_onderwerpen, $mandatory);
-          break;
+        $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+        array_push($todos_onderwerpen, $mandatory);
+        break;
       case 'Verplichte cursus':
-          $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
-          array_push($todos_cursus, $mandatory);
-          break;
+        $due_date = get_field('welke_datum_feedback', $mandatory->ID);
+        $mandatory->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
+        $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
+        array_push($todos_cursus, $mandatory);
+        break;
     }
   endforeach;
   //End
@@ -2794,36 +2797,74 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
       if(!$image)
           $image = get_stylesheet_directory_uri() . '/img/Group216.png';
       $achievement_info = array();
+      $achievement->badge_image = get_stylesheet_directory_uri() . '/img/badge-assessment.png';
 
       switch ($type) {
-          case 'Genuine':
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($badges, $achievement);
-              break;
-          case 'Certificaat':
-            $achievement_info = array(
-              'ID' => $achievement->ID,
-              'title' => $achievement->post_title,
-              'description' => $achievement->post_content,
-              'manager' => $achievement->manager,
-              'manager_image' => $achievement->manager_image,
-              'trigger' => get_field('trigger_badge', $achievement->ID),
-            );
-            $certificats[] = $achievement_info;
-            break;
+        case 'Genuine':
+          $achievement_info = array(
+            'ID' => $achievement->ID,
+            'title' => $achievement->post_title,
+            'trigger_badge' => get_field('trigger_badge', $achievement->ID),
+            'level_badge' => get_field('level_badge', $achievement->ID) ?: '<b>Company</b>',
+            'manager' => $achievement->manager,
+            'manager_image' => $achievement->manager_image,
+            'badge_image' => get_field('image_badge', $achievement->ID) ?: get_stylesheet_directory_uri() . '/img/badge-basic.png',
+          );
+          $badges[] = $achievement_info;
+          break;
+        case 'Certificaat':
+          $achievement_info = array(
+            'ID' => $achievement->ID,
+            'title' => $achievement->post_title,
+            'certificaatnummer' => get_field('certificaatnummer_badge', $achievement->ID) ?: 'None',
+            'uitgegeven_door_badge' => get_field('uitgegeven_door_badge', $achievement->ID) ?: 'None',
+            'url' => get_field('url_aanbieder_badge', $achievement->ID) ?: 'None',
+            'manager' => $achievement->manager,
+            'manager_image' => $achievement->manager_image,
+            'badge_image' => get_stylesheet_directory_uri() . '/img/badge-assessment.png'
+          );
+          $certificats[] = $achievement_info;
+          break;
 
-          case 'Prestatie':
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($prestaties, $achievement);
-              break;
-          case 'Diploma':
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($diplomas, $achievement);
-              break;
-          default:
-              $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-              array_push($badges, $achievement);
-              break;
+        case 'Prestatie':
+          $achievement_info = array(
+            'ID' => $achievement->ID,
+            'title' => $achievement->post_title,
+            'uren' => get_field('uren_badge', $achievement->ID) ?: 'None',
+            'punten' => get_field('punten_badge', $achievement->ID) ?: 'None',
+            'competencies' => get_field('competencies_badge', $achievement->ID) ?: 'None',
+            'opmerkingen' => get_field('opmerkingen_badge', $achievement->ID) ?: 'None',
+            'manager' => $achievement->manager,
+            'manager_image' => $achievement->manager_image,
+            'badge_image' => get_stylesheet_directory_uri() . '/img/badge-assessment.png'
+          );
+          $prestaties[] = $achievement_info;
+          break;
+        case 'Diploma':
+          $achievement_info = array(
+            'ID' => $achievement->ID,
+            'title' => $achievement->post_title,
+            'certificaatnummer' => get_field('certificaatnummer_badge', $achievement->ID) ?: 'None',
+            'uitgegeven_door_badge' => get_field('uitgegeven_door_badge', $achievement->ID) ?: 'None',
+            'url' => get_field('url_aanbieder_badge', $achievement->ID) ?: 'None',
+            'manager' => $achievement->manager,
+            'manager_image' => $achievement->manager_image,
+            'badge_image' => get_stylesheet_directory_uri() . '/img/badge-assessment.png'
+          );
+          $diplomas[] = $achievement_info;
+          break;
+        default:
+          $achievement_info = array(
+            'ID' => $achievement->ID,
+            'title' => $achievement->post_title,
+            'trigger_badge' => get_field('trigger_badge', $achievement->ID),
+            'level_badge' => get_field('level_badge', $achievement->ID) ?: '<b>Company</b>',
+            'manager' => $achievement->manager,
+            'manager_image' => $achievement->manager_image,
+            'badge_image' => get_field('image_badge', $achievement->ID) ?: get_stylesheet_directory_uri() . '/img/badge-basic.png',
+          );
+          $badges[] = $achievement_info;
+          break;
       }
     endforeach;
   //End
@@ -2863,6 +2904,8 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
                 array_push($feedbacks, $todo);
                 break;
             case 'Compliment':
+                $due_date = get_field('welke_datum_feedback', $todo->ID)[1];
+                $todo->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
                 $todo->beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
                 array_push($compliments, $todo);
                 break;
@@ -2871,6 +2914,8 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
                 array_push($persoonlijk_ontwikkelplan, $todo);
                 break;
             case 'Beoordeling Gesprek':
+                $due_date = get_field('welke_datum_feedback', $todo->ID)[1];
+                $todo->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
                 $todo->beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
                 array_push($beoordeling_gesprek, $todo);
                 break;
