@@ -1825,6 +1825,7 @@ function statistic_team($data)
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
 
+    $most_topics_view = [];
     foreach ($topic_views as $topic){
         $subtopic = array();
         $subtopic['id'] = $topic->data_id;
@@ -2719,7 +2720,8 @@ ORDER BY MONTH(created_at)
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         );
         $followed_topics = get_categories($args);
-
+        //$image_topic = get_field('image', 'category_'. $topic->data_id);
+        //$subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
     }
     /* // */
 
