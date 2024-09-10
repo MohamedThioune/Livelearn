@@ -1212,7 +1212,7 @@ function jobUser(WP_REST_Request $request){
   array_push($user_appliants, $user_apply);
 
   //Update the 'job_appliants'
-  // update_field('job_appliants', $user_appliants, $job_applied_id);
+  update_field('job_appliants', $user_appliants, $job_applied_id);
 
   //Add additional information
   $additional = array();
@@ -2936,13 +2936,13 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
   //End
 
   //Statistique
-  $statistique = detailsPeopleSkillsPassport(array('userID' => $user_id));
+  // $statistique = detailsPeopleSkillsPassport(array('userID' => $user_id));
 
   // Informations 
   $data = array(
     'user' => $user,
     'state' => $state,
-    'statistique' => $statistique,
+    // 'statistique' => $statistique,
     'todos' => [
       'feedback' => $todos_feedback,
       'onderwerpen' => $todos_onderwerpen,
