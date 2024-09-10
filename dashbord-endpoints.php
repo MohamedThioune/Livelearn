@@ -531,16 +531,6 @@ $args = array(
  */
 function get_detail_notification($data){
     $id_notification = intval($data['id']);
-    //$user_id = $_GET['user_id'];
-    /*
-    $args = array(
-        'post_type' => array('feedback','manadatory','badge'),
-        'author' => $user_id,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'posts_per_page' => -1,
-    );
-    */
     $notification = get_post($id_notification);
     if(!$notification)
         return new WP_REST_Response(array('message' => 'Notification not found, maybe id is not correct'), 404);
@@ -2808,7 +2798,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $id_course = $data['id_course'];
 
     //$type_course = get_field('course_type',$id_course);
-    //$course_type = $data['course_type'];
+    $course_type = ucfirst($data['course_type']);
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
     $visibility = $data['visibility']; // checkbox : true or false ?
@@ -2958,3 +2948,4 @@ function search_courses()
         'courses' => $courses_searched,
     ), 200);
 }
+
