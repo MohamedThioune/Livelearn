@@ -2297,6 +2297,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'candidateSkillsPassportAdvanced'
     ));
 
+    register_rest_route ('custom/v1', '/candidate/skillsPassport/statistique/(?P<userID>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'detailsPeopleSkillsPassport'
+    ));
+
     register_rest_route ('custom/v1', '/user/profil/update', array(
         'methods' => 'POST',
         'callback' => 'updateCompanyProfil'
@@ -2500,9 +2505,5 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/search-course', array(
         'methods' => 'GET',
         'callback' => 'search_courses'
-    ));
-    register_rest_route ('custom/v1', '/details-people-statistic', array(
-        'methods' => 'GET',
-        'callback' => 'detailsPeopleSkillsPassport'
     ));
 });
