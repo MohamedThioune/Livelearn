@@ -2724,7 +2724,8 @@ ORDER BY MONTH(created_at)
             'self_assessment_of_skills'=> $count_skills_note,
             'external_learning_opportunities' => $external_learning_opportunities,
             'average_feedback_given_me_team'=> $score_rate_feedback ."/". $score_rate_feedback_company,
-            'usage_desktop_vs_mobile_app' => array(
+            'usage_desktop_vs_mobile_app' => 
+            array(
                 'web' => $canva_data_web,
                 'mobile' => $canva_data_mobile
             ),

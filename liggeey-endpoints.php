@@ -1212,7 +1212,7 @@ function jobUser(WP_REST_Request $request){
   array_push($user_appliants, $user_apply);
 
   //Update the 'job_appliants'
-  // update_field('job_appliants', $user_appliants, $job_applied_id);
+  update_field('job_appliants', $user_appliants, $job_applied_id);
 
   //Add additional information
   $additional = array();
@@ -2427,7 +2427,6 @@ function candidateSkillsPassport(WP_REST_Request $request) {
             $thumbnail = get_field('url_image_xml', $course->ID);
                 if(!$thumbnail)
                     $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-
     }
 
     $price = get_field('price', $course->ID);
@@ -2501,7 +2500,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
       $diplomas = array();
       $image = '';
       if(!empty($achievements))
-        foreach($achievements as $key=>$achievement):
+        foreach($achievements as $key => $achievement):
 
             $type = get_field('type_badge', $achievement->ID);
 
@@ -2741,8 +2740,11 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
     $mandatory->pourcentage = intval($pourcentage);
 
     $type = get_field('type_feedback', $mandatory->ID);
-    $mandatory->manager = get_user_by('ID', get_field('manager_feedback', $mandatory->ID));
-    $mandatory->manager_image = get_field('profile_img',  'user_' . $mandatory->manager->ID);
+    $manager = get_user_by('ID', get_field('manager_feedback', $mandatory->ID));
+    $manager_image = (isset($manager->ID)) ? get_field('profile_img',  'user_' . $manager->ID) : get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+    $mandatory->manager = $manager;
+    $mandatory->manager_image = $manager_image;
+
     $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
     switch ($type) {
@@ -2788,12 +2790,14 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
   $diplomas = array();
   $image = '';
   if(!empty($achievements))
-    foreach($achievements as $key=>$achievement):
+    foreach($achievements as $key => $achievement):
       $type = get_field('type_badge', $achievement->ID);
 
-      $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-      $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
-      $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+      $manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
+      $manager_image = (isset($manager->ID)) ? get_field('profile_img',  'user_' . $manager->ID) : get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
+      $achievement->manager = $manager;
+      $achievement->manager_image = $manager_image;
+
       if(!$image)
           $image = get_stylesheet_directory_uri() . '/img/Group216.png';
       $achievement_info = array();
@@ -2932,13 +2936,13 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
   //End
 
   //Statistique
-  $statistique = detailsPeopleSkillsPassport(array('userID' => $user_id));
+  // $statistique = detailsPeopleSkillsPassport(array('userID' => $user_id));
 
   // Informations 
   $data = array(
     'user' => $user,
     'state' => $state,
-    'statistique' => $statistique,
+    // 'statistique' => $statistique,
     'todos' => [
       'feedback' => $todos_feedback,
       'onderwerpen' => $todos_onderwerpen,
