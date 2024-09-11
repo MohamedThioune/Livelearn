@@ -2950,3 +2950,8 @@ function search_courses()
     ), 200);
 }
 
+function coursesRecommendedUpcomming($data)
+{
+    $info = recommendation($data['id'],1000,100);
+    return new WP_REST_Response($info,200);
+}
