@@ -50,11 +50,11 @@ function upcoming_schedule_for_the_user()
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
-        'meta_key'   => 'data_locaties_xml',
+        'meta_key' => 'data_locaties_xml',
     );
     $schedules = get_posts($args);
     $all_schedules = array();
-    $exceptCourses = ['Artikel','Podcast','Video'];
+    $exceptCourses = ['Artikel','Podcast','Video', 'E-learning', 'Assessment', 'Cursus', 'Class'];
     foreach ($schedules as $schedule) {
         $coursType = get_field('course_type', $schedule->ID);
         if (in_array($coursType, $exceptCourses))
@@ -1343,8 +1343,9 @@ function statistic_company($data)
         'limit' => -1,
     );
     $bunch_orders = wc_get_orders($args);
-    // $bunch_orders = array();
     $course_finished = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1588,8 +1589,10 @@ function statistic_individual($data)
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
 
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    // $bunch_orders = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1835,8 +1838,10 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    // $bunch_orders = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -2502,8 +2507,10 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    // $bunch_orders = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             $progressions = array();
