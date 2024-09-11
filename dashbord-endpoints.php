@@ -1335,6 +1335,9 @@ function statistic_company($data)
     $bunch_orders = wc_get_orders($args);
     //$bunch_orders = array();
     $course_finished = array();
+    $enrolled = array();
+    $budget_spent = 0;
+
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1577,6 +1580,8 @@ function statistic_individual($data)
     );
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
+    $enrolled = array();
+    $budget_spent = 0;
 
     $bunch_orders = wc_get_orders($args);
     //$bunch_orders = array();
@@ -1814,6 +1819,8 @@ function statistic_team($data)
     //$table_tracker_views = $wpdb->prefix . 'tracker_views';
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
+    $enrolled = array();
+    $budget_spent = 0;
 
     $most_topics_view = [];
     foreach ($topic_views as $topic){
@@ -2494,6 +2501,10 @@ function detailsPeopleSkillsPassport($data){
     );
     $bunch_orders = wc_get_orders($args);
     //$bunch_orders = array();
+
+    $enrolled = array();
+    $budget_spent = 0;
+
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             $progressions = array();
