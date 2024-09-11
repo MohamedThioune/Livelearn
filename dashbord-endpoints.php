@@ -1337,6 +1337,7 @@ function statistic_company($data)
     $course_finished = array();
     $enrolled = array();
     $budget_spent = 0;
+    $enrolled_courses = array();
 
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -1582,6 +1583,7 @@ function statistic_individual($data)
     $member_courses_id = array_column($member_courses, 'ID');
     $enrolled = array();
     $budget_spent = 0;
+    $enrolled_courses = array();
 
     $bunch_orders = wc_get_orders($args);
     //$bunch_orders = array();
@@ -1821,6 +1823,7 @@ function statistic_team($data)
     $topic_views = $wpdb->get_results($sql);
     $enrolled = array();
     $budget_spent = 0;
+    $enrolled_courses = array();
 
     $most_topics_view = [];
     foreach ($topic_views as $topic){
@@ -2504,6 +2507,7 @@ function detailsPeopleSkillsPassport($data){
 
     $enrolled = array();
     $budget_spent = 0;
+    $enrolled_courses = array();
 
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
