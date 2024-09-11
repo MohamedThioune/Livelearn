@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @param $user : ID user to recommend the courses
+ * @param $globe : number total of course to search for...
+ * @param $limit : number of course to return
+ * @return array[] : array to return : $infos
+ */
 function recommendation($user, $globe = null, $limit = null) {
 
 global $wpdb;
