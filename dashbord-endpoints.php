@@ -50,11 +50,11 @@ function upcoming_schedule_for_the_user()
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
-        'meta_key'   => 'data_locaties_xml',
+        'meta_key' => 'data_locaties_xml',
     );
     $schedules = get_posts($args);
     $all_schedules = array();
-    $exceptCourses = ['Artikel','Podcast','Video'];
+    $exceptCourses = ['Artikel','Podcast','Video', 'E-learning', 'Assessment', 'Cursus', 'Class'];
     foreach ($schedules as $schedule) {
         $coursType = get_field('course_type', $schedule->ID);
         if (in_array($coursType, $exceptCourses))
@@ -531,16 +531,6 @@ $args = array(
  */
 function get_detail_notification($data){
     $id_notification = intval($data['id']);
-    //$user_id = $_GET['user_id'];
-    /*
-    $args = array(
-        'post_type' => array('feedback','manadatory','badge'),
-        'author' => $user_id,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'posts_per_page' => -1,
-    );
-    */
     $notification = get_post($id_notification);
     if(!$notification)
         return new WP_REST_Response(array('message' => 'Notification not found, maybe id is not correct'), 404);
@@ -1274,11 +1264,14 @@ function statistic_company($data)
         $subtopic = array();
         $subtopic['id'] = $topic->data_id;
         $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
-        $subtopic['occurence'] = $topic->occurence;
+        $subtopic['occurence'] = intval($topic->occurence);
         $image_topic = get_field('image', 'category_'. $topic->data_id);
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
+    usort($most_topics_view, function($a, $b) {
+        return ($b['occurence']) <=> $a['occurence'];
+    });
     /* Assessment */
     $args = array(
         'post_type' => 'assessment',
@@ -1297,31 +1290,6 @@ function statistic_company($data)
         $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
         $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
     }
-    /* assessment doing by this user */
-    $args = array(
-        'post_type' => 'assessment',
-        'post_status' => 'publish',
-        'author' => $user_connected->ID,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'posts_per_page' => -1
-    );
-    //$assessments_created = get_posts($args);
-    //$count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
-
-    /* Mandatories */
-    $args = array(
-        'post_type' => 'mandatory',
-        'post_status' => 'publish',
-        'author__in' => $user_connected->ID,
-        'posts_per_page'         => -1,
-        'no_found_rows'          => true,
-        'ignore_sticky_posts'    => true,
-        'update_post_term_cache' => false,
-        'update_post_meta_cache' => false
-    );
-    //$mandatories = get_posts($args);
-    //$count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
 
     /* Members course */
     $args = array(
@@ -1342,9 +1310,10 @@ function statistic_company($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
     $course_finished = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1587,9 +1556,14 @@ function statistic_individual($data)
     );
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
+    $enrolled = array();
+    $budget_spent = 0;
+    $enrolled_courses = array();
 
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    // $bunch_orders = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1824,6 +1798,9 @@ function statistic_team($data)
     //$table_tracker_views = $wpdb->prefix . 'tracker_views';
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
+    $enrolled = array();
+    $budget_spent = 0;
+    $enrolled_courses = array();
 
     $most_topics_view = [];
     foreach ($topic_views as $topic){
@@ -1835,8 +1812,10 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    // $bunch_orders = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -2502,8 +2481,10 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    // $bunch_orders = array();
+    $enrolled = array();
+    $enrolled_courses = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             $progressions = array();
@@ -2809,7 +2790,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $id_course = $data['id_course'];
 
     //$type_course = get_field('course_type',$id_course);
-    //$course_type = $data['course_type'];
+    $course_type = ucfirst($data['course_type']);
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
     $visibility = $data['visibility']; // checkbox : true or false ?
@@ -2958,4 +2939,10 @@ function search_courses()
         'count_courses' => count($courses_searched),
         'courses' => $courses_searched,
     ), 200);
+}
+
+function coursesRecommendedUpcomming($data)
+{
+    $info = recommendation($data['id'],1000,100);
+    return new WP_REST_Response($info,200);
 }
