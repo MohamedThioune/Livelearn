@@ -2506,4 +2506,8 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'search_courses'
     ));
+    register_rest_route ('custom/v1', '/courses/recommended/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'coursesRecommendedUpcomming'
+    ));
 });

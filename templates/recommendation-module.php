@@ -3,7 +3,10 @@
 function recommendation($user, $globe = null, $limit = null) {
 
 global $wpdb;
-$infos = array('teachers' => [], 'recommended' => []);
+$infos = array('teachers' => [], 'recommended' => [], 'upcoming'=>[]);
+$upcoming = array();
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+$date_now = strtotime(date('Y-m-d'));
 
 //View table name
 $table_tracker_views = $wpdb->prefix . 'tracker_views';
@@ -94,6 +97,18 @@ foreach ($global_courses as $key => $course) {
     if(!empty($postAuthorSearch))
     if (in_array($course->post_author, $postAuthorSearch))
         $points += 2;
+                $image = get_field('preview', $course->ID) ? : '';
+                if ($image)
+                    $image = $image['url'];
+
+               if(!$image){
+                   $image = get_the_post_thumbnail_url($course->ID);
+                   if(!$image)
+                       $image = get_field('url_image_xml', $course->ID);
+                           if(!$image)
+                               $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+               }
+    $course->image = $image;
 
     // //Price pointer
     // if($prijs <= 0)
@@ -101,17 +116,65 @@ foreach ($global_courses as $key => $course) {
 
     //Evaluate score pointer of this course
     $percent = abs(($points/$max_points) * 100);
+    $courseType = get_field('course_type', $course->ID);
+    //$count = array('Artikel'=>0, 'Video'=>0, 'Podcast'=>0, 'Opleidingen'=>0);
     if ($percent >= 50)
         if(!in_array($course->ID, $random_id)){
-            if(get_field('course_type', $course->ID))
-                $count[get_field('course_type', $course->ID)]++;
+            if($courseType) {
+                $count[$courseType]++;
+                $course->courseType = $courseType;
+            }
             array_push($random_id, $course->ID);
             array_push($recommended_courses, $course);
 
             if(!in_array($course->post_author, $teachers))
                 array_push($teachers, $course->post_author);
         }
-
+    // courses with date
+    $data = array();
+    //$day = "-";
+    $month = 0;
+    //$location = 'Online';
+    $datas = get_field('data_locaties', $course->ID);
+    if($datas){
+        $data = $datas[0]['data'][0]['start_date'];
+        if($data != ""){
+            $day = explode('/', explode(' ', $data)[0])[0];
+            $mon = explode('/', explode(' ', $data)[0])[1];
+            $year = explode('/', explode(' ', $data)[0])[2];
+            $month = $calendar[$mon];
+        }
+        $location = $datas[0]['data'][0]['location'];
+    } else {
+        $datum = get_field('data_locaties_xml', $course->ID);
+        if(isset($datum[0]['value'])){
+            $datas = explode('-', $datum[0]['value']);
+            $data = $datas[0];
+            $day = explode('/', explode(' ', $data)[0])[0];
+            $month = explode('/', explode(' ', $data)[0])[1];
+            $month = $calendar[$month];
+            $location = $datas[2];
+        } else {
+            $dates = get_field('dates', $course->ID);
+            if($dates){
+                $data = $dates[0]['date'];
+                $days = explode(' ', $data)[0];
+                $day = explode('-', $days)[2];
+                $month = $calendar[explode('-', $data)[1]];
+                $year = explode('-', $days)[0];
+            }
+        }
+    }
+    if (!$month)
+        continue;
+    if (empty($data))
+        null;
+    elseif (!empty($data)){
+        $data = strtotime(str_replace('/', '.', $data));
+        if($data > $date_now)
+            $upcoming[] = $course;
+    }
+/** END DATE */
     if($limit):
         $count_recommended_course = count($recommended_courses);
         if($count_recommended_course == $limit)
@@ -145,6 +208,7 @@ $recommended_courses = array_slice($recommended_courses, 0, $limit, true);
 
 $infos['recommended'] = $recommended_courses;
 $infos['teachers'] = $teachers;
+$infos['upcoming'] = $upcoming;
 
 return $infos;
 
