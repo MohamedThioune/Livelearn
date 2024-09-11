@@ -1413,9 +1413,9 @@ if (!$is_first_login && get_current_user_id() != 0 )
                     $year = explode('/', explode(' ', $data)[0])[2];
                     $month = $calendar[$mon];
                 }
-
                 $location = $datas[0]['data'][0]['location'];
-            }else{
+            }
+            else{
                 $datum = get_field('data_locaties_xml', $course->ID);
                 if(isset($datum[0]['value'])){
                     $datas = explode('-', $datum[0]['value']);
