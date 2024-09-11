@@ -1264,11 +1264,14 @@ function statistic_company($data)
         $subtopic = array();
         $subtopic['id'] = $topic->data_id;
         $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
-        $subtopic['occurence'] = $topic->occurence;
+        $subtopic['occurence'] = intval($topic->occurence);
         $image_topic = get_field('image', 'category_'. $topic->data_id);
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
+    usort($most_topics_view, function($a, $b) {
+        return ($b['occurence']) <=> $a['occurence'];
+    });
     /* Assessment */
     $args = array(
         'post_type' => 'assessment',
@@ -1287,31 +1290,6 @@ function statistic_company($data)
         $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
         $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
     }
-    /* assessment doing by this user */
-    $args = array(
-        'post_type' => 'assessment',
-        'post_status' => 'publish',
-        'author' => $user_connected->ID,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'posts_per_page' => -1
-    );
-    //$assessments_created = get_posts($args);
-    //$count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
-
-    /* Mandatories */
-    $args = array(
-        'post_type' => 'mandatory',
-        'post_status' => 'publish',
-        'author__in' => $user_connected->ID,
-        'posts_per_page'         => -1,
-        'no_found_rows'          => true,
-        'ignore_sticky_posts'    => true,
-        'update_post_term_cache' => false,
-        'update_post_meta_cache' => false
-    );
-    //$mandatories = get_posts($args);
-    //$count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
 
     /* Members course */
     $args = array(
