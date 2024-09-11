@@ -1332,8 +1332,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     $course_finished = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -1578,8 +1578,8 @@ function statistic_individual($data)
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
 
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1825,8 +1825,8 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -2492,8 +2492,8 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             $progressions = array();
