@@ -65,8 +65,8 @@
     //             }                    
     // }
 
-    // if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && !in_array( 'author', $user->roles ) ) 
-    //     header('Location: /dashboard/user');
+    if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && !in_array( 'author', $user->roles ) ) 
+        header('Location: /dashboard/user');
 
     // if ( !$access_granted )
     //     header('Location: /dashboard/company/profile-company');
