@@ -980,10 +980,10 @@ function jobDetail(WP_REST_Request $request){
   // $job = get_post($param_post_id);
   $errors = [];
   if (!$job) {
-      $errors['errors'] = 'No job found !';
-      $response = new WP_REST_Response($errors);
-      $response->set_status(401);
-      return $response;
+    $errors['errors'] = 'No job found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
   }
 
   $sample = job($job->ID);
@@ -3692,11 +3692,19 @@ function checkoutAPI(WP_REST_Request $request){
   $userID = $request['userID'] ?: null;
   $metadata = $request['metadata'] ?: null;
   $price_id = null;
-  /** Create or first price ID */
-    // get course
-    $post = get_post($postID);
-    $course_type = get_field('course_type', $post->ID);
 
+  //Check course exist
+  $post = get_post($postID);
+  $errors = [];
+  if (!$post) {
+    $errors['errors'] = 'No post found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  }
+
+  /** Create or first price ID */
+    $course_type = get_field('course_type', $post->ID);
     // create product
     $short_description = get_field('short_description', $post->ID) ?: 'Your adventure begins with Livelearn !';
     $prijs = get_field('price', $post->ID) ?: 0;
@@ -3743,6 +3751,17 @@ function checkoutFreeAPI(WP_REST_Request $request){
     $response->set_status(400);
     return $response;
   endif;
+
+  //Check course exist
+  $postID = $request['postID'] ?: null;
+  $post = get_post($postID);
+  $errors = [];
+  if (!$post) {
+    $errors['errors'] = 'No post found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  }
 
   $success = 'complete';
   //GET POST request
