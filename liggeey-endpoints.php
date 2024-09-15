@@ -312,7 +312,7 @@ function candidate($id){
       continue;
 
     $explosion = explode(";", $value);
-    var_dump($explosion);
+    // var_dump($explosion);
 
     $year = "";
     if(isset($explosion[2]))
@@ -324,7 +324,7 @@ function candidate($id){
 
     $education['diploma'] = $explosion[1];
     $education['startDate'] = $explosion[2];
-    $education['endDate'] = $explosion[2];
+    $education['endDate'] = $explosion[3];
     $education['year'] = $year;
     $education['school'] = $explosion[0];
     $education['description'] = $explosion[4];
