@@ -2391,6 +2391,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'checkoutFreeAPI'
     ));
+    register_rest_route ('custom/v1', '/checkout/orders', array(
+        'methods' => 'POST',
+        'callback' => 'get_post_orders'
+    ));
     //End ...
 
     register_rest_route ('custom/v1', '/tofollow/experts', array(

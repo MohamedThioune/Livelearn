@@ -312,16 +312,19 @@ function candidate($id){
       continue;
 
     $explosion = explode(";", $value);
+    var_dump($explosion);
 
     $year = "";
     if(isset($explosion[2]))
-        $year = explode("-", $explosion[2])[0];
+      $year = explode("-", $explosion[2])[0];
 
     if(isset($explosion[3]))
-        if(intval($explosion[2]) != intval($explosion[3]))
-            $year = $year . "-" .  explode("-", $explosion[3])[0];
+      if(intval($explosion[2]) != intval($explosion[3]))
+        $year = $year . "-" .  explode("-", $explosion[3])[0];
 
     $education['diploma'] = $explosion[1];
+    $education['startDate'] = $explosion[2];
+    $education['endDate'] = $explosion[2];
     $education['year'] = $year;
     $education['school'] = $explosion[0];
     $education['description'] = $explosion[4];
@@ -3791,4 +3794,78 @@ function checkoutFreeAPI(WP_REST_Request $request){
   $response->set_status(200);
   return $response;
   
+}
+
+//Orders dedicated to this user (courses) 
+function get_post_orders(WP_REST_Request $request){
+  $required_parameters = ['userID'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  //Check user exists
+  $userID = $request['userID'] ?: null;
+  $user = get_user_by('ID', $userID);
+  $errors = [];
+  if (!$user):
+    $errors['errors'] = 'No user matchin !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+
+  $enrolled = array();
+  $enrolled_courses = array();
+  // $expenses = 0; 
+  $enrolled_stripe = array();
+  //Orders woocommerce (enrolled courses)  
+  $args = array(
+    'customer_id' => $user->ID,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+  );
+  $bunch_orders = wc_get_orders($args);
+
+  foreach($bunch_orders as $order)
+    foreach ($order->get_items() as $item_id => $item ) :
+      //Get woo orders from user
+      $course_id = intval($item->get_product_id()) - 1;
+      $prijs = get_field('price', $course_id);
+      // $expenses += $prijs; 
+      if(!in_array($course_id, $enrolled))
+        array_push($enrolled, $course_id);
+    endforeach;
+
+  if(!empty($enrolled)):
+    $args = array(
+      'post_type' => 'course', 
+      'posts_per_page' => -1,
+      'orderby' => 'post_date',
+      'order' => 'DESC',
+      'include' => $enrolled,  
+    );
+    $enrolled_courses = get_posts($args);
+  endif;
+
+  //Enrolled with Stripe
+  $enrolled_stripe = array();
+  $enrolled_stripe = list_orders($user->ID)['posts'];
+  if(!empty($enrolled_stripe))
+    try {
+      $enrolled_courses = array_merge($enrolled_stripe, $enrolled_courses);
+    } catch (Error $e) {
+      echo "";
+    }
+
+  // Return the response 
+  $response = new WP_REST_Response($enrolled_courses);
+  $response->set_status(200);
+  return $response;  
+
 }
