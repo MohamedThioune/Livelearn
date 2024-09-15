@@ -4,7 +4,7 @@
  * @param $globe : number total of course to search for...
  * @param $limit : number of course to return
  * @return array[] : array to return : $infos
- */
+*/ 
 function recommendation($user, $globe = null, $limit = null) {
 
     global $wpdb;
@@ -81,6 +81,7 @@ function recommendation($user, $globe = null, $limit = null) {
         //Prijs course
         $prijs = get_field('price', $course->ID) ?: 0;
         $prijs = intval($prijs);
+        $course->price = $prijs ? : "Gratis";
 
         //Category pointer | followed 
         foreach($topics as $topic_value):
@@ -176,8 +177,11 @@ function recommendation($user, $globe = null, $limit = null) {
             null;
         elseif (!empty($data)){
             $data = strtotime(str_replace('/', '.', $data));
-            if($data > $date_now)
+            if($data > $date_now) {
+                $course->date = date('d/m/Y',$data);
+                //$course->courseType = $courseType;
                 $upcoming[] = $course;
+            }
         }
         /** END DATE */
         if($limit):
