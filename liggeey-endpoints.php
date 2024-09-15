@@ -353,6 +353,8 @@ function candidate($id){
             $year = $year . "-" .  explode("-", $explosion[3])[0];
 
     $experience['company'] = $explosion[1];
+    $education['startDate'] = $explosion[2];
+    $education['endDate'] = $explosion[3];
     $experience['year'] = $year;
     $experience['job'] = $explosion[0];
     $experience['description'] = $explosion[4];
