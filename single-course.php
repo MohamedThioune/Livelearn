@@ -52,7 +52,8 @@ if (isset($_POST) && !empty($_POST)){
 
     }
 
-} elseif ($_GET && isset($_GET['message'])){
+}
+elseif ($_GET && isset($_GET['message'])){
     if (isset($_GET['danger'])){
         $danger = $_GET['message'];
         echo "<div class='alert alert-danger text-center' role='alert'>$danger</div>";
@@ -61,7 +62,6 @@ if (isset($_POST) && !empty($_POST)){
         echo "<div class='alert alert-success text-center' role='alert'>$success</div>";
     }
 }
-
 
 $course_type = get_field('course_type', $post->ID);
 
