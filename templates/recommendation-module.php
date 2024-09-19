@@ -62,6 +62,9 @@ function recommendation($user, $globe = null, $limit = null) {
     $max_points = 10;
     foreach ($global_courses as $key => $course) {
         $points = 0;
+        //Course Type
+        $courseType = get_field('course_type', $course->ID);
+        $course->courseType = get_field('course_type', $course->ID);
 
         //Read category course - get categories from course
         $read_category_course = array();
@@ -98,37 +101,32 @@ function recommendation($user, $globe = null, $limit = null) {
             if(in_array($category_value, $read_category_course))
                 $points += 2;
         endforeach;
-
         //Author pointer  
         if(!empty($postAuthorSearch))
         if (in_array($course->post_author, $postAuthorSearch))
             $points += 2;
-                    $image = get_field('preview', $course->ID) ? : '';
-                    if ($image)
-                        $image = $image['url'];
+        
+        $image = get_field('preview', $course->ID) ? : '';
+        if ($image)
+            $image = $image['url'];
 
-                if(!$image){
-                    $image = get_the_post_thumbnail_url($course->ID);
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
                     if(!$image)
-                        $image = get_field('url_image_xml', $course->ID);
-                            if(!$image)
-                                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
-                }
+                        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courseType) . '.jpg';
+        }
         $course->image = $image;
 
-        // //Price pointer
-        // if($prijs <= 0)
-        //     $points += 1;
-
         $author = get_userdata($course->post_author);
-        if ($author) {
+        if ($author) :
             $author->data->image = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
             $course->author = $author->data;
-        }
+        endif;
+
         //Evaluate score pointer of this course
         $percent = abs(($points/$max_points) * 100);
-        $courseType = get_field('course_type', $course->ID);
-        //$count = array('Artikel'=>0, 'Video'=>0, 'Podcast'=>0, 'Opleidingen'=>0);
         if ($percent >= 50)
             if(!in_array($course->ID, $random_id)){
                 if($courseType) {
@@ -156,7 +154,8 @@ function recommendation($user, $globe = null, $limit = null) {
                 $month = $calendar[$mon];
             }
             $location = $datas[0]['data'][0]['location'];
-        } else {
+        } 
+        else {
             $datum = get_field('data_locaties_xml', $course->ID);
             if(isset($datum[0]['value'])){
                 $datas = explode('-', $datum[0]['value']);
@@ -176,6 +175,7 @@ function recommendation($user, $globe = null, $limit = null) {
                 }
             }
         }
+
         if (!$month)
             continue;
         if (empty($data))
@@ -213,8 +213,6 @@ function recommendation($user, $globe = null, $limit = null) {
 
     if (empty($recommended_courses))
         $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $global_courses;
-        // $courses_id = array();
-
 
     //Activitien
     shuffle($recommended_courses);
