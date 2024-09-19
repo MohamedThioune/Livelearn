@@ -120,6 +120,10 @@ function recommendation($user, $globe = null, $limit = null) {
         // if($prijs <= 0)
         //     $points += 1;
 
+        $author = get_userdata($course->post_author);
+        $author->image = get_field('profile_img',  'user_' . $author->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+        $course->author = $author;
+
         //Evaluate score pointer of this course
         $percent = abs(($points/$max_points) * 100);
         $courseType = get_field('course_type', $course->ID);
