@@ -2360,7 +2360,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'stripe'
     ));
 
-    register_rest_route ('custom/v1', '/search/stripe/(?P<userID>\d+)', array(
+    register_rest_route ('custom/v1', '/search/stripe/(?P<companyID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'search'
     ));
