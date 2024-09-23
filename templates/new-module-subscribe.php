@@ -130,6 +130,7 @@ function update(WP_REST_Request $request) {
     $quantity = count($request['licenses']);
 
     $licenses = implode(',', $licenses_array);
+    var_dump($licenses);
 
     $data = [
         'quantity' => $quantity,
