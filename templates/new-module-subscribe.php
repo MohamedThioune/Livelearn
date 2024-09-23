@@ -130,7 +130,6 @@ function update(WP_REST_Request $request) {
     $quantity = count($request['licenses']);
 
     $licenses = implode(',', $licenses_array);
-    var_dump($licenses);
 
     $data = [
         'quantity' => $quantity,
@@ -172,7 +171,7 @@ function stripe(WP_REST_Request $request){
     $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
 
     //Starting licenses | owner of subscription
-    $licenses[] = $request['ID'];
+    $licenses = $request['ID'];
   
     //Data information | payment 
     $data_payment = [
