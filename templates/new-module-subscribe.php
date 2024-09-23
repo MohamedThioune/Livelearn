@@ -119,8 +119,8 @@ function update(WP_REST_Request $request) {
     endif;
 
     //Licences
-    $licenses = $request['licenses'];
-    if(empty($licenses) || !is_array($licenses)):
+    $licenses_array = $request['licenses'];
+    if(empty($licenses_array) || !is_array($licenses_array)):
         $errors['errors'] = 'Please provide in array user IDs which will benefit access !';
         $response = new WP_REST_Response($errors);
         $response->set_status(401);
@@ -128,6 +128,8 @@ function update(WP_REST_Request $request) {
     endif;
 
     $quantity = count($request['licenses']);
+
+    $licenses = implode(',', $licenses_array);
 
     $data = [
         'quantity' => $quantity,
