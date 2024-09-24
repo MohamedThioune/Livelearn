@@ -413,16 +413,13 @@ function job($id, $userApplyId = null){
   // Retrieve the applied 
   // $entity = null;
   $applied = array();
-  $status = "No data available";
   $additionnals = get_field('job_additionnal', $post->ID);
-  var_dump($additionnals);
   foreach ($sample->applied as $entity):
     $tmpUser = candidate($entity->ID);
     $tmpUser->motivation = '';
-    var_dump($entity);
-    if(!empty($additionals)):
+    if(!empty($additionnals)):
       $additional = array_filter($additionnals, function ($value) use ($entity)  {
-        if($value['userid']->ID == $entity->ID)
+	if($value['userid']->ID == $entity->ID)
           return $value;
       });
       $tmpUser->motivation = $additional[0]['motivation'];
