@@ -2943,7 +2943,7 @@ function search_courses()
 
 function coursesRecommendedUpcomming($data)
 {
-    $info = recommendation($data['id'],1000,100);
+    $info = recommendation($data['id'],2000,150);
     return new WP_REST_Response($info,200);
 }
 

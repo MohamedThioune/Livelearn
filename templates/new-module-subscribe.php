@@ -96,7 +96,7 @@ function search_invoices($data){
 
 function search($data) {
     $endpoint = "https://api.stripe.com/v1/subscriptions/search";
-    $query = "status:'active' AND metadata['UserID']:'" . $data['userID'] . "'";
+    $query = "status:'active' AND metadata['CompanyID']:'" . $data['companyID'] . "'";
     $params = array( 
         'query' => $query
     );
@@ -110,7 +110,7 @@ function search($data) {
 
 function update(WP_REST_Request $request) {
     //Check required parameters register
-    $required_parameters = ['subscription', 'quantity', 'ID'];
+    $required_parameters = ['subscription', 'licenses'];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -118,10 +118,23 @@ function update(WP_REST_Request $request) {
         return $response;
     endif;
 
+    //Licences
+    $licenses_array = $request['licenses'];
+    if(empty($licenses_array) || !is_array($licenses_array)):
+        $errors['errors'] = 'Please provide in array user IDs which will benefit access !';
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+
+    $quantity = count($request['licenses']);
+
+    $licenses = implode(',', $licenses_array);
+
     $data = [
-        'quantity' => $request['quantity'],
+        'quantity' => $quantity,
         'metadata' => [
-            'UserID' => $request['ID']
+            'Licenses' => $licenses
         ]   
     ];
 
@@ -135,7 +148,7 @@ function update(WP_REST_Request $request) {
 
 function stripe(WP_REST_Request $request){
     //Check required parameters register
-    $required_parameters = ['quantity', 'ID', 'callback'];
+    $required_parameters = ['quantity', 'ID', 'CompanyID', 'callback'];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -143,8 +156,22 @@ function stripe(WP_REST_Request $request){
         return $response;
     endif;
 
+    //Check error on User or Company 
+    $company = get_post($request['CompanyID']);
+    $user = get_user_by('ID', $request['ID']);
+    $errors = [];
+    if (!$company || !$user) :
+        $errors['errors'] = 'No company or user found !';
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+
     //Constant "If required we might change it here"
     $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
+
+    //Starting licenses | owner of subscription
+    $licenses = $request['ID'];
   
     //Data information | payment 
     $data_payment = [
@@ -163,7 +190,9 @@ function stripe(WP_REST_Request $request){
         ],
         'subscription_data' => [
             'metadata' => [
-                'UserID' => $request['ID']
+                'UserID' => $request['ID'],
+                'CompanyID' => $request['CompanyID'],
+                'Licenses' => $licenses
             ]
         ]
     ];
