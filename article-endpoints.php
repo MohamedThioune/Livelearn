@@ -17,20 +17,20 @@ function RandomDoubleString()
 
 function strip_html_tags($text)
 {
-    $allowed_tags = ['h2', 'br', 'strong', 'em', 'u', 'blockquote', 'ul', 'ol', 'li', 'img', 'mark'];
-    $text = preg_replace("/\n{1,}/", "\n", $text);
-    $text = str_replace("\n", "<br>", $text);
-    $text = str_replace("&lt;", "<", $text);
-    $text = str_replace("&gt;", ">", $text);
-    $text = str_replace("&#8216;", "`", $text);
-    $text = str_replace("&#8217;", "`", $text);
-    $text = str_replace("&#8220;", "\"", $text);
-    $text = str_replace("&#8221;", "\"", $text);
-    $text = str_replace("&#8230;", "...", $text);
-    $text = str_replace(['h1', 'h3', 'h4', 'h5', 'h6'], 'h2', $text);
-    $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+  $allowed_tags = ['h2', 'br', 'strong', 'em', 'u', 'blockquote', 'ul', 'ol', 'li', 'img', 'mark'];
+  $text = preg_replace("/\n{1,}/", "\n", $text);
+  $text = str_replace("\n", "<br>", $text);
+  $text = str_replace("&lt;", "<", $text);
+  $text = str_replace("&gt;", ">", $text);
+  $text = str_replace("&#8216;", "`", $text);
+  $text = str_replace("&#8217;", "`", $text);
+  $text = str_replace("&#8220;", "\"", $text);
+  $text = str_replace("&#8221;", "\"", $text);
+  $text = str_replace("&#8230;", "...", $text);
+  $text = str_replace(['h1', 'h3', 'h4', 'h5', 'h6'], 'h2', $text);
+  $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
 
-    return preg_replace($pattern, '', $text);
+  return preg_replace($pattern, '', $text);
 }
 
 function Artikel_From_Company($data)
@@ -379,23 +379,20 @@ function Artikel_From_Company($data)
 
 }
 
-
-
- function addOneCourse($data_json){
+function addOneCourse($data_json){
      $data_insert=0;
     global $wpdb;
      $table = $wpdb->prefix . 'databank';
     $url = 'https://api.edudex.nl/data/v1/programs/bulk';
 
-// En-têtes de la requête
-
+  // En-têtes de la requête
   $headers = array(
     'accept: application/json',
     'Authorization: Bearer secret-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJFZHUtRGV4IiwiaWF0IjoxNzEzNDMxMjExLCJuYmYiOjE3MTM0MzEyMTEsInN1YiI6ImVkdWRleC1hcGktdXNlciIsInNjb3BlIjoiZGF0YSIsIm5vbmNlIjoidjh2UjNmTkY4NHdWaTZOMDlfQWl5QSIsImV4cCI6MTkwMjc0MzEwMH0.RxttT9h1eA07fYIRFqDes3EJnLiDMVWaxcY0IVFIElI',
     'Content-Type: application/json'
   );
 
-// Initialisation de la session cURL
+  // Initialisation de la session cURL
    $curl = curl_init($url);
 
     // Configuration des options cURL
@@ -419,21 +416,17 @@ function Artikel_From_Company($data)
 
     // Fermer la session cURL
     curl_close($curl);   
-     $data = json_decode($response, true);
-    
-     
+    $data = json_decode($response, true);
 
-     foreach($data['programs'] as $key => $data_xml){
-         
-            
-        $datum=$data_xml['data'];     
-        // var_dump($datum['programDescriptions']['programName']['nl']);
-         $status = 'extern';
-         $course_type = "Opleidingen";
-         $image = "";
-        if($datum['programDescriptions']['media']!=null){
+    foreach($data['programs'] as $key => $data_xml){ 
+
+      $datum = $data_xml['data'];     
+      // var_dump($datum['programDescriptions']['programName']['nl']);
+      $status = 'extern';
+      $course_type = "Opleidingen";
+      $image = "";
+      if($datum['programDescriptions']['media'] != null){
       foreach($datum['programDescriptions']['media'] as $media)
-       
       
         if($media['type'] == "image"){
           $image = $media['url'];
@@ -441,69 +434,59 @@ function Artikel_From_Company($data)
         }
         }//       //Redundance check "Image & Title"
        
-      $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
-      $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum['programDescriptions']['programName']['nl']));
+        $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
+        $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum['programDescriptions']['programName']['nl']));
 
-      if($image != "")
-        $check_image = $wpdb->get_results($sql_image); 
-     
+        if($image != "")
+          $check_image = $wpdb->get_results($sql_image); 
 
+        $check_title = $wpdb->get_results($sql_title);
+          $post = array(
+          'short_description' => $datum['programDescriptions']['programSummaryText']['nl'],
+          'long_description' => null,
+          'agenda' => $datum['programDescriptions']['programDescriptionText']['nl'],
+          'url_image' => $image,
+          'prijs' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amount'],
+          'prijsvat' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amountVAT'],
+          'degree' => $datum['programClassification']['degree'],
+          'teacher_id' => $datum['programCurriculum']['teacher']['id'],
+          'org' => $datum['programClassification']['orgUnitId'],
+          'duration_day' => $datum['programClassification']['programDuration'],
+        );
+          $attachment_xml = array();
+        $data_locaties_xml = array();
 
-      $check_title = $wpdb->get_results($sql_title);
-        $post = array(
-        'short_description' => $datum['programDescriptions']['programSummaryText']['nl'],
-        'long_description' => null,
-        'agenda' => $datum['programDescriptions']['programDescriptionText']['nl'],
-        'url_image' => $image,
-        'prijs' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amount'],
-        'prijsvat' => $datum['programSchedule']['genericProgramRun'][0]['cost'][0]['amountVAT'],
-        'degree' => $datum['programClassification']['degree'],
-        'teacher_id' => $datum['programCurriculum']['teacher']['id'],
-        'org' => $datum['programClassification']['orgUnitId'],
-        'duration_day' => $datum['programClassification']['programDuration'],
-      );
-       $attachment_xml = array();
-      $data_locaties_xml = array();
+        /*
+        ** -- Main fields --
+        */ 
 
-      /*
-      ** -- Main fields --
-      */ 
-
-      $company = null;
-      $users = get_users();
-     
-     
+        $company = null;
+        $users = get_users();
       
-      
-    // Fill the company if do not exist "next-version"
-       $informations = addAuthor($users, $post['org']);
-         $author_id = $informations['author'];
+        // Fill the company if do not exist "next-version"
+        $informations = addAuthor($users, $post['org']);
+        $author_id = $informations['author'];
         $company_id = $informations['company'] ;
-       
+        
+        $title = explode(' ', strval($datum['programDescriptions']['programName']['nl']));
+        $description = explode(' ', strval($datum['programDescriptions']['programSummaryText']['nl']));
+        $description_html = explode(' ', strval($datum['programDescriptions']['programSummaryHtml']['nl']));    
+        $keywords = array_merge($title, $description, $description_html);
+        if(!empty($keywords)){
+        
+          // Value : course type
+          if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
+            $course_type = "Masterclass";
+          else if(in_array('(training)', $keywords) || in_array('training', $keywords) || in_array('Training', $keywords))
+            $course_type = "Training";
+          else if(in_array('live', $keywords) && in_array('seminar', $keywords))
+            $course_type = "Webinar";
+          else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
+            $course_type = "E-learning";
+          else
+            $course_type = "Opleidingen";
+        }
 
-       
-         
-      $title = explode(' ', strval($datum['programDescriptions']['programName']['nl']));
-      $description = explode(' ', strval($datum['programDescriptions']['programSummaryText']['nl']));
-      $description_html = explode(' ', strval($datum['programDescriptions']['programSummaryHtml']['nl']));    
-     $keywords = array_merge($title, $description, $description_html);
-       if(!empty($keywords)){
-       
-        // Value : course type
-        if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
-          $course_type = "Masterclass";
-        else if(in_array('(training)', $keywords) || in_array('training', $keywords) || in_array('Training', $keywords))
-          $course_type = "Training";
-        else if(in_array('live', $keywords) && in_array('seminar', $keywords))
-          $course_type = "Webinar";
-        else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
-          $course_type = "E-learning";
-        else
-          $course_type = "Opleidingen";
-      }
-      //  if($datum['programDescriptions']['programDescriptionHtml'])
-      //   $descriptionHtml = $datum['programDescriptions']['programDescriptionHtml']['nl'];
-      // else
         $descriptionHtml = $datum['programDescriptions']['programDescriptionText']['nl'];
       
         $tags = array();
@@ -630,8 +613,8 @@ function Artikel_From_Company($data)
             } 
          }
 
-          $data_locaties = join('~', $data_locaties_xml);
-                $language=detectLanguage(strval($datum['programDescriptions']['programName']['nl']));
+        $data_locaties = join('~', $data_locaties_xml);
+        $language=detectLanguage(strval($datum['programDescriptions']['programName']['nl']));
         $post = array(
         'titel' => strval($datum['programDescriptions']['programName']['nl']),
         'type' => $course_type,

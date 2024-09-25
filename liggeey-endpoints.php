@@ -166,13 +166,13 @@ function candidate($id){
   $sample['gender'] = get_field('gender',  'user_' . $user->ID) ? : 'N/A!';
   $sample['language'] = get_field('language',  'user_' . $user->ID) ? : array();
   $sample['education_level'] = get_field('education_level',  'user_' . $user->ID) ? : array();
-  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['github'] = get_field('github',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['discord'] = get_field('discord',  'user_' . $user->ID) ? : '#';
-  $sample['social_network']['stackoverflow'] = get_field('stackoverflow',  'user_' . $user->ID) ? : '#';
+  $sample['social_network']['facebook'] = get_field('facebook',  'user_' . $user->ID) ? : 'https://www.facebook.com/';
+  $sample['social_network']['twitter'] = get_field('twitter',  'user_' . $user->ID) ? : 'https://x.com/';
+  $sample['social_network']['instagram'] = get_field('instagram',  'user_' . $user->ID) ? : 'https://www.instagram.com/';
+  $sample['social_network']['linkedin'] = get_field('linkedin',  'user_' . $user->ID) ? : 'https://www.linkedin.com/';
+  $sample['social_network']['github'] = get_field('github',  'user_' . $user->ID) ? : 'https://github.com/';
+  $sample['social_network']['discord'] = get_field('discord',  'user_' . $user->ID) ? : 'https://discord.com/';
+  $sample['social_network']['stackoverflow'] = get_field('stackoverflow',  'user_' . $user->ID) ? : 'https://stackoverflow.com/';
 
   $sample['biographical_info'] = get_field('biographical_info',  'user_' . $user->ID) ? :
   "This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience.<br>
@@ -411,16 +411,15 @@ function job($id, $userApplyId = null){
   $sample = (Object)$sample;
 
   // Retrieve the applied 
-  $entity = null;
+  // $entity = null;
   $applied = array();
-  $status = "No data available";
   $additionnals = get_field('job_additionnal', $post->ID);
   foreach ($sample->applied as $entity):
     $tmpUser = candidate($entity->ID);
     $tmpUser->motivation = '';
-    if(!empty($additionals)):
+    if(!empty($additionnals)):
       $additional = array_filter($additionnals, function ($value) use ($entity)  {
-        if($value['userid']->ID == $entity->ID)
+	    if($value['userid']->ID == $entity->ID)
           return $value;
       });
       $tmpUser->motivation = $additional[0]['motivation'];
