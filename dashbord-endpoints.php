@@ -3064,8 +3064,6 @@ function addAchievement($data)
     update_field('competencies_badge', $about , $id_post);
     update_field('opmerkingen_badge', $comment , $id_post);
 
-
-
     $badge = get_post($id_post,true);
     if ($badge) {
         $badge->comment = get_field('opmerkingen_badge', $badge->ID)?:'';
@@ -3091,4 +3089,57 @@ function addAchievement($data)
     ));
     $response->set_status(201);
     return $response;
+}
+
+function addFeedback($data)
+{
+    $required_parameters = ['title','type','manager','rating'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $id = $data['id'];
+    $title = $data['title'];
+    $type = $data['type']; // type_feedback : Beoordeling Gesprek,Beoordeling Video,Beoordeling Artikel
+    $manager = $data['manager']; // manager_feedback
+    $rating = $data['rating']; // rating_feedback
+    $rate_comments = $data['rate_comments']; // rate_comments
+    $trigger = $data['trigger']; // trigger_feedback
+    $begin_date = $data['begin_date']; // voor_welke_datum_feedback
+    $end_date = $data['end_date']; // ot_welke_datum_feedback
+    $vervalt = $data['vervalt']; // vervalt_feedback
+    $about = $data['about']; // opmerkingen_feedback
+
+    $args = array(
+        'post_type' => 'feedback',
+        'post_status' => 'publish',
+        'post_title' => $title,
+        'post_author' => $id,
+    );
+    $id_post = wp_insert_post($args, true);
+    if(is_wp_error($id_post)){
+        $error = new WP_Error($id_post);
+        return new WP_REST_Response(
+            array(
+            'message' => $error->get_error_message($id_post),
+            'status' => 401
+        ),401);
+    }
+    if ($type)
+        update_field('type_feedback', $type , $id_post);
+    if ($manager)
+        update_field('manager_feedback', $manager , $id_post);
+    if ($rating)
+        update_field('rating_feedback', $rating , $id_post);
+    if ($rate_comments)
+        update_field('rate_comments', $rate_comments , $id_post);
+    if ($trigger)
+        update_field('trigger_feedback', $trigger , $id_post);
+    if ($begin_date)
+        update_field('welke_datum_feedback', $begin_date , $id_post);
+    if ($end_date)
+        update_field('tot_welke_datum_feedback', $end_date , $id_post);
+
 }
