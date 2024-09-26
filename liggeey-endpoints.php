@@ -862,7 +862,7 @@ function postDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $artikel = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  $artikel = get_page_by_path($param_post_id, OBJECT, 'course');
   $sample = artikel($artikel->ID);
 
   if(!empty($sample)):
