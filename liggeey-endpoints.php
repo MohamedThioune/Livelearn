@@ -868,7 +868,6 @@ function postDetail(WP_REST_Request $request){
   if(!empty($sample)):
     //Get further information
     $sample = postAdditionnal($sample);
-    var_dump($sample);
   endif;
 
   //Response
