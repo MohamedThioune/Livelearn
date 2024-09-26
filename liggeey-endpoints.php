@@ -11,6 +11,10 @@ function artikel($id){
   $param_post_id = $id ?? 0;
   $sample = array();
   $post = get_post($param_post_id);
+  //Post is null
+  if(empty($post))
+    return null;
+  
   $course_type = get_field('course_type', $post->ID);
 
   $sample['ID'] = $post->ID;
@@ -59,6 +63,56 @@ function artikel($id){
   $sample['comments'] = $comments;
 
   $sample = (Object)$sample;
+
+  return $sample;
+}
+
+function postAdditionnal($post){
+  //check sample artikel
+  if(empty($post))
+    return null;
+  if(!isset($post->ID))
+    return null;
+
+  //Partial information
+  $coursetype = get_field('coursetype', $post->ID);
+  $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
+
+  /** Get further informations */
+  //Podcast 
+  $main_podcasts_genuine = get_field('podcasts', $post->ID);
+  $main_podcasts_index = get_field('podcasts_index', $post->ID);
+
+  //Video
+  $main_videos_genuine = get_field('data_virtual', $post->ID);
+  $main_videos_youtube = get_field('youtube_videos', $post->ID);
+
+  //Offline
+  $main_date_genuine = get_field('data_locaties', $post->ID);
+  $main_date_xml = get_field('data_locaties_xml', $post->ID);
+  $main_date_event = get_field('dates', $post->ID);
+
+  switch ($coursetype) {
+    case 'Podcast':
+      $sample->podcasts = $main_podcasts_genuine;
+      $sample->podcasts_index = $main_podcasts_index;
+      break;
+    
+    case 'Video':
+      $sample->videos = $main_videos_genuine;
+      $sample->videos_youtube = $main_videos_youtube;
+      break;
+
+    case in_array($offline):
+      $sample->dates = $main_date_genuine;
+      $sample->dates_xml = $main_date_xml;
+      $sample->dates_event = $main_date_event;
+      break;
+    
+    default:
+      return $sample;
+      break;
+  }
 
   return $sample;
 }
@@ -793,6 +847,34 @@ function artikelDetail(WP_REST_Request $request){
 
   $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
   $sample = artikel($artikel->ID);
+
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response;
+}
+
+//[POST]Detail Post
+function postDetail(WP_REST_Request $request){
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
+
+  //Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;  
+
+  $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
+  $sample = artikel($artikel->ID);
+
+  if(!empty($sample)):
+    //Get further information
+    $sample = postAdditionnal($sample);
+  endif;
 
   //Response
   $response = new WP_REST_Response($sample);
