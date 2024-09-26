@@ -67,14 +67,14 @@ function artikel($id){
 }
 
 function postAdditionnal($post){
-  var_dump($post);
-
   //check sample artikel
   if(empty($post))
     return null;
+  if(!isset($post->ID))
+    return null;
 
   //Partial information
-  $coursetype = get_field('coursetype', $post->ID);
+  $coursetype = get_field('course_type', $post->ID);
 
   /** Get further informations */
   //Podcast 
@@ -92,23 +92,23 @@ function postAdditionnal($post){
 
   switch ($coursetype) {
     case 'Podcast':
-      $sample->podcasts = $main_podcasts_genuine;
-      $sample->podcasts_index = $main_podcasts_index;
+      $post->podcasts = $main_podcasts_genuine;
+      $post->podcasts_index = $main_podcasts_index;
       break;
     
     case 'Video':
-      $sample->videos = $main_videos_genuine;
-      $sample->videos_youtube = $main_videos_youtube;
+      $post->videos = $main_videos_genuine;
+      $post->videos_youtube = $main_videos_youtube;
       break;
 
     case 'Opleidingen' || 'Training' || 'Workshop' || 'Masterclass' || 'Event':
-      $sample->dates = $main_date_genuine;
-      $sample->dates_xml = $main_date_xml;
-      $sample->dates_event = $main_date_event;
+      $post->dates = $main_date_genuine;
+      $post->dates_xml = $main_date_xml;
+      $post->dates_event = $main_date_event;
       break;
   }
 
-  return $sample;
+  return $post;
 }
 
 //Detail company
