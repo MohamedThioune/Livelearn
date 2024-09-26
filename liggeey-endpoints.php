@@ -10,11 +10,11 @@ function artikel($id){
 
   $param_post_id = $id ?? 0;
   $sample = array();
-  $post = get_post($param_post_id);
+  $post = get_post($id);
+  var_dump($post);
   //Post is null
   if(empty($post))
     return null;
-  
   $course_type = get_field('course_type', $post->ID);
 
   $sample['ID'] = $post->ID;
