@@ -12,8 +12,8 @@ function artikel($id){
   $sample = array();
   $post = get_post($param_post_id);
   //Post is null
-  // if(empty($post))
-    // return null;
+  if(empty($post))
+    return null;
   $course_type = get_field('course_type', $post->ID);
 
   $sample['ID'] = $post->ID;
