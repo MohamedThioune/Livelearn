@@ -76,7 +76,6 @@ function postAdditionnal($post){
 
   //Partial information
   $coursetype = get_field('coursetype', $post->ID);
-  $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
 
   /** Get further informations */
   //Podcast 
