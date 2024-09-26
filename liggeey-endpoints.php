@@ -70,9 +70,7 @@ function postAdditionnal($post){
   //check sample artikel
   if(empty($post))
     return null;
-  if(!isset($post->ID))
-    return null;
-
+  
   //Partial information
   $coursetype = get_field('coursetype', $post->ID);
 
@@ -863,9 +861,7 @@ function postDetail(WP_REST_Request $request){
   endif;  
 
   $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
-  var_dump($post);
   $sample = artikel($post->ID);
-  var_dump($sample);
 
   if(!empty($sample)):
     //Get further information
