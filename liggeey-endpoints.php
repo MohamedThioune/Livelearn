@@ -67,6 +67,8 @@ function artikel($id){
 }
 
 function postAdditionnal($post){
+  var_dump($post);
+
   //check sample artikel
   if(empty($post))
     return null;
@@ -864,7 +866,6 @@ function postDetail(WP_REST_Request $request){
   $sample = artikel($post->ID);
 
   if(!empty($sample)):
-    var_dump($sample);
     //Get further information
     $sample = postAdditionnal($sample);
     var_dump($sample);
