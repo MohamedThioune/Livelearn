@@ -2152,9 +2152,9 @@ add_action( 'rest_api_init', function () {
         'callback' => 'artikelDetail'
     ));
 
-    register_rest_route ('custom/v1', '/artikel/detail', array(
+    register_rest_route ('custom/v1', '/post/detail', array(
         'methods' => 'POST',
-        'callback' => 'artikelDetail'
+        'callback' => 'postDetail'
     ));
 
     register_rest_route ('custom/v1', '/artikel/comment/', array(

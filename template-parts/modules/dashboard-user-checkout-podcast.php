@@ -219,7 +219,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                         </div>
                         <div class="tab">
                             <?php
-                            if(!empty($podcasts)):
+                            if(!empty($podcasts)): 
                                 $timestamp = strtotime($post->post_date);
                                 $podcast_date = date('d M Y', $timestamp);
                                 ?>
