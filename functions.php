@@ -2152,8 +2152,8 @@ add_action( 'rest_api_init', function () {
         'callback' => 'artikelDetail'
     ));
 
-    register_rest_route ('custom/v1', '/post/detail/(?P<slug>[-\w]+)', array(
-        'methods' => 'GET',
+    register_rest_route ('custom/v1', '/post/detail/', array(
+        'methods' => 'POST',
         'callback' => 'postDetail'
     ));
 
