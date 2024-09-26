@@ -870,10 +870,13 @@ function postDetail(WP_REST_Request $request){
 
   $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
   $sample = artikel($artikel->ID);
+  var_dump($sample);
+  echo '-----------';
 
   if(!empty($sample)):
     //Get further information
     $sample = postAdditionnal($sample);
+    var_dump($sample);
   endif;
 
   //Response
