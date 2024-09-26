@@ -850,19 +850,19 @@ function artikelDetail(WP_REST_Request $request){
 }
 
 //[POST]Detail Post
-function postDetail($data){
-  $param_post_id = $data['slug'] ?? 0;
-  // $required_parameters = ['slug'];
+function postDetail(WP_REST_Request $request){
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
 
-  //Check required parameters 
-  // $errors = validated($required_parameters, $request);
-  // if($errors):
-  //   $response = new WP_REST_Response($errors);
-  //   $response->set_status(400);
-  //   return $response;
-  // endif;  
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;  
 
-  $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
+  $artikel = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
   $sample = artikel($artikel->ID);
 
   if(!empty($sample)):
