@@ -865,7 +865,7 @@ function postDetail(WP_REST_Request $request){
 
   $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
   $sample = artikel($artikel->ID);
-  var_dump($sample);
+  var_dump($artikel);
   echo '-----------';
 
   if(!empty($sample)):
