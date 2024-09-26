@@ -103,14 +103,10 @@ function postAdditionnal($post){
       $sample->videos_youtube = $main_videos_youtube;
       break;
 
-    case in_array($offline):
+    case 'Opleidingen' || 'Training' || 'Workshop' || 'Masterclass' || 'Event':
       $sample->dates = $main_date_genuine;
       $sample->dates_xml = $main_date_xml;
       $sample->dates_event = $main_date_event;
-      break;
-    
-    default:
-      return $sample;
       break;
   }
 
