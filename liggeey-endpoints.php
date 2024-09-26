@@ -862,8 +862,10 @@ function postDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $artikel = get_page_by_path($param_post_id, OBJECT, 'course');
-  $sample = artikel($artikel->ID);
+  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  var_dump($post);
+  $sample = artikel($post->ID);
+  var_dump($sample);
 
   if(!empty($sample)):
     //Get further information
