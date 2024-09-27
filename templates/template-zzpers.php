@@ -364,9 +364,11 @@
                             //degree
                             $degree = get_field('degree', $course->ID);
 
-                            // author user : name
+                            // author user : name, image
                             $user = get_user_by('id',$course->post_author);
                             $name = ($user->first_name=='') ? $user->display_name : $user->first_name;
+                            $image_author = get_field('profile_img',  'user_' . $course->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
 
                             //short description
                             $short_description = get_field('short_description' , $course->ID);
