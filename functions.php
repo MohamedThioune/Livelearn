@@ -1714,10 +1714,6 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'allArticles',
     ));
-    register_rest_route('custom/v1', '/articles', array(
-        'methods' => 'GET',
-        'callback' => 'allArticles',
-    ));
 
     register_rest_route('custom/v2', '/similar/article/category/(?P<category_id>\d+)', array(
         'methods' => 'GET',
@@ -2152,10 +2148,10 @@ add_action( 'rest_api_init', function () {
         'callback' => 'artikelDetail'
     ));
 
-    register_rest_route ('custom/v1', '/post/detail/', array(
-        'methods' => 'POST',
-        'callback' => 'postDetail'
-    ));
+    // register_rest_route ('custom/v1', '/post/detail/', array(
+    //     'methods' => 'POST',
+    //     'callback' => 'postDetail'
+    // ));
 
     register_rest_route ('custom/v1', '/artikel/comment/', array(
         'methods' => 'POST',
@@ -2513,5 +2509,10 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/courses/recommended/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'coursesRecommendedUpcomming'
+    ));
+
+    register_rest_route ('custom/v1', '/artikels/(?P<company>[-\w]+)', array(
+        'methods' => 'GET',
+        'callback' => 'artikelDezzp'
     ));
 });
