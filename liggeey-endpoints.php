@@ -32,7 +32,7 @@ function artikel($id){
   $sample['image'] = $thumbnail;
   $author = get_user_by('ID', $post->post_author);
   $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   $post_date = new DateTimeImmutable($post->post_date);
   $sample['post_date'] = $post_date->format('M d, Y');
   $reviews = get_field('reviews', $post->ID);
