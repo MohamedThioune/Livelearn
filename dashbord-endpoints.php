@@ -2891,7 +2891,7 @@ function deleteCourse($data)
                     array('message'=>"course $id_course deleted successfully ! ! !"),
                     200);
 
-        return new WP_REST_Response(array('message'=>"course not deleted ! ! !"),401);
+        return new WP_REST_Response(array('message' => "course not deleted ! ! !"),401);
 }
 
 function search_courses()
