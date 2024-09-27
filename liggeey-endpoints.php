@@ -839,8 +839,16 @@ function artikelDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
-  $sample = artikel($artikel->ID);
+  // $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
+  // $sample = artikel($artikel->ID);
+
+  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  $sample = artikel($post->ID);
+
+  if(!empty($sample)):
+    //Get further information
+    $sample = postAdditionnal($sample);
+  endif;
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -3942,6 +3950,49 @@ function get_post_orders(WP_REST_Request $request){
 
   // Return the response 
   $response = new WP_REST_Response($enrolled_courses);
+  $response->set_status(200);
+  return $response;  
+
+}
+
+
+function artikelDezzp($data){
+  $companySlug = $data['company'] ?: null;
+
+  $users = get_users();
+  $authors = array();
+  foreach ($users as $key => $value) {
+    $company_user = get_field('company',  'user_' . $value->ID );
+    if(!empty($company_user))
+    if(isset($company_user[0]->post_name))
+    if($company_user[0]->post_name == $companySlug)
+    array_push($authors, $value->ID);
+  }
+  $args = array(
+    'post_type' => 'post',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $authors,
+    'order' => 'DESC',
+  );
+  $main_blogs = get_posts($args);
+  $blogs = array();
+
+  if(empty($main_blogs)):
+    //Return a error 
+    $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
+    $response->set_status(400);
+    return $response;  
+  endif;
+
+  //Read the blogs company
+  foreach ($main_blogs as $key => $blog):
+    $sample = artikel($blog->ID);
+    $blogs[] = $sample;
+  endforeach;
+
+  //Return the response 
+  $response = new WP_REST_Response(['success' => true, 'blogs' => $blogs]);
   $response->set_status(200);
   return $response;  
 
