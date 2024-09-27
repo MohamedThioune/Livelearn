@@ -3955,7 +3955,6 @@ function get_post_orders(WP_REST_Request $request){
 
 }
 
-
 function artikelDezzp($data){
   $companySlug = $data['company'] ?: null;
 
