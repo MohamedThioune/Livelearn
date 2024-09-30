@@ -2946,3 +2946,200 @@ function coursesRecommendedUpcomming($data)
     $info = recommendation($data['id'], 2000, 150);
     return new WP_REST_Response($info, 200);
 }
+
+function subscription_organisation($data){
+    $required_parameters = ['firstName','lastName','email','company','company_size'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+        $userdata = array(
+            'user_pass' => $data['password']?:'livelearn'.date('Y'),
+            'user_login' => $data['email'],
+            'user_email' => $data['email'],
+            'user_url' => 'http://app.livelearn.nl/',
+            'display_name' => $data['firstName'] . ' ' . $data['lastName'],
+            'first_name' => $data['firstName'],
+            'last_name' => $data['lastName'],
+            'role' => 'Manager',
+        );
+
+        $user_id = wp_insert_user($userdata);
+        if (is_wp_error($user_id)) {
+            return new WP_REST_Response(
+                array(
+                    'message' => $user_id->get_error_message(),
+                    'status' => 401
+                ),401);
+        }
+        //update phone number
+        if ($data['telephone'])
+            update_field('telnr', $data['telephone'], 'user_' . $user_id);
+
+        //create a new company for the new user
+        $company_id = wp_insert_post(
+            array(
+                'post_title' => $data['company'],
+                'post_type' => 'company',
+                'post_status' => 'pending',
+            ));
+        if($data['company_size'])
+            update_field('company_size',$data['company_size'], $company_id);
+        $company = get_post($company_id);
+        update_field('company', $company, 'user_' . $user_id);
+        $user = get_user_by('ID', $user_id);
+        if ($user) {
+            $user = $user->data;
+            $user->company = $company;
+            unset($user->user_pass);
+        }
+        return new WP_REST_Response(
+            array(
+                'message' => 'User saved success and company already created.',
+                'user' => $user,
+            ),200);
+}
+function addAchievement($data)
+{
+    $required_parameters = ['title','type','level'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $id = $data['id'];
+    $title = $data['title'];
+    $type = $data['type']; // type_badge : Diploma,Prestatie,Certificaat,Genuine=Badge
+    $level = $data['level']; //level_badge
+    $trigger = $data['how_the_badge_achieved']; // how_the_badge_achieved, Describe the Performance, How was this badge achieved?
+    $vervalt_badge = $data['vervalt_badge']; // vervalt_badge : true or false
+    $for_what_day = $data['begin_date']; // voor_welke_datum_badge, begin date
+    $and_what_date = $data['end_date']; // ot_welke_datum_badge, end date
+    $about = $data['about_competencies']; // competencies_badge
+    $comment = $data['comment']; // opmerkingen_badge
+    //Certificate
+    $issuedBy = $data['issued_by']; // uitgegeven_door_badge
+    $providerUrl = $data['provider_url']; //url_aanbieder_badge
+    $certificate_number_if_applicable = $data['certificate_number_if_capable']; // certificaatnummer_badge
+    $hours = $data['hours']; // uren_badge, hours
+    $points = $data['points']; // punten_badge, points
+
+    $args = array(
+        'post_type' => 'badge',
+        'post_status' => 'publish',
+        'post_title' => $title,
+        'post_author' => $id,
+    );
+    $id_post = wp_insert_post($args, true);
+    if(is_wp_error($id_post)){
+        $error = new WP_Error($id_post);
+        return new WP_REST_Response(
+            array(
+            'message' => $error->get_error_message($id_post),
+             'status' => 401
+        ), 401);
+    }
+    if ($type)
+        update_field('type_badge', $type , $id_post);
+    if ($level)
+        update_field('level_badge', $level , $id_post);
+    if ($issuedBy)
+        update_field('uitgegeven_door_badge', $issuedBy , $id_post);
+    if ($providerUrl)
+        update_field('url_aanbieder_badge', $providerUrl , $id_post);
+    if ($certificate_number_if_applicable)
+        update_field('certificaatnummer_badge', $certificate_number_if_applicable , $id_post);
+    if ($hours)
+        update_field('uren_badge', $hours , $id_post);
+    if ($points)
+        update_field('punten_badge', $points , $id_post);
+
+    update_field('trigger_badge', $trigger , $id_post);
+    update_field('voor_welke_datum_badge', $for_what_day , $id_post);
+    update_field('ot_welke_datum_badge', $and_what_date , $id_post);
+    update_field('vervalt_badge', $vervalt_badge , $id_post);
+    update_field('competencies_badge', $about , $id_post);
+    update_field('opmerkingen_badge', $comment , $id_post);
+
+    $badge = get_post($id_post,true);
+    if ($badge) {
+        $badge->comment = get_field('opmerkingen_badge', $badge->ID)?:'';
+        $badge->level = get_field('level_badge', $badge->ID)?:'';
+        $badge->type = get_field('type_badge', $badge->ID)?:'';
+        $badge->trigger_badge = get_field('trigger_badge', $badge->ID)?:'';
+        $badge->begin_date = get_field('voor_welke_datum_badge', $badge->ID)?:'';
+        $badge->end_date = get_field('ot_welke_datum_badge', $badge->ID)?:'';
+        $badge->vervalt_badge = get_field('vervalt_badge', $badge->ID)?:'';
+        $badge->about_competencies = get_field('competencies_badge', $badge->ID)?:'';
+        $badge->author = get_user_by('ID', $badge->post_author) ? get_user_by('ID', $badge->post_author)->data : null;
+        unset($badge->author->user_pass);
+        $badge->issued_by = get_field('uitgegeven_door_badge', $badge->ID)?:'';
+        $badge->provider_url = get_field('url_aanbieder_badge', $badge->ID)?:'';
+        $badge->certificate_number_if_capable = get_field('certificaatnummer_badge', $badge->ID)?:'';
+        $badge->hours = get_field('uren_badge', $badge->ID)?:'';
+        $badge->points = get_field('punten_badge', $badge->ID)?:'';
+    }
+    $response = new WP_REST_Response(
+    array(
+        'message'=> 'badge saved success...',
+        'new_badge'=>$badge,
+    ));
+    $response->set_status(201);
+    return $response;
+}
+
+function addFeedback($data)
+{
+    $required_parameters = ['title','type','manager','rating'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $id = $data['id'];
+    $title = $data['title'];
+    $type = $data['type']; // type_feedback : Beoordeling Gesprek,Beoordeling Video,Beoordeling Artikel
+    $manager = $data['manager']; // manager_feedback
+    $rating = $data['rating']; // rating_feedback
+    $rate_comments = $data['rate_comments']; // rate_comments
+    $trigger = $data['trigger']; // trigger_feedback
+    $begin_date = $data['begin_date']; // voor_welke_datum_feedback
+    $end_date = $data['end_date']; // ot_welke_datum_feedback
+    $vervalt = $data['vervalt']; // vervalt_feedback
+    $about = $data['about']; // opmerkingen_feedback
+
+    $args = array(
+        'post_type' => 'feedback',
+        'post_status' => 'publish',
+        'post_title' => $title,
+        'post_author' => $id,
+    );
+    $id_post = wp_insert_post($args, true);
+    if(is_wp_error($id_post)){
+        $error = new WP_Error($id_post);
+        return new WP_REST_Response(
+            array(
+            'message' => $error->get_error_message($id_post),
+            'status' => 401
+        ),401);
+    }
+    if ($type)
+        update_field('type_feedback', $type , $id_post);
+    if ($manager)
+        update_field('manager_feedback', $manager , $id_post);
+    if ($rating)
+        update_field('rating_feedback', $rating , $id_post);
+    if ($rate_comments)
+        update_field('rate_comments', $rate_comments , $id_post);
+    if ($trigger)
+        update_field('trigger_feedback', $trigger , $id_post);
+    if ($begin_date)
+        update_field('welke_datum_feedback', $begin_date , $id_post);
+    if ($end_date)
+        update_field('tot_welke_datum_feedback', $end_date , $id_post);
+
+}
