@@ -3093,7 +3093,7 @@ function addAchievement($data)
 
 function addFeedback($data)
 {
-    $required_parameters = ['title','type','manager','rating'];
+    $required_parameters = ['title','type','rating'];
     $errors = validated($required_parameters, $data);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -3102,15 +3102,22 @@ function addFeedback($data)
     endif;
     $id = $data['id'];
     $title = $data['title'];
-    $type = $data['type']; // type_feedback : Beoordeling Gesprek,Beoordeling Video,Beoordeling Artikel
-    $manager = $data['manager']; // manager_feedback
+    $type = $data['type']; // Feedback = Feedback,Development Plan = Persoonlijk ontwikkelplan,Beoordeling Gesprek = Assessment,Compliment=Compliment
+    //$manager = $data['manager']; // manager_feedback
     $rating = $data['rating']; // rating_feedback
-    $rate_comments = $data['rate_comments']; // rate_comments
-    $trigger = $data['trigger']; // trigger_feedback
-    $begin_date = $data['begin_date']; // voor_welke_datum_feedback
-    $end_date = $data['end_date']; // ot_welke_datum_feedback
-    $vervalt = $data['vervalt']; // vervalt_feedback
-    $about = $data['about']; // opmerkingen_feedback
+    $rate_comments = $data['comments']; // rate_comments
+    $description = $data['description']; //Describe the Feedback, beschrijving_feedback
+    $competencies = $data['competencies']; // competencies_feedback, Competencies Related to Feedback,Competencies Related to Assessment
+    $anoniem_feedback = $data['anonymously']; // anoniem_feedback, Anonymous feedback,Send Anonymously? : true or false
+
+    //Development Plan
+    $what_achieve = $data['what_achieve']; // je_bereiken, What Do You Want to Achieve?
+    $how_achieved = $data['how_achieved']; // je_dit_bereike, How Do You Think This Can Best Be Achieved?
+    $need_help = $data['need_help']; // hulp_nodig, Need Help? : true or false
+    //Assessment
+    $general_assessment_competencies = $data['general_assessment_competencies']; // algemene_beoordeling, General Assessment of Competencies
+    $welke_datum_feedback = $data['welke_datum_feedback']; // welke_datum_feedback
+    $comments_assessment = $data['comments_assessment']; // opmerkingen
 
     $args = array(
         'post_type' => 'feedback',
@@ -3127,19 +3134,39 @@ function addFeedback($data)
             'status' => 401
         ),401);
     }
+    update_field('manager_feedback', $manager, $post_id);
     if ($type)
         update_field('type_feedback', $type , $id_post);
-    if ($manager)
-        update_field('manager_feedback', $manager , $id_post);
     if ($rating)
         update_field('rating_feedback', $rating , $id_post);
     if ($rate_comments)
         update_field('rate_comments', $rate_comments , $id_post);
-    if ($trigger)
-        update_field('trigger_feedback', $trigger , $id_post);
-    if ($begin_date)
-        update_field('welke_datum_feedback', $begin_date , $id_post);
-    if ($end_date)
-        update_field('tot_welke_datum_feedback', $end_date , $id_post);
+    if ($description)
+        update_field('beschrijving_feedback', $description , $id_post);
+    if ($competencies)
+        update_field('competencies_feedback', $competencies , $id_post);
+    if ($anoniem_feedback)
+        update_field('anoniem_feedback', $anoniem_feedback , $id_post);
+    //Development Plan
+    if ($what_achieve)
+        update_field('je_bereiken', $what_achieve , $id_post);
+    if ($how_achieved)
+        update_field('je_dit_bereike', $how_achieved, $id_post);
+    if ($need_help)
+        update_field('hulp_nodig', $need_help , $id_post);
+    if($general_assessment_competencies)
+        update_field('algemene_beoordeling', $general_assessment_competencies , $id_post);
+    if ($welke_datum_feedback)
+        update_field('welke_datum_feedback', $welke_datum_feedback , $id_post);
+    if($comments_assessment)
+        update_field('opmerkingen', $comments_assessment , $id_post);
+
+
+
+    return new WP_REST_Response(
+        array(
+            'message' => 'feedback saved success...',
+            'new_feedback' => get_post($id_post,true),
+        ),201);
 
 }
