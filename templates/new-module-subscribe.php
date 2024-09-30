@@ -63,7 +63,7 @@ function get_invoice_by_subscription($data){
     $endpoint = "https://api.stripe.com/v1/invoices";
     $customer = isset($data['customer']) ? $data['customer'] : null;
     $subscription = isset($data['subscription']) ? $data['subscription'] : null;
-    //test customer,subscription
+    //test customer,subscription 
     if(!$customer || !$subscription)
         return false;
 
