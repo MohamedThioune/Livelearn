@@ -2891,7 +2891,7 @@ function deleteCourse($data)
                     array('message'=>"course $id_course deleted successfully ! ! !"),
                     200);
 
-        return new WP_REST_Response(array('message'=>"course not deleted ! ! !"),401);
+        return new WP_REST_Response(array('message' => "course not deleted ! ! !"),401);
 }
 
 function search_courses()
@@ -2943,8 +2943,8 @@ function search_courses()
 
 function coursesRecommendedUpcomming($data)
 {
-    $info = recommendation($data['id'],2000,150);
-    return new WP_REST_Response($info,200);
+    $info = recommendation($data['id'], 2000, 150);
+    return new WP_REST_Response($info, 200);
 }
 
 function subscription_organisation($data){

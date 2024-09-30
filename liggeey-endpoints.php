@@ -11,6 +11,9 @@ function artikel($id){
   $param_post_id = $id ?? 0;
   $sample = array();
   $post = get_post($param_post_id);
+  //Post is null
+  if(empty($post))
+    return null;
   $course_type = get_field('course_type', $post->ID);
 
   $sample['ID'] = $post->ID;
@@ -29,7 +32,7 @@ function artikel($id){
   $sample['image'] = $thumbnail;
   $author = get_user_by('ID', $post->post_author);
   $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   $post_date = new DateTimeImmutable($post->post_date);
   $sample['post_date'] = $post_date->format('M d, Y');
   $reviews = get_field('reviews', $post->ID);
@@ -61,6 +64,51 @@ function artikel($id){
   $sample = (Object)$sample;
 
   return $sample;
+}
+
+function postAdditionnal($post){
+  //check sample artikel
+  if(empty($post))
+    return null;
+  if(!isset($post->ID))
+    return null;
+
+  //Partial information
+  $coursetype = get_field('course_type', $post->ID);
+
+  /** Get further informations */
+  //Podcast 
+  $main_podcasts_genuine = get_field('podcasts', $post->ID);
+  $main_podcasts_index = get_field('podcasts_index', $post->ID);
+
+  //Video
+  $main_videos_genuine = get_field('data_virtual', $post->ID);
+  $main_videos_youtube = get_field('youtube_videos', $post->ID);
+
+  //Offline
+  $main_date_genuine = get_field('data_locaties', $post->ID);
+  $main_date_xml = get_field('data_locaties_xml', $post->ID);
+  $main_date_event = get_field('dates', $post->ID);
+
+  switch ($coursetype) {
+    case 'Podcast':
+      $post->podcasts = $main_podcasts_genuine;
+      $post->podcasts_index = $main_podcasts_index;
+      break;
+    
+    case 'Video':
+      $post->videos = $main_videos_genuine;
+      $post->videos_youtube = $main_videos_youtube;
+      break;
+
+    case 'Opleidingen' || 'Training' || 'Workshop' || 'Masterclass' || 'Event':
+      $post->dates = $main_date_genuine;
+      $post->dates_xml = $main_date_xml;
+      $post->dates_event = $main_date_event;
+      break;
+  }
+
+  return $post;
 }
 
 //Detail company
@@ -791,8 +839,44 @@ function artikelDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
-  $sample = artikel($artikel->ID);
+  // $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
+  // $sample = artikel($artikel->ID);
+
+  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  $sample = artikel($post->ID);
+
+  if(!empty($sample)):
+    //Get further information
+    $sample = postAdditionnal($sample);
+  endif;
+
+  //Response
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+
+  return $response;
+}
+
+//[POST]Detail Post
+function postDetail(WP_REST_Request $request){
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
+
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;  
+
+  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  $sample = artikel($post->ID);
+
+  if(!empty($sample)):
+    //Get further information
+    $sample = postAdditionnal($sample);
+  endif;
 
   //Response
   $response = new WP_REST_Response($sample);
@@ -3866,6 +3950,49 @@ function get_post_orders(WP_REST_Request $request){
 
   // Return the response 
   $response = new WP_REST_Response($enrolled_courses);
+  $response->set_status(200);
+  return $response;  
+
+}
+
+//Artikels by company ""
+function artikelDezzp($data){
+  $companySlug = $data['company'] ?: null;
+
+  $users = get_users();
+  $authors = array();
+  foreach ($users as $key => $value) {
+    $company_user = get_field('company',  'user_' . $value->ID );
+    if(!empty($company_user))
+    if(isset($company_user[0]->post_name))
+    if($company_user[0]->post_name == $companySlug)
+    array_push($authors, $value->ID);
+  }
+  $args = array(
+    'post_type' => 'post',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $authors,
+    'order' => 'DESC',
+  );
+  $main_blogs = get_posts($args);
+  $blogs = array();
+
+  if(empty($main_blogs)):
+    //Return a error 
+    $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
+    $response->set_status(400);
+    return $response;  
+  endif;
+
+  //Read the blogs company
+  foreach ($main_blogs as $key => $blog):
+    $sample = artikel($blog->ID);
+    $blogs[] = $sample;
+  endforeach;
+
+  //Return the response 
+  $response = new WP_REST_Response(['success' => true, 'blogs' => $blogs]);
   $response->set_status(200);
   return $response;  
 
