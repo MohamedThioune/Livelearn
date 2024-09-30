@@ -2510,17 +2510,14 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'coursesRecommendedUpcomming'
     ));
-
     register_rest_route ('custom/v1', '/artikels/(?P<company>[-\w]+)', array(
         'methods' => 'GET',
         'callback' => 'artikelDezzp'
     ));
- 
     register_rest_route ('custom/v1', 'subscription/organisation', array(
         'methods' => 'POST',
         'callback' => 'subscription_organisation'
     ));
-    
     register_rest_route ('custom/v1', '/achievement/add/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'addAchievement'

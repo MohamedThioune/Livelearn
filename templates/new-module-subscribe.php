@@ -177,7 +177,10 @@ function stripe(WP_REST_Request $request){
     $data_payment = [
         'line_items' => [[
             'price' => $price_id,
-            'quantity' => $request['quantity']
+            'quantity' => $request['quantity'],
+            'metadata' => [
+                'Licenses' => $licenses
+            ]
         ]],
         'after_completion' => [
             'type' => 'redirect',
@@ -192,7 +195,6 @@ function stripe(WP_REST_Request $request){
             'metadata' => [
                 'UserID' => $request['ID'],
                 'CompanyID' => $request['CompanyID'],
-                'Licenses' => $licenses
             ]
         ]
     ];
