@@ -3118,6 +3118,12 @@ function addFeedback($data)
     $general_assessment_competencies = $data['general_assessment_competencies']; // algemene_beoordeling, General Assessment of Competencies
     $welke_datum_feedback = $data['welke_datum_feedback']; // welke_datum_feedback
     $comments_assessment = $data['comments_assessment']; // opmerkingen
+    $user_role = get_users(array('include'=> $id))[0]->roles;
+    $managed = get_field('managed',  'user_' . $id);
+    if ($managed)
+        if (in_array($id,$managed))
+            $superior = get_users(array('include'=> $id))[0]->data;
+    $manager = $superior ? $superior->ID : $id;
 
     $args = array(
         'post_type' => 'feedback',
@@ -3134,7 +3140,8 @@ function addFeedback($data)
             'status' => 401
         ),401);
     }
-    update_field('manager_feedback', $manager, $post_id);
+    if ($manager)
+        update_field('manager_feedback', $manager, $id_post);
     if ($type)
         update_field('type_feedback', $type , $id_post);
     if ($rating)
@@ -3160,13 +3167,17 @@ function addFeedback($data)
         update_field('welke_datum_feedback', $welke_datum_feedback , $id_post);
     if($comments_assessment)
         update_field('opmerkingen', $comments_assessment , $id_post);
+    // Send notification
+    sendPushNotification($title,$description);
 
-
-
+    $feedback = get_post($id_post,true);
+    $custom_fields = get_post_custom($id_post);
+    foreach ($custom_fields as $key => $value) {
+        $feedback->$key = $value[0];
+    }
     return new WP_REST_Response(
         array(
             'message' => 'feedback saved success...',
-            'new_feedback' => get_post($id_post,true),
+            'new_feedback' => $feedback,
         ),201);
-
 }

@@ -2525,7 +2525,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'addAchievement'
     ));
-    register_rest_route ('custom/v1', '/feedback/add/(?P<id>\d+)', array(
+    register_rest_route ('custom/v1', '/feedback/add/(?P<id>\d+)', array( //need to be connected
         'methods' => 'POST',
         'callback' => 'addFeedback'
     ));
