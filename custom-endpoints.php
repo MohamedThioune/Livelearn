@@ -5899,6 +5899,8 @@ endif;
             ));
             $assessment_validated = get_user_meta($user->ID,'assessment_validated');
             $formated_assessments_validated = array();
+            
+            
             foreach ($assessment_validated as $key => $value) {
               if ($value != "")
                 array_push ($formated_assessments_validated,$value);
