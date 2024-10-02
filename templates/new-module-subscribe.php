@@ -63,7 +63,7 @@ function get_invoice_by_subscription($data){
     $endpoint = "https://api.stripe.com/v1/invoices";
     $customer = isset($data['customer']) ? $data['customer'] : null;
     $subscription = isset($data['subscription']) ? $data['subscription'] : null;
-    //test customer,subscription
+    //test customer,subscription 
     if(!$customer || !$subscription)
         return false;
 
@@ -177,7 +177,10 @@ function stripe(WP_REST_Request $request){
     $data_payment = [
         'line_items' => [[
             'price' => $price_id,
-            'quantity' => $request['quantity']
+            'quantity' => $request['quantity'],
+            'metadata' => [
+                'Licenses' => $licenses
+            ]
         ]],
         'after_completion' => [
             'type' => 'redirect',
@@ -192,7 +195,6 @@ function stripe(WP_REST_Request $request){
             'metadata' => [
                 'UserID' => $request['ID'],
                 'CompanyID' => $request['CompanyID'],
-                'Licenses' => $licenses
             ]
         ]
     ];
