@@ -297,13 +297,13 @@ function companyPeople($data){
         if ($user->ID == $user_connected)
             continue;
 
-        //if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $image = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
             $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
             $user->department = get_field('department','user_'. $user->ID)?:'';
             $user->phone = get_field('telnr',  'user_' . $user->ID);
+            /*
             //people you manages
             $people_managed_by_me = array();
             $people_you_manage = get_field('managed','user_'.$user->ID);
@@ -322,14 +322,13 @@ function companyPeople($data){
                     $people_managed_by_me[] = $persone->data;
                 }
             $user->people_you_manage = $people_managed_by_me;
-
+            */
             if(!empty($company)){
                 $user->company = $company[0];
                 $company_id = $company[0]->ID;
                 if($company_id == $company_connected)  // compare ID
                     array_push($members, $user);
             }
-       // }
     }
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     $new_members_count = 0 ;
@@ -356,6 +355,45 @@ function companyPeople($data){
         array(
             'count'=>count($members),
             'people'=>$members,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function peopleYouManage($data)
+{
+    //manage error
+    $required_parameters = ['idUser'];
+    $errors = validated($required_parameters, $data);
+    if ($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $users = get_users();
+
+    $user_connected = intval($data['id']);
+    //$user_concerned = get_user_by('ID', $data['idUser']);
+    $user_concerned = $data['idUser'];
+    //var_dump($user_concerned);die;
+    $people_managed_by = [];
+    foreach ($users as $user) {
+        $users_manageds = get_field('managed', 'user_' . $user->ID)?:[];
+
+        //var_dump(array('user'=>$user->ID,'manager'=>$users_manageds));
+        if ($users_manageds)
+            if (in_array($user_concerned, $users_manageds)) {
+                $user->data->image = get_field('profile_img', 'user_' . $user->ID) ? get_field('profile_img', 'user_' . $user->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                $user->data->link = "/dashboard/company/profile/?id=" . $user->ID . '&manager=' . $user_connected;
+                $user->data->name = $user->first_name != "" ? $user->first_name : $user->display_name;
+                unset($user->data->user_pass);
+                unset($user->data->user_url);
+                $people_managed_by [] = $user->data;
+            }
+    }
+    $response = new WP_REST_Response(
+        array(
+            'managers' => $people_managed_by,
         ));
     $response->set_status(200);
     return $response;
