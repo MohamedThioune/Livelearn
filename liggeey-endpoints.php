@@ -40,6 +40,38 @@ function artikel($id){
   $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
   $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
 
+  //Categories 
+  $read_category = array();
+  $categories = array();
+  $posttags = get_the_tags();
+  $default_category = get_field('categories', $post->ID);
+  $xml_category = get_field('category_xml', $post->ID);
+  $category = array();
+  //post tags
+  if($posttags)
+  foreach($posttags as $tag)
+    if(!in_array($item,$read_category))
+      $read_category[] = $tag->ID;
+  //category default
+  if(!empty($default_category))
+  foreach($default_category as $item)
+    if($item)
+      if(!in_array($item['value'], $read_category))
+        $read_category[] = $item['value'];
+  //category xml
+  else if(!empty($category_xml))
+  foreach($category_xml as $item)
+    if($item)
+      if(!in_array($item['value'], $read_category))
+        $read_category[] = $item['value'];      
+
+  $categories = get_categories( array(
+    'taxonomy'  => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby' => 'name',
+    'include' => $read_category,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+  $sample['categories'] = $categories;
   //Reviews | Comments
   $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
