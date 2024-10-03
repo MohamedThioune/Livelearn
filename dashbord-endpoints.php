@@ -2360,13 +2360,13 @@ function detailsPeopleSkillsPassport($data){
     //Note
     $key_skills_note = array();
     $skills_note = get_field('skills', 'user_' . $id_user);
-    foreach (array() as $skill) {
-    //foreach ($skills_note as $skill) {
-        $skills = [];
-        $skills['name'] = (string)get_the_category_by_ID($skill['id']);
-        $skills['note'] = $skill['note'];
-        $key_skills_note[] = $skills;
-    }
+    if($skills_note)
+        foreach ($skills_note as $skill) {
+            $skills = [];
+            $skills['name'] = (string)get_the_category_by_ID($skill['id']);
+            $skills['note'] = $skill['note'];
+            $key_skills_note[] = $skills;
+        }
     $count_skills_note  = (empty($skills_note)) ? 0 : count($skills_note);
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     foreach ($users as $user ) {
@@ -2394,7 +2394,6 @@ function detailsPeopleSkillsPassport($data){
         'update_post_meta_cache' => false
     );
     $mandatories = get_posts($args);
-    //$count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
     $count_mandatories = (!empty($mandatories)) ? count($mandatories) : 1;
 
     /* Members course */
@@ -2562,7 +2561,6 @@ function detailsPeopleSkillsPassport($data){
                         $pourcentage = 100;
                     }
                 }
-
                 switch ($status) {
 
                     case 'new':
