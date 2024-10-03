@@ -50,7 +50,7 @@ function artikel($id){
   //post tags
   if($posttags)
   foreach($posttags as $tag)
-    if(!in_array($item,$read_category))
+    if(!in_array($tag->ID,$read_category))
       $read_category[] = $tag->ID;
   //category default
   if(!empty($default_category))
@@ -64,13 +64,14 @@ function artikel($id){
     if($item)
       if(!in_array($item['value'], $read_category))
         $read_category[] = $item['value'];      
-
+  // var_dump($read_category);
   $categories = get_categories( array(
     'taxonomy'  => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
     'orderby' => 'name',
     'include' => $read_category,
     'hide_empty' => 0, // change to 1 to hide categores not having a single post
   ) );
+
   $sample['categories'] = $categories;
   //Reviews | Comments
   $comments = array(); 
