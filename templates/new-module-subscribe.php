@@ -136,6 +136,13 @@ function update(WP_REST_Request $request) {
         'metadata' => [
             'Licenses' => $licenses
         ]   
+        // 'line_items' => [[
+        //     'price' => $price_id,
+        //     'quantity' => $quantity,
+        //     'metadata' => [
+        //         'Licenses' => $licenses
+        //     ]
+        // ]],
     ];
 
     $endpoint = "https://api.stripe.com/v1/subscriptions/" . $request['subscription'];
@@ -178,9 +185,6 @@ function stripe(WP_REST_Request $request){
         'line_items' => [[
             'price' => $price_id,
             'quantity' => $request['quantity'],
-            'metadata' => [
-                'Licenses' => $licenses
-            ]
         ]],
         'after_completion' => [
             'type' => 'redirect',
@@ -195,6 +199,7 @@ function stripe(WP_REST_Request $request){
             'metadata' => [
                 'UserID' => $request['ID'],
                 'CompanyID' => $request['CompanyID'],
+                'Licenses' => $licenses
             ]
         ]
     ];
