@@ -59,8 +59,8 @@ function artikel($id){
       if(!in_array($item['value'], $read_category))
         $read_category[] = $item['value'];
   //category xml
-  else if(!empty($category_xml))
-  foreach($category_xml as $item)
+  else if(!empty($xml_category))
+  foreach($xml_category as $item)
     if($item)
       if(!in_array($item['value'], $read_category))
         $read_category[] = $item['value'];      
