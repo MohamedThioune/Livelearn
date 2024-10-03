@@ -6514,3 +6514,149 @@ endif;
   }
 
 
+//Orders dedicated to this user (courses) 
+function get_user_orders(WP_REST_Request $request){
+  $required_parameters = ['userID'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  //Check user exists
+  $userID = $request['userID'] ?: null;
+  $user = get_user_by('ID', $userID);
+  $errors = [];
+  if (!$user):
+    $errors['errors'] = 'No user matchin !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+
+  $enrolled = array();
+  $enrolled_courses = array();
+  // $expenses = 0; 
+  $enrolled_stripe = array();
+  //Orders woocommerce (enrolled courses)  
+  $args = array(
+    'customer_id' => $user->ID,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+  );
+  $bunch_orders = wc_get_orders($args);
+
+  foreach($bunch_orders as $order)
+    foreach ($order->get_items() as $item_id => $item ) :
+      //Get woo orders from user
+      $course_id = intval($item->get_product_id()) - 1;
+      $prijs = get_field('price', $course_id);
+      // $expenses += $prijs; 
+      if(!in_array($course_id, $enrolled))
+        array_push($enrolled, $course_id);
+    endforeach;
+
+  if(!empty($enrolled)):
+    $args = array(
+      'post_type' => 'course', 
+      'posts_per_page' => -1,
+      'orderby' => 'post_date',
+      'order' => 'DESC',
+      'include' => $enrolled,  
+    );
+    $enrolled_courses = get_posts($args);
+  endif;
+
+  //Enrolled with Stripe
+  $enrolled_stripe = array();
+  $enrolled_stripe = list_orders($user->ID)['posts'];
+  if(!empty($enrolled_stripe))
+    try {
+      $enrolled_courses = array_merge($enrolled_stripe, $enrolled_courses);
+    } catch (Error $e) {
+      echo "";
+    }
+    
+    $outcome_courses = array();
+  
+    for ($i = 0; $i < count($enrolled_courses); $i++) {
+      $enrolled_courses[$i]->visibility = get_field('visibility', $enrolled_courses[$i]->ID) ?? [];
+      $author = get_user_by('ID', $enrolled_courses[$i]->post_author);
+      $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+      if ($enrolled_courses[$i]->visibility != []) {
+          if ($author_company != $current_user_company) continue;
+      }
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $enrolled_courses[$i]->experts = array();
+      $experts = get_field('experts', $enrolled_courses[$i]->ID);
+      if (!empty($experts)) {
+          foreach ($experts as $key => $expert) {
+              $expert = get_user_by('ID', $expert);
+              $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              array_push($enrolled_courses[$i]->experts, new Expert($expert, $experts_img));
+          }
+      }
+
+      $enrolled_courses[$i]->author = new Expert($author, $author_img);
+      $enrolled_courses[$i]->longDescription = get_field('long_description', $enrolled_courses[$i]->ID);
+      $enrolled_courses[$i]->shortDescription = get_field('short_description', $enrolled_courses[$i]->ID);
+      $enrolled_courses[$i]->courseType = get_field('course_type', $enrolled_courses[$i]->ID);
+
+      $image = get_field('preview', $enrolled_courses[$i]->ID)['url'];
+      if (!$image) {
+          $image = get_the_post_thumbnail_url($enrolled_courses[$i]->ID);
+          if (!$image) $image = get_field('url_image_xml', $enrolled_courses[$i]->ID);
+          if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($enrolled_courses[$i]->courseType) . '.jpg';
+      }
+      $enrolled_courses[$i]->pathImage = $image;
+      $enrolled_courses[$i]->price = get_field('price', $enrolled_courses[$i]->ID) ?? 0;
+      $enrolled_courses[$i]->language = get_field('language', $enrolled_courses[$i]->ID) ?? "";
+      $enrolled_courses[$i]->youtubeVideos = get_field('youtube_videos', $enrolled_courses[$i]->ID) ? get_field('youtube_videos', $enrolled_courses[$i]->ID) : [];
+      if (strtolower($enrolled_courses[$i]->courseType) == 'podcast') {
+          $podcasts = get_field('podcasts', $enrolled_courses[$i]->ID) ? get_field('podcasts', $enrolled_courses[$i]->ID) : [];
+          if (!empty($podcasts)) {
+              $enrolled_courses[$i]->podcasts = $podcasts;
+          } else {
+              $podcasts = get_field('podcasts_index', $enrolled_courses[$i]->ID) ? get_field('podcasts_index', $enrolled_courses[$i]->ID) : [];
+              if (!empty($podcasts)) {
+                  $enrolled_courses[$i]->podcasts = array();
+                  foreach ($podcasts as $key => $podcast) {
+                      $item = array(
+                          "course_podcast_title" => $podcast['podcast_title'],
+                          "course_podcast_intro" => $podcast['podcast_description'],
+                          "course_podcast_url" => $podcast['podcast_url'],
+                          "course_podcast_image" => $podcast['podcast_image'],
+                      );
+                      array_push($enrolled_courses[$i]->podcasts, ($item));
+                  }
+              }
+          }
+      }
+      $enrolled_courses[$i]->podcasts = $enrolled_courses[$i]->podcasts ?? [];
+      $enrolled_courses[$i]->connectedProduct = get_field('connected_product', $enrolled_courses[$i]->ID);
+      $tags = get_field('categories', $enrolled_courses[$i]->ID) ?? [];
+      $enrolled_courses[$i]->tags = array();
+      if ($tags) {
+          if (!empty($tags)) {
+              foreach ($tags as $key => $category) {
+                  if (isset($category['value'])) {
+                      $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                      array_push($enrolled_courses[$i]->tags, $tag);
+                  }
+              }
+          }
+      }
+      $new_course = new Course($enrolled_courses[$i]);
+      array_push($outcome_courses, $new_course);
+  }
+
+  // Return the response 
+  $response = new WP_REST_Response($outcome_courses);
+  $response->set_status(200);
+  return $response;  
+
+}
