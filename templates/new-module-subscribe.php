@@ -132,17 +132,10 @@ function update(WP_REST_Request $request) {
     $licenses = implode(',', $licenses_array);
 
     $data = [
-        // 'quantity' => $quantity,
-        // 'metadata' => [
-        //     'Licenses' => $licenses
-        // ]   
-        'line_items' => [[
-            'price' => $price_id,
-            'quantity' => $quantity,
-            'metadata' => [
-                'Licenses' => $licenses
-            ]
-        ]],
+        'quantity' => $quantity,
+        'metadata' => [
+            'Licenses' => $licenses
+        ]   
     ];
 
     $endpoint = "https://api.stripe.com/v1/subscriptions/" . $request['subscription'];
