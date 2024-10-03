@@ -231,6 +231,7 @@ function candidate($id){
   $topics = get_user_meta($user->ID, 'topic');
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
+  $sample['skills'] = array();
   if(!empty($topics)):
     $args = array(
       'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -277,6 +278,7 @@ function candidate($id){
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
   $main_skills = array();
+  $sample['internal_skills'] = array();
   if(!empty($topics_internal)):
     $args = array(
       'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -322,6 +324,7 @@ function candidate($id){
   $experts = get_user_meta($user->ID, 'expert');
   $experts_origin = array();
   $read_one = array();
+  $sample['experts'] = array();
   if(!empty($experts)):
     foreach($experts as $value):
       $expert_sample = [];
@@ -353,6 +356,7 @@ function candidate($id){
   //Education Information
   $main_education = get_field('education',  'user_' . $user->ID);
   $educations = array();
+  $sample['educations'] = array();
   foreach($main_education as $value):
 
     $education = array();
@@ -384,6 +388,7 @@ function candidate($id){
   //Work & Experience Information
   $main_experience = get_field('work',  'user_' . $user->ID);
   $experiences = array();
+  $sample['experiences'] = array();
   foreach($main_experience as $value):
 
     $experience = array();
