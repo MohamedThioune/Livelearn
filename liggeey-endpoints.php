@@ -40,6 +40,39 @@ function artikel($id){
   $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
   $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
 
+  //Categories 
+  $read_category = array();
+  $categories = array();
+  $posttags = get_the_tags();
+  $default_category = get_field('categories', $post->ID);
+  $xml_category = get_field('category_xml', $post->ID);
+  $category = array();
+  //post tags
+  if($posttags)
+  foreach($posttags as $tag)
+    if(!in_array($tag->ID,$read_category))
+      $read_category[] = $tag->ID;
+  //category default
+  if(!empty($default_category))
+  foreach($default_category as $item)
+    if($item)
+      if(!in_array($item['value'], $read_category))
+        $read_category[] = $item['value'];
+  //category xml
+  else if(!empty($xml_category))
+  foreach($xml_category as $item)
+    if($item)
+      if(!in_array($item['value'], $read_category))
+        $read_category[] = $item['value'];      
+  // var_dump($read_category);
+  $categories = get_categories( array(
+    'taxonomy'  => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby' => 'name',
+    'include' => $read_category,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+
+  $sample['categories'] = $categories;
   //Reviews | Comments
   $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
@@ -231,6 +264,7 @@ function candidate($id){
   $topics = get_user_meta($user->ID, 'topic');
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
+  $sample['skills'] = array();
   if(!empty($topics)):
     $args = array(
       'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -277,6 +311,7 @@ function candidate($id){
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
   $main_skills = array();
+  $sample['internal_skills'] = array();
   if(!empty($topics_internal)):
     $args = array(
       'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -322,6 +357,7 @@ function candidate($id){
   $experts = get_user_meta($user->ID, 'expert');
   $experts_origin = array();
   $read_one = array();
+  $sample['experts'] = array();
   if(!empty($experts)):
     foreach($experts as $value):
       $expert_sample = [];
@@ -353,6 +389,7 @@ function candidate($id){
   //Education Information
   $main_education = get_field('education',  'user_' . $user->ID);
   $educations = array();
+  $sample['educations'] = array();
   foreach($main_education as $value):
 
     $education = array();
@@ -384,6 +421,7 @@ function candidate($id){
   //Work & Experience Information
   $main_experience = get_field('work',  'user_' . $user->ID);
   $experiences = array();
+  $sample['experiences'] = array();
   foreach($main_experience as $value):
 
     $experience = array();

@@ -297,13 +297,13 @@ function companyPeople($data){
         if ($user->ID == $user_connected)
             continue;
 
-        //if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             $image = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
             $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
             $user->department = get_field('department','user_'. $user->ID)?:'';
             $user->phone = get_field('telnr',  'user_' . $user->ID);
+            /*
             //people you manages
             $people_managed_by_me = array();
             $people_you_manage = get_field('managed','user_'.$user->ID);
@@ -322,14 +322,13 @@ function companyPeople($data){
                     $people_managed_by_me[] = $persone->data;
                 }
             $user->people_you_manage = $people_managed_by_me;
-
+            */
             if(!empty($company)){
                 $user->company = $company[0];
                 $company_id = $company[0]->ID;
                 if($company_id == $company_connected)  // compare ID
                     array_push($members, $user);
             }
-       // }
     }
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     $new_members_count = 0 ;
@@ -356,6 +355,45 @@ function companyPeople($data){
         array(
             'count'=>count($members),
             'people'=>$members,
+        ));
+    $response->set_status(200);
+    return $response;
+}
+
+function peopleYouManage($data)
+{
+    //manage error
+    $required_parameters = ['idUser'];
+    $errors = validated($required_parameters, $data);
+    if ($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $users = get_users();
+
+    $user_connected = intval($data['id']);
+    //$user_concerned = get_user_by('ID', $data['idUser']);
+    $user_concerned = $data['idUser'];
+    //var_dump($user_concerned);die;
+    $people_managed_by = [];
+    foreach ($users as $user) {
+        $users_manageds = get_field('managed', 'user_' . $user->ID)?:[];
+
+        //var_dump(array('user'=>$user->ID,'manager'=>$users_manageds));
+        if ($users_manageds)
+            if (in_array($user_concerned, $users_manageds)) {
+                $user->data->image = get_field('profile_img', 'user_' . $user->ID) ? get_field('profile_img', 'user_' . $user->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                $user->data->link = "/dashboard/company/profile/?id=" . $user->ID . '&manager=' . $user_connected;
+                $user->data->name = $user->first_name != "" ? $user->first_name : $user->display_name;
+                unset($user->data->user_pass);
+                unset($user->data->user_url);
+                $people_managed_by [] = $user->data;
+            }
+    }
+    $response = new WP_REST_Response(
+        array(
+            'managers' => $people_managed_by,
         ));
     $response->set_status(200);
     return $response;
@@ -3093,7 +3131,7 @@ function addAchievement($data)
 
 function addFeedback($data)
 {
-    $required_parameters = ['title','type','manager','rating'];
+    $required_parameters = ['title','type','rating'];
     $errors = validated($required_parameters, $data);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -3102,15 +3140,28 @@ function addFeedback($data)
     endif;
     $id = $data['id'];
     $title = $data['title'];
-    $type = $data['type']; // type_feedback : Beoordeling Gesprek,Beoordeling Video,Beoordeling Artikel
-    $manager = $data['manager']; // manager_feedback
+    $type = $data['type']; // Feedback = Feedback,Development Plan = Persoonlijk ontwikkelplan,Beoordeling Gesprek = Assessment,Compliment=Compliment
+    //$manager = $data['manager']; // manager_feedback
     $rating = $data['rating']; // rating_feedback
-    $rate_comments = $data['rate_comments']; // rate_comments
-    $trigger = $data['trigger']; // trigger_feedback
-    $begin_date = $data['begin_date']; // voor_welke_datum_feedback
-    $end_date = $data['end_date']; // ot_welke_datum_feedback
-    $vervalt = $data['vervalt']; // vervalt_feedback
-    $about = $data['about']; // opmerkingen_feedback
+    $rate_comments = $data['comments']; // rate_comments
+    $description = $data['description']; //Describe the Feedback, beschrijving_feedback
+    $competencies = $data['competencies']; // competencies_feedback, Competencies Related to Feedback,Competencies Related to Assessment
+    $anoniem_feedback = $data['anonymously']; // anoniem_feedback, Anonymous feedback,Send Anonymously? : true or false
+
+    //Development Plan
+    $what_achieve = $data['what_achieve']; // je_bereiken, What Do You Want to Achieve?
+    $how_achieved = $data['how_achieved']; // je_dit_bereike, How Do You Think This Can Best Be Achieved?
+    $need_help = $data['need_help']; // hulp_nodig, Need Help? : true or false
+    //Assessment
+    $general_assessment_competencies = $data['general_assessment_competencies']; // algemene_beoordeling, General Assessment of Competencies
+    $welke_datum_feedback = $data['welke_datum_feedback']; // welke_datum_feedback
+    $comments_assessment = $data['comments_assessment']; // opmerkingen
+    $user_role = get_users(array('include'=> $id))[0]->roles;
+    $managed = get_field('managed',  'user_' . $id);
+    if ($managed)
+        if (in_array($id,$managed))
+            $superior = get_users(array('include'=> $id))[0]->data;
+    $manager = $superior ? $superior->ID : $id;
 
     $args = array(
         'post_type' => 'feedback',
@@ -3127,19 +3178,44 @@ function addFeedback($data)
             'status' => 401
         ),401);
     }
+    if ($manager)
+        update_field('manager_feedback', $manager, $id_post);
     if ($type)
         update_field('type_feedback', $type , $id_post);
-    if ($manager)
-        update_field('manager_feedback', $manager , $id_post);
     if ($rating)
         update_field('rating_feedback', $rating , $id_post);
     if ($rate_comments)
         update_field('rate_comments', $rate_comments , $id_post);
-    if ($trigger)
-        update_field('trigger_feedback', $trigger , $id_post);
-    if ($begin_date)
-        update_field('welke_datum_feedback', $begin_date , $id_post);
-    if ($end_date)
-        update_field('tot_welke_datum_feedback', $end_date , $id_post);
+    if ($description)
+        update_field('beschrijving_feedback', $description , $id_post);
+    if ($competencies)
+        update_field('competencies_feedback', $competencies , $id_post);
+    if ($anoniem_feedback)
+        update_field('anoniem_feedback', $anoniem_feedback , $id_post);
+    //Development Plan
+    if ($what_achieve)
+        update_field('je_bereiken', $what_achieve , $id_post);
+    if ($how_achieved)
+        update_field('je_dit_bereike', $how_achieved, $id_post);
+    if ($need_help)
+        update_field('hulp_nodig', $need_help , $id_post);
+    if($general_assessment_competencies)
+        update_field('algemene_beoordeling', $general_assessment_competencies , $id_post);
+    if ($welke_datum_feedback)
+        update_field('welke_datum_feedback', $welke_datum_feedback , $id_post);
+    if($comments_assessment)
+        update_field('opmerkingen', $comments_assessment , $id_post);
+    // Send notification
+    sendPushNotification($title,$description);
 
+    $feedback = get_post($id_post,true);
+    $custom_fields = get_post_custom($id_post);
+    foreach ($custom_fields as $key => $value) {
+        $feedback->$key = $value[0];
+    }
+    return new WP_REST_Response(
+        array(
+            'message' => 'feedback saved success...',
+            'new_feedback' => $feedback,
+        ),201);
 }
