@@ -287,6 +287,7 @@ function companyPeople($data){
         return new WP_REST_Response(array('message' => 'User id is required in the request'), 401);
 
     $company = get_field('company',  'user_' . $user_connected);
+    $users_manageds = get_field('managed','user_'.$user_connected);
 
     if(!empty($company))
         $company_connected = $company[0]->ID;
@@ -294,6 +295,7 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
+        $user = $user->data;
         if ($user->ID == $user_connected)
             continue;
 
@@ -302,7 +304,8 @@ function companyPeople($data){
             $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
             $user->department = get_field('department','user_'. $user->ID)?:'';
-            $user->phone = get_field('telnr',  'user_' . $user->ID);
+            $user->phone = get_field('telnr',  'user_' . $user->ID)?:'';
+            $user->isManaged = in_array($user->ID,$users_manageds);
             /*
             //people you manages
             $people_managed_by_me = array();
