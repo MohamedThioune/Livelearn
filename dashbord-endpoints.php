@@ -2360,7 +2360,8 @@ function detailsPeopleSkillsPassport($data){
     //Note
     $key_skills_note = array();
     $skills_note = get_field('skills', 'user_' . $id_user);
-    foreach ($skills_note as $skill) {
+    foreach (array() as $skill) {
+    //foreach ($skills_note as $skill) {
         $skills = [];
         $skills['name'] = (string)get_the_category_by_ID($skill['id']);
         $skills['note'] = $skill['note'];
@@ -2497,9 +2498,8 @@ function detailsPeopleSkillsPassport($data){
                 }
             }
         }
-
         if($rating){
-            $score_rate_company += $rating;
+            $score_rate_company += intval($rating);
             $score_rate_max_company += 1;
         }
     }
@@ -2520,7 +2520,7 @@ function detailsPeopleSkillsPassport($data){
         'limit' => -1,
     );
     $bunch_orders = wc_get_orders($args);
-    // $bunch_orders = array();
+    //$bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     foreach($bunch_orders as $order){
@@ -2677,38 +2677,6 @@ ORDER BY MONTH(created_at)
 
     $canva_data_web = join(',', $data_web);
     $canva_data_mobile = join(',', $data_mobile);
-    // // Badges
-    // $args = array(
-    //     'post_type' => 'badge',
-    //     'author' => $id_user,
-    //     'orderby' => 'post_date',
-    //     'order' => 'DESC',
-    //     'posts_per_page' => -1,
-    // );
-    // $achievements = get_posts($args);
-    // $badges = array();
-    // if($achievements)
-    //     foreach($achievements as $achievement):
-    //         $type = get_field('type_badge', $achievement->ID);
-    //         $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-
-    //         $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->manager->ID);
-    //         if(!$image)
-    //             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-    //         if ($type) {
-    //             $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-    //             array_push($badges, $achievement);
-    //         }
-    //     endforeach;
-     // foreach ($badges as $key => $badge):
-    //     if($key == 3)
-    //         break;
-    //     // Image + trigger
-    //     $badge->image_badge = get_field('image_badge', $badge->ID);
-    //     $badge->trigger_badge = get_field('trigger_badge', $badge->ID);
-    //     $badge->level_badge = get_field('level_badge', $badge->ID);
-    // endforeach;
-    /* // */
 
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
     $read_learning = array();
