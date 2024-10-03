@@ -2418,6 +2418,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'companyPeople'
     ));
+    register_rest_route ('custom/v1', '/company/people/managers/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'peopleYouManage'
+    ));
     register_rest_route ('custom/v1', '/company/people/update/(?P<ID>\d+)', array(
         'methods' => 'POST',
         'callback' => 'editPeopleCompany'
@@ -2521,5 +2525,9 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/achievement/add/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'addAchievement'
+    ));
+    register_rest_route ('custom/v1', '/feedback/add/(?P<id>\d+)', array( //need to be connected
+        'methods' => 'POST',
+        'callback' => 'addFeedback'
     ));
 });
