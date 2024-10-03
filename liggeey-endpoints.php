@@ -47,8 +47,6 @@ function artikel($id){
   $default_category = get_field('categories', $post->ID);
   $xml_category = get_field('category_xml', $post->ID);
   $category = array();
-  var_dump($default_category, $xml_category);
-  die();
   //post tags
   if($posttags)
   foreach($posttags as $tag)
