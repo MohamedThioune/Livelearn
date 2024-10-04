@@ -2521,10 +2521,11 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
+    $course_finished = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             $progressions = array();
@@ -2963,14 +2964,14 @@ function subscription_organisation($data){
         return $response;
     endif;
         $userdata = array(
-            'user_pass' => $data['password']?:'livelearn'.date('Y'),
+            'user_pass' => $data['password'] ? :'livelearn'.date('Y'),
             'user_login' => $data['email'],
             'user_email' => $data['email'],
             'user_url' => 'http://app.livelearn.nl/',
             'display_name' => $data['firstName'] . ' ' . $data['lastName'],
             'first_name' => $data['firstName'],
             'last_name' => $data['lastName'],
-            'role' => 'Manager',
+            'role' => $data['role'] ? :'Manager',
         );
 
         $user_id = wp_insert_user($userdata);
