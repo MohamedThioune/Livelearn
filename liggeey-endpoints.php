@@ -4035,3 +4035,84 @@ function artikelDezzp($data){
   return $response;  
 
 }
+
+//Skills | sub - skills
+
+function skillsAll(){
+  /*
+  ** Categories - all  *
+  */
+
+  $categories = array();
+
+  $cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ));
+
+  foreach($cats as $category){
+    $cat_id = strval($category->cat_ID);
+    $category = intval($cat_id);
+    array_push($categories, $category);
+  }
+
+  // //Categories
+  // $bangerichts = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[1],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  // $functies = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[0],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  // $skills = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[3],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  // $interesses = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[2],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  $subtopics = array();
+  $topics = array();
+  foreach($categories as $categ):
+    //Topics
+    $topicss = get_categories(
+      array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categ,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+      )
+    );
+    $topics = array_merge($topics, $topicss);
+
+    foreach ($topicss as $value):
+      $subtopic = get_categories(
+        array(
+            'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $value->cat_ID,
+            'hide_empty' => 0,
+            //  change to 1 to hide categores not having a single post
+        )
+      );
+      $subtopics = array_merge($subtopics, $subtopic);
+    endforeach;
+  endforeach;
+
+  //Return the response 
+  $response = new WP_REST_Response(['success' => true, 'topics' => $subtopics]);
+  $response->set_status(200);
+  return $response;  
+
+}
