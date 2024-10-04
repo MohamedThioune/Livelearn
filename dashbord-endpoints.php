@@ -2521,8 +2521,8 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     $course_finished = array();
