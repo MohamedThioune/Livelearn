@@ -287,6 +287,7 @@ function companyPeople($data){
         return new WP_REST_Response(array('message' => 'User id is required in the request'), 401);
 
     $company = get_field('company',  'user_' . $user_connected);
+    $users_manageds = get_field('managed','user_'.$user_connected);
 
     if(!empty($company))
         $company_connected = $company[0]->ID;
@@ -294,6 +295,7 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
+        $user = $user->data;
         if ($user->ID == $user_connected)
             continue;
 
@@ -302,7 +304,8 @@ function companyPeople($data){
             $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
             $user->function = get_field('role',  'user_' . $user->ID)? : '';
             $user->department = get_field('department','user_'. $user->ID)?:'';
-            $user->phone = get_field('telnr',  'user_' . $user->ID);
+            $user->phone = get_field('telnr',  'user_' . $user->ID)?:'';
+            $user->isManaged = in_array($user->ID,$users_manageds);
             /*
             //people you manages
             $people_managed_by_me = array();
@@ -2360,12 +2363,13 @@ function detailsPeopleSkillsPassport($data){
     //Note
     $key_skills_note = array();
     $skills_note = get_field('skills', 'user_' . $id_user);
-    foreach ($skills_note as $skill) {
-        $skills = [];
-        $skills['name'] = (string)get_the_category_by_ID($skill['id']);
-        $skills['note'] = $skill['note'];
-        $key_skills_note[] = $skills;
-    }
+    if($skills_note)
+        foreach ($skills_note as $skill) {
+            $skills = [];
+            $skills['name'] = (string)get_the_category_by_ID($skill['id']);
+            $skills['note'] = $skill['note'];
+            $key_skills_note[] = $skills;
+        }
     $count_skills_note  = (empty($skills_note)) ? 0 : count($skills_note);
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     foreach ($users as $user ) {
@@ -2393,7 +2397,6 @@ function detailsPeopleSkillsPassport($data){
         'update_post_meta_cache' => false
     );
     $mandatories = get_posts($args);
-    //$count_mandatories_video = (!empty($mandatories)) ? count($mandatories) : 0;
     $count_mandatories = (!empty($mandatories)) ? count($mandatories) : 1;
 
     /* Members course */
@@ -2497,9 +2500,8 @@ function detailsPeopleSkillsPassport($data){
                 }
             }
         }
-
         if($rating){
-            $score_rate_company += $rating;
+            $score_rate_company += intval($rating);
             $score_rate_max_company += 1;
         }
     }
@@ -2520,7 +2522,7 @@ function detailsPeopleSkillsPassport($data){
         'limit' => -1,
     );
     $bunch_orders = wc_get_orders($args);
-    // $bunch_orders = array();
+    //$bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     foreach($bunch_orders as $order){
@@ -2562,7 +2564,6 @@ function detailsPeopleSkillsPassport($data){
                         $pourcentage = 100;
                     }
                 }
-
                 switch ($status) {
 
                     case 'new':
@@ -2677,38 +2678,6 @@ ORDER BY MONTH(created_at)
 
     $canva_data_web = join(',', $data_web);
     $canva_data_mobile = join(',', $data_mobile);
-    // // Badges
-    // $args = array(
-    //     'post_type' => 'badge',
-    //     'author' => $id_user,
-    //     'orderby' => 'post_date',
-    //     'order' => 'DESC',
-    //     'posts_per_page' => -1,
-    // );
-    // $achievements = get_posts($args);
-    // $badges = array();
-    // if($achievements)
-    //     foreach($achievements as $achievement):
-    //         $type = get_field('type_badge', $achievement->ID);
-    //         $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-
-    //         $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->manager->ID);
-    //         if(!$image)
-    //             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-    //         if ($type) {
-    //             $achievement->beschrijving_feedback = get_field('trigger_badge', $achievement->ID);
-    //             array_push($badges, $achievement);
-    //         }
-    //     endforeach;
-     // foreach ($badges as $key => $badge):
-    //     if($key == 3)
-    //         break;
-    //     // Image + trigger
-    //     $badge->image_badge = get_field('image_badge', $badge->ID);
-    //     $badge->trigger_badge = get_field('trigger_badge', $badge->ID);
-    //     $badge->level_badge = get_field('level_badge', $badge->ID);
-    // endforeach;
-    /* // */
 
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
     $read_learning = array();
