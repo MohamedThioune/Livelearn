@@ -2521,8 +2521,8 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     $course_finished = array();
@@ -3080,7 +3080,7 @@ function addAchievement($data)
         $badge->trigger_badge = get_field('trigger_badge', $badge->ID)?:'';
         $badge->begin_date = get_field('voor_welke_datum_badge', $badge->ID)?:'';
         $badge->end_date = get_field('ot_welke_datum_badge', $badge->ID)?:'';
-        $badge->vervalt_badge = get_field('vervalt_badge', $badge->ID)?:'';
+        $badge->vervalt_badge = get_field('vervalt_badge', $badge->ID)?:false;
         $badge->about_competencies = get_field('competencies_badge', $badge->ID)?:'';
         $badge->author = get_user_by('ID', $badge->post_author) ? get_user_by('ID', $badge->post_author)->data : null;
         unset($badge->author->user_pass);
