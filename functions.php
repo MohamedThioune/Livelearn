@@ -2397,6 +2397,11 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'get_post_orders'
     ));
+
+    register_rest_route ('custom/v2', '/checkout/orders', array(
+        'methods' => 'POST',
+        'callback' => 'get_user_orders'
+    ));
     //End ...
 
     register_rest_route ('custom/v1', '/tofollow/experts', array(
