@@ -378,7 +378,7 @@ function peopleYouManage($data)
     $user_connected = intval($data['id']);
     //$user_concerned = get_user_by('ID', $data['idUser']);
     $user_concerned = $data['idUser'];
-    //var_dump($user_concerned);die;
+    $users_managed_by_user_connected = get_field('managed','user_'.$user_connected);
     $people_managed_by = [];
     foreach ($users as $user) {
         $users_manageds = get_field('managed', 'user_' . $user->ID)?:[];
@@ -391,6 +391,7 @@ function peopleYouManage($data)
                 $user->data->name = $user->first_name != "" ? $user->first_name : $user->display_name;
                 unset($user->data->user_pass);
                 unset($user->data->user_url);
+                $user->isManaged = in_array($user->ID,$users_managed_by_user_connected);
                 $people_managed_by [] = $user->data;
             }
     }
@@ -2717,6 +2718,7 @@ ORDER BY MONTH(created_at)
     $dataResponse = array(
         'statistic'=>array(
             'training_costs' => $budget_spent,
+            //'average_training_hours' => $average_training_hours,
             'courses_progression'=> $progress_courses,
             'mandatory_courses_done'=> $count_mandatory_done . "/" . $count_mandatories,
             'assessments_done' => $assessment_validated,
@@ -2788,7 +2790,7 @@ function newCoursesByTeacher(WP_REST_Request $data)
     $response = new WP_REST_Response(
     array(
         'new_course_added'=>get_post($id_post,true),
-        'message'=> 'course saved success...',
+        'message'=> 'course created success...',
     ));
     $response->set_status(201);
     return $response;
