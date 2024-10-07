@@ -30,6 +30,12 @@ function artikel($id){
                   $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
   }
   $sample['image'] = $thumbnail;
+  $price_noformat = " ";
+  $price_noformat = get_field('price', $course->ID);
+  $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
+  $sample['language'] = get_field('language', $course->ID);
+  //Certificate
+  $sample['certificate'] = "No";
   $author = get_user_by('ID', $post->post_author);
   $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
   $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
