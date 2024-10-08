@@ -2353,6 +2353,7 @@ function detailsPeopleSkillsPassport($data){
     $assessment_validated = array();
     $enrolled_all_courses = array();
     $users = get_users();
+    $total_number_of_hours_for_other_member_company = 0;
     //Note
     $key_skills_note = array();
     $skills_note = get_field('skills', 'user_' . $id_user)?:[];
@@ -2367,18 +2368,29 @@ function detailsPeopleSkillsPassport($data){
     $count_skills_note  = (empty($skills_note)) ? 0 : count($skills_note);
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     foreach ($users as $user ) {
+        if($user->ID==$id_user)
+            continue;
+
         $company = get_field('company',  'user_' . $user->ID);
 
         if(!empty($company))
             if($company[0]->ID == $company_connected_id) {
+
                 $numbers[] = $user->ID;
                 // Assessment
                 $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
+
+                //take statistics values for others menmber of company
+                $staticstic = getUserStatistics($user->ID);
+                $total_number_of_hours_for_other_member_company = $total_number_of_hours_for_other_member_company + intval($staticstic->podcast)+intval($staticstic->artikel)+intval($staticstic->video)+intval($staticstic->online)+intval($staticstic->location);
             }
     }
+    $avairage_user_connected = getUserStatistics($id_user);
+    $average_training_hours = intval($avairage_user_connected->podcast)+intval($avairage_user_connected->artikel)+intval($avairage_user_connected->video)+intval($avairage_user_connected->online)+intval($avairage_user_connected->location);
+
     /* Mandatories */
     $args = array(
         'post_type' => array('mandatory','feedback'),
@@ -2626,6 +2638,9 @@ function detailsPeopleSkillsPassport($data){
     $course_views = $wpdb->get_results($sql_course);
     $count_course_views = (!empty($course_views)) ? count($course_views) : 0;
 
+    //Expert views
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $id_user . " AND data_type = 'expert' GROUP BY data_id ORDER BY occurence DESC");
+    $expert_views = $wpdb->get_results($sql);
 
     $external_learning_opportunities = 0;
     foreach ($course_views as $value) {
@@ -2674,29 +2689,38 @@ ORDER BY MONTH(created_at)
     $canva_data_web = join(',', $data_web);
     $canva_data_mobile = join(',', $data_mobile);
 
-    $topics_internal = get_user_meta($id_user, 'topic_affiliate');
+    //$topics_internal = get_user_meta($id_user, 'topic_affiliate');
+    $topics_internal = get_user_meta($id_user, 'topic'); // array of topics
     $read_learning = array();
-    if(!empty($topics_internal))
-    foreach($topics_internal as $key => $learning):
-        if(!$learning && !in_array($learning, $read_learning))
-            continue;
-        //$learning->link_stat = get_category_link($learning);
-        array_push($read_learning, $learning);
-    endforeach;
-   
+    $topic_topics_learning = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'exclude' => $topics_internal,
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    )); //  add image
+
+    if($topic_topics_learning)
+        foreach($topic_topics_learning as $key => $learning):
+            if(!$learning && !in_array($learning, $read_learning))
+                continue;
+
+            $image_topic = get_field('image', 'category_' . $learning->term_id) ?: get_field('banner_category', 'category_' . $learning->term_id);
+            $learning->topic_image = $image_topic?:get_stylesheet_directory_uri() . '/img/placeholder.png';
+
+
+            array_push($read_learning, $learning);
+
+        endforeach;
+
     $followed_topics = array();
     //Get Topics
-    $topics_external = get_user_meta($id_user, 'topic');
+    $topics = get_user_meta($id_user, 'topic'); //external topics
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
-    $topics = array();
-    if(!empty($topics_external))
-        $topics = $topics_external;
 
-    if(!empty($topics_internal))
-        foreach($topics_internal as $item)
-            array_push($topics, $item);
+    if ($topics_internal)
+        $topics = array_merge($topics,$topics_internal);
 
-    if(!empty($topics)){
+    if($topics){
         $args = array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'include'  => $topics,
@@ -2706,6 +2730,7 @@ ORDER BY MONTH(created_at)
         if ($followed_topics)
             foreach ($followed_topics as $followed_topic) {
                 $image_topic = get_field('image', 'category_'. $followed_topic->term_id)? : get_field('banner_category', 'category_'. $followed_topic->term_id);
+
                 $followed_topic->topic_image = $image_topic ?: get_stylesheet_directory_uri() . '/img/placeholder.png';
             }
     }
@@ -2714,13 +2739,13 @@ ORDER BY MONTH(created_at)
     $dataResponse = array(
         'statistic'=>array(
             'training_costs' => $budget_spent,
-            //'average_training_hours' => $average_training_hours,
+            'average_training_hours' => $average_training_hours.'/'.$total_number_of_hours_for_other_member_company,
             'courses_progression'=> $progress_courses,
             'mandatory_courses_done'=> $count_mandatory_done . "/" . $count_mandatories,
             'assessments_done' => $assessment_validated,
             'self_assessment_of_skills'=> $count_skills_note,
             'external_learning_opportunities' => $external_learning_opportunities,
-            'average_feedback_given_me_team'=> $score_rate_feedback ."/". $score_rate_feedback_company,
+            'average_feedback_given_me_team'=> $score_rate_feedback ."/". intval($score_rate_feedback_company),
             'usage_desktop_vs_mobile_app' => 
             array(
                 'web' => $canva_data_web,
@@ -2728,15 +2753,18 @@ ORDER BY MONTH(created_at)
             ),
             // 'badge' =>$achievements,
             'most_popular_courses' => $most_popular_course,
-            'most_viewed_topics' => ['image'=> '','count'=>count($read_learning)],
+            'most_viewed_topics' => count($followed_topics),
+            'followed_teachers' => get_user_meta($id_user, 'expert') ? count(get_user_meta($id_user, 'expert')) :0,
+            'most_viewed_expert'=>count($expert_views),
             'key_skill_development_progress' => $key_skills_note,
+
             'tab_after_skills_dev' => array(
                 'learning_delivery_method' => ['image'=>get_stylesheet_directory_uri() . "/img/empty-topic.png", 'count'=>$count_course_views], //image not available
                 'feedback_received' => $count_feedback_received,
                 'count_feedback_given' => $count_feedback_given,
                 // 'latest_badges'=>$badges,
             ),
-            'followed_topics' => $followed_topics
+            'followed_topics_by_me' => ($read_learning),
         ),
     );
 
