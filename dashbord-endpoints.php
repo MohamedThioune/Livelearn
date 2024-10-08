@@ -691,12 +691,15 @@ function RandomStringBis(){
     }
     return $randstring;
 }
-function sendEmail($id_user, $email, $name)
+function sendEmail($id_user,$id_newUser)
 {
     $guest = get_user_by('ID', $id_user);
     $name_guest = (($guest->first_name) ?: $guest->display_name);
-    $first_name = $name;
     $company = get_field('company',  'user_' . $id_user);
+
+    $newUser = get_user_by('ID', $id_newUser);
+    $first_name = (($newUser->first_name) ?: $newUser->display_name);
+    $email = $newUser->email;
     $mail_invitation_body =
         '<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
@@ -896,10 +899,10 @@ function sendEmail($id_user, $email, $name)
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>Uitnodiging</b></span></h1>
+                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>Invitation</b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
-                            data-testid="RJMLrMvA0Rh">Je <span style="font-size:14px;">krijgt toegang tot alle content
-                              vanuit '. $company[0]->post_title .'</span></p>
+                            data-testid="RJMLrMvA0Rh">You <span style="font-size:14px;">will have access to all content from '. $company[0]->post_title .'</span></p>
+                               LiveLearn
                         </div>
                       </td>
                     </tr>
@@ -913,38 +916,28 @@ function sendEmail($id_user, $email, $name)
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
                               </b>,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je bent
-                              uitgenodigd om onderdeel te worden van ' . $company[0]->post_title . '. Vanaf nu kan je gebruik maken
-                              van alle content die er beschikbaar gesteld wordt vanuit het
-                              bedrijf.&nbsp;</span><br><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Uiteraard houd je
-                              ook gewoon toegang tot alle content die vanuit LiveLearn of partners wordt
-                              aangeboden.</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
+                              You have been invited to become part of ' . $company[0]->post_title . '. From now on you can use all the content that is made available by the company
+                              </span><br><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Of course, you will also retain access to all content offered by LiveLearn or partners.</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Jouw
-                                gegevens</b></i></span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Gebruikersnaam:
-                              ' . $email . '</span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Tijdelijk
-                              wachtwoord: Livelearn2023</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Your credentials</b></i></span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Username:' . $email . '</span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Temporary password : Livelearn'.date('Y').'</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Uitnodiging</b></i></span><br><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Door: ' . $name_guest . '
                               </span><br><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Bedrijf:&nbsp;' . $company[0]->post_title. '
                               </span><br><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Ben je niet
-                              bekend met dit bedrijf of de persoon? Neem dan </span><a class="link-build-content"
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">If you are not familiar with this company or person, </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
                                 style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons
-                              op.</span><br>&nbsp;</p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> us.</span><br>&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Succes
-                              namens,</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Good luck from,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Het LiveLearn
-                              team</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The LiveLearn team</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
                         </div>
@@ -959,10 +952,10 @@ function sendEmail($id_user, $email, $name)
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://livelearn.nl/inloggen/"
+                                valign="middle"><a href="https://app.livelearn.nl/login/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Login</span></a>
                               </td>
                             </tr>
                           </tbody>
@@ -2282,7 +2275,7 @@ function addOnePeople(WP_REST_Request $data)
         //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
         update_field('company', $company[0], 'user_'.$user_id);
 
-        //sendEmail($user_connected,$email,$first_name);
+        sendEmail($user_connected,$user_id);
         $response = new WP_REST_Response(
                     array(
                         'message' => 'You have successfully created a new employee ✔️'
@@ -2334,7 +2327,7 @@ function addManyPeople(WP_REST_Request $data)
             update_field('company', $company[0], 'user_'.$user_id);
 
             // send email new user
-            sendEmail($user_connected, $email, $first_name);
+            sendEmail($user_connected, $user_id);
         }
     $response = new WP_REST_Response(
         array(
@@ -2363,10 +2356,11 @@ function detailsPeopleSkillsPassport($data){
     $users = get_users();
     //Note
     $key_skills_note = array();
-    $skills_note = get_field('skills', 'user_' . $id_user);
+    $skills_note = get_field('skills', 'user_' . $id_user)?:[];
     if($skills_note)
         foreach ($skills_note as $skill) {
             $skills = [];
+            $skills['id'] = $skill['id'];
             $skills['name'] = (string)get_the_category_by_ID($skill['id']);
             $skills['note'] = $skill['note'];
             $key_skills_note[] = $skills;
@@ -2522,8 +2516,8 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     $course_finished = array();
@@ -2710,8 +2704,11 @@ ORDER BY MONTH(created_at)
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         );
         $followed_topics = get_categories($args);
-        //$image_topic = get_field('image', 'category_'. $topic->data_id);
-        //$subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
+        if ($followed_topics)
+            foreach ($followed_topics as $followed_topic) {
+                $image_topic = get_field('image', 'category_'. $followed_topic->term_id)? : get_field('banner_category', 'category_'. $followed_topic->term_id);
+                $followed_topic->topic_image = $image_topic ?: get_stylesheet_directory_uri() . '/img/placeholder.png';
+            }
     }
     /* // */
 
@@ -2732,11 +2729,11 @@ ORDER BY MONTH(created_at)
             ),
             // 'badge' =>$achievements,
             'most_popular_courses' => $most_popular_course,
-            'most_viewed_topics' => $read_learning,
+            'most_viewed_topics' => ['image'=>'','count'=>$read_learning],
             'key_skill_development_progress' => $key_skills_note,
             'tab_after_skills_dev' => array(
-                'learning_delivery_method' => $count_course_views,
-                'count_feedback_received' => $count_feedback_received,
+                'learning_delivery_method' => ['image'=>get_stylesheet_directory_uri() . "/img/empty-topic.png", 'count'=>$count_course_views], //image not available
+                'feedback_received' => $count_feedback_received,
                 'count_feedback_given' => $count_feedback_given,
                 // 'latest_badges'=>$badges,
             ),
@@ -3114,8 +3111,8 @@ function addFeedback($data)
     $title = $data['title'];
     $type = $data['type']; // Feedback = Feedback,Development Plan = Persoonlijk ontwikkelplan,Beoordeling Gesprek = Assessment,Compliment=Compliment
     //$manager = $data['manager']; // manager_feedback
-    $rating = $data['rating']; // rating_feedback
-    $rate_comments = $data['comments']; // rate_comments
+    $rating = $data['rating']; // rating_feedback [1,5]
+    $rate_comments = $data['comments']; // rate_comments, How to Improve / Other Comments?
     $description = $data['description']; //Describe the Feedback, beschrijving_feedback
     $competencies = $data['competencies']; // competencies_feedback, Competencies Related to Feedback,Competencies Related to Assessment
     $anoniem_feedback = $data['anonymously']; // anoniem_feedback, Anonymous feedback,Send Anonymously? : true or false
