@@ -691,7 +691,7 @@ function RandomStringBis(){
     }
     return $randstring;
 }
-function sendEmail($id_user,$id_newUser)
+function sendEmail($id_user,$id_newUser,$password)
 {
     $guest = get_user_by('ID', $id_user);
     $name_guest = (($guest->first_name) ?: $guest->display_name);
@@ -801,7 +801,7 @@ function sendEmail($id_user,$id_newUser)
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Uitnodiging voor een bedrijfs leeromgeving</p>
+                            data-testid="Y0h44Pmw76d">Invitation to a corporate learning environment</p>
                         </div>
                       </td>
                     </tr>
@@ -923,12 +923,12 @@ function sendEmail($id_user,$id_newUser)
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Your credentials</b></i></span><br><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Username:' . $email . '</span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Temporary password : Livelearn'.date('Y').'</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Temporary password : '.$password.'</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Uitnodiging</b></i></span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Door: ' . $name_guest . '
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Invitation</b></i></span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">invented by : ' . $name_guest . '
                               </span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Bedrijf:&nbsp;' . $company[0]->post_title. '
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Company:&nbsp;' . $company[0]->post_title. '
                               </span><br><br><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">If you are not familiar with this company or person, </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
@@ -1167,10 +1167,9 @@ function sendEmail($id_user,$id_newUser)
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
                             data-testid="p1wGkfjeZKT7"><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
-                              sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
-                              messages from this series, </span><a class="link-build-content"
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">
+                              This message was sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving messages from this series, </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" target="_blank"
                               href="[[WORKFLOW_EXIT_LINK_EN]]"><span
                                 style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
@@ -2250,7 +2249,7 @@ function addOnePeople(WP_REST_Request $data)
     $last_name = $data['last_name'];
 
         $login = RandomStringBis();
-        $password = "Livelearn".date('Y');
+        $password = "Livelearn".date('Y').RandomStringBis();
 
         $userdata = array(
             'user_pass' => $password,
@@ -2275,7 +2274,7 @@ function addOnePeople(WP_REST_Request $data)
         //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
         update_field('company', $company[0], 'user_'.$user_id);
 
-        sendEmail($user_connected,$user_id);
+        sendEmail($user_connected,$user_id,$password);
         $response = new WP_REST_Response(
                     array(
                         'message' => 'You have successfully created a new employee ✔️'
@@ -2301,7 +2300,7 @@ function addManyPeople(WP_REST_Request $data)
             $first_name = RandomStringBis();
             $last_name = RandomStringBis();
 
-            $password = "Livelearn".date('Y');
+            $password = "Livelearn".date('Y').RandomStringBis();
 
             $userdata = array(
                 'user_pass' => $password,
@@ -2327,7 +2326,7 @@ function addManyPeople(WP_REST_Request $data)
             update_field('company', $company[0], 'user_'.$user_id);
 
             // send email new user
-            sendEmail($user_connected, $user_id);
+            sendEmail($user_connected, $user_id,$password);
         }
     $response = new WP_REST_Response(
         array(
@@ -2729,7 +2728,7 @@ ORDER BY MONTH(created_at)
             ),
             // 'badge' =>$achievements,
             'most_popular_courses' => $most_popular_course,
-            'most_viewed_topics' => ['image'=>'','count'=>$read_learning],
+            'most_viewed_topics' => ['image'=> ,'count'=>count($read_learning)],
             'key_skill_development_progress' => $key_skills_note,
             'tab_after_skills_dev' => array(
                 'learning_delivery_method' => ['image'=>get_stylesheet_directory_uri() . "/img/empty-topic.png", 'count'=>$count_course_views], //image not available
