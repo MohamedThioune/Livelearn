@@ -2318,7 +2318,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_topics_to_user'
     ));
 
-    register_rest_route ('custom/v1', '/user/skillsInternal', array(
+    register_rest_route ('custom/v1', '/user/skills/internal', array(
         'methods' => 'POST',
         'callback' => 'add_topics_internal_to_user'
     ));
