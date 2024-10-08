@@ -3357,6 +3357,37 @@ function add_topics_to_user(WP_REST_Request $request) {
   return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
 }
 
+function add_topics_internal_to_user(WP_REST_Request $request){
+  $required_parameters = ['userManagerId', 'userEmployeeId', 'topics'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $added = false;
+  $user_id = $request['userEmployeeId'];
+  $manager = isset($request['userManagerId']) ? $request['userManagerId'] : get_current_user_id();
+  $topics = $request['topics'];
+  $bunch = get_user_meta($user_id,'topic_affiliate');
+  foreach($topics as $topic):
+    if(!in_array($topic, $bunch)):
+      add_user_meta($user_id, 'topic_affiliate', $topic);
+      $added = true;
+    endif;
+  endforeach;   
+  
+  // Response
+  $message = (!$added) ? "Topic add : no news added !" :  "Topic add : action done ✅";
+  $response = array(
+    'success' => true,
+    'message' => $message
+  );
+  return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
+}
+
 //Made By Fadel
 function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   $code_status = 400;
