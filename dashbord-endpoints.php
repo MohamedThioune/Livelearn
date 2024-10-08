@@ -2728,7 +2728,7 @@ ORDER BY MONTH(created_at)
             ),
             // 'badge' =>$achievements,
             'most_popular_courses' => $most_popular_course,
-            'most_viewed_topics' => ['image'=> ,'count'=>count($read_learning)],
+            'most_viewed_topics' => ['image'=> '','count'=>count($read_learning)],
             'key_skill_development_progress' => $key_skills_note,
             'tab_after_skills_dev' => array(
                 'learning_delivery_method' => ['image'=>get_stylesheet_directory_uri() . "/img/empty-topic.png", 'count'=>$count_course_views], //image not available
