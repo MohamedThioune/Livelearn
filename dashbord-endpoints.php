@@ -3060,6 +3060,7 @@ function addAchievement($data)
     $certificate_number_if_applicable = $data['certificate_number_if_capable']; // certificaatnummer_badge
     $hours = $data['hours']; // uren_badge, hours
     $points = $data['points']; // punten_badge, points
+    $country = $data['country']; // land_badge
 
     $args = array(
         'post_type' => 'badge',
@@ -3090,6 +3091,8 @@ function addAchievement($data)
         update_field('uren_badge', $hours , $id_post);
     if ($points)
         update_field('punten_badge', $points , $id_post);
+    if ($country)
+        update_field('land_badge', $country , $id_post);
 
     update_field('trigger_badge', $trigger , $id_post);
     update_field('voor_welke_datum_badge', $for_what_day , $id_post);
