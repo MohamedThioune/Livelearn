@@ -30,6 +30,12 @@ function artikel($id){
                   $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
   }
   $sample['image'] = $thumbnail;
+  $price_noformat = " ";
+  $price_noformat = get_field('price', $course->ID);
+  $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
+  $sample['language'] = get_field('language', $course->ID);
+  //Certificate
+  $sample['certificate'] = "No";
   $author = get_user_by('ID', $post->post_author);
   $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
   $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -40,6 +46,39 @@ function artikel($id){
   $sample['short_description'] = get_field('short_description', $post->ID) ?: 'Empty till far ...';
   $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
 
+  //Categories 
+  $read_category = array();
+  $categories = array();
+  $posttags = get_the_tags();
+  $default_category = get_field('categories', $post->ID);
+  $xml_category = get_field('category_xml', $post->ID);
+  $category = array();
+  //post tags
+  if($posttags)
+  foreach($posttags as $tag)
+    if(!in_array($tag->ID,$read_category))
+      $read_category[] = $tag->ID;
+  //category default
+  if(!empty($default_category))
+  foreach($default_category as $item)
+    if($item)
+      if(!in_array($item['value'], $read_category))
+        $read_category[] = $item['value'];
+  //category xml
+  else if(!empty($xml_category))
+  foreach($xml_category as $item)
+    if($item)
+      if(!in_array($item['value'], $read_category))
+        $read_category[] = $item['value'];      
+  // var_dump($read_category);
+  $categories = get_categories( array(
+    'taxonomy'  => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby' => 'name',
+    'include' => $read_category,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+
+  $sample['categories'] = $categories;
   //Reviews | Comments
   $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
@@ -47,7 +86,7 @@ function artikel($id){
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
     $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
-    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $company = get_field('company',  'user_' . $user->ID);
     $title = $company[0]->post_title;
 
@@ -172,7 +211,7 @@ function candidate($id){
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
   $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
-  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
@@ -231,6 +270,7 @@ function candidate($id){
   $topics = get_user_meta($user->ID, 'topic');
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
+  $sample['skills'] = array();
   if(!empty($topics)):
     $args = array(
       'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -277,6 +317,7 @@ function candidate($id){
   $skills_note = get_field('skills', 'user_' . $user->ID);
   $skills_origin = array();
   $main_skills = array();
+  $sample['internal_skills'] = array();
   if(!empty($topics_internal)):
     $args = array(
       'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -322,6 +363,7 @@ function candidate($id){
   $experts = get_user_meta($user->ID, 'expert');
   $experts_origin = array();
   $read_one = array();
+  $sample['experts'] = array();
   if(!empty($experts)):
     foreach($experts as $value):
       $expert_sample = [];
@@ -353,6 +395,7 @@ function candidate($id){
   //Education Information
   $main_education = get_field('education',  'user_' . $user->ID);
   $educations = array();
+  $sample['educations'] = array();
   foreach($main_education as $value):
 
     $education = array();
@@ -384,6 +427,7 @@ function candidate($id){
   //Work & Experience Information
   $main_experience = get_field('work',  'user_' . $user->ID);
   $experiences = array();
+  $sample['experiences'] = array();
   foreach($main_experience as $value):
 
     $experience = array();
@@ -1222,7 +1266,7 @@ function allArtikels(WP_REST_Request $request){
     $author = get_user_by('ID', $post->post_author);
     $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
     $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_field('profile_img_api',  'user_' . $post->post_author);
-    $sample['author_image'] = $sample['author_image'] ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';  
+    $sample['author_image'] = $sample['author_image'] ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
     $post_date = new DateTimeImmutable($post->post_date);
     $sample['post_date'] = $post_date->format('M d, Y');
     $reviews = get_field('reviews', $post->ID);
@@ -1402,7 +1446,7 @@ function commentByID(WP_REST_Request $request ) {
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
 
     $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
-    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   
     $rating = $review['rating'];
     $feedback = $review['Feedback'];
@@ -2594,7 +2638,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
 
             $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
             $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
-            $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+            $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
             $achievement_info = array();
@@ -3313,6 +3357,37 @@ function add_topics_to_user(WP_REST_Request $request) {
   return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
 }
 
+function add_topics_internal_to_user(WP_REST_Request $request){
+  $required_parameters = ['userManagerId', 'userEmployeeId', 'topics'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $added = false;
+  $user_id = $request['userEmployeeId'];
+  $manager = isset($request['userManagerId']) ? $request['userManagerId'] : get_current_user_id();
+  $topics = $request['topics'];
+  $bunch = get_user_meta($user_id,'topic_affiliate');
+  foreach($topics as $topic):
+    if(!in_array($topic, $bunch)):
+      add_user_meta($user_id, 'topic_affiliate', $topic);
+      $added = true;
+    endif;
+  endforeach;   
+  
+  // Response
+  $message = (!$added) ? "Topic add : no news added !" :  "Topic add : action done ✅";
+  $response = array(
+    'success' => true,
+    'message' => $message
+  );
+  return new WP_REST_Response($response, 200); // Code de réponse HTTP 200 pour une réussite
+}
+
 //Made By Fadel
 function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   $code_status = 400;
@@ -3430,7 +3505,7 @@ function notifications(WP_REST_Request $request){
       $author = get_user_by('ID', $author_trigger_id);
       if($author):
         $sample['author_trigger']['name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-        $sample['author_trigger']['photo'] = get_field('profile_img',  'user_' . $author->ID) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+        $sample['author_trigger']['photo'] = get_field('profile_img',  'user_' . $author->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
       endif;
     endif;
 
@@ -3660,7 +3735,7 @@ function activity($ID){
       $sample['description'] = get_field('trigger_badge', $achievement->ID);
       $sample['image'] = get_stylesheet_directory_uri() . '/img/Group216.png';
       $manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-      $manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+      $manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
       $sample['manager'] = $manager;
       $sample['manager_image'] = $manager_image;
 
@@ -3993,6 +4068,87 @@ function artikelDezzp($data){
 
   //Return the response 
   $response = new WP_REST_Response(['success' => true, 'blogs' => $blogs]);
+  $response->set_status(200);
+  return $response;  
+
+}
+
+//Skills | sub - skills
+
+function skillsAll(){
+  /*
+  ** Categories - all  *
+  */
+
+  $categories = array();
+
+  $cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ));
+
+  foreach($cats as $category){
+    $cat_id = strval($category->cat_ID);
+    $category = intval($cat_id);
+    array_push($categories, $category);
+  }
+
+  // //Categories
+  // $bangerichts = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[1],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  // $functies = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[0],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  // $skills = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[3],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  // $interesses = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'parent'  => $categories[2],
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  $subtopics = array();
+  $topics = array();
+  foreach($categories as $categ):
+    //Topics
+    $topicss = get_categories(
+      array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categ,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+      )
+    );
+    $topics = array_merge($topics, $topicss);
+
+    foreach ($topicss as $value):
+      $subtopic = get_categories(
+        array(
+            'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $value->cat_ID,
+            'hide_empty' => 0,
+            //  change to 1 to hide categores not having a single post
+        )
+      );
+      $subtopics = array_merge($subtopics, $subtopic);
+    endforeach;
+  endforeach;
+
+  //Return the response 
+  $response = new WP_REST_Response(['success' => true, 'topics' => $subtopics]);
   $response->set_status(200);
   return $response;  
 

@@ -2318,6 +2318,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_topics_to_user'
     ));
 
+    register_rest_route ('custom/v1', '/user/skills/internal', array(
+        'methods' => 'POST',
+        'callback' => 'add_topics_internal_to_user'
+    ));
+
     register_rest_route ('custom/v1', '/candidate/myResume/update', array(
         'methods' => 'POST',
         'callback' => 'candidateMyResumeEdit' 
@@ -2336,6 +2341,12 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/candidate/skills', array(
         'methods' => 'POST',
         'callback' => 'editSkills'
+    ));
+
+    //Sub topics all 
+    register_rest_route ('custom/v1', '/skills/all', array(
+        'methods' => 'GET',
+        'callback' => 'skillsAll'
     ));
     /** Endpoint */
 
@@ -2361,7 +2372,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'search'
     ));
 
-    register_rest_route ('custom/v1', '/search/stripe/invoices/(?P<userID>\d+)', array(
+    register_rest_route ('custom/v1', '/search/stripe/invoices/(?P<companyID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'search_invoices'
     ));
@@ -2390,6 +2401,11 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/checkout/orders', array(
         'methods' => 'POST',
         'callback' => 'get_post_orders'
+    ));
+
+    register_rest_route ('custom/v2', '/checkout/orders', array(
+        'methods' => 'POST',
+        'callback' => 'get_user_orders'
     ));
     //End ...
 
