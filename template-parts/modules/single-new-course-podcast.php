@@ -117,7 +117,7 @@ endif;
                                         </div>
                                     </div>
                                     <?php
-                                    if(!empty($posttags) || !empty($category_default) || !empty($category_default)):
+                                    if(!empty($posttags) || !empty($category_default) || !empty($category_default)): 
                                         ?>
                                         <div class="section-tabs" >
                                             <h2>What You'll Learn</h2>

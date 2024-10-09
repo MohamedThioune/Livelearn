@@ -5899,6 +5899,8 @@ endif;
             ));
             $assessment_validated = get_user_meta($user->ID,'assessment_validated');
             $formated_assessments_validated = array();
+            
+            
             foreach ($assessment_validated as $key => $value) {
               if ($value != "")
                 array_push ($formated_assessments_validated,$value);
@@ -6510,5 +6512,411 @@ endif;
     $response->set_status(200);
     return $response;
   }
+
+
+//Orders dedicated to this user (courses) 
+function get_user_orders(WP_REST_Request $request){
+  $required_parameters = ['userID'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  //Check user exists
+  $userID = $request['userID'] ?: null;
+  $user = get_user_by('ID', $userID);
+  $errors = [];
+  if (!$user):
+    $errors['errors'] = 'No user matchin !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+
+  $enrolled = array();
+  $enrolled_courses = array();
+  // $expenses = 0; 
+  $enrolled_stripe = array();
+  //Orders woocommerce (enrolled courses)  
+  $args = array(
+    'customer_id' => $user->ID,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+  );
+  $bunch_orders = wc_get_orders($args);
+
+  foreach($bunch_orders as $order)
+    foreach ($order->get_items() as $item_id => $item ) :
+      //Get woo orders from user
+      $course_id = intval($item->get_product_id()) - 1;
+      $prijs = get_field('price', $course_id);
+      // $expenses += $prijs; 
+      if(!in_array($course_id, $enrolled))
+        array_push($enrolled, $course_id);
+    endforeach;
+
+  if(!empty($enrolled)):
+    $args = array(
+      'post_type' => 'course', 
+      'posts_per_page' => -1,
+      'orderby' => 'post_date',
+      'order' => 'DESC',
+      'include' => $enrolled,  
+    );
+    $enrolled_courses = get_posts($args);
+  endif;
+
+  //Enrolled with Stripe
+  $enrolled_stripe = array();
+  $enrolled_stripe = list_orders($user->ID)['posts'];
+  if(!empty($enrolled_stripe))
+    try {
+      $enrolled_courses = array_merge($enrolled_stripe, $enrolled_courses);
+    } catch (Error $e) {
+      echo "";
+    }
+    
+    $outcome_courses = array();
+  
+    for ($i = 0; $i < count($enrolled_courses); $i++) {
+      $enrolled_courses[$i]->visibility = get_field('visibility', $enrolled_courses[$i]->ID) ?? [];
+      $author = get_user_by('ID', $enrolled_courses[$i]->post_author);
+      $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+      if ($enrolled_courses[$i]->visibility != []) {
+          if ($author_company != $current_user_company) continue;
+      }
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $enrolled_courses[$i]->experts = array();
+      $experts = get_field('experts', $enrolled_courses[$i]->ID);
+      if (!empty($experts)) {
+          foreach ($experts as $key => $expert) {
+              $expert = get_user_by('ID', $expert);
+              $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              array_push($enrolled_courses[$i]->experts, new Expert($expert, $experts_img));
+          }
+      }
+
+      $enrolled_courses[$i]->author = new Expert($author, $author_img);
+      $enrolled_courses[$i]->longDescription = get_field('long_description', $enrolled_courses[$i]->ID);
+      $enrolled_courses[$i]->shortDescription = get_field('short_description', $enrolled_courses[$i]->ID);
+      $enrolled_courses[$i]->courseType = get_field('course_type', $enrolled_courses[$i]->ID);
+
+      $image = get_field('preview', $enrolled_courses[$i]->ID)['url'];
+      if (!$image) {
+          $image = get_the_post_thumbnail_url($enrolled_courses[$i]->ID);
+          if (!$image) $image = get_field('url_image_xml', $enrolled_courses[$i]->ID);
+          if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($enrolled_courses[$i]->courseType) . '.jpg';
+      }
+      $enrolled_courses[$i]->pathImage = $image;
+      $enrolled_courses[$i]->price = get_field('price', $enrolled_courses[$i]->ID) ?? 0;
+      $enrolled_courses[$i]->language = get_field('language', $enrolled_courses[$i]->ID) ?? "";
+      $enrolled_courses[$i]->youtubeVideos = get_field('youtube_videos', $enrolled_courses[$i]->ID) ? get_field('youtube_videos', $enrolled_courses[$i]->ID) : [];
+      if (strtolower($enrolled_courses[$i]->courseType) == 'podcast') {
+          $podcasts = get_field('podcasts', $enrolled_courses[$i]->ID) ? get_field('podcasts', $enrolled_courses[$i]->ID) : [];
+          if (!empty($podcasts)) {
+              $enrolled_courses[$i]->podcasts = $podcasts;
+          } else {
+              $podcasts = get_field('podcasts_index', $enrolled_courses[$i]->ID) ? get_field('podcasts_index', $enrolled_courses[$i]->ID) : [];
+              if (!empty($podcasts)) {
+                  $enrolled_courses[$i]->podcasts = array();
+                  foreach ($podcasts as $key => $podcast) {
+                      $item = array(
+                          "course_podcast_title" => $podcast['podcast_title'],
+                          "course_podcast_intro" => $podcast['podcast_description'],
+                          "course_podcast_url" => $podcast['podcast_url'],
+                          "course_podcast_image" => $podcast['podcast_image'],
+                      );
+                      array_push($enrolled_courses[$i]->podcasts, ($item));
+                  }
+              }
+          }
+      }
+      $enrolled_courses[$i]->podcasts = $enrolled_courses[$i]->podcasts ?? [];
+      $enrolled_courses[$i]->connectedProduct = get_field('connected_product', $enrolled_courses[$i]->ID);
+      $tags = get_field('categories', $enrolled_courses[$i]->ID) ?? [];
+      $enrolled_courses[$i]->tags = array();
+      if ($tags) {
+          if (!empty($tags)) {
+              foreach ($tags as $key => $category) {
+                  if (isset($category['value'])) {
+                      $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                      array_push($enrolled_courses[$i]->tags, $tag);
+                  }
+              }
+          }
+      }
+      $new_course = new Course($enrolled_courses[$i]);
+      array_push($outcome_courses, $new_course);
+  }
+
+  // Return the response 
+  $response = new WP_REST_Response($outcome_courses);
+  $response->set_status(200);
+  return $response;  
+
+}
+
+// Assessments
+
+// Endpoint pour ajouter un assessment avec ses questions
+function add_assessment_with_questions(WP_REST_Request $request) {
+    global $wpdb;
+    
+    $data = $request->get_json_params();
+    
+    // Vérifier les données requises
+    if (empty($data['title']) || empty($data['questions'])) {
+        return new WP_Error('missing_data', 'Title and questions are required', array('status' => 400));
+    }
+    
+    // Commencer une transaction pour assurer l'intégrité des données
+    $wpdb->query('START TRANSACTION');
+    
+    try {
+        // Insérer l'assessment dans la table wp_assessment
+        $wpdb->insert(
+            $wpdb->prefix . 'assessment',
+            array(
+                'title' => sanitize_text_field($data['title']),
+                'description' => sanitize_textarea_field($data['description']),
+                'duration' => (int) $data['duration'],
+                'category_id' => (int) $data['category_id'],
+                'is_public' => isset($data['is_public']) ? (int) $data['is_public'] : 0,
+                'is_enabled' => isset($data['is_enabled']) ? (int) $data['is_enabled'] : 0,
+                'createdAt' => current_time('mysql', true),
+                'updatedAt' => current_time('mysql', true),
+            ),
+            array('%s', '%s', '%d', '%d', '%d', '%d', '%s', '%s')
+        );
+        
+        $assessment_id = $wpdb->insert_id;
+        
+        // Insérer les questions associées
+        foreach ($data['questions'] as $question_data) {
+            $wpdb->insert(
+                $wpdb->prefix . 'question',
+                array(
+                    'wording' => sanitize_textarea_field($question_data['wording']),
+                    'assessment_id' => $assessment_id,
+                    'createdAt' => current_time('mysql', true),
+                ),
+                array('%s', '%d', '%s')
+            );
+            
+            $question_id = $wpdb->insert_id;
+            
+            // Insérer les réponses associées à chaque question
+            foreach ($question_data['answers'] as $answer_data) {
+                $wpdb->insert(
+                    $wpdb->prefix . 'answer',
+                    array(
+                        'wording' => sanitize_text_field($answer_data['wording']),
+                        'is_correct' => isset($answer_data['is_correct']) ? (int) $answer_data['is_correct'] : 0,
+                        'question_id' => $question_id,
+                        'createdAt' => current_time('mysql', true),
+                    ),
+                    array('%s', '%d', '%d', '%s')
+                );
+            }
+        }
+        
+        // Valider la transaction
+        $wpdb->query('COMMIT');
+        
+        // Retourner une réponse de succès
+        return rest_ensure_response(array('message' => 'Assessment added successfully'));
+        
+    } catch (Exception $e) {
+        // En cas d'erreur, annuler la transaction
+        $wpdb->query('ROLLBACK');
+        return new WP_Error('db_error', 'Failed to add assessment', array('status' => 500));
+    }
+}
+
+// Fonction pour traiter une tentative d'évaluation dans la base de données
+function process_assessment_attempt($assessment_id, $user_id, $answers) {
+  global $wpdb;
+  
+  // Vérifie s'il existe déjà un résultat pour cet utilisateur et cette évaluation
+  $existing_result = $wpdb->get_row(
+      $wpdb->prepare(
+          "SELECT * FROM {$wpdb->prefix}result WHERE user_id = %d AND assessment_id = %d",
+          $user_id,
+          $assessment_id
+      )
+  );
+  
+  if ($existing_result) {
+      // Vous pouvez choisir de ne pas insérer de nouveau résultat si un résultat existe déjà
+      // return $existing_result->id; // Retourne l'ID du résultat existant
+      
+      // Ou bien mettre à jour le résultat existant selon votre logique métier
+      $result_id = $existing_result->id;
+      
+      // Exemple: Mettre à jour le score et le nombre de tentatives dans le résultat existant
+      $wpdb->update(
+          $wpdb->prefix . 'result',
+          array(
+              'score' => calculate_assessment_score($assessment_id, $answers), // Fonction pour calculer le score
+              'is_success' => determine_assessment_success($assessment_id, $answers), // Fonction pour déterminer le succès
+              'attempt_count' => $existing_result->attempt_count + 1, // Incrémente le nombre de tentatives
+              'completed_at' => current_time('mysql', true),
+          ),
+          array('id' => $result_id),
+          array('%f', '%d', '%d', '%s'),
+          array('%d')
+      );
+      
+      // Retourne l'ID du résultat mis à jour
+      return $result_id;
+  }
+  
+  // Sinon, insérez un nouveau résultat pour cet utilisateur et cette évaluation
+  // Commencez une transaction pour assurer la cohérence des données
+  $wpdb->query('START TRANSACTION');
+  
+  try {
+      // Insérez le résultat de l'évaluation
+      $wpdb->insert(
+          $wpdb->prefix . 'result',
+          array(
+              'user_id' => $user_id,
+              'assessment_id' => $assessment_id,
+              'score' => calculate_assessment_score($assessment_id, $answers), // Fonction pour calculer le score
+              'is_success' => determine_assessment_success($assessment_id, $answers), // Fonction pour déterminer le succès
+              'attempt_count' => 1, // Pourrait être incrémenté si gestion des tentatives multiples
+              'completed_at' => current_time('mysql', true),
+          ),
+          array('%d', '%d', '%f', '%d', '%s')
+      );
+      
+      // Insérez les réponses pour chaque question
+      foreach ($answers as $question_id => $answer_id) {
+          $wpdb->insert(
+              $wpdb->prefix . 'user_answers',
+              array(
+                  'user_id' => $user_id,
+                  'question_id' => $question_id,
+                  'answer_id' => $answer_id,
+                  'submitted_at' => current_time('mysql', true),
+              ),
+              array('%d', '%d', '%d', '%s')
+          );
+      }
+      
+      // Validez la transaction
+      $wpdb->query('COMMIT');
+      
+      // Renvoie l'ID du résultat enregistré
+      return $wpdb->insert_id;
+      
+  } catch (Exception $e) {
+      // En cas d'erreur, annulez la transaction
+      $wpdb->query('ROLLBACK');
+      return false;
+  }
+}
+
+// Fonction pour tenter un assessment (soumission des réponses)
+function attempt_assessment(WP_REST_Request $request) {
+  $assessment_id = $request->get_param('id');
+  $user_id = get_current_user_id(); // Récupère l'ID de l'utilisateur connecté
+  
+  // Valider les données d'entrée
+  $answers = $request->get_json_params(); // Supposons que les réponses sont envoyées sous forme JSON
+  
+  if (empty($answers)) {
+      return new WP_Error('empty_answers', 'No answers provided', array('status' => 400));
+  }
+  
+  // Votre logique pour enregistrer les réponses dans la base de données
+  $result = process_assessment_attempt($assessment_id, $user_id, $answers); // Fonction personnalisée
+  
+  if ($result === false) {
+      return new WP_Error('assessment_attempt_failed', 'Failed to process assessment attempt', array('status' => 500));
+  }
+  
+  // Formater la réponse JSON
+  $response = array(
+      'message' => 'Assessment attempt processed successfully',
+      'result_id' => $result, // ID du résultat enregistré dans la base de données
+  );
+  
+  return rest_ensure_response($response);
+}
+
+// Fonction pour récupérer une évaluation par son ID depuis la base de données
+function get_wp_assessment_by_id($assessment_id) {
+  global $wpdb;
+  
+  $query = "SELECT * FROM {$wpdb->prefix}assessment WHERE id = %d";
+  $prepared_query = $wpdb->prepare($query, $assessment_id);
+  
+  return $wpdb->get_row($prepared_query);
+}
+
+// Fonction pour récupérer les questions pour une évaluation spécifique depuis la base de données
+function get_wp_questions_by_assessment_id($assessment_id) {
+  global $wpdb;
+  
+  $query = "SELECT * FROM {$wpdb->prefix}question WHERE assessment_id = %d";
+  $prepared_query = $wpdb->prepare($query, $assessment_id);
+  
+  return $wpdb->get_results($prepared_query);
+}
+// Fonction pour récupérer une évaluation par son ID
+function get_assessment(WP_REST_Request $request) {
+  $assessment_id = $request->get_param('id');
+  
+  // Votre logique pour récupérer l'évaluation depuis la base de données
+  $assessment = get_wp_assessment_by_id($assessment_id); // Fonction personnalisée
+  
+  if (!$assessment) {
+      return new WP_Error('assessment_not_found', 'Assessment not found', array('status' => 404));
+  }
+  
+  // Formater la réponse JSON
+  $response = array(
+      'id' => $assessment->id,
+      'title' => $assessment->title,
+      'description' => $assessment->description,
+      'duration' => $assessment->duration,
+      'createdAt' => $assessment->createdAt,
+      'updatedAt' => $assessment->updatedAt,
+      'category_id' => $assessment->id_category,
+      'is_public' => (bool) $assessment->is_public,
+      'is_enabled' => (bool) $assessment->is_enabled,
+  );
+  
+  return rest_ensure_response($response);
+}
+
+// Fonction pour récupérer les questions pour une évaluation spécifique
+function get_questions_for_assessment(WP_REST_Request $request) {
+  $assessment_id = $request->get_param('id');
+  
+  // Votre logique pour récupérer les questions depuis la base de données
+  $questions = get_wp_questions_by_assessment_id($assessment_id); // Fonction personnalisée
+  
+  $formatted_questions = array();
+  foreach ($questions as $question) {
+      $formatted_questions[] = array(
+          'id' => $question->id,
+          'wording' => $question->wording,
+          'createdAt' => $question->createdAt,
+      );
+  }
+  
+  return rest_ensure_response($formatted_questions);
+}
+
+// Ajoutez d'autres fonctions callback selon vos besoins
+
+
 
 
