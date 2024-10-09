@@ -6669,7 +6669,6 @@ function add_assessment_with_questions(WP_REST_Request $request) {
     
     $data = $request->get_json_params();
     
-    // Vérifier les données requises
     if (empty($data['title']) || empty($data['questions'])) {
         return new WP_Error('missing_data', 'Title and questions are required', array('status' => 400));
     }
@@ -6678,9 +6677,8 @@ function add_assessment_with_questions(WP_REST_Request $request) {
     $wpdb->query('START TRANSACTION');
     
     try {
-        // Insérer l'assessment dans la table wp_assessment
         $wpdb->insert(
-            $wpdb->prefix . 'assessment',
+            $wpdb->prefix . 'assessments',
             array(
                 'title' => sanitize_text_field($data['title']),
                 'description' => sanitize_textarea_field($data['description']),
@@ -6741,7 +6739,7 @@ function add_assessment_with_questions(WP_REST_Request $request) {
 // Fonction pour traiter une tentative d'évaluation dans la base de données
 function process_assessment_attempt($assessment_id, $user_id, $answers) {
   global $wpdb;
-  
+
   // Vérifie s'il existe déjà un résultat pour cet utilisateur et cette évaluation
   $existing_result = $wpdb->get_row(
       $wpdb->prepare(
@@ -6750,76 +6748,127 @@ function process_assessment_attempt($assessment_id, $user_id, $answers) {
           $assessment_id
       )
   );
-  
+
   if ($existing_result) {
-      // Vous pouvez choisir de ne pas insérer de nouveau résultat si un résultat existe déjà
-      // return $existing_result->id; // Retourne l'ID du résultat existant
-      
-      // Ou bien mettre à jour le résultat existant selon votre logique métier
+      // Si un résultat existe déjà, on le met à jour
       $result_id = $existing_result->id;
-      
-      // Exemple: Mettre à jour le score et le nombre de tentatives dans le résultat existant
+
+      // Mettre à jour le score et le nombre de tentatives dans le résultat existant
       $wpdb->update(
           $wpdb->prefix . 'result',
           array(
-              'score' => calculate_assessment_score($assessment_id, $answers), // Fonction pour calculer le score
-              'is_success' => determine_assessment_success($assessment_id, $answers), // Fonction pour déterminer le succès
-              'attempt_count' => $existing_result->attempt_count + 1, // Incrémente le nombre de tentatives
+              'score' => calculate_assessment_score($assessment_id, $answers),
+              'is_success' => determine_assessment_success($assessment_id, $answers), // Vous devez également mettre à jour cette fonction
+              'attempt_count' => $existing_result->attempt_count + 1,
               'completed_at' => current_time('mysql', true),
           ),
           array('id' => $result_id),
           array('%f', '%d', '%d', '%s'),
           array('%d')
       );
-      
+
       // Retourne l'ID du résultat mis à jour
       return $result_id;
   }
-  
-  // Sinon, insérez un nouveau résultat pour cet utilisateur et cette évaluation
+
   // Commencez une transaction pour assurer la cohérence des données
   $wpdb->query('START TRANSACTION');
-  
+
   try {
-      // Insérez le résultat de l'évaluation
       $wpdb->insert(
           $wpdb->prefix . 'result',
           array(
               'user_id' => $user_id,
               'assessment_id' => $assessment_id,
-              'score' => calculate_assessment_score($assessment_id, $answers), // Fonction pour calculer le score
-              'is_success' => determine_assessment_success($assessment_id, $answers), // Fonction pour déterminer le succès
-              'attempt_count' => 1, // Pourrait être incrémenté si gestion des tentatives multiples
+              'score' => calculate_assessment_score($assessment_id, $answers),
+              'is_success' => determine_assessment_success($assessment_id, $answers),
+              'attempt_count' => 1,
               'completed_at' => current_time('mysql', true),
           ),
           array('%d', '%d', '%f', '%d', '%s')
       );
-      
-      // Insérez les réponses pour chaque question
-      foreach ($answers as $question_id => $answer_id) {
-          $wpdb->insert(
-              $wpdb->prefix . 'user_answers',
-              array(
-                  'user_id' => $user_id,
-                  'question_id' => $question_id,
-                  'answer_id' => $answer_id,
-                  'submitted_at' => current_time('mysql', true),
-              ),
-              array('%d', '%d', '%d', '%s')
-          );
-      }
-      
+
       // Validez la transaction
       $wpdb->query('COMMIT');
-      
+
       // Renvoie l'ID du résultat enregistré
       return $wpdb->insert_id;
-      
+
   } catch (Exception $e) {
       // En cas d'erreur, annulez la transaction
       $wpdb->query('ROLLBACK');
       return false;
   }
+}
+
+
+function determine_assessment_success($assessment_id, $user_answers) {
+  global $wpdb;
+
+  // Obtenir les questions de l'évaluation
+  $questions = $wpdb->get_results(
+      $wpdb->prepare(
+          "SELECT id FROM {$wpdb->prefix}question WHERE assessment_id = %d",
+          $assessment_id
+      )
+  );
+
+  $correct_count = 0; // Compteur pour les réponses correctes
+  $total_questions = count($questions); // Nombre total de questions
+
+  // Pour chaque question, vérifier les réponses fournies par l'utilisateur
+  foreach ($questions as $question) {
+      // Obtenir les réponses correctes pour la question
+      $correct_answers = $wpdb->get_col(
+          $wpdb->prepare(
+              "SELECT id FROM {$wpdb->prefix}answer WHERE question_id = %d AND is_correct = 1",
+              $question->id
+          )
+      );
+
+      // Vérifier si les réponses de l'utilisateur contiennent toutes les réponses correctes
+      if (!empty($user_answers[$question->id])) {
+          // Compte le nombre de bonnes réponses données par l'utilisateur
+          $correct_user_answers = array_intersect($user_answers[$question->id], $correct_answers);
+          if (count($correct_user_answers) === count($correct_answers)) {
+              $correct_count++;
+          }
+      }
+  }
+
+  // Calcule le score et détermine le succès
+  $score = ($total_questions > 0) ? ($correct_count / $total_questions) * 100 : 0; // Score en pourcentage
+
+  // Détermine le succès : true si le score est supérieur ou égal à 50, sinon false
+  return $score >= 50;
+}
+
+
+function calculate_assessment_score($assessment_id, $answers) {
+  global $wpdb;
+  $score = 0;
+  
+  foreach ($answers as $answer) {
+      $question_id = $answer['question_id'];
+      $selected_answer_ids = $answer['selected_answer_ids'];
+
+      // Récupérer les réponses correctes pour cette question
+      $correct_answers = $wpdb->get_col(
+          $wpdb->prepare(
+              "SELECT id FROM {$wpdb->prefix}answer WHERE question_id = %d AND is_correct = 1",
+              $question_id
+          )
+      );
+
+      // Compter le nombre de réponses correctes sélectionnées
+      $correct_count = count(array_intersect($selected_answer_ids, $correct_answers));
+      
+      // Ajout au score : par exemple, chaque réponse correcte pourrait valoir 10 points
+      $score += $correct_count * 10;
+  }
+
+  // Assurez-vous que le score maximum est de 100
+  return min($score, 100);
 }
 
 // Fonction pour tenter un assessment (soumission des réponses)
@@ -6854,7 +6903,7 @@ function attempt_assessment(WP_REST_Request $request) {
 function get_wp_assessment_by_id($assessment_id) {
   global $wpdb;
   
-  $query = "SELECT * FROM {$wpdb->prefix}assessment WHERE id = %d";
+  $query = "SELECT * FROM {$wpdb->prefix}assessments WHERE id = %d";
   $prepared_query = $wpdb->prepare($query, $assessment_id);
   
   return $wpdb->get_row($prepared_query);
@@ -6915,8 +6964,164 @@ function get_questions_for_assessment(WP_REST_Request $request) {
   return rest_ensure_response($formatted_questions);
 }
 
-// Ajoutez d'autres fonctions callback selon vos besoins
+function get_assessment_questions(WP_REST_Request $request) {
+  global $wpdb;
+  
+  // Récupère l'ID de l'évaluation à partir de la requête
+  $assessment_id = $request->get_param('assessment_id');
+  
+  if (empty($assessment_id)) {
+      return new WP_Error('missing_assessment_id', 'Assessment ID is required', array('status' => 400));
+  }
+  
+  // Vérifie si l'évaluation existe et est activée
+  $assessment = $wpdb->get_row(
+      $wpdb->prepare(
+          "SELECT * FROM {$wpdb->prefix}assessments WHERE id = %d AND is_enabled = 1",
+          $assessment_id
+      )
+  );
+  
+  if (!$assessment) {
+      return new WP_Error('assessment_not_found', 'Assessment not found or not enabled', array('status' => 404));
+  }
+  
+  // Récupère toutes les questions de l'évaluation
+  $questions = $wpdb->get_results(
+      $wpdb->prepare(
+          "SELECT * FROM {$wpdb->prefix}question WHERE assessment_id = %d",
+          $assessment_id
+      )
+  );
+  
+  if (empty($questions)) {
+      return new WP_Error('no_questions_found', 'No questions found for this assessment', array('status' => 404));
+  }
+  
+  // Préparer le tableau de retour pour les questions et leurs réponses
+  $assessment_data = array(
+      'assessment_id' => $assessment->id,
+      'title' => $assessment->title,
+      'description' => $assessment->description,
+      'duration' => $assessment->duration,
+      'questions' => array()
+  );
+  
+  // Boucle pour chaque question et récupère les réponses associées
+  foreach ($questions as $question) {
+      $answers = $wpdb->get_results(
+          $wpdb->prepare(
+              "SELECT id, wording FROM {$wpdb->prefix}answer WHERE question_id = %d",
+              $question->id
+          )
+      );
+      
+      // Ajoute chaque question avec ses réponses à la structure de retour
+      $assessment_data['questions'][] = array(
+          'question_id' => $question->id,
+          'wording' => $question->wording,
+          'answers' => $answers
+      );
+  }
+  
+  // Retourne les données de l'évaluation, des questions et des réponses
+  return rest_ensure_response($assessment_data);
+}
 
+function get_assessment_statistics(WP_REST_Request $request) {
+  global $wpdb;
+
+  // Récupérer l'ID de l'utilisateur à partir des paramètres de la requête
+  $user_id = $request->get_param('user_id');
+
+  if (empty($user_id)) {
+      return new WP_Error('missing_user_id', 'User ID is required', array('status' => 400));
+  }
+
+  // Récupérer le nombre total d'assessments tentés par l'utilisateur
+  $total_attempts = $wpdb->get_var(
+      $wpdb->prepare(
+          "SELECT COUNT(*) FROM {$wpdb->prefix}result WHERE user_id = %d",
+          $user_id
+      )
+  );
+
+  // Récupérer le nombre d'assessments réussis (score >= 50)
+  $successful_attempts = $wpdb->get_var(
+      $wpdb->prepare(
+          "SELECT COUNT(*) FROM {$wpdb->prefix}result WHERE user_id = %d AND score >= 50",
+          $user_id
+      )
+  );
+
+  // Récupérer le nombre d'assessments échoués (score < 50)
+  $failed_attempts = $wpdb->get_var(
+      $wpdb->prepare(
+          "SELECT COUNT(*) FROM {$wpdb->prefix}result WHERE user_id = %d AND score < 50",
+          $user_id
+      )
+  );
+
+  // Retourner les statistiques sous forme de réponse JSON
+  return rest_ensure_response(array(
+      'user_id' => $user_id,
+      'total_attempts' => (int) $total_attempts,
+      'successful_attempts' => (int) $successful_attempts,
+      'failed_attempts' => (int) $failed_attempts
+  ));
+}
+
+function get_successful_assessments(WP_REST_Request $request) {
+  global $wpdb;
+
+  // Récupérer l'ID de l'utilisateur à partir des paramètres de la requête
+  $user_id = $request->get_param('user_id');
+
+  if (empty($user_id)) {
+      return new WP_Error('missing_user_id', 'User ID is required', array('status' => 400));
+  }
+
+  // Requête pour obtenir les assessments réussis par l'utilisateur (score >= 50)
+  $successful_assessments = $wpdb->get_results(
+      $wpdb->prepare(
+          "SELECT a.id, a.title, r.score, r.completed_at, COUNT(q.id) as question_count
+          FROM {$wpdb->prefix}result r
+          INNER JOIN {$wpdb->prefix}assessments a ON r.assessment_id = a.id
+          LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+          WHERE r.user_id = %d AND r.score >= 50
+          GROUP BY a.id, r.score, r.completed_at",
+          $user_id
+      )
+  );
+
+  // Vérifie s'il y a des assessments réussis
+  if (empty($successful_assessments)) {
+      return rest_ensure_response(array('message' => 'No successful assessments found for this user.'));
+  }
+
+  // Retourner les assessments réussis sous forme de réponse JSON
+  return rest_ensure_response($successful_assessments);
+}
+
+function get_all_assessments_with_question_count(WP_REST_Request $request) {
+  global $wpdb;
+
+  // Requête pour obtenir tous les assessments avec le nombre de questions associées
+  $assessments = $wpdb->get_results(
+      "SELECT a.id, a.title, a.description, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+      FROM {$wpdb->prefix}assessments a
+      LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+      GROUP BY a.id"
+  );
+
+  // Vérifie s'il y a des assessments
+  if (empty($assessments)) {
+      return rest_ensure_response(array('message' => 'No assessments found.'));
+  }
+
+  // Retourner les assessments avec le nombre de questions sous forme de réponse JSON
+  return rest_ensure_response($assessments);
+}
 
 
 

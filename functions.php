@@ -1871,7 +1871,38 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getUserAttempts',
     ));
 
+    
+    register_rest_route('custom/v3', '/assessments/add', array(
+        'methods' => 'POST',
+        'callback' => 'add_assessment_with_questions',
+    ));
 
+    register_rest_route('custom/v3', '/assessments/(?P<id>\d+)/attempt', array(
+        'methods' => 'POST',
+        'callback' => 'attempt_assessment',
+    ));
+
+    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)/questions', array(
+        'methods' => 'GET',
+        'callback' => 'get_assessment_questions',
+    ));
+
+    register_rest_route('custom/v3', '/user/(?P<user_id>\d+)/assessments/statistics', array(
+        'methods' => 'GET',
+        'callback' => 'get_assessment_statistics',
+    ));
+
+    register_rest_route('custom/v3', 'user/(?P<user_id>\d+)/successful/assessments', array(
+        'methods' => 'GET',
+        'callback' => 'get_successful_assessments',
+    ));
+
+
+    register_rest_route('custom/v3', 'assessment/all', array(
+        'methods' => 'GET',
+        'callback' => 'get_all_assessments_with_question_count',
+    ));
+    
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
         'methods' => 'GET',
         'callback' => 'get_total_followers',
