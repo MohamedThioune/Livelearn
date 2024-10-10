@@ -6661,79 +6661,93 @@ function get_user_orders(WP_REST_Request $request){
 
 }
 
-// Assessments
+// Assessments v3
 
 // Endpoint pour ajouter un assessment avec ses questions
 function add_assessment_with_questions(WP_REST_Request $request) {
-    global $wpdb;
-    
-    $data = $request->get_json_params();
-    
-    if (empty($data['title']) || empty($data['questions'])) {
-        return new WP_Error('missing_data', 'Title and questions are required', array('status' => 400));
-    }
-    
-    // Commencer une transaction pour assurer l'intégrité des données
-    $wpdb->query('START TRANSACTION');
-    
-    try {
-        $wpdb->insert(
-            $wpdb->prefix . 'assessments',
-            array(
-                'title' => sanitize_text_field($data['title']),
-                'description' => sanitize_textarea_field($data['description']),
-                'duration' => (int) $data['duration'],
-                'category_id' => (int) $data['category_id'],
-                'is_public' => isset($data['is_public']) ? (int) $data['is_public'] : 0,
-                'is_enabled' => isset($data['is_enabled']) ? (int) $data['is_enabled'] : 0,
-                'createdAt' => current_time('mysql', true),
-                'updatedAt' => current_time('mysql', true),
-            ),
-            array('%s', '%s', '%d', '%d', '%d', '%d', '%s', '%s')
-        );
-        
-        $assessment_id = $wpdb->insert_id;
-        
-        // Insérer les questions associées
-        foreach ($data['questions'] as $question_data) {
-            $wpdb->insert(
-                $wpdb->prefix . 'question',
-                array(
-                    'wording' => sanitize_textarea_field($question_data['wording']),
-                    'assessment_id' => $assessment_id,
-                    'createdAt' => current_time('mysql', true),
-                ),
-                array('%s', '%d', '%s')
-            );
-            
-            $question_id = $wpdb->insert_id;
-            
-            // Insérer les réponses associées à chaque question
-            foreach ($question_data['answers'] as $answer_data) {
-                $wpdb->insert(
-                    $wpdb->prefix . 'answer',
-                    array(
-                        'wording' => sanitize_text_field($answer_data['wording']),
-                        'is_correct' => isset($answer_data['is_correct']) ? (int) $answer_data['is_correct'] : 0,
-                        'question_id' => $question_id,
-                        'createdAt' => current_time('mysql', true),
-                    ),
-                    array('%s', '%d', '%d', '%s')
-                );
-            }
-        }
-        
-        // Valider la transaction
-        $wpdb->query('COMMIT');
-        
-        // Retourner une réponse de succès
-        return rest_ensure_response(array('message' => 'Assessment added successfully'));
-        
-    } catch (Exception $e) {
-        // En cas d'erreur, annuler la transaction
-        $wpdb->query('ROLLBACK');
-        return new WP_Error('db_error', 'Failed to add assessment', array('status' => 500));
-    }
+  global $wpdb;
+  
+  $data = $request->get_json_params();
+  
+  if (empty($data['title']) || empty($data['questions'])) {
+      return new WP_Error('missing_data', 'Title and questions are required', array('status' => 400));
+  }
+  
+  // Commencer une transaction pour assurer l'intégrité des données
+  $wpdb->query('START TRANSACTION');
+  
+  try {
+      // Insertion de l'assessment
+      $wpdb->insert(
+          $wpdb->prefix . 'assessments',
+          array(
+              'title' => sanitize_text_field($data['title']),
+              'description' => sanitize_textarea_field($data['description']),
+              'duration' => (int) $data['duration'],
+              'category_id' => (int) $data['category_id'],
+              'is_public' => isset($data['is_public']) ? (int) $data['is_public'] : 0,
+              'is_enabled' => isset($data['is_enabled']) ? (int) $data['is_enabled'] : 0,
+              'createdAt' => current_time('mysql', true),
+              'updatedAt' => current_time('mysql', true),
+          ),
+          array('%s', '%s', '%d', '%d', '%d', '%d', '%s', '%s')
+      );
+
+      // Vérification des erreurs SQL
+      if ($wpdb->last_error) {
+          throw new Exception('Failed to insert assessment: ' . $wpdb->last_error);
+      }
+      
+      $assessment_id = $wpdb->insert_id;
+      
+      // Insérer les questions associées
+      foreach ($data['questions'] as $question_data) {
+          $wpdb->insert(
+              $wpdb->prefix . 'question',
+              array(
+                  'wording' => sanitize_textarea_field($question_data['wording']),
+                  'assessment_id' => $assessment_id,
+                  'createdAt' => current_time('mysql', true),
+              ),
+              array('%s', '%d', '%s')
+          );
+          
+          if ($wpdb->last_error) {
+              throw new Exception('Failed to insert question: ' . $wpdb->last_error);
+          }
+
+          $question_id = $wpdb->insert_id;
+          
+          // Insérer les réponses associées à chaque question
+          foreach ($question_data['answers'] as $answer_data) {
+              $wpdb->insert(
+                  $wpdb->prefix . 'answer',
+                  array(
+                      'wording' => sanitize_text_field($answer_data['wording']),
+                      'is_correct' => isset($answer_data['is_correct']) ? (int) $answer_data['is_correct'] : 0,
+                      'question_id' => $question_id,
+                      'createdAt' => current_time('mysql', true),
+                  ),
+                  array('%s', '%d', '%d', '%s')
+              );
+
+              if ($wpdb->last_error) {
+                  throw new Exception('Failed to insert answer: ' . $wpdb->last_error);
+              }
+          }
+      }
+      
+      // Valider la transaction
+      $wpdb->query('COMMIT');
+      
+      // Retourner une réponse de succès
+      return rest_ensure_response(array('message' => 'Assessment added successfully'));
+      
+  } catch (Exception $e) {
+      // En cas d'erreur, annuler la transaction
+      $wpdb->query('ROLLBACK');
+      return new WP_Error('db_error', $e->getMessage(), array('status' => 500));
+  }
 }
 
 // Fonction pour traiter une tentative d'évaluation dans la base de données
@@ -6844,31 +6858,48 @@ function determine_assessment_success($assessment_id, $user_answers) {
 }
 
 
-function calculate_assessment_score($assessment_id, $answers) {
+function calculate_assessment_score($assessment_id, $user_answers) {
   global $wpdb;
-  $score = 0;
   
-  foreach ($answers as $answer) {
-      $question_id = $answer['question_id'];
-      $selected_answer_ids = $answer['selected_answer_ids'];
+  $total_questions = 0;
+  $correct_answers = 0;
 
-      // Récupérer les réponses correctes pour cette question
-      $correct_answers = $wpdb->get_col(
-          $wpdb->prepare(
-              "SELECT id FROM {$wpdb->prefix}answer WHERE question_id = %d AND is_correct = 1",
-              $question_id
-          )
-      );
+  // Récupérer toutes les questions et leurs réponses correctes pour cet assessment
+  $questions = $wpdb->get_results($wpdb->prepare(
+      "SELECT q.id as question_id FROM {$wpdb->prefix}question q WHERE q.assessment_id = %d",
+      $assessment_id
+  ));
 
-      // Compter le nombre de réponses correctes sélectionnées
-      $correct_count = count(array_intersect($selected_answer_ids, $correct_answers));
-      
-      // Ajout au score : par exemple, chaque réponse correcte pourrait valoir 10 points
-      $score += $correct_count * 10;
+  foreach ($questions as $question) {
+      $total_questions++;
+
+      // Récupérer les réponses correctes pour chaque question
+      $correct_answers_db = $wpdb->get_col($wpdb->prepare(
+          "SELECT a.id FROM {$wpdb->prefix}answer a WHERE a.question_id = %d AND a.is_correct = 1",
+          $question->question_id
+      ));
+
+      // Vérification des réponses utilisateur pour la question
+      $user_answer_for_question = isset($user_answers[$question->question_id]) ? $user_answers[$question->question_id] : [];
+
+      // Assurez-vous que les deux variables sont bien des tableaux
+      if (is_array($correct_answers_db) && is_array($user_answer_for_question)) {
+          // Comparer les réponses utilisateur avec les bonnes réponses
+          $matched_answers = array_intersect($correct_answers_db, $user_answer_for_question);
+
+          // Si toutes les bonnes réponses sont trouvées dans les réponses utilisateur
+          if (count($matched_answers) == count($correct_answers_db)) {
+              $correct_answers++;
+          }
+      }
   }
 
-  // Assurez-vous que le score maximum est de 100
-  return min($score, 100);
+  // Calculer le score comme un pourcentage
+  if ($total_questions > 0) {
+      return ($correct_answers / $total_questions) * 100;
+  }
+
+  return 0;
 }
 
 // Fonction pour tenter un assessment (soumission des réponses)
