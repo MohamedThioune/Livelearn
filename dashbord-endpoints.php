@@ -133,7 +133,6 @@ function upcoming_schedule_for_the_user()
  * @url : localhost:8888/livelearn/wp-json/custom/v1/teacher/save?id=3
  */
 function saveManager(WP_REST_Request $request){
-    $user_id = 0;
     if (isset($_GET['id'])) {
         $user_id = intval($_GET['id']);
     } else {
@@ -143,7 +142,7 @@ function saveManager(WP_REST_Request $request){
         $response->set_status(401);
         return $response;
     }
-    $required_parameters = ['company','quantity','email','industry',];
+    $required_parameters = ['company','quantity','email','industry'];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -152,10 +151,13 @@ function saveManager(WP_REST_Request $request){
     endif;
     //update role of  user
     $user = get_userdata($user_id);
+    $role = $request['role'];
     $new_role = 'hr';
     if (!in_array($new_role, $user->roles)) {
         $user->add_role($new_role);
     }
+    if ($role)
+        $user->add_role($role);
     // creating new company
     $company_id = wp_insert_post(
         array(
@@ -2285,20 +2287,15 @@ function addOnePeople(WP_REST_Request $data)
 function addManyPeople(WP_REST_Request $data)
 {
     $user_connected = intval($data['id']);
-    $required_parameters = ['emails'];
-    $errors = validated($required_parameters, $data);
-    if($errors):
-        $response = new WP_REST_Response($errors);
-        $response->set_status(401);
-        return $response;
-    endif;
-    $emails = $data['emails'];
+
+    $emails = $data['users'];
 
     if(!empty($emails))
-        foreach($emails as $email){
+        foreach($emails as $user){
             $login = RandomStringBis();
-            $first_name = RandomStringBis();
-            $last_name = RandomStringBis();
+            $first_name = $user['first_name'];
+            $last_name = $user['last_name'];
+            $email = $user['email'];
 
             $password = "Livelearn".date('Y').RandomStringBis();
 
@@ -2315,7 +2312,7 @@ function addManyPeople(WP_REST_Request $data)
 
             $user_id = wp_insert_user(wp_slash($userdata));
             if(is_wp_error($user_id)){
-                $danger = "An error occurred while creating the emails, please ensure that all emails do not already exist.";
+                $danger = "An error occurred $email is already exist" ;
                 return new WP_REST_Response(array(
                     'message' => $danger
                 ), 401);
@@ -2330,9 +2327,9 @@ function addManyPeople(WP_REST_Request $data)
         }
     $response = new WP_REST_Response(
         array(
-            'message' => 'You have successfully created new employees ✔️'
+            'message' => 'You have successfully created '.count($emails) .' new employees ✔️'
         ));
-    $response->set_status(200);
+    $response->set_status(201);
     return $response;
 }
 
@@ -2738,14 +2735,14 @@ ORDER BY MONTH(created_at)
 
     $dataResponse = array(
         'statistic'=>array(
-            'training_costs' => $budget_spent,
+            'training_costs' => intval($budget_spent),
             'average_training_hours' => $average_training_hours.'/'.$total_number_of_hours_for_other_member_company,
             'courses_progression'=> $progress_courses,
             'mandatory_courses_done'=> $count_mandatory_done . "/" . $count_mandatories,
             'assessments_done' => $assessment_validated,
             'self_assessment_of_skills'=> $count_skills_note,
             'external_learning_opportunities' => $external_learning_opportunities,
-            'average_feedback_given_me_team'=> $score_rate_feedback ."/". intval($score_rate_feedback_company),
+            'average_feedback_given_me_team'=> intval($score_rate_feedback) ."/". intval($score_rate_feedback_company),
             'usage_desktop_vs_mobile_app' => 
             array(
                 'web' => $canva_data_web,
