@@ -6913,6 +6913,9 @@ function calculate_assessment_score($assessment_id, $user_answers) {
 
 // Fonction pour tenter un assessment (soumission des réponses)
 function attempt_assessment(WP_REST_Request $request) {
+
+  global $wpdb;
+
   $assessment_id = $request->get_param('assessment_id');
   $user_id = $request->get_param('user_id'); // Récupère l'ID de l'utilisateur depuis le payload
   $answers = $request->get_json_params()['answers'];
