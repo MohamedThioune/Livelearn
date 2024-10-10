@@ -1871,7 +1871,8 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getUserAttempts',
     ));
 
-    
+    /* Assessment endpoints V3 */
+
     register_rest_route('custom/v3', '/assessments/add', array(
         'methods' => 'POST',
         'callback' => 'add_assessment_with_questions',
@@ -1892,16 +1893,18 @@ add_action( 'rest_api_init', function () {
         'callback' => 'get_assessment_statistics',
     ));
 
-    register_rest_route('custom/v3', 'user/(?P<user_id>\d+)/successful/assessments', array(
+    register_rest_route('custom/v3', '/user/(?P<user_id>\d+)/successful/assessments', array(
         'methods' => 'GET',
         'callback' => 'get_successful_assessments',
     ));
 
 
-    register_rest_route('custom/v3', 'assessment/all', array(
+    register_rest_route('custom/v3', '/assessment/all', array(
         'methods' => 'GET',
         'callback' => 'get_all_assessments_with_question_count',
     ));
+
+    /* Assessment endpoints V3 */
     
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
         'methods' => 'GET',
