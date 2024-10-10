@@ -2494,6 +2494,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'Selecteer_experts'
     ));
+    register_rest_route ('custom/v1', '/granted/role/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'grantPushRole'
+    ));
     register_rest_route ('custom/v1', '/peopleManaged/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'people_managed'
