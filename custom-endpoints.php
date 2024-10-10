@@ -6750,11 +6750,16 @@ function add_assessment_with_questions(WP_REST_Request $request) {
   }
 }
 
-// Fonction pour traiter une tentative d'évaluation dans la base de données
-function process_assessment_attempt($assessment_id, $user_id, $answers) {
+// Fonction pour traiter une tentative d'assessment dans la base de données
+function process_assessment_attempt($assessment_id, $user_id, $answers_payload) {
   global $wpdb;
 
-  // Vérifie s'il existe déjà un résultat pour cet utilisateur et cette évaluation
+  $user_answers = [];
+  foreach ($answers_payload as $answer) {
+      $user_answers[$answer['question_id']] = $answer['selected_answers'];
+  }
+
+  // Vérifier s'il existe déjà un résultat pour cet utilisateur et cette évaluation
   $existing_result = $wpdb->get_row(
       $wpdb->prepare(
           "SELECT * FROM {$wpdb->prefix}result WHERE user_id = %d AND assessment_id = %d",
@@ -6763,16 +6768,19 @@ function process_assessment_attempt($assessment_id, $user_id, $answers) {
       )
   );
 
+  $score = calculate_assessment_score($assessment_id, $user_answers);
+  $is_success = determine_assessment_success($assessment_id, $user_answers);
+
   if ($existing_result) {
       // Si un résultat existe déjà, on le met à jour
       $result_id = $existing_result->id;
 
-      // Mettre à jour le score et le nombre de tentatives dans le résultat existant
+      // Mettre à jour le score, le statut de succès, et le nombre de tentatives dans le résultat existant
       $wpdb->update(
           $wpdb->prefix . 'result',
           array(
-              'score' => calculate_assessment_score($assessment_id, $answers),
-              'is_success' => determine_assessment_success($assessment_id, $answers), // Vous devez également mettre à jour cette fonction
+              'score' => $score,
+              'is_success' => $is_success,
               'attempt_count' => $existing_result->attempt_count + 1,
               'completed_at' => current_time('mysql', true),
           ),
@@ -6781,45 +6789,42 @@ function process_assessment_attempt($assessment_id, $user_id, $answers) {
           array('%d')
       );
 
-      // Retourne l'ID du résultat mis à jour
       return $result_id;
   }
 
-  // Commencez une transaction pour assurer la cohérence des données
+  // Commence une transaction pour assurer la cohérence des données
   $wpdb->query('START TRANSACTION');
 
   try {
+      // Insérer un nouveau résultat pour cette tentative
       $wpdb->insert(
           $wpdb->prefix . 'result',
           array(
               'user_id' => $user_id,
               'assessment_id' => $assessment_id,
-              'score' => calculate_assessment_score($assessment_id, $answers),
-              'is_success' => determine_assessment_success($assessment_id, $answers),
+              'score' => $score,
+              'is_success' => $is_success,
               'attempt_count' => 1,
               'completed_at' => current_time('mysql', true),
           ),
           array('%d', '%d', '%f', '%d', '%s')
       );
 
-      // Validez la transaction
+      // Valider la transaction
       $wpdb->query('COMMIT');
 
-      // Renvoie l'ID du résultat enregistré
       return $wpdb->insert_id;
-
   } catch (Exception $e) {
-      // En cas d'erreur, annulez la transaction
+      // En cas d'erreur, annuler la transaction
       $wpdb->query('ROLLBACK');
       return false;
   }
 }
 
-
 function determine_assessment_success($assessment_id, $user_answers) {
   global $wpdb;
 
-  // Obtenir les questions de l'évaluation
+  // Obtenir toutes les questions de l'évaluation
   $questions = $wpdb->get_results(
       $wpdb->prepare(
           "SELECT id FROM {$wpdb->prefix}question WHERE assessment_id = %d",
@@ -6830,7 +6835,7 @@ function determine_assessment_success($assessment_id, $user_answers) {
   $correct_count = 0; // Compteur pour les réponses correctes
   $total_questions = count($questions); // Nombre total de questions
 
-  // Pour chaque question, vérifier les réponses fournies par l'utilisateur
+  // Parcourir chaque question et vérifier les réponses fournies par l'utilisateur
   foreach ($questions as $question) {
       // Obtenir les réponses correctes pour la question
       $correct_answers = $wpdb->get_col(
@@ -6840,23 +6845,24 @@ function determine_assessment_success($assessment_id, $user_answers) {
           )
       );
 
-      // Vérifier si les réponses de l'utilisateur contiennent toutes les réponses correctes
+      // Vérifier si l'utilisateur a répondu à cette question
       if (!empty($user_answers[$question->id])) {
-          // Compte le nombre de bonnes réponses données par l'utilisateur
+          // Compter le nombre de bonnes réponses données par l'utilisateur
           $correct_user_answers = array_intersect($user_answers[$question->id], $correct_answers);
+
+          // Si toutes les bonnes réponses sont présentes dans les réponses utilisateur
           if (count($correct_user_answers) === count($correct_answers)) {
               $correct_count++;
           }
       }
   }
 
-  // Calcule le score et détermine le succès
-  $score = ($total_questions > 0) ? ($correct_count / $total_questions) * 100 : 0; // Score en pourcentage
+  // Calculer le score en pourcentage
+  $score = ($total_questions > 0) ? ($correct_count / $total_questions) * 100 : 0;
 
-  // Détermine le succès : true si le score est supérieur ou égal à 50, sinon false
+  // Retourner true si le score est supérieur ou égal à 50%, sinon false
   return $score >= 50;
 }
-
 
 function calculate_assessment_score($assessment_id, $user_answers) {
   global $wpdb;
@@ -6864,30 +6870,33 @@ function calculate_assessment_score($assessment_id, $user_answers) {
   $total_questions = 0;
   $correct_answers = 0;
 
-  // Récupérer toutes les questions et leurs réponses correctes pour cet assessment
-  $questions = $wpdb->get_results($wpdb->prepare(
-      "SELECT q.id as question_id FROM {$wpdb->prefix}question q WHERE q.assessment_id = %d",
-      $assessment_id
-  ));
+  // Récupérer toutes les questions de l'évaluation
+  $questions = $wpdb->get_results(
+      $wpdb->prepare(
+          "SELECT id FROM {$wpdb->prefix}question WHERE assessment_id = %d",
+          $assessment_id
+      )
+  );
 
+  // Parcourir les questions et comparer les réponses utilisateur
   foreach ($questions as $question) {
       $total_questions++;
 
-      // Récupérer les réponses correctes pour chaque question
-      $correct_answers_db = $wpdb->get_col($wpdb->prepare(
-          "SELECT a.id FROM {$wpdb->prefix}answer a WHERE a.question_id = %d AND a.is_correct = 1",
-          $question->question_id
-      ));
+      // Récupérer les réponses correctes pour cette question
+      $correct_answers_db = $wpdb->get_col(
+          $wpdb->prepare(
+              "SELECT id FROM {$wpdb->prefix}answer WHERE question_id = %d AND is_correct = 1",
+              $question->id
+          )
+      );
 
-      // Vérification des réponses utilisateur pour la question
-      $user_answer_for_question = isset($user_answers[$question->question_id]) ? $user_answers[$question->question_id] : [];
+      // Vérification des réponses utilisateur pour cette question
+      $user_answer_for_question = isset($user_answers[$question->id]) ? $user_answers[$question->id] : [];
 
-      // Assurez-vous que les deux variables sont bien des tableaux
+      // Comparer les réponses utilisateur avec les bonnes réponses
       if (is_array($correct_answers_db) && is_array($user_answer_for_question)) {
-          // Comparer les réponses utilisateur avec les bonnes réponses
-          $matched_answers = array_intersect($correct_answers_db, $user_answer_for_question);
-
           // Si toutes les bonnes réponses sont trouvées dans les réponses utilisateur
+          $matched_answers = array_intersect($correct_answers_db, $user_answer_for_question);
           if (count($matched_answers) == count($correct_answers_db)) {
               $correct_answers++;
           }
@@ -6904,29 +6913,61 @@ function calculate_assessment_score($assessment_id, $user_answers) {
 
 // Fonction pour tenter un assessment (soumission des réponses)
 function attempt_assessment(WP_REST_Request $request) {
-  $assessment_id = $request->get_param('id');
-  $user_id = get_current_user_id(); // Récupère l'ID de l'utilisateur connecté
-  
-  // Valider les données d'entrée
-  $answers = $request->get_json_params(); // Supposons que les réponses sont envoyées sous forme JSON
+  $assessment_id = $request->get_param('assessment_id');
+  $user_id = $request->get_param('user_id'); // Récupère l'ID de l'utilisateur depuis le payload
+  $answers = $request->get_json_params()['answers'];
   
   if (empty($answers)) {
       return new WP_Error('empty_answers', 'No answers provided', array('status' => 400));
   }
-  
-  // Votre logique pour enregistrer les réponses dans la base de données
-  $result = process_assessment_attempt($assessment_id, $user_id, $answers); // Fonction personnalisée
-  
-  if ($result === false) {
+
+  // Logique pour enregistrer les réponses dans la base de données
+  $result_id = process_assessment_attempt($assessment_id, $user_id, $answers);
+
+  if ($result_id === false) {
       return new WP_Error('assessment_attempt_failed', 'Failed to process assessment attempt', array('status' => 500));
   }
+
+  // Calculer le score et déterminer si l'utilisateur a réussi ou échoué
+  $user_answers = [];
+  foreach ($answers as $answer) {
+      $user_answers[$answer['question_id']] = $answer['selected_answers'];
+  }
+
+  $score = calculate_assessment_score($assessment_id, $user_answers);
+  $is_success = determine_assessment_success($assessment_id, $user_answers);
   
+  // Ajouter des détails sur les réponses (correctes ou incorrectes)
+  $formatted_answers = [];
+  foreach ($answers as $answer) {
+      $correct_answers = $wpdb->get_col(
+          $wpdb->prepare(
+              "SELECT id FROM {$wpdb->prefix}answer WHERE question_id = %d AND is_correct = 1",
+              $answer['question_id']
+          )
+      );
+
+      $correct_user_answers = array_intersect($answer['selected_answers'], $correct_answers);
+
+      $formatted_answers[] = array(
+          'question_id' => $answer['question_id'],
+          'selected_answers' => $answer['selected_answers'],
+          'correct' => count($correct_user_answers) === count($correct_answers)
+      );
+  }
+
   // Formater la réponse JSON
   $response = array(
       'message' => 'Assessment attempt processed successfully',
-      'result_id' => $result, // ID du résultat enregistré dans la base de données
+      'result_id' => $result_id, // ID du résultat enregistré dans la base de données
+      'user_id' => $user_id,  // ID de l'utilisateur
+      'assessment_id' => $assessment_id,  // ID de l'assessment
+      'score' => $score,  // Score en pourcentage
+      'is_success' => $is_success,  // Statut de réussite ou échec
+      'completed_at' => current_time('mysql', true),  // Date et heure de la soumission
+      'answers' => $formatted_answers,  // Détails des réponses soumises
   );
-  
+
   return rest_ensure_response($response);
 }
 
