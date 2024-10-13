@@ -1214,7 +1214,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role)
     $subject = 'You have the role of '.$role;
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     $email = $user->data->user_email;
-    $first_name = $user->data->first_name.' '.$user->data->last_name;
+    $first_name = $user->data->display_name ? : $user->data->first_name.' '.$user->data->last_name;
     $company_connected = $company->post_tittle ? :'Livelearn';
 
     $mail_became_manager_body =
@@ -1723,7 +1723,8 @@ function statistic_company($data)
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     $course_finished = array();
     $enrolled = array();
     $enrolled_courses = array();
