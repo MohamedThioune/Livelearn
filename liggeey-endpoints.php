@@ -86,7 +86,7 @@ function artikel($id){
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
     $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
-    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $company = get_field('company',  'user_' . $user->ID);
     $title = $company[0]->post_title;
 
@@ -211,7 +211,7 @@ function candidate($id){
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
   $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
-  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
@@ -1266,7 +1266,7 @@ function allArtikels(WP_REST_Request $request){
     $author = get_user_by('ID', $post->post_author);
     $sample['author_name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
     $sample['author_image'] = get_field('profile_img',  'user_' . $post->post_author) ? : get_field('profile_img_api',  'user_' . $post->post_author);
-    $sample['author_image'] = $sample['author_image'] ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';  
+    $sample['author_image'] = $sample['author_image'] ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
     $post_date = new DateTimeImmutable($post->post_date);
     $sample['post_date'] = $post_date->format('M d, Y');
     $reviews = get_field('reviews', $post->ID);
@@ -1446,7 +1446,7 @@ function commentByID(WP_REST_Request $request ) {
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name; // Retrieve the author's name
 
     $image_author = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
-    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $image_author = $image_author ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   
     $rating = $review['rating'];
     $feedback = $review['Feedback'];
@@ -2638,7 +2638,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
 
             $achievement->manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
             $achievement->manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_field('profile_img_api',  'user_' . $achievement->post_author);
-            $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+            $achievement->manager_image = $achievement->manager_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
             $achievement_info = array();
@@ -3505,7 +3505,7 @@ function notifications(WP_REST_Request $request){
       $author = get_user_by('ID', $author_trigger_id);
       if($author):
         $sample['author_trigger']['name'] = ($author) ? $author->first_name . ' ' . $author->last_name : 'xxxx xxxx';
-        $sample['author_trigger']['photo'] = get_field('profile_img',  'user_' . $author->ID) ? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+        $sample['author_trigger']['photo'] = get_field('profile_img',  'user_' . $author->ID) ? : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
       endif;
     endif;
 
@@ -3735,7 +3735,7 @@ function activity($ID){
       $sample['description'] = get_field('trigger_badge', $achievement->ID);
       $sample['image'] = get_stylesheet_directory_uri() . '/img/Group216.png';
       $manager = get_user_by('ID', get_field('manager_badge', $achievement->ID));
-      $manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+      $manager_image = get_field('profile_img',  'user_' . $achievement->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
       $sample['manager'] = $manager;
       $sample['manager_image'] = $manager_image;
 
