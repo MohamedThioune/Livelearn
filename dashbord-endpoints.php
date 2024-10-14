@@ -133,7 +133,6 @@ function upcoming_schedule_for_the_user()
  * @url : localhost:8888/livelearn/wp-json/custom/v1/teacher/save?id=3
  */
 function saveManager(WP_REST_Request $request){
-    $user_id = 0;
     if (isset($_GET['id'])) {
         $user_id = intval($_GET['id']);
     } else {
@@ -143,7 +142,7 @@ function saveManager(WP_REST_Request $request){
         $response->set_status(401);
         return $response;
     }
-    $required_parameters = ['company','quantity','email','industry',];
+    $required_parameters = ['company','quantity','email','industry'];
     $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -152,10 +151,13 @@ function saveManager(WP_REST_Request $request){
     endif;
     //update role of  user
     $user = get_userdata($user_id);
+    $role = $request['role'];
     $new_role = 'hr';
     if (!in_array($new_role, $user->roles)) {
         $user->add_role($new_role);
     }
+    if ($role)
+        $user->add_role($role);
     // creating new company
     $company_id = wp_insert_post(
         array(
@@ -691,12 +693,15 @@ function RandomStringBis(){
     }
     return $randstring;
 }
-function sendEmail($id_user, $email, $name)
+function sendEmail($id_user,$id_newUser,$password)
 {
     $guest = get_user_by('ID', $id_user);
     $name_guest = (($guest->first_name) ?: $guest->display_name);
-    $first_name = $name;
     $company = get_field('company',  'user_' . $id_user);
+
+    $newUser = get_user_by('ID', $id_newUser);
+    $first_name = (($newUser->first_name) ?: $newUser->display_name);
+    $email = $newUser->email;
     $mail_invitation_body =
         '<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
@@ -798,7 +803,7 @@ function sendEmail($id_user, $email, $name)
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Uitnodiging voor een bedrijfs leeromgeving</p>
+                            data-testid="Y0h44Pmw76d">Invitation to a corporate learning environment</p>
                         </div>
                       </td>
                     </tr>
@@ -896,10 +901,10 @@ function sendEmail($id_user, $email, $name)
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>Uitnodiging</b></span></h1>
+                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>Invitation</b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
-                            data-testid="RJMLrMvA0Rh">Je <span style="font-size:14px;">krijgt toegang tot alle content
-                              vanuit '. $company[0]->post_title .'</span></p>
+                            data-testid="RJMLrMvA0Rh">You <span style="font-size:14px;">will have access to all content from '. $company[0]->post_title .'</span></p>
+                               LiveLearn
                         </div>
                       </td>
                     </tr>
@@ -913,38 +918,28 @@ function sendEmail($id_user, $email, $name)
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
                               </b>,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je bent
-                              uitgenodigd om onderdeel te worden van ' . $company[0]->post_title . '. Vanaf nu kan je gebruik maken
-                              van alle content die er beschikbaar gesteld wordt vanuit het
-                              bedrijf.&nbsp;</span><br><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Uiteraard houd je
-                              ook gewoon toegang tot alle content die vanuit LiveLearn of partners wordt
-                              aangeboden.</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Jouw
-                                gegevens</b></i></span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Gebruikersnaam:
-                              ' . $email . '</span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Tijdelijk
-                              wachtwoord: Livelearn2023</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Uitnodiging</b></i></span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Door: ' . $name_guest . '
-                              </span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Bedrijf:&nbsp;' . $company[0]->post_title. '
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
+                              You have been invited to become part of ' . $company[0]->post_title . '. From now on you can use all the content that is made available by the company
                               </span><br><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Ben je niet
-                              bekend met dit bedrijf of de persoon? Neem dan </span><a class="link-build-content"
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Of course, you will also retain access to all content offered by LiveLearn or partners.</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Your credentials</b></i></span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Username:' . $email . '</span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Temporary password : '.$password.'</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Invitation</b></i></span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">invented by : ' . $name_guest . '
+                              </span><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Company:&nbsp;' . $company[0]->post_title. '
+                              </span><br><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">If you are not familiar with this company or person, </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
                                 style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons
-                              op.</span><br>&nbsp;</p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> us.</span><br>&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Succes
-                              namens,</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Good luck from,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Het LiveLearn
-                              team</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The LiveLearn team</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
                         </div>
@@ -959,10 +954,10 @@ function sendEmail($id_user, $email, $name)
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://livelearn.nl/inloggen/"
+                                valign="middle"><a href="https://app.livelearn.nl/login/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Login</span></a>
                               </td>
                             </tr>
                           </tbody>
@@ -1174,6 +1169,383 @@ function sendEmail($id_user, $email, $name)
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
                             data-testid="p1wGkfjeZKT7"><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">
+                              This message was sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving messages from this series, </span><a class="link-build-content"
+                              style="color:inherit;; text-decoration: none;" target="_blank"
+                              href="[[WORKFLOW_EXIT_LINK_EN]]"><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
+                                unsubscribe here</span></a><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">.</span></p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span
+                              style="font-size:16px;text-align:center;color:#55575d;font-family:Arial;line-height:22px;">
+                              NL</span></p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!--[if mso | IE]></td></tr></table><![endif]-->
+  </div>
+</body>
+
+</html>';
+    $subject = 'Your LiveLearn registration has arrived! ✨';
+    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+    return wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
+}
+function sendEmailBecaumeManager($idUserToInvite,$role)
+{
+    $user = new WP_User($idUserToInvite);
+    $company = get_field('company',  'user_' . $idUserToInvite)[0];
+    $subject = 'You have the role of '.$role;
+    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+    $email = $user->data->user_email;
+    $first_name = $user->data->first_name.' '.$user->data->last_name;
+    $company_connected = $company->post_tittle ? :'Livelearn';
+
+    $mail_became_manager_body =
+        '
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <title><firs-name>, je hebt een nieuwe rol</firs-name></title><!--[if !mso]><!-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style type="text/css">
+    #outlook a {
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+  </style><!--[if mso]>
+        <noscript>
+        <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+        </xml>
+        </noscript>
+        <![endif]--><!--[if lte mso 11]>
+        <style type="text/css">
+          .mj-outlook-group-fix { width:100% !important; }
+        </style>
+        <![endif]--><!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
+  <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+  </style><!--<![endif]-->
+  <style type="text/css">
+    @media only screen and (min-width:480px) {
+      .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+    }
+  </style>
+  <style media="screen and (min-width:480px)">
+    .moz-text-html .mj-column-per-100 {
+      width: 100% !important;
+      max-width: 100%;
+    }
+  </style>
+  <style type="text/css">
+    [owa] .mj-column-per-100 {
+      width: 100% !important;
+      max-width: 100%;
+    }
+  </style>
+  <style type="text/css">
+    @media only screen and (max-width:480px) {
+      table.mj-full-width-mobile {
+        width: 100% !important;
+      }
+
+      td.mj-full-width-mobile {
+        width: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body style="word-spacing:normal;background-color:#e0eff4;">
+  <div style="background-color:#e0eff4;">
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p class="text-build-content"
+                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                            data-testid="Y0h44Pmw76d">Je hebt een nieuwe rol.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" vertical-align="top"
+                        style="background:#023356;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+                        <p style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:20px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="border-collapse:collapse;border-spacing:0px;">
+                          <tbody>
+                            <tr>
+                              <td style="width:50px;"><a href="http://livelearn.nl" target="_blank"><img alt=""
+                                    height="auto" src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/lurx1/l0xh.png"
+                                    style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                    width="50"></a></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <h1 class="text-build-content"
+                            style="text-align:center;; margin-top: 10px; font-weight: normal;"
+                            data-testid="RJMLrMvA0Rh"><span
+                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Je bent nu een
+                                manager!</b></span></h1>
+                          <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
+                            data-testid="RJMLrMvA0Rh">Make sure your team continues to develop.</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                            style="margin: 10px 0; margin-top: 10px;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . ' 
+                              ,</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">You now have the role of
+manager within ' . $company_connected . '. This means that you can share knowledge with your
+teammates, give them feedback and encourage them to work on specific topics.&nbsp;</span><br>&nbsp;</p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Do you not recognize yourself in the role or the organization? Then contact</span><a class="link-build-content"
+                              style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons
+                              op.</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><br><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Good luck from,</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The LiveLearn team</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                            style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" vertical-align="middle"
+                        style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="border-collapse:separate;line-height:100%;">
+                          <tbody>
+                            <tr>
+                              <td align="center" bgcolor="#023356" role="presentation"
+                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
+                                valign="middle"><a href="https://app.livelearn.nl/login/"
+                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
+                                  target="_blank"><span
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">login</span></a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center" vertical-align="top"
+                        style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                        <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="left" vertical-align="middle"
+                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                        <div
+                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                          <p class="text-build-content"
+                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                            data-testid="p1wGkfjeZKT7"><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
                               sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
@@ -1209,9 +1581,8 @@ function sendEmail($id_user, $email, $name)
 </body>
 
 </html>';
-    $subject = 'Your LiveLearn registration has arrived! ✨';
-    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-    return wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
+  return  wp_mail($email, $subject, $mail_became_manager_body, $headers, array( '' )) ;
+
 }
 
 function statistic_company($data)
@@ -2137,11 +2508,48 @@ function Selecteer_experts($data)
             }
        }
     }
+    $budget = get_field('amount_budget','user_' . $user_connected)?:0;
+    $role = (new WP_User($user_connected))->roles;
     $response = new WP_REST_Response(
         array(
-            'Selecteer_je_experts'=>$members
+            'Selecteer_je_experts'=>$members,
+            'info_personal_budget'=>array(
+                'role'=>array(
+                    'manager'=>$role =='manager',
+                    'author' =>$role == 'author'
+                ),
+                'budget'=>$budget
+            )
         ));
     $response->set_status(200);
+    return $response;
+}
+function grantPushRole($data)
+{
+    $role = $data['role'];
+    $budget = $data['budget'];
+    $user_id = $data['id'];
+    $user = new WP_User($user_id);
+    $required_parameters = ['role','budget'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $user->add_role( $role );
+    update_field('amount_budget', $budget, 'user_' . $user_id);
+    //send Email
+    $user->data->budget_amount = get_field('amount_budget','user_' . $user_id)?:0;
+    $user->data->roles = $user->roles;
+
+
+    sendEmailBecaumeManager($user_id,$role);
+    $response = new WP_REST_Response(
+        array(
+            'user'=>$user->data
+        ));
+    $response->set_status(201);
     return $response;
 }
 
@@ -2257,7 +2665,7 @@ function addOnePeople(WP_REST_Request $data)
     $last_name = $data['last_name'];
 
         $login = RandomStringBis();
-        $password = "Livelearn".date('Y');
+        $password = "Livelearn".date('Y').RandomStringBis();
 
         $userdata = array(
             'user_pass' => $password,
@@ -2282,7 +2690,7 @@ function addOnePeople(WP_REST_Request $data)
         //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
         update_field('company', $company[0], 'user_'.$user_id);
 
-        //sendEmail($user_connected,$email,$first_name);
+        sendEmail($user_connected,$user_id,$password);
         $response = new WP_REST_Response(
                     array(
                         'message' => 'You have successfully created a new employee ✔️'
@@ -2293,22 +2701,17 @@ function addOnePeople(WP_REST_Request $data)
 function addManyPeople(WP_REST_Request $data)
 {
     $user_connected = intval($data['id']);
-    $required_parameters = ['emails'];
-    $errors = validated($required_parameters, $data);
-    if($errors):
-        $response = new WP_REST_Response($errors);
-        $response->set_status(401);
-        return $response;
-    endif;
-    $emails = $data['emails'];
+
+    $emails = $data['users'];
 
     if(!empty($emails))
-        foreach($emails as $email){
+        foreach($emails as $user){
             $login = RandomStringBis();
-            $first_name = RandomStringBis();
-            $last_name = RandomStringBis();
+            $first_name = $user['first_name'];
+            $last_name = $user['last_name'];
+            $email = $user['email'];
 
-            $password = "Livelearn".date('Y');
+            $password = "Livelearn".date('Y').RandomStringBis();
 
             $userdata = array(
                 'user_pass' => $password,
@@ -2323,7 +2726,7 @@ function addManyPeople(WP_REST_Request $data)
 
             $user_id = wp_insert_user(wp_slash($userdata));
             if(is_wp_error($user_id)){
-                $danger = "An error occurred while creating the emails, please ensure that all emails do not already exist.";
+                $danger = "An error occurred $email is already exist" ;
                 return new WP_REST_Response(array(
                     'message' => $danger
                 ), 401);
@@ -2334,13 +2737,13 @@ function addManyPeople(WP_REST_Request $data)
             update_field('company', $company[0], 'user_'.$user_id);
 
             // send email new user
-            sendEmail($user_connected, $email, $first_name);
+            sendEmail($user_connected, $user_id,$password);
         }
     $response = new WP_REST_Response(
         array(
-            'message' => 'You have successfully created new employees ✔️'
+            'message' => 'You have successfully created '.count($emails) .' new employees ✔️'
         ));
-    $response->set_status(200);
+    $response->set_status(201);
     return $response;
 }
 
@@ -2361,12 +2764,14 @@ function detailsPeopleSkillsPassport($data){
     $assessment_validated = array();
     $enrolled_all_courses = array();
     $users = get_users();
+    $total_number_of_hours_for_other_member_company = 0;
     //Note
     $key_skills_note = array();
-    $skills_note = get_field('skills', 'user_' . $id_user);
+    $skills_note = get_field('skills', 'user_' . $id_user)?:[];
     if($skills_note)
         foreach ($skills_note as $skill) {
             $skills = [];
+            $skills['id'] = $skill['id'];
             $skills['name'] = (string)get_the_category_by_ID($skill['id']);
             $skills['note'] = $skill['note'];
             $key_skills_note[] = $skills;
@@ -2374,18 +2779,29 @@ function detailsPeopleSkillsPassport($data){
     $count_skills_note  = (empty($skills_note)) ? 0 : count($skills_note);
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     foreach ($users as $user ) {
+        if($user->ID==$id_user)
+            continue;
+
         $company = get_field('company',  'user_' . $user->ID);
 
         if(!empty($company))
             if($company[0]->ID == $company_connected_id) {
+
                 $numbers[] = $user->ID;
                 // Assessment
                 $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
+
+                //take statistics values for others menmber of company
+                $staticstic = getUserStatistics($user->ID);
+                $total_number_of_hours_for_other_member_company = $total_number_of_hours_for_other_member_company + intval($staticstic->podcast)+intval($staticstic->artikel)+intval($staticstic->video)+intval($staticstic->online)+intval($staticstic->location);
             }
     }
+    $avairage_user_connected = getUserStatistics($id_user);
+    $average_training_hours = intval($avairage_user_connected->podcast)+intval($avairage_user_connected->artikel)+intval($avairage_user_connected->video)+intval($avairage_user_connected->online)+intval($avairage_user_connected->location);
+
     /* Mandatories */
     $args = array(
         'post_type' => array('mandatory','feedback'),
@@ -2522,8 +2938,8 @@ function detailsPeopleSkillsPassport($data){
         'order' => 'DESC',
         'limit' => -1,
     );
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     $course_finished = array();
@@ -2633,6 +3049,9 @@ function detailsPeopleSkillsPassport($data){
     $course_views = $wpdb->get_results($sql_course);
     $count_course_views = (!empty($course_views)) ? count($course_views) : 0;
 
+    //Expert views
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $id_user . " AND data_type = 'expert' GROUP BY data_id ORDER BY occurence DESC");
+    $expert_views = $wpdb->get_results($sql);
 
     $external_learning_opportunities = 0;
     foreach ($course_views as $value) {
@@ -2681,50 +3100,63 @@ ORDER BY MONTH(created_at)
     $canva_data_web = join(',', $data_web);
     $canva_data_mobile = join(',', $data_mobile);
 
-    $topics_internal = get_user_meta($id_user, 'topic_affiliate');
+    //$topics_internal = get_user_meta($id_user, 'topic_affiliate');
+    $topics_internal = get_user_meta($id_user, 'topic'); // array of topics
     $read_learning = array();
-    if(!empty($topics_internal))
-    foreach($topics_internal as $key => $learning):
-        if(!$learning && !in_array($learning, $read_learning))
-            continue;
-        //$learning->link_stat = get_category_link($learning);
-        array_push($read_learning, $learning);
-    endforeach;
-   
+    $topic_topics_learning = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'exclude' => $topics_internal,
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    )); //  add image
+
+    if($topic_topics_learning)
+        foreach($topic_topics_learning as $key => $learning):
+            if(!$learning && !in_array($learning, $read_learning))
+                continue;
+
+            $image_topic = get_field('image', 'category_' . $learning->term_id) ?: get_field('banner_category', 'category_' . $learning->term_id);
+            $learning->topic_image = $image_topic?:get_stylesheet_directory_uri() . '/img/placeholder.png';
+
+
+            array_push($read_learning, $learning);
+
+        endforeach;
+
     $followed_topics = array();
     //Get Topics
-    $topics_external = get_user_meta($id_user, 'topic');
+    $topics = get_user_meta($id_user, 'topic'); //external topics
     $topics_internal = get_user_meta($id_user, 'topic_affiliate');
-    $topics = array();
-    if(!empty($topics_external))
-        $topics = $topics_external;
 
-    if(!empty($topics_internal))
-        foreach($topics_internal as $item)
-            array_push($topics, $item);
+    if ($topics_internal)
+        $topics = array_merge($topics,$topics_internal);
 
-    if(!empty($topics)){
+    if($topics){
         $args = array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'include'  => $topics,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         );
         $followed_topics = get_categories($args);
-        //$image_topic = get_field('image', 'category_'. $topic->data_id);
-        //$subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
+        if ($followed_topics)
+            foreach ($followed_topics as $followed_topic) {
+                $image_topic = get_field('image', 'category_'. $followed_topic->term_id)? : get_field('banner_category', 'category_'. $followed_topic->term_id);
+
+                $followed_topic->topic_image = $image_topic ?: get_stylesheet_directory_uri() . '/img/placeholder.png';
+            }
     }
     /* // */
 
     $dataResponse = array(
         'statistic'=>array(
-            'training_costs' => $budget_spent,
-            //'average_training_hours' => $average_training_hours,
+            'training_costs' => intval($budget_spent),
+            'average_training_hours' => $average_training_hours.'/'.$total_number_of_hours_for_other_member_company,
             'courses_progression'=> $progress_courses,
             'mandatory_courses_done'=> $count_mandatory_done . "/" . $count_mandatories,
             'assessments_done' => $assessment_validated,
             'self_assessment_of_skills'=> $count_skills_note,
             'external_learning_opportunities' => $external_learning_opportunities,
-            'average_feedback_given_me_team'=> $score_rate_feedback ."/". $score_rate_feedback_company,
+            'average_feedback_given_me_team'=> intval($score_rate_feedback) ."/". intval($score_rate_feedback_company),
             'usage_desktop_vs_mobile_app' => 
             array(
                 'web' => $canva_data_web,
@@ -2732,15 +3164,18 @@ ORDER BY MONTH(created_at)
             ),
             // 'badge' =>$achievements,
             'most_popular_courses' => $most_popular_course,
-            'most_viewed_topics' => $read_learning,
+            'most_viewed_topics' => count($followed_topics),
+            'followed_teachers' => get_user_meta($id_user, 'expert') ? count(get_user_meta($id_user, 'expert')) :0,
+            'most_viewed_expert'=>count($expert_views),
             'key_skill_development_progress' => $key_skills_note,
+
             'tab_after_skills_dev' => array(
-                'learning_delivery_method' => $count_course_views,
-                'count_feedback_received' => $count_feedback_received,
+                'learning_delivery_method' => ['image'=>get_stylesheet_directory_uri() . "/img/empty-topic.png", 'count'=>$count_course_views], //image not available
+                'feedback_received' => $count_feedback_received,
                 'count_feedback_given' => $count_feedback_given,
                 // 'latest_badges'=>$badges,
             ),
-            'followed_topics' => $followed_topics
+            'followed_topics_by_me' => ($read_learning),
         ),
     );
 
@@ -3036,6 +3471,7 @@ function addAchievement($data)
     $certificate_number_if_applicable = $data['certificate_number_if_capable']; // certificaatnummer_badge
     $hours = $data['hours']; // uren_badge, hours
     $points = $data['points']; // punten_badge, points
+    $country = $data['country']; // land_badge
 
     $args = array(
         'post_type' => 'badge',
@@ -3066,6 +3502,8 @@ function addAchievement($data)
         update_field('uren_badge', $hours , $id_post);
     if ($points)
         update_field('punten_badge', $points , $id_post);
+    if ($country)
+        update_field('land_badge', $country , $id_post);
 
     update_field('trigger_badge', $trigger , $id_post);
     update_field('voor_welke_datum_badge', $for_what_day , $id_post);
@@ -3114,8 +3552,8 @@ function addFeedback($data)
     $title = $data['title'];
     $type = $data['type']; // Feedback = Feedback,Development Plan = Persoonlijk ontwikkelplan,Beoordeling Gesprek = Assessment,Compliment=Compliment
     //$manager = $data['manager']; // manager_feedback
-    $rating = $data['rating']; // rating_feedback
-    $rate_comments = $data['comments']; // rate_comments
+    $rating = $data['rating']; // rating_feedback [1,5]
+    $rate_comments = $data['comments']; // rate_comments, How to Improve / Other Comments?
     $description = $data['description']; //Describe the Feedback, beschrijving_feedback
     $competencies = $data['competencies']; // competencies_feedback, Competencies Related to Feedback,Competencies Related to Assessment
     $anoniem_feedback = $data['anonymously']; // anoniem_feedback, Anonymous feedback,Send Anonymously? : true or false
