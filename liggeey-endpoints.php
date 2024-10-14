@@ -206,6 +206,7 @@ function candidate($id){
   $sample['ID'] = $user->ID;
   $sample['first_name'] = $user->first_name;
   $sample['last_name'] = $user->last_name;
+  $sample['roles'] = $user->roles;
   $sample['email'] = $user->user_email;
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
@@ -868,6 +869,38 @@ function candidateDetail(WP_REST_Request $request){
   $response->set_status(200);
 
   return $response;
+}
+
+//[POST]Is Managed ?
+function IsManagedOrNot(WP_REST_Request $request){
+  //Information 
+  $userID = $request['userID'] ?? 0;
+  $checkID = $request['checkID'] ?? 0;
+  $required_parameters = ['checkID', 'userID'];
+
+  //Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;  
+
+  
+  $infos = [
+    'message' => 'This check user ID does not manage the following user ID !',
+    'status' => false
+  ];
+  $managers = get_field('managed', 'user_' . $userID);
+  if(in_array($checkID, $managers)):
+    $infos['message'] = 'This check user ID does manage the following user ID !';
+    $infos['status'] = true;
+  endif;
+ 
+  $response = new WP_REST_Response($infos);
+  $response->set_status(200);
+  return $response;
+
 }
 
 //[POST]Detail artikel

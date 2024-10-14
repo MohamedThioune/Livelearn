@@ -2177,6 +2177,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'candidateDetail',
     ));
 
+    register_rest_route ('custom/v1', '/candidate/IsManagedOrNot', array(
+        'methods' => 'POST',
+        'callback' => 'IsManagedOrNot',
+    ));
+
     register_rest_route ('custom/v1', '/artikel/detail', array(
         'methods' => 'POST',
         'callback' => 'artikelDetail'
