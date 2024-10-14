@@ -891,9 +891,8 @@ function IsManagedOrNot(WP_REST_Request $request){
     'message' => 'This check user ID does not manage the following user ID !',
     'status' => false
   ];
-  $managers = get_field('managed', 'user_' . $userID);
-  var_dump($managers);
-  if(in_array($checkID, $managers)):
+  $managers = get_field('managed', 'user_' . $checkID);
+  if(in_array($userID, $managers)):
     $infos['message'] = 'This check user ID does manage the following user ID !';
     $infos['status'] = true;
   endif;
