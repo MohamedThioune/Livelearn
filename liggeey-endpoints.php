@@ -888,12 +888,12 @@ function IsManagedOrNot(WP_REST_Request $request){
 
   
   $infos = [
-    'message' => 'This check user ID does not manage the following user ID !',
+    'message' => 'This check user ID do not manage the following user ID !',
     'status' => false
   ];
   $ismanaged = get_field('managed', 'user_' . $checkID);
   if(in_array($userID, $ismanaged)):
-    $infos['message'] = 'This check user ID does manage the following user ID !';
+    $infos['message'] = 'This check user ID do manage the following user ID !';
     $infos['status'] = true;
   endif;
  
