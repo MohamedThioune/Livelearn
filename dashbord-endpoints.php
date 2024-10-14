@@ -297,6 +297,7 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
+        $roles = $user->roles;
         $user = $user->data;
         if ($user->ID == $user_connected)
             continue;
@@ -308,26 +309,8 @@ function companyPeople($data){
             $user->department = get_field('department','user_'. $user->ID)?:'';
             $user->phone = get_field('telnr',  'user_' . $user->ID)?:'';
             $user->isManaged = in_array($user->ID,$users_manageds);
-            /*
-            //people you manages
-            $people_managed_by_me = array();
-            $people_you_manage = get_field('managed','user_'.$user->ID);
-            if($people_you_manage)
-                foreach ($people_you_manage as $persone_id){
-                    $persone = get_user_by('ID', $persone_id);
-                    if(!$persone)
-                        continue;
-                    $company = get_field('company',  'user_' . $persone_id);
-                    $persone->data->company = $company;
-                    $persone->data->imagePersone = get_field('profile_img',  'user_' . $persone_id) ? : get_field('profile_img_api',  'user_' . $persone_id);
-                    $persone->data->department = get_field('department','user_'.$persone_id);
-                    $persone->data->phone = get_field('telnr',  'user_' . $persone->ID);
-                    $persone->data->function = get_field('role',  'user_' . $persone->ID);
-                    unset($persone->data->user_pass);
-                    $people_managed_by_me[] = $persone->data;
-                }
-            $user->people_you_manage = $people_managed_by_me;
-            */
+            $user->roles = $roles;
+
             if(!empty($company)){
                 $user->company = $company[0];
                 $company_id = $company[0]->ID;
@@ -1214,7 +1197,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role)
     $subject = 'You have the role of '.$role;
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     $email = $user->data->user_email;
-    $first_name = $user->data->first_name.' '.$user->data->last_name;
+    $first_name = $user->data->display_name ? : $user->data->first_name.' '.$user->data->last_name;
     $company_connected = $company->post_tittle ? :'Livelearn';
 
     $mail_became_manager_body =
@@ -1588,7 +1571,12 @@ teammates, give them feedback and encourage them to work on specific topics.&nbs
 function statistic_company($data)
 {
     global $wpdb;
-    $current_user = intval($data['ID']);
+    $current_user = $data['ID'];
+    $u = get_user_by('ID', $current_user);
+    if (!$u)
+        return new WP_REST_Response("You have to fill the id of the current user !",401);
+    $current_user = intval($current_user);
+
     $company = get_field('company',  'user_' . $current_user);
     $id_current_company = $company[0]->ID;
     $image =  get_field('company_logo',$id_current_company);
@@ -1606,7 +1594,10 @@ function statistic_company($data)
     }
 
     $company[0]->company_image = $image;
+    //$u = get_user_by('ID', $current_user);
+
     $user_connected = get_user_by('ID', $current_user)->data;
+    $user_connected->roles = $u->roles;
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
@@ -1664,7 +1655,8 @@ function statistic_company($data)
         'author'=>$current_user,
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        'numberposts' => 1000,
+        //'posts_per_page' => -1
     );
     $total_courses = count(get_posts($args));
     /*****************************************************/
@@ -1691,7 +1683,8 @@ function statistic_company($data)
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1
+        'numberposts' => 1000
     );
     $assessments = get_posts($args);
     $count_assessments = count($assessments);
@@ -1711,7 +1704,8 @@ function statistic_company($data)
         'author__in' => $numbers,
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1,
+        'numberposts' => 1000,
     );
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
@@ -1721,9 +1715,10 @@ function statistic_company($data)
         'post_status' => array('wc-processing', 'wc-completed'),
         'orderby' => 'date',
         'order' => 'DESC',
-        'limit' => -1,
+        'limit' => 1000,
     );
     $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     $course_finished = array();
     $enrolled = array();
     $enrolled_courses = array();
@@ -1745,7 +1740,8 @@ function statistic_company($data)
                         'post_type' => 'progression',
                         'title' => $course->post_name,
                         'post_status' => 'publish',
-                        'posts_per_page'         => -1,
+                        //'posts_per_page'         => -1,
+                        'numberposts' => 1000,
                         'no_found_rows'          => true,
                         'ignore_sticky_posts'    => true,
                         'update_post_term_cache' => false,
@@ -1793,7 +1789,8 @@ function statistic_company($data)
     arsort($most_popular);
     $args = array(
         'post_type' => 'course',
-        'posts_per_page' => -1,
+        //'posts_per_page' => -1,
+        'numberposts' => 1000,
         'orderby' => 'post_date',
         'order' => 'DESC',
         'include' => $most_popular,
@@ -1895,8 +1892,12 @@ function statistic_company($data)
 
 function statistic_individual($data)
 {
+    if (!get_user_by('ID', $data['ID']))
+        return new WP_REST_Response("You have to fill the id of the current user !",401);
+
     global $wpdb;
     $current_user = intval($data['ID']);
+
     $company = get_field('company',  'user_' . $current_user);
     $user_connected = get_user_by('ID', $current_user)->data;
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
@@ -1909,7 +1910,6 @@ function statistic_individual($data)
     );
     $members_active = 0;
     $members_inactive = 0;
-    $budget_spent = 0;
     $numbers = array();
     $most_topics_view = array();
 
@@ -1947,8 +1947,10 @@ function statistic_individual($data)
                     $user->data->departement = $departments[0]['name'];
                 $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
                 unset($user->data->user_pass);
-                if ($user->ID != $current_user)
-                        $members[] = $user->data;
+                if ($user->ID != $current_user) {
+                    $user->data->roles = $user->roles;
+                    $members[] = $user->data;
+                }
                 // Assessment
                     $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
@@ -1965,7 +1967,8 @@ function statistic_individual($data)
         'author__in' => $numbers,
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1,
+        //'numberposts' => 1000,
     );
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
@@ -1995,7 +1998,8 @@ function statistic_individual($data)
                         'post_type' => 'progression',
                         'title' => $course->post_name,
                         'post_status' => 'publish',
-                        'posts_per_page'         => -1,
+                        //'posts_per_page'         => -1,
+                        'numberposts' => 1000,
                         'no_found_rows'          => true,
                         'ignore_sticky_posts'    => true,
                         'update_post_term_cache' => false,
@@ -2044,7 +2048,8 @@ function statistic_individual($data)
         'author' => $current_user,
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1
+        'numberposts' => 1000,
     );
     $assessments_created = get_posts($args);
     $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
@@ -2054,7 +2059,8 @@ function statistic_individual($data)
         'post_type' => 'mandatory',
         'post_status' => 'publish',
         'author__in' => $current_user,
-        'posts_per_page'         => -1,
+        //'posts_per_page'         => -1,
+        'numberposts' => 1000,
         'no_found_rows'          => true,
         'ignore_sticky_posts'    => true,
         'update_post_term_cache' => false,
@@ -2068,7 +2074,8 @@ function statistic_individual($data)
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1,
+        'numberposts' => 1000,
     );
     $assessments = get_posts($args);
     $count_assessments = count($assessments);
@@ -2115,7 +2122,7 @@ function statistic_individual($data)
                     'not_started'=>$assessment_not_started,
                     'completed'=>$assessment_completed,
                 ),
-            ),            'most_topics_view'=>$most_topics_view,
+            ),  'most_topics_view'=>$most_topics_view,
             'other_membre'=>$members
         ));
     $respons->set_status(200);
@@ -2128,7 +2135,10 @@ function statistic_team($data)
     $users = get_users();
     $numbers = array();
     $members = array();
+    if (!get_user_by('ID', $data['ID']))
+        return new WP_REST_Response("You have to fill the id of the current user !",401);
     $current_user = intval($data['ID']);
+
     $company_user = get_field('company',  'user_' . $current_user);
     $assessment_validated = array();
     $member_active = 0;
@@ -2148,7 +2158,8 @@ function statistic_team($data)
         'post_type' => 'mandatory',
         'post_status' => 'publish',
         'author' => $current_user,
-        'posts_per_page'         => -1,
+        //'posts_per_page'         => -1,
+        'numberposts' => 1000,
         'no_found_rows'          => true,
         'ignore_sticky_posts'    => true,
         'update_post_term_cache' => false,
@@ -2164,7 +2175,8 @@ function statistic_team($data)
         'author__in' => $numbers,
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1,
+        'numberposts' => 1000,
     );
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
@@ -2247,7 +2259,8 @@ function statistic_team($data)
                         'post_type' => 'progression',
                         'title' => $course->post_name,
                         'post_status' => 'publish',
-                        'posts_per_page'         => -1,
+                        //'posts_per_page'         => -1,
+                        'numberposts' => 1000,
                         'no_found_rows'          => true,
                         'ignore_sticky_posts'    => true,
                         'update_post_term_cache' => false,
@@ -2284,7 +2297,7 @@ function statistic_team($data)
         'author'=>$current_user,
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1
     );
     $total_courses = count(get_posts($args));
     /* Assessment */
@@ -2293,7 +2306,8 @@ function statistic_team($data)
         'post_status' => 'publish',
         'orderby' => 'date',
         'order' => 'DESC',
-        'posts_per_page' => -1
+        //'posts_per_page' => -1,
+        'numberposts' => 1000,
     );
     $assessments = get_posts($args);
     $count_assessments = count($assessments);
@@ -2306,6 +2320,7 @@ function statistic_team($data)
         $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
     }
     /* assessment doing by this user */
+    /*
     $args = array(
         'post_type' => 'assessment',
         'post_status' => 'publish',
@@ -2316,7 +2331,7 @@ function statistic_team($data)
     );
     $assessments_created = get_posts($args);
     $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
-
+    */
     $desktop_vs_mobile = array(
         'desktop' => array(
             'Jan'=>get_number_for_month('Jan'),
@@ -2526,10 +2541,6 @@ function Selecteer_experts($data)
 }
 function grantPushRole($data)
 {
-    $role = $data['role'];
-    $budget = $data['budget'];
-    $user_id = $data['id'];
-    $user = new WP_User($user_id);
     $required_parameters = ['role','budget'];
     $errors = validated($required_parameters, $data);
     if($errors):
@@ -2537,12 +2548,16 @@ function grantPushRole($data)
         $response->set_status(401);
         return $response;
     endif;
+    $role = $data['role'];
+    $budget = $data['budget'];
+    $user_id = $data['id'];
+    $user = new WP_User($user_id);
+
     $user->add_role( $role );
     update_field('amount_budget', $budget, 'user_' . $user_id);
     //send Email
     $user->data->budget_amount = get_field('amount_budget','user_' . $user_id)?:0;
     $user->data->roles = $user->roles;
-
 
     sendEmailBecaumeManager($user_id,$role);
     $response = new WP_REST_Response(
