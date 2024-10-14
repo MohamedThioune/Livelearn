@@ -6669,8 +6669,9 @@ function add_assessment_with_questions(WP_REST_Request $request) {
   
   $data = $request->get_json_params();
   
-  if (empty($data['title']) || empty($data['questions'])) {
-      return new WP_Error('missing_data', 'Title and questions are required', array('status' => 400));
+  // Vérifier que les champs requis sont présents
+  if (empty($data['title']) || empty($data['questions']) || empty($data['author_id']) || empty($data['level'])) {
+      return new WP_Error('missing_data', 'Title, questions, author_id, and level are required', array('status' => 400));
   }
   
   // Commencer une transaction pour assurer l'intégrité des données
@@ -6687,10 +6688,12 @@ function add_assessment_with_questions(WP_REST_Request $request) {
               'category_id' => (int) $data['category_id'],
               'is_public' => isset($data['is_public']) ? (int) $data['is_public'] : 0,
               'is_enabled' => isset($data['is_enabled']) ? (int) $data['is_enabled'] : 0,
+              'author_id' => (int) $data['author_id'], 
+              'level' => sanitize_text_field($data['level']),
               'createdAt' => current_time('mysql', true),
               'updatedAt' => current_time('mysql', true),
           ),
-          array('%s', '%s', '%d', '%d', '%d', '%d', '%s', '%s')
+          array('%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s')
       );
 
       // Vérification des erreurs SQL
@@ -7181,9 +7184,12 @@ function get_successful_assessments(WP_REST_Request $request) {
 function get_all_assessments_with_question_count(WP_REST_Request $request) {
   global $wpdb;
 
+  // Récupère l'ID de l'utilisateur à partir de la requête (ou autre méthode)
+  $user_id = $request->get_param('user_id');
+
   // Requête pour obtenir tous les assessments avec le nombre de questions associées
   $assessments = $wpdb->get_results(
-      "SELECT a.id, a.title, a.description, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+      "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level ,  a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
       FROM {$wpdb->prefix}assessments a
       LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
       GROUP BY a.id"
@@ -7194,9 +7200,47 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
       return rest_ensure_response(array('message' => 'No assessments found.'));
   }
 
-  // Retourner les assessments avec le nombre de questions sous forme de réponse JSON
+  // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
+  foreach ($assessments as &$assessment) {
+      // Rechercher si l'utilisateur a un résultat pour cet assessment
+      $result = $wpdb->get_row(
+          $wpdb->prepare(
+              "SELECT score, is_success FROM {$wpdb->prefix}result WHERE user_id = %d AND assessment_id = %d",
+              $user_id,
+              $assessment->id
+          )
+      );
+
+      if ($result) {
+          if ($result->is_success) {
+              $assessment->status = 'validated'; // L'utilisateur a validé l'évaluation
+          } else {
+              $assessment->status = 'failed'; // L'utilisateur a échoué l'évaluation
+          }
+          $assessment->score = $result->score; // Inclure le score
+      } else {
+          $assessment->status = 'not_attempted'; // L'utilisateur n'a jamais tenté l'évaluation
+          $assessment->score = null; // Pas de score car jamais tenté
+      }
+  }
+
+  foreach ($assessments as $key => $assessment) 
+  {
+      if (get_user_by('ID', $assessment->author_id) != null)
+      {
+        $author = get_user_by('ID', $assessment->author_id) ?? null;
+        $author_img = get_field('profile_img','user_'.$author->ID) ? get_field('profile_img','user_'.$author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $assessment->author = new Expert($author, $author_img);
+      }
+       else
+        $assessment -> author = null; 
+       $assessment->category = get_category($assessment->category_id) ?? null;
+  }
+
+  // Retourner les assessments avec le nombre de questions et le statut
   return rest_ensure_response($assessments);
 }
+
 
 
 
