@@ -7185,7 +7185,14 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   global $wpdb;
 
   // Récupère l'ID de l'utilisateur à partir de la requête (ou autre méthode)
-  $user_id = $request->get_param('user_id');
+  $user_id = $GLOBALS['user_id'] ?? 0 ;
+
+  if ($user_id == 0) 
+  {
+    $response = new WP_REST_Response("You have to login with valid credentials!");
+    $response->set_status(400);
+    return $response;
+  }
 
   // Requête pour obtenir tous les assessments avec le nombre de questions associées
   $assessments = $wpdb->get_results(
@@ -7201,7 +7208,7 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   }
 
   // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
-  foreach ($assessments as &$assessment) {
+  foreach ($assessments as $key => $assessment) {
       // Rechercher si l'utilisateur a un résultat pour cet assessment
       $result = $wpdb->get_row(
           $wpdb->prepare(
@@ -7234,8 +7241,15 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
       }
        else
         $assessment -> author = null; 
-       $assessment->category = get_category($assessment->category_id) ?? null;
-  }
+       $category  = get_categories(
+        array(
+        'taxonomy'   => 'course_category',
+        'include' => (int)$assessment->category_id,
+        )) ?? null ;
+       if ($category != null)
+       $category->image = get_field('image', 'category_'. $category->cat_ID) ?? "";
+       $assessment->category = $category ?? null;
+    }
 
   // Retourner les assessments avec le nombre de questions et le statut
   return rest_ensure_response($assessments);
