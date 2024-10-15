@@ -136,10 +136,10 @@
         $trigger_badges = [
             'Read my first article !',
             'Read 50 articles !',
-            'Read 10 videos !',
-            'Read 50 videos !' ,
-            'Read 7 podcasts !' ,
-            'View the same topic more than 10 times'
+            'Watch 10 videos !',
+            'Watch 50 videos !' ,
+            'Listen 7 podcasts !' ,
+            'View the same topic more than 10 times'    
         ];
 
         $array_badges = array();
