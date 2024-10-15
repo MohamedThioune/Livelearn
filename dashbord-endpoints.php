@@ -517,8 +517,8 @@ $args = array(
         //'post_status' => array_keys(wc_get_order_statuses()),
         'post_status' => array('wc-processing'),
     );
-    $bunch_orders = wc_get_orders($order_args);
-    //$bunch_orders = array();
+    //$bunch_orders = wc_get_orders($order_args);
+    $bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
@@ -531,6 +531,7 @@ $args = array(
     $courses = get_posts($args);
     foreach ($courses as $course){
         $all_subtopics = array();
+
         $subtopics = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent' => (int)'expert',
@@ -539,11 +540,39 @@ $args = array(
         if ($subtopics != false)
             $all_subtopics = array_merge($all_subtopics,$subtopics);
 
+        $category = ' ';
+        /*
+        $category_str = 0;
+        if($category == ' '){
+            $one_category = get_field('categories',  $course->ID);
+            if($one_category) {
+                $catStr = $one_category[0]['value'];
+                $category_str = intval($catStr[0]);
+            } else{
+                $one_category = get_field('category_xml',  $course->ID);
+                if(isset($one_category[0]))
+                    $category_id = intval($one_category[0]['value']);
+            }
+            if ($category_str) {
+                if ($category_str) {
+                    $category_name = get_the_category_by_ID($category_str);
+                    if(!is_wp_error($category_name))
+                       $category = (string)$category_name;
+                }
+                else {
+                    $category_name = get_the_category_by_ID($category_id);
+                    if (!is_wp_error($category_name))
+                    $category = (string)$category_name;
+                }
+            }
+        }*/
+
         $price = get_field('price',$course->ID);
         $course->price = $price ? : 'Gratis';
         $course->startDate = date('d/m/Y',strtotime($course->post_date));
         $course->courseType = get_field('course_type',$course->ID);
-        $course->subects = $all_subtopics[2]->name;
+        $course->subects = $all_subtopics[0];
+        //$course->subects = $category;
         $course->sales = in_array($course->ID, $enrolled_user); //true or false
     }
     $response = new WP_REST_Response($courses);
@@ -1575,6 +1604,7 @@ function statistic_company($data)
     $u = get_user_by('ID', $current_user);
     if (!$u)
         return new WP_REST_Response("You have to fill the id of the current user !",401);
+
     $current_user = intval($current_user);
 
     $company = get_field('company',  'user_' . $current_user);
@@ -1594,7 +1624,6 @@ function statistic_company($data)
     }
 
     $company[0]->company_image = $image;
-    //$u = get_user_by('ID', $current_user);
 
     $user_connected = get_user_by('ID', $current_user)->data;
     $user_connected->roles = $u->roles;
@@ -1609,7 +1638,6 @@ function statistic_company($data)
     );
     $members_active = 5;
     $members_inactive = 5;
-
 
     if (!empty($company))
         $company_connected = $company[0]->ID;
@@ -1639,6 +1667,7 @@ function statistic_company($data)
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
+                break;
             }
         $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
         $if_user_actif = count($wpdb->get_results($sql));
@@ -1655,7 +1684,7 @@ function statistic_company($data)
         'author'=>$current_user,
         'orderby' => 'date',
         'order' => 'DESC',
-        'numberposts' => 1000,
+        'numberposts' => 500,
         //'posts_per_page' => -1
     );
     $total_courses = count(get_posts($args));
@@ -1664,7 +1693,7 @@ function statistic_company($data)
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
-
+    $most_topics_view = [];
     foreach ($topic_views as $topic){
         $subtopic = array();
         $subtopic['id'] = $topic->data_id;
@@ -1674,9 +1703,10 @@ function statistic_company($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    usort($most_topics_view, function($a, $b) {
-        return ($b['occurence']) <=> $a['occurence'];
-    });
+    if (!empty($most_topics_view))
+        usort($most_topics_view, function($a, $b) {
+            return ($b['occurence']) <=> $a['occurence'];
+        });
     /* Assessment */
     $args = array(
         'post_type' => 'assessment',
@@ -1684,7 +1714,7 @@ function statistic_company($data)
         'orderby' => 'date',
         'order' => 'DESC',
         //'posts_per_page' => -1
-        'numberposts' => 1000
+        'numberposts' => 500
     );
     $assessments = get_posts($args);
     $count_assessments = count($assessments);
@@ -1705,8 +1735,9 @@ function statistic_company($data)
         'orderby' => 'date',
         'order' => 'DESC',
         //'posts_per_page' => -1,
-        'numberposts' => 1000,
+        'numberposts' => 500,
     );
+
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
 
@@ -1715,7 +1746,7 @@ function statistic_company($data)
         'post_status' => array('wc-processing', 'wc-completed'),
         'orderby' => 'date',
         'order' => 'DESC',
-        'limit' => 1000,
+        'limit' => 500,
     );
     $bunch_orders = wc_get_orders($args);
     //$bunch_orders = array();
@@ -1741,7 +1772,7 @@ function statistic_company($data)
                         'title' => $course->post_name,
                         'post_status' => 'publish',
                         //'posts_per_page'         => -1,
-                        'numberposts' => 1000,
+                        'numberposts' => 500,
                         'no_found_rows'          => true,
                         'ignore_sticky_posts'    => true,
                         'update_post_term_cache' => false,
@@ -1790,7 +1821,7 @@ function statistic_company($data)
     $args = array(
         'post_type' => 'course',
         //'posts_per_page' => -1,
-        'numberposts' => 1000,
+        'numberposts' => 500,
         'orderby' => 'post_date',
         'order' => 'DESC',
         'include' => $most_popular,
@@ -1857,10 +1888,10 @@ function statistic_company($data)
             'percentage'=>round(($value / $total_occurences) * 100, 2),
         );
     }
-
-    usort($avairages_topics_company, function($a, $b) {
-        return $b['percentage'] <=> $a['percentage'];
-    });
+    if(!empty($avairages_topics_company))
+        usort($avairages_topics_company, function($a, $b) {
+            return $b['percentage'] <=> $a['percentage'];
+        });
     /*                      / /                      */
     $respons = new WP_REST_Response(
         array(
@@ -1938,13 +1969,17 @@ function statistic_individual($data)
 
         if(!empty($company))
             if($company[0]->ID == $company_connected) {
-                $departments = get_field('departments', $company[0]->ID) ? : array();
+                //$departments = get_field('departments', $company[0]->ID) ? : array();
                 $numbers[] = $user->ID;
                 $user->data->status = $status;
+                /*
                 if(empty($departments))
                     $user->data->departement = 'IT';
                 else
                     $user->data->departement = $departments[0]['name'];
+                */
+                $user->data->department = get_field('department','user_'. $user->ID)?:'';
+
                 $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
                 unset($user->data->user_pass);
                 if ($user->ID != $current_user) {
@@ -1956,6 +1991,7 @@ function statistic_individual($data)
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
+                break;
             }
     }
 
@@ -1999,7 +2035,7 @@ function statistic_individual($data)
                         'title' => $course->post_name,
                         'post_status' => 'publish',
                         //'posts_per_page'         => -1,
-                        'numberposts' => 1000,
+                        'numberposts' => 500,
                         'no_found_rows'          => true,
                         'ignore_sticky_posts'    => true,
                         'update_post_term_cache' => false,
@@ -2049,7 +2085,7 @@ function statistic_individual($data)
         'orderby' => 'date',
         'order' => 'DESC',
         //'posts_per_page' => -1
-        'numberposts' => 1000,
+        'numberposts' => 500,
     );
     $assessments_created = get_posts($args);
     $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
@@ -2060,7 +2096,6 @@ function statistic_individual($data)
         'post_status' => 'publish',
         'author__in' => $current_user,
         //'posts_per_page'         => -1,
-        'numberposts' => 1000,
         'no_found_rows'          => true,
         'ignore_sticky_posts'    => true,
         'update_post_term_cache' => false,
@@ -2075,7 +2110,7 @@ function statistic_individual($data)
         'orderby' => 'date',
         'order' => 'DESC',
         //'posts_per_page' => -1,
-        'numberposts' => 1000,
+        'numberposts' => 500,
     );
     $assessments = get_posts($args);
     $count_assessments = count($assessments);
@@ -2159,7 +2194,7 @@ function statistic_team($data)
         'post_status' => 'publish',
         'author' => $current_user,
         //'posts_per_page'         => -1,
-        'numberposts' => 1000,
+        //'numberposts' => 500,
         'no_found_rows'          => true,
         'ignore_sticky_posts'    => true,
         'update_post_term_cache' => false,
@@ -2175,8 +2210,7 @@ function statistic_team($data)
         'author__in' => $numbers,
         'orderby' => 'date',
         'order' => 'DESC',
-        //'posts_per_page' => -1,
-        'numberposts' => 1000,
+        'numberposts' => 500,
     );
     $member_courses = get_posts($args);
     $member_courses_id = array_column($member_courses, 'ID');
@@ -2192,7 +2226,7 @@ function statistic_team($data)
             if($company[0]->ID == $company_connected) {
                 $prijs = get_field('price', $user->ID);
                 $budget_spent = $prijs;
-                $departments = get_field('departments', $company[0]->ID) ? : array();
+                //$departments = get_field('departments', $company[0]->ID) ? : array();
                 $numbers[] = $user->ID;
                 $status = 'Inactive';
 
@@ -2202,11 +2236,14 @@ function statistic_team($data)
                     $status = 'Active';
                     $member_active++;
                 }
-
+                /*
                 if(empty($departments))
                     $user->data->departement = 'IT';
                 else
                     $user->data->departement = $departments[0]['name'];
+                */
+                $user->data->departement = get_field('department','user_'. $user->ID)?:'';
+
                 $user->data->status = $status;
                 $user->data->personel_budget = $budget_spent ? : 0;
 
@@ -2217,6 +2254,7 @@ function statistic_team($data)
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
+                break;
             }
     }
     //Topic views
@@ -2260,7 +2298,7 @@ function statistic_team($data)
                         'title' => $course->post_name,
                         'post_status' => 'publish',
                         //'posts_per_page'         => -1,
-                        'numberposts' => 1000,
+                        'numberposts' => 500,
                         'no_found_rows'          => true,
                         'ignore_sticky_posts'    => true,
                         'update_post_term_cache' => false,
@@ -2297,6 +2335,7 @@ function statistic_team($data)
         'author'=>$current_user,
         'orderby' => 'date',
         'order' => 'DESC',
+        'numberposts' => 500,
         //'posts_per_page' => -1
     );
     $total_courses = count(get_posts($args));
@@ -2320,18 +2359,7 @@ function statistic_team($data)
         $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
     }
     /* assessment doing by this user */
-    /*
-    $args = array(
-        'post_type' => 'assessment',
-        'post_status' => 'publish',
-        'author' => $current_user,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'posts_per_page' => -1
-    );
-    $assessments_created = get_posts($args);
-    $count_assessments_created = (!empty($assessments_created)) ? count($assessments_created) : 0;
-    */
+
     $desktop_vs_mobile = array(
         'desktop' => array(
             'Jan'=>get_number_for_month('Jan'),
