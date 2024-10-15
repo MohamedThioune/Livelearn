@@ -310,7 +310,7 @@ function companyPeople($data){
             $user->phone = get_field('telnr',  'user_' . $user->ID)?:'';
             $user->isManaged = in_array($user->ID,$users_manageds);
             $user->roles = $roles;
-
+            $user->budget = get_field('amount_budget','user_' . $user->ID)?:0;
             if(!empty($company)){
                 $user->company = $company[0];
                 $company_id = $company[0]->ID;
