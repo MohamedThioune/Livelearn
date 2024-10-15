@@ -238,7 +238,6 @@ $urls =
         'Hospitality News'=>'https://hospitalitynewsny.com/',
         'ZOUT'=>'https://www.zoutmagazine.eu/',
         'Tableau'=>'https://tableaumagazine.nl/',
-
         'Amsterdam Magazine' =>	'https://www.amsterdammagazine.com/',
 	    'Smart Farmer Africa' =>	'https://smartfarmerkenya.com/',
 	    'Modern Agriculture' =>	'https://modernagriculture.ca/',
@@ -252,49 +251,36 @@ $urls =
 	    'Computer' =>	'https://www.computer.org/',
 	    'PHP Magazine' =>	'https://phpmagazine.net/',
 	    'Mouse is Python' =>	'https://www.blog.pythonlibrary.org/',
-
 	    'Digital DJ Tips' =>'https://www.digitaldjtips.com/',
-      
         'Centrum voor Conflicthantering' =>	'https://cvc.nl/',
         'HR Morning'	 =>'https://www.hrmorning.com/',
-       
         'Human in Progress'  =>	'https://humaninprogress.com/',
         'Personelle Today'	 => 'https://www.personneltoday.com/',
-       
         'Wccf Tech' => 'https://wccftech.com/',
         'Kit Guru'  =>	'https://www.kitguru.net/',
-      
         'CHT'  =>	'https://chtmag.com/',
         'Intelligent Transport'	 => 'https://www.intelligenttransport.com/',
-      
         'Attorney at Law Magazine'  =>	'https://attorneyatlawmagazine.com/',
         'Lawyer Monthly'  =>	'https://www.lawyer-monthly.com/',
-      
         'Architects Journal'  =>	'https://www.architectsjournal.co.uk/',
         'E-architect' =>	'https://www.e-architect.com/',
         'Construction News'	 => 'https://www.constructionnews.co.uk/',
         'Construction Week'  =>	'https://www.constructionweekonline.com/',
-       
         'Threat Post'=>	'https://threatpost.com/',
-      
         'ARTnews'  =>	'https://www.artnews.com/',
         'Design Wanted'	 =>'https://designwanted.com/',
         'Craftsmanship'	 =>'https://craftsmanship.net/',
         'Wood and Panel'  =>	'https://www.woodandpanel.com/',
-       															
-	   'Platform O' =>	'https://platformoverheid.nl/',																							
-	   'Duurzaam Ondernemen' =>	'https://www.duurzaam-ondernemen.nl/',																																											
-	   'IVVD' =>	'https://www.ivvd.nl/',																																													
-	   'De Afdeling Marketing' =>	'https://deafdelingmarketing.nl/',																																												
-	   'Neurofactor' =>	'https://neurofactor.nl/',																							
-	   'Kennisportal'	=> 'https://www.kennisportal.com/'	,																							
-	   'Orbis' =>	'https://www.orbis-software.nl/',																																												
-	   'Onno Kleyn' =>	'https://www.onnokleyn.nl/',																						
-	   'NFCI' =>	'https://nfcihospitality.com/',																																													
-	   'SVO' =>	'https://www.svo.nl/'																						
-																										
-        
-        
+	    'Platform O' =>	'https://platformoverheid.nl/',
+	    'Duurzaam Ondernemen' =>	'https://www.duurzaam-ondernemen.nl/',
+	    'IVVD' =>	'https://www.ivvd.nl/',
+	    'De Afdeling Marketing' =>	'https://deafdelingmarketing.nl/',
+	    'Neurofactor' =>	'https://neurofactor.nl/',
+	    'Kennisportal'	=> 'https://www.kennisportal.com/'	,
+	    'Orbis' =>	'https://www.orbis-software.nl/',
+	    'Onno Kleyn' =>	'https://www.onnokleyn.nl/',
+	    'NFCI' =>	'https://nfcihospitality.com/',
+	    'SVO' =>	'https://www.svo.nl/'
     ];
     
 
@@ -1187,9 +1173,8 @@ if (!empty($courses)) {
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',true)
                 $('#select_field').attr('hidden',false)
-                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the article.</span>";
-                //   alert('Something is wrong');
-                // location.reload();
+                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the course.</span>";
+                   console.log(error)
                },
                success: function(data) {
                     console.log('response ',data);

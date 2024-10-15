@@ -134,9 +134,11 @@ if($optie == "✔"){
         $podcasts = explode('^', $course->podcasts);
         $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
-        foreach ($podcasts as $item) {
+        foreach ($podcasts as $key => $item) {
             if (!$item)
                 continue;
+            if ($key==180)
+                break;
 
             $podcasts_playlist = [];
             $podcast = explode('~', $item);
