@@ -496,7 +496,7 @@ function job($id, $userApplyId = null){
   $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
   $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
   $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
-  $sample['favorited'] = [];
+  // $sample['favorited'] = [];
 
   $sample['skills_passport'] = get_field('job_topics', $post->ID) ?: false;
   $sample['assessments'] = get_field('job_assessments', $post->ID) ?: false;
@@ -582,7 +582,7 @@ function homepage(){
   $errors = ['errors' => '', 'error_data' => ''];
   $limit_job = 6;
   $limit_post = 3;
-  // $limit_candidate = 20;
+  $limit_candidate = 20;
 
   //Job [Block]
   $args = array(
@@ -718,9 +718,9 @@ function homepage(){
     $sample = candidate($value->ID);
     array_push($candidates, $sample);
 
-    // $i += 1;
-    // if($i >= $limit_candidate)
-    //   break;
+    $i += 1;
+    if($i >= $limit_candidate)
+      break;
   }
   $infos['candidates'] = $candidates;
 
@@ -855,17 +855,20 @@ function candidateDetail(WP_REST_Request $request){
 
   $sample = candidate($param_user_id);
 
-  //Favorited course or not
+  //Favorited or not
   $favorited = false;
-  $favorites = array();
   if($userID):
     $saves = get_field('save_liggeey', 'user_' . $userID);
     foreach($saves as $save)
-      if($save['type'] == 'candidate' && $save['id'] == $param_user_id):
+      if($save['type'] == 'candidate' && $save['id'] == $param_user_id)
         $favorited = true;
-        $favorites[] = get_user_by('ID', $save['id']);
-      endif;
   endif;
+  $favorites = array();
+  $saves = get_field('save_liggeey', 'user_' . $param_user_id);
+  foreach($saves as $save)
+    if($save['type'] == 'candidate')
+      $favorites[] = get_user_by('ID', $save['id']);
+    
   $sample->favorites = $favorites;
   $sample->favorited = $favorited;
   //Response
