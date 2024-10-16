@@ -868,7 +868,7 @@ function candidateDetail(WP_REST_Request $request){
   foreach($saves as $save)
     if($save['type'] == 'candidate')
       $favorites[] = get_user_by('ID', $save['id']);
-    
+
   $sample->favorites = $favorites;
   $sample->favorited = $favorited;
   //Response
@@ -1757,15 +1757,17 @@ function FavoritesUser(WP_REST_Request $request){
   endif;
 
   //Favorite company
+  $matIDs = [];
   $main_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
   foreach($main_favorites as $favo):
     if(!$favo)
       continue;
     if($favo['type'] != 'candidate')
       continue;
+
     $user_id = $favo['id'];
     $user = get_user_by('ID', $user_id);
-    if(!$user)
+    if(!$user || in_array($user->ID, $matIDs))
       continue;
 
     $errors = array();
@@ -1776,6 +1778,7 @@ function FavoritesUser(WP_REST_Request $request){
       return $response;
     endif;
 
+    $matIDs[] = $user->ID;
     $favorite[] = candidate($user->ID);
   endforeach;
 
