@@ -1,6 +1,8 @@
 
 <?php
-$trigger = "LIGGEEY";
+$company = get_field('company',  'user_' . $user->ID);
+$title = $company[0]->post_title;
+$trigger = ($title) ? $title . 'needs your help !' : 'Livelearn';
 $mail_invitation_body =
 
 
@@ -179,8 +181,8 @@ $mail_invitation_body =
                           style="border-collapse:collapse;border-spacing:0px;">
                           <tbody>
                             <tr>
-                              <td style="width:50px;"><a href="https://liggeey.com" target="_blank"><img alt=""
-                                    height="auto" src="' . get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png"
+                              <td style="width:50px;"><a href="https://www.livelearn.nl" target="_blank"><img alt=""
+                                    height="auto" src="' . get_stylesheet_directory_uri() . '/img/LiveLearn_logo.png"
                                     style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                     width="50"></a></td>
                             </tr>
