@@ -1,8 +1,8 @@
 
 <?php
 $company = get_field('company',  'user_' . $user->ID);
-$title = $company[0]->post_title;
-$trigger = ($title) ? $title . 'needs your help !' : 'Livelearn';
+$postTitle = $company[0]->post_title;
+$trigger .= ' needs your attention !';
 $mail_invitation_body =
 
 
@@ -120,7 +120,7 @@ $mail_invitation_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">' . $title . '</p>
+                            data-testid="Y0h44Pmw76d">' . $trigger . '</p>
                         </div>
                       </td>
                     </tr>
@@ -219,10 +219,10 @@ $mail_invitation_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>'. $trigger .'</b></span></h1>
+                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>'. $title .'</b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
                             data-testid="RJMLrMvA0Rh">
-                            <span style="font-size:14px;">'. $title .'</span>
+                            <span style="font-size:14px;">'. $trigger .'</span>
                           </p>
                         </div>
                       </td>

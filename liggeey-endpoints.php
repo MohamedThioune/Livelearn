@@ -3450,6 +3450,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
     $response->set_status($code_status);
     return $response;
   }
+  $title = (isset($request['is_livelearn'])) ? $title . 'section is missing !' : $title;
 
   $content = $request['content'] != null && !empty($request['content']) ? $request['content'] : false;
   if (!($content))
