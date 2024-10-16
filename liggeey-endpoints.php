@@ -496,6 +496,7 @@ function job($id, $userApplyId = null){
   $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
   $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
   $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
+  $sample['favorited'] = [];
 
   $sample['skills_passport'] = get_field('job_topics', $post->ID) ?: false;
   $sample['assessments'] = get_field('job_assessments', $post->ID) ?: false;
@@ -581,7 +582,7 @@ function homepage(){
   $errors = ['errors' => '', 'error_data' => ''];
   $limit_job = 6;
   $limit_post = 3;
-  $limit_candidate = 20;
+  // $limit_candidate = 20;
 
   //Job [Block]
   $args = array(
@@ -704,7 +705,7 @@ function homepage(){
 
   $users = get_users();
   //Featured candidates [Block]
-  $i = 0;
+  // $i = 0;
   foreach ($users as $key => $value) {
     // die();
     $sample = array();
@@ -717,9 +718,9 @@ function homepage(){
     $sample = candidate($value->ID);
     array_push($candidates, $sample);
 
-    $i += 1;
-    if($i >= $limit_candidate)
-      break;
+    // $i += 1;
+    // if($i >= $limit_candidate)
+    //   break;
   }
   $infos['candidates'] = $candidates;
 
@@ -856,14 +857,17 @@ function candidateDetail(WP_REST_Request $request){
 
   //Favorited course or not
   $favorited = false;
+  $favorites = array();
   if($userID):
     $saves = get_field('save_liggeey', 'user_' . $userID);
     foreach($saves as $save)
-      if($save['type'] == 'candidate' && $save['id'] == $param_user_id)
+      if($save['type'] == 'candidate' && $save['id'] == $param_user_id):
         $favorited = true;
+        $favorites[] = get_user_by('ID', $save['id']);
+      endif;
   endif;
+  $sample->favorites = $favorites;
   $sample->favorited = $favorited;
-
   //Response
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -1704,21 +1708,19 @@ function ApplicantsUser(WP_REST_Request $request){
   $sample['open_jobs'] = $jobs;
   $sample['count_open_jobs'] = !empty($jobs) ? count($jobs) : 0;
   $application = array();
-  foreach($sample['open_jobs'] as $post):
-    $job_appliants = get_field('job_appliants', $post->ID);
-    $application = (!empty($job_appliants)) ? array_merge($application, $job_appliants) : $application;
-  endforeach;
-
-  //Application company
   $mat_ids = [];
-  foreach($application as $key => $user):
-    if(in_array($user->ID, $mat_ids))
-      continue;
+  //Application company
+  foreach($sample['open_jobs'] as $post):
+    $application = get_field('job_appliants', $post->ID);
+    foreach($application as $key => $user):
+      if(in_array($user->ID, $mat_ids))
+        continue;
 
-    if($key >= 6)
-      break;
-    $applications[] = candidate($user->ID);
-    $mat_ids[] = $user->ID;
+      $tmp = candidate($user->ID);
+      $tmp->job = $post;
+      $applications[] = $tmp;
+      $mat_ids[] = $user->ID;
+    endforeach;
   endforeach;
 
   $response = new WP_REST_Response($applications);
@@ -3484,7 +3486,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
     $first_name = $user->first_name ?: $user->display_name;
     $emails = [$user->user_email, 'info@livelearn.nl'];
     // $emails = [$user->user_email];
-    $path_mail = '/templates/mail-liggeey.php';
+    $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
     require(__DIR__ . $path_mail);
     $subject = $title;
     // Have to put here the liggey admin email and define the base template
