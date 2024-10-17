@@ -3809,6 +3809,6 @@ function addTodo($data)
     return new WP_REST_Response(
         array(
             'message' => 'todo saved success...',
-            'new_feedback' => $todo,
+            'new_todo' => $todo,
         ),201);
 }
