@@ -2589,4 +2589,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'addFeedback'
     ));
+    register_rest_route ('custom/v1', '/external-internal-courses/(?P<id>\d+)', array( //need to be connected
+        'methods' => 'GET',
+        'callback' => 'getExterInterCourses'
+    ));
+    register_rest_route ('custom/v1', '/todo/add/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addTodo'
+    ));
 });
