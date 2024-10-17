@@ -751,7 +751,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role)
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>You are now a manager !</b></span></h1>
+                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>You are now a '.$role.' !</b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
                             data-testid="RJMLrMvA0Rh">Make sure your team continues to develop.</p>
                         </div>
@@ -3637,6 +3637,7 @@ function addFeedback($data)
             $superior = get_users(array('include'=> $id))[0]->data;
     $manager = $superior ? $superior->ID : $id;
 
+
     $args = array(
         'post_type' => 'feedback',
         'post_status' => 'publish',
@@ -3679,6 +3680,8 @@ function addFeedback($data)
         update_field('welke_datum_feedback', $welke_datum_feedback , $id_post);
     if($comments_assessment)
         update_field('opmerkingen', $comments_assessment , $id_post);
+
+
     // Send notification
     sendPushNotification($title,$description);
 
@@ -3691,5 +3694,121 @@ function addFeedback($data)
         array(
             'message' => 'feedback saved success...',
             'new_feedback' => $feedback,
+        ),201);
+}
+
+function getExterInterCourses($data)
+{
+    $id_user = $data['id'];
+    $numbers = array();
+    $users = get_users();
+    $external = array();
+    $internal = array();
+    $collegues = array();
+
+    $company = get_field('company',  'user_' . $id_user);
+    if($company)
+        $company_name = $company[0]->post_title;
+
+    foreach ($users as $value ) {
+        if($id_user == $value->ID)
+            continue;
+
+        $company_value = get_field('company',  'user_' . $value->ID);
+        if(!empty($company_value))
+            if($company_value[0]->post_title == $company_name):
+                array_push($numbers, $value->ID);
+                array_push($collegues, array('id'=>$value->ID,'name'=>$value->display_name?:$value->first_name.' '.$value->last_name));
+            endif;
+    }
+    $args = array(
+        'post_type' => array('post', 'course'),
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    );
+    $internal_growth_subtopics = get_user_meta($id_user,'topic');
+    $internal_subtopics = [];
+    if ($internal_growth_subtopics)
+        foreach ($internal_growth_subtopics as $value)
+            $internal_subtopics[] =  ['id'=>$value, 'name'=>(String)get_the_category_by_ID($value)];
+
+    $posts = get_posts($args);
+    foreach ($posts as $post) {
+        if (in_array($post->post_author,$numbers))
+            $internal[] = ['id'=>$post->ID,'value'=>$post->post_title];
+        else
+            $external[] = ['id'=>$post->ID,'value'=>$post->post_title];
+    }
+    return new WP_REST_Response(
+        array(
+            'external' => $external,
+            'internal' => $internal,
+            'select_the_topic_sub_topic'=>$internal_subtopics,
+            'collegue'=>$collegues,
+        ),200);
+}
+
+function addTodo($data)
+{
+    $required_parameters = ['title','type'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $id = $data['id'];
+    $title = $data['title'];
+    $collegas_feedback = $data['collegues']; // waiting in array
+    $onderwerpen_todo = $data['topics'];
+    $internal = $data['internal'];
+    $external = $data['external'];
+    $type = $data['type'];
+    $welke_datum_feedback = $data['dates'];
+    $anoniem_feedback = $data['comments_notes']; // Comments or Notes? ,What is the plan about?, Nog op- en of aanmerkingen?
+    $competencies_feedback = $data['what_competencies_plan']; // What competencies?, competencies_feedback
+    $opmerkingen = $data['comments_notes_plan']; // What competencies?
+    $hours = $data['hours'];
+
+    if ($internal)
+        $post_cursus = (get_post($internal));
+    else
+        $post_cursus = (get_post($external));
+
+    $post_name = ($type == 'Verplichte cursus' && (!empty($post_cursus))) ? $post_cursus->post_name : $title;
+
+    $args = array(
+        'post_type' => 'mandatory',
+        'post_status' => 'publish',
+        'post_title' => $post_name,
+        'post_author' => $id,
+    );
+    $id_post = wp_insert_post($args, true);
+    update_field('title_todo', $title, $id_post);
+    update_field('manager_feedback', $id , $id_post);
+
+    if ($type)
+        update_field('type_feedback', $type, $id_post);
+    if ($collegas_feedback)
+        update_field('collegas_feedback', $collegas_feedback, $id_post);
+    if($onderwerpen_todo)
+        update_field('onderwerpen_todo', $onderwerpen_todo, $id_post);
+    if ($welke_datum_feedback)
+        update_field('welke_datum_feedback', $welke_datum_feedback, $id_post);
+    if ($anoniem_feedback)
+        update_field('beschrijving_feedback', $anoniem_feedback, $id_post);
+    if ($competencies_feedback)
+        update_field('competencies_feedback', $competencies_feedback, $id_post);
+    if($opmerkingen)
+        update_field('opmerkingen', $opmerkingen, $id_post);
+    if ($hours)
+        update_field('uren_badge', $hours , $id_post);
+    $todo = get_post($id_post,true);
+    return new WP_REST_Response(
+        array(
+            'message' => 'todo saved success...',
+            'new_feedback' => $todo,
         ),201);
 }
