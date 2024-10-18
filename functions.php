@@ -2502,10 +2502,11 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'people_managed'
     ));
-    register_rest_route ('custom/v1', '/addPeopleToManaged/(?P<id>\d+)', array(
+    register_rest_route ('custom/v1', '/unManagedPerson/(?P<id>\d+)', array(
         'methods' => 'POST',
-        'callback' => 'add_people_to_manage'
+        'callback' => 'unManagePeople'
     ));
+
     register_rest_route ('custom/v1', '/addOnePersone/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'addOnePeople'
