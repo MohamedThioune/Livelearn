@@ -2637,10 +2637,13 @@ function people_managed($data)
                 continue;
             $image = get_field('profile_img',  'user_' . $id_person) ? : get_stylesheet_directory_uri() . '/img/user.png';
             $person = get_user_by('ID', $id_person);
-            if (!$person->data)
+            if (!$person)
                 continue;
+
+            $roles = $person->roles;
             $person = $person->data;
             $person->image = $image;
+            $person->roles = $roles;
             unset($person->user_pass);
             $people_managed[] = $person;
         }
@@ -2710,7 +2713,39 @@ function add_people_to_manage(WP_REST_Request $data)
             'message'=>'People added successfully to manage !',
             'people_managed'=>$people_managed,
         ));
-    $response->set_status(200);
+    $response->set_status(201);
+    return $response;
+}
+
+function unManagePeople($data)
+{
+    $required_parameters = ['people_id'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $user_connected = intval($data['id']);
+    $person_to_unmanage = $data['people_id'];
+    $people_managed = get_field('managed', 'user_'.$user_connected)?:array();
+    $index_to_remove = array_search($person_to_unmanage,$people_managed);
+    if(!$index_to_remove)
+        return new WP_REST_Response(
+            array(
+                'message'=>'error while removing this people on your list'
+            ),401);
+
+    unset($people_managed[$index_to_remove]);
+    $isInsert = update_field('managed', $people_managed, 'user_'.$user_connected);
+    if (!$isInsert)
+        return new WP_REST_Response(array('message' => 'Error while adding people to manage'), 401);
+
+    $response = new WP_REST_Response(
+        array(
+            'message'=>'personne remove on your list successfuly',
+        ));
+    $response->set_status(201);
     return $response;
 }
 
