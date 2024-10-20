@@ -703,17 +703,12 @@ function homepage(){
   endforeach;
   $infos['artikels'] = $artikels;
 
-  $users = get_users();
+  $users = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
   //Featured candidates [Block]
   $i = 0;
   foreach ($users as $key => $value) {
     // die();
     $sample = array();
-
-    //Is Liggeey User
-    $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
-    if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
-      continue;
 
     $sample = candidate($value->ID);
     array_push($candidates, $sample);
@@ -732,27 +727,15 @@ function homepage(){
 }
 
 function allCandidates(){
-  $user_query = new WP_User_Query( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
+  $users_query = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
+  $candidates = array();
 
-  return $user_query;
-  $users = get_users();
-  
-  //Featured candidates [Block]
-  foreach ($users as $key => $value) {
-    // die();
+  //All candidates 
+  foreach ($users_query as $key => $value) {
     $sample = array();
-
-    //Is Liggeey User
-    $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
-    if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
-      continue;
 
     $sample = candidate($value->ID);
     array_push($candidates, $sample);
-
-    $i += 1;
-    if($i >= $limit_candidate)
-      break;
   }
   $infos['candidates'] = $candidates;
 
@@ -760,8 +743,8 @@ function allCandidates(){
   $response = new WP_REST_Response($infos);
   $response->set_status(200);
   return $response;
-
 }
+
 //[POST]Register the company chief
 function register_company(WP_REST_Request $request){
   $required_parameters = ['first_name', 'last_name', 'email', 'bedrijf', 'phone', 'password', 'password_confirmation'];
