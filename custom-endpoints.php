@@ -2601,9 +2601,15 @@ function getCommunitiesPersonal($data) {
           $community->is_connected_user_member = true;
           break;
         }
-
-    $community->count_posts = get_field('course_community', $community->ID) ? count(get_field('course_community', $community->ID)) : 0;
     
+    $posts = get_field('course_community', $community->ID);
+    $community->count_posts = $posts ? count($posts) : 0;
+
+    //Posts community 
+    $community->posts = array();
+    foreach ($posts as $key => $value)
+      $community->posts[] = artikel($value->ID);
+
     array_push($retrieved_communities, $community);
   }
   
