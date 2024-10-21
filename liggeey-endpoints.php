@@ -703,13 +703,19 @@ function homepage(){
   endforeach;
   $infos['artikels'] = $artikels;
 
-  $users = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
+  // $users = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
+  $users = get_users();
   //Featured candidates [Block]
   $i = 0;
   foreach ($users as $key => $value) {
     // die();
     $sample = array();
 
+    //Is Liggeey User
+    $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
+    if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
+      continue;
+      
     $sample = candidate($value->ID);
     array_push($candidates, $sample);
 
@@ -877,13 +883,13 @@ function candidateDetail(WP_REST_Request $request){
       if($save['type'] == 'candidate' && $save['id'] == $param_user_id)
         $favorited = true;
   endif;
-  $favorites = array();
-  $saves = get_field('save_liggeey', 'user_' . $param_user_id);
-  foreach($saves as $save)
-    if($save['type'] == 'candidate')
-      $favorites[] = get_user_by('ID', $save['id']);
+  // $favorites = array();
+  // $saves = get_field('save_liggeey', 'user_' . $param_user_id);
+  // foreach($saves as $save)
+  //   if($save['type'] == 'candidate')
+  //     $favorites[] = get_user_by('ID', $save['id']);
 
-  $sample->favorites = $favorites;
+  // $sample->favorites = $favorites;
   $sample->favorited = $favorited;
   //Response
   $response = new WP_REST_Response($sample);
