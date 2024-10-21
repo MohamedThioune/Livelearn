@@ -211,8 +211,7 @@ function candidate($id){
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
-  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?:  get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
@@ -715,7 +714,7 @@ function homepage(){
     $is_liggeey = get_field('is_liggeey', 'user_' . $value->ID);
     if(!$is_liggeey || !$value->first_name) // No more condition "is Liggeey"
       continue;
-      
+
     $sample = candidate($value->ID);
     array_push($candidates, $sample);
 
@@ -733,7 +732,7 @@ function homepage(){
 }
 
 function allCandidates(){
-  $users_query = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
+  $users_query = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'orderby' => 'ID' ,'order' => 'DESC' ) );
   $candidates = array();
 
   //All candidates 
@@ -883,13 +882,6 @@ function candidateDetail(WP_REST_Request $request){
       if($save['type'] == 'candidate' && $save['id'] == $param_user_id)
         $favorited = true;
   endif;
-  // $favorites = array();
-  // $saves = get_field('save_liggeey', 'user_' . $param_user_id);
-  // foreach($saves as $save)
-  //   if($save['type'] == 'candidate')
-  //     $favorites[] = get_user_by('ID', $save['id']);
-
-  // $sample->favorites = $favorites;
   $sample->favorited = $favorited;
   //Response
   $response = new WP_REST_Response($sample);
@@ -2032,6 +2024,15 @@ function companyProfil(WP_REST_Request $request){
   //Get company
   $compagnie = get_field('company',  'user_' . $user_apply->ID);
   $companyInfos = company($compagnie[0]->ID);
+
+  //Favorites 
+  $favorites = array();
+  $saves = get_field('save_liggeey', 'user_' . $user_apply->ID);
+  foreach($saves as $save)
+    if($save['type'] == 'candidate')
+      $favorites[] = get_user_by('ID', $save['id']);
+  $companyInfos->favorites = $favorites;
+
   // Return response
   $response = new WP_REST_Response($companyInfos);
   $response->set_status(200);
