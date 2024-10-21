@@ -211,8 +211,7 @@ function candidate($id){
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
   $sample['adress'] = $user->adress;
-  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?: get_field('profile_img_api',  'user_' . $user->ID);
-  $sample['image'] = $sample['image'] ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+  $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?:  get_stylesheet_directory_uri() . '/img/placeholder_user.png';
   $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
   $sample['cv'] = get_field('cv',  'user_' . $user->ID);
   $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
@@ -496,6 +495,7 @@ function job($id, $userApplyId = null){
   $sample['applied'] = get_field('job_appliants', $post->ID) ?: [];
   $sample['approved'] = get_field('job_appliants_approved', $post->ID) ?: [];
   $sample['rejected'] = get_field('job_appliants_rejected', $post->ID) ?: [];
+  // $sample['favorited'] = [];
 
   $sample['skills_passport'] = get_field('job_topics', $post->ID) ?: false;
   $sample['assessments'] = get_field('job_assessments', $post->ID) ?: false;
@@ -702,6 +702,7 @@ function homepage(){
   endforeach;
   $infos['artikels'] = $artikels;
 
+  // $users = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
   $users = get_users();
   //Featured candidates [Block]
   $i = 0;
@@ -728,6 +729,25 @@ function homepage(){
   $response->set_status(200);
   return $response;
 
+}
+
+function allCandidates(){
+  $users_query = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'orderby' => 'ID' ,'order' => 'DESC' ) );
+  $candidates = array();
+
+  //All candidates 
+  foreach ($users_query as $key => $value) {
+    $sample = array();
+
+    $sample = candidate($value->ID);
+    array_push($candidates, $sample);
+  }
+  $infos['candidates'] = $candidates;
+
+  //Response
+  $response = new WP_REST_Response($infos);
+  $response->set_status(200);
+  return $response;
 }
 
 //[POST]Register the company chief
@@ -854,7 +874,7 @@ function candidateDetail(WP_REST_Request $request){
 
   $sample = candidate($param_user_id);
 
-  //Favorited course or not
+  //Favorited or not
   $favorited = false;
   if($userID):
     $saves = get_field('save_liggeey', 'user_' . $userID);
@@ -863,7 +883,6 @@ function candidateDetail(WP_REST_Request $request){
         $favorited = true;
   endif;
   $sample->favorited = $favorited;
-
   //Response
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -1704,21 +1723,19 @@ function ApplicantsUser(WP_REST_Request $request){
   $sample['open_jobs'] = $jobs;
   $sample['count_open_jobs'] = !empty($jobs) ? count($jobs) : 0;
   $application = array();
-  foreach($sample['open_jobs'] as $post):
-    $job_appliants = get_field('job_appliants', $post->ID);
-    $application = (!empty($job_appliants)) ? array_merge($application, $job_appliants) : $application;
-  endforeach;
-
-  //Application company
   $mat_ids = [];
-  foreach($application as $key => $user):
-    if(in_array($user->ID, $mat_ids))
-      continue;
+  //Application company
+  foreach($sample['open_jobs'] as $post):
+    $application = get_field('job_appliants', $post->ID);
+    foreach($application as $key => $user):
+      if(in_array($user->ID, $mat_ids))
+        continue;
 
-    if($key >= 6)
-      break;
-    $applications[] = candidate($user->ID);
-    $mat_ids[] = $user->ID;
+      $tmp = candidate($user->ID);
+      $tmp->job = $post;
+      $applications[] = $tmp;
+      $mat_ids[] = $user->ID;
+    endforeach;
   endforeach;
 
   $response = new WP_REST_Response($applications);
@@ -1752,15 +1769,17 @@ function FavoritesUser(WP_REST_Request $request){
   endif;
 
   //Favorite company
+  $matIDs = [];
   $main_favorites = get_field('save_liggeey', 'user_' . $user_apply_id);
   foreach($main_favorites as $favo):
     if(!$favo)
       continue;
     if($favo['type'] != 'candidate')
       continue;
+
     $user_id = $favo['id'];
     $user = get_user_by('ID', $user_id);
-    if(!$user)
+    if(!$user || in_array($user->ID, $matIDs))
       continue;
 
     $errors = array();
@@ -1771,6 +1790,7 @@ function FavoritesUser(WP_REST_Request $request){
       return $response;
     endif;
 
+    $matIDs[] = $user->ID;
     $favorite[] = candidate($user->ID);
   endforeach;
 
@@ -2004,6 +2024,15 @@ function companyProfil(WP_REST_Request $request){
   //Get company
   $compagnie = get_field('company',  'user_' . $user_apply->ID);
   $companyInfos = company($compagnie[0]->ID);
+
+  //Favorites 
+  $favorites = array();
+  $saves = get_field('save_liggeey', 'user_' . $user_apply->ID);
+  foreach($saves as $save)
+    if($save['type'] == 'candidate')
+      $favorites[] = get_user_by('ID', $save['id']);
+  $companyInfos->favorites = $favorites;
+
   // Return response
   $response = new WP_REST_Response($companyInfos);
   $response->set_status(200);
@@ -3442,6 +3471,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
     $response->set_status($code_status);
     return $response;
   }
+  $title = (isset($request['is_livelearn'])) ? $title . ' section is missing !' : $title;
 
   $content = $request['content'] != null && !empty($request['content']) ? $request['content'] : false;
   if (!($content))
@@ -3484,7 +3514,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
     $first_name = $user->first_name ?: $user->display_name;
     $emails = [$user->user_email, 'info@livelearn.nl'];
     // $emails = [$user->user_email];
-    $path_mail = '/templates/mail-liggeey.php';
+    $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
     require(__DIR__ . $path_mail);
     $subject = $title;
     // Have to put here the liggey admin email and define the base template

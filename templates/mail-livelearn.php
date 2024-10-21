@@ -1,6 +1,8 @@
 
 <?php
-$trigger = "LIGGEEY";
+$company = get_field('company',  'user_' . $user->ID);
+$postTitle = $company[0]->post_title;
+$trigger .= ' needs your attention !';
 $mail_invitation_body =
 
 
@@ -118,7 +120,7 @@ $mail_invitation_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">' . $title . '</p>
+                            data-testid="Y0h44Pmw76d">' . $trigger . '</p>
                         </div>
                       </td>
                     </tr>
@@ -179,8 +181,8 @@ $mail_invitation_body =
                           style="border-collapse:collapse;border-spacing:0px;">
                           <tbody>
                             <tr>
-                              <td style="width:50px;"><a href="https://liggeey.com" target="_blank"><img alt=""
-                                    height="auto" src="' . get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png"
+                              <td style="width:50px;"><a href="https://www.livelearn.nl" target="_blank"><img alt=""
+                                    height="auto" src="' . get_stylesheet_directory_uri() . '/img/LiveLearn_logo.png"
                                     style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                     width="50"></a></td>
                             </tr>
@@ -217,10 +219,10 @@ $mail_invitation_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>'. $trigger .'</b></span></h1>
+                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>'. $title .'</b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
                             data-testid="RJMLrMvA0Rh">
-                            <span style="font-size:14px;">'. $title .'</span>
+                            <span style="font-size:14px;">'. $trigger .'</span>
                           </p>
                         </div>
                       </td>
@@ -232,7 +234,7 @@ $mail_invitation_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-top: 10px;"><span
-                            style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '</b>,</span>
+                            style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Dear <b>' . $first_name  . '</b>,</span>
                           </p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">
                             <span style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
@@ -245,7 +247,7 @@ $mail_invitation_body =
                             </span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">
                             <span style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
-                            All The Liggeey Team                              
+                            All The Livelearn Team                              
                             </span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
@@ -261,7 +263,7 @@ $mail_invitation_body =
                             <tr>
                               <td align="center" bgcolor="#143352" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#143352;"
-                                valign="middle"><a href="https://liggeey.com/login"
+                                valign="middle"><a href="https://www.livelearn.nl/inloggen"
                                   style="display:inline-block;background:#143352;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
                                     style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
