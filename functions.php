@@ -2177,6 +2177,16 @@ add_action( 'rest_api_init', function () {
         'callback' => 'candidateDetail',
     ));
 
+    register_rest_route ('custom/v1', '/candidate/IsManagedOrNot', array(
+        'methods' => 'POST',
+        'callback' => 'IsManagedOrNot',
+    ));
+
+    register_rest_route ('custom/v1', '/candidates', array(
+        'methods' => 'GET',
+        'callback' => 'allCandidates',
+    ));
+
     register_rest_route ('custom/v1', '/artikel/detail', array(
         'methods' => 'POST',
         'callback' => 'artikelDetail'
@@ -2540,6 +2550,11 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'add_people_to_manage'
     ));
+    register_rest_route ('custom/v1', '/unManagedPerson/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'unManagePeople'
+    ));
+
     register_rest_route ('custom/v1', '/addOnePersone/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'addOnePeople'
@@ -2583,5 +2598,13 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/feedback/add/(?P<id>\d+)', array( //need to be connected
         'methods' => 'POST',
         'callback' => 'addFeedback'
+    ));
+    register_rest_route ('custom/v1', '/external-internal-courses/(?P<id>\d+)', array( //need to be connected
+        'methods' => 'GET',
+        'callback' => 'getExterInterCourses'
+    ));
+    register_rest_route ('custom/v1', '/todo/add/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addTodo'
     ));
 });
