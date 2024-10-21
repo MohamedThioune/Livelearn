@@ -7231,6 +7231,7 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
       }
   }
 
+
   foreach ($assessments as $key => $assessment) 
   {
       if (get_user_by('ID', $assessment->author_id) != null)
@@ -7241,14 +7242,10 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
       }
        else
         $assessment -> author = null;
-       $category  = get_categories(
-        array(
-        'taxonomy'   => 'course_category',
-        'include' => (int)$assessment->category_id,
-        ))[0] ?? null ;
-       if ($category != null)
-       $category->image = get_field('image', 'category_'. $category->cat_ID) ?? "";
-       $assessment->category = $category ?? null;
+       $assessment -> category = [
+        "name" => get_the_category_by_ID((int)$assessment->category_id),
+        "image" => get_field('image', 'category_'. (int)$assessment->category_id) ?? ""
+       ];
     }
 
   // Retourner les assessments avec le nombre de questions et le statut
