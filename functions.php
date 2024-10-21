@@ -1296,7 +1296,7 @@ function seperate_tags(){
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent'  => $categories[1],
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+    ));
 
     $functies = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -2175,11 +2175,6 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/candidate/detail', array(
         'methods' => 'POST',
         'callback' => 'candidateDetail',
-    ));
-
-    register_rest_route ('custom/v1', '/candidate/IsManagedOrNot', array(
-        'methods' => 'POST',
-        'callback' => 'IsManagedOrNot',
     ));
 
     register_rest_route ('custom/v1', '/artikel/detail', array(
