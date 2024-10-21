@@ -7246,12 +7246,12 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
         $assessment->author = new Expert($author, $author_img);
       }
        else
-        $assessment -> author = null; 
+        $assessment -> author = null;
        $category  = get_categories(
         array(
         'taxonomy'   => 'course_category',
         'include' => (int)$assessment->category_id,
-        )) ?? null ;
+        ))[0] ?? null ;
        if ($category != null)
        $category->image = get_field('image', 'category_'. $category->cat_ID) ?? "";
        $assessment->category = $category ?? null;
