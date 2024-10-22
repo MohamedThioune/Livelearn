@@ -2677,7 +2677,7 @@ function getCommunitiesOptimized($data)
   return $retrieved_communities;
 }
 
-function getCommunityById($data)
+function getCommunityBy($data)
 {
   $user_id = $GLOBALS['user_id'];
   //All communities
