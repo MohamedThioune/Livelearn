@@ -216,8 +216,10 @@ if ($audio_search){
             curl_close($ch2);
             $content_podcasts = $content;
         }
+        $i=0;
         foreach ($content_podcasts as $key => $pod)
             if ($pod->enclosure->attributes()->url) {
+                $i++;
                 $description_podcast = (string)$pod->description;
                 $title_podcast = (string)$pod->title;
                 $mp3 = $pod->enclosure->attributes()->url;
@@ -225,8 +227,9 @@ if ($audio_search){
                 $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
 
                 $podcasts .= "$mp3~$title_podcast~$description_podcast~$date~$image_audio^";
+                if ($i==100)
+                    break;
             }
-
 
         $data = array(
             //'titel' => htmlentities($title,ENT_NOQUOTES),
