@@ -2675,7 +2675,6 @@ function getCommunitiesOptimized($data)
   }
   
   return $retrieved_communities;
-
 }
 
 function getCommunityById($data)
