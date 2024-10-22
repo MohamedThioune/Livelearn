@@ -828,14 +828,13 @@ if (!empty($courses)) {
             },
             success: function(success){
                 backAudioApiPlaylist.innerHTML=success;
-                console.log('success',success)
+                //console.log('success',success)
             },error: function(error,status){
-                console.log('error',error);
-                console.log('status',status);
+                //console.log('error',error);
                 backAudioApiPlaylist.innerHTML = error;
             },complete: function(complete){
                 $('#spinner-search-audio-playlist').addClass('d-none');
-                console.log(complete);
+                //console.log(complete);
             },
         });
     });

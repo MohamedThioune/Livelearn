@@ -1210,7 +1210,7 @@ function companyPeople($data){
             $user->phone = get_field('telnr',  'user_' . $user->ID)?:'';
             $user->isManaged = in_array($user->ID,$users_manageds);
             $user->roles = $roles;
-            $user->budget = get_field('amount_budget','user_' . $user->ID)?:0;
+            $user->budget = get_field('amount_budget','user_' .$user->ID )?:0;
             if(!empty($company)){
                 $user->company = $company[0];
                 $company_id = $company[0]->ID;
@@ -1956,9 +1956,9 @@ function statistic_individual($data)
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
     $progress_courses = array(
-        'not_started' => $current_user%10,
-        'in_progress' => 8,
-        'done' => 4,
+        'not_started' => 0,
+        'in_progress' => 0,
+        'done' => 0,
     );
     $members_active = 0;
     $members_inactive = 0;
@@ -1975,44 +1975,41 @@ function statistic_individual($data)
     $date_this_month = date('Y-m-d');
     $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
+
+
     foreach ($users as $user ) {
         $company = get_field('company',  'user_' . $user->ID);
         $status = 'Inactive';
 
-        $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
-        $if_user_actif = count($wpdb->get_results($sql));
-        if ($if_user_actif) {
-            $status = 'Active';
-            $members_active = $members_active + 1;
-        }
-        else
-            $members_inactive = $members_inactive + 1;
-
         if(!empty($company))
             if($company[0]->ID == $company_connected) {
-                //$departments = get_field('departments', $company[0]->ID) ? : array();
+                $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+                $if_user_actif = count($wpdb->get_results($sql));
+                if ($if_user_actif) {
+                    $status = 'Active';
+                    $members_active = $members_active + 1;
+                }
+                else
+                    $members_inactive = $members_inactive + 1;
+
                 $numbers[] = $user->ID;
                 $user->data->status = $status;
-                /*
-                if(empty($departments))
-                    $user->data->departement = 'IT';
-                else
-                    $user->data->departement = $departments[0]['name'];
-                */
                 $user->data->department = get_field('department','user_'. $user->ID)?:'';
 
                 $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
                 unset($user->data->user_pass);
-                if ($user->ID != $current_user) {
-                    $user->data->roles = $user->roles;
-                    $members[] = $user->data;
-                }
+                $user->data->roles = $user->roles;
+                $user->data->budget = get_field('amount_budget','user_' .$user->ID )?:0;
+
+                $members[] = $user->data;
+                //array_push($members,$user->data);
+
                 // Assessment
                     $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
-                break;
+                //break;
             }
     }
 
@@ -2034,7 +2031,7 @@ function statistic_individual($data)
     $enrolled_courses = array();
 
     $bunch_orders = wc_get_orders($args);
-    // $bunch_orders = array();
+    //$bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     foreach($bunch_orders as $order){
@@ -2073,11 +2070,9 @@ function statistic_individual($data)
                                 $status = "done";
 
                             switch ($status) {
-
                                 case 'in_progress':
                                     $progress_courses['in_progress'] += 1;
                                     break;
-
                                 case 'done':
                                     $progress_courses['done'] += 1;
                                     //course finished
@@ -2137,8 +2132,8 @@ function statistic_individual($data)
     $count_assessments = count($assessments);
     $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
 
-    $assessment_not_started = 3;
-    $assessment_completed = 2;
+    $assessment_not_started = 0;
+    $assessment_completed = 0;
     if($count_assessments > 0){
         $not_started_assessment = abs($count_assessments - $assessment_validated);
         $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
@@ -2146,7 +2141,8 @@ function statistic_individual($data)
     }
 
     //Topic views
-    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
+
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id = " . $current_user . " AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
 
     foreach ($topic_views as $topic){
@@ -2162,7 +2158,7 @@ function statistic_individual($data)
         array(
             'firs_tab'=>array(
                 'budget_spent'=>$budget_spent,
-                'course_in_progress'=>$progress_courses['not_started'],
+                'course_in_progress'=>$progress_courses['in_progress'],
                 'your_courses'=>$count_enrolled_courses,
                 'course_done'=>$progress_courses['done'],
                 'assessment_created'=>$count_assessments_created,
@@ -2179,7 +2175,8 @@ function statistic_individual($data)
                     'completed'=>$assessment_completed,
                 ),
             ),  'most_topics_view'=>$most_topics_view,
-            'other_membre'=>$members
+            'other_membre_count'=>count($members),
+            'other_membre'=>$members,
         ));
     $respons->set_status(200);
     return $respons;
@@ -2194,6 +2191,8 @@ function statistic_team($data)
     if (!get_user_by('ID', $data['ID']))
         return new WP_REST_Response("You have to fill the id of the current user !",401);
     $current_user = intval($data['ID']);
+    $members_active = 0;
+    $members_inactive = 0;
 
     $company_user = get_field('company',  'user_' . $current_user);
     $assessment_validated = array();
@@ -2203,8 +2202,7 @@ function statistic_team($data)
         'in_progress' => 3,
         'done' => 10,
     );
-    $members_active = 5;
-    $members_inactive = 5;
+
     $date = new DateTime();
     $date_this_month = date('Y-m-d');
     $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
@@ -2255,14 +2253,12 @@ function statistic_team($data)
                 $if_user_actif = count($wpdb->get_results($sql));
                 if ($if_user_actif) {
                     $status = 'Active';
-                    $member_active++;
+                    $member_active=$member_active+1;
+                    $members_active = $members_active+1;
                 }
-                /*
-                if(empty($departments))
-                    $user->data->departement = 'IT';
                 else
-                    $user->data->departement = $departments[0]['name'];
-                */
+                    $members_inactive = $members_inactive+1;
+
                 $user->data->departement = get_field('department','user_'. $user->ID)?:'';
 
                 $user->data->status = $status;
@@ -2275,7 +2271,7 @@ function statistic_team($data)
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
-                break;
+                //break;
             }
     }
     //Topic views
@@ -2296,8 +2292,8 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    $bunch_orders = wc_get_orders($args);
-    // $bunch_orders = array();
+    //$bunch_orders = wc_get_orders($args);
+    $bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     foreach($bunch_orders as $order){
@@ -2420,9 +2416,9 @@ function statistic_team($data)
                 'total_members'=>count($members),
                 'all_courses'=>$total_courses,
                 'assessment'=>($assessment_validated),
-                'courses_done'=>$progress_courses['done'] ? : (6+$current_user%10),
-                'mandatories'=>$count_mandatories_video ? : (8+$current_user%10),
-                'member_actif'=> $member_active ? : (3+$current_user%10),
+                'courses_done'=>$progress_courses['done'],
+                'mandatories'=>$count_mandatories_video,
+                'member_actif'=> $member_active,
             ),
             'progress_courses'=>array(
                 'user_engagement'=>array(
