@@ -2686,7 +2686,7 @@ function getCommunityBy($data)
     return ["error" => "You have to fill correctly the slug of the community !"];
 
   $community = get_page_by_path($slug, OBJECT, 'community') ?? null;
-
+var_dump($community);
   if ($community == null)
     return ["error" => "This community does not exist !"];
 
