@@ -2003,12 +2003,12 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getCommunitiesOptimized',
     ));
 
-    register_rest_route ('custom/v1', '/community/(?P<slug>[-\w]+)', array(
+    register_rest_route ('custom/v1', '/community/detail/(?P<slug>[-\w]+)', array(
         'methods' => 'GET',
         'callback' => 'getCommunityBy',
     ));
 
-    register_rest_route ('custom/v1', '/community/(?P<ID>\d+)', array(
+    register_rest_route ('custom/v1', '/community/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getCommunityByID',
     ));

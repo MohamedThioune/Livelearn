@@ -2825,11 +2825,12 @@ function getCommunityByID($data)
 {
   $user_id = $GLOBALS['user_id'];
   //All communities
-  $id = $data['ID'] ?? null;
+  $id = $data['id'] ?? null;
   if ($id == null)
     return ["error" => "You have to fill correctly the slug of the community !"];
 
   $community = get_post($id) ?? null;
+
   if ($community == null)
     return ["error" => "This community does not exist !"];
 
