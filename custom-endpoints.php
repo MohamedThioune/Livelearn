@@ -2825,14 +2825,14 @@ function getCommunityByID($data)
 {
   $user_id = $GLOBALS['user_id'];
   //All communities
-  $id = $data['id'] ?? null;
-  if ($id == null)
-    return ["error" => "You have to fill correctly the slug of the community !"];
+  $id_community = $data['id'] ?? null;
+  if ($id_community == null)
+    return ["error" => "You have to fill the id of the community !"];
 
-  $community = get_post($id) ?? null;
-
+  $community = get_post($id_community) ?? null;
   if ($community == null)
     return ["error" => "This community does not exist !"];
+  $community = get_post($id_community) ?? null;
 
   $community-> author_company = array();
   //Check if the community is private or public
@@ -2845,7 +2845,6 @@ function getCommunityByID($data)
   if(is_object($author_community))
     array_push($community->author_company,$author_community);
 
-  
   $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
   $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
   $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
