@@ -110,6 +110,7 @@ $args = array(
     'limit' => -1,
 );
 $bunch_orders = wc_get_orders($args);
+$bunch_orders = array();
 
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
@@ -180,7 +181,8 @@ $args = array(
     'post_status' => 'publish',
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => -1
+    'posts_per_page' => -1,
+    'post_author'=>$current_user,
 );
 $assessments = get_posts($args);
 $count_assessments = count($assessments);

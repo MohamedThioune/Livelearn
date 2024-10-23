@@ -2001,6 +2001,9 @@ function statistic_individual($data)
                 $user->data->roles = $user->roles;
                 $user->data->budget = get_field('amount_budget','user_' .$user->ID )?:0;
 
+                if ($user->ID==$current_user)
+                    continue;
+
                 $members[] = $user->data;
                 //array_push($members,$user->data);
 
@@ -2175,7 +2178,6 @@ function statistic_individual($data)
                     'completed'=>$assessment_completed,
                 ),
             ),  'most_topics_view'=>$most_topics_view,
-            'other_membre_count'=>count($members),
             'other_membre'=>$members,
         ));
     $respons->set_status(200);
@@ -2190,7 +2192,7 @@ function statistic_team($data)
     $members = array();
     if (!get_user_by('ID', $data['ID']))
         return new WP_REST_Response("You have to fill the id of the current user !",401);
-    $current_user = intval($data['ID']);
+    $current_user = $data['ID'];
     $members_active = 0;
     $members_inactive = 0;
 
@@ -2198,9 +2200,9 @@ function statistic_team($data)
     $assessment_validated = array();
     $member_active = 0;
     $progress_courses = array(
-        'not_started' => 7+($current_user%10),
-        'in_progress' => 3,
-        'done' => 10,
+        'not_started' => 0,
+        'in_progress' => 0,
+        'done' => 0,
     );
 
     $date = new DateTime();
@@ -2237,13 +2239,13 @@ function statistic_team($data)
         $company_connected = $company_user[0]->ID;
 
     foreach ($users as $user ) {
-        if ($user->ID == $current_user)
-            continue;
         $company = get_field('company',  'user_' . $user->ID);
 
         if(!empty($company))
             if($company[0]->ID == $company_connected) {
-                $prijs = get_field('price', $user->ID);
+
+                //$prijs = get_field('price', $user->ID);
+                $prijs = get_field('amount_budget', 'user_'.$user->ID);
                 $budget_spent = $prijs;
                 //$departments = get_field('departments', $company[0]->ID) ? : array();
                 $numbers[] = $user->ID;
@@ -2266,6 +2268,9 @@ function statistic_team($data)
 
                 $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
                 unset($user->data->user_pass);
+                if ($user->ID == $current_user)
+                    continue;
+
                 $members[] = $user->data;
                 $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
@@ -2276,11 +2281,10 @@ function statistic_team($data)
     }
     //Topic views
     //$table_tracker_views = $wpdb->prefix . 'tracker_views';
+
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
-    $enrolled = array();
     $budget_spent = 0;
-    $enrolled_courses = array();
 
     $most_topics_view = [];
     foreach ($topic_views as $topic){
@@ -2296,8 +2300,8 @@ function statistic_team($data)
     $bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
-    foreach($bunch_orders as $order){
-        foreach ($order->get_items() as $item_id => $item ) {
+    foreach($bunch_orders as $order)
+        foreach ($order->get_items() as $item ) {
             //Get woo orders from user
             $course_id = intval($item->get_product_id()) - 1;
             $course = get_post($course_id);
@@ -2345,15 +2349,14 @@ function statistic_team($data)
                 }
             }
         }
-    }
+
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'author'=>$current_user,
         'orderby' => 'date',
         'order' => 'DESC',
-        'numberposts' => 500,
-        //'posts_per_page' => -1
+        'posts_per_page' => -1
     );
     $total_courses = count(get_posts($args));
     /* Assessment */
@@ -2364,16 +2367,17 @@ function statistic_team($data)
         'order' => 'DESC',
         //'posts_per_page' => -1,
         'numberposts' => 1000,
+        'author'=>$current_user,
     );
     $assessments = get_posts($args);
     $count_assessments = count($assessments);
-    $assessment_validated = (!empty($assessment_validated)) ? count($assessment_validated) : 0;
-    $assessment_not_started = 3;
-    $assessment_completed = 2;
+    $count_assessment_validated = $assessment_validated ? count($assessment_validated) : 0;
+    $assessment_not_started = 0;
+    $assessment_completed = 0;
     if($count_assessments > 0){
-        $not_started_assessment = abs($count_assessments - $assessment_validated);
+        $not_started_assessment = abs($count_assessments - $count_assessment_validated);
         $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
-        $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
+        $assessment_completed = intval(($count_assessment_validated / $count_assessments) * 100);
     }
     /* assessment doing by this user */
 
@@ -2415,7 +2419,7 @@ function statistic_team($data)
             'team_first_card'=>array(
                 'total_members'=>count($members),
                 'all_courses'=>$total_courses,
-                'assessment'=>($assessment_validated),
+                'assessment'=>$count_assessments,
                 'courses_done'=>$progress_courses['done'],
                 'mandatories'=>$count_mandatories_video,
                 'member_actif'=> $member_active,
@@ -3282,7 +3286,9 @@ function newCoursesByTeacher(WP_REST_Request $data)
 {
     $id = intval($data['id']);
     $course_type = $data['course_type'];
-    $required_parameters = ['course_type'];
+    $required_parameters = ['course_type','title'];
+    $short_description = $data['short_description'];
+
     $price = $data['price'];
 
     $errors = validated($required_parameters, $data);
@@ -3316,6 +3322,8 @@ function newCoursesByTeacher(WP_REST_Request $data)
     update_field('course_type', $course_type , $id_post);
     if ($price)
         update_field('price', $price , $id_post);
+    if ($short_description)
+        update_field('short_description', $short_description, $id_post);
 
     $response = new WP_REST_Response(
     array(
@@ -3349,6 +3357,9 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
     $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
     $btwKlasse = $data['btw-klasse'];
+
+    $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
+
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
 
@@ -3488,7 +3499,7 @@ function coursesRecommendedUpcomming($data)
 }
 
 function subscription_organisation($data){
-    $required_parameters = ['firstName','lastName','email','company','company_size'];
+    $required_parameters = ['firstName','lastName','email'];
     $errors = validated($required_parameters, $data);
     if($errors):
         $response = new WP_REST_Response($errors);
@@ -3518,21 +3529,22 @@ function subscription_organisation($data){
         if ($data['telephone'])
             update_field('telnr', $data['telephone'], 'user_' . $user_id);
 
-        //create a new company for the new user
-        $company_id = wp_insert_post(
-            array(
-                'post_title' => $data['company'],
-                'post_type' => 'company',
-                'post_status' => 'pending',
-            ));
-        if($data['company_size'])
-            update_field('company_size',$data['company_size'], $company_id);
-        $company = get_post($company_id);
-        update_field('company', $company, 'user_' . $user_id);
+       if ($data['company']) {
+           $company_id = wp_insert_post(
+               array(
+                   'post_title' => $data['company'],
+                   'post_type' => 'company',
+                   'post_status' => 'pending',
+               ));
+           if ($data['company_size'])
+               update_field('company_size', $data['company_size'], $company_id);
+           $company = get_post($company_id);
+           update_field('company', $company, 'user_' . $user_id);
+       }
         $user = get_user_by('ID', $user_id);
         if ($user) {
             $user = $user->data;
-            $user->company = $company;
+            $user->company = $company?:'';
             unset($user->user_pass);
         }
         return new WP_REST_Response(
