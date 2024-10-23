@@ -2594,13 +2594,18 @@ function getCommunitiesPersonal($data) {
     $community->is_connected_user_member = false;
     $follower_community = get_field('follower_community', $community->ID) ? get_field('follower_community', $community->ID) : [];
     $community->count_members =  count($follower_community) ?? 0;
+
+    //Followers community
     $community->is_connected_user_member = false;
+    $community->followers = array();
     if (!empty($follower_community))
-      foreach ($follower_community as $key => $follower) 
-        if ($follower -> data -> ID == $user_id){
+      foreach ($follower_community as $key => $follower):
+        if ($follower -> data -> ID == $user_id)
           $community->is_connected_user_member = true;
-          break;
-        }
+
+        $follower -> data -> profile_image =  get_field('profile_img','user_' . (int)$follower -> data ->ID) != false ? get_field('profile_img','user_' . (int)$follower -> data ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        array_push($community->followers, $follower -> data);  
+      endforeach;
     
     $posts = get_field('course_community', $community->ID);
     $community->count_posts = $posts ? count($posts) : 0;
@@ -2608,7 +2613,7 @@ function getCommunitiesPersonal($data) {
     //Posts community 
     $community->posts = array();
     foreach ($posts as $key => $value)
-      $community->posts[] = artikel($value->ID);
+      $community->posts[] = artikel($value->ID);    
 
     array_push($retrieved_communities, $community);
   }
