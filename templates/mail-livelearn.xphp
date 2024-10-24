@@ -1,8 +1,5 @@
 
-<?php
-$company = get_field('company',  'user_' . $user->ID);
-$postTitle = $company[0]->post_title;
-$trigger .= ' needs your attention !';
+<?php 
 $mail_invitation_body =
 
 

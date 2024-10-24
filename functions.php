@@ -1296,7 +1296,7 @@ function seperate_tags(){
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent'  => $categories[1],
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+    ));
 
     $functies = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -1992,6 +1992,16 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getCommunitiesPersonal',
     ));
 
+    register_rest_route ('custom/v1', '/community/author/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getCommunitiesAuthor',
+    ));
+
+    register_rest_route ('custom/v1', '/community/add/courses', array(
+        'methods' => 'POST',
+        'callback' => 'addCourseCommunity',
+    ));
+
     //(Bis) Community
     register_rest_route ('custom/v2', '/communities/(?P<userID>\d+)', array(
         'methods' => 'GET',
@@ -2003,9 +2013,14 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getCommunitiesOptimized',
     ));
 
+    register_rest_route ('custom/v1', '/community/detail/(?P<slug>[-\w]+)', array(
+        'methods' => 'GET',
+        'callback' => 'getCommunityBy',
+    ));
+
     register_rest_route ('custom/v1', '/community/(?P<id>\d+)', array(
         'methods' => 'GET',
-        'callback' => 'getCommunityById',
+        'callback' => 'getCommunityByID',
     ));
 
     register_rest_route ('custom/v1', '/join/community/', array(
