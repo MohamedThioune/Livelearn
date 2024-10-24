@@ -1563,7 +1563,7 @@ function get_detail_notification($data){
     return $response;
 }
 
-function get_number_for_month($month, $plateform='web'){
+function get_number_of_month($month, $plateform='web'){
     global $wpdb;
     $number_of_month = 0;
     $year = intval(date('Y'));
@@ -1651,26 +1651,31 @@ function statistic_company($data)
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
-    $not_started = $current_user % 10;
+
     $progress_courses = array(
-        'not_started' => $not_started+100,
-        'in_progress' => 40,
-        'done' => 30,
+        'not_started' => 0,
+        'in_progress' => 0,
+        'done' => 0,
     );
-    $members_active = 5;
-    $members_inactive = 5;
+    $members_active = 0;
+    $members_inactive = 0;
 
     if (!empty($company))
         $company_connected = $company[0]->ID;
+
     $users = get_users();
     $assessment_validated = array();
     $members = [];
+    $numbers = [$current_user];
     $new_members = [];
     $date = new DateTime();
     $date_this_month = date('Y-m-d');
     $date_last_month = $date->sub(new DateInterval('P1M'))->format('Y-m-d');
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     $topic_in_company = array();
+    //$today = strtotime(date('Y-m-d', strtotime('today')));
+    $oneMonthAgo = strtotime(date('Y-m-d', strtotime('-1 month')));
+
     foreach ($users as $user ) {
         $company = get_field('company',  'user_' . $user->ID);
         if($company)
@@ -1680,50 +1685,59 @@ function statistic_company($data)
                     $topic_in_company[] = $topic_for_this_user;
 
                 $numbers[] = $user->ID;
+                $user->data->roles = $user->roles;
                 $members[] = $user->data;
-                if($user->user_registered < date('Y-m-d', strtotime('-1 month')))
+                $danteOnInt = strtotime(date('Y-m-d',strtotime($user->user_registered)));
+
+                if($oneMonthAgo <= $danteOnInt)
                     $new_members[] = $user;
-                    // Assessment
-                    $validated = get_user_meta($user->ID, 'assessment_validated');
+
+                // Assessment
+                $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
-                break;
+
+                $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
+                $if_user_actif = count($wpdb->get_results($sql));
+                if ($if_user_actif) {
+                    $status = 'Active';
+                    $members_active = $members_active + 1;
+                }
+                else
+                    $members_inactive = $members_inactive + 1;
             }
-        $sql = $wpdb->prepare("SELECT * FROM $table_tracker_views WHERE user_id = ".$user->ID." AND updated_at BETWEEN '".$date_last_month."' AND '".$date_this_month."'");
-        $if_user_actif = count($wpdb->get_results($sql));
-        if ($if_user_actif) {
-            $status = 'Active';
-            $members_active = $members_active + 1;
-        }
-        else
-            $members_inactive = $members_inactive + 1;
     }
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
-        'author'=>$current_user,
+        'author__in'=>$numbers,
         'orderby' => 'date',
         'order' => 'DESC',
         'numberposts' => 500,
-        //'posts_per_page' => -1
     );
     $total_courses = count(get_posts($args));
     /*****************************************************/
-    //Topic views
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
+    //Topic views
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
+    //Courses views
+    $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'course' GROUP BY data_id ORDER BY occurence DESC");
+    $course_views = $wpdb->get_results($sql);
+    $popular_course = array();
     $most_topics_view = [];
-    foreach ($topic_views as $topic){
-        $subtopic = array();
-        $subtopic['id'] = $topic->data_id;
-        $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
-        $subtopic['occurence'] = intval($topic->occurence);
-        $image_topic = get_field('image', 'category_'. $topic->data_id);
-        $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
-        $most_topics_view[] = $subtopic;
-    }
+
+    if ($topic_views)
+        foreach ($topic_views as $topic){
+            $subtopic = array();
+            $subtopic['id'] = $topic->data_id;
+            $subtopic['name'] = (String)get_the_category_by_ID($topic->data_id);
+            $subtopic['occurence'] = intval($topic->occurence);
+            $image_topic = get_field('image', 'category_'. $topic->data_id);
+            $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
+            $most_topics_view[] = $subtopic;
+        }
     if (!empty($most_topics_view))
         usort($most_topics_view, function($a, $b) {
             return ($b['occurence']) <=> $a['occurence'];
@@ -1755,7 +1769,6 @@ function statistic_company($data)
         'author__in' => $numbers,
         'orderby' => 'date',
         'order' => 'DESC',
-        //'posts_per_page' => -1,
         'numberposts' => 500,
     );
 
@@ -1770,10 +1783,11 @@ function statistic_company($data)
         'limit' => 500,
     );
     $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
+    // $bunch_orders = array();
     $course_finished = array();
     $enrolled = array();
     $enrolled_courses = array();
+    $progressions = array();
     foreach($bunch_orders as $order){
         foreach ($order->get_items() as $item_id => $item ) {
             //Get woo orders from user
@@ -1833,65 +1847,128 @@ function statistic_company($data)
         $progress_courses['in_progress'] = intval(($progress_courses['in_progress'] / $count_enrolled_courses) * 100);
         $progress_courses['done'] = intval(($progress_courses['done'] / $count_enrolled_courses) * 100);
     }
-    else
-        $progress_courses['not_started'] = 100;
 
     // Most popular
     $most_popular = array_count_values($enrolled_all_courses);
     arsort($most_popular);
+/*
     $args = array(
-        'post_type' => 'course',
+        'post_type' => array('course','post'),
         //'posts_per_page' => -1,
-        'numberposts' => 500,
+        'numberposts' => 250,
         'orderby' => 'post_date',
         'order' => 'DESC',
-        'include' => $most_popular,
-        'author'=>$current_user
+        'post__in'=>$topic_views
+        //'include' => $most_popular,
+        //'author'=>$current_user
     );
     $most_popular_course = get_posts($args);
+    */
+    /*
     $popular_course = array();
     foreach ($most_popular_course as $course){
+        $postType = get_field('course_type',$course->ID);
+
+        $author = get_user_by('ID', $course->post_author);
         $course->in_progress = $progress_courses['in_progress'];
         $course->done = $progress_courses['done'];
         $course->not_started = $progress_courses['not_started'];
-        $course->instructor = get_user_by('ID', $course->post_author)->data->display_name ? : get_user_by('ID', $course->post_author)->data->user_email;
+        if ($author)
+            $course->instructor = $author ? $author->data->display_name : $author->data->user_email;
         $course->price = get_field('price',$course->ID) ? : 'Gratis';
+        $course->post_type = $postType;
+
         $popular_course[] = $course;
     }
+    */
+    if ($course_views) {
+        usort($course_views, function($a, $b) {
+            return (int) $b->occurence - (int) $a->occurence;
+        });
+        $i=0;
+        foreach ($course_views as $course_id) {
+            $course = get_post($course_id->data_id);
+            if ($course) {
+                $course_in_progress = 0;
+                $course_done = 0;
+                $course_not_started = 0;
+
+                $postType = get_field('course_type', $course->ID);
+                if (!$postType)
+                    continue;
+                $i++;
+                $author = get_user_by('ID', $course->post_author);
+                if ($author)
+                    $course->instructor = $author ? $author->data->display_name : $author->data->user_email;
+                $course->price = get_field('price', $course->ID) ?: 'Gratis';
+                $course->post_type = $postType;
+                //$course->type = $postType;
+                if($progressions)
+                    foreach ($progressions as $progression) {
+                        $status = "in_progress";
+                        $progression_id = $progression->ID;
+                        //Finish read
+                        $is_finish = get_field('state_actual', $progression_id);
+                        if($is_finish)
+                            $status = "done";
+
+                        switch ($status) {
+                            case 'in_progress':
+                                $course_in_progress = 1;
+                                break;
+                            case 'not_started':
+                                $course_not_started = 1;
+                                break;
+                            case 'done':
+                                $course_done = 1;
+                                break;
+                        }
+                    }
+
+                $course->in_progress = $course_in_progress;
+                $course->done = $course_done;
+                $course->not_started = $course_not_started;
+
+                $popular_course[] = $course;
+                if ($i==20)
+                    break;
+            }
+        }
+    }
+
     $desktop_vs_mobile = array(
         'desktop' => array(
-            'Jan'=>get_number_for_month('Jan'),
-            'Feb'=>get_number_for_month('Feb'),
-            'March'=>get_number_for_month('March'),
-            'Apr'=>get_number_for_month('Apr'),
-            'May'=>get_number_for_month('May'),
-            'Jun'=>get_number_for_month('Jun'),
-            'Jul'=>get_number_for_month('Jul'),
-            'Aug'=>get_number_for_month('Aug'),
-            'Sep'=>get_number_for_month('Sep'),
-            'Oct'=>get_number_for_month('Oct'),
-            'Nov'=>get_number_for_month('Nov'),
-            'Dec'=>get_number_for_month('Dec'),
+            'Jan'=>get_number_of_month('Jan'),
+            'Feb'=>get_number_of_month('Feb'),
+            'March'=>get_number_of_month('March'),
+            'Apr'=>get_number_of_month('Apr'),
+            'May'=>get_number_of_month('May'),
+            'Jun'=>get_number_of_month('Jun'),
+            'Jul'=>get_number_of_month('Jul'),
+            'Aug'=>get_number_of_month('Aug'),
+            'Sep'=>get_number_of_month('Sep'),
+            'Oct'=>get_number_of_month('Oct'),
+            'Nov'=>get_number_of_month('Nov'),
+            'Dec'=>get_number_of_month('Dec'),
         ),
 
         'mobile' => array(
-            'Jan'=>get_number_for_month('Jan','mobile'),
-            'Feb'=>get_number_for_month('Feb','mobile'),
-            'March'=>get_number_for_month('March','mobile'),
-            'Apr'=>get_number_for_month('Apr','mobile'),
-            'May'=>get_number_for_month('May','mobile'),
-            'Jun'=>get_number_for_month('Jun','mobile'),
-            'Jul'=>get_number_for_month('Jul','mobile'),
-            'Aug'=>get_number_for_month('Aug','mobile'),
-            'Sep'=>get_number_for_month('Sep','mobile'),
-            'Oct'=>get_number_for_month('Oct','mobile'),
-            'Nov'=>get_number_for_month('Nov','mobile'),
-            'Dec'=>get_number_for_month('Dec','mobile'),
+            'Jan'=>get_number_of_month('Jan','mobile'),
+            'Feb'=>get_number_of_month('Feb','mobile'),
+            'March'=>get_number_of_month('March','mobile'),
+            'Apr'=>get_number_of_month('Apr','mobile'),
+            'May'=>get_number_of_month('May','mobile'),
+            'Jun'=>get_number_of_month('Jun','mobile'),
+            'Jul'=>get_number_of_month('Jul','mobile'),
+            'Aug'=>get_number_of_month('Aug','mobile'),
+            'Sep'=>get_number_of_month('Sep','mobile'),
+            'Oct'=>get_number_of_month('Oct','mobile'),
+            'Nov'=>get_number_of_month('Nov','mobile'),
+            'Dec'=>get_number_of_month('Dec','mobile'),
         ),
     );
     /*****************************************************/
     /*                      /begin topic in  /                      */
-
     $is_topic_in_company = array();
     foreach ($topic_in_company as $id_topics)
         if (!empty($id_topics))
@@ -2240,11 +2317,8 @@ function statistic_team($data)
 
     foreach ($users as $user ) {
         $company = get_field('company',  'user_' . $user->ID);
-
         if(!empty($company))
             if($company[0]->ID == $company_connected) {
-
-                //$prijs = get_field('price', $user->ID);
                 $prijs = get_field('amount_budget', 'user_'.$user->ID);
                 $budget_spent = $prijs;
                 //$departments = get_field('departments', $company[0]->ID) ? : array();
@@ -2261,16 +2335,16 @@ function statistic_team($data)
                 else
                     $members_inactive = $members_inactive+1;
 
-                $user->data->departement = get_field('department','user_'. $user->ID)?:'';
+                if ($user->ID == $current_user)
+                    continue;
 
+                $user->data->departement = get_field('department','user_'. $user->ID)?:'';
                 $user->data->status = $status;
                 $user->data->personel_budget = $budget_spent ? : 0;
 
                 $user->data->image = get_field('profile_img',  'user_' . $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
+                $user->data->roles = $user->roles;
                 unset($user->data->user_pass);
-                if ($user->ID == $current_user)
-                    continue;
-
                 $members[] = $user->data;
                 $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
@@ -2280,8 +2354,6 @@ function statistic_team($data)
             }
     }
     //Topic views
-    //$table_tracker_views = $wpdb->prefix . 'tracker_views';
-
     $sql = $wpdb->prepare("SELECT data_id, SUM(occurence) as occurence FROM $table_tracker_views WHERE user_id IN (" . implode(',', $numbers) . ") AND data_type = 'topic' GROUP BY data_id ORDER BY occurence DESC");
     $topic_views = $wpdb->get_results($sql);
     $budget_spent = 0;
@@ -2296,8 +2368,8 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
+    $bunch_orders = wc_get_orders($args);
+    //$bunch_orders = array();
     $enrolled = array();
     $enrolled_courses = array();
     foreach($bunch_orders as $order)
@@ -2383,33 +2455,33 @@ function statistic_team($data)
 
     $desktop_vs_mobile = array(
         'desktop' => array(
-            'Jan'=>get_number_for_month('Jan'),
-            'Feb'=>get_number_for_month('Feb'),
-            'March'=>get_number_for_month('March'),
-            'Apr'=>get_number_for_month('Apr'),
-            'May'=>get_number_for_month('May'),
-            'Jun'=>get_number_for_month('Jun'),
-            'Jul'=>get_number_for_month('Jul'),
-            'Aug'=>get_number_for_month('Aug'),
-            'Sep'=>get_number_for_month('Sep'),
-            'Oct'=>get_number_for_month('Oct'),
-            'Nov'=>get_number_for_month('Nov'),
-            'Dec'=>get_number_for_month('Dec'),
+            'Jan'=>get_number_of_month('Jan'),
+            'Feb'=>get_number_of_month('Feb'),
+            'March'=>get_number_of_month('March'),
+            'Apr'=>get_number_of_month('Apr'),
+            'May'=>get_number_of_month('May'),
+            'Jun'=>get_number_of_month('Jun'),
+            'Jul'=>get_number_of_month('Jul'),
+            'Aug'=>get_number_of_month('Aug'),
+            'Sep'=>get_number_of_month('Sep'),
+            'Oct'=>get_number_of_month('Oct'),
+            'Nov'=>get_number_of_month('Nov'),
+            'Dec'=>get_number_of_month('Dec'),
         ),
 
         'mobile' => array(
-            'Jan'=>get_number_for_month('Jan','mobile'),
-            'Feb'=>get_number_for_month('Feb','mobile'),
-            'March'=>get_number_for_month('March','mobile'),
-            'Apr'=>get_number_for_month('Apr','mobile'),
-            'May'=>get_number_for_month('May','mobile'),
-            'Jun'=>get_number_for_month('Jun','mobile'),
-            'Jul'=>get_number_for_month('Jul','mobile'),
-            'Aug'=>get_number_for_month('Aug','mobile'),
-            'Sep'=>get_number_for_month('Sep','mobile'),
-            'Oct'=>get_number_for_month('Oct','mobile'),
-            'Nov'=>get_number_for_month('Nov','mobile'),
-            'Dec'=>get_number_for_month('Dec','mobile'),
+            'Jan'=>get_number_of_month('Jan','mobile'),
+            'Feb'=>get_number_of_month('Feb','mobile'),
+            'March'=>get_number_of_month('March','mobile'),
+            'Apr'=>get_number_of_month('Apr','mobile'),
+            'May'=>get_number_of_month('May','mobile'),
+            'Jun'=>get_number_of_month('Jun','mobile'),
+            'Jul'=>get_number_of_month('Jul','mobile'),
+            'Aug'=>get_number_of_month('Aug','mobile'),
+            'Sep'=>get_number_of_month('Sep','mobile'),
+            'Oct'=>get_number_of_month('Oct','mobile'),
+            'Nov'=>get_number_of_month('Nov','mobile'),
+            'Dec'=>get_number_of_month('Dec','mobile'),
         ),
     );
 
