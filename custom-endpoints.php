@@ -7430,23 +7430,42 @@ function get_successful_assessments(WP_REST_Request $request) {
 function get_all_assessments_with_question_count(WP_REST_Request $request) {
   global $wpdb;
 
-  // Récupère l'ID de l'utilisateur à partir de la requête (ou autre méthode)
-  $user_id = $GLOBALS['user_id'] ?? 0 ;
+  // Récupère l'ID de l'utilisateur à partir de la requête
+  $user_id = $GLOBALS['user_id'];
 
-  if ($user_id == 0) 
-  {
-    $response = new WP_REST_Response("You have to login with valid credentials!");
-    $response->set_status(400);
-    return $response;
+  if ($user_id == 0) {
+      $response = new WP_REST_Response("You have to login with valid credentials!");
+      $response->set_status(400);
+      return $response;
   }
 
-  // Requête pour obtenir tous les assessments avec le nombre de questions associées
+  // Récupérer le paramètre 'category_id' depuis la requête
+  $category_id = $request['category_id'];
+
+  // Construire la clause WHERE en fonction de la présence de category_id
+  $where_clause = '';
+  if (!empty($category_id)) {
+      $where_clause = $wpdb->prepare("WHERE a.category_id = %d", $category_id);
+  }
+
+  // Requête pour obtenir les assessments filtrés par category_id si fourni
   $assessments = $wpdb->get_results(
-      "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level ,  a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+      "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
       FROM {$wpdb->prefix}assessments a
       LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+      $where_clause
       GROUP BY a.id"
   );
+
+  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
+  if (empty($assessments)) {
+      $assessments = $wpdb->get_results(
+          "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+          FROM {$wpdb->prefix}assessments a
+          LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+          GROUP BY a.id"
+      );
+  }
 
   // Vérifie s'il y a des assessments
   if (empty($assessments)) {
@@ -7454,7 +7473,7 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   }
 
   // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
-  foreach ($assessments as $key => $assessment) {
+  foreach ($assessments as $assessment) {
       // Rechercher si l'utilisateur a un résultat pour cet assessment
       $result = $wpdb->get_row(
           $wpdb->prepare(
@@ -7475,28 +7494,28 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
           $assessment->status = 'not_attempted'; // L'utilisateur n'a jamais tenté l'évaluation
           $assessment->score = null; // Pas de score car jamais tenté
       }
-  }
 
-
-  foreach ($assessments as $key => $assessment) 
-  {
-      if (get_user_by('ID', $assessment->author_id) != null)
-      {
-        $author = get_user_by('ID', $assessment->author_id) ?? null;
-        $author_img = get_field('profile_img','user_'.$author->ID) ? get_field('profile_img','user_'.$author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $assessment->author = new Expert($author, $author_img);
+      // Récupérer les informations de l'auteur
+      $author = get_user_by('ID', $assessment->author_id);
+      if ($author) {
+          $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $assessment->author = new Expert($author, $author_img);
+      } else {
+          $assessment->author = null;
       }
-       else
-        $assessment -> author = null;
-       $assessment -> category = [
-        "name" => get_the_category_by_ID((int)$assessment->category_id),
-        "image" => get_field('image', 'category_'. (int)$assessment->category_id) ?? ""
-       ];
-    }
+
+      // Récupérer les informations de la catégorie
+      $assessment->category = [
+          "name" => get_the_category_by_ID((int)$assessment->category_id),
+          "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+      ];
+  }
 
   // Retourner les assessments avec le nombre de questions et le statut
   return rest_ensure_response($assessments);
 }
+
+
 
 
 
