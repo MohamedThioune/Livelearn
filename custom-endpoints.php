@@ -2622,24 +2622,17 @@ function getCommunitiesPersonal($data) {
 
 }
 
-function getCommunitiesOptimized($data)
-{
-  // Retrieve the user ID from the global variable and validate it
-  $user_id = false;
-  $user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
-
-  // Check if the user ID is provided
-  if (!$user_id) 
-  {
-    $response = new WP_REST_Response("You have to login with valid credentials!");
-    $response->set_status(400);
-    return $response;
-  }
+function getCommunitiesAuthor($data) {
+  //Personal ID
+  $user_id = $data['id'] ?? null;
+  if ($user_id == 0)
+    return ["error" => "You have to fill the correct user id !"];
 
   //All communities
   $args = array(
     'post_type' => 'community',
     'post_status' => 'publish',
+    'author' => $user_id,
     'posts_per_page' => -1 
   );
   $communities = get_posts($args);
@@ -2653,28 +2646,37 @@ function getCommunitiesOptimized($data)
     $author_community = get_field('company_author',$community->ID) ?? false;
     $author_company = get_field('company', 'user_' . (int) $user_id)[0] ?? false;
     if ($community->visibility_community !=false)
-    {
       if ($author_community ->ID != $author_company->ID)
         continue;
-    }
-        
+    
     $community-> author_company = array();
     if(is_object($author_community))
       array_push($community->author_company,$author_community);
     $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
     $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
     $community->is_connected_user_member = false;
-    $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
-    $community->count_members = count($follower_community) ?? 0;
+    $follower_community = get_field('follower_community', $community->ID) ? get_field('follower_community', $community->ID) : [];
+    $community->count_members =  count($follower_community) ?? 0;
+
+    //Followers community
+    $community->is_connected_user_member = false;
+    $community->followers = array();
     if (!empty($follower_community))
-      foreach ($follower_community as $key => $follower) 
+      foreach ($follower_community as $key => $follower):
         if ($follower -> data -> ID == $user_id)
-        {
           $community->is_connected_user_member = true;
-          break;
-        }
+
+        $follower -> data -> profile_image =  get_field('profile_img','user_' . (int)$follower -> data ->ID) != false ? get_field('profile_img','user_' . (int)$follower -> data ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        array_push($community->followers, $follower -> data);  
+      endforeach;
     
-    $community->count_posts = get_field('course_community', $community->ID) ? count(get_field('course_community', $community->ID)) : 0;
+    $posts = get_field('course_community', $community->ID);
+    $community->count_posts = $posts ? count($posts) : 0;
+
+    //Posts community 
+    $community->posts = array();
+    foreach ($posts as $key => $value)
+      $community->posts[] = artikel($value->ID);    
 
     array_push($retrieved_communities, $community);
   }
@@ -2957,6 +2959,111 @@ function getCommunityByID($data)
 
   return $community;
 
+}
+
+function addCourseCommunity(WP_REST_Request $request){
+  $required_parameters = ['communityID', 'courses'];
+
+  //Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+  
+  //is array & is a community 
+  $errors = [];
+  $ids = $request['courses'];
+  $community = get_post($request['communityID']);
+  if(!is_array($ids) || !$community):
+    $errors['errors'] = "Please fill the fields correctly !";
+    $errors = (Object)$errors;
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+  
+  $args = array(
+    'post_type' => array('post', 'course'),
+    'post_status' => 'publish',
+    'include' => $ids,
+    'posts_per_page' => -1 
+  );
+  $main_courses = get_posts($args);  
+
+  $former_courses = get_field('course_community', $community->ID);
+  $courses = (!empty($former_courses)) ? array_merge($former_courses, $main_courses) : $former_courses;
+
+  //Add the courses to the community
+  update_field ('course_community', $courses, $community->ID);
+
+  //Send response
+  $message = "Succesfully added courses to the community !";
+  $response = new WP_REST_Response($message);
+  $response->set_status(200);
+  return $response;
+
+}
+
+function getCommunitiesOptimized($data)
+{
+  // Retrieve the user ID from the global variable and validate it
+  $user_id = false;
+  $user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
+
+  // Check if the user ID is provided
+  if (!$user_id) 
+  {
+    $response = new WP_REST_Response("You have to login with valid credentials!");
+    $response->set_status(400);
+    return $response;
+  }
+
+  //All communities
+  $args = array(
+    'post_type' => 'community',
+    'post_status' => 'publish',
+    'posts_per_page' => -1 
+  );
+  $communities = get_posts($args);
+  $retrieved_communities = array();
+
+  foreach ($communities as $key => $community) 
+  {
+    //Check if the community is private or public
+    $community->visibility_community = get_field('visibility_company',$community->ID) ?? false;
+    $community->password_community = get_field('password_community',$community->ID);
+    $author_community = get_field('company_author',$community->ID) ?? false;
+    $author_company = get_field('company', 'user_' . (int) $user_id)[0] ?? false;
+    if ($community->visibility_community !=false)
+    {
+      if ($author_community ->ID != $author_company->ID)
+        continue;
+    }
+        
+    $community-> author_company = array();
+    if(is_object($author_community))
+      array_push($community->author_company,$author_community);
+    $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
+    $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
+    $community->is_connected_user_member = false;
+    $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
+    $community->count_members = count($follower_community) ?? 0;
+    if (!empty($follower_community))
+      foreach ($follower_community as $key => $follower) 
+        if ($follower -> data -> ID == $user_id)
+        {
+          $community->is_connected_user_member = true;
+          break;
+        }
+    
+    $community->count_posts = get_field('course_community', $community->ID) ? count(get_field('course_community', $community->ID)) : 0;
+
+    array_push($retrieved_communities, $community);
+  }
+  
+  return $retrieved_communities;
 }
 
 function joinCommunity( WP_REST_Request $request )
