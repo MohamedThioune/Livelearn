@@ -325,126 +325,30 @@ $mail_invitation_body =
                     <tr>
                       <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                         <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#3B5998;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#1DA1F2;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/twitter.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#DD4B39;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/google-plus.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#BD081C;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/pinterest.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#0077B5;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/linkedin.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#405DE6;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td></tr></table><![endif]-->
+                        // <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                        //   style="float:none;display:inline-table;">
+                        //   <tbody>
+                        //     <tr>
+                        //       <td style="padding:4px;vertical-align:middle;">
+                        //         <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                        //           style="background:#3B5998;border-radius:3px;width:20px;">
+                        //           <tbody>
+                        //             <tr>
+                        //               <td style="font-size:0;height:20px;vertical-align:middle;width:20px;">
+                        //                 <a href="">
+                        //                 <img
+                        //                   height="20"
+                        //                   src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"
+                        //                   style="border-radius:3px;display:block;" width="20">
+                        //                 </a>
+                        //               </td>
+                        //             </tr>
+                        //           </tbody>
+                        //         </table>
+                        //       </td>
+                        //     </tr>
+                        //   </tbody>
+                        // </table><!--[if mso | IE]></td><td><![endif]-->
                       </td>
                     </tr>
                   </tbody>

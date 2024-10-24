@@ -3514,7 +3514,15 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
     $first_name = $user->first_name ?: $user->display_name;
     $emails = [$user->user_email, 'info@livelearn.nl'];
     // $emails = [$user->user_email];
-    $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
+
+    //Showin information 
+    $company = get_field('company',  'user_' . $user->ID);
+    $postTitle = $company[0]->post_title;
+    $title = (!isset($request['is_livelearn'])) ? $trigger . ' needs your attention !' : $title;
+    $trigger = (!isset($request['is_livelearn'])) ? $title : $trigger;
+
+    // $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
+    $path_mail = '/templates/mail-liggeey.php';
     require(__DIR__ . $path_mail);
     $subject = $title;
     // Have to put here the liggey admin email and define the base template
