@@ -1992,6 +1992,16 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getCommunitiesPersonal',
     ));
 
+    register_rest_route ('custom/v1', '/community/author/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'getCommunitiesAuthor',
+    ));
+
+    register_rest_route ('custom/v1', '/community/add/courses', array(
+        'methods' => 'POST',
+        'callback' => 'addCourseCommunity',
+    ));
+
     //(Bis) Community
     register_rest_route ('custom/v2', '/communities/(?P<userID>\d+)', array(
         'methods' => 'GET',
