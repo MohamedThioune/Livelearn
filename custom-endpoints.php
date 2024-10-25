@@ -3003,7 +3003,6 @@ function addCourseCommunity(WP_REST_Request $request){
   $response = new WP_REST_Response($message);
   $response->set_status(200);
   return $response;
-
 }
 
 function getCommunitiesOptimized($data)
