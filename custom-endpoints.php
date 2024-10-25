@@ -2999,7 +2999,7 @@ function addCourseCommunity(WP_REST_Request $request){
   update_field ('course_community', $courses, $community->ID);
 
   //Send response
-  $message = "Succesfully added courses to the community !";
+  $message = "Succesfully added courses to the community !"; 
   $response = new WP_REST_Response($message);
   $response->set_status(200);
   return $response;
