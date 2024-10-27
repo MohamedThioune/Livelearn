@@ -703,7 +703,13 @@ function homepage(){
   $infos['artikels'] = $artikels;
 
   // $users = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
-  $users = get_users();
+  $featuredIds = [4459, 4431, 4277, 4272, 4270, 4265];
+  $users = get_users(
+    array(
+      'include' => '',
+      'order' => 'DESC' 
+    )
+  );
   //Featured candidates [Block]
   $i = 0;
   foreach ($users as $key => $value) {
