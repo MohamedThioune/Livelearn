@@ -236,7 +236,7 @@ $mail_invitation_body =
                           </p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">
                             <span style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
-                              ' . $content . '. &nbsp;
+                              ' . $content . '&nbsp;
                             </span><br><br>
                           </p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">
