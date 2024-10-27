@@ -703,8 +703,7 @@ function homepage(){
   $infos['artikels'] = $artikels;
 
   // $users = get_users( array ( 'meta_key' => 'is_liggeey', 'meta_value' => 'candidate', 'order' => 'DESC' ) );
-  // 1889 => Oumy NDIAYE
-  $featuredIds = [30, 8, 479, 1889, 4272, 4459, 4245, 4226];
+  $featuredIds = [30, 8, 479, 1889, 4272, 4459, 4270, 4226];
   $users = get_users(
     array(
       'include' => $featuredIds,
