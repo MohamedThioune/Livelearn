@@ -706,7 +706,7 @@ function homepage(){
   $featuredIds = [4459, 4431, 4277, 4272, 4270, 4265];
   $users = get_users(
     array(
-      'include' => '',
+      'include' => $featuredIds,
       'order' => 'DESC' 
     )
   );
