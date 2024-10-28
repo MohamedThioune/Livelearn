@@ -1268,7 +1268,6 @@ function peopleYouManage($data)
     foreach ($users as $user) {
         $users_manageds = get_field('managed', 'user_' . $user->ID)?:[];
 
-        //var_dump(array('user'=>$user->ID,'manager'=>$users_manageds));
         if ($users_manageds)
             if (in_array($user_concerned, $users_manageds)) {
                 $user->data->image = get_field('profile_img', 'user_' . $user->ID) ? get_field('profile_img', 'user_' . $user->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -3431,7 +3430,6 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $btwKlasse = $data['btw-klasse'];
 
     $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
-
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
 
@@ -3448,7 +3446,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $isCourseUpdated = true;
     }
     if ($experts){
-        $all_experts = get_filed('experts', $id_course) ? : [];
+        $all_experts = get_field('experts', $id_course) ? : [];
         $experts = array_merge($experts,$all_experts);
         $experts = array_unique($experts);
         update_field('experts', null, $id_course);
