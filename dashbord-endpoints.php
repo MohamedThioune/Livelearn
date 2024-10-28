@@ -3413,7 +3413,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
     $visibility = $data['visibility']; // checkbox : true or false ?
-    $categories = $data['categories'];
+    $categories = $data['categories'];  // array ["id1","id2"]
     $course = get_post($id_course);
     $questions = $data['questions']; // for assessments
     $how_it_works = $data['how_it_works'];
