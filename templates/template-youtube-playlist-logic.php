@@ -51,24 +51,21 @@ if ($playlist_youtube) {
         array_push($authors,$id[0]);
         array_push($companys,$id[3]);
     }
-    //var_dump($companys);
-    //die;
 
     $i = 1;
-    if ($playlists_id || !empty($playlists_id)) {
+    if($playlists_id) {
         foreach ($playlists_id as $key => $playlist_id) {
             $id_playlist = $playlist_id;
             $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist . "&key=" . $api_key;
             $playlists = json_decode(file_get_contents($url_playlist), true);
             $author = $authors[$key];
-            // var_dump($author);
+
             $company_id = 0;
             $author_id=0;
            //Add Author
              $informations = addAuthor($users, $companys[$key]);
              $author_id = $informations['author'];
              $company_id = $informations['company'];
-
 
             foreach ($playlists['items'] as $playlist) {
                 //tags
@@ -146,7 +143,6 @@ if ($playlist_youtube) {
                 }
                 $words_not_goods = [];
                 foreach ($categorys as $cat) {
-                    // var_dump($cat->cat_name);
                     if (str_contains($cat->cat_name, ' ')) {
                         $words_not_goods[] = $cat->cat_name;
                     }
@@ -184,6 +180,7 @@ if ($playlist_youtube) {
                 //define type
                 $type = 'Video';
 
+                /*
                 //Get the url media image to display on front
                 $image = (isset($playlist['snippet']['thumbnails']['maxres'])) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
                 $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images, $type));
@@ -191,8 +188,10 @@ if ($playlist_youtube) {
 
                 $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s", array($playlist['snippet']['title'], $type));
                 $result_title = $wpdb->get_results($sql_title);
+                */
 
-                if (!isset($result_title[0]) && !isset($result_image[0])) {
+                //if (!isset($result_title[0]) && !isset($result_image[0])) {
+                if (true) {
                     $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $playlist['id'] . "&maxResults=" . $maxResults . "&key=" . $api_key;
 
                     $detail_playlist = json_decode(file_get_contents($url_playlist, true));
@@ -237,18 +236,21 @@ if ($playlist_youtube) {
                    
 
                    
+                }else{
+                 echo "<span class='alert alert-danger'>this course already exist in databank ❌</span>";
+                 return;
                 }
             }
             $i++;
         }
 
     } else {
-        echo "<span class='alert alert-danger'>No new data ! ❌</span>";
+        echo "<span class='alert alert-danger'>No new data video ! ❌</span>";
     }
     if($data_insert==1)
      echo"<span class='alert alert-success'> Courses Insertion done successfully ✔️</span><br><br>";
      else
-         echo "<span class='alert alert-danger'>No new data ! ❌</span>";
+         echo "<span class='alert alert-danger'>course Not saved ! ❌</span>";
     //Empty youtube channels after parse
 
     // update_field('youtube_playlists', null, 'user_' . $author_id);

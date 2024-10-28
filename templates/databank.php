@@ -438,7 +438,8 @@ if (isset($_GET["message"])) {
                                 }
                                 ?>
                             </select>
-                            &nbsp;&nbsp;<a id="playlist-youtube">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
+                            &nbsp;&nbsp; <a id="playlist-youtube" style="cursor:pointer">✔️</a>&nbsp;&nbsp;
+                            <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white; cursor:pointer" >⚙️</a>
                         </div>
 
                         <div class="col-md-3">
@@ -488,8 +489,8 @@ if (isset($_GET["message"])) {
                                 <th scope="col">Author</th>
                                 <th scope="col">Company</th>
                                 <th class="tdCenter textThBorder">
-                                    <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔" />&nbsp;
-                                    <input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌" />
+                                    <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔"/>&nbsp;
+                                    <input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌"/>
                                 </th>
                             </tr>
                             </thead>
