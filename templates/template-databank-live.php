@@ -13,7 +13,6 @@ $current_page = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 1;
 
 $courses = array();
 
-
 // Check if the form is submitted
 if (isset($_POST['filter_databank'])) {
     // Sanitize and validate form values
@@ -22,6 +21,7 @@ if (isset($_POST['filter_databank'])) {
     $max = isset($_POST['max']) ? intval($_POST['max']) : null;
     $gratis = isset($_POST['gratis']) ? 1 : 0;
     $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
+    $language = $_POST['language'] ? : '';
 
     // Define the base arguments for WP_Query
     $args = array(
@@ -35,90 +35,70 @@ if (isset($_POST['filter_databank'])) {
     // Filter by course type
     if (!empty($leervom)) {
         $courseType = strtolower($leervom[0]);
-               switch ($courseType) {
+        switch ($courseType) {
         case 'all':
             $type='all';
-          
             break;
           case 'artikel':
             $type='article';
-          
             break;
         case 'podcast':
            $type='podcast';
             break;
         case 'video': 
              $type='video';
-           
             break;
         case 'opleidingen':
             $type='course';
-           
             break;
         case 'training':
             $type='training';
-           
             break;
         case 'workshop':
             $type='workshop';
-           
             break; 
         case 'assessment':
             $type='assessment';
-           
             break;
         case 'cursus':
             $type='cursus';
-           
             break;
         case 'webinar':
             $type='webinar';
-           
             break;
         case 'event':
             $type='event';
-           
             break; 
         case 'lezing':
             $type='reading';
-           
             break;
         case 'class':
             $type='class';
-           
             break;
         case 'leerpad':
             $type='leerpad';
-           
             break;
         case 'e-learning':
             $type='elearning';
-           
             break;
         case 'masterclass':
             $type='masterclass';
-           
-            break;                                
-                      
-
-        default:
-           
             break;
-
+        default:
+            break;
     }
         //$type = ($courseType == 'all') ? 'all' : $courseType;
 
         if ($type != "all") {
-           $args = array(
-        
-        'posts_per_page' => -1,
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'ordevalue'       => $type,
-        'order' => 'DESC' ,
-        'meta_key'         => 'course_type',
-        'meta_value' => $type
-    );
+            $args = array(
+            'posts_per_page' => -1,
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'ordevalue'       => $type,
+            'order' => 'DESC' ,
+            'meta_key'         => 'course_type',
+            'meta_value' => $type
+            );
         }
     }
 
@@ -160,7 +140,13 @@ if (isset($_POST['filter_databank'])) {
             'compare' => '='
         );
     }
-
+    if ($language){
+        $args['meta_query'][] = array(
+            'key' => 'language',
+            'value' => $language,
+            'compare' => 'LIKE'
+        );
+    }
     // Fetch filtered courses
     $courses = get_posts($args);
 
@@ -170,7 +156,6 @@ if (isset($_POST['filter_databank'])) {
     $args['posts_per_page'] = $posts_per_page;
     $args['paged'] = $current_page;
     $courses = get_posts($args);
-
 } else {
     // Default behavior: Fetch all published courses if no filter is applied
     $args = array(
@@ -180,7 +165,6 @@ if (isset($_POST['filter_databank'])) {
         'paged' => $current_page,
         'order' => 'DESC'
     );
-
     $courses = get_posts($args);
     $total_posts = wp_count_posts('course')->publish + wp_count_posts('post')->publish;
     $total_pages = ceil($total_posts / $posts_per_page);
@@ -434,30 +418,29 @@ if (isset($_POST['filter_databank'])) {
 
 
  function countTypeCourse($course_type){
-    
-$args = array(
-      'post_type' => array('course','post'),
-      'post_status' => 'publish',
-      'posts_per_page' => -1,
-      'ordevalue'       => $course_type,
-      'order' => 'DESC' ,
-      'meta_key'         => 'course_type',
-      'meta_value' => $course_type
-);
-return count(get_posts($args));
+        $args = array(
+              'post_type' => array('course','post'),
+              'post_status' => 'publish',
+              'posts_per_page' => -1,
+              'ordevalue'       => $course_type,
+              'order' => 'DESC' ,
+              'meta_key'         => 'course_type',
+              'meta_value' => $course_type
+        );
+    return count(get_posts($args));
  }
    $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
     'order' => 'DESC'
-);
-  $courses_on_current_page = get_posts($args);
-  $count = count($courses_on_current_page);
- $countVideos = countTypeCourse('video');
- $countArtikles = countTypeCourse('article');
- $countPodcasts=countTypeCourse('podcast');
- $countOpleidingens=countTypeCourse('course');
+   );
+    $courses_on_current_page = get_posts($args);
+    $count = count($courses_on_current_page);
+    $countVideos = countTypeCourse('video');
+    $countArtikles = countTypeCourse('article');
+    $countPodcasts=countTypeCourse('podcast');
+    $countOpleidingens=countTypeCourse('course');
 
 
 
@@ -535,33 +518,52 @@ $user = wp_get_current_user();
         <div class="head d-flex justify-content-between align-items-center">
             <p class="title-page">Databank LIVE</p>
             <div class="d-flex">
-                <button class="btn btn-add-element" data-toggle="modal" data-target="#ModalCompany" type="button">Add a
-                    company</button>
-                <button class="btn btn-add-element" data-toggle="modal" data-target="#ModalTeacher" type="button">Add a
-                    teacher</button>
+                <button class="btn btn-add-element" data-toggle="modal" data-target="#ModalCompany" type="button">Add a company</button>
+                <button class="btn btn-add-element" data-toggle="modal" data-target="#ModalTeacher" type="button">Add a teacher</button>
             </div>
         </div>
         <div class="content-tab">
             <div class="d-flex justify-content-between content-head-tab">
                 <div class="content-button-tabs">
-                    <button data-tab="all" class="b-nav-tab buttonInsideModal btn active">
-                        View all<span class="number-content"><?php echo $count;?></span>
-                    </button>
-                    <button data-tab="Opleidingen" class="b-nav-tab buttonInsideModal btn">
+
+                    <form action="" method="post">
+                        <input type="hidden" name="leervom[]" id="leervom" value="All">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn active">
+                            View all<span class="number-content"><?php echo $count;?></span>
+                        </button>
+                    </form>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="leervom[]" id="leervom" value="Opleidingen">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn">
                         Opleidingen <span class="number-content"><?php echo $countOpleidingens;?></span>
                     </button>
-                    <button data-tab="Article" class="b-nav-tab buttonInsideModal btn">
-                        Article <span class="number-content"><?php echo $countArtikles;?></span>
-                    </button>
-                    <button data-tab="Podcast" class="b-nav-tab buttonInsideModal btn">
-                        Podcast <span class="number-content"><?php echo $countPodcasts;?></span>
-                    </button>
-                    <button data-tab="Videos" class="b-nav-tab buttonInsideModal btn">
-                        Videos <span class="number-content"><?php echo $countVideos;?></span>
-                    </button>
+                    </form>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="leervom[]" id="leervom" value="Artikel">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn">
+                            Article <span class="number-content"><?php echo $countArtikles;?></span>
+                        </button>
+                    </form>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="leervom[]" id="leervom" value="Podcast">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn" >
+                            Podcast <span class="number-content"><?php echo $countPodcasts;?></span>
+                        </button>
+                    </form>
+
+                    <form action="" method="post">
+                        <input type="hidden" name="leervom[]" id="leervom" value="Video">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn">
+                            Videos <span class="number-content"><?php echo $countVideos;?></span>
+                        </button>
+                    </form>
                 </div>
                 <div class="d-flex align-items-center">
-                    <input id="search_txt_course" type="search" class="search-databank" placeholder="Search">
+                    <input id="search_txt_course" type="search" class="search-databank" placeholder="Search course">
+                    <div id="loader" class="spinner-border spinner-border-sm text-primary d-none" role="status"></div>
                 </div>
             </div>
             <div class="headFilterCourse">
@@ -622,6 +624,30 @@ $user = wp_get_current_user();
                                 <?php if(isset($leervom) && in_array('Webinar', $leervom)) echo "selected"; ?>>Webinar
                             </option>
                         </select>
+                        <select name="language">
+                            <option></option>
+                            <option value="en" <?php if (isset($language)) echo "selected"; ?> >
+                                English
+                            </option>
+                            <option value="de" <?php if (isset($language)) echo "selected"; ?> >
+                                Deutsch
+                            </option>
+                            <option value="nl" <?php if (isset($language) && $language=="nl") echo "selected"; ?> >
+                                Nederlands
+                            </option>
+                            <option value="fr" <?php if (isset($language) && $language=="fr") echo "selected"; ?> >
+                                French
+                            </option>
+                            <option value="it" <?php if (isset($language) && $language=="it") echo "selected"; ?> >
+                                Italian
+                            </option>
+                            <option value="Ib" <?php if (isset($language) && $language == "Ib") echo "selected"; ?> >
+                                Luxembourgish
+                            </option>
+                            <option value="sk" <?php if (isset($language) && $language == "sk") echo "selected"; ?> >
+                                Slovak
+                            </option>
+                        </select>
                         <div class="priceInput">
                             <div class="priceFilter">
                                 <input type="number" name="min" value="<?php if(isset($min)) echo $min ?>"
@@ -657,6 +683,7 @@ $user = wp_get_current_user();
                                 <th scope="col">Image</th>
                                 <th scope="col">Titel</th>
                                 <th scope="col">Type</th>
+                                <th scope="col">Lang</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Sub-topics</th>
                                 <th scope="col">Startdate</th>
@@ -673,7 +700,42 @@ $user = wp_get_current_user();
                         
                             foreach ($courses as $course) {
                                 $thumbnail = "";
-$course_type = get_field('course_type', $course->ID); 
+$course_type = get_field('course_type', $course->ID);
+$lang = get_field('language', $course->ID);
+$language_display = '';
+if ($lang){
+    if (is_array($lang))
+        $language_display = $lang[0];
+    else
+        $language_display = $lang;
+    // take juste 2 first letter
+    $lang_first_character = strtolower(substr($language_display,0,2));
+
+    switch ($lang_first_character){
+        case 'en':
+            $language_display='English';
+            break;
+        case 'fr':
+            $language_display='French';
+            break;
+        case 'de':
+            $language_display='Dutch';
+            break;
+        case 'nl':
+            $language_display='Nederlands';
+            break;
+        case 'it':
+            $language_display='Italian';
+            break;
+        case 'Ib':
+            $language_display='Luxembourgish';
+            break;
+        case 'sk':
+            $language_display='Slovak';
+            break;
+    }
+}
+
 if(!$thumbnail){
     $thumbnail = get_the_post_thumbnail_url($course->ID);
     if(!$thumbnail)
@@ -744,7 +806,13 @@ if(!$thumbnail){
                              //Categories
                             $category = " ";
                             $id_category = 0;
-                            $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                            $category_id = 0;
+                            $categories = get_field('categories',  $course->ID);
+                            if ($categories)
+                                if (isset($categories[0]['value'])) {
+                                    //$category_id = intval(explode(',', $categories[0]['value'])[0]);
+                                    $category_id = intval($categories[0]['value']);
+                                }
                             $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
                             if($category_xml)
                                 if($category_xml != 0)
@@ -753,20 +821,33 @@ if(!$thumbnail){
                             if($category_id)
                                 if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
-                                          
+
+                            $artikel_single = "Artikel";
+                            $white_type_array =  ['Lezing', 'Event'];
+                            $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
+                            $video_single = "Video";
+                            $leerpad_single  = 'Leerpad';
+                            $podcast_single = 'Podcast';
+                            $path_edit  = "";
+                            if($course_type == $artikel_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-article&id=" . $course->ID ."&edit";
+                            else if($course_type == $video_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-video&id=" . $course->ID ."&edit";
+                            else if(in_array($course_type,$white_type_array))
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-add-white&id=" . $course->ID ."&edit";
+                            else if(in_array($course_type,$course_type_array))
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
+                            else if($course_type == $leerpad_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+                            else if($course_type == 'Assessment')
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
+                            else if($course_type == 'Podcast')
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
+
 
                             $link = get_permalink($course->ID);
-                                           
-                                              
-        
-                                              
-                                      
-
-                    
-
-                                           
-                      ?>
-                            <tr class="pagination-element-block">
+                            ?>
+                            <tr class="pagination-element-block" id="<?= $course->ID ?>">
                                 <td>
                                     <div class="for-img">
                                         <img src="<?=$thumbnail;?>" alt="" srcset="">
@@ -775,12 +856,13 @@ if(!$thumbnail){
                                 <td class="textTh text-left first-td-databank"><a style="color:#212529;font-weight:bold"
                                         href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                                 <td class="textTh"><?= get_field('course_type', $course->ID);?></td>
+                                <td>
+                                    <?= $language_display ?>
+                                </td>
                                 <td id="" class="textTh td_subtopics">
                                     <?php echo empty(get_field('price', $course->ID)) ? 'Gratis':  get_field('price', $course->ID); ?>
                                 </td>
-                              
 
-                                 
                                 <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
                                     <?php
                                      $course_subtopics = get_field('categories', $course->ID);
@@ -821,7 +903,7 @@ if(!$thumbnail){
                                     </div> 
                                     <?php }?>      
                             </td>
-                                <td class="textTh ">
+                                <td class="textTh">
                                     <div class="bg-element">
                                         <p> <?php 
                                     $date = new DateTime($course->post_date);
@@ -889,11 +971,22 @@ if(!$thumbnail){
                                                 src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt=""
                                                 srcset="">
                                         </p>
+
+
                                         <ul class="dropdown-menu">
-                                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i
-                                                    class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a>
+                                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i>
+                                                <i class="fa fa-eye px-2"></i>
+                                                <a href="<?php echo $link; ?>" target="_blank">
+                                                    Bekijk
+                                                </a>
                                             </li>
+
+                                            <li class='my-2'><i class='fa fa-gear px-2'></i><a href='<?= $path_edit ?>' target='_blank'>Pas aan</a></li>
+
+                                            <li class='my-1 remove_opleidingen' ><i class='fa fa-trash px-2'></i><input onclick="removeCourse(this)" id="<?= $course->ID ?>" type='button' value='Verwijderen'/></li>
+
                                         </ul>
+
                                     </div>
                                 </td>
                             </tr>
@@ -948,9 +1041,9 @@ if(!$thumbnail){
             <?php endif; ?>
         </ul>
     <?php endif; ?>
-                     
+
                      </center>
-                   
+
 
 
                 </div>
@@ -971,12 +1064,9 @@ if(!$thumbnail){
             <div id="Videos" class="b-tab contentBlockSetting">
                 f
             </div>
-
         </div>
     </div>
-
-    
-     <!-- Modal add company -->
+ <!-- Modal add company -->
     <div class="modal fade" id="ModalCompany" tabindex="-1" role="dialog" aria-labelledby="ModalCompanyLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -1330,8 +1420,6 @@ $(document).ready(function() {
     });
 </script>
 
-
-
 <script>
 const selectButtons = document.querySelectorAll('.select-button');
 selectButtons.forEach(button => {
@@ -1385,26 +1473,17 @@ function submitUserForm() {
    // var formData = new FormData(document.getElementById('userForm'));
     var form = document.getElementById('userForm');
  var companyId = $('#selected_company').val()
-
-        
-      
 document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
     // Create a FormData object to send the file
     var formData = new FormData(form);
- 
 //     console.log("avant")
-   
 //     var formData = new FormData();
-
-    
 //     for (var i = 0; i < form.elements.length; i++) {
 //         var element = form.elements[i];
 //         if (element.name) {
 //             formData.append(element.name, element.value);
 //         }
 //     }
-   
-    
 //   const fileInput = document.getElementById('fileInput');
 //      if (fileInput.files.length > 0) {
          
@@ -1413,10 +1492,6 @@ document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for 
     
       formData.append('action', 'add_users');
       formData.append('companyId', companyId);
-
- 
-    
-
     $.ajax({
         url: "/save-author-and-compagny",
         method:"post",
@@ -1673,22 +1748,51 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
      $('#search_txt_course').keyup(function(){
         var txt = $(this).val();
         console.log(txt);
-
         $.ajax({
-
-            url:"/fetch-databank-live-course",
+            url:"/fetch-databank-live-course/",
             method:"post",
             data:{
                 search_txt_course : txt,
             },
             dataType:"text",
             success: function(data){
-                
                 $('#autocomplete_company_databank').html(data);
             }
         });
-
     });
+</script>
+<script>
+    function removeCourse(e){
+        var id = e.id
+        console.log(id)
+        //var loader = document.getElementById('loader')
+        if(confirm('Are you sure you want to delete this course ?')){
+            $.ajax({
+                url:"/live-fetch-databank-2/",
+                method:"post",
+                data: {
+                    id_course_to_delete : id
+                },
+                dataType:"text",
+                beforeSend:function (){
+                    console.log('before send')
+                    $('#loader').removeClass('d-none');
+                },
+                error:function (e,status){
+                    console.log('error',e.responseText)
+                    console.log('status :',status)
+                },
+                success:function (succes){
+                    //console.log('susscess',succes)
+                    alert(succes)
+                    location.reload();
+                },
+                complete:function (){
+                    console.log('complete')
+                }
+            })
+        }
+    }
 </script>
 
 <?php get_footer(); ?>

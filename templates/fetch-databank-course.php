@@ -16,7 +16,7 @@ $args = array(
 
 $courses = get_posts($args);
 
-$row_company_course = " ";
+$row_company_course = "";
 
 $artikel_single = "Artikel"; 
 $white_type_array =  ['Lezing', 'Event'];
@@ -24,7 +24,6 @@ $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cur
 $video_single = "Video";
 $leerpad_single  = 'Leerpad';
 $podcast_single = 'Podcast';
-
 if(isset($search_txt_course)){
     foreach($courses as $key => $course){
         $filter = $course->post_title;
@@ -193,4 +192,3 @@ if(isset($search_txt_course)){
 
     echo $row_company_course;
 }
-
