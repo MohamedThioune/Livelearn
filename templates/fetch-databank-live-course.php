@@ -1,29 +1,24 @@
 <?php
 /** Template Name: Fetch databank  Live course */
 
-
 $search_txt_course = isset($_POST['search_txt_course']) ? sanitize_text_field($_POST['search_txt_course']) : '';
-
-
-
-
 if (empty($search_txt_course)) {
    $args = array(
-    
+
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
     'order' => 'DESC',
-                            
+
 );
 } else {
    $args = array(
-    
+
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
     'order' => 'DESC',
-     's' => $search_txt_course                           
+     's' => $search_txt_course
 );
 }
 
@@ -34,8 +29,6 @@ $courses = get_posts($args);
 
 ?>
 
-
-    
         <?php  
         if (!empty($courses)) {
             foreach ($courses as $course) {
@@ -129,7 +122,7 @@ $courses = get_posts($args);
                 // Company Name
                 $company_name = !empty($company) ? '' : 'No company';
 
-                echo '<tr class="pagination-element-block">';
+                echo '<tr class="pagination-element-block" id="' . $course->ID . '">';
                 echo '    <td><div class="for-img"><img src="' . $thumbnail . '" alt="" srcset=""></div></td>';
                 echo '    <td class="textTh text-left first-td-databank"><a style="color:#212529;font-weight:bold" href="' . $link . '">' . $course->post_title . '</a></td>';
                 echo '    <td class="textTh">' . $course_type . '</td>';
@@ -149,7 +142,7 @@ $courses = get_posts($args);
                 echo '        <ul class="dropdown-menu">';
                 echo '            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="' . $link . '" target="_blank">Bekijk</a></li>';
                 echo '            <li class="my-2"><i class="fa fa-gear px-2"></i><a href="' . $path_edit . '" target="_blank">Pas aan</a></li>';
-                echo '            <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="" value="Verwijderen"/></li>';
+                echo '            <li class="my-1 remove_opleidingen" ><i class="fa fa-trash px-2"></i><input onclick="removeCourse(this)" id="'.$course->ID.'" type="button" value="Verwijderen"/></li>';
                 echo '        </ul>';
                 echo '    </div></td>';
                 echo '</tr>';
