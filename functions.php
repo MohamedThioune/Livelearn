@@ -1992,6 +1992,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'addCommunity',
     ));
 
+    register_rest_route ('custom/v1', '/community/edit', array(
+        'methods' => 'POST',
+        'callback' => 'editCommunity',
+    ));
+
     register_rest_route ('custom/v1', '/community/personal/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getCommunitiesPersonal',
