@@ -1362,7 +1362,7 @@ function learn_modules($data){
         'post_status' => array('wc-processing'),
     );
     $bunch_orders = wc_get_orders($order_args);
-    // $bunch_orders = array();
+    //$bunch_orders = array();
     $enrolled_user = array();
     foreach($bunch_orders as $order)
         foreach ($order->get_items() as $item ) {
@@ -1392,8 +1392,9 @@ function learn_modules($data){
         //$category_str = intval("312");
     } else {
         $one_category = get_field('category_xml',  $course->ID);
-        if(isset($one_category[0]))
-            $category_id = intval($one_category[0]['value']);
+        if(isset($one_category))
+            if (isset($one_category[0]['value']))
+                $category_id = intval($one_category[0]['value']);
     }
     if ($category_str) {
         if ($category_str) {
@@ -1468,8 +1469,8 @@ $args = array(
         $category_str = 0;
         $one_category = get_field('categories',  $course->ID);
         if($one_category) {
+            if (isset($one_category[0]['value']))
                 $category_str = intval($one_category[0]['value']);
-                //$category_str = intval("312");
         } else {
             $one_category = get_field('category_xml',  $course->ID);
             if(isset($one_category[0]))
@@ -2919,7 +2920,7 @@ function addManyPeople(WP_REST_Request $data)
 
 function detailsPeopleSkillsPassport($data){
     global $wpdb;
-    $id_user = $data['userID'] ?: null;      
+    $id_user = $data['userID'] ?: null;
     $user = get_users(array('include'=> $id_user))[0]->data;
     $progress_courses = array(
         'not_started' => 0,
@@ -3327,7 +3328,7 @@ ORDER BY MONTH(created_at)
             'self_assessment_of_skills'=> $count_skills_note,
             'external_learning_opportunities' => $external_learning_opportunities,
             'average_feedback_given_me_team'=> intval($score_rate_feedback) ."/". intval($score_rate_feedback_company),
-            'usage_desktop_vs_mobile_app' => 
+            'usage_desktop_vs_mobile_app' =>
             array(
                 'web' => $canva_data_web,
                 'mobile' => $canva_data_mobile
