@@ -4262,13 +4262,26 @@ function addCommunity(WP_REST_Request $request){
     )
   );
 
+  //Check error at insertion
+  if(is_wp_error($communityID)):
+    $error = new WP_Error($communityID);
+    return new WP_REST_Response(
+        array(
+        'message' => $error->get_error_message($communityID),
+        'status' => 401
+    ), 401);
+  endif;
+
+  $infos['community'] = ($communityID) ? get_post($communityID) : null;
+  $infos['message'] = ($communityID) ? "Community add successfully !" : "";
+
   //Add informations 
   update_field('short_description', $request['short_description'], $communityID);
   update_field('visibility_community', $request['intern'], $communityID); //public or private
   update_field('password_community', $request['private_code'], $communityID); //fill up this field if necessary
 
   // Return the response 
-  $response = new WP_REST_Response("Community add successfully !");
+  $response = new WP_REST_Response($infos);
   $response->set_status(200);
   return $response;  
 
