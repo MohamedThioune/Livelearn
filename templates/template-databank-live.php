@@ -626,10 +626,10 @@ $user = wp_get_current_user();
                         </select>
                         <select name="language">
                             <option></option>
-                            <option value="en" <?php if (isset($language)) echo "selected"; ?> >
+                            <option value="en" <?php if (isset($language) && $language=="en") echo "selected"; ?> >
                                 English
                             </option>
-                            <option value="de" <?php if (isset($language)) echo "selected"; ?> >
+                            <option value="de" <?php if (isset($language) && $language=="de") echo "selected"; ?> >
                                 Deutsch
                             </option>
                             <option value="nl" <?php if (isset($language) && $language=="nl") echo "selected"; ?> >
@@ -697,7 +697,6 @@ $user = wp_get_current_user();
                         <tbody id="autocomplete_company_databank">
                             <?php  
                        if (!empty($courses)) {
-                        
                             foreach ($courses as $course) {
                                 $thumbnail = "";
 $course_type = get_field('course_type', $course->ID);
@@ -813,8 +812,10 @@ if(!$thumbnail){
                                     //$category_id = intval(explode(',', $categories[0]['value'])[0]);
                                     $category_id = intval($categories[0]['value']);
                                 }
-                            $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
-                            if($category_xml)
+                            $categories_xml = get_field('category_xml', $course->ID);
+                            if ($categories_xml)
+                            $category_xml = intval($categories_xml[0]['value']);
+                            if(isset($category_xml))
                                 if($category_xml != 0)
                                     $category = (String)get_the_category_by_ID($category_xml);
                                 
