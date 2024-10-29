@@ -4232,7 +4232,7 @@ function skillsAll(){
 }
 
 function addCommunity(WP_REST_Request $request){
-  $required_parameters = ['userID', 'title', 'short_description', 'publicOrprivate'];
+  $required_parameters = ['userID', 'title', 'short_description', 'private'];
   // Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
