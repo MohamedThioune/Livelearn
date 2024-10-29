@@ -4287,7 +4287,7 @@ function addCommunity(WP_REST_Request $request){
 }
 
 function editCommunity(WP_REST_Request $request){
-  $required_parameters = ['userID', 'communityID', 'short_description', 'intern'];
+  $required_parameters = ['userID', 'communityID'];
   // Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
