@@ -4312,10 +4312,10 @@ function editCommunity(WP_REST_Request $request){
   //Add informations 
   if($request['short_description'])
     update_field('short_description', $request['short_description'], $community->ID);
-  if($request['intern'])
-    update_field('visibility_community', $request['intern'], $community->ID); //public or private
   if($request['private_code'])
     update_field('password_community', $request['private_code'], $community->ID); //fill up this field if necessary
+  
+  update_field('visibility_community', $request['intern'], $community->ID); //public or private
 
   // Return the response 
   $response = new WP_REST_Response("Community updated successfully !");
