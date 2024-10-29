@@ -4256,9 +4256,9 @@ function addCommunity(WP_REST_Request $request){
     array(
         'post_title' => $request['title'],
         'post_type' => 'community',
+        // 'post_content' => $request['short_description'],
         'post_status' => 'publish',
         'post_author' => $user->ID
-        //'post_status' => 'pending',
     )
   );
 
@@ -4310,9 +4310,12 @@ function editCommunity(WP_REST_Request $request){
   endif;
 
   //Add informations 
-  update_field('short_description', $request['short_description'], $community->ID);
-  update_field('visibility_community', $request['intern'], $community->ID); //public or private
-  update_field('password_community', $request['private_code'], $community->ID); //fill up this field if necessary
+  if($request['short_description'])
+    update_field('short_description', $request['short_description'], $community->ID);
+  if($request['intern'])
+    update_field('visibility_community', $request['intern'], $community->ID); //public or private
+  if($request['private_code'])
+    update_field('password_community', $request['private_code'], $community->ID); //fill up this field if necessary
 
   // Return the response 
   $response = new WP_REST_Response("Community updated successfully !");
