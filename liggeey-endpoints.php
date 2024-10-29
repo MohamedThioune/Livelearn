@@ -4230,3 +4230,44 @@ function skillsAll(){
   return $response;  
 
 }
+
+function addCommunity(WP_REST_Request $request){
+  $required_parameters = ['userID', 'title', 'short_description', 'publicOrprivate'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  //Check user exists
+  $userID = $request['userID'] ?: null;
+  $user = get_user_by('ID', $userID);
+  $errors = [];
+  if (!$user):
+    $errors['errors'] = 'No user matchin !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+
+  $communityID = wp_insert_post(
+    array(
+        'post_title' => $request['title'],
+        'post_type' => 'community',
+        'post_status' => 'publish',
+        'post_author' => $user->ID
+        //'post_status' => 'pending',
+    )
+  );
+
+  //Add informations 
+  update_field('short_description', $request['short_description'], $communityID);
+  update_field('visibility_community', $request['publicOrprivate'], $communityID); //public or private
+  update_field('password_community', $request['private_code'], $communityID); //fill up this field if necessary
+
+  // $company = get_post($company_id);
+  // update_field('company', $company, 'user_' . $user_id);
+
+}
