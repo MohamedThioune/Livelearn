@@ -16,6 +16,3 @@ if (isset($_POST['id_course_to_delete'])) {
         return;
     }
 }
-
-
-
