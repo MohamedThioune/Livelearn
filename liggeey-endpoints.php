@@ -4232,7 +4232,7 @@ function skillsAll(){
 }
 
 function addCommunity(WP_REST_Request $request){
-  $required_parameters = ['userID', 'title', 'short_description', 'private'];
+  $required_parameters = ['userID', 'title', 'short_description', 'intern'];
   // Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
@@ -4264,15 +4264,46 @@ function addCommunity(WP_REST_Request $request){
 
   //Add informations 
   update_field('short_description', $request['short_description'], $communityID);
-  update_field('visibility_community', $request['private'], $communityID); //public or private
+  update_field('visibility_community', $request['intern'], $communityID); //public or private
   update_field('password_community', $request['private_code'], $communityID); //fill up this field if necessary
 
-  // $company = get_post($company_id);
-  // update_field('company', $company, 'user_' . $user_id);
+  // Return the response 
+  $response = new WP_REST_Response("Community add successfully !");
+  $response->set_status(200);
+  return $response;  
 
-    // Return the response 
-    $response = new WP_REST_Response($enrolled_courses);
-    $response->set_status(200);
-    return $response;  
+}
 
+function editCommunity(WP_REST_Request $request){
+  $required_parameters = ['userID', 'communityID', 'short_description', 'intern'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  //Check user exists
+  $userID = $request['userID'] ?: null;
+  $communityID = $request['communityID'] ?: null;
+  $user = get_user_by('ID', $userID);
+  $community = get_post($communityID);
+  $errors = [];
+  if (!$user || !$community):
+    $errors['errors'] = 'Please fill up informations correctly : user || community';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+
+  //Add informations 
+  update_field('short_description', $request['short_description'], $community->ID);
+  update_field('visibility_community', $request['intern'], $community->ID); //public or private
+  update_field('password_community', $request['private_code'], $community->ID); //fill up this field if necessary
+
+  // Return the response 
+  $response = new WP_REST_Response("Community updated successfully !");
+  $response->set_status(200);
+  return $response;  
 }
