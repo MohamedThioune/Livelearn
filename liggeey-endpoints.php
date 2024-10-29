@@ -4271,7 +4271,6 @@ function addCommunity(WP_REST_Request $request){
         'status' => 401
     ), 401);
   endif;
-
   $infos['community'] = ($communityID) ? get_post($communityID) : null;
   $infos['message'] = ($communityID) ? "Community add successfully !" : "";
 
