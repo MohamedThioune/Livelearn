@@ -4264,10 +4264,15 @@ function addCommunity(WP_REST_Request $request){
 
   //Add informations 
   update_field('short_description', $request['short_description'], $communityID);
-  update_field('visibility_community', $request['publicOrprivate'], $communityID); //public or private
+  update_field('visibility_community', $request['private'], $communityID); //public or private
   update_field('password_community', $request['private_code'], $communityID); //fill up this field if necessary
 
   // $company = get_post($company_id);
   // update_field('company', $company, 'user_' . $user_id);
+
+    // Return the response 
+    $response = new WP_REST_Response($enrolled_courses);
+    $response->set_status(200);
+    return $response;  
 
 }
