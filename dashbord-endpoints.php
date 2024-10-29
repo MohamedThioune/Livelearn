@@ -1350,9 +1350,9 @@ function learn_modules($data){
     //$company_connected = get_field('company',  'user_' . $user_connected);
     $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => -1,
         'author__in' => $users_companies,
-        'ORDER BY' => 'post_date',
+        'order' => 'DESC',
+        'numberposts' => 1000,
     );
 
     //bought courses
@@ -1434,7 +1434,8 @@ function learnning_database(){
 $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
         'posts_per_page' => -1,
-        'ORDER BY' => 'post_date',
+        'order' => 'DESC',
+        'numberposts' => 1000,
     );
     $order_args = array(
         'customer_id' => get_current_user_id(),
