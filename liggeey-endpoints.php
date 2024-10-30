@@ -3463,7 +3463,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   /** Checking parameters **/
 
   $userIDs = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $userS = (is_array($userIDs)) ? $userIDs : get_user_by('ID', $userIDs);
+  $userS = (is_array($userIDs)) ? $userIDs : [$userIDs];
   if (!$userS)
   {
     $response = new WP_REST_Response('You\'ve to be logged in !');
@@ -3500,7 +3500,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   $author_trigger = get_user_by('ID', $author_trigger_id);
   /** End checking **/
 
-  foreach($userIDs as $id):
+  foreach($userS as $id):
     $user = get_user_by('ID', $id);
     //Create notification
     $notification_data = 
