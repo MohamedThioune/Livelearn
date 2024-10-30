@@ -2436,7 +2436,7 @@ add_action( 'rest_api_init', function () {
     //Made by Mohamed | 'Subscription' Payment link
     register_rest_route ('custom/v1', '/payment/link', array(
         'methods' => 'POST',
-        'callback' => 'stripe'
+        'callback' => 'stripe' 
     ));
 
     register_rest_route ('custom/v1', '/search/stripe/(?P<companyID>\d+)', array(
