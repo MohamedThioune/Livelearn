@@ -3478,7 +3478,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
     $response->set_status($code_status);
     return $response;
   }
-  $title = (isset($request['is_livelearn'])) ? $title . ' section is missing !' : $title;
+  // $title = (isset($request['is_livelearn'])) ? $title . ' section is missing !' : $title;
 
   $content = $request['content'] != null && !empty($request['content']) ? $request['content'] : false;
   if (!($content))
@@ -3528,7 +3528,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       //Showin information 
       $company = get_field('company',  'user_' . $user->ID);
       $postTitle = $company[0]->post_title;
-      $title = (!isset($request['is_livelearn'])) ? $trigger . ' needs your attention !' : $title;
+      // $title = (!isset($request['is_livelearn'])) ? $trigger . ' needs your attention !' : $title;
       $trigger = (!isset($request['is_livelearn'])) ? $title : $trigger;
 
       $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
