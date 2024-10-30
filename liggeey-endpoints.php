@@ -3478,7 +3478,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
     $response->set_status($code_status);
     return $response;
   }
-  $title = (isset($request['is_livelearn'])) ? $title . ' section is missing !' : $title;
+  // $title = (isset($request['is_livelearn'])) ? $title . ' section is missing !' : $title;
 
   $content = $request['content'] != null && !empty($request['content']) ? $request['content'] : false;
   if (!($content))
@@ -3500,6 +3500,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   $author_trigger = get_user_by('ID', $author_trigger_id);
   /** End checking **/
 
+  $mail_sent = false;
   foreach($userS as $id):
     $user = get_user_by('ID', $id);
     //Create notification
@@ -3527,7 +3528,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       //Showin information 
       $company = get_field('company',  'user_' . $user->ID);
       $postTitle = $company[0]->post_title;
-      $title = (!isset($request['is_livelearn'])) ? $trigger . ' needs your attention !' : $title;
+      // $title = (!isset($request['is_livelearn'])) ? $trigger . ' needs your attention !' : $title;
       $trigger = (!isset($request['is_livelearn'])) ? $title : $trigger;
 
       $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
@@ -3535,16 +3536,19 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       require(__DIR__ . $path_mail);
       $subject = $title;
       // Have to put here the liggey admin email and define the base template
+
       $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
       if (wp_mail($emails, $subject, $mail_invitation_body, $headers, array( '' )))
-      {
-        $response = new WP_REST_Response('The email was sent successfully');
-        $code_status = 201;
-        $response->set_status($code_status);
-        return $response;
-      }
+        $mail_sent = true;
     }
   endforeach;
+
+  if($mail_sent):
+    $response = new WP_REST_Response('The email was sent successfully');
+    $code_status = 201;
+    $response->set_status($code_status);
+    return $response;
+  endif;
 
   $response = new WP_REST_Response('An error occurred while sending the email !');
   $response->set_status($code_status);
