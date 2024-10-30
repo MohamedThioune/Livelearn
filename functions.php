@@ -895,9 +895,7 @@ function custom_post_type() {
 
     register_post_type( 'job', $job_args );
 
-    /**  
-      Liggeey notifications cpt By Fadel
-    **/
+    /** Liggeey notifications cpt By Fadel **/
     $notifications = array(
         'name'                => _x( 'Notifications', 'Notifications', 'notification' ),
         'singular_name'       => _x( 'Notifications', 'Notification', 'notification' ),

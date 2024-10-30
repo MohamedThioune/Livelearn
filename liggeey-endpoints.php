@@ -3461,9 +3461,10 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   $code_status = 400;
 
   /** Checking parameters **/
-  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $user = get_user_by( 'ID', $user_id );
-  if (!$user)
+
+  $userIDs = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $userS = (is_array($userIDs)) ? $userIDs : get_user_by_id($userIDs);
+  if (!$userS)
   {
     $response = new WP_REST_Response('You\'ve to be logged in !');
     $response->set_status($code_status);
@@ -3498,49 +3499,52 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   $author_trigger_id = $request['author_trigger'] != null && !empty($request['author_trigger']) ? $request['author_trigger'] : false;
   $author_trigger = get_user_by('ID', $author_trigger_id);
   /** End checking **/
-  
-  //Create notification
-  $notification_data = 
-  array(
-    'post_title' => $title,
-    'post_author' => $user->ID,
-    'post_type' => 'notification',
-    'post_status' => 'publish'
-  );
-  $notification_id = wp_insert_post($notification_data);
-  if (is_int($notification_id))
-  {
-    update_field('content', $content, $notification_id);
-    update_field('trigger', $trigger, $notification_id);
-    if($author_trigger)
-      update_field('author_trigger_id', $author_trigger->ID, $notification_id);
-    
-    //Sending email notification
-    //title + trigger + content parsing
-    $first_name = $user->first_name ?: $user->display_name;
-    $emails = [$user->user_email, 'info@livelearn.nl'];
-    // $emails = [$user->user_email];
 
-    //Showin information 
-    $company = get_field('company',  'user_' . $user->ID);
-    $postTitle = $company[0]->post_title;
-    $title = (!isset($request['is_livelearn'])) ? $trigger . ' needs your attention !' : $title;
-    $trigger = (!isset($request['is_livelearn'])) ? $title : $trigger;
-
-    // $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
-    $path_mail = '/templates/mail-liggeey.php';
-    require(__DIR__ . $path_mail);
-    $subject = $title;
-    // Have to put here the liggey admin email and define the base template
-    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-    if (wp_mail($emails, $subject, $mail_invitation_body, $headers, array( '' )))
+  foreach($userS as $user):
+    //Create notification
+    $notification_data = 
+    array(
+      'post_title' => $title,
+      'post_author' => $user->ID,
+      'post_type' => 'notification',
+      'post_status' => 'publish'
+    );
+    $notification_id = wp_insert_post($notification_data);
+    if (is_int($notification_id))
     {
-      $response = new WP_REST_Response('The email was sent successfully');
-      $code_status = 201;
-      $response->set_status($code_status);
-      return $response;
+      update_field('content', $content, $notification_id);
+      update_field('trigger', $trigger, $notification_id);
+      if($author_trigger)
+        update_field('author_trigger_id', $author_trigger->ID, $notification_id);
+      
+      //Sending email notification
+      //title + trigger + content parsing
+      $first_name = $user->first_name ?: $user->display_name;
+      $emails = [$user->user_email, 'info@livelearn.nl'];
+      // $emails = [$user->user_email];
+
+      //Showin information 
+      $company = get_field('company',  'user_' . $user->ID);
+      $postTitle = $company[0]->post_title;
+      $title = (!isset($request['is_livelearn'])) ? $trigger . ' needs your attention !' : $title;
+      $trigger = (!isset($request['is_livelearn'])) ? $title : $trigger;
+
+      $path_mail = (!isset($request['is_livelearn'])) ? '/templates/mail-liggeey.php' : '/templates/mail-livelearn.php';
+      // $path_mail = '/templates/mail-liggeey.php';
+      require(__DIR__ . $path_mail);
+      $subject = $title;
+      // Have to put here the liggey admin email and define the base template
+      $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+      if (wp_mail($emails, $subject, $mail_invitation_body, $headers, array( '' )))
+      {
+        $response = new WP_REST_Response('The email was sent successfully');
+        $code_status = 201;
+        $response->set_status($code_status);
+        return $response;
+      }
     }
-  }
+  endforeach;
+  
   $response = new WP_REST_Response('An error occurred while sending the email !');
   $response->set_status($code_status);
   return $response;
@@ -4323,7 +4327,7 @@ function editCommunity(WP_REST_Request $request){
 }
 
 function deleteCourseCommunity(WP_REST_Request $request){
-  $required_parameters = ['userID', 'communityID', 'courseID'];
+  $required_parameters = ['communityID', 'courseID'];
   // Check required parameters 
   $errors = validated($required_parameters, $request);
   if($errors):
@@ -4361,7 +4365,7 @@ function deleteCourseCommunity(WP_REST_Request $request){
   endforeach;
   update_field ('course_community', $courses, $community->ID);
 
-  $message = ($find) ? "Community updated successfully !" : "Nothing happened there !";
+  $message = ($find) ? "Course removed successfully from the community !" : "Nothing happened there !";
   // Return the response 
   $response = new WP_REST_Response($message);
   $response->set_status(200);
