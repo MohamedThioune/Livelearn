@@ -1,6 +1,5 @@
 
 <?php
-$trigger = "LIGGEEY";
 $mail_invitation_body =
 
 
