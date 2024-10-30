@@ -3413,7 +3413,6 @@ function newCoursesByTeacher(WP_REST_Request $data)
 function updateCoursesByTeacher(WP_REST_Request $data)
 {
     $id_course = $data['id_course'];
-
     //$type_course = get_field('course_type',$id_course);
     $course_type = ucfirst($data['course_type']);
     $isCourseUpdated = false;
@@ -3435,9 +3434,9 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
     $btwKlasse = $data['btw-klasse'];
     $addiition_start_date = $data['addiition_start_date'];
-    //var_dump($addiition_start_date);die;
     //var_dump(get_field('data_locaties',$id_course));die;
     //var_dump(get_field('data_locaties_xml',$id_course));die;
+
     $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
@@ -3511,7 +3510,6 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->data_locaties = get_field('data_locaties',$id_course);
         $isCourseUpdated = true;
     }
-    //$course->data_locaties = get_field('data_locaties',$id_course);
 
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
