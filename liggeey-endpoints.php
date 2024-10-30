@@ -4151,7 +4151,6 @@ function artikelDezzp($data){
 }
 
 //Skills | sub - skills
-
 function skillsAll(){
   /*
   ** Categories - all  *
