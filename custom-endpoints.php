@@ -2993,7 +2993,7 @@ function addCourseCommunity(WP_REST_Request $request){
   $main_courses = get_posts($args);  
 
   $former_courses = get_field('course_community', $community->ID);
-  $courses = (!empty($former_courses)) ? array_merge($former_courses, $main_courses) : $former_courses;
+  $courses = (!empty($former_courses)) ? array_merge($former_courses, $main_courses) : $main_courses;
 
   //Add the courses to the community
   update_field ('course_community', $courses, $community->ID);
