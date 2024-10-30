@@ -2012,6 +2012,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'addCourseCommunity',
     ));
 
+    register_rest_route ('custom/v1', '/community/delete/courses', array(
+        'methods' => 'POST',
+        'callback' => 'deleteCourseCommunity',
+    ));
+
     //(Bis) Community
     register_rest_route ('custom/v2', '/communities/(?P<userID>\d+)', array(
         'methods' => 'GET',
