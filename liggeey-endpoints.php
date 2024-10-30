@@ -3463,7 +3463,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   /** Checking parameters **/
 
   $userIDs = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
-  $userS = (is_array($userIDs)) ? $userIDs : get_user_by($userIDs);
+  $userS = (is_array($userIDs)) ? $userIDs : get_user_by('ID', $userIDs);
   if (!$userS)
   {
     $response = new WP_REST_Response('You\'ve to be logged in !');
