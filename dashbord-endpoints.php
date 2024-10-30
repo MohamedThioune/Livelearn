@@ -3436,7 +3436,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $btwKlasse = $data['btw-klasse'];
     $addiition_start_date = $data['addiition_start_date'];
     //var_dump($addiition_start_date);die;
-    var_dump(get_field('data_locaties',$id_course));die;
+    //var_dump(get_field('data_locaties',$id_course));die;
     //var_dump(get_field('data_locaties_xml',$id_course));die;
     $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
     if (!$course)
@@ -3511,6 +3511,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->data_locaties = get_field('data_locaties',$id_course);
         $isCourseUpdated = true;
     }
+    //$course->data_locaties = get_field('data_locaties',$id_course);
 
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
