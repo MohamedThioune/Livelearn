@@ -29,6 +29,7 @@ if (isset($_POST['filter_databank'])) {
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
+        'numberposts' => 2000,
         'meta_query' => array()
     );
 
