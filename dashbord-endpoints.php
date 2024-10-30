@@ -3361,6 +3361,7 @@ function newCoursesByTeacher(WP_REST_Request $data)
     $course_type = $data['course_type'];
     $required_parameters = ['course_type','title'];
     $short_description = $data['short_description'];
+    $article_content = $data['article_content'];
 
     $price = $data['price'];
 
@@ -3398,6 +3399,9 @@ function newCoursesByTeacher(WP_REST_Request $data)
     if ($short_description)
         update_field('short_description', $short_description, $id_post);
 
+    if ($article_content)
+        update_field('article_itself', $article_content, $id_post);
+
     $response = new WP_REST_Response(
     array(
         'new_course_added'=>get_post($id_post,true),
@@ -3430,7 +3434,10 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
     $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
     $btwKlasse = $data['btw-klasse'];
-
+    $addiition_start_date = $data['addiition_start_date'];
+    //var_dump($addiition_start_date);die;
+    var_dump(get_field('data_locaties',$id_course));die;
+    //var_dump(get_field('data_locaties_xml',$id_course));die;
     $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
@@ -3465,30 +3472,43 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     }
     if ($languageAssessment){
         update_field('language_assessment', $languageAssessment, $id_course);
+        $course->language_assessment = get_field('language_assessment',$id_course);
         $isCourseUpdated = true;
     }
     if ($difficultyAssessment){
         update_field('difficulty_assessment', $difficultyAssessment, $id_course);
+        $course->difficulty_assessment = get_field('difficulty_assessment',$id_course);
         $isCourseUpdated = true;
     }
     if ($short_description){
         update_field('short_description', $short_description, $id_course);
+        $course->short_description = get_field('short_description',$id_course);
         $isCourseUpdated = true;
     }
     if ($long_description){
         update_field('long_description', $long_description, $id_course);
+        $course->long_description = get_field('long_description',$id_course);
         $isCourseUpdated = true;
     }
     if ($for_who){
         update_field('for_who', $for_who, $id_course);
+        $course->for_who = get_field('for_who',$id_course);
         $isCourseUpdated = true;
     }
     if ($agenda){
         update_field('agenda', $agenda, $id_course);
+        $course->agenda = get_field('agenda',$id_course);
         $isCourseUpdated = true;
     }
     if ($results){
         update_field('results', $results, $id_course);
+        $course->results = get_field('results',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($addiition_start_date){
+        update_field('data_locaties', null, $id_course);
+        update_field('data_locaties', $addiition_start_date, $id_course);
+        $course->data_locaties = get_field('data_locaties',$id_course);
         $isCourseUpdated = true;
     }
 
@@ -3496,7 +3516,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $response = new WP_REST_Response(
             array(
                 'message' => 'course updated success...',
-                'course' => get_post($id_course,true),
+                'course' => $course,
             ));
         $response->set_status(201);
         return $response;
