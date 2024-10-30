@@ -1,8 +1,8 @@
 <?php
-function crontab_podcast( ) {
+function crontab_podcast() {
     global $wpdb;
     $args = array(
-        'post_type' => array('course', 'post'),
+        'post_type' => array('course'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'ordevalue' => 'podcast',
@@ -47,9 +47,11 @@ function crontab_podcast( ) {
         //$all_audios_in_plateform_for_this_cours =  $podcast_index;
 
         //Reach podcasts and add new lesson
-        $sql = $wpdb->prepare("SELECT course_id FROM {$wpdb->prefix}databank WHERE {$wpdb->prefix}databank.titel =%s",array($course->post_title));
-        $feedid_from_databank = $wpdb->get_results($sql)[0]->course_id;
-        $feedid = $feedid_from_platform ? : $feedid_from_databank;
+        //$sql = $wpdb->prepare("SELECT course_id FROM {$wpdb->prefix}databank WHERE {$wpdb->prefix}databank.titel =%s",array($course->post_title));
+        //$feedid_from_databank = $wpdb->get_results($sql)[0]->course_id;
+        //$feedid = $feedid_from_platform ? : $feedid_from_databank;
+
+        $feedid = $feedid_from_platform;
         if (!$feedid)
             continue;
 
