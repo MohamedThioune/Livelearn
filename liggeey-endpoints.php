@@ -4321,3 +4321,49 @@ function editCommunity(WP_REST_Request $request){
   $response->set_status(200);
   return $response;  
 }
+
+function deleteCourseCommunity(WP_REST_Request $request){
+  $required_parameters = ['userID', 'communityID', 'courseID'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  //Check user exists
+  $userID = $request['userID'] ?: null;
+  $communityID = $request['communityID'] ?: null;
+  $courseID = $request['courseID'] ?: null;
+  $user = get_user_by('ID', $userID);
+  $community = get_post($communityID);
+  $errors = [];
+  if (!$user || !$community || !$courseID):
+    $errors['errors'] = 'Please fill up informations correctly : user || community || course';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+
+  //Delete the courses to the community
+  $courses = [];
+  $find = false;
+  $former_courses = get_field('course_community', $community->ID);
+  foreach ($former_courses as $key => $course):
+    if($course)
+    if($course->ID == $courseID):
+      $find = true;
+      continue;
+    endif;
+
+    $courses[] = $course;
+  endforeach;
+  update_field ('course_community', $courses, $community->ID);
+
+  $message = ($find) ? "Community updated successfully !" : "Nothing happened there !";
+  // Return the response 
+  $response = new WP_REST_Response($message);
+  $response->set_status(200);
+  return $response;  
+}
