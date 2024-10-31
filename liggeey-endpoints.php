@@ -18,10 +18,11 @@ function artikel($id){
 
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
+  $sample['link'] = get_permalink($post->ID);
   $sample['slug'] = $post->post_name;
   $sample['type'] = $course_type;
   //Image information
-  $thumbnail = get_field('preview', $post->ID)['url'];
+  $thumbnail = get_field('preview', $post->ID) ? get_field('preview', $post->ID)['url'] : null;
   if(!$thumbnail){
       $thumbnail = get_the_post_thumbnail_url($post->ID);
       if(!$thumbnail)
@@ -31,9 +32,9 @@ function artikel($id){
   }
   $sample['image'] = $thumbnail;
   $price_noformat = " ";
-  $price_noformat = get_field('price', $course->ID);
+  $price_noformat = get_field('price', $post->ID);
   $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
-  $sample['language'] = get_field('language', $course->ID);
+  $sample['language'] = get_field('language', $post->ID);
   //Certificate
   $sample['certificate'] = "No";
   $author = get_user_by('ID', $post->post_author);
@@ -49,7 +50,7 @@ function artikel($id){
   //Categories 
   $read_category = array();
   $categories = array();
-  $posttags = get_the_tags();
+  $posttags = get_the_tags($post->ID);
   $default_category = get_field('categories', $post->ID);
   $xml_category = get_field('category_xml', $post->ID);
   $category = array();
@@ -82,6 +83,7 @@ function artikel($id){
   //Reviews | Comments
   $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
+  if(!empty($main_reviews))
   foreach($main_reviews as $review):
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
@@ -4120,34 +4122,70 @@ function get_post_orders(WP_REST_Request $request){
 function artikelDezzp($data){
   $companySlug = $data['company'] ?: null;
 
-  $users = get_users();
-  $authors = array();
-  foreach ($users as $key => $value) {
-    $company_user = get_field('company',  'user_' . $value->ID );
-    if(!empty($company_user))
-    if(isset($company_user[0]->post_name))
-    if($company_user[0]->post_name == $companySlug)
-    array_push($authors, $value->ID);
-  }
+  // $users = get_users();
+  // $authors = array();
+  // foreach ($users as $key => $value) {
+  //   $company_user = get_field('company',  'user_' . $value->ID );
+  //   if(!empty($company_user))
+  //   if(isset($company_user[0]->post_name))
+  //   if($company_user[0]->post_name == $companySlug)
+  //   array_push($authors, $value->ID);
+  // }
+
   $args = array(
-    'post_type' => 'post',
+    'post_type' => array('post','course'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
-    'author__in' => $authors,
+    // 'author__in' => $authors,
     'order' => 'DESC',
   );
   $main_blogs = get_posts($args);
   $blogs = array();
 
-  if(empty($main_blogs)):
-    //Return a error 
-    $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
-    $response->set_status(400);
-    return $response;  
-  endif;
+  // if(empty($main_blogs)):
+  //   //Return a error 
+  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
+  //   $response->set_status(400);
+  //   return $response;  
+  // endif;
 
+  $CONST_FREELANCING = 647;
   //Read the blogs company
   foreach ($main_blogs as $key => $blog):
+    //Get topics | genuine, xml
+    $postags = get_the_tags($blog->ID);
+    $default_category = get_field('categories', $blog->ID);
+    $xml_category = get_field('category_xml', $blog->ID);
+    $find = false;
+
+    //Topic match "freelancing" ?
+    $main_default = array();
+    if(!empty($default_category)):
+      $main_default = array_column($default_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_default))
+        $find = true;
+    endif;
+
+    $main_xml = array();
+    if(!$find)
+    if(!empty($xml_category)):
+      $main_xml = array_column($xml_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_xml))
+        $find = true;
+    endif;
+
+    if(!$find)
+    if($postags)
+    foreach($postags as $tag)
+      if($tag->ID == $CONST_FREELANCING):
+        $find = true;
+        break;
+      endif;
+
+    if(!$find)
+      continue;
+
+    //Add the post
     $sample = artikel($blog->ID);
     $blogs[] = $sample;
   endforeach;
