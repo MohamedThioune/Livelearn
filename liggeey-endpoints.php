@@ -18,10 +18,11 @@ function artikel($id){
 
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
+  $sample['link'] = get_permalink($post->ID);
   $sample['slug'] = $post->post_name;
   $sample['type'] = $course_type;
   //Image information
-  $thumbnail = get_field('preview', $post->ID)['url'];
+  $thumbnail = get_field('preview', $post->ID) ? get_field('preview', $post->ID)['url'] : null;
   if(!$thumbnail){
       $thumbnail = get_the_post_thumbnail_url($post->ID);
       if(!$thumbnail)
@@ -31,9 +32,9 @@ function artikel($id){
   }
   $sample['image'] = $thumbnail;
   $price_noformat = " ";
-  $price_noformat = get_field('price', $course->ID);
+  $price_noformat = get_field('price', $post->ID);
   $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
-  $sample['language'] = get_field('language', $course->ID);
+  $sample['language'] = get_field('language', $post->ID);
   //Certificate
   $sample['certificate'] = "No";
   $author = get_user_by('ID', $post->post_author);
@@ -49,7 +50,7 @@ function artikel($id){
   //Categories 
   $read_category = array();
   $categories = array();
-  $posttags = get_the_tags();
+  $posttags = get_the_tags($post->ID);
   $default_category = get_field('categories', $post->ID);
   $xml_category = get_field('category_xml', $post->ID);
   $category = array();
@@ -82,6 +83,7 @@ function artikel($id){
   //Reviews | Comments
   $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
+  if(!empty($main_reviews))
   foreach($main_reviews as $review):
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
@@ -4147,29 +4149,44 @@ function artikelDezzp($data){
   //   return $response;  
   // endif;
 
-  $CONST_FREELANCING = 203;
+  $CONST_FREELANCING = 647;
   //Read the blogs company
   foreach ($main_blogs as $key => $blog):
     //Get topics | genuine, xml
+    $postags = get_the_tags($blog->ID);
     $default_category = get_field('categories', $blog->ID);
     $xml_category = get_field('category_xml', $blog->ID);
     $find = false;
 
     //Topic match "freelancing" ?
-    if(!empty($default_category))
-    if(in_array($CONST_FREELANCING, $default_category))
-      $find = true;
+    $main_default = array();
+    if(!empty($default_category)):
+      $main_default = array_column($default_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_default))
+        $find = true;
+    endif;
 
-    if(!empty($xml_category))
-    if(!in_array($CONST_FREELANCING, $xml_category) )
-      $find = true;
+    $main_xml = array();
+    if(!$find)
+    if(!empty($xml_category)):
+      $main_xml = array_column($xml_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_xml))
+        $find = true;
+    endif;
+
+    if(!$find)
+    if($postags)
+    foreach($postags as $tag)
+      if($tag->ID == $CONST_FREELANCING):
+        $find = true;
+        break;
+      endif;
 
     if(!$find)
       continue;
 
     //Add the post
     $sample = artikel($blog->ID);
-    $sample = postAdditionnal($sample);
     $blogs[] = $sample;
   endforeach;
 
