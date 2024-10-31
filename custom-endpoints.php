@@ -3508,10 +3508,9 @@ function save_user_views(WP_REST_Request $request)
   $response = new WP_REST_Response($lesson_reads);
   $response->set_status(200);
   $progressions = get_posts($args);
+
   return $lesson_reads;    
   }
-
-
 
 
   function updateUserProgressionWithLastPosition($request)

@@ -4120,35 +4120,56 @@ function get_post_orders(WP_REST_Request $request){
 function artikelDezzp($data){
   $companySlug = $data['company'] ?: null;
 
-  $users = get_users();
-  $authors = array();
-  foreach ($users as $key => $value) {
-    $company_user = get_field('company',  'user_' . $value->ID );
-    if(!empty($company_user))
-    if(isset($company_user[0]->post_name))
-    if($company_user[0]->post_name == $companySlug)
-    array_push($authors, $value->ID);
-  }
+  // $users = get_users();
+  // $authors = array();
+  // foreach ($users as $key => $value) {
+  //   $company_user = get_field('company',  'user_' . $value->ID );
+  //   if(!empty($company_user))
+  //   if(isset($company_user[0]->post_name))
+  //   if($company_user[0]->post_name == $companySlug)
+  //   array_push($authors, $value->ID);
+  // }
+
   $args = array(
-    'post_type' => 'post',
+    'post_type' => array('post','course'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
-    'author__in' => $authors,
+    // 'author__in' => $authors,
     'order' => 'DESC',
   );
   $main_blogs = get_posts($args);
   $blogs = array();
 
-  if(empty($main_blogs)):
-    //Return a error 
-    $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
-    $response->set_status(400);
-    return $response;  
-  endif;
+  // if(empty($main_blogs)):
+  //   //Return a error 
+  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
+  //   $response->set_status(400);
+  //   return $response;  
+  // endif;
 
+  $CONST_FREELANCING = 203;
   //Read the blogs company
   foreach ($main_blogs as $key => $blog):
+    //Get topics | genuine, xml
+    $default_category = get_field('categories', $blog->ID);
+    $xml_category = get_field('category_xml', $blog->ID);
+    $find = false;
+
+    //Topic match "freelancing" ?
+    if(!empty($default_category))
+    if(in_array($CONST_FREELANCING, $default_category))
+      $find = true;
+
+    if(!empty($xml_category))
+    if(!in_array($CONST_FREELANCING, $xml_category) )
+      $find = true;
+
+    if(!$find)
+      continue;
+
+    //Add the post
     $sample = artikel($blog->ID);
+    $sample = postAdditionnal($sample);
     $blogs[] = $sample;
   endforeach;
 
