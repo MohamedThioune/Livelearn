@@ -3431,12 +3431,11 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $for_who = $data['for_who']; //for_who, Voor wie,
     $agenda = $data['agenda']; // Programma, agenda
     $results = $data['results']; // Resultaten, results
-    $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
-    $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
     $btwKlasse = $data['btw-klasse'];
     $addiition_start_date = $data['addiition_start_date'];
+    $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
+    $geacrediteerd = $data['accredeted']; // geacrediteerd accredited, Geaccrediteerd
 
-    $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
 
@@ -3511,6 +3510,21 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     }
     if ($course_type)
         update_field('course_type', $course_type , $id_course);
+    if ($incompany_mogelijk){
+        update_field('incompany_mogelijk', $incompany_mogelijk, $id_course);
+        $course->incompany_mogelijk = get_field('incompany_mogelijk',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($geacrediteerd){
+        update_field('geacrediteerd', $geacrediteerd, $id_course);
+        $course->geacrediteerd = get_field('geacrediteerd',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($btwKlasse){
+        update_field('btw-klasse', $btwKlasse, $id_course);
+        $course->btw_klasse = get_field('btw-klasse',$id_course);
+        $isCourseUpdated = true;
+    }
 
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
