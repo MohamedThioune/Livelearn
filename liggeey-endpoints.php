@@ -18,10 +18,11 @@ function artikel($id){
 
   $sample['ID'] = $post->ID;
   $sample['title'] = $post->post_title;
+  $sample['link'] = get_permalink($post->ID);
   $sample['slug'] = $post->post_name;
   $sample['type'] = $course_type;
   //Image information
-  $thumbnail = get_field('preview', $post->ID)['url'];
+  $thumbnail = get_field('preview', $post->ID) ? get_field('preview', $post->ID)['url'] : null;
   if(!$thumbnail){
       $thumbnail = get_the_post_thumbnail_url($post->ID);
       if(!$thumbnail)
@@ -31,9 +32,9 @@ function artikel($id){
   }
   $sample['image'] = $thumbnail;
   $price_noformat = " ";
-  $price_noformat = get_field('price', $course->ID);
+  $price_noformat = get_field('price', $post->ID);
   $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
-  $sample['language'] = get_field('language', $course->ID);
+  $sample['language'] = get_field('language', $post->ID);
   //Certificate
   $sample['certificate'] = "No";
   $author = get_user_by('ID', $post->post_author);
@@ -49,7 +50,7 @@ function artikel($id){
   //Categories 
   $read_category = array();
   $categories = array();
-  $posttags = get_the_tags();
+  $posttags = get_the_tags($post->ID);
   $default_category = get_field('categories', $post->ID);
   $xml_category = get_field('category_xml', $post->ID);
   $category = array();
@@ -82,6 +83,7 @@ function artikel($id){
   //Reviews | Comments
   $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
+  if(!empty($main_reviews))
   foreach($main_reviews as $review):
     $user = $review['user'];
     $author_name = ($user->last_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
@@ -4116,44 +4118,138 @@ function get_post_orders(WP_REST_Request $request){
 
 }
 
-//Artikels by company ""
-function artikelDezzp($data){
-  $companySlug = $data['company'] ?: null;
+function getAsseessmentsViaCategory($data) {
+  global $wpdb;
 
-  $users = get_users();
-  $authors = array();
-  foreach ($users as $key => $value) {
-    $company_user = get_field('company',  'user_' . $value->ID );
-    if(!empty($company_user))
-    if(isset($company_user[0]->post_name))
-    if($company_user[0]->post_name == $companySlug)
-    array_push($authors, $value->ID);
+  // Récupérer le paramètre 'category_id' depuis la requête
+  $categoryID = $data['categoryID'];
+
+  // Construire la clause WHERE en fonction de la présence de category_id
+  $where_clause = '';
+  if (!empty($categoryID)) 
+    $where_clause = $wpdb->prepare("WHERE a.category_id = %d", $categoryID);
+
+  // Requête pour obtenir les assessments filtrés par category_id si fourni
+  $assessments = $wpdb->get_results(
+    "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+    FROM {$wpdb->prefix}assessments a
+    LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+    $where_clause
+    GROUP BY a.id"
+  );
+
+  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
+  // if (empty($assessments)) 
+  //   $assessments = $wpdb->get_results(
+  //     "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+  //     FROM {$wpdb->prefix}assessments a
+  //     LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+  //     GROUP BY a.id"
+  //   );
+
+  // Vérifie s'il y a des assessments
+  if (empty($assessments))
+    return rest_ensure_response(array('message' => 'No assessments found.'));
+
+  // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
+  foreach ($assessments as $assessment) {
+
+    // Récupérer les informations de l'auteur
+    $author = get_user_by('ID', $assessment->author_id);
+    if ($author) {
+        $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $assessment->author = new Expert($author, $author_img);
+    } else {
+        $assessment->author = null;
+    }
+
+    // Récupérer les informations de la catégorie
+    $assessment->category = [
+        "name" => get_the_category_by_ID($categoryID),
+        "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+    ];
   }
+
+  // Retourner les assessments avec le nombre de questions et le statut
+  return $assessments;
+}
+
+//Posts for DeZZP via category
+function artikelDezzp($data){
+  // $users = get_users();
+  // $authors = array();
+  // foreach ($users as $key => $value) {
+  //   $company_user = get_field('company',  'user_' . $value->ID );
+  //   if(!empty($company_user))
+  //   if(isset($company_user[0]->post_name))
+  //   if($company_user[0]->post_name == $companySlug)
+  //   array_push($authors, $value->ID);
+  // }
+
+  // if(empty($main_blogs)):
+  //   //Return a error 
+  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
+  //   $response->set_status(400);
+  //   return $response;  
+  // endif;
+
+  $CONST_FREELANCING = 647;
+  $companySlug = $data['company'] ?: null;
   $args = array(
-    'post_type' => 'post',
+    'post_type' => array('post','course'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
-    'author__in' => $authors,
+    // 'author__in' => $authors,
     'order' => 'DESC',
   );
   $main_blogs = get_posts($args);
   $blogs = array();
 
-  if(empty($main_blogs)):
-    //Return a error 
-    $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
-    $response->set_status(400);
-    return $response;  
-  endif;
-
-  //Read the blogs company
+  //Read the blogs via category
   foreach ($main_blogs as $key => $blog):
+    //Get topics | genuine, xml
+    $postags = get_the_tags($blog->ID);
+    $default_category = get_field('categories', $blog->ID);
+    $xml_category = get_field('category_xml', $blog->ID);
+    $find = false;
+
+    //Topic match "freelancing" ?
+    $main_default = array();
+    if(!empty($default_category)):
+      $main_default = array_column($default_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_default))
+        $find = true;
+    endif;
+
+    $main_xml = array();
+    if(!$find)
+    if(!empty($xml_category)):
+      $main_xml = array_column($xml_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_xml))
+        $find = true;
+    endif;
+
+    if(!$find)
+    if($postags)
+    foreach($postags as $tag)
+      if($tag->ID == $CONST_FREELANCING):
+        $find = true;
+        break;
+      endif;
+
+    if(!$find)
+      continue;
+
+    //Add the post
     $sample = artikel($blog->ID);
     $blogs[] = $sample;
   endforeach;
 
+  //Read the assessments via category 
+  $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
+
   //Return the response 
-  $response = new WP_REST_Response(['success' => true, 'blogs' => $blogs]);
+  $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
   $response->set_status(200);
   return $response;  
 
