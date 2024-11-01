@@ -4139,13 +4139,13 @@ function getAsseessmentsViaCategory($data) {
   );
 
   // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
-  if (empty($assessments)) 
-    $assessments = $wpdb->get_results(
-      "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
-      FROM {$wpdb->prefix}assessments a
-      LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-      GROUP BY a.id"
-    );
+  // if (empty($assessments)) 
+  //   $assessments = $wpdb->get_results(
+  //     "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+  //     FROM {$wpdb->prefix}assessments a
+  //     LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+  //     GROUP BY a.id"
+  //   );
 
   // Vérifie s'il y a des assessments
   if (empty($assessments))
@@ -4166,7 +4166,7 @@ function getAsseessmentsViaCategory($data) {
     // Récupérer les informations de la catégorie
     $assessment->category = [
         "name" => get_the_category_by_ID($categoryID),
-        "image" => get_field('image', 'category_' . $categoryID) ?? ""
+        "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
     ];
   }
 
