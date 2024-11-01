@@ -4151,7 +4151,7 @@ function getAsseessmentsViaCategory($data) {
 
   // Vérifie s'il y a des assessments
   if (empty($assessments))
-    return [];
+    return []; 
 
   // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
   foreach ($assessments as $assessment) {
