@@ -4124,8 +4124,6 @@ function getAsseessmentsViaCategory($data) {
   // Récupérer le paramètre 'category_id' depuis la requête
   $categoryID = $data['categoryID'];
 
-  var_dump($categoryID);
-
   // Construire la clause WHERE en fonction de la présence de category_id
   $where_clause = '';
   if (!empty($categoryID)) 
