@@ -4121,14 +4121,6 @@ function get_post_orders(WP_REST_Request $request){
 function getAsseessmentsViaCategory($data) {
   global $wpdb;
 
-  // Récupère l'ID de l'utilisateur à partir de la requête
-  // $user_id = $GLOBALS['user_id'];
-  // if ($user_id == 0) {
-  //     $response = new WP_REST_Response("You have to login with valid credentials!");
-  //     $response->set_status(400);
-  //     return $response;
-  // }
-
   // Récupérer le paramètre 'category_id' depuis la requête
   $categoryID = $data['categoryID'];
 
@@ -4161,26 +4153,6 @@ function getAsseessmentsViaCategory($data) {
 
   // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
   foreach ($assessments as $assessment) {
-    // Rechercher si l'utilisateur a un résultat pour cet assessment
-    // $result = $wpdb->get_row(
-    //     $wpdb->prepare(
-    //         "SELECT score, is_success FROM {$wpdb->prefix}result WHERE user_id = %d AND assessment_id = %d",
-    //         $user_id,
-    //         $assessment->id
-    //     )
-    // );
-
-    // if ($result) {
-    //     if ($result->is_success) {
-    //         $assessment->status = 'validated'; // L'utilisateur a validé l'évaluation
-    //     } else {
-    //         $assessment->status = 'failed'; // L'utilisateur a échoué l'évaluation
-    //     }
-    //     $assessment->score = $result->score; // Inclure le score
-    // } else {
-    //     $assessment->status = 'not_attempted'; // L'utilisateur n'a jamais tenté l'évaluation
-    //     $assessment->score = null; // Pas de score car jamais tenté
-    // }
 
     // Récupérer les informations de l'auteur
     $author = get_user_by('ID', $assessment->author_id);
@@ -4193,8 +4165,8 @@ function getAsseessmentsViaCategory($data) {
 
     // Récupérer les informations de la catégorie
     $assessment->category = [
-        "name" => get_the_category_by_ID((int)$assessment->category_id),
-        "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+        "name" => get_the_category_by_ID($categoryID),
+        "image" => get_field('image', 'category_' . $categoryID) ?? ""
     ];
   }
 
@@ -4220,7 +4192,7 @@ function artikelDezzp($data){
   //   $response->set_status(400);
   //   return $response;  
   // endif;
-  
+
   $CONST_FREELANCING = 647;
   $companySlug = $data['company'] ?: null;
   $args = array(
