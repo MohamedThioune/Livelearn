@@ -1434,6 +1434,7 @@ function learnning_database(){
 $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
         'posts_per_page' => -1,
+        'orderby' => 'date',
         'order' => 'DESC',
         'numberposts' => 1000,
     );
@@ -3434,8 +3435,6 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
     $btwKlasse = $data['btw-klasse'];
     $addiition_start_date = $data['addiition_start_date'];
-    //var_dump(get_field('data_locaties',$id_course));die;
-    //var_dump(get_field('data_locaties_xml',$id_course));die;
 
     $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
     if (!$course)
@@ -3510,6 +3509,8 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->data_locaties = get_field('data_locaties',$id_course);
         $isCourseUpdated = true;
     }
+    if ($course_type)
+        update_field('course_type', $course_type , $id_course);
 
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
@@ -3585,7 +3586,7 @@ function search_courses()
 
 function coursesRecommendedUpcomming($data)
 {
-    $info = recommendation($data['id'], 2000, 200);
+    $info = recommendation($data['id'], 1500, 200);
     return new WP_REST_Response($info, 200);
 }
 
