@@ -4118,10 +4118,92 @@ function get_post_orders(WP_REST_Request $request){
 
 }
 
-//Artikels by company ""
-function artikelDezzp($data){
-  $companySlug = $data['company'] ?: null;
+function getAsseessmentsViaCategory($data) {
+  global $wpdb;
 
+  // Récupère l'ID de l'utilisateur à partir de la requête
+  // $user_id = $GLOBALS['user_id'];
+  // if ($user_id == 0) {
+  //     $response = new WP_REST_Response("You have to login with valid credentials!");
+  //     $response->set_status(400);
+  //     return $response;
+  // }
+
+  // Récupérer le paramètre 'category_id' depuis la requête
+  $categoryID = $data['categoryID'];
+
+  // Construire la clause WHERE en fonction de la présence de category_id
+  $where_clause = '';
+  if (!empty($categoryID)) 
+    $where_clause = $wpdb->prepare("WHERE a.category_id = %d", $categoryID);
+
+  // Requête pour obtenir les assessments filtrés par category_id si fourni
+  $assessments = $wpdb->get_results(
+    "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+    FROM {$wpdb->prefix}assessments a
+    LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+    $where_clause
+    GROUP BY a.id"
+  );
+
+  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
+  if (empty($assessments)) 
+    $assessments = $wpdb->get_results(
+      "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+      FROM {$wpdb->prefix}assessments a
+      LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+      GROUP BY a.id"
+    );
+
+  // Vérifie s'il y a des assessments
+  if (empty($assessments))
+    return rest_ensure_response(array('message' => 'No assessments found.'));
+
+  // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
+  foreach ($assessments as $assessment) {
+    // Rechercher si l'utilisateur a un résultat pour cet assessment
+    // $result = $wpdb->get_row(
+    //     $wpdb->prepare(
+    //         "SELECT score, is_success FROM {$wpdb->prefix}result WHERE user_id = %d AND assessment_id = %d",
+    //         $user_id,
+    //         $assessment->id
+    //     )
+    // );
+
+    // if ($result) {
+    //     if ($result->is_success) {
+    //         $assessment->status = 'validated'; // L'utilisateur a validé l'évaluation
+    //     } else {
+    //         $assessment->status = 'failed'; // L'utilisateur a échoué l'évaluation
+    //     }
+    //     $assessment->score = $result->score; // Inclure le score
+    // } else {
+    //     $assessment->status = 'not_attempted'; // L'utilisateur n'a jamais tenté l'évaluation
+    //     $assessment->score = null; // Pas de score car jamais tenté
+    // }
+
+    // Récupérer les informations de l'auteur
+    $author = get_user_by('ID', $assessment->author_id);
+    if ($author) {
+        $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $assessment->author = new Expert($author, $author_img);
+    } else {
+        $assessment->author = null;
+    }
+
+    // Récupérer les informations de la catégorie
+    $assessment->category = [
+        "name" => get_the_category_by_ID((int)$assessment->category_id),
+        "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+    ];
+  }
+
+  // Retourner les assessments avec le nombre de questions et le statut
+  return $assessments;
+}
+
+//Posts for DeZZP via category
+function artikelDezzp($data){
   // $users = get_users();
   // $authors = array();
   // foreach ($users as $key => $value) {
@@ -4131,6 +4213,18 @@ function artikelDezzp($data){
   //   if($company_user[0]->post_name == $companySlug)
   //   array_push($authors, $value->ID);
   // }
+
+  // if(empty($main_blogs)):
+  //   //Return a error 
+  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
+  //   $response->set_status(400);
+  //   return $response;  
+  // endif;
+  $CONST_FREELANCING = 647;
+  $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
+  var_dump($assessments);
+  die();
+  $companySlug = $data['company'] ?: null;
 
   $args = array(
     'post_type' => array('post','course'),
@@ -4142,14 +4236,6 @@ function artikelDezzp($data){
   $main_blogs = get_posts($args);
   $blogs = array();
 
-  // if(empty($main_blogs)):
-  //   //Return a error 
-  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
-  //   $response->set_status(400);
-  //   return $response;  
-  // endif;
-
-  $CONST_FREELANCING = 647;
   //Read the blogs company
   foreach ($main_blogs as $key => $blog):
     //Get topics | genuine, xml
