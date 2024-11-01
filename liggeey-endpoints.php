@@ -4220,12 +4220,9 @@ function artikelDezzp($data){
   //   $response->set_status(400);
   //   return $response;  
   // endif;
+  
   $CONST_FREELANCING = 647;
-  $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
-  var_dump($assessments);
-  die();
   $companySlug = $data['company'] ?: null;
-
   $args = array(
     'post_type' => array('post','course'),
     'post_status' => 'publish',
@@ -4236,7 +4233,7 @@ function artikelDezzp($data){
   $main_blogs = get_posts($args);
   $blogs = array();
 
-  //Read the blogs company
+  //Read the blogs via category
   foreach ($main_blogs as $key => $blog):
     //Get topics | genuine, xml
     $postags = get_the_tags($blog->ID);
@@ -4276,8 +4273,11 @@ function artikelDezzp($data){
     $blogs[] = $sample;
   endforeach;
 
+  //Read the assessments via category 
+  $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
+
   //Return the response 
-  $response = new WP_REST_Response(['success' => true, 'blogs' => $blogs]);
+  $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
   $response->set_status(200);
   return $response;  
 
