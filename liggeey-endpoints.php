@@ -4124,6 +4124,8 @@ function getAsseessmentsViaCategory($data) {
   // Récupérer le paramètre 'category_id' depuis la requête
   $categoryID = $data['categoryID'];
 
+  var_dump($categoryID);
+
   // Construire la clause WHERE en fonction de la présence de category_id
   $where_clause = '';
   if (!empty($categoryID)) 
@@ -4149,7 +4151,7 @@ function getAsseessmentsViaCategory($data) {
 
   // Vérifie s'il y a des assessments
   if (empty($assessments))
-    return rest_ensure_response(array('message' => 'No assessments found.'));
+    return [];
 
   // Parcourir les assessments et ajouter un champ "status" et "score" pour chaque évaluation
   foreach ($assessments as $assessment) {
