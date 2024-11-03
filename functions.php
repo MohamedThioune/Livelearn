@@ -1902,7 +1902,32 @@ add_action( 'rest_api_init', function () {
         'callback' => 'get_all_assessments_with_question_count',
     ));
 
+    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'get_assessment_details',
+    ));
+
     /* Assessment endpoints V3 */
+
+
+    /* Likes endpoints V3 */
+
+    register_rest_route('custom/v3', 'course/(?P<course_id>\d+)/likes/stats/', array(
+        'methods' => 'GET',
+        'callback' => 'get_course_feedback',
+    ));
+
+    register_rest_route('custom/v3', 'user/course/(?P<course_id>\d+)/likes/stats/', array(
+        'methods' => 'GET',
+        'callback' => 'get_user_course_feedback',
+    ));
+
+    register_rest_route('custom/v3', 'course/likes/stats/add', array(
+        'methods' => 'POST',
+        'callback' => 'create_or_update_like',
+    ));
+
+    /* Likes endpoints V3 */
     
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
         'methods' => 'GET',
