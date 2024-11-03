@@ -6918,6 +6918,10 @@ function add_assessment_with_questions(WP_REST_Request $request) {
       return new WP_Error('missing_data', 'Title, questions, author_id, and level are required', array('status' => 400));
   }
   
+  // Génére un slug unique
+  $slug = sanitize_title($data['title']);
+  
+  
   // Commencer une transaction pour assurer l'intégrité des données
   $wpdb->query('START TRANSACTION');
   
@@ -6927,6 +6931,7 @@ function add_assessment_with_questions(WP_REST_Request $request) {
           $wpdb->prefix . 'assessments',
           array(
               'title' => sanitize_text_field($data['title']),
+              'slug' => $slug,
               'description' => sanitize_textarea_field($data['description']),
               'duration' => (int) $data['duration'],
               'category_id' => (int) $data['category_id'],
@@ -6937,7 +6942,7 @@ function add_assessment_with_questions(WP_REST_Request $request) {
               'createdAt' => current_time('mysql', true),
               'updatedAt' => current_time('mysql', true),
           ),
-          array('%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s')
+          array('%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s')
       );
 
       // Vérification des erreurs SQL
@@ -6996,6 +7001,34 @@ function add_assessment_with_questions(WP_REST_Request $request) {
       return new WP_Error('db_error', $e->getMessage(), array('status' => 500));
   }
 }
+
+// Endpoint pour rajouter un slug à tous les assessments
+function add_slug_to_all_assessments()
+{
+
+  global $wpdb;
+
+  // Récupérer tous les assessments existants
+  $assessments = $wpdb->get_results("SELECT id, title FROM {$wpdb->prefix}assessments");
+
+  // Parcourir chaque assessment et générer un slug unique
+  foreach ($assessments as $assessment) {
+      $slug = sanitize_title($assessment->title);
+
+      // Mettre à jour le slug dans la base de données
+      $wpdb->update(
+          "{$wpdb->prefix}assessments",
+          array('slug' => $slug),
+          array('id' => $assessment->id),
+          array('%s'),
+          array('%d')
+      );
+
+  }
+
+
+}
+
 
 // Fonction pour traiter une tentative d'assessment dans la base de données
 function process_assessment_attempt($assessment_id, $user_id, $answers_payload) {
@@ -7255,6 +7288,7 @@ function get_assessment(WP_REST_Request $request) {
   $response = array(
       'id' => $assessment->id,
       'title' => $assessment->title,
+      'slug' => $assessment->slug,
       'description' => $assessment->description,
       'duration' => $assessment->duration,
       'createdAt' => $assessment->createdAt,
@@ -7448,7 +7482,7 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
 
   // Requête pour obtenir les assessments filtrés par category_id si fourni
   $assessments = $wpdb->get_results(
-      "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+      "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
       FROM {$wpdb->prefix}assessments a
       LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
       $where_clause
@@ -7517,23 +7551,23 @@ function get_assessment_details(WP_REST_Request $request) {
   global $wpdb;
 
   // Récupérer l'ID de l'assessment depuis l'URL
-  $assessment_id = $request['assessment_id'];
+  $assessment_slug = $request['assessment_slug'];
 
   // Vérifier si l'ID est null ou vide
-  if (empty($assessment_id)) {
-      return new WP_REST_Response(array('message' => 'Assessment ID is required'), 400);
+  if (empty($assessment_slug)) {
+      return new WP_REST_Response(array('message' => 'Assessment slug is required'), 400);
   }
 
   // Obtenir les détails de l'assessment et le nombre de questions associées
   $assessment = $wpdb->get_row(
       $wpdb->prepare(
-          "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled,
+          "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled,
                   COUNT(q.id) as question_count
           FROM {$wpdb->prefix}assessments a
           LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-          WHERE a.id = %d
-          GROUP BY a.id",
-          $assessment_id
+          WHERE a.slug = %s
+          GROUP BY a.slug",
+          $assessment_slug
       )
   );
 
