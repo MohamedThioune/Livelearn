@@ -1912,7 +1912,13 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_slug_to_all_assessments',
     ));
 
-    
+    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
+        'methods' => 'DELETE',
+        'callback' => 'delete_assessment_by_id',
+        'permission_callback' => function () {
+            return current_user_can('delete_posts'); // Vérifie les permissions pour supprimer
+        },
+    ));
 
     /* Assessment endpoints V3 */
 
