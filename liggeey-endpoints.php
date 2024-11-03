@@ -31,8 +31,8 @@ function artikel($id){
                   $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
   }
   $sample['image'] = $thumbnail;
-  $price_noformat = " ";
-  $price_noformat = get_field('price', $post->ID);
+  $price_noformat = "";
+  $price_noformat = get_field('price', $post->ID) ?: "0";
   $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
   $sample['language'] = get_field('language', $post->ID);
   //Certificate
@@ -3779,8 +3779,8 @@ function activity($ID){
     $manager_id = get_field('manager_feedback', $todo->ID);
     if($manager_id){
       $manager = get_user_by('ID', $manager_id);
-      $image = get_field('profile_img',  'user_' . $manager->ID);
-      $manager_display = $manager->display_name;
+      $image = ($manager) ? get_field('profile_img',  'user_' . $manager->ID) : '';
+      $manager_display = ($manager) ? $manager->display_name : '';
     }else{
       $manager_display = 'A manager';
       $image = 0;
@@ -3850,7 +3850,7 @@ function activity($ID){
     $sample['company'] = $company->post_title;
     $sample['company_image'] = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
     $sample['title'] = $value->post_title;
-    $sample['image']= get_field('image_community', $value->ID) ?: $company_image;
+    $sample['image']= get_field('image_community', $value->ID) ?: $sample['company_image'];
 
     //Courses through custom field
     $courses = get_field('course_community', $value->ID);
@@ -3861,13 +3861,15 @@ function activity($ID){
 
     //Followers
     $max_follower = 0;
+    $followers = 0;
     $followers = get_field('follower_community', $value->ID);
     if(!empty($followers))
       $max_follower = count($followers);
-    $sample['followers'] = $max_course;
+    $sample['followers'] = $max_follower;
 
     $bool = false;
-    foreach ($sample['followers'] as $key => $val)
+    if(!empty($followers))
+    foreach ($followers as $key => $val)
       if($val->ID == $user->ID){
         $bool = true;
         break;
