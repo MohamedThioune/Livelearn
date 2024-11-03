@@ -7474,13 +7474,13 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   // Récupérer le paramètre 'category_id' depuis la requête
   $category_id = $request['category_id'];
 
-  // Construire la clause WHERE en fonction de la présence de category_id
-  $where_clause = '';
+  // Construire la clause WHERE en fonction de la présence de category_id et de is_enabled
+  $where_clause = "WHERE a.is_enabled = 1";
   if (!empty($category_id)) {
-      $where_clause = $wpdb->prepare("WHERE a.category_id = %d", $category_id);
+      $where_clause .= $wpdb->prepare(" AND a.category_id = %d", $category_id);
   }
 
-  // Requête pour obtenir les assessments filtrés par category_id si fourni
+  // Requête pour obtenir les assessments activés, filtrés par category_id si fourni
   $assessments = $wpdb->get_results(
       "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
       FROM {$wpdb->prefix}assessments a
@@ -7489,12 +7489,13 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
       GROUP BY a.id"
   );
 
-  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
+  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments activés sans filtre de catégorie
   if (empty($assessments)) {
       $assessments = $wpdb->get_results(
           "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
           FROM {$wpdb->prefix}assessments a
           LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+          WHERE a.is_enabled = 1
           GROUP BY a.id"
       );
   }
@@ -7547,6 +7548,7 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   return rest_ensure_response($assessments);
 }
 
+
 function get_assessment_details(WP_REST_Request $request) {
   global $wpdb;
 
@@ -7595,6 +7597,49 @@ function get_assessment_details(WP_REST_Request $request) {
 
   return rest_ensure_response($assessment);
 }
+
+function delete_assessment_by_id(WP_REST_Request $request) {
+  global $wpdb;
+
+  // Récupère l'ID de l'assessment à partir de la requête
+  $assessment_id = (int) $request['assessment_id'];
+
+  // Vérifie si l'ID de l'assessment est valide
+  if (empty($assessment_id) || !is_numeric($assessment_id)) {
+      return new WP_REST_Response("Invalid assessment ID", 400);
+  }
+
+  // Debug : Vérifie l'ID reçu
+  error_log("Trying to delete assessment with ID: " . $assessment_id);
+
+  // Vérifie si l'assessment existe
+  $assessment = $wpdb->get_row(
+      $wpdb->prepare("SELECT * FROM {$wpdb->prefix}assessments WHERE id = %d", $assessment_id)
+  );
+
+  if (!$assessment) {
+      // Debug : Log si l'assessment n'est pas trouvé
+      error_log("Assessment with ID {$assessment_id} not found in database.");
+      return new WP_REST_Response("Assessment not found", 404);
+  }
+
+  // Supprime l'assessment
+
+  $deleted = $wpdb->delete(
+      "{$wpdb->prefix}assessments",
+      array('id' => $assessment_id),
+      array('%d')
+  );
+
+  if ($deleted === false) {
+      return new WP_REST_Response("Failed to delete assessment", 500);
+  }
+
+  return new WP_REST_Response("Assessment deleted successfully", 200);
+}
+
+
+
 
 /**
  * Likes endpoints 
