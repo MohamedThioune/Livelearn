@@ -7513,6 +7513,262 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   return rest_ensure_response($assessments);
 }
 
+function get_assessment_details(WP_REST_Request $request) {
+  global $wpdb;
+
+  // Récupérer l'ID de l'assessment depuis l'URL
+  $assessment_id = $request['assessment_id'];
+
+  // Vérifier si l'ID est null ou vide
+  if (empty($assessment_id)) {
+      return new WP_REST_Response(array('message' => 'Assessment ID is required'), 400);
+  }
+
+  // Obtenir les détails de l'assessment et le nombre de questions associées
+  $assessment = $wpdb->get_row(
+      $wpdb->prepare(
+          "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled,
+                  COUNT(q.id) as question_count
+          FROM {$wpdb->prefix}assessments a
+          LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+          WHERE a.id = %d
+          GROUP BY a.id",
+          $assessment_id
+      )
+  );
+
+  if (!$assessment) {
+      return new WP_REST_Response(array('message' => 'Assessment not found'), 404);
+  }
+
+  // Récupérer les informations de l'auteur
+  $author = get_user_by('ID', $assessment->author_id);
+  if ($author) {
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $assessment->author = [
+          "name" => $author->display_name,
+          "profile_image" => $author_img
+      ];
+  } else {
+      $assessment->author = null;
+  }
+
+  // Récupérer les informations de la catégorie
+  $assessment->category = [
+      "name" => get_the_category_by_ID((int)$assessment->category_id),
+      "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+  ];
+
+  return rest_ensure_response($assessment);
+}
+
+/**
+ * Likes endpoints 
+ */
+
+
+ function create_or_update_like(WP_REST_Request $request) {
+  global $wpdb;
+
+  $course_id = $request['course_id'];
+  $user_id = $request['user_id'];
+  $feedback_type = $request['feedback_type'];
+
+  // Vérification des paramètres requis
+  if (empty($course_id) || empty($feedback_type)) {
+      return new WP_REST_Response("Course ID and feedback type are required", 400);
+  }
+
+  if ($user_id == 0 || null) {
+      return new WP_REST_Response("You have to login with valid credentials!", 400);
+  }
+
+  $feedback_keywords =  array(
+    'like' ,    
+    'educational',
+    'issues' ,
+    'fake_news',
+    'sales' 
+  );
+
+  if (!in_array($feedback_type,$feedback_keywords)) {
+    return new WP_REST_Response("This feedback type doesnt exist!", 400);
+}
+
+
+  // Vérifier si l'utilisateur a déjà donné un feedback pour ce cours
+  $existing_like = $wpdb->get_row(
+      $wpdb->prepare(
+          "SELECT id, feedback_value FROM {$wpdb->prefix}likes
+           WHERE course_id = %d AND user_id = %d",
+          $course_id,
+          $user_id
+      )
+  );
+
+  if ($existing_like) {
+      // Si l'utilisateur soumet le même feedback, on considère que c'est une suppression
+      if ($existing_like->feedback_value === $feedback_type) {
+          $wpdb->delete("{$wpdb->prefix}likes", ['id' => $existing_like->id]);
+          $message = "Feedback removed successfully.";
+      } else {
+          // Sinon, on met à jour avec le nouveau type de feedback
+          $wpdb->update(
+              "{$wpdb->prefix}likes",
+              ['feedback_value' => $feedback_type],
+              ['id' => $existing_like->id]
+          );
+          $message = "Feedback updated successfully.";
+      }
+  } else {
+      // Création d'un nouveau feedback
+      $wpdb->insert(
+          "{$wpdb->prefix}likes",
+          [
+              'user_id' => $user_id,
+              'course_id' => $course_id,
+              'feedback_value' => $feedback_type,
+          ]
+      );
+      $message = "Feedback created successfully.";
+  }
+
+  // Récupérer les statistiques pour ce cours
+  $stats = $wpdb->get_row(
+      $wpdb->prepare(
+          "SELECT 
+              SUM(CASE WHEN feedback_value = 'like' THEN 1 ELSE 0 END) as `like`,
+              SUM(CASE WHEN feedback_value = 'educational' THEN 1 ELSE 0 END) as `educational`,
+              SUM(CASE WHEN feedback_value = 'issues' THEN 1 ELSE 0 END) as `issues`,
+              SUM(CASE WHEN feedback_value = 'fake_news' THEN 1 ELSE 0 END) as `fake_news`,
+              SUM(CASE WHEN feedback_value = 'sales' THEN 1 ELSE 0 END) as `sales`
+           FROM {$wpdb->prefix}likes
+           WHERE course_id = %d",
+          $course_id
+      )
+  );
+
+  // Vérifier quel feedback l'utilisateur a donné
+  $user_feedback = ($existing_like && $existing_like->feedback_value === $feedback_type) ? null : $feedback_type;
+
+  // Préparer les données de réponse
+  $data = [
+      'user_feedback' => $user_feedback,
+      'like' => (int) $stats->like,
+      'educational' => (int) $stats->educational,
+      'issues' => (int) $stats->issues,
+      'fake_news' => (int) $stats->fake_news,
+      'sales' => (int) $stats->sales,
+  ];
+
+  // Retourner le message et les données
+  return rest_ensure_response(['message' => $message, 'data' => $data]);
+}
+
+
+function get_user_course_feedback(WP_REST_Request $request) {
+  global $wpdb;
+
+  $course_id = $request['course_id'];
+  $user_id = $GLOBALS['user_id'] ?? 0;
+
+  // Vérification des paramètres requis
+  if (empty($course_id)) {
+      return new WP_REST_Response("Course ID is required", 400);
+  }
+
+  if ($user_id == 0) {
+      return new WP_REST_Response("You have to login with valid credentials!", 400);
+  }
+
+  // Récupérer le feedback de l'utilisateur pour ce cours, s'il existe
+  $user_feedback = $wpdb->get_var(
+      $wpdb->prepare(
+          "SELECT feedback_value FROM {$wpdb->prefix}likes
+           WHERE course_id = %d AND user_id = %d",
+          $course_id,
+          $user_id
+      )
+  );
+
+  // Récupérer les statistiques de feedback pour ce cours
+  $stats = $wpdb->get_row(
+      $wpdb->prepare(
+          "SELECT 
+              SUM(CASE WHEN feedback_value = 'like' THEN 1 ELSE 0 END) as `like`,
+              SUM(CASE WHEN feedback_value = 'educational' THEN 1 ELSE 0 END) as `educational`,
+              SUM(CASE WHEN feedback_value = 'issues' THEN 1 ELSE 0 END) as `issues`,
+              SUM(CASE WHEN feedback_value = 'fake_news' THEN 1 ELSE 0 END) as `fake_news`,
+              SUM(CASE WHEN feedback_value = 'sales' THEN 1 ELSE 0 END) as `sales`
+           FROM {$wpdb->prefix}likes
+           WHERE course_id = %d",
+          $course_id
+      )
+  );
+
+  
+  $data = [
+      'user_feedback' => $user_feedback ?? null, // null si l'utilisateur n'a pas encore donné de feedback
+      'like' => (int) $stats->like,
+      'educational' => (int) $stats->educational,
+      'issues' => (int) $stats->issues,
+      'fake_news' => (int) $stats->fake_news,
+      'sales' => (int) $stats->sales,
+  ];
+
+  // Retourner les données
+  return rest_ensure_response(['message' => "Course feedback retrieved successfully", 'data' => $data]);
+}
+
+function get_course_feedback(WP_REST_Request $request) {
+  global $wpdb;
+
+  $course_id = $request['course_id'];
+
+  // Vérification des paramètres requis
+  if (empty($course_id)) {
+      return new WP_REST_Response("Course ID is required", 400);
+  }
+
+
+  // Récupérer les statistiques de feedback pour ce cours
+  $stats = $wpdb->get_row(
+      $wpdb->prepare(
+          "SELECT 
+              SUM(CASE WHEN feedback_value = 'like' THEN 1 ELSE 0 END) as `like`,
+              SUM(CASE WHEN feedback_value = 'educational' THEN 1 ELSE 0 END) as `educational`,
+              SUM(CASE WHEN feedback_value = 'issues' THEN 1 ELSE 0 END) as `issues`,
+              SUM(CASE WHEN feedback_value = 'fake_news' THEN 1 ELSE 0 END) as `fake_news`,
+              SUM(CASE WHEN feedback_value = 'sales' THEN 1 ELSE 0 END) as `sales`
+           FROM {$wpdb->prefix}likes
+           WHERE course_id = %d",
+          $course_id
+      )
+  );
+
+  
+  $data = [
+      'like' => (int) $stats->like,
+      'educational' => (int) $stats->educational,
+      'issues' => (int) $stats->issues,
+      'fake_news' => (int) $stats->fake_news,
+      'sales' => (int) $stats->sales,
+  ];
+
+  // Retourner les données
+  return rest_ensure_response(['message' => "Course feedback retrieved successfully", 'data' => $data]);
+}
+
+
+
+
+
+ /**
+ * Likes endpoints 
+ */
+
+
+
 
 
 
