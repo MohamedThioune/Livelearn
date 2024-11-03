@@ -3734,6 +3734,8 @@ function activity($ID){
       // $expenses += $prijs; 
       if(!in_array($course_id, $enrolled)):
         $course = artikel($course_id);
+        if(!$course)
+          continue;
         //Get statut
         $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : ""; 
         if(get_post($course_id)):
