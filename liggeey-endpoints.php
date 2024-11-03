@@ -3735,7 +3735,7 @@ function activity($ID){
       if(!in_array($course_id, $enrolled)):
         $course = artikel($course_id);
         //Get statut
-        $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : null;
+        $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : "";
         if(get_post($course_id)):
           array_push($courses, $course);
           array_push($enrolled, $course_id);
