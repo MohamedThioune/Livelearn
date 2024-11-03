@@ -1902,13 +1902,25 @@ add_action( 'rest_api_init', function () {
         'callback' => 'get_all_assessments_with_question_count',
     ));
 
-    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
+    register_rest_route('custom/v3', '/assessment/(?P<assessment_slug>[-\w]+)', array(
         'methods' => 'GET',
         'callback' => 'get_assessment_details',
     ));
 
-    /* Assessment endpoints V3 */
+    register_rest_route('custom/v3', '/assessments/slug/add', array(
+        'methods' => 'GET',
+        'callback' => 'add_slug_to_all_assessments',
+    ));
 
+    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
+        'methods' => 'DELETE',
+        'callback' => 'delete_assessment_by_id',
+        'permission_callback' => function () {
+            return current_user_can('delete_posts'); // Vérifie les permissions pour supprimer
+        },
+    ));
+
+    /* Assessment endpoints V3 */
 
     /* Likes endpoints V3 */
 
@@ -2639,7 +2651,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/posts/(?P<company>[-\w]+)', array(
         'methods' => 'GET',
         'callback' => 'artikelDezzp'
-    )); 
+    ));
     register_rest_route ('custom/v1', 'subscription/organisation', array(
         'methods' => 'POST',
         'callback' => 'subscription_organisation'
