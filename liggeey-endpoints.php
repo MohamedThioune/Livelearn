@@ -4476,3 +4476,100 @@ function deleteCourseCommunity(WP_REST_Request $request){
   $response->set_status(200);
   return $response;  
 }
+
+function HomepageAngular(){
+
+  $infos = array();
+
+  //Topics 
+  $topics = array();
+  $categories = array();
+  $cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+
+  foreach($cats as $category):
+    $cat_id = strval($category->cat_ID);
+    $category = intval($cat_id);
+    array_push($categories, $category);
+  endforeach;
+
+  //Categories
+  $topics['training'] = get_categories( array(
+    'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent' => $categories[2],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+
+  $topics['grow'] = get_categories( array(
+    'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent' => $categories[1],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+
+  $topics['relevant_skills'] = get_categories( array(
+    'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent' => $categories[0],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+
+  $topics['interests'] = get_categories( array(
+    'taxonomy'  => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent' => $categories[3],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+  $infos['topics'] = $topics;
+
+  //What not to miss 
+  $courses = array();
+  $posts = get_posts(array(
+    'post_type' => array('course', 'post'), 
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC',
+  ));
+
+  $article = 0;
+  $video = 0;
+  $podcast = 0;
+
+  foreach ($posts as $post):
+    if(!$post)
+      continue;
+
+    $courses['all'] = artikel($post->ID);
+    $coursetype = get_field('course_type', $post->ID);
+    switch ($coursetype) {
+      case 'Artikel':
+        $courses['Artikel'] = artikel($post->ID);
+        $article++;
+        break;
+
+      case 'Video':
+        $courses['Video'] = artikel($post->ID);
+        $video++;
+        break;
+
+      case 'Podcast':
+        $courses['Podcast'] = artikel($post->ID);
+        $podcast++;
+        break;
+    }
+
+    if($article >= 6 && $video >= 6 && $podcast >=6)
+      break;
+
+    $infos['what_not_miss'] = $courses;
+
+  endforeach;
+
+  // Return the response 
+  $response = new WP_REST_Response($message);
+  $response->set_status(200);
+  return $response;  
+  
+}
