@@ -4541,21 +4541,21 @@ function HomepageAngular(){
     if(!$post)
       continue;
 
-    $courses['all'] = artikel($post->ID);
+    $courses['all'][] = artikel($post->ID);
     $coursetype = get_field('course_type', $post->ID);
     switch ($coursetype) {
       case 'Artikel':
-        $courses['Artikel'] = artikel($post->ID);
+        $courses['Artikel'][] = artikel($post->ID);
         $article++;
         break;
 
       case 'Video':
-        $courses['Video'] = artikel($post->ID);
+        $courses['Video'][] = artikel($post->ID);
         $video++;
         break;
 
       case 'Podcast':
-        $courses['Podcast'] = artikel($post->ID);
+        $courses['Podcast'][] = artikel($post->ID);
         $podcast++;
         break;
     }
