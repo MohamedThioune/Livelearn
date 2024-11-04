@@ -4568,7 +4568,7 @@ function HomepageAngular(){
   endforeach;
 
   // Return the response 
-  $response = new WP_REST_Response($message);
+  $response = new WP_REST_Response($infos);
   $response->set_status(200);
   return $response;  
   
