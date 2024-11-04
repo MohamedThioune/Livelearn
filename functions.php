@@ -2672,4 +2672,8 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'addTodo'
     ));
+    register_rest_route ('custom/v1', '/homepage/angular', array(
+        'methods' => 'GET',
+        'callback' => 'HomepageAngular'
+    ));
 });
