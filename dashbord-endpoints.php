@@ -525,11 +525,11 @@ function sendEmail($id_user,$id_newUser,$password)
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     return wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
 }
-function sendEmailBecaumeManager($idUserToInvite,$role)
+function sendEmailBecaumeManager($idUserToInvite,$role,$subject,$tittle)
 {
     $user = new WP_User($idUserToInvite);
     $company = get_field('company',  'user_' . $idUserToInvite)[0];
-    $subject = 'You have the role of '.$role;
+    //$subject = 'You have the role of '.$role;
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     $email = $user->data->user_email;
     $first_name = $user->data->display_name ? : $user->data->first_name.' '.$user->data->last_name;
@@ -651,7 +651,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role)
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Je hebt een nieuwe rol.</p>
+                            data-testid="Y0h44Pmw76d">You have a new role.</p>
                         </div>
                       </td>
                     </tr>
@@ -751,7 +751,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role)
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>You are now a '.$role.' !</b></span></h1>
+                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b> '.$tittle.' </b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
                             data-testid="RJMLrMvA0Rh">Make sure your team continues to develop.</p>
                         </div>
@@ -2675,17 +2675,38 @@ function grantPushRole($data)
     $budget = $data['budget'];
     $user_id = $data['id'];
     $user = new WP_User($user_id);
+    $manager = $role['manager'];
+    $author = $role['author'];
 
-    $user->add_role( $role );
+    if ($manager) {
+        if (in_array($manager, $user->roles)) {
+            $user->add_role('manager');
+            sendEmailBecaumeManager($user_id,$role,'You have the role of manager','You are now a manager!');
+        }
+    } else {
+        $user->remove_role('manager');
+        sendEmailBecaumeManager($user_id,$role,'You have been deleted as a manager','You are no longer a manager');
+    }
+    if ($author) {
+        if (in_array($author, $user->roles)) {
+            $user->add_role('author');
+            sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
+        }
+    }else {
+        $user->remove_role('author');
+        sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
+    }
+    //$role = $manager ? 'manager' : 'author';
+    //$user->add_role( $role );
     update_field('amount_budget', $budget, 'user_' . $user_id);
     //send Email
     $user->data->budget_amount = get_field('amount_budget','user_' . $user_id)?:0;
     $user->data->roles = $user->roles;
 
-    sendEmailBecaumeManager($user_id,$role);
     $response = new WP_REST_Response(
         array(
-            'user'=>$user->data
+            'user'=>$user->data,
+            'user_complete'=>$user
         ));
     $response->set_status(201);
     return $response;
@@ -3378,7 +3399,7 @@ function newCoursesByTeacher(WP_REST_Request $data)
             array(
                 'message' => 'User not found',
             ),401 );
-    $types = ['Assessment' => 'assessment', 'Article'=>'post', 'Video' => 'course','Podcast'=>'course'];
+    $types = ['Assessment' => 'assessment', 'Article'=>'post', 'Video' => 'course','Podcast'=>'course','Training'=>'post'];
     $type = $types[$course_type];
     $args = array(
             'post_type' => $type,
@@ -3435,10 +3456,31 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $addiition_start_date = $data['addiition_start_date'];
     $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
     $geacrediteerd = $data['accredeted']; // geacrediteerd accredited, Geaccrediteerd
+    $lessons_video = $data['lessons_video']; // update video courses : { "course_lesson_title": "ttitle video 1",  "course_lesson_intro": "description video 1",  "course_lesson_data": "https://wp12.influid.nl/wp-content/uploads/2023/04/Mobile-App-UI_UX-Speed-Design-in-Figma.mp4"},
+    $lessons_podcasts = $data['podcasts']; //update podcast courses : { "course_podcast_title": "title poscast 2",  "course_podcast_intro": "description poscast 2", "course_podcast_data": "https://wp12.influid.nl/wp-content/uploads/2024/11/BONUS_Live_Boukje_Taphoorn_Bol_over_het_afscheid_van_de__com-1.mp3"}
+
+    $language = $data['language']; // langage for course
+    $training_dates_locations = $data['training_dates_locations']; // langage for course
+
 
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
+    //var_dump(get_field('data_locaties_xml',$id_course));die;
+    if($training_dates_locations){
+        $date_location_xml = "";
+        foreach ($training_dates_locations as $date_location) {
+            $date_location_xml.=$date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
+            $dates_between = explode(',',$date_location['dates_between']);
+            foreach ($dates_between as $date_between)
+                $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
 
+            $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
+        }
+        $location_xml = ['value'=>$date_location_xml, 'label'=>$date_location_xml ];
+        update_field('data_locaties_xml',$location_xml,$id_course);
+        $course->data_locaties_xml = get_field('data_locaties_xml',$id_course);
+        $isCourseUpdated = true;
+    }
     if ($article_content) {
         update_field('article_itself', $article_content, $id_course);
         $isCourseUpdated = true;
@@ -3525,7 +3567,16 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->btw_klasse = get_field('btw-klasse',$id_course);
         $isCourseUpdated = true;
     }
-
+    /*
+    if ($lessons_video) {
+        update_field('data_virtual', $lessons_video, $id_course);
+        $isCourseUpdated = true;
+    }
+    */
+    if ($language) {
+        update_field('language', $language, $id_course);
+        $isCourseUpdated = true;
+    }
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
             array(
@@ -3546,7 +3597,8 @@ function deleteCourse($data)
             if (wp_trash_post($post->ID))
                 return new WP_REST_Response(
                     array('message'=>"course $id_course deleted successfully ! ! !"),
-                    200);
+                    200
+                );
 
         return new WP_REST_Response(array('message' => "course not deleted ! ! !"),401);
 }
@@ -3764,7 +3816,6 @@ function addFeedback($data)
     $id = $data['id'];
     $title = $data['title'];
     $type = $data['type']; // Feedback = Feedback,Development Plan = Persoonlijk ontwikkelplan,Beoordeling Gesprek = Assessment,Compliment=Compliment
-    //$manager = $data['manager']; // manager_feedback
     $rating = $data['rating']; // rating_feedback [1,5]
     $rate_comments = $data['comments']; // rate_comments, How to Improve / Other Comments?
     $description = $data['description']; //Describe the Feedback, beschrijving_feedback
@@ -3780,12 +3831,12 @@ function addFeedback($data)
     $welke_datum_feedback = $data['welke_datum_feedback']; // welke_datum_feedback
     $comments_assessment = $data['comments_assessment']; // opmerkingen
     $user_role = get_users(array('include'=> $id))[0]->roles;
-    $managed = get_field('managed',  'user_' . $id);
-    if ($managed)
-        if (in_array($id,$managed))
-            $superior = get_users(array('include'=> $id))[0]->data;
-    $manager = $superior ? $superior->ID : $id;
-
+    //$managed = get_field('managed',  'user_' . $id);
+    //if ($managed)
+    //    if (in_array($id,$managed))
+    //        $superior = get_users(array('include'=> $id))[0]->data;
+    //$manager = $superior ? $superior->ID : $id;
+    $manager = $id;
 
     $args = array(
         'post_type' => 'feedback',
@@ -3803,7 +3854,7 @@ function addFeedback($data)
         ),401);
     }
     if ($manager)
-        update_field('manager_feedback', $manager, $id_post);
+        update_field('manager_feedback', intval($manager), $id_post);
     if ($type)
         update_field('type_feedback', $type , $id_post);
     if ($rating)
@@ -3936,7 +3987,7 @@ function addTodo($data)
     );
     $id_post = wp_insert_post($args, true);
     update_field('title_todo', $title, $id_post);
-    update_field('manager_feedback', $id , $id_post);
+    update_field('manager_feedback', intval($id) , $id_post);
 
     if ($type)
         update_field('type_feedback', $type, $id_post);
