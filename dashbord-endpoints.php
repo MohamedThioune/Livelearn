@@ -4052,3 +4052,64 @@ function addTodo($data)
             'new_todo' => $todo,
         ),201);
 }
+
+function all_courses()
+{
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'order' => 'DESC' ,
+        'paged' => $page,
+    );
+    $courses = get_posts($args);
+    $all_courses = array();
+    foreach ($courses as $course) {
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        $author = get_user_by( 'ID', $course -> post_author  );
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course-> author = new Expert ($author , $author_img);
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = '';
+        $preview = get_field('preview', $course->ID);
+        if ($preview)
+            $image = $preview['url'];
+
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image && $course->courseType)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
+
+        $new_course = new Course($course);
+
+        $all_courses[] = new Course($course);
+    }
+
+    $count_all_course = count(get_posts(
+            array(
+                'post_type' => array('course', 'post'),
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'order' => 'DESC'
+            )
+        )
+    );
+    $total_pages = ceil($count_all_course / 20);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+
+    return new WP_REST_Response(
+        array(
+            'count_all_course' => $count_all_course,
+            'page'=>$numbers_of_pages,
+            'course' => $all_courses,
+        ),200);
+}
