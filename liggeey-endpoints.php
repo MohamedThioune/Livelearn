@@ -1073,19 +1073,18 @@ function allCompaniesAdvanced(){
   $company_experts = ['' => ''];
   // Users should
   $users = get_users();
-
   foreach ($users as $user):
-      $company_partial = get_field('company',  'user_' . $user->ID);
-      if(!empty($company_partial)):
-          $company_partie = $company_partial[0]->post_title;
-          $company_experts[$company_partie] .= $user->ID . ',';
-      endif;
+    $company_partial = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_partial)):
+        $company_partie = $company_partial[0]->post_title;
+        $company_experts[$company_partie] .= $user->ID . ',';
+    endif;
   endforeach;
 
   $args = array(
-      'post_type' => 'company',
-      'post_status' => 'publish',
-      'posts_per_page' => -1,
+    'post_type' => 'company',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
   );
   $company_posts = get_posts($args);
   $companies = array();
@@ -1116,12 +1115,12 @@ function allCompaniesAdvanced(){
     $sample['open_jobs']  = empty($jobs) ? 0 : count($jobs);
 
     //Experts
-    $str_experts = isset($company_experts[$name]) ? $company_experts[$name] : '';
+    $str_experts = isset($company_experts[$post->post_title]) ? $company_experts[$post->post_title] : '';
     $experts = explode(',', $str_experts);
     $sample['experts'] = (isset($experts[0])) ? count($experts) : 0;
-    
+    var_dump($experts);
     //Date
-    $date = $company->post_date;
+    $date = $post->post_date;
     $days = explode(' ', $date)[0];
     $year = explode('-', $days)[0];
     $sample['year'] = $year;
