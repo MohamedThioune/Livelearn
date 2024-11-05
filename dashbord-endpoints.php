@@ -3412,13 +3412,13 @@ function newCoursesByTeacher(WP_REST_Request $data)
         'Article'=>'post',
         'Video' => 'course',
         'Podcast'=>'course',
-        'Training'=>'post',
-        'Opleidingen'=>'post',
-        'Event'=>'post',
-        'Lezing'=>'post',
-        'Workshop'=>'post',
-        'Masterclass'=>'post',
-        'Cursus'=>'post',
+        'Training'=>'course',
+        'Opleidingen'=>'course',
+        'Event'=>'course',
+        'Lezing'=>'course',
+        'Workshop'=>'course',
+        'Masterclass'=>'course',
+        'Cursus'=>'course',
     ];
     $type = $types[$course_type];
     $args = array(
@@ -4109,7 +4109,145 @@ function all_courses_in_plateform()
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
             'course' => $all_courses,
-        ),200);
+        ),200 );
 }
 
+function all_company_in_plateform()
+{
 
+    $company_experts = array();
+    $users = get_users();
+    foreach ($users as $user):
+        $company_partial = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_partial)):
+            $company_partie = $company_partial[0]->post_title;
+            if ($company_partie)
+                $company_experts[$company_partie] .= $user->ID . ',';
+        endif;
+    endforeach;
+
+    $all_companies = array();
+    $args = array(
+        'post_type' => 'company',
+        'post_status' => 'publish',
+        'order' => 'ASC',
+        'posts_per_page' => -1,
+    );
+    $companies = get_posts($args);
+    foreach ($companies as $company) {
+        $com = [];
+        $name = $company->post_title;
+        $str_experts = isset($company_experts[$name]) ? $company_experts[$name] : '';
+        $experts = explode(',', $str_experts);
+        $count_experts = (isset($experts[0])) ? count($experts) : 0;
+
+        //Courses
+        $count_courses = 0;
+        if(isset($experts[0])):
+            $args = array(
+                'post_type' => array('post','course'),
+                'posts_per_page' => -1,
+                'orderby' => 'date',
+                'order'   => 'DESC',
+                'author__in' => $experts,
+            );
+            $courses = get_posts($args);
+            $count_courses = (isset($courses[0])) ? count($courses) : 0;
+        endif;
+
+        $com['id'] = $company->ID;
+        $com['name'] = $name;
+        $date = $company->post_date;
+        $days = explode(' ', $date)[0];
+        $year = explode('-', $days)[0];
+        $com['since'] = $year;
+        $com['count_course'] = $count_courses;
+        $com['count_expert'] = $count_experts;
+
+        $all_companies[] = $com;
+    }
+    return new WP_REST_Response(
+        array(
+            'count' => count($all_companies),
+            'companies' => $all_companies,
+        ),200 );
+}
+
+function detail_company($data)
+{
+    $id_company = $data['id'];
+    $company = get_post($id_company);
+    if (!$company)
+        return new WP_REST_Response(
+            array(
+                'error'=>'company not exist'
+            ));
+
+    $info_company = array();
+    $company_experts = array();
+    $name = $company->post_title;
+    $users = get_users();
+    foreach ($users as $user):
+        $company_partial = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_partial)):
+            $company_partie = $company_partial[0]->post_title;
+            if ($company_partie)
+                $company_experts[$company_partie] .= $user->ID . ',';
+        endif;
+    endforeach;
+    $str_experts = isset($company_experts[$name]) ? $company_experts[$name] : '';
+    $experts = explode(',', $str_experts);
+    $count_experts = (isset($experts[0])) ? count($experts) : 0;
+    $all_courses = array();
+
+    if(isset($experts[0])):
+        $args = array(
+            'post_type' => array('post','course'),
+            'posts_per_page' => -1,
+            'orderby' => 'date',
+            'order'   => 'DESC',
+            'author__in' => $experts,
+        );
+        $courses = get_posts($args);
+        foreach ($courses as $course) {
+            $course->visibility = get_field('visibility',$course->ID) ?? [];
+            $author = get_user_by( 'ID', $course -> post_author  );
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $course-> author = new Expert ($author , $author_img);
+            $course->longDescription = get_field('long_description',$course->ID);
+            $course->shortDescription = get_field('short_description',$course->ID);
+
+            $course->courseType = get_field('course_type', $course->ID);
+            $image = '';
+            $preview = get_field('preview', $course->ID);
+            if ($preview)
+                $image = $preview['url'];
+
+            if(!$image){
+                $image = get_the_post_thumbnail_url($course->ID);
+                if(!$image)
+                    $image = get_field('url_image_xml', $course->ID);
+                if(!$image && $course->courseType)
+                    $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+            }
+            $course->pathImage = $image;
+
+            $all_courses[] = new Course($course);
+        }
+    endif;
+
+    $info_company['id'] = $company->ID;
+    $info_company['logo'] = get_field('company_logo',$id_company)?:get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $info_company['email'] = get_field('company_email', $id_company) ? : 'contact@livelearn.nl';
+    $info_company['country'] = get_field('company_country',$id_company) ? : '';
+    $info_company['phone'] = get_field('company_phone',$id_company) ? : '';
+    $info_company['website'] =  get_field('company_website', $id_company) ?: 'www.livelearn.nl';
+    $info_company['number_course'] = $all_courses ? count($all_courses) : 0;
+    $info_company['number_employee'] = $count_experts;
+    $info_company['courses'] = $all_courses;
+
+    return new WP_REST_Response(
+        array(
+            'company' => $info_company,
+        ),200 );
+}
