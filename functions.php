@@ -2678,6 +2678,6 @@ add_action( 'rest_api_init', function () {
     ));
     register_rest_route ('custom/v1', '/courses/all', array(
         'methods' => 'GET',
-        'callback' => 'all_courses'
+        'callback' => 'all_courses_in_plateform'
     ));
 });
