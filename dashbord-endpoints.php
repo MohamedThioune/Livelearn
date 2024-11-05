@@ -4053,7 +4053,7 @@ function addTodo($data)
         ),201);
 }
 
-function all_courses()
+function all_courses_in_plateform()
 {
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $args = array(
@@ -4088,8 +4088,6 @@ function all_courses()
         }
         $course->pathImage = $image;
 
-        $new_course = new Course($course);
-
         $all_courses[] = new Course($course);
     }
 
@@ -4113,3 +4111,5 @@ function all_courses()
             'course' => $all_courses,
         ),200);
 }
+
+
