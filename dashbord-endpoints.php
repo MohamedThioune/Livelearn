@@ -2678,23 +2678,31 @@ function grantPushRole($data)
     $manager = $role['manager'];
     $author = $role['author'];
 
-    if ($manager) {
-        if (in_array($manager, $user->roles)) {
-            $user->add_role('manager');
-            sendEmailBecaumeManager($user_id,$role,'You have the role of manager','You are now a manager!');
+    if (isset($manager) && $manager!=null) {
+        if ($manager) {
+            if (!in_array('manager', $user->roles)) {
+                $user->add_role('manager');
+                sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
+            }
+        } else {
+            if (in_array('manager', $user->roles)) {
+                $user->remove_role('manager');
+                sendEmailBecaumeManager($user_id, $role, 'You have been deleted as a manager', 'You are no longer a manager');
+            }
         }
-    } else {
-        $user->remove_role('manager');
-        sendEmailBecaumeManager($user_id,$role,'You have been deleted as a manager','You are no longer a manager');
     }
+    if (isset($author) && $author!=null) {
     if ($author) {
-        if (in_array($author, $user->roles)) {
+        if (!in_array('author', $user->roles)) {
             $user->add_role('author');
             sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
         }
     }else {
-        $user->remove_role('author');
-        sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
+            if (!in_array('author', $user->roles)) {
+                $user->remove_role('author');
+                sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
+            }
+        }
     }
     //$role = $manager ? 'manager' : 'author';
     //$user->add_role( $role );
@@ -3399,7 +3407,19 @@ function newCoursesByTeacher(WP_REST_Request $data)
             array(
                 'message' => 'User not found',
             ),401 );
-    $types = ['Assessment' => 'assessment', 'Article'=>'post', 'Video' => 'course','Podcast'=>'course','Training'=>'post'];
+    $types = [
+        'Assessment' => 'assessment',
+        'Article'=>'post',
+        'Video' => 'course',
+        'Podcast'=>'course',
+        'Training'=>'post',
+        'Opleidingen'=>'post',
+        'Event'=>'post',
+        'Lezing'=>'post',
+        'Workshop'=>'post',
+        'Masterclass'=>'post',
+        'Cursus'=>'post',
+    ];
     $type = $types[$course_type];
     $args = array(
             'post_type' => $type,
@@ -3461,26 +3481,13 @@ function updateCoursesByTeacher(WP_REST_Request $data)
 
     $language = $data['language']; // langage for course
     $training_dates_locations = $data['training_dates_locations']; // langage for course
+    $link_to_call = $data['lin_to_call'];
+    $online_location = $data['online_location'];
 
 
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
     //var_dump(get_field('data_locaties_xml',$id_course));die;
-    if($training_dates_locations){
-        $date_location_xml = "";
-        foreach ($training_dates_locations as $date_location) {
-            $date_location_xml.=$date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
-            $dates_between = explode(',',$date_location['dates_between']);
-            foreach ($dates_between as $date_between)
-                $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
-
-            $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
-        }
-        $location_xml = ['value'=>$date_location_xml, 'label'=>$date_location_xml ];
-        update_field('data_locaties_xml',$location_xml,$id_course);
-        $course->data_locaties_xml = get_field('data_locaties_xml',$id_course);
-        $isCourseUpdated = true;
-    }
     if ($article_content) {
         update_field('article_itself', $article_content, $id_course);
         $isCourseUpdated = true;
@@ -3567,16 +3574,49 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->btw_klasse = get_field('btw-klasse',$id_course);
         $isCourseUpdated = true;
     }
-    /*
+
     if ($lessons_video) {
         update_field('data_virtual', $lessons_video, $id_course);
         $isCourseUpdated = true;
+        $course->video = get_field('data_virtual', $id_course);
     }
-    */
+
+     if ($lessons_podcasts) {
+        update_field('podcasts', $lessons_podcasts, $id_course);
+        $isCourseUpdated = true;
+        $course->podcast = get_field('podcasts', $id_course);
+    }
+
     if ($language) {
         update_field('language', $language, $id_course);
         $isCourseUpdated = true;
     }
+    if($training_dates_locations){
+        $date_location_xml = "";
+        foreach ($training_dates_locations as $date_location) {
+            $date_location_xml.=$date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
+            $dates_between = explode(',',$date_location['dates_between']);
+            foreach ($dates_between as $date_between)
+                $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
+
+            $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
+        }
+        $location_xml = ['value'=>$date_location_xml, 'label'=>$date_location_xml ];
+        update_field('data_locaties_xml',$location_xml,$id_course);
+        $course->data_locaties_xml = get_field('data_locaties_xml',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($link_to_call){
+        update_field('link_to', $link_to_call, $id_course);
+        $isCourseUpdated = true;
+        $course->link_to_call = get_field('link_to',$id_course);
+    }
+    if ($online_location){
+        update_field('online_location', $online_location, $id_course);
+        $isCourseUpdated = true;
+        $course->online_location = get_field('online_location',$id_course);
+    }
+
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
             array(
