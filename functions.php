@@ -2247,7 +2247,7 @@ add_action( 'rest_api_init', function () {
 
     register_rest_route ('custom/v1', '/companies/advanced', array(
         'methods' => 'GET',
-        'callback' => 'allCompanies'
+        'callback' => 'allCompaniesAdvanced'
     ));
 
     register_rest_route ('custom/v1', '/jobs', array(
