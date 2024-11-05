@@ -2245,6 +2245,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'allCompanies'
     ));
 
+    register_rest_route ('custom/v1', '/companies/advanced', array(
+        'methods' => 'GET',
+        'callback' => 'allCompanies'
+    ));
+
     register_rest_route ('custom/v1', '/jobs', array(
         'methods' => 'GET',
         'callback' => 'allJobs'
@@ -2614,6 +2619,10 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/posts/(?P<company>[-\w]+)', array(
         'methods' => 'GET',
         'callback' => 'artikelDezzp'
+    )); 
+    register_rest_route ('custom/v1', '/posts/(?P<category>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'artikelByCategory'
     )); 
     register_rest_route ('custom/v1', 'subscription/organisation', array(
         'methods' => 'POST',
