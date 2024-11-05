@@ -525,11 +525,11 @@ function sendEmail($id_user,$id_newUser,$password)
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     return wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
 }
-function sendEmailBecaumeManager($idUserToInvite,$role)
+function sendEmailBecaumeManager($idUserToInvite,$role,$subject,$tittle)
 {
     $user = new WP_User($idUserToInvite);
     $company = get_field('company',  'user_' . $idUserToInvite)[0];
-    $subject = 'You have the role of '.$role;
+    //$subject = 'You have the role of '.$role;
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     $email = $user->data->user_email;
     $first_name = $user->data->display_name ? : $user->data->first_name.' '.$user->data->last_name;
@@ -651,7 +651,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role)
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Je hebt een nieuwe rol.</p>
+                            data-testid="Y0h44Pmw76d">You have a new role.</p>
                         </div>
                       </td>
                     </tr>
@@ -751,7 +751,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role)
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>You are now a '.$role.' !</b></span></h1>
+                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b> '.$tittle.' </b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
                             data-testid="RJMLrMvA0Rh">Make sure your team continues to develop.</p>
                         </div>
@@ -1434,6 +1434,7 @@ function learnning_database(){
 $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
         'posts_per_page' => -1,
+        'orderby' => 'date',
         'order' => 'DESC',
         'numberposts' => 1000,
     );
@@ -2674,17 +2675,46 @@ function grantPushRole($data)
     $budget = $data['budget'];
     $user_id = $data['id'];
     $user = new WP_User($user_id);
+    $manager = $role['manager'];
+    $author = $role['author'];
 
-    $user->add_role( $role );
+    if (isset($manager) && $manager!=null) {
+        if ($manager) {
+            if (!in_array('manager', $user->roles)) {
+                $user->add_role('manager');
+                sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
+            }
+        } else {
+            if (in_array('manager', $user->roles)) {
+                $user->remove_role('manager');
+                sendEmailBecaumeManager($user_id, $role, 'You have been deleted as a manager', 'You are no longer a manager');
+            }
+        }
+    }
+    if (isset($author) && $author!=null) {
+    if ($author) {
+        if (!in_array('author', $user->roles)) {
+            $user->add_role('author');
+            sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
+        }
+    }else {
+            if (!in_array('author', $user->roles)) {
+                $user->remove_role('author');
+                sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
+            }
+        }
+    }
+    //$role = $manager ? 'manager' : 'author';
+    //$user->add_role( $role );
     update_field('amount_budget', $budget, 'user_' . $user_id);
     //send Email
     $user->data->budget_amount = get_field('amount_budget','user_' . $user_id)?:0;
     $user->data->roles = $user->roles;
 
-    sendEmailBecaumeManager($user_id,$role);
     $response = new WP_REST_Response(
         array(
-            'user'=>$user->data
+            'user'=>$user->data,
+            'user_complete'=>$user
         ));
     $response->set_status(201);
     return $response;
@@ -3361,6 +3391,7 @@ function newCoursesByTeacher(WP_REST_Request $data)
     $course_type = $data['course_type'];
     $required_parameters = ['course_type','title'];
     $short_description = $data['short_description'];
+    $article_content = $data['article_content'];
 
     $price = $data['price'];
 
@@ -3376,7 +3407,19 @@ function newCoursesByTeacher(WP_REST_Request $data)
             array(
                 'message' => 'User not found',
             ),401 );
-    $types = ['Assessment' => 'assessment', 'Article'=>'post', 'Video' => 'course','Podcast'=>'course'];
+    $types = [
+        'Assessment' => 'assessment',
+        'Article'=>'post',
+        'Video' => 'course',
+        'Podcast'=>'course',
+        'Training'=>'course',
+        'Opleidingen'=>'course',
+        'Event'=>'course',
+        'Lezing'=>'course',
+        'Workshop'=>'course',
+        'Masterclass'=>'course',
+        'Cursus'=>'course',
+    ];
     $type = $types[$course_type];
     $args = array(
             'post_type' => $type,
@@ -3398,6 +3441,9 @@ function newCoursesByTeacher(WP_REST_Request $data)
     if ($short_description)
         update_field('short_description', $short_description, $id_post);
 
+    if ($article_content)
+        update_field('article_itself', $article_content, $id_post);
+
     $response = new WP_REST_Response(
     array(
         'new_course_added'=>get_post($id_post,true),
@@ -3409,7 +3455,6 @@ function newCoursesByTeacher(WP_REST_Request $data)
 function updateCoursesByTeacher(WP_REST_Request $data)
 {
     $id_course = $data['id_course'];
-
     //$type_course = get_field('course_type',$id_course);
     $course_type = ucfirst($data['course_type']);
     $isCourseUpdated = false;
@@ -3427,14 +3472,22 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $for_who = $data['for_who']; //for_who, Voor wie,
     $agenda = $data['agenda']; // Programma, agenda
     $results = $data['results']; // Resultaten, results
-    $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
-    $geacrediteerd = $data['geacrediteerd']; // accredited, Geaccrediteerd
     $btwKlasse = $data['btw-klasse'];
+    $addiition_start_date = $data['addiition_start_date'];
+    $incompany_mogelijk = $data['incompany_mogelijk']; // In-company possible
+    $geacrediteerd = $data['accredeted']; // geacrediteerd accredited, Geaccrediteerd
+    $lessons_video = $data['lessons_video']; // update video courses : { "course_lesson_title": "ttitle video 1",  "course_lesson_intro": "description video 1",  "course_lesson_data": "https://wp12.influid.nl/wp-content/uploads/2023/04/Mobile-App-UI_UX-Speed-Design-in-Figma.mp4"},
+    $lessons_podcasts = $data['podcasts']; //update podcast courses : { "course_podcast_title": "title poscast 2",  "course_podcast_intro": "description poscast 2", "course_podcast_data": "https://wp12.influid.nl/wp-content/uploads/2024/11/BONUS_Live_Boukje_Taphoorn_Bol_over_het_afscheid_van_de__com-1.mp3"}
 
-    $geacrediteerd = $data['program']; // accredited, Geaccrediteerd
+    $language = $data['language']; // langage for course
+    $training_dates_locations = $data['training_dates_locations']; // langage for course
+    $link_to_call = $data['lin_to_call'];
+    $online_location = $data['online_location'];
+
+
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
-
+    //var_dump(get_field('data_locaties_xml',$id_course));die;
     if ($article_content) {
         update_field('article_itself', $article_content, $id_course);
         $isCourseUpdated = true;
@@ -3465,38 +3518,110 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     }
     if ($languageAssessment){
         update_field('language_assessment', $languageAssessment, $id_course);
+        $course->language_assessment = get_field('language_assessment',$id_course);
         $isCourseUpdated = true;
     }
     if ($difficultyAssessment){
         update_field('difficulty_assessment', $difficultyAssessment, $id_course);
+        $course->difficulty_assessment = get_field('difficulty_assessment',$id_course);
         $isCourseUpdated = true;
     }
     if ($short_description){
         update_field('short_description', $short_description, $id_course);
+        $course->short_description = get_field('short_description',$id_course);
         $isCourseUpdated = true;
     }
     if ($long_description){
         update_field('long_description', $long_description, $id_course);
+        $course->long_description = get_field('long_description',$id_course);
         $isCourseUpdated = true;
     }
     if ($for_who){
         update_field('for_who', $for_who, $id_course);
+        $course->for_who = get_field('for_who',$id_course);
         $isCourseUpdated = true;
     }
     if ($agenda){
         update_field('agenda', $agenda, $id_course);
+        $course->agenda = get_field('agenda',$id_course);
         $isCourseUpdated = true;
     }
     if ($results){
         update_field('results', $results, $id_course);
+        $course->results = get_field('results',$id_course);
         $isCourseUpdated = true;
+    }
+    if ($addiition_start_date){
+        update_field('data_locaties', null, $id_course);
+        update_field('data_locaties', $addiition_start_date, $id_course);
+        $course->data_locaties = get_field('data_locaties',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($course_type)
+        update_field('course_type', $course_type , $id_course);
+    if ($incompany_mogelijk){
+        update_field('incompany_mogelijk', $incompany_mogelijk, $id_course);
+        $course->incompany_mogelijk = get_field('incompany_mogelijk',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($geacrediteerd){
+        update_field('geacrediteerd', $geacrediteerd, $id_course);
+        $course->geacrediteerd = get_field('geacrediteerd',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($btwKlasse){
+        update_field('btw-klasse', $btwKlasse, $id_course);
+        $course->btw_klasse = get_field('btw-klasse',$id_course);
+        $isCourseUpdated = true;
+    }
+
+    if ($lessons_video) {
+        update_field('data_virtual', $lessons_video, $id_course);
+        $isCourseUpdated = true;
+        $course->video = get_field('data_virtual', $id_course);
+    }
+
+     if ($lessons_podcasts) {
+        update_field('podcasts', $lessons_podcasts, $id_course);
+        $isCourseUpdated = true;
+        $course->podcast = get_field('podcasts', $id_course);
+    }
+
+    if ($language) {
+        update_field('language', $language, $id_course);
+        $isCourseUpdated = true;
+    }
+    if($training_dates_locations){
+        $date_location_xml = "";
+        foreach ($training_dates_locations as $date_location) {
+            $date_location_xml.=$date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
+            $dates_between = explode(',',$date_location['dates_between']);
+            foreach ($dates_between as $date_between)
+                $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
+
+            $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
+        }
+        $location_xml = ['value'=>$date_location_xml, 'label'=>$date_location_xml ];
+        update_field('data_locaties_xml',$location_xml,$id_course);
+        $course->data_locaties_xml = get_field('data_locaties_xml',$id_course);
+        $isCourseUpdated = true;
+    }
+    if ($link_to_call){
+        update_field('link_to', $link_to_call, $id_course);
+        $isCourseUpdated = true;
+        $course->link_to_call = get_field('link_to',$id_course);
+    }
+    if ($online_location){
+        update_field('online_location', $online_location, $id_course);
+        $isCourseUpdated = true;
+        $course->online_location = get_field('online_location',$id_course);
     }
 
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
             array(
                 'message' => 'course updated success...',
-                'course' => get_post($id_course,true),
+                'course' => $course,
             ));
         $response->set_status(201);
         return $response;
@@ -3512,7 +3637,8 @@ function deleteCourse($data)
             if (wp_trash_post($post->ID))
                 return new WP_REST_Response(
                     array('message'=>"course $id_course deleted successfully ! ! !"),
-                    200);
+                    200
+                );
 
         return new WP_REST_Response(array('message' => "course not deleted ! ! !"),401);
 }
@@ -3566,7 +3692,7 @@ function search_courses()
 
 function coursesRecommendedUpcomming($data)
 {
-    $info = recommendation($data['id'], 2000, 200);
+    $info = recommendation($data['id'], 1500, 200);
     return new WP_REST_Response($info, 200);
 }
 
@@ -3730,7 +3856,6 @@ function addFeedback($data)
     $id = $data['id'];
     $title = $data['title'];
     $type = $data['type']; // Feedback = Feedback,Development Plan = Persoonlijk ontwikkelplan,Beoordeling Gesprek = Assessment,Compliment=Compliment
-    //$manager = $data['manager']; // manager_feedback
     $rating = $data['rating']; // rating_feedback [1,5]
     $rate_comments = $data['comments']; // rate_comments, How to Improve / Other Comments?
     $description = $data['description']; //Describe the Feedback, beschrijving_feedback
@@ -3746,12 +3871,12 @@ function addFeedback($data)
     $welke_datum_feedback = $data['welke_datum_feedback']; // welke_datum_feedback
     $comments_assessment = $data['comments_assessment']; // opmerkingen
     $user_role = get_users(array('include'=> $id))[0]->roles;
-    $managed = get_field('managed',  'user_' . $id);
-    if ($managed)
-        if (in_array($id,$managed))
-            $superior = get_users(array('include'=> $id))[0]->data;
-    $manager = $superior ? $superior->ID : $id;
-
+    //$managed = get_field('managed',  'user_' . $id);
+    //if ($managed)
+    //    if (in_array($id,$managed))
+    //        $superior = get_users(array('include'=> $id))[0]->data;
+    //$manager = $superior ? $superior->ID : $id;
+    $manager = $id;
 
     $args = array(
         'post_type' => 'feedback',
@@ -3769,7 +3894,7 @@ function addFeedback($data)
         ),401);
     }
     if ($manager)
-        update_field('manager_feedback', $manager, $id_post);
+        update_field('manager_feedback', intval($manager), $id_post);
     if ($type)
         update_field('type_feedback', $type , $id_post);
     if ($rating)
@@ -3902,7 +4027,7 @@ function addTodo($data)
     );
     $id_post = wp_insert_post($args, true);
     update_field('title_todo', $title, $id_post);
-    update_field('manager_feedback', $id , $id_post);
+    update_field('manager_feedback', intval($id) , $id_post);
 
     if ($type)
         update_field('type_feedback', $type, $id_post);
@@ -3926,4 +4051,203 @@ function addTodo($data)
             'message' => 'todo saved success...',
             'new_todo' => $todo,
         ),201);
+}
+
+function all_courses_in_plateform()
+{
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'order' => 'DESC' ,
+        'paged' => $page,
+    );
+    $courses = get_posts($args);
+    $all_courses = array();
+    foreach ($courses as $course) {
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        $author = get_user_by( 'ID', $course -> post_author  );
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course-> author = new Expert ($author , $author_img);
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = '';
+        $preview = get_field('preview', $course->ID);
+        if ($preview)
+            $image = $preview['url'];
+
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image && $course->courseType)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
+
+        $all_courses[] = new Course($course);
+    }
+
+    $count_all_course = count(get_posts(
+            array(
+                'post_type' => array('course', 'post'),
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'order' => 'DESC'
+            )
+        )
+    );
+    $total_pages = ceil($count_all_course / 20);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+
+    return new WP_REST_Response(
+        array(
+            'count_all_course' => $count_all_course,
+            'page'=>$numbers_of_pages,
+            'course' => $all_courses,
+        ),200 );
+}
+
+function all_company_in_plateform()
+{
+
+    $company_experts = array();
+    $users = get_users();
+    foreach ($users as $user):
+        $company_partial = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_partial)):
+            $company_partie = $company_partial[0]->post_title;
+            if ($company_partie)
+                $company_experts[$company_partie] .= $user->ID . ',';
+        endif;
+    endforeach;
+
+    $all_companies = array();
+    $args = array(
+        'post_type' => 'company',
+        'post_status' => 'publish',
+        'order' => 'ASC',
+        'posts_per_page' => -1,
+    );
+    $companies = get_posts($args);
+    foreach ($companies as $company) {
+        $com = [];
+        $name = $company->post_title;
+        $str_experts = isset($company_experts[$name]) ? $company_experts[$name] : '';
+        $experts = explode(',', $str_experts);
+        $count_experts = (isset($experts[0])) ? count($experts) : 0;
+
+        //Courses
+        $count_courses = 0;
+        if(isset($experts[0])):
+            $args = array(
+                'post_type' => array('post','course'),
+                'posts_per_page' => -1,
+                'orderby' => 'date',
+                'order'   => 'DESC',
+                'author__in' => $experts,
+            );
+            $courses = get_posts($args);
+            $count_courses = (isset($courses[0])) ? count($courses) : 0;
+        endif;
+
+        $com['id'] = $company->ID;
+        $com['name'] = $name;
+        $date = $company->post_date;
+        $days = explode(' ', $date)[0];
+        $year = explode('-', $days)[0];
+        $com['since'] = $year;
+        $com['count_course'] = $count_courses;
+        $com['count_expert'] = $count_experts;
+
+        $all_companies[] = $com;
+    }
+    return new WP_REST_Response(
+        array(
+            'count' => count($all_companies),
+            'companies' => $all_companies,
+        ),200 );
+}
+
+function detail_company($data)
+{
+    $id_company = $data['id'];
+    $company = get_post($id_company);
+    if (!$company)
+        return new WP_REST_Response(
+            array(
+                'error'=>'company not exist'
+            ));
+
+    $info_company = array();
+    $company_experts = array();
+    $name = $company->post_title;
+    $users = get_users();
+    foreach ($users as $user):
+        $company_partial = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_partial)):
+            $company_partie = $company_partial[0]->post_title;
+            if ($company_partie)
+                $company_experts[$company_partie] .= $user->ID . ',';
+        endif;
+    endforeach;
+    $str_experts = isset($company_experts[$name]) ? $company_experts[$name] : '';
+    $experts = explode(',', $str_experts);
+    $count_experts = (isset($experts[0])) ? count($experts) : 0;
+    $all_courses = array();
+
+    if(isset($experts[0])):
+        $args = array(
+            'post_type' => array('post','course'),
+            'posts_per_page' => -1,
+            'orderby' => 'date',
+            'order'   => 'DESC',
+            'author__in' => $experts,
+        );
+        $courses = get_posts($args);
+        foreach ($courses as $course) {
+            $course->visibility = get_field('visibility',$course->ID) ?? [];
+            $author = get_user_by( 'ID', $course -> post_author  );
+            $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $course-> author = new Expert ($author , $author_img);
+            $course->longDescription = get_field('long_description',$course->ID);
+            $course->shortDescription = get_field('short_description',$course->ID);
+
+            $course->courseType = get_field('course_type', $course->ID);
+            $image = '';
+            $preview = get_field('preview', $course->ID);
+            if ($preview)
+                $image = $preview['url'];
+
+            if(!$image){
+                $image = get_the_post_thumbnail_url($course->ID);
+                if(!$image)
+                    $image = get_field('url_image_xml', $course->ID);
+                if(!$image && $course->courseType)
+                    $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+            }
+            $course->pathImage = $image;
+
+            $all_courses[] = new Course($course);
+        }
+    endif;
+
+    $info_company['id'] = $company->ID;
+    $info_company['logo'] = get_field('company_logo',$id_company)?:get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
+    $info_company['email'] = get_field('company_email', $id_company) ? : 'contact@livelearn.nl';
+    $info_company['country'] = get_field('company_country',$id_company) ? : '';
+    $info_company['phone'] = get_field('company_phone',$id_company) ? : '';
+    $info_company['website'] =  get_field('company_website', $id_company) ?: 'www.livelearn.nl';
+    $info_company['number_course'] = $all_courses ? count($all_courses) : 0;
+    $info_company['number_employee'] = $count_experts;
+    $info_company['courses'] = $all_courses;
+
+    return new WP_REST_Response(
+        array(
+            'company' => $info_company,
+        ),200 );
 }

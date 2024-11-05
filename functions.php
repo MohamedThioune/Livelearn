@@ -2648,4 +2648,18 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'HomepageAngular'
     ));
+    register_rest_route ('custom/v1', '/courses/all', array(
+        'methods' => 'GET',
+        'callback' => 'all_courses_in_plateform'
+    ));
+
+    register_rest_route ('custom/v1', '/companies/all', array(
+        'methods' => 'GET',
+        'callback' => 'all_company_in_plateform'
+    ));
+
+    register_rest_route ('custom/v1', '/company-detail/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'detail_company'
+    ));
 });
