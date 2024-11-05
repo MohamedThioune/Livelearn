@@ -2144,9 +2144,6 @@ add_action( 'rest_api_init', function () {
         'callback' => 'update_user_progress',
     ));
 
-    
-    
-
     register_rest_route ('custom/v1', '/user/cart/signups', array(
         'methods' => 'GET',
         'callback' => 'get_user_signups',
@@ -2657,7 +2654,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'artikelDezzp'
     )); 
-    register_rest_route ('custom/v1', '/posts/(?P<category>\d+)', array(
+    register_rest_route ('custom/v1', '/posts/category/(?P<category>\d+)', array(
         'methods' => 'GET',
         'callback' => 'artikelByCategory'
     )); 
@@ -2699,4 +2696,5 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'detail_company'
     ));
+ 
 });
