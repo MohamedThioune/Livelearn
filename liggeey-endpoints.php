@@ -1067,6 +1067,91 @@ function allCompanies(){
 
 }
 
+//[GET]All companies
+function allCompaniesAdvanced(){
+
+  $company_experts = ['' => ''];
+  // Users should
+  $users = get_users();
+
+  foreach ($users as $user):
+      $company_partial = get_field('company',  'user_' . $user->ID);
+      if(!empty($company_partial)):
+          $company_partie = $company_partial[0]->post_title;
+          $company_experts[$company_partie] .= $user->ID . ',';
+      endif;
+  endforeach;
+
+  $args = array(
+      'post_type' => 'company',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $company_posts = get_posts($args);
+  $companies = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($company_posts as $post):
+
+    $sample = array();
+    // Affichez ici le contenu de chaque élément
+    $sample['ID'] = $post->ID;
+    $sample['post_title'] = $post->post_title;
+    $sample['post_slug'] = $post->post_name;
+    $sample['address'] = get_field('company_address', $post->ID)?: 'xxxx';
+    $sample['sector'] = get_field('company_sector', $post->ID)?: 'xxxx';
+    $sample['company_logo'] = get_field('company_logo',  $post->ID) ?: get_stylesheet_directory_uri() . '/img/company.png';
+
+    //Open position
+    $args = array(
+      'post_type' => 'job',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'ordevalue' => $post->ID,
+      'order' => 'DESC' ,
+      'meta_key' => 'job_company',
+      'meta_value' => $post->ID
+    );
+    $jobs = get_posts($args);
+    $sample['open_jobs']  = empty($jobs) ? 0 : count($jobs);
+
+    //Experts
+    $str_experts = isset($company_experts[$name]) ? $company_experts[$name] : '';
+    $experts = explode(',', $str_experts);
+    $sample['experts'] = (isset($experts[0])) ? count($experts) : 0;
+    
+    //Date
+    $date = $company->post_date;
+    $days = explode(' ', $date)[0];
+    $year = explode('-', $days)[0];
+    $sample['year'] = $year;
+
+    //Courses
+    $count_courses = 0;
+    if(isset($experts[0])):
+        $args = array(
+            'post_type' => array('post','course'),
+            'posts_per_page' => -1,
+            'orderby' => 'date',
+            'order'   => 'DESC',
+            'author__in' => $experts,
+        );
+        $courses = get_posts($args);
+        $count_courses = (isset($courses[0])) ? count($courses) : 0;
+        $sample['courses'] = $year;
+    endif;
+    
+    $sample = (Object)$sample;
+    array_push($companies, $sample);
+
+  endforeach;
+
+  $response = new WP_REST_Response($companies);
+  $response->set_status(200);
+  return $response;
+
+}
+
 //[GET]All jobs
 function allJobs(){
 
@@ -4571,5 +4656,67 @@ function HomepageAngular(){
   $response = new WP_REST_Response($infos);
   $response->set_status(200);
   return $response;  
-  
+}
+
+//Posts for DeZZP via category
+function artikelByCategory($data){
+
+  $CONST_FREELANCING = $data['category'];
+  $args = array(
+    'post_type' => array('post','course'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC',
+  );
+  $main_blogs = get_posts($args);
+  $blogs = array();
+
+  //Read the blogs via category
+  foreach ($main_blogs as $key => $blog):
+    //Get topics | genuine, xml
+    $postags = get_the_tags($blog->ID);
+    $default_category = get_field('categories', $blog->ID);
+    $xml_category = get_field('category_xml', $blog->ID);
+    $find = false;
+
+    //Topic match "freelancing" ?
+    $main_default = array();
+    if(!empty($default_category)):
+      $main_default = array_column($default_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_default))
+        $find = true;
+    endif;
+
+    $main_xml = array();
+    if(!$find)
+    if(!empty($xml_category)):
+      $main_xml = array_column($xml_category, 'value');
+      if(in_array($CONST_FREELANCING, $main_xml))
+        $find = true;
+    endif;
+
+    if(!$find)
+    if($postags)
+    foreach($postags as $tag)
+      if($tag->ID == $CONST_FREELANCING):
+        $find = true;
+        break;
+      endif;
+
+    if(!$find)
+      continue;
+
+    //Add the post
+    $sample = artikel($blog->ID);
+    $blogs[] = $sample;
+  endforeach;
+
+  //Read the assessments via category 
+  $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
+
+  //Return the response 
+  $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
+  $response->set_status(200);
+  return $response;  
+
 }
