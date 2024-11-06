@@ -4154,9 +4154,9 @@ function all_company_in_plateform()
             $courses = get_posts($args);
             $count_courses = (isset($courses[0])) ? count($courses) : 0;
         endif;
-
         $com['id'] = $company->ID;
         $com['name'] = $name;
+        $com['logo'] = get_field('company_logo',$company->ID) ? :get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
         $date = $company->post_date;
         $days = explode(' ', $date)[0];
         $year = explode('-', $days)[0];
@@ -4237,6 +4237,7 @@ function detail_company($data)
     endif;
 
     $info_company['id'] = $company->ID;
+    $info_company['name'] = $company->post_title;
     $info_company['logo'] = get_field('company_logo',$id_company)?:get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $info_company['email'] = get_field('company_email', $id_company) ? : 'contact@livelearn.nl';
     $info_company['country'] = get_field('company_country',$id_company) ? : '';
@@ -4249,5 +4250,38 @@ function detail_company($data)
     return new WP_REST_Response(
         array(
             'company' => $info_company,
+        ),200 );
+}
+
+function update_image_course($data)
+{
+    $id_course = $data['id'];
+    $course = get_post($id_course);
+    $required_parameters = ['id_image'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    if (!$course)
+        return new WP_REST_Response(
+            array(
+                'error' => 'course not exist !',
+            ),401 );
+    $id_image = $data['id_image'];
+    $image = get_post($id_image);
+    if (!$image)
+        return new WP_REST_Response(
+            array(
+                'error' => 'image not exist...',
+            ),201);
+    update_field('preview', $id_image, $id_course);
+    $course->image = get_field('preview', $id_course)['url'];
+
+    return new WP_REST_Response(
+        array(
+            'message' => 'course updated',
+            'course'=>$course
         ),200 );
 }
