@@ -4154,9 +4154,9 @@ function all_company_in_plateform()
             $courses = get_posts($args);
             $count_courses = (isset($courses[0])) ? count($courses) : 0;
         endif;
-
         $com['id'] = $company->ID;
         $com['name'] = $name;
+        $com['logo'] = get_field('company_logo',$company->ID) ? :get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
         $date = $company->post_date;
         $days = explode(' ', $date)[0];
         $year = explode('-', $days)[0];
@@ -4237,6 +4237,7 @@ function detail_company($data)
     endif;
 
     $info_company['id'] = $company->ID;
+    $info_company['name'] = $company->post_title;
     $info_company['logo'] = get_field('company_logo',$id_company)?:get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $info_company['email'] = get_field('company_email', $id_company) ? : 'contact@livelearn.nl';
     $info_company['country'] = get_field('company_country',$id_company) ? : '';
