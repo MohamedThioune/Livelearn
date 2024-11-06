@@ -1902,7 +1902,44 @@ add_action( 'rest_api_init', function () {
         'callback' => 'get_all_assessments_with_question_count',
     ));
 
+    register_rest_route('custom/v3', '/assessment/(?P<assessment_slug>[-\w]+)', array(
+        'methods' => 'GET',
+        'callback' => 'get_assessment_details',
+    ));
+
+    register_rest_route('custom/v3', '/assessments/slug/add', array(
+        'methods' => 'GET',
+        'callback' => 'add_slug_to_all_assessments',
+    ));
+
+    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
+        'methods' => 'DELETE',
+        'callback' => 'delete_assessment_by_id',
+        'permission_callback' => function () {
+            return current_user_can('delete_posts'); // Vérifie les permissions pour supprimer
+        },
+    ));
+
     /* Assessment endpoints V3 */
+
+    /* Likes endpoints V3 */
+
+    register_rest_route('custom/v3', 'course/(?P<course_id>\d+)/likes/stats/', array(
+        'methods' => 'GET',
+        'callback' => 'get_course_feedback',
+    ));
+
+    register_rest_route('custom/v3', 'user/course/(?P<course_id>\d+)/likes/stats/', array(
+        'methods' => 'GET',
+        'callback' => 'get_user_course_feedback',
+    ));
+
+    register_rest_route('custom/v3', 'course/likes/stats/add', array(
+        'methods' => 'POST',
+        'callback' => 'create_or_update_like',
+    ));
+
+    /* Likes endpoints V3 */
     
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
         'methods' => 'GET',
@@ -2107,9 +2144,6 @@ add_action( 'rest_api_init', function () {
         'callback' => 'update_user_progress',
     ));
 
-    
-    
-
     register_rest_route ('custom/v1', '/user/cart/signups', array(
         'methods' => 'GET',
         'callback' => 'get_user_signups',
@@ -2243,6 +2277,11 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/companies', array(
         'methods' => 'GET',
         'callback' => 'allCompanies'
+    ));
+
+    register_rest_route ('custom/v1', '/companies/advanced', array(
+        'methods' => 'GET',
+        'callback' => 'allCompaniesAdvanced'
     ));
 
     register_rest_route ('custom/v1', '/jobs', array(
@@ -2615,6 +2654,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'artikelDezzp'
     )); 
+    register_rest_route ('custom/v1', '/posts/category/(?P<category>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'artikelByCategory'
+    )); 
     register_rest_route ('custom/v1', 'subscription/organisation', array(
         'methods' => 'POST',
         'callback' => 'subscription_organisation'
@@ -2653,4 +2696,5 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'detail_company'
     ));
+ 
 });
