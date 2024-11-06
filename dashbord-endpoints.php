@@ -1347,127 +1347,15 @@ function learn_modules($data){
             if($company_user[0]->ID == $company_connected[0]->ID)
                 array_push($users_companies,$user->ID);
     }
-    //$company_connected = get_field('company',  'user_' . $user_connected);
     $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
         'author__in' => $users_companies,
         'order' => 'DESC',
         'numberposts' => 1000,
     );
-
-    //bought courses
-    $order_args = array(
-        'customer_id' => get_current_user_id(),
-        //'post_status' => array_keys(wc_get_order_statuses()),
-        'post_status' => array('wc-processing'),
-    );
-    $bunch_orders = wc_get_orders($order_args);
-    //$bunch_orders = array();
-    $enrolled_user = array();
-    foreach($bunch_orders as $order)
-        foreach ($order->get_items() as $item ) {
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
-            if(!empty($course))
-                array_push($enrolled_user, $course->ID);
-        }
-
-    $courses = get_posts($args);
-    /*
-    $all_subtopics = array();
-    $subtopics = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent' => (int)'expert',
-        'hide_empty' => false, // change to 1 to hide categores not having a single post
-    )) ?? false;
-    if ($subtopics != false)
-        $all_subtopics = array_merge($all_subtopics,$subtopics);
-    */
-    $category = ' ';
-
-    $category_str = 0;
-    $one_category = get_field('categories',  $course->ID);
-    if($one_category) {
-        $category_str = intval($one_category[0]['value']);
-        //$category_str = intval("312");
-    } else {
-        $one_category = get_field('category_xml',  $course->ID);
-        if(isset($one_category))
-            if (isset($one_category[0]['value']))
-                $category_id = intval($one_category[0]['value']);
-    }
-    if ($category_str) {
-        if ($category_str) {
-            $category_name = get_the_category_by_ID($category_str);
-            if(!is_wp_error($category_name))
-                $category = (string)$category_name;
-        } else {
-            $category_name = get_the_category_by_ID($category_id);
-            if (!is_wp_error($category_name))
-                $category = (string)$category_name;
-        }
-    }
-    foreach ($courses as $course){
-        $all_subtopics = array();
-            $subtopics = get_categories( array(
-                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                'parent' => (int)'expert',
-                'hide_empty' => false, // change to 1 to hide categores not having a single post
-            )) ?? false;
-            if ($subtopics != false)
-                $all_subtopics = array_merge($all_subtopics,$subtopics);
-
-        $price = get_field('price',$course->ID);
-        $course->price = $price ? : 'Gratis';
-        $course->startDate = date('d/m/Y',strtotime($course->post_date));
-        $course->courseType = get_field('course_type',$course->ID);
-        //$course->subects = $all_subtopics[0]->name;
-        $course->subects = $category;
-        $course->sales = in_array($course->ID, $enrolled_user); //true or false
-
-    }
-    $response = new WP_REST_Response($courses);
-    $response->set_status(200);
-    return $response;
-}
-function learnning_database(){
-$args = array(
-        'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => -1,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'numberposts' => 1000,
-    );
-    $order_args = array(
-        'customer_id' => get_current_user_id(),
-        //'post_status' => array_keys(wc_get_order_statuses()),
-        'post_status' => array('wc-processing'),
-    );
-    $bunch_orders = wc_get_orders($order_args);
-    //$bunch_orders = array();
-    $enrolled_user = array();
-    foreach($bunch_orders as $order){
-        foreach ($order->get_items() as $item_id => $item ) {
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
-            if(!empty($course))
-                array_push($enrolled_user, $course->ID);
-        }
-    }
     $courses = get_posts($args);
     foreach ($courses as $course){
-        /*
-        $all_subtopics = array();
-        $subtopics = get_categories( array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent' => (int)'expert',
-            'hide_empty' => false, // change to 1 to hide categores not having a single post
-        )) ?? false;
-        if ($subtopics != false)
-            $all_subtopics = array_merge($all_subtopics,$subtopics);
-        */
-        $category = ' ';
-
+        $category = '';
         $category_str = 0;
         $one_category = get_field('categories',  $course->ID);
         if($one_category) {
@@ -1482,22 +1370,129 @@ $args = array(
             if ($category_str) {
                 $category_name = get_the_category_by_ID($category_str);
                 if(!is_wp_error($category_name))
-                   $category = (string)$category_name;
+                    $category = (string)$category_name;
             } else {
                 $category_name = get_the_category_by_ID($category_id);
                 if (!is_wp_error($category_name))
-                $category = (string)$category_name;
+                    $category = (string)$category_name;
+            }
+        }
+        $datas = get_field('data_locaties', $course->ID);
+        $datum = get_field('data_locaties_xml', $course->ID);
+        $dates = get_field('dates', $course->ID);
+
+        $start_date = '';
+        if($datas){
+            $data = $datas[0]['data'][0]['start_date'];
+            if($data != ""){
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
+                $start_date = "$day/$month/$year";
+            }
+        } elseif ($datum) {
+            if(isset($datum[0]['value'])){
+                $datas = explode('-', $datum[0]['value']);
+                $data = $datas[0];
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
+
+                $start_date = "$day/$month/$year";
+            } else {
+                if($dates){
+                    $data = $dates[0]['date'];
+                    $days = explode(' ', $data)[0];
+                    $day = explode('-', $days)[2];
+                    //$month = $calendar[explode('-', $data)[1]];
+                    $year = explode('-', $days)[0];
+                    $start_date = "$day/$month/$year";
+                }
             }
         }
 
-
         $price = get_field('price',$course->ID);
         $course->price = $price ? : 'Gratis';
-        $course->startDate = date('d/m/Y',strtotime($course->post_date));
-        $course->courseType = get_field('course_type',$course->ID);
-        //$course->subects = $all_subtopics[0]->name;
+        $course->startDate = $start_date;
+        $course->courseType = get_field('course_type',$course->ID) ?:'';
         $course->subects = $category;
-        $course->sales = in_array($course->ID, $enrolled_user); //true or false
+        $course->sales = get_field('visibility', $course->ID) ? true : false;
+    }
+    $response = new WP_REST_Response($courses);
+    $response->set_status(200);
+    return $response;
+}
+function learnning_database(){
+$args = array(
+        'post_type' => array('course','post','leerpad','assessment'),
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'numberposts' => 1000,
+    );
+    $courses = get_posts($args);
+    foreach ($courses as $course){
+        $category = '';
+        $category_str = 0;
+        $one_category = get_field('categories',  $course->ID);
+        if($one_category) {
+            if (isset($one_category[0]['value']))
+                $category_str = intval($one_category[0]['value']);
+        } else {
+            $one_category = get_field('category_xml',  $course->ID);
+            if(isset($one_category[0]))
+                $category_id = intval($one_category[0]['value']);
+        }
+        if ($category_str) {
+            if ($category_str) {
+                $category_name = get_the_category_by_ID($category_str);
+                if(!is_wp_error($category_name))
+                    $category = (string)$category_name;
+            } else {
+                $category_name = get_the_category_by_ID($category_id);
+                if (!is_wp_error($category_name))
+                    $category = (string)$category_name;
+            }
+        }
+        $datas = get_field('data_locaties', $course->ID);
+        $datum = get_field('data_locaties_xml', $course->ID);
+        $dates = get_field('dates', $course->ID);
+
+        $start_date = '';
+        if($datas){
+            $data = $datas[0]['data'][0]['start_date'];
+            if($data != ""){
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
+                $start_date = "$day/$month/$year";
+            }
+        } elseif ($datum) {
+            if(isset($datum[0]['value'])){
+                $datas = explode('-', $datum[0]['value']);
+                $data = $datas[0];
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
+
+                $start_date = "$day/$month/$year";
+            } else {
+                if($dates){
+                    $data = $dates[0]['date'];
+                    $days = explode(' ', $data)[0];
+                    $day = explode('-', $days)[2];
+                    //$month = $calendar[explode('-', $data)[1]];
+                    $year = explode('-', $days)[0];
+                    $start_date = "$day/$month/$year";
+                }
+            }
+        }
+        $price = get_field('price',$course->ID);
+        $course->price = $price ? : 'Gratis';
+        $course->startDate = $start_date; //date('d/m/Y',strtotime($course->post_date));
+        $course->courseType = get_field('course_type',$course->ID);
+        $course->subects = $category;
+        $course->sales = get_field('visibility', $course->ID) ? true : false; //true or false
     }
     $response = new WP_REST_Response($courses);
     $response->set_status(200);
