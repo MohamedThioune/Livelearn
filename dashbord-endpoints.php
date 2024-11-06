@@ -4252,3 +4252,36 @@ function detail_company($data)
             'company' => $info_company,
         ),200 );
 }
+
+function update_image_course($data)
+{
+    $id_course = $data['id'];
+    $course = get_post($id_course);
+    $required_parameters = ['id_image'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    if (!$course)
+        return new WP_REST_Response(
+            array(
+                'error' => 'course not exist !',
+            ),401 );
+    $id_image = $data['id_image'];
+    $image = get_post($id_image);
+    if (!$image)
+        return new WP_REST_Response(
+            array(
+                'error' => 'image not exist...',
+            ),201);
+    update_field('preview', $id_image, $id_course);
+    $course->image = get_field('preview', $id_course)['url'];
+
+    return new WP_REST_Response(
+        array(
+            'message' => 'course updated',
+            'course'=>$course
+        ),200 );
+}
