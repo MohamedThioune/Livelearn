@@ -700,72 +700,60 @@ $user = wp_get_current_user();
                        if (!empty($courses)) {
                             foreach ($courses as $course) {
                                 $thumbnail = "";
-$course_type = get_field('course_type', $course->ID);
-$lang = get_field('language', $course->ID);
-$language_display = '';
-if ($lang){
-    if (is_array($lang))
-        $language_display = $lang[0];
-    else
-        $language_display = $lang;
-    // take juste 2 first letter
-    $lang_first_character = strtolower(substr($language_display,0,2));
+                                $course_type = get_field('course_type', $course->ID);
+                                $lang = get_field('language', $course->ID);
+                                $language_display = '';
+                                if ($lang){
+                                    if (is_array($lang))
+                                        $language_display = $lang[0];
+                                    else
+                                        $language_display = $lang;
+                                    // take juste 2 first letter
+                                    $lang_first_character = strtolower(substr($language_display,0,2));
 
-    switch ($lang_first_character){
-        case 'en':
-            $language_display='English';
-            break;
-        case 'fr':
-            $language_display='French';
-            break;
-        case 'de':
-            $language_display='Dutch';
-            break;
-        case 'nl':
-            $language_display='Nederlands';
-            break;
-        case 'it':
-            $language_display='Italian';
-            break;
-        case 'Ib':
-            $language_display='Luxembourgish';
-            break;
-        case 'sk':
-            $language_display='Slovak';
-            break;
-    }
-}
+                                    switch ($lang_first_character){
+                                        case 'en':
+                                            $language_display='English';
+                                            break;
+                                        case 'fr':
+                                            $language_display='French';
+                                            break;
+                                        case 'de':
+                                            $language_display='Dutch';
+                                            break;
+                                        case 'nl':
+                                            $language_display='Nederlands';
+                                            break;
+                                        case 'it':
+                                            $language_display='Italian';
+                                            break;
+                                        case 'Ib':
+                                            $language_display='Luxembourgish';
+                                            break;
+                                        case 'sk':
+                                            $language_display='Slovak';
+                                            break;
+                                    }
+                                }
 
-if(!$thumbnail){
-    $thumbnail = get_the_post_thumbnail_url($course->ID);
-    if(!$thumbnail)
-         $thumbnail = get_field('url_image_xml', $course->ID);
-    if(!$thumbnail)
-         $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-}
+                        if(!$thumbnail){
+                            $thumbnail = get_the_post_thumbnail_url($course->ID);
+                            if(!$thumbnail)
+                                 $thumbnail = get_field('url_image_xml', $course->ID);
+                            if(!$thumbnail)
+                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                        }
 
-//   //Author Image
-//         $image_author = get_field('profile_img', 'user_' . $course->author_id);
-//         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                       $image_author = get_field('profile_img', 'user_' . $course->post_author);
+                       $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-//         //Company
-//         $company = get_field('company', 'user_' . $course->post_author);
+                       //Company
+                        $company = get_field('company', 'user_' . $course->post_author);
 
-//         $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
-//         if (!empty($company)) {
-//             $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
-//         }
-     //Author Image
-                                           $image_author = get_field('profile_img', 'user_' . $course->post_author);
-                                           $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-                                           //Company
-                                            $company = get_field('company', 'user_' . $course->post_author);
-
-                                            $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
-                                            if (!empty($company)) {
-                                                   $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
-                                            }
+                        $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
+                        if (!empty($company)) {
+                               $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png';
+                        }
        
                            /*
                             * Price 
@@ -870,10 +858,9 @@ if(!$thumbnail){
                                      $course_subtopics = get_field('categories', $course->ID);
                                      if($course_subtopics != null){
                                      ?>
-                                    <div id= <?php echo $course->ID; ?> class="d-flex content-subtopics bg-element td_subtopics" >
+                                    <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element td_subtopics" >
                                 <?= $category ?>
                                 <?php
-                               
                                 $field='';
                                 $read_topis = array();
                                 if($course_subtopics != null){
@@ -897,13 +884,13 @@ if(!$thumbnail){
                                         echo $field;
                                     }
                                 }
-                            
-                           
                             ?>
-
-                    
-                                    </div> 
-                                    <?php }?>      
+                            </div>
+                            <?php } else { ?>
+                                <button >
+                                    add subtopics
+                                </button>
+                            <?php } ?>
                             </td>
                                 <td class="textTh">
                                     <div class="bg-element">
@@ -914,23 +901,15 @@ if(!$thumbnail){
                                     ?></p>
                                     </div>
                                 </td>
-                                <td  class="textTh block-pointer td_authors">
+                                <td  class="textTh block-pointer td_authors" onclick="loadAuthor(<?=$course->ID?>)">
                                     <div id="id_authors" class="d-flex content-teacher" data-toggle="modal" data-target="#showTeacher"
                                         type="button" data-value="<?php echo $course->ID; ?>">
-                                        <?php if ($course->post_author) {
-                                            ?>
-                                            
-            <img src="<?php echo $image_author?>" alt="image course" width="25" height="25">;
-            <?php
-        } else {
-            ?>
-
-
-            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">;
-                             <?php
-
-                                        }
-                                        ?>
+                                        <?php if ($course->post_author) { ?>
+                                            <img src="<?php echo $image_author?>" alt="image course" width="25" height="25">;
+                                            <?php
+                                        } else {?>
+                                        <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">;
+                                            <?php } ?>
                                         <!-- <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">
                                     <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">
                                     <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">
@@ -1164,16 +1143,15 @@ if(!$thumbnail){
             <input type="text" class="form-control" id="Phonenumber" name="phone_number" placeholder="Enter her Phone number" required>
         </div>
          <div class="form-group">
-                        <label class="label-sub-topics">Select Company</label>
-                        <select name="companyId" id="selected_company"  class="multipleSelect2" >
-                            <?php
-                                foreach($companies as $value) {
-                                   
-                                    echo "<option value='" . $value->ID . "'>" . $value->post_name . "</option>";
-                                }
-                            ?>
-                        </select>
-                    </div> 
+            <label class="label-sub-topics">Select Company</label>
+            <select name="companyId" id="selected_company"  class="multipleSelect2" >
+                <?php
+                    foreach($companies as $value) {
+                        echo "<option value='" . $value->ID . "'>" . $value->post_name . "</option>";
+                    }
+                ?>
+            </select>
+        </div>
         
         <!-- <div class="form-group">
             <label for="Role">Role</label>
@@ -1330,9 +1308,6 @@ if(!$thumbnail){
 
 
 </div>
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <script>
@@ -1495,7 +1470,7 @@ document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for 
       formData.append('action', 'add_users');
       formData.append('companyId', companyId);
     $.ajax({
-        url: "/save-author-and-compagny",
+        url: "/livelearn/save-author-and-compagny",
         method:"post",
         data: formData,
         processData: false,
@@ -1510,16 +1485,14 @@ document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for 
            //  $('#ModalTeacher').modal('hide');
         },
         error: function(response) {
-            alert('Failed to create user!');
-              document.getElementById('content-back-topicsauthor').innerHTML =response;
-             //  $('#ModalTeacher').modal('hide');
+        alert('Failed to create user!');
+          document.getElementById('content-back-topicsauthor').innerHTML =response;
+         //  $('#ModalTeacher').modal('hide');
         },
-        
-   complete:function(response){
-                    
-                  location.reload();
-                }
-    });
+       complete:function(response){
+          //location.reload();
+        }
+        });
 }
 </script>
 <script>
@@ -1544,7 +1517,7 @@ function submitCompanyForm() {
  
 
     $.ajax({
-        url: "/save-author-and-compagny",
+        url: "/livelearn/save-author-and-compagny",
         method: "post",
         data: formData,
         processData: false,
@@ -1553,8 +1526,6 @@ function submitCompanyForm() {
             console.log(response);
             document.getElementById('content-back-topics').innerHTML = response;
            // $('#ModalCompany').modal('hide');
-
-            
             // Optionally, you can refresh the page or update the UI accordingly
         },
         error: function(response) {
@@ -1562,12 +1533,9 @@ function submitCompanyForm() {
             document.getElementById('content-back-topics').innerHTML = response;
             // $('#ModalCompany').modal('hide');
         },
-        
-   complete:function(response){
-                    
-                  location.reload();
-                }
-
+        complete:function(response){
+          location.reload();
+        }
     });
 }
 </script>
@@ -1579,16 +1547,15 @@ function submitCompanyForm() {
         id_course = e.target.id;
         
      $.ajax({
-            url:"/fetch-subtopics-course-databanklive",
+            url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
                 id_course:id_course,
                 action:'get_course_subtopics'
             },
-        dataType:"text",
-        success: function(data){
-            // Get the modal
+            dataType:"text",
+            success: function(data){
             //console.log(data)
             var modal = document.getElementById("myModal");
             $('.modal-content').html(data)
@@ -1631,23 +1598,16 @@ function submitCompanyForm() {
     },
   dataType:"text",
   success: function(data){
-
-
-      
   }
   })
 });
 // connect company to course
   $('#save_author').click(()=>{
     id_course = document.getElementById('id_authors').getAttribute('data-value');
-  
-   
-        document.getElementById('companyAuthor').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
+      document.getElementById('companyAuthor').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
       var author = $('#selected_user').val()
-      
-    
       $.ajax({
-  url:"/save-author-and-compagny",
+  url:"/livelearn/save-author-and-compagny",
   method:"post",
   data:
     {
@@ -1666,34 +1626,57 @@ function submitCompanyForm() {
     document.getElementById('companyAuthor').innerHTML = data;
   },
    complete:function(response){
-                    
-                  location.reload();
-                }
-
+      location.reload();
+    }
   })
   }
 );
-// display author 
+// display author
+    /*
  $('.td_authors').click((e)=>{
-      id_course = document.getElementById('id_authors').getAttribute('data-value');
-       
+     console.log(id_course,e);return
+     id_course = document.getElementById('id_authors').getAttribute('data-value');
     $('.block-to-show-teacher').html("<span>Wait for getting datas <i class='fas fa-spinner fa-pulse'></i></span>")
      $.ajax({
-            url:"/fetch-subtopics-course-databanklive",
+            url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
                 id_course:id_course,
                 action:'get_course_authors'
             },
-        dataType:"text",
-        success: function(data){
-      
-               $('.block-to-show-teacher').html(data)
-         } 
-
+            dataType:"text",
+            success: function(data){
+                console.log(data)
+                $('.block-to-show-teacher').html(data)
+            }
 })});
+*/
+    function loadAuthor(id_course){
+        //console.log(id_course);
+        $.ajax({
+            url:"/livelearn/fetch-subtopics-course-databanklive",
+            method:"post",
+            data:
+            {
+                id_course:id_course,
+                action:'get_course_authors'
+            },
+            beforeSend:function (){
+                $('.block-to-show-teacher').html("<span>Wait for getting datas <i class='fas fa-spinner fa-pulse'></i></span>")
+            },
+            error:function (error) {
+                console.log(error)
+            },
+            success:function (success){
+                $('.block-to-show-teacher').html(success)
+                //console.log(success)
+            },
+            complete:function (){
 
+            }
+        })
+    }
 </script>
 
 <script>
@@ -1796,6 +1779,5 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
         }
     }
 </script>
-
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
