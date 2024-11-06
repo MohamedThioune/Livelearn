@@ -1118,7 +1118,7 @@ function allCompaniesAdvanced(){
     $str_experts = isset($company_experts[$post->post_title]) ? $company_experts[$post->post_title] : '';
     $experts = explode(',', $str_experts);
     $sample['experts'] = (isset($experts[0])) ? count($experts) : 0;
-    var_dump($experts);
+
     //Date
     $date = $post->post_date;
     $days = explode(' ', $date)[0];
@@ -1137,7 +1137,7 @@ function allCompaniesAdvanced(){
         );
         $courses = get_posts($args);
         $count_courses = (isset($courses[0])) ? count($courses) : 0;
-        $sample['courses'] = $year;
+        $sample['courses'] = $count_courses;
     endif;
     
     $sample = (Object)$sample;
