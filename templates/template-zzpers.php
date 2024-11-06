@@ -540,7 +540,6 @@
 
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
-
 <script type="text/javascript">
     $('.logo_slider').slick({
         centerMode: true,
