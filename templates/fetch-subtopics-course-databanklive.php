@@ -3,9 +3,7 @@
 <?php
 
     
-   if ( $_POST['action'] == 'get_course_authors') 
-
-{
+   if ( $_POST['action'] == 'get_course_authors') {
         $course = get_post(intval($_POST['id_course']));
         // $courses = get_field('author',intval($_POST['id_course']) );
 
@@ -112,6 +110,7 @@ $user_in = wp_get_current_user();
 
 
 //bought courses
+/*
 $order_args = array(
     'customer_id' => get_current_user_id(),
     'post_status' => array_keys(wc_get_order_statuses()), 
@@ -119,7 +118,7 @@ $order_args = array(
 
 );
 $orders = wc_get_orders($order_args);
-
+*/
 
 
 /*
@@ -232,48 +231,24 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                     <div class="content-sub-topics">
                     <select class='multipleSelect2' id="selected_subtopics"   multiple='true'>
                      <?php
-    
-    $course_subtopics = get_field('categories',$_POST['id_course']);
-    $selected_subtopics=array();
-    if (is_array($course_subtopics) || is_object($course_subtopics)){
-        foreach ($course_subtopics as $key =>  $course_subtopic) {
-            if ($course_subtopic!="" && $course_subtopic!="Array")
-                array_push($selected_subtopics,$course_subtopic['value']);
-        }
-        // check subtopics already added on this course 
-        foreach($subtopics as $value){
-            if (in_array($value->cat_ID,$selected_subtopics))
-                echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-             
-        }
-    }
-   
-    
-?>
+                    $course_subtopics = get_field('categories',$_POST['id_course']);
+                    $selected_subtopics=array();
+                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                        foreach ($course_subtopics as $key =>  $course_subtopic) {
+                            if ($course_subtopic!="" && $course_subtopic!="Array")
+                                array_push($selected_subtopics,$course_subtopic['value']);
+                        }
+                        // check subtopics already added on this course
+                        foreach($subtopics as $value){
+                            if (in_array($value->cat_ID,$selected_subtopics))
+                                echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+
+                        }
+                    }
+
+                    ?>
                     </select>
-                    
-                                             <!--?php
-    
-    $course_subtopics = get_field('categories',$_POST['id_course']);
-    $selected_subtopics=array();
-    if (is_array($course_subtopics) || is_object($course_subtopics)){
-        foreach ($course_subtopics as $key =>  $course_subtopic) {
-            if ($course_subtopic!="" && $course_subtopic!="Array")
-                array_push($selected_subtopics,$course_subtopic['value']);
-        }
-        // check subtopics already added on this course 
-        foreach($subtopics as $value){
-            if (in_array($value->cat_ID,$selected_subtopics))
-
-                echo "<div class='btn-sub-topics' id='btn-sub-topics' value='".json_encode($selected_subtopics) ."'><p   value='" . $value->cat_ID . "'>" . $value->cat_name . "</p> <button class='btn'><i class='fa fa-remove'></i></button></div>";
-           
-        }
-    }
-
-           ?-->   
-                        
-                        
-                    </div>
+                   </div>
                     <div class="content-add-sub-topics" >
                            <div class="topics"></div>
                             <div class="form-group mb-4">
@@ -292,12 +267,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                                 </div>
                             </div>
                             <div class="block-sub-topics">
-                                
-                              
-                                
                             </div>
-                        
-                    
                 </div>
             </div>
       
@@ -323,8 +293,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
         });
     });
     //# sourceURL=pen.js
-</script>  
-
+</script>
  <script>
         $(".btn-add-sub-topics").click(function() {
             $(".content-sub-topics").hide();
@@ -346,21 +315,21 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
     </script>  
     <script>
 $(document).ready(function() {
-    
     const topicSelect = $('.multipleSelect2');
-
     topicSelect.on('change', function() {
         const selectedTopic = $(this).val();
-
         if (selectedTopic) {
             $.ajax({
-                url: "/save-author-and-compagny",
+                url: "/livelearn/save-author-and-compagny",
                 method: "post",
                 data: {
                     topic_id: selectedTopic,
                     action:'get_subtopics'
                 },
                 dataType: "text",
+                error:function (error){
+                    console.log(error)
+                }
                 success: function(response) {
                     console.log(response);
                     $('.block-sub-topics').html(response);
@@ -388,58 +357,45 @@ $(document).ready(function() {
                       //document.getElementById('topics').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
                         
                        $(document).on('click', '#save_subtopics', function() {
-                            
-
                             var subtopics  = Array.from(selectedValues);
-                            
                             var btnSubTopics = document.getElementById('btn-sub-topics');
                             var selectedsubtopics = $('#selected_subtopics').val();
-           
-              
-                
-           
-                            
                             const id_course = document.getElementById('formModifeChoose').getAttribute('value');
-                           
                              var concatenatedselectedsubtopics = subtopics.concat(selectedsubtopics)
-                            
                            
-      $.ajax({
-  url:"/fetch-subtopics-course",
-  method:"post",
-  data:
-    {
-      add_subtopics:concatenatedselectedsubtopics,
-      id_course:id_course,
-      action:'add_subtopics'
-    },
-  dataType:"text",
-  success: function(data){
-      console.log(data)
-      let modal=$('#myModal');
-      modal.attr('style', { display: "none" });
-      //modal.style.display = "none";
-       $('.sava-substopics').html(data);
-      $('#'+id_course).html(data)
-      //console.log(data)
-  },
-  error:function(data){
-    
-      console.log(data)
-  }
-  })
+                                  $.ajax({
+                              url:"/fetch-subtopics-course",
+                              method:"post",
+                              data:
+                                {
+                                  add_subtopics:concatenatedselectedsubtopics,
+                                  id_course:id_course,
+                                  action:'add_subtopics'
+                                },
+                              dataType:"text",
+                              success: function(data){
+                                  console.log(data)
+                                  let modal=$('#myModal');
+                                  modal.attr('style', { display: "none" });
+                                  //modal.style.display = "none";
+                                   $('.sava-substopics').html(data);
+                                  $('#'+id_course).html(data)
+                                  //console.log(data)
+                              },
+                              error:function(data){
 
-                            
+                                  console.log(data)
+                              }
+                              })
                         });
-                    
                 },
                 error: function(response) {
                     alert('Failed to create user!');
                     document.getElementById('content-back-topics').innerHTML = response;
+                    console.log(response)
                 },
                  complete:function(response){
-                  
-                  location.reload();
+                  //location.reload();
                 }
             });
         } else {
