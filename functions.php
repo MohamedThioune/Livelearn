@@ -2700,5 +2700,8 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'update_image_course'
     ));
- 
+    register_rest_route ('custom/v1', '/expert/detail/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'detail_expert'
+    ));
 });
