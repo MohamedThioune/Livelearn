@@ -1452,7 +1452,7 @@ function submitUserForm() {
       formData.append('action', 'add_users');
       formData.append('companyId', companyId);
         $.ajax({
-            url: "/livelearn/save-author-and-compagny",
+            url: "/save-author-and-compagny",
             method:"post",
             data: formData,
             processData: false,
@@ -1494,7 +1494,7 @@ function submitCompanyForm() {
     }
     formData.append('action', 'add_compagnies');
     $.ajax({
-        url: "/livelearn/save-author-and-compagny",
+        url: "/save-author-and-compagny",
         method: "post",
         data: formData,
         processData: false,
@@ -1524,7 +1524,7 @@ function submitCompanyForm() {
         id_course = e.target.id;
         console.log(id_course)
      $.ajax({
-            url:"/livelearn/fetch-subtopics-course-databanklive",
+            url:"/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1588,7 +1588,7 @@ function submitCompanyForm() {
       //console.log(id_course);return;
     var author = $('#selected_user').val()
       $.ajax({
-      url:"/livelearn/save-author-and-compagny",
+      url:"/save-author-and-compagny",
       method:"post",
       data: {
           connect_authortoCourse:author,
@@ -1634,7 +1634,7 @@ function submitCompanyForm() {
     function loadAuthor(id_course){
         console.log('id course clicked',id_course);
         $.ajax({
-            url:"/livelearn/fetch-subtopics-course-databanklive",
+            url:"/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {

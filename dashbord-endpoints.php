@@ -4280,3 +4280,100 @@ function update_image_course($data)
             'course'=>$course
         ),200 );
 }
+function detail_expert($data)
+{
+    $id_expert = $data['id'];
+    $args_courses = array(
+        'post_type' => array('post','course'),
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'author' => $id_expert,
+    );
+    $courses = get_posts($args_courses);
+    $all_courses = array();
+    foreach ($courses as $course) {
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        $author = get_user_by( 'ID', $course -> post_author  );
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course-> author = new Expert ($author , $author_img);
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = '';
+        $preview = get_field('preview', $course->ID);
+        if ($preview)
+            $image = $preview['url'];
+
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image && $course->courseType)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
+
+        $all_courses[] = new Course($course);
+    }
+    $note_skilles = array();
+    $skill_notes = get_field('skills', 'user_' . $id_expert);
+    /*
+    if($skill_notes)
+        foreach ($skill_notes as $skill) {
+            $skills = [];
+            $skills['id'] = $skill['id'];
+            $skills['name'] = (string)get_the_category_by_ID($skill['id']);
+            $skills['note'] = $skill['note'];
+            $note_skilles[] = $skills;
+        }
+    */
+
+    if ($skill_notes) {
+        $total_notes = array_sum(array_column($skill_notes, 'note'));
+        foreach ($skill_notes as $skill_note) {
+            $note_skilles[] = array(
+                'id' => $skill_note['id'],
+                'name' => get_the_category_by_ID($skill_note),
+                'note' => $skill_note['note'],
+                'percentage' => intval((intval($skill_note['note']) / $total_notes) * 100),
+                //'image' => get_term_meta($skill_note, 'image_field_key', true),
+            );
+        }
+    }
+    usort($note_skilles, function($a, $b) {
+        return $b['percentage'] <=> $a['percentage'];
+    });
+    $expert_initial = get_user_by('ID', $id_expert);
+    $expert = $expert_initial->data;
+    unset($expert->user_pass);
+    $expert->image = get_field('profile_img','user_'.$expert->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+    $expert->overview = [
+        'about'=>get_field('biographical_info',  'user_' . $expert->ID)?:"This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience. <br>Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.",
+        'telephone'=>get_field('telnr',  'user_' . $expert->ID)?:'', //telnr
+        'email'=>$expert->user_email?:'',
+        'country'=>get_field('country',  'user_' . $expert->ID) ? : ''
+    ];
+    $reviews = get_field('user_reviews',  'user_' . $expert->ID) ? :[];
+    $goodReviews = array();
+    if ($reviews)
+        foreach ($reviews as $review) {
+            $rev = array();
+            $user = $review['user'];
+            $user->data->image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+            unset($user->data->user_pass);
+            $user->data->role = get_field('role','user_' . $user->ID) ? : "";
+            $rev['user'] = $user->data;
+            $rev['rating'] = $review['rating'];
+            $rev['feedback'] = $review['feedback'];
+
+            $goodReviews[] = $rev;
+        }
+    $expert->courses = $all_courses;
+    $expert->skills = $note_skilles;
+    $expert->reviews = $goodReviews;
+    return new WP_REST_Response(
+        array(
+            'expert' => $expert,
+        ),200 );
+}

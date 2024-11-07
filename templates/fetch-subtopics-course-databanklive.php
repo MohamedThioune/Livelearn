@@ -318,7 +318,7 @@ $(document).ready(function() {
         const selectedTopic = $(this).val();
         if (selectedTopic) {
             $.ajax({
-                url: "/livelearn/save-author-and-compagny",
+                url: "/save-author-and-compagny",
                 method: "post",
                 data: {
                     topic_id: selectedTopic,
