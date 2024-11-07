@@ -4302,6 +4302,9 @@ function detail_expert($data)
     $courses = get_posts($args_courses);
     $all_courses = array();
     foreach ($courses as $course) {
+        if ($course->post_author!=$id_expert)
+            continue;
+
         $course->visibility = get_field('visibility',$course->ID) ?? [];
         $author = get_user_by( 'ID', $course -> post_author  );
         $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
