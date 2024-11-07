@@ -461,10 +461,6 @@ if (isset($_POST['filter_databank'])) {
 
    $author_users = get_users(array('role_in' => ['author','administrator']));
 
-
-
-
-
 $user = wp_get_current_user();
 
 ?>
@@ -529,35 +525,35 @@ $user = wp_get_current_user();
 
                     <form action="" method="post">
                         <input type="hidden" name="leervom[]" id="leervom" value="All">
-                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn active">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn <?php if(isset($leervom)) echo '' ?> ">
                             View all<span class="number-content"><?php echo $count;?></span>
                         </button>
                     </form>
 
                     <form action="" method="post">
                         <input type="hidden" name="leervom[]" id="leervom" value="Opleidingen">
-                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn <?php if(isset($leervom) && in_array('Opleidingen', $leervom)) echo 'active'?> ">
                         Opleidingen <span class="number-content"><?php echo $countOpleidingens;?></span>
                     </button>
                     </form>
 
                     <form action="" method="post">
                         <input type="hidden" name="leervom[]" id="leervom" value="Artikel">
-                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn <?php if(isset($leervom) && in_array('Artikel', $leervom)) echo 'active'?>">
                             Article <span class="number-content"><?php echo $countArtikles;?></span>
                         </button>
                     </form>
 
                     <form action="" method="post">
                         <input type="hidden" name="leervom[]" id="leervom" value="Podcast">
-                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn" >
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn <?php if(isset($leervom) && in_array('Podcast', $leervom)) echo 'active'?>" >
                             Podcast <span class="number-content"><?php echo $countPodcasts;?></span>
                         </button>
                     </form>
 
                     <form action="" method="post">
                         <input type="hidden" name="leervom[]" id="leervom" value="Video">
-                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn">
+                        <button name="filter_databank" class="b-nav-tab buttonInsideModal btn <?php if(isset($leervom) && in_array('Video', $leervom)) echo 'active' ?>">
                             Videos <span class="number-content"><?php echo $countVideos;?></span>
                         </button>
                     </form>
