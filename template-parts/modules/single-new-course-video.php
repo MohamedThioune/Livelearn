@@ -64,7 +64,7 @@ $stripe_pay_form =
 $redirect_register = "/checkout-stripe?single=" . $post->ID ."&after=1";
 
 //Review pourcentage
-if(!empty($counting_rate)):
+if($counting_rate):
     $star_review[1] = ($star_review[1] / $counting_rate) * 100;
     $star_review[2] = ($star_review[2] / $counting_rate) * 100;
     $star_review[3] = ($star_review[3] / $counting_rate) * 100;
@@ -329,7 +329,7 @@ endif;
                                                     <p class="text-detail-reveiw text-detail-reveiw2"> 5.0 Instructor Rating</p>
                                                 </div>
                                                 <!-- <p class="text-detail-reveiw"><?= $count_reviews ?> Reviews</p> -->
-                                                <p class="text-detail-reveiw"><?= $enrolled_all ?> Students</p>
+                                                <p class="text-detail-reveiw"><?= $enrolled_member ?> Students</p>
                                                 <p class="text-detail-reveiw"><?= count($author_courses) ?> Courses</p>
                                             </div>
                                         </div>

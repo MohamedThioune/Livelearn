@@ -1388,8 +1388,8 @@
                     * Price
                     */
                     $p = get_field('price', $course->ID);
-                    if($p != "0")
-                        $price =  number_format($p, 2, '.', ',');
+                    if($p)
+                        $price = number_format($p, 2, '.', ',');
                     else
                         $price = 'Gratis';
 
