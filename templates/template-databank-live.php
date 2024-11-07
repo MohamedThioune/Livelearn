@@ -849,16 +849,16 @@ $user = wp_get_current_user();
                                 <td>
                                     <?= $language_display ?>
                                 </td>
-                                <td id="" class="textTh td_subtopics">
+                                <td id="<?= $course->ID ?>" class="textTh">
                                     <?php echo empty(get_field('price', $course->ID)) ? 'Gratis':  get_field('price', $course->ID); ?>
                                 </td>
 
-                                <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
+                                <td id=" <?php echo $course->ID; ?>" class="textTh td_subtopics">
                                     <?php
                                      $course_subtopics = get_field('categories', $course->ID);
                                      if($course_subtopics != null){
                                      ?>
-                                    <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element td_subtopics" >
+                                    <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element" >
                                 <?= $category ?>
                                 <?php
                                 $field='';
@@ -887,7 +887,7 @@ $user = wp_get_current_user();
                             ?>
                             </div>
                             <?php } else { ?>
-                                <button >
+                                <button class="td_subtopics" id="<?= $course->ID ?>">
                                     add subtopics
                                 </button>
                             <?php } ?>
@@ -901,19 +901,15 @@ $user = wp_get_current_user();
                                     ?></p>
                                     </div>
                                 </td>
-                                <td  class="textTh block-pointer td_authors" onclick="loadAuthor(<?=$course->ID?>)">
-                                    <div id="id_authors" class="d-flex content-teacher" data-toggle="modal" data-target="#showTeacher"
-                                        type="button" data-value="<?php echo $course->ID; ?>">
+                                <td  class="textTh block-pointer td_authors">
+                                    <div id="id_authors" class="d-flex content-teacher one_author" data-toggle="modal" data-target="#showTeacher" onclick="loadAuthor(<?=$course->ID?>)"
+                                        type="button" data-value="<?php echo $course->ID; ?>" >
                                         <?php if ($course->post_author) { ?>
                                             <img src="<?php echo $image_author?>" alt="image course" width="25" height="25">;
                                             <?php
-                                        } else {?>
-                                        <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">;
+                                        } else { ?>
+                                            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">;
                                             <?php } ?>
-                                        <!-- <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">
-                                    <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">
-                                    <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset="">
-                                    <img src="<?php echo get_stylesheet_directory_uri() ?>/img/course-img.png" alt="" srcset=""> -->
                                     </div>
                                 </td>
                                 <td class="textTh block-pointer td_compagnies">
@@ -1252,7 +1248,7 @@ $user = wp_get_current_user();
                         <button class="btn btn-add-sub-topics" id="addTeacher" type="button">Add teacher</button>
                     </div>
                     <div class="block-to-show-teacher">
-                       
+
                     </div>
 
                     <div class="block-to-add-teacher">
@@ -1449,49 +1445,35 @@ $("#removeTeacher").click(function() {
 function submitUserForm() {
    // var formData = new FormData(document.getElementById('userForm'));
     var form = document.getElementById('userForm');
- var companyId = $('#selected_company').val()
-document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
+     var companyId = $('#selected_company').val()
+    document.getElementById('content-back-topicsauthor').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
     // Create a FormData object to send the file
     var formData = new FormData(form);
-//     console.log("avant")
-//     var formData = new FormData();
-//     for (var i = 0; i < form.elements.length; i++) {
-//         var element = form.elements[i];
-//         if (element.name) {
-//             formData.append(element.name, element.value);
-//         }
-//     }
-//   const fileInput = document.getElementById('fileInput');
-//      if (fileInput.files.length > 0) {
-         
-//          formData.append('profile_photo', fileInput.files[0]);
-//      }
-    
       formData.append('action', 'add_users');
       formData.append('companyId', companyId);
-    $.ajax({
-        url: "/livelearn/save-author-and-compagny",
-        method:"post",
-        data: formData,
-        processData: false,
-        contentType: false, 
-        
-         // dataType:"text",
-        success: function(response) {
-            console.log(response)
-           // alert('User created successfully!');
-              document.getElementById('content-back-topicsauthor').innerHTML =response;
-            // Optionally, you can refresh the page or update the UI accordingly
-           //  $('#ModalTeacher').modal('hide');
-        },
-        error: function(response) {
-        alert('Failed to create user!');
-          document.getElementById('content-back-topicsauthor').innerHTML =response;
-         //  $('#ModalTeacher').modal('hide');
-        },
-       complete:function(response){
-          //location.reload();
-        }
+        $.ajax({
+            url: "/livelearn/save-author-and-compagny",
+            method:"post",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+             // dataType:"text",
+            success: function(response) {
+                console.log(response)
+               // alert('User created successfully!');
+                  document.getElementById('content-back-topicsauthor').innerHTML = response;
+                // Optionally, you can refresh the page or update the UI accordingly
+               //  $('#ModalTeacher').modal('hide');
+            },
+            error: function(response) {
+            alert('Failed to create user!');
+              document.getElementById('content-back-topicsauthor').innerHTML = response;
+             //  $('#ModalTeacher').modal('hide');
+            },
+           complete:function(response){
+              //location.reload();
+            }
         });
 }
 </script>
@@ -1500,22 +1482,17 @@ function submitCompanyForm() {
     document.getElementById('content-back-topics').innerHTML ="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>"
     var form = document.getElementById('companyForm');
     var formData = new FormData();
-
     for (var i = 0; i < form.elements.length; i++) {
         var element = form.elements[i];
         if (element.name) {
             formData.append(element.name, element.value);
         }
     }
-
     const fileInput = document.getElementById('fileInputCompany');
     if (fileInput.files.length > 0) {
        formData.append('company_logo', fileInput.files[0]);
     }
-     
     formData.append('action', 'add_compagnies');
- 
-
     $.ajax({
         url: "/livelearn/save-author-and-compagny",
         method: "post",
@@ -1542,10 +1519,10 @@ function submitCompanyForm() {
 
 <!-- script-modal -->
 <script>
-    var id_course;
+
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
-        
+        console.log(id_course)
      $.ajax({
             url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
@@ -1579,81 +1556,83 @@ function submitCompanyForm() {
                 modal.style.display = "none";
                 }
             }
-            
         }
     });
 });
-    
+
   $('#save_subtopics').click(()=>{
-      
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
-  url:"/fetch-subtopics-course",
-  method:"post",
-  data:
-    {
-      add_subtopics:subtopics,
-      id_course:id_course,
-      action:'add_subtopics'
-    },
-  dataType:"text",
-  success: function(data){
-  }
-  })
+      url:"/fetch-subtopics-course",
+      method:"post",
+      data:
+        {
+          add_subtopics:subtopics,
+          id_course:id_course,
+          action:'add_subtopics'
+        },
+          dataType:"text",
+          success: function(data){
+              console.log(data)
+          }
+      });
 });
 // connect company to course
-  $('#save_author').click(()=>{
-    id_course = document.getElementById('id_authors').getAttribute('data-value');
-      document.getElementById('companyAuthor').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
-      var author = $('#selected_user').val()
+
+  $('#save_author').click((e)=>{
+    // id_course = document.getElementById('id_authors').getAttribute('data-value');
+    // id_course = document.getElementsByClassName('one_author').getAttribute('data-value');
+    document.getElementById('companyAuthor').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
+      const id_course_id_course = $('div[id^="id_course_"]')[0].id;
+      const id_course = id_course_id_course.replace('id_course_','');
+      //console.log(id_course);return;
+    var author = $('#selected_user').val()
       $.ajax({
-  url:"/livelearn/save-author-and-compagny",
-  method:"post",
-  data:
-    {
-      connect_authortoCourse:author,
-      id_course:id_course,
-      action:'connect_authortoCourse'
-    },
-  dataType:"text",
-  success: function(data){
-    console.log(data);
-      
-      document.getElementById('companyAuthor').innerHTML = data;
-      
-  },
-  error:function(data){
-    document.getElementById('companyAuthor').innerHTML = data;
-  },
-   complete:function(response){
-      location.reload();
-    }
-  })
+      url:"/livelearn/save-author-and-compagny",
+      method:"post",
+      data: {
+          connect_authortoCourse:author,
+          id_course:id_course,
+          action:'connect_authortoCourse'
+        },
+      dataType:"text",
+      success: function(data){
+        //console.log(data);
+        document.getElementById('companyAuthor').innerHTML = data;
+
+      },
+      error:function(data){
+        document.getElementById('companyAuthor').innerHTML = data;
+      },
+       complete:function(response){
+          location.reload();
+        }
+    })
   }
 );
 // display author
     /*
- $('.td_authors').click((e)=>{
-     console.log(id_course,e);return
-     id_course = document.getElementById('id_authors').getAttribute('data-value');
-    $('.block-to-show-teacher').html("<span>Wait for getting datas <i class='fas fa-spinner fa-pulse'></i></span>")
-     $.ajax({
-            url:"/livelearn/fetch-subtopics-course-databanklive",
-            method:"post",
-            data:
-            {
-                id_course:id_course,
-                action:'get_course_authors'
-            },
-            dataType:"text",
-            success: function(data){
-                console.log(data)
-                $('.block-to-show-teacher').html(data)
-            }
-})});
+     $('.td_authors').click((e)=>{
+         console.log(id_course,e);return
+         id_course = document.getElementById('id_authors').getAttribute('data-value');
+        $('.block-to-show-teacher').html("<span>Wait for getting datas <i class='fas fa-spinner fa-pulse'></i></span>")
+         $.ajax({
+                url:"/livelearn/fetch-subtopics-course-databanklive",
+                method:"post",
+                data:
+                {
+                    id_course:id_course,
+                    action:'get_course_authors'
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data)
+                    $('.block-to-show-teacher').html(data)
+                }
+    })});
 */
     function loadAuthor(id_course){
-        //console.log(id_course);
+        console.log('id course clicked',id_course);
         $.ajax({
             url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
@@ -1668,14 +1647,15 @@ function submitCompanyForm() {
             error:function (error) {
                 console.log(error)
             },
-            success:function (success){
-                $('.block-to-show-teacher').html(success)
+            success:function (data){
+                $('.block-to-show-teacher').html(data)
                 //console.log(success)
             },
             complete:function (){
-
             }
         })
+        // part number two
+            console.log('second trigger');
     }
 </script>
 
@@ -1705,10 +1685,12 @@ document.getElementById('fileInput').addEventListener('change', function() {
 });
 
 </script>
-<script>    
-function openImageUploaderCompany() {
-    document.getElementById('fileInputCompany').click();
-}
+<script>
+   /*
+    function openImageUploaderCompany() {
+        document.getElementById('fileInputCompany').click();
+    }
+    */
 
 document.getElementById('fileInputCompany').addEventListener('change', function() {
     const file = this.files[0];
