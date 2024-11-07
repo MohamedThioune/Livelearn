@@ -1607,8 +1607,7 @@ function submitCompanyForm() {
   }
 );
 // display author
-    /*
-     $('.td_authors').click((e)=>{
+    /*      $('.td_authors').click((e)=>{
          console.log(id_course,e);return
          id_course = document.getElementById('id_authors').getAttribute('data-value');
         $('.block-to-show-teacher').html("<span>Wait for getting datas <i class='fas fa-spinner fa-pulse'></i></span>")
