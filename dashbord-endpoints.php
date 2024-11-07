@@ -4283,6 +4283,15 @@ function update_image_course($data)
 function detail_expert($data)
 {
     $id_expert = $data['id'];
+    $expert_initial = get_user_by('ID', $id_expert);
+    if (!$expert_initial)
+        return new WP_REST_Response(
+            array(
+                'message' => 'Expert not exist maybe not correct !!!',
+            ),401 );
+
+    $expert = $expert_initial->data;
+    unset($expert->user_pass);
     $args_courses = array(
         'post_type' => array('post','course'),
         'posts_per_page' => -1,
@@ -4318,16 +4327,6 @@ function detail_expert($data)
     }
     $note_skilles = array();
     $skill_notes = get_field('skills', 'user_' . $id_expert);
-    /*
-    if($skill_notes)
-        foreach ($skill_notes as $skill) {
-            $skills = [];
-            $skills['id'] = $skill['id'];
-            $skills['name'] = (string)get_the_category_by_ID($skill['id']);
-            $skills['note'] = $skill['note'];
-            $note_skilles[] = $skills;
-        }
-    */
 
     if ($skill_notes) {
         $total_notes = array_sum(array_column($skill_notes, 'note'));
@@ -4344,9 +4343,7 @@ function detail_expert($data)
     usort($note_skilles, function($a, $b) {
         return $b['percentage'] <=> $a['percentage'];
     });
-    $expert_initial = get_user_by('ID', $id_expert);
-    $expert = $expert_initial->data;
-    unset($expert->user_pass);
+
     $expert->image = get_field('profile_img','user_'.$expert->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
     $expert->overview = [
         'about'=>get_field('biographical_info',  'user_' . $expert->ID)?:"This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience. <br>Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.",
