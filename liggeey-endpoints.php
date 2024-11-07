@@ -17,6 +17,7 @@ function artikel($id){
   $course_type = get_field('course_type', $post->ID);
 
   $sample['ID'] = $post->ID;
+  $sample['authorID'] = $post->post_author;
   $sample['title'] = $post->post_title;
   $sample['link'] = get_permalink($post->ID);
   $sample['slug'] = $post->post_name;
@@ -107,7 +108,7 @@ function artikel($id){
   return $sample;
 }
 
-function postAdditionnal($post){
+function postAdditionnal($post, $userID){
   //check sample artikel
   if(empty($post))
     return null;
@@ -149,6 +150,125 @@ function postAdditionnal($post){
       break;
   }
 
+  $reviews = get_field('reviews', $post->ID);
+  $count_reviews = (!empty($reviews)) ? count($reviews) : 0;  
+  $star_review = [ 0, 0, 0, 0, 0];
+  $average_star = 0;
+  $average_star_nor = 0;
+  $my_review_bool = false;
+  $counting_rate = 0;
+  //Instructor
+  $instructor = array();
+  $author = get_user_by('ID', $post->authorID);
+  $post->instructor = array();
+  $post->instructor = (object)$post->instructor;
+
+  if($author):
+    $post->instructor->name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
+
+    $author_image = get_field('profile_img',  'user_' . $post->authorID);
+    $post->instructor->image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+    $post->instructor->bio =  get_field('biographical_info',  'user_' . $post->authorID);
+    $post->instructor->role =  get_field('role',  'user_' . $post->authorID);
+
+    $post_date = new DateTimeImmutable($post->post_date);
+    $post->instructor->date = $post_date->format('d/m/Y');  
+
+    //Courses author
+    $args = array(
+      'post_type' => array('course','post'),
+      'post_status' => 'publish',
+      'orderby' => 'date',
+      'author' => $post->authorID,
+      'order' => 'DESC',
+      'posts_per_page' => -1
+    );
+    $author_courses = get_posts($args);
+    $post->instructor->courses = (!empty($author_courses)) ? count($author_courses) : 0;
+
+    //Star rating & reviews
+    if ($reviews):
+      foreach ($reviews as $review):
+        if($review['user']->ID == $userID)
+            $my_review_bool = true;
+
+        switch ($review['rating']) {
+          case 1:
+            $star_review[1] += 1;
+            break;
+          case 2:
+            $star_review[2] += 1;
+            break;
+          case 3:
+            $star_review[3] += 1;
+            break;
+          case 4:
+            $star_review[4] += 1;
+            break;
+          case 5:
+            $star_review[5] += 1;
+            break;
+        }
+
+        if($review['rating']):
+          $average_star += intval($review['rating']);
+          $counting_rate += 1;
+        endif;
+      endforeach;
+    endif;
+  endif;
+
+  //Enrollment
+  $datenr = 0; 
+  $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+  $enrolled = array();
+  $enrolled_courses = array();
+  $statut_bool = 0;
+  $args = array(
+      'customer_id' => $userID,
+      'post_status' => array('wc-processing', 'wc-completed'),
+      'orderby' => 'date',
+      'order' => 'DESC',
+      'limit' => -1,
+  );
+  $bunch_orders = wc_get_orders($args);
+  $enrolled_member = 0;
+  $enrolled_all = 0;
+  foreach($bunch_orders as $order)
+    foreach ($order->get_items() as $item_id => $item ) :
+      $course_id = intval($item->get_product_id()) - 1;
+      $course = get_post($course_id);
+      if($course_id == $post->ID){
+        $statut_bool = 1;
+        $enrolled_member += 1;
+      }
+      if(!empty($course))
+        if($course->post_author == $post->authorID)
+          $enrolled_all += 1;
+    endforeach;
+  $post->enrolled_students = $enrolled_member;
+  $post->enrolled_courses = $enrolled_all;
+  $post->access = "Fulltime";
+
+  //Experts
+  $expertS = get_field('experts', $post->ID);
+  $author = array($post->authorID);
+  $main_experts = (isset($expertS[0])) ? array_merge($expertS, $author) : $author;
+  foreach ($main_experts as $value):
+    $expert = get_user_by('ID', $value);
+    $sample['name'] = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name;
+    $sample['image'] = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+    $company = get_field('company',  'user_' . $expert->ID);
+    $sample['bio'] =  get_field('biographical_info',  'user_' . $post->authorID);
+    $sample['role'] =  get_field('role',  'user_' . $post->authorID);
+    $sample['company'] = ($company) ? $company[0]->post_title : '';
+
+    $experts[] = (object)$sample;
+  endforeach;
+  
+  $post->experts = $experts;
   return $post;
 }
 
@@ -933,6 +1053,9 @@ function IsManagedOrNot(WP_REST_Request $request){
 //[POST]Detail artikel
 function artikelDetail(WP_REST_Request $request){
   $param_post_id = $request['slug'] ?? 0;
+  $userApplyID = 0; 
+  if(isset($request['userID']))
+  $userApplyID = $request['userID'] ?? 0;
   $required_parameters = ['slug'];
 
   //Check required parameters 
@@ -943,15 +1066,12 @@ function artikelDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  // $artikel = get_page_by_path($param_post_id, OBJECT, 'post');
-  // $sample = artikel($artikel->ID);
-
   $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
   $sample = artikel($post->ID);
 
   if(!empty($sample)):
     //Get further information
-    $sample = postAdditionnal($sample);
+    $sample = postAdditionnal($sample, $userApplyID);
   endif;
 
   //Response
