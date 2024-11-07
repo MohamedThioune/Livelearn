@@ -20,12 +20,10 @@
         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
         $company=get_field('company', 'user_' . $course->post_author);
         $functie = get_field('role', 'user_' . $course->post_author);
-
          $html = '';
            
                 $html .= '
-
-        <div class="element-teacher-block d-flex justify-content-between align-items-center">
+                            <div id="id_course_'. $course->ID .'" class="element-teacher-block d-flex justify-content-between align-items-center">
                             <div class="element-teacher d-flex align-items-center">
                                 <div class="block-img">
                                     <img src="'. $image_author .'" alt=""
