@@ -5,11 +5,11 @@ require_once 'add-author.php';
 require_once 'upload.php';
 
 if (isset($_POST['connect_authortoCourse']) && !empty($_POST['connect_authortoCourse']) && $_POST['action'] == 'connect_authortoCourse') 
-{ 
+{
+            $author_ids = array_map('intval', $_POST['connect_authortoCourse']);
 
-        $author_ids = array_map('intval', $_POST['connect_authortoCourse']);
-
-        $course_id  = intval($_POST['id_course']);
+            $course_id  = intval($_POST['id_course']);
+            //var_dump($author_ids,$course_id);die;
 
             // Save associated companies using ACF
            // update_field('company', $company_ids, $course_id);
@@ -24,26 +24,17 @@ if (isset($_POST['connect_authortoCourse']) && !empty($_POST['connect_authortoCo
 
         // Update the post
             $update_result=wp_update_post($course_data);
-              
               if ($update_result)
               $verify=1;
-            
            }
-
             // Verify if the field was updated
             if ($verify==1) {
-               
                //  $company = get_post($company_id);
                 echo "<span class='alert alert-success'>Author added successfully!</span>";
-                
             } else {
                 echo "<span class='alert alert-success'>Failed to add author for the course.</p>";
             }
-          
-        
-     
-
-}
+    }
 
 if ( $_POST['action'] == 'get_subtopics') 
 {
@@ -175,22 +166,11 @@ $result = curl_exec($ch);
             
             
         }
-
-
-
-
-
-
     }
-
     // Save additional custom fields
-  
-}
-    
-}    
- if ($_POST['action'] == 'add_users') 
-
-{  
+   }
+ }
+ if ($_POST['action'] == 'add_users') {
  if (!isset($_POST['first_name']) || !isset($_POST['last_name']) || !isset($_POST['email'])) {
       // echo wp_send_json_error('Required fields are missing.');
         echo "<br><h6>Required fields are missing. running <i class='fas fa-spinner fa-pulse'></i></h6>";
@@ -223,44 +203,22 @@ if (is_wp_error($user_id)) {
 } 
 else{
         $attachment_url = '';
-
         // Check if a file was uploaded
-
        if (isset($_POST['companyId'])){
-        
             $idCompany=intval($_POST['companyId']);
          $company = get_post($idCompany);
-    
-       
-       
            update_field('company', $company, 'user_' . $user_id);
-        
        }
-      
-
         if (isset($_FILES['profile_photo'])) {
         $file = $_FILES['profile_photo'];
                    // $file = $_POST['profile_photo'];
-        
-
-        
-
-
     $imageId= upload_image_to_media($file);
-
     $user  = get_user_by('ID', 3);
-     
-    
      $username = $user->user_email;
      $password = $user->user_pass;
      $base64_credentials = base64_encode("$username:$password");
-          
         $url = get_site_url() . '/wp-json/wp/v2/users/'.$user_id;
-       
-
 $ch = curl_init();
-
-
 curl_setopt($ch, CURLOPT_URL, $url );
 curl_setopt($ch, CURLOPT_POST, 1 );
 curl_setopt($ch, CURLOPT_POSTFIELDS,'
@@ -288,34 +246,10 @@ $result = curl_exec($ch);
            echo 'Response: ' .$error_msg;
         } else {
             // update_field('profile_img', $imageId, 'user_' . $user_id);
-             
-            
              echo "<span class='alert alert-success'>User created successfully! ✔️</span>";
-            
         }
-
-
-          
-        
-
-       
-
-
-
-
-
-
-           
         }
-       
-
-      
-        
 }
-
-
-    
-       
     }
  }
 ?>
