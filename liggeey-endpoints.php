@@ -3957,27 +3957,23 @@ function activity($ID){
       endif;
     endforeach;
 
-  var_dump('1st time', $courses);
-
   //Enrolled with Stripe
   $enrolled_stripe = array();
   $enrolled_stripe = list_orders($user->ID)['posts'];
   if(!empty($enrolled_stripe)):
-    try {
-      foreach ($enrolled_stripe as $post)
-        if($post)
-        if($post->title && $post->title != ""):
+    foreach ($enrolled_stripe as $post)
+      try {
+        if($post):
           $course = artikel($post->ID);
-          array_push($courses, $course);
+          if($course->title && $course->title != "")
+            array_push($courses, $course);
         endif;
-    } catch (Error $e) {
-      //Went wrong !
-      $error = true;
-    }
+      } catch (Error $e) {
+        // Went wrong !
+        $error = true;
+      }
   endif;
   $information['courses'] = $courses;
-  
-  var_dump('2nd time', $courses);
 
   //Notifications
   $notifications = array();
