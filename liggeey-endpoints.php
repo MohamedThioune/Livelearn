@@ -188,6 +188,8 @@ function postAdditionnal($post, $userID){
     $post->instructor->courses = (!empty($author_courses)) ? count($author_courses) : 0;
 
     //Star rating & reviews
+    $post->instructor->star_review[] = array();
+    $post->instructor->average_star = 0;
     if ($reviews):
       foreach ($reviews as $review):
         if($review['user']->ID == $userID)
@@ -217,6 +219,8 @@ function postAdditionnal($post, $userID){
         endif;
       endforeach;
     endif;
+    $post->instructor->average_star = '5.0'; //Default value is 5.0
+    $post->instructor->total_reviews = $count_reviews;
   endif;
 
   //Enrollment
@@ -235,6 +239,7 @@ function postAdditionnal($post, $userID){
   $bunch_orders = wc_get_orders($args);
   $enrolled_member = 0;
   $enrolled_all = 0;
+  $statut_bool = 0;
   foreach($bunch_orders as $order)
     foreach ($order->get_items() as $item_id => $item ) :
       $course_id = intval($item->get_product_id()) - 1;
@@ -247,9 +252,10 @@ function postAdditionnal($post, $userID){
         if($course->post_author == $post->authorID)
           $enrolled_all += 1;
     endforeach;
+  $post->average_star = $average_star;
   $post->enrolled_students = $enrolled_member;
   $post->enrolled_courses = $enrolled_all;
-  $post->access = "Fulltime";
+  $post->access = ($statut_bool) ? "Fulltime" : 'Free';
 
   //Experts
   $expertS = get_field('experts', $post->ID);
@@ -257,6 +263,7 @@ function postAdditionnal($post, $userID){
   $main_experts = (isset($expertS[0])) ? array_merge($expertS, $author) : $author;
   foreach ($main_experts as $value):
     $expert = get_user_by('ID', $value);
+    $sample['ID'] = $expert->ID; 
     $sample['name'] = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name;
     $sample['image'] = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
