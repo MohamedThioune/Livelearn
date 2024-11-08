@@ -219,6 +219,7 @@ function postAdditionnal($post, $userID){
         endif;
       endforeach;
     endif;
+    $post->instructor->star_review = $star_review; 
     $post->instructor->average_star = '5.0'; //Default value is 5.0
     $post->instructor->total_reviews = $count_reviews;
   endif;
