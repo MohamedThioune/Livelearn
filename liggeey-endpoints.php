@@ -3961,21 +3961,20 @@ function activity($ID){
   $enrolled_stripe = array();
   $enrolled_stripe = list_orders($user->ID)['posts'];
   if(!empty($enrolled_stripe)):
-    try {
-      foreach ($enrolled_stripe as $post)
-        if($post)
-        if($post->title && $post->title != ""):
+    foreach ($enrolled_stripe as $post)
+      try {
+        if($post):
           $course = artikel($post->ID);
-          array_push($courses, $course);
+          if($course->title && $course->title != "")
+            array_push($courses, $course);
         endif;
-      // $your_count_courses = (!empty($courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
-    } catch (Error $e) {
-      //Went wrong !
-      $error = true;
-    }
+      } catch (Error $e) {
+        // Went wrong !
+        $error = true;
+      }
   endif;
   $information['courses'] = $courses;
-  
+
   //Notifications
   $notifications = array();
   $args = array(
