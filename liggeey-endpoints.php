@@ -188,6 +188,8 @@ function postAdditionnal($post, $userID){
     $post->instructor->courses = (!empty($author_courses)) ? count($author_courses) : 0;
 
     //Star rating & reviews
+    $post->instructor->star_review[] = array();
+    $post->instructor->average_star = 0;
     if ($reviews):
       foreach ($reviews as $review):
         if($review['user']->ID == $userID)
@@ -217,6 +219,9 @@ function postAdditionnal($post, $userID){
         endif;
       endforeach;
     endif;
+    $post->instructor->star_review = $star_review; 
+    $post->instructor->average_star = '5.0'; //Default value is 5.0
+    $post->instructor->total_reviews = $count_reviews;
   endif;
 
   //Enrollment
@@ -235,6 +240,7 @@ function postAdditionnal($post, $userID){
   $bunch_orders = wc_get_orders($args);
   $enrolled_member = 0;
   $enrolled_all = 0;
+  $statut_bool = 0;
   foreach($bunch_orders as $order)
     foreach ($order->get_items() as $item_id => $item ) :
       $course_id = intval($item->get_product_id()) - 1;
@@ -247,9 +253,10 @@ function postAdditionnal($post, $userID){
         if($course->post_author == $post->authorID)
           $enrolled_all += 1;
     endforeach;
+  $post->average_star = $average_star;
   $post->enrolled_students = $enrolled_member;
   $post->enrolled_courses = $enrolled_all;
-  $post->access = "Fulltime";
+  $post->access = ($statut_bool) ? "Fulltime" : 'Free';
 
   //Experts
   $expertS = get_field('experts', $post->ID);
@@ -257,6 +264,7 @@ function postAdditionnal($post, $userID){
   $main_experts = (isset($expertS[0])) ? array_merge($expertS, $author) : $author;
   foreach ($main_experts as $value):
     $expert = get_user_by('ID', $value);
+    $sample['ID'] = $expert->ID; 
     $sample['name'] = ($expert->last_name) ? $expert->first_name . ' ' . $expert->last_name : $expert->display_name;
     $sample['image'] = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
@@ -3926,7 +3934,7 @@ function activity($ID){
     'customer_id' => $user->ID,
     'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
-    'order' => 'DESC',
+    'order' => 'ASC',
     'limit' => -1,
   );
   $bunch_orders = wc_get_orders($args);
@@ -3942,7 +3950,7 @@ function activity($ID){
           continue;
         //Get statut
         $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : ""; 
-        if(get_post($course_id)):
+        if($course->title && $course->title != ""):
           array_push($courses, $course);
           array_push($enrolled, $course_id);
         endif;
@@ -3953,21 +3961,20 @@ function activity($ID){
   $enrolled_stripe = array();
   $enrolled_stripe = list_orders($user->ID)['posts'];
   if(!empty($enrolled_stripe)):
-    try {
-      foreach ($enrolled_stripe as $post)
-        if($post)
-        if($post->title && $post->title != ''):
+    foreach ($enrolled_stripe as $post)
+      try {
+        if($post):
           $course = artikel($post->ID);
-          array_push($courses, $course);
+          if($course->title && $course->title != "")
+            array_push($courses, $course);
         endif;
-      // $your_count_courses = (!empty($courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
-    } catch (Error $e) {
-      //Went wrong !
-      $error = true;
-    }
+      } catch (Error $e) {
+        // Went wrong !
+        $error = true;
+      }
   endif;
   $information['courses'] = $courses;
-  
+
   //Notifications
   $notifications = array();
   $args = array(
@@ -4457,7 +4464,7 @@ function artikelDezzp($data){
   $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
 
   //Return the response 
-  $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
+  $response = new WP_REST_Response(['success' => true, 'posts' => $blogs]);
   $response->set_status(200);
   return $response;  
 
