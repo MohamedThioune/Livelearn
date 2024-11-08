@@ -3957,6 +3957,8 @@ function activity($ID){
       endif;
     endforeach;
 
+  var_dump('1st time', $courses);
+
   //Enrolled with Stripe
   $enrolled_stripe = array();
   $enrolled_stripe = list_orders($user->ID)['posts'];
@@ -3968,7 +3970,6 @@ function activity($ID){
           $course = artikel($post->ID);
           array_push($courses, $course);
         endif;
-      // $your_count_courses = (!empty($courses)) ? $your_count_courses + count($enrolled_stripe) : $your_count_courses;
     } catch (Error $e) {
       //Went wrong !
       $error = true;
@@ -3976,6 +3977,8 @@ function activity($ID){
   endif;
   $information['courses'] = $courses;
   
+  var_dump('2nd time', $courses);
+
   //Notifications
   $notifications = array();
   $args = array(
