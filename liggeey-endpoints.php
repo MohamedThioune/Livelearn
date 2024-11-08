@@ -4465,7 +4465,7 @@ function artikelDezzp($data){
   $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
 
   //Return the response 
-  $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
+  $response = new WP_REST_Response(['success' => true, 'posts' => $blogs]);
   $response->set_status(200);
   return $response;  
 
