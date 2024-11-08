@@ -794,7 +794,6 @@ $user = wp_get_current_user();
                             $categories = get_field('categories',  $course->ID);
                             if ($categories)
                                 if (isset($categories[0]['value'])) {
-                                    //$category_id = intval(explode(',', $categories[0]['value'])[0]);
                                     $category_id = intval($categories[0]['value']);
                                 }
                             $categories_xml = get_field('category_xml', $course->ID);
