@@ -3950,7 +3950,7 @@ function activity($ID){
           continue;
         //Get statut
         $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : ""; 
-        if(get_post($course_id)):
+        if($course->title && $course->title != ""):
           array_push($courses, $course);
           array_push($enrolled, $course_id);
         endif;
@@ -3964,7 +3964,7 @@ function activity($ID){
     try {
       foreach ($enrolled_stripe as $post)
         if($post)
-        if($post->title && $post->title != ''):
+        if($post->title && $post->title != ""):
           $course = artikel($post->ID);
           array_push($courses, $course);
         endif;
