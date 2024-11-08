@@ -3934,7 +3934,7 @@ function activity($ID){
     'customer_id' => $user->ID,
     'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
-    'order' => 'DESC',
+    'order' => 'ASC',
     'limit' => -1,
   );
   $bunch_orders = wc_get_orders($args);
