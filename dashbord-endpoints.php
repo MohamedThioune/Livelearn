@@ -1197,7 +1197,7 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
-        $roles = $user->roles;
+        $roles = array_values($user->roles);
         $user = $user->data;
         if ($user->ID == $user_connected)
             continue;
@@ -2624,9 +2624,9 @@ function Selecteer_experts($data)
             if($company_id == $company_connected_id) {
                 $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
                 $name = ($user->first_name) ?  $user->first_name . ' ' . $user->last_name : $user->user_email ;
-
-                $is_manager = (in_array('manager', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
-                $is_author = (in_array('author', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                $roles = array_values($user->roles);
+                $is_manager = (in_array('manager', $roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                $is_author = (in_array('author', $roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
                 $departement = get_field('departments', $company[0]->ID);
                 $member['ID'] = $user->ID;
@@ -2642,14 +2642,14 @@ function Selecteer_experts($data)
        }
     }
     $budget = get_field('amount_budget','user_' . $user_connected)?:0;
-    $role = (new WP_User($user_connected))->roles;
+    $role = array_values((new WP_User($user_connected))->roles);
     $response = new WP_REST_Response(
         array(
             'Selecteer_je_experts'=>$members,
             'info_personal_budget'=>array(
                 'role'=>array(
-                    'manager'=>$role =='manager',
-                    'author' =>$role == 'author'
+                    'manager'=>in_array('manager',$role),
+                    'author' =>in_array('author',$role)
                 ),
                 'budget'=>$budget
             )
@@ -2670,46 +2670,44 @@ function grantPushRole($data)
     $budget = $data['budget'];
     $user_id = $data['id'];
     $user = new WP_User($user_id);
+    $roles = array_values($user->roles); // roles initials before changing
     $manager = $role['manager'];
     $author = $role['author'];
 
-    if (isset($manager) && $manager!=null) {
-        if ($manager) {
-            if (!in_array('manager', $user->roles)) {
-                $user->add_role('manager');
-                sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
-            }
+    if ($manager) {
+        if (!in_array('manager', $roles)) {
+            $user->add_role('manager');
+            sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
+        }
+
         } else {
-            if (in_array('manager', $user->roles)) {
+            if (in_array('manager', $roles)) {
                 $user->remove_role('manager');
                 sendEmailBecaumeManager($user_id, $role, 'You have been deleted as a manager', 'You are no longer a manager');
             }
         }
-    }
-    if (isset($author) && $author!=null) {
-    if ($author) {
-        if (!in_array('author', $user->roles)) {
-            $user->add_role('author');
-            sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
-        }
-    }else {
+
+        if ($author) {
             if (!in_array('author', $user->roles)) {
+                $user->add_role('author');
+                sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
+            }
+        } else {
+            if (in_array('author', $user->roles)) {
                 $user->remove_role('author');
                 sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
             }
         }
-    }
-    //$role = $manager ? 'manager' : 'author';
-    //$user->add_role( $role );
+
+
     update_field('amount_budget', $budget, 'user_' . $user_id);
     //send Email
-    $user->data->budget_amount = get_field('amount_budget','user_' . $user_id)?:0;
-    $user->data->roles = $user->roles;
+    $user->data->budget_amount = get_field('amount_budget','user_'. $user_id)?:0;
+    $user->data->roles = array_values($user->roles);
 
     $response = new WP_REST_Response(
         array(
             'user'=>$user->data,
-            'user_complete'=>$user
         ));
     $response->set_status(201);
     return $response;
@@ -2741,7 +2739,7 @@ function people_managed($data)
             $roles = $person->roles;
             $person = $person->data;
             $person->image = $image;
-            $person->roles = $roles;
+            $person->roles = array_values($roles);
             unset($person->user_pass);
             $people_managed[] = $person;
         }
@@ -4283,6 +4281,15 @@ function update_image_course($data)
 function detail_expert($data)
 {
     $id_expert = $data['id'];
+    $expert_initial = get_user_by('ID', $id_expert);
+    if (!$expert_initial)
+        return new WP_REST_Response(
+            array(
+                'message' => 'Expert not exist maybe not correct !!!',
+            ),401 );
+
+    $expert = $expert_initial->data;
+    unset($expert->user_pass);
     $args_courses = array(
         'post_type' => array('post','course'),
         'posts_per_page' => -1,
@@ -4293,6 +4300,9 @@ function detail_expert($data)
     $courses = get_posts($args_courses);
     $all_courses = array();
     foreach ($courses as $course) {
+        if ($course->post_author!=$id_expert)
+            continue;
+
         $course->visibility = get_field('visibility',$course->ID) ?? [];
         $author = get_user_by( 'ID', $course -> post_author  );
         $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -4318,23 +4328,13 @@ function detail_expert($data)
     }
     $note_skilles = array();
     $skill_notes = get_field('skills', 'user_' . $id_expert);
-    /*
-    if($skill_notes)
-        foreach ($skill_notes as $skill) {
-            $skills = [];
-            $skills['id'] = $skill['id'];
-            $skills['name'] = (string)get_the_category_by_ID($skill['id']);
-            $skills['note'] = $skill['note'];
-            $note_skilles[] = $skills;
-        }
-    */
 
     if ($skill_notes) {
         $total_notes = array_sum(array_column($skill_notes, 'note'));
         foreach ($skill_notes as $skill_note) {
             $note_skilles[] = array(
                 'id' => $skill_note['id'],
-                'name' => get_the_category_by_ID($skill_note),
+                'name' => get_the_category_by_ID($skill_note['id']),
                 'note' => $skill_note['note'],
                 'percentage' => intval((intval($skill_note['note']) / $total_notes) * 100),
                 //'image' => get_term_meta($skill_note, 'image_field_key', true),
@@ -4344,9 +4344,7 @@ function detail_expert($data)
     usort($note_skilles, function($a, $b) {
         return $b['percentage'] <=> $a['percentage'];
     });
-    $expert_initial = get_user_by('ID', $id_expert);
-    $expert = $expert_initial->data;
-    unset($expert->user_pass);
+
     $expert->image = get_field('profile_img','user_'.$expert->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
     $expert->overview = [
         'about'=>get_field('biographical_info',  'user_' . $expert->ID)?:"This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience. <br>Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.",

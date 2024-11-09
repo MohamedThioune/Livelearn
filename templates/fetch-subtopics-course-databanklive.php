@@ -39,19 +39,8 @@
                                 <i class="fa fa-remove"></i>
                             </button>
                         </div>';
-            
-           
             echo $html;
-
-
-
-
 } 
-
-
-
-
-
 
 
 
@@ -208,12 +197,8 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
 
         if(!empty($merged))
             $topics = array_merge($topics, $merged);
-    }
-    
-
-?>
-  
-            
+        }
+    ?>
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Sub-topics</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
@@ -240,36 +225,32 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                         foreach($subtopics as $value){
                             if (in_array($value->cat_ID,$selected_subtopics))
                                 echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-
                         }
                     }
-
                     ?>
                     </select>
                    </div>
                     <div class="content-add-sub-topics" >
                            <div class="topics"></div>
                             <div class="form-group mb-4">
-                                
                                 <label class="label-sub-topics">First Choose Your topics </label>
                                 <div class="formModifeChoose" id="formModifeChoose" value=<?php echo $_POST['id_course'];?>>
                                     <select name="topic" id="selectTopic" class="multipleSelect2" >
-
                                         <?php
-                                foreach($topics as $value)
-                                    echo '<option  value= '.$value->cat_ID .'  >'. $value->cat_name .'</option>';
-                                ?>
-                                        
+                                            foreach($topics as $value)
+                                                echo '<option  value= '.$value->cat_ID .'  >'. $value->cat_name .'</option>';
+                                            ?>
                                     </select>
-                                    
                                 </div>
                             </div>
-                            <div class="block-sub-topics">
-                            </div>
-                </div>
+                            <div class="block-sub-topics"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
             </div>
-      
-  <?php }?>             
+      <?php }?>
 <!----> 
  <script>
         $(document).ready(function() {
