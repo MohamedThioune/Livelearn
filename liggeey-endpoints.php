@@ -3934,7 +3934,7 @@ function activity($ID){
     'customer_id' => $user->ID,
     'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
-    'order' => 'ASC',
+    'order' => 'DESC',
     'limit' => -1,
   );
   $bunch_orders = wc_get_orders($args);
@@ -3973,6 +3973,7 @@ function activity($ID){
         $error = true;
       }
   endif;
+  $courses = (!empty($courses)) ? array_reverse($courses) : $courses;
   $information['courses'] = $courses;
 
   //Notifications
