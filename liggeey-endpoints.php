@@ -234,7 +234,7 @@ function postAdditionnal($post, $userID){
       'customer_id' => $userID,
       'post_status' => array('wc-processing', 'wc-completed'),
       'orderby' => 'date',
-      'order' => 'DESC',
+      'order' => 'ASC',
       'limit' => -1,
   );
   $bunch_orders = wc_get_orders($args);
