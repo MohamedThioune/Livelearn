@@ -256,7 +256,7 @@ function postAdditionnal($post, $userID){
   $post->average_star = $average_star;
   $post->enrolled_students = $enrolled_member;
   $post->enrolled_courses = $enrolled_all;
-  $post->access = ($statut_bool) ? "Fulltime" : 'Free';
+  $post->access = ($statut_bool) ? "All access" : 'Free';
 
   //Experts
   $expertS = get_field('experts', $post->ID);
