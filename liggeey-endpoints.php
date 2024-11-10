@@ -3973,7 +3973,7 @@ function activity($ID){
         $error = true;
       }
   endif;
-  $courses = (!empty($courses)) ? array_reverse($courses) : $courses;
+  $courses = (!empty($courses)) ? array_reverse($courses) : $courses; //will be commented later
   $information['courses'] = $courses;
 
   //Notifications
