@@ -2729,15 +2729,16 @@ function getCommunityBy($data)
   {
     foreach ($community -> questions as $key => $question) {
       if (isset($question['user_question']->data) && !empty($question['user_question']->data)) 
+        if( $question['user_question']->data)
         $question['user_question']->data->profile_image = get_field('profile_img','user_'.(int)$question['user_question']->data->ID) != false ? get_field('profile_img','user_'.(int)$question['user_question']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
       if (isset($question['reply_question']) && !empty($question['reply_question'])) 
-          foreach ($question['reply_question'] as $key => $reply) {
-            $reply['user_reply']->data->profile_image = get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) != false ? get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
-          } 
-          
-        $question['user_question']->data->profile_image = get_field('profile_img','user_'.(int)$question['user_question']->data->ID) != false ? get_field('profile_img','user_'.(int)$question['user_question']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png'; ;
-        if (!$question['reply_question'])
-            $community -> questions[$key]['reply_question'] = [];
+        foreach ($question['reply_question'] as $key => $reply) {
+          if( $reply['user_reply']->data)
+          $reply['user_reply']->data->profile_image = get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) != false ? get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
+        } 
+    $question['user_question']->data->profile_image = get_field('profile_img','user_'.(int)$question['user_question']->data->ID) != false ? get_field('profile_img','user_'.(int)$question['user_question']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png'; ;
+    if (!$question['reply_question'])
+        $community->questions[$key]['reply_question'] = [];
     }
   }
   $courses_community = get_field('course_community',$community->ID) ?? [];
