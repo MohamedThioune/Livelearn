@@ -3763,6 +3763,8 @@ function addAchievement($data)
     $and_what_date = $data['end_date']; // ot_welke_datum_badge, end date
     $about = $data['about_competencies']; // competencies_badge
     $comment = $data['comment']; // opmerkingen_badge
+    $manager = $data['manager_id'];
+
     //Certificate
     $issuedBy = $data['issued_by']; // uitgegeven_door_badge
     $providerUrl = $data['provider_url']; //url_aanbieder_badge
@@ -3802,6 +3804,8 @@ function addAchievement($data)
         update_field('punten_badge', $points , $id_post);
     if ($country)
         update_field('land_badge', $country , $id_post);
+    if ($manager)
+        update_field('manager_badge', $manager , $id_post);
 
     update_field('trigger_badge', $trigger , $id_post);
     update_field('voor_welke_datum_badge', $for_what_day , $id_post);
@@ -3869,7 +3873,7 @@ function addFeedback($data)
     //    if (in_array($id,$managed))
     //        $superior = get_users(array('include'=> $id))[0]->data;
     //$manager = $superior ? $superior->ID : $id;
-    $manager = $id;
+    $manager = $data['manager_id'];
 
     $args = array(
         'post_type' => 'feedback',
@@ -4374,4 +4378,35 @@ function detail_expert($data)
         array(
             'expert' => $expert,
         ),200 );
+}
+function addReveiewUser($data)
+{
+    $id_user = $data['id'];
+    $initial_review = get_field('user_reviews', 'user_' . $id_user);
+    $review = array();
+    if ($initial_review)
+        foreach ($initial_review as $item) {
+            $review [] = array(
+                'user'=>$item['user']->ID,
+                'rating'=>$item['rating'],
+                'feedback'=>$item['feedback']
+            );
+        }
+    //$review_user = $data['review_user'];
+    $review_user = [
+        'user'=>$data['user'],
+        'rating'=>$data['rating'],
+        'feedback'=>$data['feedback']
+    ];
+    if (!empty($review))
+        $review_user = array_merge([$review_user],$review);
+
+    update_field('user_reviews', $review_user, 'user_' . $id_user);
+
+    return new WP_REST_Response(
+        array(
+            //'review'=>$review_user,
+            'message' =>'review adding successfully !',
+            'all_review' => get_field('user_reviews', 'user_' . $id_user),
+        ),201 );
 }
