@@ -2743,11 +2743,11 @@ function candidateSkillsPassport(WP_REST_Request $request) {
 
   //Orders - enrolled courses
   $args = array(
-      'customer_id' => $user_id,
-      'post_status' => array('wc-processing', 'wc-completed'),
-      'orderby' => 'date',
-      'order' => 'DESC',
-      'limit' => -1,
+    'customer_id' => $user_id,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
   );
   $bunch_orders = wc_get_orders($args);
   //$bunch_orders = array();
@@ -3026,17 +3026,16 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
           array_push($enrolled, $id_course);
     }
   
-  if(!empty($enrolled))
-  {
-      $args = array(
-          'post_type' => 'course',
-          'posts_per_page' => -1,
-          'orderby' => 'post_date',
-          'order' => 'DESC',
-          'include' => $enrolled,
-      );
-      $enrolled_courses = get_posts($args);
-  }
+  if(!empty($enrolled)):
+    $args = array(
+        'post_type' => 'course',
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'include' => $enrolled,
+    );
+    $enrolled_courses = get_posts($args);
+  endif;
   $state = array('new' => 0, 'progress' => 0, 'done' => 0);
   foreach($enrolled_courses as $key => $course):
     /* * State actual details * */
@@ -3158,19 +3157,17 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
     $manager_image = (isset($manager->ID)) ? get_field('profile_img',  'user_' . $manager->ID) : get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
     $mandatory->manager = $manager;
     $mandatory->manager_image = $manager_image;
+    $due_date = get_field('welke_datum_feedback', $mandatory->ID);
+    $mandatory->due_date = ($due_date) ? date("d-m-Y", strtotime($due_date[1])) : '🗓️';
 
     $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
     switch ($type) {
       case 'Feedback':
         $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
-        $due_date = get_field('welke_datum_feedback', $mandatory->ID);
-        $mandatory->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
         array_push($todos_feedback, $mandatory);
         break;
       case 'Persoonlijk ontwikkelplan':
-        $due_date = get_field('welke_datum_feedback', $mandatory->ID);
-        $mandatory->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
         $mandatory->beschrijving_feedback = get_field('opmerkingen', $mandatory->ID);
         array_push($todos_plannen, $mandatory);
         break;
@@ -3179,8 +3176,6 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
         array_push($todos_onderwerpen, $mandatory);
         break;
       case 'Verplichte cursus':
-        $due_date = get_field('welke_datum_feedback', $mandatory->ID);
-        $mandatory->due_date = ($due_date) ? date("d/m/Y", strtotime($due_date[1])) : '🗓️';
         $mandatory->beschrijving_feedback = get_field('beschrijving_feedback', $mandatory->ID);
         array_push($todos_cursus, $mandatory);
         break;
