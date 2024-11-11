@@ -171,7 +171,8 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
 
      
     $categories = array();
-
+    $course_subtopics = get_field('categories',$_POST['id_course']);
+    $id_subtopics = $course_subtopics ? array_column($course_subtopics, 'value'):[];
     $cats = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
@@ -194,60 +195,42 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
             'parent'  => $value,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         ) );
-
         if(!empty($merged))
             $topics = array_merge($topics, $merged);
-        }
+    }
+//    echo '<pre>';
+    //var_dump($topics);
+
     ?>
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Sub-topics</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
                         <span aria-hidden="true">×</span>
-                    </button>
+                </button>
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-between align-items-center head-for-body">
-                        <button class="btn btn-sub-title-topics" type="button">Remove</button>
-                        <p class="text-or">Or</p>
-                        <button class="btn btn-add-sub-topics" type="button">Add Subtopics</button>
+                        <!-- <button class="btn btn-sub-title-topics" type="button">Remove</button>
+                         <p class="text-or">Or</p>
+                         <button class="btn btn-add-sub-topics" type="button">Add Subtopics</button> -->
                     </div>
                     <div class="content-sub-topics">
                     <select class='multipleSelect2' id="selected_subtopics"   multiple='true'>
-                     <?php
-                    $course_subtopics = get_field('categories',$_POST['id_course']);
-                    $selected_subtopics=array();
-                    if (is_array($course_subtopics) || is_object($course_subtopics)){
-                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                            if ($course_subtopic!="" && $course_subtopic!="Array")
-                                array_push($selected_subtopics,$course_subtopic['value']);
-                        }
-                        // check subtopics already added on this course
-                        foreach($subtopics as $value){
-                            if (in_array($value->cat_ID,$selected_subtopics))
-                                echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                        }
-                    }
-                    ?>
+                        <?php
+                        if ($id_subtopics)
+                            foreach ($id_subtopics as $id_subtopic)
+                                if (get_the_category_by_ID($id_subtopic))
+                                    echo "<option value='$id_subtopic' selected >".get_the_category_by_ID($id_subtopic)."</option>";
+
+                        foreach($topics as $value)
+                            echo '<option value= ' . $value->cat_ID . ' >' . $value->cat_name . '</option>';
+
+                        ?>
                     </select>
                    </div>
-                    <div class="content-add-sub-topics" >
-                           <div class="topics"></div>
-                            <div class="form-group mb-4">
-                                <label class="label-sub-topics">First Choose Your topics </label>
-                                <div class="formModifeChoose" id="formModifeChoose" value=<?php echo $_POST['id_course'];?>>
-                                    <select name="topic" id="selectTopic" class="multipleSelect2" >
-                                        <?php
-                                            foreach($topics as $value)
-                                                echo '<option  value= '.$value->cat_ID .'  >'. $value->cat_name .'</option>';
-                                            ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="block-sub-topics"></div>
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary" id="save_subtopic_course" onclick="alert(this)">Save subtopics</button>
                     </div>
             </div>
       <?php }?>
@@ -295,6 +278,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
     <script>
 $(document).ready(function() {
     const topicSelect = $('.multipleSelect2');
+    console.log('changeeeeeeeeeee')
     topicSelect.on('change', function() {
         const selectedTopic = $(this).val();
         if (selectedTopic) {
@@ -329,44 +313,6 @@ $(document).ready(function() {
                             }
                         });
                     });
-
-                    // Move the event listener binding inside the success callback
-                    const saveButton = document.getElementById('save_subtopics');
-                    
-                      //document.getElementById('topics').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
-                        
-                       $(document).on('click', '#save_subtopics', function() {
-                            var subtopics  = Array.from(selectedValues);
-                            var btnSubTopics = document.getElementById('btn-sub-topics');
-                            var selectedsubtopics = $('#selected_subtopics').val();
-                            const id_course = document.getElementById('formModifeChoose').getAttribute('value');
-                             var concatenatedselectedsubtopics = subtopics.concat(selectedsubtopics)
-                           
-                                  $.ajax({
-                              url:"/fetch-subtopics-course",
-                              method:"post",
-                              data:
-                                {
-                                  add_subtopics:concatenatedselectedsubtopics,
-                                  id_course:id_course,
-                                  action:'add_subtopics'
-                                },
-                              dataType:"text",
-                              success: function(data){
-                                  console.log(data)
-                                  let modal=$('#myModal');
-                                  modal.attr('style', { display: "none" });
-                                  //modal.style.display = "none";
-                                   $('.sava-substopics').html(data);
-                                  $('#'+id_course).html(data)
-                                  //console.log(data)
-                              },
-                              error:function(data){
-
-                                  console.log(data)
-                              }
-                              })
-                        });
                 },
                 error: function(response) {
                     alert('Failed to create user!');
@@ -374,7 +320,7 @@ $(document).ready(function() {
                     console.log(response)
                 },
                  complete:function(response){
-                  //location.reload();
+                  location.reload();
                 }
             });
         } else {
