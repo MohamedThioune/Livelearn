@@ -882,7 +882,7 @@ $user = wp_get_current_user();
                             ?>
                             </div>
                             <?php } else { ?>
-                                <button class="td_subtopics" id="<?= $course->ID ?>">
+                                <button class="td_subtopics btn btn-success" id="<?= $course->ID ?>">
                                     add subtopics
                                 </button>
                             <?php } ?>
@@ -1278,26 +1278,14 @@ $user = wp_get_current_user();
             </div>
         </div>
     </div>
-
-  
      <!-- The Modal -->
     <div id="myModal" class="modal">
-          
-           
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-               
-                
-                    
-                
             <!-- </div> -->
             </div>
         </div>    
     </div>
-
-    
-
-
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
@@ -1467,7 +1455,7 @@ function submitUserForm() {
              //  $('#ModalTeacher').modal('hide');
             },
            complete:function(response){
-              //location.reload();
+              location.reload();
             }
         });
 }
@@ -1510,6 +1498,48 @@ function submitCompanyForm() {
         }
     });
 }
+$(document).ready(function() {
+    $('#save_subtopic_course').click(e){
+        console.log(e)
+    }
+}
+/*
+const saveButton = document.getElementById('save_subtopics');
+$(document).on('click', '#save_subtopics', function() {
+    console.log('save sup topics');
+    var subtopics  = Array.from(selectedValues);
+    var btnSubTopics = document.getElementById('btn-sub-topics');
+    var selectedsubtopics = $('#selected_subtopics').val();
+    const id_course = document.getElementById('formModifeChoose').getAttribute('value');
+    var concatenatedselectedsubtopics = subtopics.concat(selectedsubtopics)
+    console.log(selectedValues)
+
+    $.ajax({
+        url:"/livelearn/fetch-subtopics-course",
+        method:"post",
+        data:
+            {
+                add_subtopics:concatenatedselectedsubtopics,
+                id_course:id_course,
+                action:'add_subtopics'
+            },
+        dataType:"text",
+        success: function(data){
+            console.log(data)
+            let modal=$('#myModal');
+            modal.attr('style', { display: "none" });
+            //modal.style.display = "none";
+            $('.sava-substopics').html(data);
+            $('#'+id_course).html(data)
+            //console.log(data)
+        },
+        error:function(data){
+
+            console.log(data)
+        }
+    })
+});
+ */
 </script>
 
 <!-- script-modal -->
@@ -1517,9 +1547,9 @@ function submitCompanyForm() {
 
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
-        console.log(id_course)
+        console.log('id course to add subtopics',id_course)
      $.ajax({
-            url:"/fetch-subtopics-course-databanklive",
+            url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1527,38 +1557,33 @@ function submitCompanyForm() {
                 action:'get_course_subtopics'
             },
             dataType:"text",
-            success: function(data){
-            //console.log(data)
-            var modal = document.getElementById("myModal");
-            $('.modal-content').html(data)
-    
-            // Get the button that opens the modal
-        
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-            
-            // When the user clicks on the button, open the modal
-            modal.style.display = "block";
-            
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-            
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                modal.style.display = "none";
+            beforeSend:function (){
+                var modal = document.getElementById("myModal");
+                $('.modal-content').html('<span>waiting for ...</span>')
+                modal.style.display = "block";
+            },
+            success: function(data) {
+                var modal = document.getElementById("myModal");
+                $('.modal-content').html(data)
+                var span = document.getElementsByClassName("close")[0];
+                modal.style.display = "block";
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
                 }
             }
-        }
     });
 });
 
   $('#save_subtopics').click(()=>{
+      console.log('clicker save topics')
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
-      url:"/fetch-subtopics-course",
+      url:"/livelearn/fetch-subtopics-course",
       method:"post",
       data:
         {
@@ -1628,7 +1653,7 @@ function submitCompanyForm() {
     function loadAuthor(id_course){
         console.log('id course clicked',id_course);
         $.ajax({
-            url:"/fetch-subtopics-course-databanklive",
+            url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1649,7 +1674,6 @@ function submitCompanyForm() {
             }
         })
         // part number two
-            console.log('second trigger');
     }
 </script>
 
@@ -1710,7 +1734,7 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
         var txt = $(this).val();
         console.log(txt);
         $.ajax({
-            url:"/fetch-databank-live-course/",
+            url:"/livelearn/fetch-databank-live-course/",
             method:"post",
             data:{
                 search_txt_course : txt,
