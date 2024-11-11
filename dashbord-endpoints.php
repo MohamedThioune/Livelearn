@@ -4375,3 +4375,34 @@ function detail_expert($data)
             'expert' => $expert,
         ),200 );
 }
+function addReveiewUser($data)
+{
+    $id_user = $data['id'];
+    $initial_review = get_field('user_reviews', 'user_' . $id_user);
+    $review = array();
+    if ($initial_review)
+        foreach ($initial_review as $item) {
+            $review [] = array(
+                'user'=>$item['user']->ID,
+                'rating'=>$item['rating'],
+                'feedback'=>$item['feedback']
+            );
+        }
+    //$review_user = $data['review_user'];
+    $review_user = [
+        'user'=>$data['user'],
+        'rating'=>$data['rating'],
+        'feedback'=>$data['feedback']
+    ];
+    if (!empty($review))
+        $review_user = array_merge([$review_user],$review);
+
+    update_field('user_reviews', $review_user, 'user_' . $id_user);
+
+    return new WP_REST_Response(
+        array(
+            //'review'=>$review_user,
+            'message' =>'review adding successfully !',
+            'all_review' => get_field('user_reviews', 'user_' . $id_user),
+        ),201 );
+}

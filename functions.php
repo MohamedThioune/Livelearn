@@ -2704,4 +2704,9 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'detail_expert'
     ));
+    register_rest_route ('custom/v1', '/review/user/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addReveiewUser'
+    ));
+
 });
