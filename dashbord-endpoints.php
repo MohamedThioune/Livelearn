@@ -3763,6 +3763,8 @@ function addAchievement($data)
     $and_what_date = $data['end_date']; // ot_welke_datum_badge, end date
     $about = $data['about_competencies']; // competencies_badge
     $comment = $data['comment']; // opmerkingen_badge
+    $manager = $data['manager_id'];
+
     //Certificate
     $issuedBy = $data['issued_by']; // uitgegeven_door_badge
     $providerUrl = $data['provider_url']; //url_aanbieder_badge
@@ -3802,6 +3804,8 @@ function addAchievement($data)
         update_field('punten_badge', $points , $id_post);
     if ($country)
         update_field('land_badge', $country , $id_post);
+    if ($manager)
+        update_field('manager_badge', $manager , $id_post);
 
     update_field('trigger_badge', $trigger , $id_post);
     update_field('voor_welke_datum_badge', $for_what_day , $id_post);
@@ -3869,7 +3873,7 @@ function addFeedback($data)
     //    if (in_array($id,$managed))
     //        $superior = get_users(array('include'=> $id))[0]->data;
     //$manager = $superior ? $superior->ID : $id;
-    $manager = $id;
+    $manager = $data['manager_id'];
 
     $args = array(
         'post_type' => 'feedback',
