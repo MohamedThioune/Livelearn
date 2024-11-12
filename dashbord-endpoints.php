@@ -2898,6 +2898,7 @@ function addManyPeople(WP_REST_Request $data)
     $user_connected = intval($data['id']);
 
     $emails = $data['users'];
+    $user_inserted = [];
 
     if(!empty($emails))
         foreach($emails as $user){
@@ -2933,10 +2934,13 @@ function addManyPeople(WP_REST_Request $data)
 
             // send email new user
             sendEmail($user_connected, $user_id,$password);
+            $user_inserted[] = get_user_by('ID', $user_id)->ID;
         }
+
     $response = new WP_REST_Response(
         array(
-            'message' => 'You have successfully created '.count($emails) .' new employees ✔️'
+            'message' => 'You have successfully created '.count($emails) .' new employees ✔️',
+            'users'=>$user_inserted
         ));
     $response->set_status(201);
     return $response;
@@ -3449,7 +3453,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
 {
     $id_course = $data['id_course'];
     //$type_course = get_field('course_type',$id_course);
-    $course_type = ucfirst($data['course_type']);
+    $course_type = $data['course_type'];
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
     $visibility = $data['visibility']; // checkbox : true or false ?
@@ -3476,6 +3480,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $training_dates_locations = $data['training_dates_locations']; // langage for course
     $link_to_call = $data['lin_to_call'];
     $online_location = $data['online_location'];
+    $cours_learning_path = $data['courses']; //road_path
 
 
     if (!$course)
@@ -3608,6 +3613,24 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         update_field('online_location', $online_location, $id_course);
         $isCourseUpdated = true;
         $course->online_location = get_field('online_location',$id_course);
+    }
+
+    if ($cours_learning_path){
+        $old_course = get_field('road_path',$id_course)?:[];
+        $old_id_course = [];
+        if ($old_course)
+            foreach ($old_course as $course) {
+                $old_id_course[] = $course->ID;
+            }
+        if ($old_id_course)
+            $cours_learning_path=array_merge($cours_learning_path,$old_id_course);
+
+        $cours_learning_path=array_unique($cours_learning_path);
+
+        update_field('road_path', $cours_learning_path, $id_course);
+        $isCourseUpdated = true;
+        $course->courses = get_field('road_path',$id_course);
+        //$course->courses = $old_id_course;
     }
 
     if ($isCourseUpdated) {
@@ -4049,7 +4072,18 @@ function addTodo($data)
             'new_todo' => $todo,
         ),201);
 }
-
+function countCourseType($course_type){
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'ordevalue'       => $course_type,
+        'order' => 'DESC' ,
+        'meta_key'         => 'course_type',
+        'meta_value' => $course_type
+    );
+    return count(get_posts($args));
+}
 function all_courses_in_plateform()
 {
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -4060,6 +4094,20 @@ function all_courses_in_plateform()
         'order' => 'DESC' ,
         'paged' => $page,
     );
+    if(isset($_GET['type'])) {
+        $type = $_GET['type'];
+        $args = array(
+            'posts_per_page' => -1,
+            'post_type' => array('course', 'post'),
+            'post_status' => 'publish',
+            'ordevalue' => $type,
+            'order' => 'DESC',
+            'meta_key' => 'course_type',
+            'meta_value' => $type,
+            'paged' => $page,
+        );
+    }
+    // course_type[]=Video&course_type[]=Podcast
     $courses = get_posts($args);
     $all_courses = array();
     foreach ($courses as $course) {
@@ -4105,6 +4153,19 @@ function all_courses_in_plateform()
         array(
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
+            'count_course_type'=>[
+                'video'=>countCourseType('Video'),
+                'podcast'=>countCourseType('Podcast'),
+                'Opleidingen'=>countCourseType('Opleidingen'),
+                'Artikel'=>countCourseType('article'),
+                'Masterclass'=>countCourseType('Masterclass'),
+                'Workshop'=>countCourseType('Workshop'),
+                'e_Learning'=>countCourseType('E-Learning'),
+                'Event'=>countCourseType('Event'),
+                'Training'=>countCourseType('Training'),
+                'Lezing'=>countCourseType('Lezing'),
+                'Assessment'=>countCourseType('Assessment'),
+            ],
             'course' => $all_courses,
         ),200 );
 }
@@ -4400,13 +4461,15 @@ function addReveiewUser($data)
     ];
     if (!empty($review))
         $review_user = array_merge([$review_user],$review);
-
+    if (empty($initial_review))
+        $review_user = array($review_user);
     update_field('user_reviews', $review_user, 'user_' . $id_user);
-
+    //var_dump([$review_user]);die;
     return new WP_REST_Response(
         array(
             //'review'=>$review_user,
             'message' =>'review adding successfully !',
-            'all_review' => get_field('user_reviews', 'user_' . $id_user),
+            'all_review' => get_field('user_reviews', 'user_' . $id_user)?:[],
+            //'all_review' =>$review_user
         ),201 );
 }
