@@ -1549,7 +1549,7 @@ $(document).on('click', '#save_subtopics', function() {
         id_course = e.target.id;
         console.log('id course to add subtopics',id_course)
      $.ajax({
-            url:"/livelearn/fetch-subtopics-course-databanklive",
+            url:"/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1583,7 +1583,7 @@ $(document).on('click', '#save_subtopics', function() {
       console.log('clicker save topics')
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
-      url:"/livelearn/fetch-subtopics-course",
+      url:"/fetch-subtopics-course",
       method:"post",
       data:
         {
@@ -1653,7 +1653,7 @@ $(document).on('click', '#save_subtopics', function() {
     function loadAuthor(id_course){
         console.log('id course clicked',id_course);
         $.ajax({
-            url:"/livelearn/fetch-subtopics-course-databanklive",
+            url:"/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
