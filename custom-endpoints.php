@@ -3647,55 +3647,56 @@ function save_user_views(WP_REST_Request $request)
   }
 
 
-   function get_all_user_progress( $request ) {
-    global $wpdb;
-    $user_id = $GLOBALS['user_id'] ?? 0;
-    
-    if ($user_id == 0)
-        {
-          $response = new WP_REST_Response("You have to login with good credentials !"); 
-          $response->set_status(400);
-          return $response;
-        }
+function get_all_user_progress( $request ) {
+  global $wpdb;
+  $user_id = $GLOBALS['user_id'] ?? 0;
+  
+  if ($user_id == 0)
+      {
+        $response = new WP_REST_Response("You have to login with good credentials !"); 
+        $response->set_status(400);
+        return $response;
+      }
 
-    $course_id = /*$request->get_param( 'course_id' )*/ $request['course_id'] ?? null;
-    if ($course_id == null)
-        {
-          $response = new WP_REST_Response("You have to provide the course id !"); 
-          $response->set_status(400);
-          return $response;
-        }
+  $course_id = /*$request->get_param( 'course_id' )*/ $request['course_id'] ?? null;
+  if ($course_id == null)
+      {
+        $response = new WP_REST_Response("You have to provide the course id !"); 
+        $response->set_status(400);
+        return $response;
+      }
 
-    $table_name = $wpdb->prefix . 'user_progression';
-    $results = $wpdb->get_results(
-        $wpdb->prepare(
-            "SELECT episode_index, progress_seconds, episode_duration FROM $table_name WHERE user_id = %d AND course_id = %d",
-            $user_id, $course_id
-        )
-    );
+  $table_name = $wpdb->prefix . 'user_progression';
+  $results = $wpdb->get_results(
+      $wpdb->prepare(
+          "SELECT episode_index, progress_seconds, episode_duration FROM $table_name WHERE user_id = %d AND course_id = %d",
+          $user_id, $course_id
+      )
+  );
 
-    if ( empty( $results ) ) {
-        return new WP_REST_Response( 'no_progress_found', 'No progress found for this user and course.', array( 'status' => 200 ) );
-    }
+  if ( empty( $results ) ) {
+      return new WP_REST_Response( 'no_progress_found', 'No progress found for this user and course.', array( 'status' => 200 ) );
+  }
 
-    $response = array();
+  $response = array();
 
-    foreach ( $results as $row ) {
-        $progress_percentage = 0;
-        if ( $row->episode_duration > 0 ) {
-            $progress_percentage = ($row->progress_seconds / $row->episode_duration) * 100;
-        }
+  foreach ( $results as $row ) {
+      $progress_percentage = 0;
+      if ( $row->episode_duration > 0 ) {
+          $progress_percentage = ($row->progress_seconds / $row->episode_duration) * 100;
+      }
 
-        $response[] = array(
-            'episode_index' => $row->episode_index,
-            'progress_seconds' => $row->progress_seconds,
-            'episode_duration' => $row->episode_duration,
-            'progress_percentage' => ceil($progress_percentage)
-        );
-    }
+      $response[] = array(
+          'episode_index' => $row->episode_index,
+          'progress_seconds' => $row->progress_seconds,
+          'episode_duration' => $row->episode_duration,
+          'progress_percentage' => ceil($progress_percentage)
+      );
+  }
 
-    return rest_ensure_response( $response );
+  return rest_ensure_response( $response );
 }
+
 
   // function update_user_progress(WP_REST_Request $request) 
   // {
@@ -3834,155 +3835,152 @@ function save_user_views(WP_REST_Request $request)
   // }
 
 
-  function update_user_progress( WP_REST_Request $request ) 
+function update_user_progress( WP_REST_Request $request ) 
 {
-    global $wpdb;
+  global $wpdb;
 
-    $user_id = $GLOBALS['user_id'] ?? 0;
-    if ($user_id == 0)
-    {
-        $response = new WP_REST_Response("You have to login with good credentials!"); 
-        $response->set_status(400);
-        return $response;
+  $user_id = $GLOBALS['user_id'] ?? 0;
+  if ($user_id == 0)
+  {
+    $response = new WP_REST_Response("You have to login with good credentials!"); 
+    $response->set_status(400);
+    return $response;
+  }
+
+  $course_id = $request['course_id'] ?? null;
+  if ($course_id == null)
+  {
+    $response = new WP_REST_Response("You have to provide the course id!"); 
+    $response->set_status(400);
+    return $response;
+  }
+
+  $episode_index = $request['episode_index'] ?? null;
+  if ($episode_index == null)
+  {
+    $response = new WP_REST_Response("You have to provide the episode index!"); 
+    $response->set_status(400);
+    return $response;
+  }
+
+  $new_progress_seconds = $request['progress_seconds'] ?? null;
+  if ($new_progress_seconds == null)
+  {
+    $response = new WP_REST_Response("You have to provide your progression duration!"); 
+    $response->set_status(400);
+    return $response;
+  }
+
+  $episode_duration = $request['episode_duration'] ?? null;
+  if ($episode_duration == null)
+  {
+    $response = new WP_REST_Response("You have to provide the duration of the episode!"); 
+    $response->set_status(400);
+    return $response;
+  }
+
+  $table_name = $wpdb->prefix . 'user_progression';
+
+  // Récupérer l'enregistrement actuel pour cet utilisateur, cours et épisode
+  $current_progress = $wpdb->get_row(
+    $wpdb->prepare(
+      "SELECT progress_seconds, episode_duration FROM $table_name WHERE user_id = %d AND course_id = %d AND episode_index = %d",
+      $user_id, $course_id, $episode_index
+    )
+  );
+
+  if (!$current_progress) {
+    // Si aucun enregistrement n'existe, on insère un nouvel enregistrement
+    if ($new_progress_seconds > $episode_duration) {
+      return new WP_Error('invalid_progress', 'New progress exceeds the episode duration.', array('status' => 400));
     }
 
-    $course_id = $request['course_id'] ?? null;
-    if ($course_id == null)
-    {
-        $response = new WP_REST_Response("You have to provide the course id!"); 
-        $response->set_status(400);
-        return $response;
-    }
+    $time_spent = $new_progress_seconds;
 
-    $episode_index = $request['episode_index'] ?? null;
-    if ($episode_index == null)
-    {
-        $response = new WP_REST_Response("You have to provide the episode index!"); 
-        $response->set_status(400);
-        return $response;
-    }
-
-    $new_progress_seconds = $request['progress_seconds'] ?? null;
-    if ($new_progress_seconds == null)
-    {
-        $response = new WP_REST_Response("You have to provide your progression duration!"); 
-        $response->set_status(400);
-        return $response;
-    }
-
-    $episode_duration = $request['episode_duration'] ?? null;
-    if ($episode_duration == null)
-    {
-        $response = new WP_REST_Response("You have to provide the duration of the episode!"); 
-        $response->set_status(400);
-        return $response;
-    }
-
-    $table_name = $wpdb->prefix . 'user_progression';
-
-    // Récupérer l'enregistrement actuel pour cet utilisateur, cours et épisode
-    $current_progress = $wpdb->get_row(
-        $wpdb->prepare(
-            "SELECT progress_seconds, episode_duration FROM $table_name WHERE user_id = %d AND course_id = %d AND episode_index = %d",
-            $user_id, $course_id, $episode_index
-        )
+    $inserted = $wpdb->insert(
+      $table_name,
+      array(
+          'user_id' => $user_id,
+          'course_id' => $course_id,
+          'episode_index' => $episode_index,
+          'progress_seconds' => $new_progress_seconds,
+          'episode_duration' => $episode_duration
+      ),
+      array('%d', '%d', '%d', '%d', '%d')
     );
 
-    if (!$current_progress) {
-        // Si aucun enregistrement n'existe, on insère un nouvel enregistrement
-        if ($new_progress_seconds > $episode_duration) {
-            return new WP_Error('invalid_progress', 'New progress exceeds the episode duration.', array('status' => 400));
-        }
-
-        $time_spent = $new_progress_seconds;
-
-        $inserted = $wpdb->insert(
-            $table_name,
-            array(
-                'user_id' => $user_id,
-                'course_id' => $course_id,
-                'episode_index' => $episode_index,
-                'progress_seconds' => $new_progress_seconds,
-                'episode_duration' => $episode_duration
-            ),
-            array('%d', '%d', '%d', '%d', '%d')
-        );
-
-        if ($inserted === false) {
-            return new WP_Error('insert_failed', 'Failed to insert progress.', array('status' => 500));
-        }
-    } else {
-        // Si un enregistrement existe, on le met à jour
-        if ($new_progress_seconds < $current_progress->progress_seconds) {
-            return new WP_Error('invalid_progress', 'New progress is less than the current progress.', array('status' => 400));
-        }
-
-        if ($new_progress_seconds > $current_progress->episode_duration) {
-            return new WP_Error('invalid_progress', 'New progress exceeds the episode duration.', array('status' => 400));
-        }
-
-        $time_spent = $new_progress_seconds - $current_progress->progress_seconds;
-
-        $updated = $wpdb->update(
-            $table_name,
-            array('progress_seconds' => $new_progress_seconds),
-            array('user_id' => $user_id, 'course_id' => $course_id, 'episode_index' => $episode_index),
-            array('%d'),
-            array('%d', '%d', '%d')
-        );
-
-        if ($updated === false) {
-            return new WP_Error('update_failed', 'Failed to update progress.', array('status' => 500));
-        }
+    if ($inserted === false) {
+      return new WP_Error('insert_failed', 'Failed to insert progress.', array('status' => 500));
+    }
+  } 
+  else {
+    // Si un enregistrement existe, on le met à jour
+    if ($new_progress_seconds < $current_progress->progress_seconds) {
+        return new WP_Error('invalid_progress', 'New progress is less than the current progress.', array('status' => 400));
     }
 
-    // Récupérer le cours
-    $course = get_post($course_id);
-    if ($course != null) 
+    if ($new_progress_seconds > $current_progress->episode_duration) {
+        return new WP_Error('invalid_progress', 'New progress exceeds the episode duration.', array('status' => 400));
+    }
+
+    $time_spent = $new_progress_seconds - $current_progress->progress_seconds;
+
+    $updated = $wpdb->update(
+        $table_name,
+        array('progress_seconds' => $new_progress_seconds),
+        array('user_id' => $user_id, 'course_id' => $course_id, 'episode_index' => $episode_index),
+        array('%d'),
+        array('%d', '%d', '%d')
+    );
+
+    if ($updated === false) {
+      return new WP_Error('update_failed', 'Failed to update progress.', array('status' => 500));
+    }
+  }
+
+  // Récupérer le cours
+  $course = get_post($course_id);
+  if ($course != null) 
+  {
+    $tags = get_field('categories', $course->ID) ?? [];
+    
+    if (count($tags) > 0) {
+
+      foreach ($tags as $key => $category) 
+      if(isset($category['value']))
       {
-        
-        $tags = get_field('categories', $course->ID) ?? [];
-        
-        if (count($tags) > 0) {
-
-          foreach ($tags as $key => $category) 
-          if(isset($category['value']))
-          {
-            $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
-            $post_data = json_encode([
-              'user_id' => $user_id,
-              'category_id' =>  $tag->id,
-              'category_name' => $tag->name,
-              'time_spent' => $time_spent,
-              'course_type' => strtolower(get_field('course_type', $course->ID))
-            ]);
-            send_post_request('https://www.livelearn.nl/wp-json/custom/v2/user/statistics/subtopic/update', $post_data);
-          }
-
-            
-      }
-
-        // Envoi de la requête PUT
-        $put_data = json_encode([
-            'user_id' => $user_id,
-            'course_type' => strtolower(get_field('course_type', $course->ID)),
-            'time_spent' => $time_spent
+        $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+        $post_data = json_encode([
+          'user_id' => $user_id,
+          'category_id' =>  $tag->id,
+          'category_name' => $tag->name,
+          'time_spent' => $time_spent,
+          'course_type' => strtolower(get_field('course_type', $course->ID))
         ]);
-        send_put_request('https://www.livelearn.nl/wp-json/custom/v2/user/statistics', $put_data);
+        send_post_request('https://www.livelearn.nl/wp-json/custom/v2/user/statistics/subtopic/update', $post_data);
+      }    
     }
 
-    $progress_percentage = ($new_progress_seconds / $episode_duration) * 100;
+    // Envoi de la requête PUT
+    $put_data = json_encode([
+        'user_id' => $user_id,
+        'course_type' => strtolower(get_field('course_type', $course->ID)),
+        'time_spent' => $time_spent
+    ]);
+    send_put_request('https://www.livelearn.nl/wp-json/custom/v2/user/statistics', $put_data);
+  }
 
-    $response = array(
-        'success' => true,
-        'progress_seconds' => $new_progress_seconds,
-        'episode_duration' => $episode_duration,
-        'progress_percentage' => round($progress_percentage, 2)
-    );
+  $progress_percentage = ($new_progress_seconds / $episode_duration) * 100;
 
-    return rest_ensure_response($response);
+  $response = array(
+    'success' => true,
+    'progress_seconds' => $new_progress_seconds,
+    'episode_duration' => $episode_duration,
+    'progress_percentage' => round($progress_percentage, 2)
+  );
+
+  return rest_ensure_response($response);
 }
-
 
 // Fonction pour envoyer une requête POST
  function send_post_request($url, $data) {
