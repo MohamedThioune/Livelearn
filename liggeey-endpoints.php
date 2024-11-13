@@ -336,8 +336,7 @@ function candidate($id){
   $sample['ID'] = $user->ID;
   $sample['first_name'] = $user->first_name;
   $sample['last_name'] = $user->last_name;
-  $sample['roles'] = $user->role;
-  var_dump($user->role ,'/n');
+  $sample['roles'] = $user->roles;
   var_dump($user->roles);
 
   $sample['email'] = $user->user_email;
