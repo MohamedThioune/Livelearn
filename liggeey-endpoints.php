@@ -171,7 +171,6 @@ function postAdditionnal($post, $userID){
 
     $post->instructor->bio =  get_field('biographical_info',  'user_' . $post->authorID);
     $post->instructor->role =  get_field('role',  'user_' . $post->authorID);
-    var_dump($post->instructor->role);
 
     $post_date = new DateTimeImmutable($post->post_date);
     $post->instructor->date = $post_date->format('d/m/Y');  
@@ -337,7 +336,10 @@ function candidate($id){
   $sample['ID'] = $user->ID;
   $sample['first_name'] = $user->first_name;
   $sample['last_name'] = $user->last_name;
-  $sample['roles'] = $user->roles;
+  $sample['roles'] = $user->role;
+  var_dump($user->role ,'/n');
+  var_dump($user->roles);
+
   $sample['email'] = $user->user_email;
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
