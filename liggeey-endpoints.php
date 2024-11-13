@@ -171,6 +171,7 @@ function postAdditionnal($post, $userID){
 
     $post->instructor->bio =  get_field('biographical_info',  'user_' . $post->authorID);
     $post->instructor->role =  get_field('role',  'user_' . $post->authorID);
+    var_dump($post->instructor->role);
 
     $post_date = new DateTimeImmutable($post->post_date);
     $post->instructor->date = $post_date->format('d/m/Y');  
@@ -368,7 +369,7 @@ function candidate($id){
 
   $date_born = get_field('date_born',  'user_' . $user->ID);
   if(!$date_born)
-      $age = "No birth";
+    $age = "No birth";
   else{
     //explode the date to get month, day and year
     $birthDate = explode("/", $date_born);
