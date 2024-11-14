@@ -336,7 +336,8 @@ function candidate($id){
   $sample['ID'] = $user->ID;
   $sample['first_name'] = $user->first_name;
   $sample['last_name'] = $user->last_name;
-  $sample['roles'] = $user->roles;
+  $sample['roles'] = (count($user->roles) != 1) ? $user->roles : [$user->roles[1]];
+
   $sample['email'] = $user->user_email;
   $sample['mobile_phone'] = $user->mobile_phone;
   $sample['city'] = $user->city;
@@ -368,7 +369,7 @@ function candidate($id){
 
   $date_born = get_field('date_born',  'user_' . $user->ID);
   if(!$date_born)
-      $age = "No birth";
+    $age = "No birth";
   else{
     //explode the date to get month, day and year
     $birthDate = explode("/", $date_born);
