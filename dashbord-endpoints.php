@@ -1323,13 +1323,29 @@ function editPeopleCompany($data){
 
 function removePeopleCompany($data)
 {
+    $user_connected = wp_get_current_user()->ID;
     $user_id = intval($data['ID']);
     $isRemoved = update_field('company', null ,'user_' . $user_id);
-    if ($isRemoved)
+    // remove people managed user connected on $user_id
+
+    if ($isRemoved) {
+        $people_managed = get_field('managed', 'user_'.$user_connected)?:array();
+        $index_to_remove = array_search($user_id,$people_managed);
+        if(!$index_to_remove)
+            return new WP_REST_Response(
+                array(
+                    'message'=>'error while removing this people on your list'
+                ),401);
+
+        unset($people_managed[$index_to_remove]);
+        update_field('managed', $people_managed, 'user_'.$user_connected);
+        update_field('ismanaged', null , 'user_' . $isRemoved);
+
         return new WP_REST_Response(
             array(
-                'message'=>'User removed from company...',
+                'message' => 'User removed from company...',
             ));
+    }
     return new WP_REST_Response(
         array(
             'message'=>'User not removed from company...',
@@ -2931,11 +2947,18 @@ function addManyPeople(WP_REST_Request $data)
             $company = get_field('company',  'user_' . $user_connected);
             //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
             update_field('company', $company[0], 'user_'.$user_id);
+            // add people to manage
+            update_field('ismanaged', $user_connected, 'user_' . $user_id);
+
 
             // send email new user
-            sendEmail($user_connected, $user_id,$password);
+            sendEmail($user_connected,$user_id,$password);
             $user_inserted[] = get_user_by('ID', $user_id)->ID;
         }
+    $people_managed = get_field('managed', 'user_'.$user_connected) ? : array();
+    $people_managed = array_merge($people_managed,$user_inserted);
+    $people_managed = array_unique($people_managed);
+    update_field('managed', $people_managed, 'user_'.$user_connected);
 
     $response = new WP_REST_Response(
         array(
@@ -4087,26 +4110,17 @@ function countCourseType($course_type){
 function all_courses_in_plateform()
 {
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $type = isset($_GET['type']) ? $_GET['type'] : '' ;
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => 20,
         'order' => 'DESC' ,
+        'ordevalue' => $type,
+        'meta_key' => $type ? 'course_type' : '',
+        'meta_value' => $type,
         'paged' => $page,
     );
-    if(isset($_GET['type'])) {
-        $type = $_GET['type'];
-        $args = array(
-            'posts_per_page' => -1,
-            'post_type' => array('course', 'post'),
-            'post_status' => 'publish',
-            'ordevalue' => $type,
-            'order' => 'DESC',
-            'meta_key' => 'course_type',
-            'meta_value' => $type,
-            'paged' => $page,
-        );
-    }
     // course_type[]=Video&course_type[]=Podcast
     $courses = get_posts($args);
     $all_courses = array();
@@ -4135,16 +4149,16 @@ function all_courses_in_plateform()
 
         $all_courses[] = new Course($course);
     }
-
-    $count_all_course = count(get_posts(
-            array(
-                'post_type' => array('course', 'post'),
-                'post_status' => 'publish',
-                'posts_per_page' => -1,
-                'order' => 'DESC'
-            )
-        )
+    $arg_paginated =  array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'order' => 'DESC' ,
+        'posts_per_page' => -1,
+        'ordevalue' => $type,
+        'meta_key' => $type ? 'course_type' : '',
+        'meta_value' => $type,
     );
+    $count_all_course = count(get_posts($arg_paginated));
     $total_pages = ceil($count_all_course / 20);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
