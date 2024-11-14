@@ -3649,50 +3649,47 @@ function save_user_views(WP_REST_Request $request)
 
 function get_all_user_progress( $request ) {
   global $wpdb;
-  $user_id = $GLOBALS['user_id'] ?? 0;
-  
-  if ($user_id == 0)
-      {
-        $response = new WP_REST_Response("You have to login with good credentials !"); 
-        $response->set_status(400);
-        return $response;
-      }
+  $user_id = isset($request['user_id']) ? $request['user_id'] : $GLOBALS['user_id'];
+  $user_id = ($user_id) ?? 0;
+  if ($user_id == 0){
+    $response = new WP_REST_Response("You have to login with good credentials !"); 
+    $response->set_status(400);
+    return $response;
+  }
 
-  $course_id = /*$request->get_param( 'course_id' )*/ $request['course_id'] ?? null;
-  if ($course_id == null)
-      {
-        $response = new WP_REST_Response("You have to provide the course id !"); 
-        $response->set_status(400);
-        return $response;
-      }
+  $course_id =  $request['course_id'] ?? null;
+  if ($course_id == null){
+    $response = new WP_REST_Response("You have to provide the course id !"); 
+    $response->set_status(400);
+    return $response;
+  }
 
   $table_name = $wpdb->prefix . 'user_progression';
   $results = $wpdb->get_results(
-      $wpdb->prepare(
-          "SELECT episode_index, progress_seconds, episode_duration FROM $table_name WHERE user_id = %d AND course_id = %d",
-          $user_id, $course_id
-      )
+    $wpdb->prepare(
+      "SELECT episode_index, progress_seconds, episode_duration FROM $table_name WHERE user_id = %d AND course_id = %d",
+      $user_id, $course_id
+    )
   );
 
-  if ( empty( $results ) ) {
-      return new WP_REST_Response( 'no_progress_found', 'No progress found for this user and course.', array( 'status' => 200 ) );
-  }
+  if ( empty( $results ) ) 
+    return new WP_REST_Response( 'no_progress_found', 'No progress found for this user and course.', array( 'status' => 200 ) );
 
   $response = array();
 
-  foreach ( $results as $row ) {
-      $progress_percentage = 0;
-      if ( $row->episode_duration > 0 ) {
-          $progress_percentage = ($row->progress_seconds / $row->episode_duration) * 100;
-      }
+  foreach ( $results as $row ):
+    $progress_percentage = 0;
+    if ( $row->episode_duration > 0 ) {
+      $progress_percentage = ($row->progress_seconds / $row->episode_duration) * 100;
+    }
 
-      $response[] = array(
-          'episode_index' => $row->episode_index,
-          'progress_seconds' => $row->progress_seconds,
-          'episode_duration' => $row->episode_duration,
-          'progress_percentage' => ceil($progress_percentage)
-      );
-  }
+    $response[] = array(
+      'episode_index' => $row->episode_index,
+      'progress_seconds' => $row->progress_seconds,
+      'episode_duration' => $row->episode_duration,
+      'progress_percentage' => ceil($progress_percentage)
+    );
+  endforeach;
 
   return rest_ensure_response( $response );
 }
@@ -3839,7 +3836,8 @@ function update_user_progress( WP_REST_Request $request )
 {
   global $wpdb;
 
-  $user_id = $GLOBALS['user_id'] ?? 0;
+  $user_id = isset($request['user_id']) ? $request['user_id'] : $GLOBALS['user_id'];
+  $user_id = ($user_id) ?? 0;
   if ($user_id == 0)
   {
     $response = new WP_REST_Response("You have to login with good credentials!"); 
@@ -3991,7 +3989,7 @@ function update_user_progress( WP_REST_Request $request )
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     $response = curl_exec($ch);
     curl_close($ch);
-    var_dump($response);
+    // var_dump($response);
     return $response;
 }
 
@@ -4004,20 +4002,11 @@ function update_user_progress( WP_REST_Request $request )
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     $response = curl_exec($ch);
     curl_close($ch);
-    var_dump($response);
+    // var_dump($response);
     return $response;
 }
 
-
-
-
-
-
-
-  /* User progression */
-
-  
-   
+  /* User progression */  
   function matchin_topics()
   {
     global $wpdb;

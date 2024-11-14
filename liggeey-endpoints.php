@@ -503,6 +503,7 @@ function candidate($id){
 
       array_push($read_one, $value);
       $user_expert = get_user_by('ID', $value);
+      $expert_sample['ID'] = $user_expert->ID;
 
       if($user_expert->ID != $user->ID)
         $expert_sample['name'] = ($user_expert->first_name) ? : $user_expert->display_name;
