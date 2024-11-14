@@ -94,24 +94,9 @@ $args = array(
 $courses = get_posts($args);
 
 $user_in = wp_get_current_user();
-
-
-//bought courses
-/*
-$order_args = array(
-    'customer_id' => get_current_user_id(),
-    'post_status' => array_keys(wc_get_order_statuses()), 
-    'post_status' => array('wc-processing'),
-
-);
-$orders = wc_get_orders($order_args);
-*/
-
-
-/*
-    ** Categories - all  * 
+    /*
+        ** Categories - all  *
     */
-
     $categories = array();
 
     $cats = get_categories( 
@@ -121,28 +106,22 @@ $orders = wc_get_orders($order_args);
         'exclude' => 'Uncategorized',
         'parent'     => 0,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) 
-    );
-
-
-    
+    ) );
     foreach($cats as $category){
         $cat_id = strval($category->cat_ID);
         $category = intval($cat_id);
         array_push($categories, $category);
     }
-
-     $subtopics = array();
+    $subtopics = array();
      
     foreach($categories as $categ){
         //Topics
         $topicss = get_categories(
             array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent'  => $categ,
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ) 
-        );
+                'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent' => $categ,
+                'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ));
 
         foreach ($topicss as  $value) {
             $subtopic = get_categories( 
@@ -154,25 +133,32 @@ $orders = wc_get_orders($order_args);
                 ) 
             );
             $subtopics = array_merge($subtopics, $subtopic);  
-            //var_dump($subtopics);    
         }
     }
-
-
-
  ?>
 
 
 <!-- modal-style -->
-         
+
 <!-- script-modal -->
 <?php
 if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') {
+    $course = get_post(intval($_POST['id_course']));
 
-     
     $categories = array();
+    $course_subtopics = [];
     $course_subtopics = get_field('categories',$_POST['id_course']);
     $id_subtopics = $course_subtopics ? array_column($course_subtopics, 'value'):[];
+    if(!$course_subtopics)
+        $course_subtopics = get_field('category_xml', $_POST['id_course']);
+
+    foreach($course_subtopics as $choosen){
+        if(empty($course_subtopicss))
+            $course_subtopics = explode(',', $choosen['value']);
+        else
+            array_merge($course_subtopics, explode(',', $choosen['value']));
+    }
+
     $cats = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
@@ -188,53 +174,117 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
     }
 
     //Topics
+    $row_bangrichts = '';
     $topics = array();
-    foreach ($categories as $value){
+    foreach ($categories as $key1=>$value){
         $merged = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $value,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         ) );
-        if(!empty($merged))
+        if(!empty($merged)) {
             $topics = array_merge($topics, $merged);
+            $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
+            foreach ($merged as $key => $value) {
+                $selected = '';
+                if(!empty($already_linked_tags))
+                    $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;
+
+                $row_bangrichts .= '
+            <input '.$selected.' class="selected" type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' />
+            <label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
+            }
+            $row_bangrichts.= '</div>';
+        }
     }
-//    echo '<pre>';
-    //var_dump($topics);
 
     ?>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Sub-topics</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
-                        <span aria-hidden="true">×</span>
-                </button>
+    <div class="modal-header">
+        <h5 class="modal-title" >Sub-topics</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="d-flex justify-content-between align-items-center head-for-body">
+            <!-- <button class="btn btn-sub-title-topics" type="button">Remove</button>
+                <p class="text-or">Or</p>
+                <button class="btn btn-add-sub-topics" type="button">Add Subtopics</button> -->
+        </div>
+        <div class="content-sub-topics">
+            <div class="hiddenCB">
+                <div>
+                    <?php
+                    foreach($cats as $key => $value)
+                    {
+                        $state = false;
+                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                        foreach($course_subtopicss as $element)
+                            if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                echo '<input checked type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
+                                array_push($displayed, $element);
+                                $state = true;
+                            }
+                        if($state)
+                            continue;
+                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
+                    }
+                    ?>
+                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
                 </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between align-items-center head-for-body">
-                        <!-- <button class="btn btn-sub-title-topics" type="button">Remove</button>
-                         <p class="text-or">Or</p>
-                         <button class="btn btn-add-sub-topics" type="button">Add Subtopics</button> -->
-                    </div>
-                    <div class="content-sub-topics">
-                    <select class='multipleSelect2' id="selected_subtopics"   multiple='true'>
-                        <?php
-                        if ($id_subtopics)
-                            foreach ($id_subtopics as $id_subtopic)
-                                if (get_the_category_by_ID($id_subtopic))
-                                    echo "<option value='$id_subtopic' selected >".get_the_category_by_ID($id_subtopic)."</option>";
-
-                        foreach($topics as $value)
-                            echo '<option value= ' . $value->cat_ID . ' >' . $value->cat_name . '</option>';
-
-                        ?>
-                    </select>
-                   </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
-                        <button type="button" class="btn btn-primary" id="save_subtopic_course" onclick="alert(this)">Save subtopics</button>
-                    </div>
             </div>
+            <div class="subtopicBaangerichte">
+                <div class="hiddenCB">
+                    <p class="pickText">Pick the sub-topics matching with the course : <span class="h6"><?=$course->post_title?></span> </p>
+                    <?php
+                    echo $row_bangrichts;
+                    ?>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="button" class="btn btnSkipCourse" id="btnSkipTopics1">Skip</button>
+                    <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="document.getElementById('myModal').style.display='none'">Close</button>
+            <button type="button" class="btn btn-primary" id="save_subtopic_course" onclick="saveSubTopics()">Save subtopics</button>
+        </div>
+    </div>
       <?php }?>
-<!----> 
+<!---->
+<script>
+    $("#nextblockBaangerichte, #btnSkipTopics1").click(function() {
+        $(".blockfunctiegericht").show();
+        $(".blockBaangerichte").hide();
+    });
+   function saveSubTopics(){
+       const selectElement = document.getElementById('selected_subtopics');
+       /*
+       Array.from(selectElement.options).forEach(option=>{
+           if(option)
+                option.setAttribute("selected", "selected");
+       })
+       */
+       var selectedTopicOption = $("#selected_subtopics").find('option:selected');
+       var subtopicsId = [];
+
+       selectedTopicOption.each(function(){
+           var values = $(this).val();
+           console.log($(this))
+           subtopicsId.push(values);
+       });
+       console.log(subtopicsId)
+
+       // const selectedOptions = selectElement.selectedOptions
+       // const selectedValues = Array.from(selectedOptions).map(option => option.value);
+       // console.log('Valeurs sélectionnées:', selectedValues);
+
+
+       //const selectedValues = Array.from(select.selectedOptions).map(option => option.value);
+       //console.log(selectedValues);
+   }
+</script>
  <script>
         $(document).ready(function() {
             $('#autocomplete').on('change', function() {
@@ -275,7 +325,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
             $(".block-to-show-teacher").show();
         });
     </script>  
-    <script>
+<script>
 $(document).ready(function() {
     const topicSelect = $('.multipleSelect2');
     console.log('changeeeeeeeeeee')
