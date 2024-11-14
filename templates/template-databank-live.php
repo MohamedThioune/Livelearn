@@ -848,7 +848,7 @@ $user = wp_get_current_user();
                                     <?php echo empty(get_field('price', $course->ID)) ? 'Gratis':  get_field('price', $course->ID); ?>
                                 </td>
 
-                                <td id=" <?php echo $course->ID; ?>" class="textTh td_subtopics">
+                                <td id=" <?php echo $course->ID; ?>" class="textTh td_subtopics btn">
                                     <?php
                                      $course_subtopics = get_field('categories', $course->ID);
                                      if($course_subtopics != null){
@@ -1498,48 +1498,6 @@ function submitCompanyForm() {
         }
     });
 }
-$(document).ready(function() {
-    $('#save_subtopic_course').click(e){
-        console.log(e)
-    }
-}
-/*
-const saveButton = document.getElementById('save_subtopics');
-$(document).on('click', '#save_subtopics', function() {
-    console.log('save sup topics');
-    var subtopics  = Array.from(selectedValues);
-    var btnSubTopics = document.getElementById('btn-sub-topics');
-    var selectedsubtopics = $('#selected_subtopics').val();
-    const id_course = document.getElementById('formModifeChoose').getAttribute('value');
-    var concatenatedselectedsubtopics = subtopics.concat(selectedsubtopics)
-    console.log(selectedValues)
-
-    $.ajax({
-        url:"/livelearn/fetch-subtopics-course",
-        method:"post",
-        data:
-            {
-                add_subtopics:concatenatedselectedsubtopics,
-                id_course:id_course,
-                action:'add_subtopics'
-            },
-        dataType:"text",
-        success: function(data){
-            console.log(data)
-            let modal=$('#myModal');
-            modal.attr('style', { display: "none" });
-            //modal.style.display = "none";
-            $('.sava-substopics').html(data);
-            $('#'+id_course).html(data)
-            //console.log(data)
-        },
-        error:function(data){
-
-            console.log(data)
-        }
-    })
-});
- */
 </script>
 
 <!-- script-modal -->
@@ -1561,6 +1519,7 @@ $(document).on('click', '#save_subtopics', function() {
                 var modal = document.getElementById("myModal");
                 $('.modal-content').html('<span>waiting for ...</span>')
                 modal.style.display = "block";
+                console.log(e)
             },
             success: function(data) {
                 var modal = document.getElementById("myModal");
@@ -1575,15 +1534,20 @@ $(document).on('click', '#save_subtopics', function() {
                         modal.style.display = "none";
                     }
                 }
+                $(this).off('click');
+            },
+            complete:function () {
+                //$(this).off('click');
+                console.log('element after event',e)
             }
     });
 });
-
+/*
   $('#save_subtopics').click(()=>{
       console.log('clicker save topics')
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
-      url:"/fetch-subtopics-course",
+      url:"/livelearn/fetch-subtopics-course",
       method:"post",
       data:
         {
@@ -1597,6 +1561,8 @@ $(document).on('click', '#save_subtopics', function() {
           }
       });
 });
+ */
+
 // connect company to course
 
   $('#save_author').click((e)=>{
@@ -1734,7 +1700,7 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
         var txt = $(this).val();
         console.log(txt);
         $.ajax({
-            url:"/livelearn/fetch-databank-live-course/",
+            url:"/fetch-databank-live-course/",
             method:"post",
             data:{
                 search_txt_course : txt,
