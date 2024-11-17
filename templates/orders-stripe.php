@@ -15,8 +15,8 @@ function create_order($data){
         return $wpdb->insert($table, $data);
 }
 
-//Listing orders stripe
-function list_orders($userID){
+//Listing orders stripe by User 
+function list_orders($userID, $no_futher = null){
     global $wpdb;
     $table = $wpdb->prefix . 'stripe_order';
 
@@ -29,32 +29,34 @@ function list_orders($userID){
             if($order->course_id):
                 $post = get_post($order->course_id);
                 if($post):
-                //Get metadata
-                $post->metadata = ($order->metadata) ?: null;
-                //Get extra informations on the post 
-                //+short description
-                $post->short_description = get_field('short_description', $post->ID) ?: 'No description available !';
-                //+long description
-                $post->long_description = get_field('long_description', $post->ID) ?: 'No long description available !';
-                //+Image
-                $course_type = get_field('course_type', $post->ID);
-                $thumbnail = "";
-                if(!$thumbnail):
-                    $thumbnail = get_the_post_thumbnail_url($post->ID);
-                    if(!$thumbnail)
-                        $thumbnail = get_field('url_image_xml', $post->ID);
-                        if(!$thumbnail)
-                            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                endif;
-                $post->image = $thumbnail;
-                //+author
-                $author = get_user_by('id', $post->post_author);
-                $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
-                $author_image = get_field('profile_img',  'user_' . $post->post_author);
-                $author->image= $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                $post->author = $author;
-                array_push($enrolledPost, $post);
-                array_push($enrolledID, $post->ID);
+                    //Get metadata
+                    $post->metadata = ($order->metadata) ?: null;
+                    if($no_futher):
+                        //Get extra informations on the post 
+                        //+short description
+                        $post->short_description = get_field('short_description', $post->ID) ?: 'No description available !';
+                        //+long description
+                        $post->long_description = get_field('long_description', $post->ID) ?: 'No long description available !';
+                        //+Image
+                        $course_type = get_field('course_type', $post->ID);
+                        $thumbnail = "";
+                        if(!$thumbnail):
+                            $thumbnail = get_the_post_thumbnail_url($post->ID);
+                            if(!$thumbnail)
+                                $thumbnail = get_field('url_image_xml', $post->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                        endif;
+                        $post->image = $thumbnail;
+                        //+author
+                        $author = get_user_by('id', $post->post_author);
+                        $author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name;
+                        $author_image = get_field('profile_img',  'user_' . $post->post_author);
+                        $author->image= $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                        $post->author = $author;
+                    endif;
+                    array_push($enrolledPost, $post);
+                    array_push($enrolledID, $post->ID);
                 endif;
             endif;
     
@@ -63,4 +65,45 @@ function list_orders($userID){
     return ['ids' => $enrolledID, 'posts' => $enrolledPost];
 }
 
+//Listing orders stripe by Author 
+function ordersByAuthor($authorID, $courseID){
+    global $wpdb;
+    $table = $wpdb->prefix . 'stripe_order';
+
+    $sql_orders_stripe = $wpdb->prepare("SELECT course_id, metadata, owner_id FROM $table");
+    $orders_stripe = $wpdb->get_results($sql_orders_stripe);
+    $enrolledPost = array();
+    $enrolledID = array();
+    $enrolledUser = array();
+
+    if(isset($orders_stripe[0]))
+    foreach ($orders_stripe as $order):
+        if($order->course_id):
+            $post = get_post($order->course_id);
+            if($post):
+                if($post->post_author != $authorID)
+                    continue;
+                //Get metadata
+                $post->metadata = ($order->metadata) ?: null;
+                //Get owner
+                $post->ownerID = ($order->owner_id) ?: null;
+
+                $sample = array(); 
+                if($post->ID == $courseID):
+                    $sample['ownerID'] = $post->owner_id;
+                    $sample['metadata'] = $post->metadata;
+                    $sample = (Object)$sample;
+                    array_push($enrolledUser, $sample);
+                endif;
+                    
+                array_push($enrolledPost, $post);
+                array_push($enrolledID, $post->ID);
+            endif;
+        endif;
+    endforeach;
+                
+    $enrolledPost = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
+    return ['ids' => $enrolledID, 'posts' => $enrolledPost, 'students' => $enrolledUser];
+}
+    
 ?>
