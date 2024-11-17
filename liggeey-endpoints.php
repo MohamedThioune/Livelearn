@@ -3041,6 +3041,12 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
           array_push($enrolled, $id_course);
     }
   
+  //Enrolled with Stripe
+  $enrolled_stripe = array();
+  $enrolled_stripe = list_orders($user_id, 1)['ids'];
+  if(!empty($enrolled_stripe))
+    $enrolled = (!empty($enrolled)) ? $enrolled_stripe : array_merge($enrolled, $enrolled_stripe);
+  
   if(!empty($enrolled)):
     $args = array(
         'post_type' => 'course',
