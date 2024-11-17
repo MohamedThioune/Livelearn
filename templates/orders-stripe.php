@@ -90,7 +90,7 @@ function ordersByAuthor($authorID, $courseID){
 
                 $sample = array(); 
                 if($post->ID == $courseID):
-                    $sample['ownerID'] = $post->owner_id;
+                    $sample['ownerID'] = $post->ownerID;
                     $sample['metadata'] = $post->metadata;
                     $sample = (Object)$sample;
                     array_push($enrolledUser, $sample);
