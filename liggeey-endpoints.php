@@ -255,14 +255,13 @@ function postAdditionnal($post, $userID){
     endforeach;
   
   //Enrollment | Stripe - by author
-  $student_stripe = array();
-  $enrolled_stripe = array();
-  $enrolled_stripe = ordersByAuthor($post->authorID, $post->ID);
+  $ordersByAuthor = array();
+  $ordersByAuthor = ordersByAuthor($post->authorID, $post->ID);
   //get students data for this course 
-  $course_enrolled = (!empty($ordersByAuthor['students'])) ? array_column('ownerID', $ordersByAuthor['students']) : array();
+  $course_enrolled = (!empty($ordersByAuthor['students'])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
   $count_stripe_course_student = (!empty($course_enrolled)) ? count(array_count_values($course_enrolled)) : 0;
   //get students data for all these author courses
-  $course_enrolled_all = (!empty($ordersByAuthor['posts'])) ? array_column('ownerID', $ordersByAuthor['posts']) : array();
+  $course_enrolled_all = (!empty($ordersByAuthor['posts'])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
   $count_stripe_student = (!empty($course_enrolled_all)) ? count(array_count_values($course_enrolled_all)) : 0;
 
   $post->average_star = $average_star;
