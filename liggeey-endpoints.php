@@ -224,18 +224,18 @@ function postAdditionnal($post, $userID){
     $post->instructor->total_reviews = $count_reviews;
   endif;
 
-  //Enrollment
+  //Enrollment | WooCommerce
   $datenr = 0; 
   $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
   $enrolled = array();
   $enrolled_courses = array();
   $statut_bool = 0;
   $args = array(
-      'customer_id' => $userID,
-      'post_status' => array('wc-processing', 'wc-completed'),
-      'orderby' => 'date',
-      'order' => 'ASC',
-      'limit' => -1,
+    'customer_id' => $userID,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'ASC',
+    'limit' => -1
   );
   $bunch_orders = wc_get_orders($args);
   $enrolled_member = 0;
@@ -253,8 +253,22 @@ function postAdditionnal($post, $userID){
         if($course->post_author == $post->authorID)
           $enrolled_all += 1;
     endforeach;
+  
+  //Enrollment | Stripe - by author
+  $student_stripe = array();
+  $enrolled_stripe = array();
+  $enrolled_stripe = ordersByAuthor($post->authorID, $post->ID);
+  //get students data for this course 
+  $course_enrolled = (!empty($ordersByAuthor['students'])) ? array_column('ownerID', $ordersByAuthor['students']) : array();
+  $count_stripe_course_student = (!empty($course_enrolled)) ? count(array_count_values($course_enrolled)) : 0;
+  //get students data for all these author courses
+  $course_enrolled_all = (!empty($ordersByAuthor['posts'])) ? array_column('ownerID', $ordersByAuthor['posts']) : array();
+  $count_stripe_student = (!empty($course_enrolled_all)) ? count(array_count_values($course_enrolled_all)) : 0;
+
   $post->average_star = $average_star;
-  $post->enrolled_students = $enrolled_member;
+  $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
+  if($author)
+    $post->instructor->enrolled_students = $count_stripe_student;
   $post->enrolled_courses = $enrolled_all;
   $post->access = ($statut_bool) ? "All access" : 'Free';
 
@@ -3956,7 +3970,7 @@ function activity($ID){
 
   //Enrolled with Stripe
   $enrolled_stripe = array();
-  $enrolled_stripe = list_orders($user->ID)['posts'];
+  $enrolled_stripe = list_orders($user->ID, 1)['posts'];
   if(!empty($enrolled_stripe)):
     foreach ($enrolled_stripe as $post)
       try {
