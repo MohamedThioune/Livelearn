@@ -240,7 +240,6 @@ function postAdditionnal($post, $userID){
   $bunch_orders = wc_get_orders($args);
   $enrolled_member = 0;
   $enrolled_all = 0;
-  $statut_bool = 0;
   foreach($bunch_orders as $order)
     foreach ($order->get_items() as $item_id => $item ) :
       $course_id = intval($item->get_product_id()) - 1;
@@ -260,16 +259,16 @@ function postAdditionnal($post, $userID){
   //get students data for this course 
   $course_enrolled = (!empty($ordersByAuthor['students'])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
   $count_stripe_course_student = (!empty($course_enrolled)) ? count(array_count_values($course_enrolled)) : 0;
+  $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool;   //check access to user connected
   //get students data for all these author courses
   $course_enrolled_all = (!empty($ordersByAuthor['posts'])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
   $count_stripe_student = (!empty($course_enrolled_all)) ? count(array_count_values($course_enrolled_all)) : 0;
-
   $post->average_star = $average_star;
   $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
   if($author)
     $post->instructor->enrolled_students = $count_stripe_student;
   $post->enrolled_courses = $enrolled_all;
-  $post->access = ($statut_bool) ? "All access" : 'Free';
+  $post->access = ($statut_bool) ? "All access" : 'Free'; 
 
   //Experts
   $expertS = get_field('experts', $post->ID);
