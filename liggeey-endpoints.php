@@ -268,7 +268,7 @@ function postAdditionnal($post, $userID){
   if($author)
     $post->instructor->enrolled_students = $count_stripe_student;
   $post->enrolled_courses = $enrolled_all;
-  $post->access = ($statut_bool) ? "All access" : 'Free';
+  $post->access = ($statut_bool) ? "All access" : 'Free'; 
 
   //Experts
   $expertS = get_field('experts', $post->ID);
