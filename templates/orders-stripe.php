@@ -61,7 +61,7 @@ function list_orders($userID, $no_futher = null){
             endif;
     
     //Reverse array of orders
-    $enrolledPost = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
+    // $enrolledPost = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
     return ['ids' => $enrolledID, 'posts' => $enrolledPost];
 }
 
