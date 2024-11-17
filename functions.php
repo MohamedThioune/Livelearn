@@ -23,6 +23,7 @@ function create_session_stripe($data){
     return $information;
 }
 function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $offline = null, $ui_mode = null){
+    $SITE_URL = "https://app.livelearn.nl/";
     $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ?  get_site_url() . '/inloggen' : get_site_url() . '/dashboard/user/activity';
     $PRICE_ID = ($price_id) ?: null;
     $offline = ($offline) ?: null;
