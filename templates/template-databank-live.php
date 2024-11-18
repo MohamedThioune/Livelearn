@@ -1101,7 +1101,6 @@ $user = wp_get_current_user();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    
                     <h5 class="modal-title" id="exampleModalLabel">Add a Teacher</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -1279,9 +1278,15 @@ $user = wp_get_current_user();
         </div>
     </div>
      <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <div id="myModal" class="modal" >
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <style>
+                .scroller:{
+                    max-height: 80vh;
+                    overflow-y: auto;
+                }
+            </style>
+            <div class="modal-content scroller">
             <!-- </div> -->
             </div>
         </div>    
@@ -1507,7 +1512,7 @@ function submitCompanyForm() {
         id_course = e.target.id;
         console.log('id course to add subtopics',id_course)
      $.ajax({
-            url:"/fetch-subtopics-course-databanklive",
+            url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1519,7 +1524,6 @@ function submitCompanyForm() {
                 var modal = document.getElementById("myModal");
                 $('.modal-content').html('<span>waiting for ...</span>')
                 modal.style.display = "block";
-                console.log(e)
             },
             success: function(data) {
                 var modal = document.getElementById("myModal");
@@ -1538,7 +1542,6 @@ function submitCompanyForm() {
             },
             complete:function () {
                 //$(this).off('click');
-                console.log('element after event',e)
             }
     });
 });
@@ -1619,7 +1622,7 @@ function submitCompanyForm() {
     function loadAuthor(id_course){
         console.log('id course clicked',id_course);
         $.ajax({
-            url:"/fetch-subtopics-course-databanklive",
+            url:"/livelearn/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1700,7 +1703,7 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
         var txt = $(this).val();
         console.log(txt);
         $.ajax({
-            url:"/fetch-databank-live-course/",
+            url:"/livelearn/fetch-databank-live-course/",
             method:"post",
             data:{
                 search_txt_course : txt,
