@@ -257,12 +257,12 @@ function postAdditionnal($post, $userID){
   $ordersByAuthor = array();
   $ordersByAuthor = ordersByAuthor($post->authorID, $post->ID);
   //get students data for this course 
-  $course_enrolled = (!empty($ordersByAuthor['students'])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
-  $count_stripe_course_student = (!empty($course_enrolled)) ? count(array_count_values($course_enrolled)) : 0;
+  $course_enrolled = (isset($ordersByAuthor['students'][0])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
+  $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
   $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool;   //check access to user connected
   //get students data for all these author courses
-  $course_enrolled_all = (!empty($ordersByAuthor['posts'])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
-  $count_stripe_student = (!empty($course_enrolled_all)) ? count(array_count_values($course_enrolled_all)) : 0;
+  $course_enrolled_all = (isset($ordersByAuthor['posts'][0])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
+  $count_stripe_student = (isset($course_enrolled_all[0])) ? count(array_count_values($course_enrolled_all)) : 0;
   $post->average_star = $average_star;
   $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
   if($author)
