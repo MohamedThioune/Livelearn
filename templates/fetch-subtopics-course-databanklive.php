@@ -89,7 +89,7 @@ $cats = get_categories(
     array(
         'taxonomy'   => 'course_category',  //Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
-        'exclude' => 'Uncategorized',
+        'exclude' => ['Uncategorized','Wordpress'],
         'parent'     => 0,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
@@ -147,7 +147,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
     $cats = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
-        'exclude' => 'Uncategorized',
+        'exclude' => ['Uncategorized','Wordpress'],
         'parent'     => 0,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
@@ -176,7 +176,6 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                 if (!empty($already_linked_tags)) {
                     $selected = in_array($value->cat_ID, $already_linked_tags) ? 'checked' : '';
                 }
-
                 $row_bangrichts .= '
                 <input ' . $selected . ' class="selected" type="checkbox" name="choice_bangrichts_' . $value->cat_ID . '" value="' . $value->cat_ID . '" id="subtopics_bangricht_' . $value->cat_ID . '" />
                 <label class="labelChoose" for="subtopics_bangricht_' . $value->cat_ID . '">' . $value->cat_name . '</label>';
@@ -409,6 +408,3 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
         });
     });
 </script>
-
-                     
-                    
