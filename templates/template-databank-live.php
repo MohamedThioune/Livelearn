@@ -1512,7 +1512,7 @@ function submitCompanyForm() {
         id_course = e.target.id;
         console.log('id course to add subtopics',id_course)
      $.ajax({
-            url:"/livelearn/fetch-subtopics-course-databanklive",
+            url:"/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1622,7 +1622,7 @@ function submitCompanyForm() {
     function loadAuthor(id_course){
         console.log('id course clicked',id_course);
         $.ajax({
-            url:"/livelearn/fetch-subtopics-course-databanklive",
+            url:"/fetch-subtopics-course-databanklive",
             method:"post",
             data:
             {
@@ -1703,7 +1703,7 @@ document.getElementById('fileInputCompany').addEventListener('change', function(
         var txt = $(this).val();
         console.log(txt);
         $.ajax({
-            url:"/livelearn/fetch-databank-live-course/",
+            url:"/fetch-databank-live-course/",
             method:"post",
             data:{
                 search_txt_course : txt,
