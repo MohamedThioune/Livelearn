@@ -694,6 +694,27 @@ function job($id, $userApplyId = null){
   return $sample;
 }
 
+//Detail challenge
+function challenge($id, $userApplyId = null){
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  $sample['ID'] = $post->ID;
+  $sample['post_title'] = $post->post_title;
+  $sample['post_slug'] = $post->post_name;
+  $sample['profile'] = get_field('profile_challenge', $post->ID)?: '';
+  $sample['content'] = $post->post_content ?: get_field('description_challenge', $post->ID);
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+  $sample['prize'] = get_field('prize_challenge', $post->ID)?: '';
+  $sample['banner'] = get_field('banner_challenge', $post->ID)?: '';
+  $sample['deadline'] = get_field('deadline_challenge', $post->ID)?: '';
+
+  $sample = (Object)$sample;
+
+  return $sample;
+}
+
 function validated($required_parameters, $request){
   $errors = ['errors' => '', 'error_data' => ''];
 
@@ -4836,3 +4857,96 @@ function artikelByCategory($data){
   return $response;  
 }
 
+
+/** Challenge */
+
+//List challenges
+function challenges(){
+  $args = array(
+      'post_type' => 'challenge',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $challenge_posts = get_posts($args);
+  $challenges = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($challenge_posts as $post):
+    $sample = array();
+    // Recuperer le contenu de chaque élément
+    $challenges[] = challenge($post->ID);
+  endforeach;
+
+  $response = new WP_REST_Response($challenges);
+  $response->set_status(200);
+  return $response;
+
+}
+
+function challengeDetail(WP_REST_Request $request){
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
+
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $userID = isset($data['userID']) ? $data['userID'] : 0;
+  $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
+  $sample = challenge($post->ID);
+
+  // if(!empty($sample))
+  //   //Get further information
+  //   $sample = postAdditionnal($sample, $userApplyID);
+
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+  return $response;
+}
+
+function startChallenge(WP_REST_Request $request){
+  global $wpdb;
+
+  $required_parameters = ['challenge_id', 'user_id', 'titel', 'short_description', 'motivation', 'long_description', 'imageURLs', 'pdfURL'];
+
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $table_start_challenge = $wpdb->prefix . 'start_challenge';
+  $data = [
+    'challenge_id' => $request['challenge_id'],
+    'user_id' => $request['user_id'],
+    'titel' => $request['titel'],
+    'short_description' => $request['short_description'],
+    'motivation' => $request['motivation'],
+    'long_description' => $request['long_description'],
+    'imageURLs' => $request['imageURLs'],
+    'pdfURL' => $request['pdfURL']
+  ];
+  $wpdb->insert($table_start_challenge, $data);
+  $start_id = $wpdb->insert_id; 
+  
+  $errors = [];
+  if(!$start_id):
+    //Check if there are no errors
+    $errors['errors'] = 'Something wrong on insertion !';
+    $errors = (Object)$errors;
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $data['ID'] = $start_id;
+  $response = new WP_REST_Response($data);
+  $response->set_status(400);
+  return $response;
+}
