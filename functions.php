@@ -942,10 +942,10 @@ function custom_post_type() {
 }
 add_action( 'init', 'custom_post_type', 0 );
 
- //Challenges with
- $challenge = array(
+//Challenges with
+$challenge = array(
     'name'                => _x( 'Challenges', 'Challenges', 'challenge' ),
-    'singular_name'       => _x( 'Challenges', 'Challenge', 'challenge' ),
+    'singular_name'       => _x( 'Challenge', 'Challenge', 'challenge' ),
     'menu_name'           => __( 'Challenges', 'challenge' ),
     //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
     'all_items'           => __( 'All challenges', 'challenge' ),
@@ -958,7 +958,6 @@ add_action( 'init', 'custom_post_type', 0 );
     'not_found'           => __( 'Not found', 'text_domain' ),
     'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
 );
-
 $challenge_args = array(
     'label'               => __( 'challenge', 'text_domain' ),
     'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
@@ -968,7 +967,7 @@ $challenge_args = array(
     'hierarchical'        => false,
     'public'              => true,
     'show_ui'             => true,
-    'show_in_rest'        => false,
+    'show_in_rest'        => true,
     'show_in_menu'        => true,
     'show_in_nav_menus'   => true,
     'show_in_admin_bar'   => true,
@@ -982,7 +981,6 @@ $challenge_args = array(
     'capability_type'     => 'page',
 
 );
-
 register_post_type( 'challenge', $challenge_args );
 
 
@@ -2738,5 +2736,19 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'detail_company'
     ));
- 
+
+    register_rest_route ('custom/v1', '/challenges', array(
+        'methods' => 'GET',
+        'callback' => 'challenges'
+    ));
+
+    register_rest_route ('custom/v1', '/challenge', array(
+        'methods' => 'POST',
+        'callback' => 'challengeDetail'
+    ));
+
+    register_rest_route ('custom/v1', '/challenge/start', array(
+        'methods' => 'POST',
+        'callback' => 'startChallenge'
+    ));
 });
