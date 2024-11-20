@@ -267,7 +267,6 @@ function postAdditionnal($post, $userID){
   $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
   if($author)
     $post->instructor->enrolled_students = $count_stripe_student;
-  $post->enrolled_courses = $enrolled_all;
   $post->access = ($statut_bool) ? "All access" : 'Free'; 
 
   //Experts
@@ -691,6 +690,27 @@ function job($id, $userApplyId = null){
   $sample->rejected = $rejected;
 
   $sample->status = $status;
+
+  return $sample;
+}
+
+//Detail challenge
+function challenge($id, $userApplyId = null){
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  $sample['ID'] = $post->ID;
+  $sample['post_title'] = $post->post_title;
+  $sample['post_slug'] = $post->post_name;
+  $sample['profile'] = get_field('profile_challenge', $post->ID)?: '';
+  $sample['content'] = $post->post_content ?: get_field('description_challenge', $post->ID);
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+  $sample['prize'] = get_field('prize_challenge', $post->ID)?: '';
+  $sample['banner'] = get_field('banner_challenge', $post->ID)?: '';
+  $sample['deadline'] = get_field('deadline_challenge', $post->ID)?: '';
+
+  $sample = (Object)$sample;
 
   return $sample;
 }
@@ -4369,15 +4389,6 @@ function getAsseessmentsViaCategory($data) {
     GROUP BY a.id"
   );
 
-  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
-  // if (empty($assessments)) 
-  //   $assessments = $wpdb->get_results(
-  //     "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
-  //     FROM {$wpdb->prefix}assessments a
-  //     LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-  //     GROUP BY a.id"
-  //   );
-
   // Vérifie s'il y a des assessments
   if (empty($assessments))
     return []; 
@@ -4388,16 +4399,16 @@ function getAsseessmentsViaCategory($data) {
     // Récupérer les informations de l'auteur
     $author = get_user_by('ID', $assessment->author_id);
     if ($author) {
-        $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $assessment->author = new Expert($author, $author_img);
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $assessment->author = new Expert($author, $author_img);
     } else {
-        $assessment->author = null;
+      $assessment->author = null;
     }
 
     // Récupérer les informations de la catégorie
     $assessment->category = [
-        "name" => get_the_category_by_ID($categoryID),
-        "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+      "name" => get_the_category_by_ID($categoryID),
+      "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
     ];
   }
 
@@ -4407,22 +4418,6 @@ function getAsseessmentsViaCategory($data) {
 
 //Posts for DeZZP via category
 function artikelDezzp($data){
-  // $users = get_users();
-  // $authors = array();
-  // foreach ($users as $key => $value) {
-  //   $company_user = get_field('company',  'user_' . $value->ID );
-  //   if(!empty($company_user))
-  //   if(isset($company_user[0]->post_name))
-  //   if($company_user[0]->post_name == $companySlug)
-  //   array_push($authors, $value->ID);
-  // }
-
-  // if(empty($main_blogs)):
-  //   //Return a error 
-  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
-  //   $response->set_status(400);
-  //   return $response;  
-  // endif;
 
   $CONST_FREELANCING = 647;
   $companySlug = $data['company'] ?: null;
@@ -4430,7 +4425,6 @@ function artikelDezzp($data){
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
-    // 'author__in' => $authors,
     'order' => 'DESC',
   );
   $main_blogs = get_posts($args);
@@ -4704,6 +4698,7 @@ function deleteCourseCommunity(WP_REST_Request $request){
   return $response;  
 }
 
+//Home Page angular 
 function HomepageAngular(){
 
   $infos = array();
@@ -4860,5 +4855,98 @@ function artikelByCategory($data){
   $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
   $response->set_status(200);
   return $response;  
+}
 
+
+/** Challenge */
+
+//List challenges
+function challenges(){
+  $args = array(
+      'post_type' => 'challenge',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $challenge_posts = get_posts($args);
+  $challenges = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($challenge_posts as $post):
+    $sample = array();
+    // Recuperer le contenu de chaque élément
+    $challenges[] = challenge($post->ID);
+  endforeach;
+
+  $response = new WP_REST_Response($challenges);
+  $response->set_status(200);
+  return $response;
+
+}
+
+function challengeDetail(WP_REST_Request $request){
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
+
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $userID = isset($data['userID']) ? $data['userID'] : 0;
+  $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
+  $sample = challenge($post->ID);
+
+  // if(!empty($sample))
+  //   //Get further information
+  //   $sample = postAdditionnal($sample, $userApplyID);
+
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+  return $response;
+}
+
+function startChallenge(WP_REST_Request $request){
+  global $wpdb;
+
+  $required_parameters = ['challenge_id', 'user_id', 'titel', 'short_description', 'motivation', 'long_description', 'imageURLs', 'pdfURL'];
+
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $table_start_challenge = $wpdb->prefix . 'start_challenge';
+  $data = [
+    'challenge_id' => $request['challenge_id'],
+    'user_id' => $request['user_id'],
+    'titel' => $request['titel'],
+    'short_description' => $request['short_description'],
+    'motivation' => $request['motivation'],
+    'long_description' => $request['long_description'],
+    'imageURLs' => $request['imageURLs'],
+    'pdfURL' => $request['pdfURL']
+  ];
+  $wpdb->insert($table_start_challenge, $data);
+  $start_id = $wpdb->insert_id; 
+  
+  $errors = [];
+  if(!$start_id):
+    //Check if there are no errors
+    $errors['errors'] = 'Something wrong on insertion !';
+    $errors = (Object)$errors;
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $data['ID'] = $start_id;
+  $response = new WP_REST_Response($data);
+  $response->set_status(400);
+  return $response;
 }
