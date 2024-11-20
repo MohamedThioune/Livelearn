@@ -32,7 +32,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
         <div class="container my-5">
             <div class="categories-wrapper">
                 <?php foreach ($cats as $category):
-                    if ($category->name=='Uncategorized')
+                    if (in_array($category->name,['Uncategorized','Wordpress']))
                         continue;
                     // Préparation des variables
                     $category_name = htmlspecialchars($category->name);
