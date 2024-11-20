@@ -912,7 +912,6 @@ function custom_post_type() {
         'not_found'           => __( 'Not found', 'text_domain' ),
         'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
     );
-
     $notification_args = array(
         'label'               => __( 'notification', 'text_domain' ),
         'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
@@ -936,53 +935,50 @@ function custom_post_type() {
         'capability_type'     => 'page',
 
     );
-
     register_post_type( 'notification', $notification_args );
 
+    $challenge = array(
+        'name'                => _x( 'Challenges', 'Challenges', 'challenge' ),
+        'singular_name'       => _x( 'Challenge', 'Challenge', 'challenge' ),
+        'menu_name'           => __( 'Challenges', 'challenge' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All challenges', 'challenge' ),
+        'view_item'           => __( 'View challenge', 'view_challenge' ),
+        'add_new_item'        => __( 'New challenge', 'add_new_challenge' ),
+        'add_new'             => __( 'New challenge', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+    $challenge_args = array(
+        'label'               => __( 'challenge', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $challenge,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt', 'thumbnail' ),
+        'taxonomies'          => array('course_category'),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'challenge'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'post',
+    );
+    register_post_type( 'challenge', $challenge_args );
+
 }
+
 add_action( 'init', 'custom_post_type', 0 );
-
-//Challenges with
-$challenge = array(
-    'name'                => _x( 'Challenges', 'Challenges', 'challenge' ),
-    'singular_name'       => _x( 'Challenge', 'Challenge', 'challenge' ),
-    'menu_name'           => __( 'Challenges', 'challenge' ),
-    //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
-    'all_items'           => __( 'All challenges', 'challenge' ),
-    'view_item'           => __( 'View challenge', 'view_challenge' ),
-    'add_new_item'        => __( 'New challenge', 'add_new_challenge' ),
-    'add_new'             => __( 'New challenge', 'text_domain' ),
-    'edit_item'           => __( 'Edit Item', 'text_domain' ),
-    'update_item'         => __( 'Update Item', 'text_domain' ),
-    'search_items'        => __( 'Search Item', 'text_domain' ),
-    'not_found'           => __( 'Not found', 'text_domain' ),
-    'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
-);
-$challenge_args = array(
-    'label'               => __( 'challenge', 'text_domain' ),
-    'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
-    'labels'              => $challenge,
-    'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
-    'taxonomies'          => array('course_category'),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_rest'        => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon'           => '',
-    'can_export'          => true,
-    'rewrite'             => array('slug' => 'challenge'),
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capability_type'     => 'page',
-
-);
-register_post_type( 'challenge', $challenge_args );
-
 
 function add_custom_roles(){
     // add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
