@@ -23,7 +23,8 @@ function create_session_stripe($data){
     return $information;
 }
 function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $offline = null, $ui_mode = null){
-    $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ?  get_site_url() . '/inloggen' : get_site_url() . '/dashboard/user/activity';
+    $SITE_URL = "https://app.livelearn.nl";
+    $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ?  get_site_url() . '/login' : get_site_url() . '/user/my-activities';
     $PRICE_ID = ($price_id) ?: null;
     $offline = ($offline) ?: null;
     $ui_mode = ($ui_mode) ? 'hosted': 'embedded';
@@ -31,22 +32,22 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
 
     //Get post information
     $sample = array(
-        'ID' => null, 
-        'name' => null, 
+        'ID' => null,
+        'name' => null,
         'description' => null,
         'prijs' => null,
-        'permalink' => null,   
+        'permalink' => null,
         'image' => null
     );
     $post_data = ($post_id) ? get_post($post_id) : array();
-    $standard_text = 'Your adventure begins now with Livelearn !'; 
+    $standard_text = 'Your adventure begins now with Livelearn !';
     if(!empty($post_data)):
         $course_type = get_field('course_type', $post_data->ID);
         $sample['ID'] = $post_data->ID;
         $sample['name'] = $post_data->post_title;
         $sample['description'] = get_field('short_description', $post_data->ID) ?: $standard_text;
-        $sample['prijs'] = get_field('price', $post_data->ID) ?: 0; 
-        $sample['permalink'] = get_permalink($post_data->ID); 
+        $sample['prijs'] = get_field('price', $post_data->ID) ?: 0;
+        $sample['permalink'] = get_permalink($post_data->ID);
         $thumbnail = "";
         if(!$thumbnail):
             $thumbnail = get_field('url_image_xml', $post_data->ID);
@@ -105,16 +106,16 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
                 [
                     'key' => 'phone_number',
                     'label' => [
-                      'type' => 'custom',
-                      'custom' => 'Phone',
+                        'type' => 'custom',
+                        'custom' => 'Phone',
                     ],
                     'type' => 'numeric',
                 ],
                 [
                     'key' => 'additional_information',
                     'label' => [
-                      'type' => 'custom',
-                      'custom' => 'Additional information',
+                        'type' => 'custom',
+                        'custom' => 'Additional information',
                     ],
                     'optional' => 'true',
                     'type' => 'text',
@@ -151,16 +152,16 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
     //case : success - hosted 
     if($ui_mode == 'hosted')
         if($information['data'])
-        if($information['data']->url):
-            $url = $information['data']->url;
-            return array('message' => 'Session successfully created !', 'url' => $url);
-        endif;
+            if($information['data']->url):
+                $url = $information['data']->url;
+                return array('message' => 'Session successfully created !', 'url' => $url);
+            endif;
 
-    $client_secret = null;    
+    $client_secret = null;
     //case : success - embedded
     if($information['data'])
-    if($information['data']->client_secret)
-        $client_secret = $information['data']->client_secret;
+        if($information['data']->client_secret)
+            $client_secret = $information['data']->client_secret;
 
     return json_encode(array('clientSecret' => $client_secret));
 }
@@ -206,8 +207,8 @@ function stripe_status($data){
         if($userID) :
             $session->metadata['userID'] = $userID;
             $register_message = "We find on our records a email already corresponding to email : " . $session->customer_details['email'] . "<br>We have therefore taken the liberty of assigning this command to this user.";
-        else : 
-        //Register this user
+        else :
+            //Register this user
             $password = 'L1vele@rn2024';
             $userdata = array(
                 'user_pass' => $password,
@@ -235,13 +236,13 @@ function stripe_status($data){
         $somethin_wrong = "<small>The payment was applied but communication with Stripe was suddenly interrupted.<br>
         Please contact us at <a href='mailto:contact@livelearn.nl'>contact@livelearn.nl</a></small>";
         $data_order = array(
-            'session_id' => $session->id, 
-            'course_id' => $session->metadata['postID'], 
-            'status' => $success, 
+            'session_id' => $session->id,
+            'course_id' => $session->metadata['postID'],
+            'status' => $success,
             'prijs' => 'true',
-            'auth_id' => $session->metadata['userID'],  
-            'owner_id' => $session->metadata['userID'], 
-            'metadata' =>  $session->metadata['offline'], 
+            'auth_id' => $session->metadata['userID'],
+            'owner_id' => $session->metadata['userID'],
+            'metadata' =>  $session->metadata['offline'],
         );
 
         //create a order information
@@ -678,7 +679,7 @@ function custom_post_type() {
 
     );
 
-    register_post_type( 'community', $community_args );  
+    register_post_type( 'community', $community_args );
 
     //Progression
     $progression = array(
@@ -852,7 +853,7 @@ function custom_post_type() {
 
     register_post_type( 'todo', $todo_args );
 
-    //To Do's with
+    //Jobs with
     $job = array(
         'name'                => _x( 'Jobs', 'Jobs', 'job' ),
         'singular_name'       => _x( 'Jobs', 'Job', 'job' ),
@@ -911,7 +912,6 @@ function custom_post_type() {
         'not_found'           => __( 'Not found', 'text_domain' ),
         'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
     );
-
     $notification_args = array(
         'label'               => __( 'notification', 'text_domain' ),
         'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
@@ -935,12 +935,50 @@ function custom_post_type() {
         'capability_type'     => 'page',
 
     );
-
     register_post_type( 'notification', $notification_args );
 
-}
-add_action( 'init', 'custom_post_type', 0 );
+    $challenge = array(
+        'name'                => _x( 'Challenges', 'Challenges', 'challenge' ),
+        'singular_name'       => _x( 'Challenge', 'Challenge', 'challenge' ),
+        'menu_name'           => __( 'Challenges', 'challenge' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All challenges', 'challenge' ),
+        'view_item'           => __( 'View challenge', 'view_challenge' ),
+        'add_new_item'        => __( 'New challenge', 'add_new_challenge' ),
+        'add_new'             => __( 'New challenge', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+    $challenge_args = array(
+        'label'               => __( 'challenge', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $challenge,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt', 'thumbnail' ),
+        'taxonomies'          => array('course_category'),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'challenge'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'post',
+    );
+    register_post_type( 'challenge', $challenge_args );
 
+}
+
+add_action( 'init', 'custom_post_type', 0 );
 
 function add_custom_roles(){
     // add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
@@ -1121,14 +1159,14 @@ add_filter( 'rest_authentication_errors', function( $result ) {
     return $result;
 });
 
-function filter_woocommerce_api_product_response( $product_data, $product, $fields, $this_server ) { 
+function filter_woocommerce_api_product_response( $product_data, $product, $fields, $this_server ) {
     $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
     $product_data['vendor_name'] = get_the_author_meta( 'display_name', $product_data['vendor_id']);
-    return $product_data; 
+    return $product_data;
 
 
-};      
-add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_response', 10, 4 ); 
+};
+add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_response', 10, 4 );
 
 //Hide product page 
 remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
@@ -1166,7 +1204,7 @@ function recommended_course($data)
     //$teachers = $infos['teachers'];
 
     $course_id = array();
-    $random_id = array(); 
+    $random_id = array();
     if (!empty($recommended_courses)) {
         $current_user_id = $user;
         $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
@@ -1209,10 +1247,10 @@ function recommended_course($data)
                     if (!empty($podcasts))
                     {
                         $course->podcasts = array();
-                        foreach ($podcasts as $key => $podcast) 
-                        { 
+                        foreach ($podcasts as $key => $podcast)
+                        {
                             $item= array(
-                                "course_podcast_title"=>$podcast['podcast_title'], 
+                                "course_podcast_title"=>$podcast['podcast_title'],
                                 "course_podcast_intro"=>$podcast['podcast_description'],
                                 "course_podcast_url" => $podcast['podcast_url'],
                                 "course_podcast_image" => $podcast['podcast_image'],
@@ -1234,8 +1272,8 @@ function recommended_course($data)
                             array_push($course->tags, $tag);
                         }
             /**
-               * Handle Image exception
-            */
+             * Handle Image exception
+             */
             $handle = curl_init($course->pathImage);
             curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
 
@@ -1259,7 +1297,7 @@ function recommended_course($data)
         }
         return $outcomes_recommended_courses;
     }
-    else 
+    else
         return ["error" => "Nothing to show, don't ask me why 😅 !"];
 }
 
@@ -1386,7 +1424,7 @@ function tracker_course(WP_REST_Request $request){
         return false;
 
     $args = array(
-        'post_type' => 'view', 
+        'post_type' => 'view',
         'post_status' => 'publish',
         'author' => $user_id,
     );
@@ -1414,8 +1452,8 @@ function tracker_course(WP_REST_Request $request){
 
     if(!empty($view))
         array_push($view, $one_view);
-    else 
-        $view = array($one_view); 
+    else
+        $view = array($one_view);
 
     update_field('views', $view, $stat_id);
 
@@ -1523,7 +1561,7 @@ function notification_display(){
     */
 
     $args = array(
-        'post_type' => 'feedback', 
+        'post_type' => 'feedback',
         'author' => $user->ID,
         'orderby' => 'post_date',
         'order' => 'DESC',
@@ -1551,7 +1589,7 @@ function notification($data){
 
     $feedback = array();
 
-    $value = get_post($data['id']);   
+    $value = get_post($data['id']);
     if(!empty($value)){
         $feedback['type'] = get_field('type_feedback', $value->ID);
         $manager_id = get_field('manager_feedback', $value->ID);
@@ -1568,7 +1606,7 @@ function notification($data){
         else if($feedback['type'] == "Beoordeling Gesprek")
             $feedback['beschrijving_feedback'] = get_field('algemene_beoordeling', $value->ID);
 
-    } 
+    }
 
     return $feedback;
 }
@@ -1576,7 +1614,7 @@ function notification($data){
 function agreement(WP_REST_Request $request){
     global $wpdb;
 
-    $table = $wpdb->prefix . 'agreement_content_artikel'; 
+    $table = $wpdb->prefix . 'agreement_content_artikel';
 
     $website = $request['website'];
     $url = $request['url'];
@@ -1604,7 +1642,7 @@ function agreement(WP_REST_Request $request){
 }
 
 function following(){
-    $value = wp_get_current_user();   
+    $value = wp_get_current_user();
 
     $infos = array();
 
@@ -1620,7 +1658,7 @@ function following(){
             array_push($topics, $item);
 
     if(!empty($topics)){
-        $args = array( 
+        $args = array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'include'  => $topics,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
@@ -1633,7 +1671,7 @@ function following(){
     $users = get_user_meta($value->data->ID, 'expert');
 
     if(!empty($users)){
-        $args = array( 
+        $args = array(
             'include' => $users,
         );
         $infos['following_users'] = get_users($args);
@@ -1820,7 +1858,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
-    
+
     //(Bis) Statistics topics
     register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
         'methods' => 'GET',
@@ -1847,7 +1885,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'createInternalCourses',
     ));
 
-    
+
 
     register_rest_route('custom/v2', '/user/statistics/subtopic/update', array(
         'methods' => 'POST',
@@ -1940,7 +1978,7 @@ add_action( 'rest_api_init', function () {
     ));
 
     /* Likes endpoints V3 */
-    
+
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
         'methods' => 'GET',
         'callback' => 'get_total_followers',
@@ -2137,8 +2175,6 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'get_all_user_progress',
     ));
-
-
     register_rest_route ('custom/v3', '/user/course/progression/update', array(
         'methods' => 'PUT',
         'callback' => 'update_user_progress',
@@ -2210,7 +2246,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'filterArticlesByUserLanguagePreferences',
     ));
 
-    
+
 
     //Weekly mail livelearn
     register_rest_route ('custom/v1', '/weekly-recommendation', array(
@@ -2304,7 +2340,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'searchCoursesViaKeyWords',
     ));
 
-    register_rest_route ('custom/v1', '/apply', array( 
+    register_rest_route ('custom/v1', '/apply', array(
         'methods' => 'POST',
         'callback' => 'jobUser'
     ));
@@ -2436,7 +2472,7 @@ add_action( 'rest_api_init', function () {
 
     register_rest_route ('custom/v1', '/candidate/myResume/update', array(
         'methods' => 'POST',
-        'callback' => 'candidateMyResumeEdit' 
+        'callback' => 'candidateMyResumeEdit'
     ));
 
     register_rest_route ('custom/v1', '/candidate/myResume/add', array(
@@ -2475,7 +2511,7 @@ add_action( 'rest_api_init', function () {
     //Made by Mohamed | 'Subscription' Payment link
     register_rest_route ('custom/v1', '/payment/link', array(
         'methods' => 'POST',
-        'callback' => 'stripe' 
+        'callback' => 'stripe'
     ));
 
     register_rest_route ('custom/v1', '/search/stripe/(?P<companyID>\d+)', array(
@@ -2530,7 +2566,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'upcoming_schedule_for_the_user'
     ));
 
-    register_rest_route ('custom/v1', '/teacher/save', array( 
+    register_rest_route ('custom/v1', '/teacher/save', array(
         //teacher/save ; /save/manager
         'methods' => 'POST',
         'callback' => 'saveManager'
@@ -2653,11 +2689,11 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/posts/(?P<company>[-\w]+)', array(
         'methods' => 'GET',
         'callback' => 'artikelDezzp'
-    )); 
+    ));
     register_rest_route ('custom/v1', '/posts/category/(?P<category>\d+)', array(
         'methods' => 'GET',
         'callback' => 'artikelByCategory'
-    )); 
+    ));
     register_rest_route ('custom/v1', 'subscription/organisation', array(
         'methods' => 'POST',
         'callback' => 'subscription_organisation'
@@ -2696,17 +2732,19 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'detail_company'
     ));
-    register_rest_route ('custom/v1', '/update-image-course/(?P<id>\d+)', array(
-        'methods' => 'POST',
-        'callback' => 'update_image_course'
-    ));
-    register_rest_route ('custom/v1', '/expert/detail/(?P<id>\d+)', array(
+
+    register_rest_route ('custom/v1', '/challenges', array(
         'methods' => 'GET',
-        'callback' => 'detail_expert'
-    ));
-    register_rest_route ('custom/v1', '/review/user/(?P<id>\d+)', array(
-        'methods' => 'POST',
-        'callback' => 'addReveiewUser'
+        'callback' => 'challenges'
     ));
 
+    register_rest_route ('custom/v1', '/challenge', array(
+        'methods' => 'POST',
+        'callback' => 'challengeDetail'
+    ));
+
+    register_rest_route ('custom/v1', '/challenge/start', array(
+        'methods' => 'POST',
+        'callback' => 'startChallenge'
+    ));
 });
