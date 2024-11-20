@@ -267,7 +267,6 @@ function postAdditionnal($post, $userID){
   $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
   if($author)
     $post->instructor->enrolled_students = $count_stripe_student;
-  $post->enrolled_courses = $enrolled_all;
   $post->access = ($statut_bool) ? "All access" : 'Free'; 
 
   //Experts
@@ -4369,15 +4368,6 @@ function getAsseessmentsViaCategory($data) {
     GROUP BY a.id"
   );
 
-  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
-  // if (empty($assessments)) 
-  //   $assessments = $wpdb->get_results(
-  //     "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
-  //     FROM {$wpdb->prefix}assessments a
-  //     LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-  //     GROUP BY a.id"
-  //   );
-
   // Vérifie s'il y a des assessments
   if (empty($assessments))
     return []; 
@@ -4388,16 +4378,16 @@ function getAsseessmentsViaCategory($data) {
     // Récupérer les informations de l'auteur
     $author = get_user_by('ID', $assessment->author_id);
     if ($author) {
-        $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $assessment->author = new Expert($author, $author_img);
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $assessment->author = new Expert($author, $author_img);
     } else {
-        $assessment->author = null;
+      $assessment->author = null;
     }
 
     // Récupérer les informations de la catégorie
     $assessment->category = [
-        "name" => get_the_category_by_ID($categoryID),
-        "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+      "name" => get_the_category_by_ID($categoryID),
+      "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
     ];
   }
 
@@ -4407,22 +4397,6 @@ function getAsseessmentsViaCategory($data) {
 
 //Posts for DeZZP via category
 function artikelDezzp($data){
-  // $users = get_users();
-  // $authors = array();
-  // foreach ($users as $key => $value) {
-  //   $company_user = get_field('company',  'user_' . $value->ID );
-  //   if(!empty($company_user))
-  //   if(isset($company_user[0]->post_name))
-  //   if($company_user[0]->post_name == $companySlug)
-  //   array_push($authors, $value->ID);
-  // }
-
-  // if(empty($main_blogs)):
-  //   //Return a error 
-  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
-  //   $response->set_status(400);
-  //   return $response;  
-  // endif;
 
   $CONST_FREELANCING = 647;
   $companySlug = $data['company'] ?: null;
@@ -4430,7 +4404,6 @@ function artikelDezzp($data){
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
-    // 'author__in' => $authors,
     'order' => 'DESC',
   );
   $main_blogs = get_posts($args);
@@ -4704,6 +4677,7 @@ function deleteCourseCommunity(WP_REST_Request $request){
   return $response;  
 }
 
+//Home Page angular 
 function HomepageAngular(){
 
   $infos = array();
@@ -4860,5 +4834,5 @@ function artikelByCategory($data){
   $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
   $response->set_status(200);
   return $response;  
-
 }
+
