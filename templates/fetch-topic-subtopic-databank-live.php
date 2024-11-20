@@ -126,6 +126,7 @@ if (isset($_POST['id_course']) && isset($_POST['categories']) && $_POST['action'
     $id_course = $_POST['id_course'];
     $categories = array_values($_POST['categories']);
     $topics_in_course = get_field('categories',$id_course);
+    $topics_xml = get_field('category_xml',$id_course);
     $topics = array();
     foreach ($topics_in_course as $item) {
         $topics[] = $item['value'];
