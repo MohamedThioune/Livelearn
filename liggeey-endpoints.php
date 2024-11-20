@@ -224,23 +224,22 @@ function postAdditionnal($post, $userID){
     $post->instructor->total_reviews = $count_reviews;
   endif;
 
-  //Enrollment
+  //Enrollment | WooCommerce
   $datenr = 0; 
   $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
   $enrolled = array();
   $enrolled_courses = array();
   $statut_bool = 0;
   $args = array(
-      'customer_id' => $userID,
-      'post_status' => array('wc-processing', 'wc-completed'),
-      'orderby' => 'date',
-      'order' => 'ASC',
-      'limit' => -1,
+    'customer_id' => $userID,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'ASC',
+    'limit' => -1
   );
   $bunch_orders = wc_get_orders($args);
   $enrolled_member = 0;
   $enrolled_all = 0;
-  $statut_bool = 0;
   foreach($bunch_orders as $order)
     foreach ($order->get_items() as $item_id => $item ) :
       $course_id = intval($item->get_product_id()) - 1;
@@ -253,10 +252,22 @@ function postAdditionnal($post, $userID){
         if($course->post_author == $post->authorID)
           $enrolled_all += 1;
     endforeach;
+  
+  //Enrollment | Stripe - by author
+  $ordersByAuthor = array();
+  $ordersByAuthor = ordersByAuthor($post->authorID, $post->ID);
+  //get students data for this course 
+  $course_enrolled = (isset($ordersByAuthor['students'][0])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
+  $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
+  $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool;   //check access to user connected
+  //get students data for all these author courses
+  $course_enrolled_all = (isset($ordersByAuthor['posts'][0])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
+  $count_stripe_student = (isset($course_enrolled_all[0])) ? count(array_count_values($course_enrolled_all)) : 0;
   $post->average_star = $average_star;
-  $post->enrolled_students = $enrolled_member;
-  $post->enrolled_courses = $enrolled_all;
-  $post->access = ($statut_bool) ? "All access" : 'Free';
+  $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
+  if($author)
+    $post->instructor->enrolled_students = $count_stripe_student;
+  $post->access = ($statut_bool) ? "All access" : 'Free'; 
 
   //Experts
   $expertS = get_field('experts', $post->ID);
@@ -503,6 +514,7 @@ function candidate($id){
 
       array_push($read_one, $value);
       $user_expert = get_user_by('ID', $value);
+      $expert_sample['ID'] = $user_expert->ID; 
 
       if($user_expert->ID != $user->ID)
         $expert_sample['name'] = ($user_expert->first_name) ? : $user_expert->display_name;
@@ -678,6 +690,27 @@ function job($id, $userApplyId = null){
   $sample->rejected = $rejected;
 
   $sample->status = $status;
+
+  return $sample;
+}
+
+//Detail challenge
+function challenge($id, $userApplyId = null){
+  $param_post_id = $id ?? 0;
+  $sample = array();
+  $post = get_post($param_post_id);
+
+  $sample['ID'] = $post->ID;
+  $sample['post_title'] = $post->post_title;
+  $sample['post_slug'] = $post->post_name;
+  $sample['profile'] = get_field('profile_challenge', $post->ID)?: '';
+  $sample['content'] = $post->post_content ?: get_field('description_challenge', $post->ID);
+  $sample['skills'] = get_the_terms( $post->ID, 'course_category' );
+  $sample['prize'] = get_field('prize_challenge', $post->ID)?: '';
+  $sample['banner'] = get_field('banner_challenge', $post->ID)?: '';
+  $sample['deadline'] = get_field('deadline_challenge', $post->ID)?: '';
+
+  $sample = (Object)$sample;
 
   return $sample;
 }
@@ -3027,6 +3060,12 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
           array_push($enrolled, $id_course);
     }
   
+  //Enrolled with Stripe
+  $enrolled_stripe = array();
+  $enrolled_stripe = list_orders($user_id, 1)['ids'];
+  if(!empty($enrolled_stripe))
+    $enrolled = (empty($enrolled)) ? $enrolled_stripe : array_merge($enrolled, $enrolled_stripe);
+  
   if(!empty($enrolled)):
     $args = array(
         'post_type' => 'course',
@@ -3955,7 +3994,7 @@ function activity($ID){
 
   //Enrolled with Stripe
   $enrolled_stripe = array();
-  $enrolled_stripe = list_orders($user->ID)['posts'];
+  $enrolled_stripe = list_orders($user->ID, 1)['posts'];
   if(!empty($enrolled_stripe)):
     foreach ($enrolled_stripe as $post)
       try {
@@ -4350,15 +4389,6 @@ function getAsseessmentsViaCategory($data) {
     GROUP BY a.id"
   );
 
-  // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments sans filtre
-  // if (empty($assessments)) 
-  //   $assessments = $wpdb->get_results(
-  //     "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
-  //     FROM {$wpdb->prefix}assessments a
-  //     LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-  //     GROUP BY a.id"
-  //   );
-
   // Vérifie s'il y a des assessments
   if (empty($assessments))
     return []; 
@@ -4369,16 +4399,16 @@ function getAsseessmentsViaCategory($data) {
     // Récupérer les informations de l'auteur
     $author = get_user_by('ID', $assessment->author_id);
     if ($author) {
-        $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $assessment->author = new Expert($author, $author_img);
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $assessment->author = new Expert($author, $author_img);
     } else {
-        $assessment->author = null;
+      $assessment->author = null;
     }
 
     // Récupérer les informations de la catégorie
     $assessment->category = [
-        "name" => get_the_category_by_ID($categoryID),
-        "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+      "name" => get_the_category_by_ID($categoryID),
+      "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
     ];
   }
 
@@ -4388,22 +4418,6 @@ function getAsseessmentsViaCategory($data) {
 
 //Posts for DeZZP via category
 function artikelDezzp($data){
-  // $users = get_users();
-  // $authors = array();
-  // foreach ($users as $key => $value) {
-  //   $company_user = get_field('company',  'user_' . $value->ID );
-  //   if(!empty($company_user))
-  //   if(isset($company_user[0]->post_name))
-  //   if($company_user[0]->post_name == $companySlug)
-  //   array_push($authors, $value->ID);
-  // }
-
-  // if(empty($main_blogs)):
-  //   //Return a error 
-  //   $response = new WP_REST_Response(['error' => true, 'message' => 'There is no correspondence between blogs and the specified company.']);
-  //   $response->set_status(400);
-  //   return $response;  
-  // endif;
 
   $CONST_FREELANCING = 647;
   $companySlug = $data['company'] ?: null;
@@ -4411,7 +4425,6 @@ function artikelDezzp($data){
     'post_type' => array('post','course'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
-    // 'author__in' => $authors,
     'order' => 'DESC',
   );
   $main_blogs = get_posts($args);
@@ -4685,6 +4698,7 @@ function deleteCourseCommunity(WP_REST_Request $request){
   return $response;  
 }
 
+//Home Page angular 
 function HomepageAngular(){
 
   $infos = array();
@@ -4841,5 +4855,98 @@ function artikelByCategory($data){
   $response = new WP_REST_Response(['success' => true, 'posts' => $blogs, 'assessments' => $assessments]);
   $response->set_status(200);
   return $response;  
+}
 
+
+/** Challenge */
+
+//List challenges
+function challenges(){
+  $args = array(
+      'post_type' => 'challenge',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+  );
+  $challenge_posts = get_posts($args);
+  $challenges = array();
+
+  // Boucle pour afficher les résultats
+  foreach ($challenge_posts as $post):
+    $sample = array();
+    // Recuperer le contenu de chaque élément
+    $challenges[] = challenge($post->ID);
+  endforeach;
+
+  $response = new WP_REST_Response($challenges);
+  $response->set_status(200);
+  return $response;
+
+}
+
+function challengeDetail(WP_REST_Request $request){
+  $param_post_id = $request['slug'] ?? 0;
+  $required_parameters = ['slug'];
+
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $userID = isset($data['userID']) ? $data['userID'] : 0;
+  $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
+  $sample = challenge($post->ID);
+
+  // if(!empty($sample))
+  //   //Get further information
+  //   $sample = postAdditionnal($sample, $userApplyID);
+
+  $response = new WP_REST_Response($sample);
+  $response->set_status(200);
+  return $response;
+}
+
+function startChallenge(WP_REST_Request $request){
+  global $wpdb;
+
+  $required_parameters = ['challenge_id', 'user_id', 'titel', 'short_description', 'motivation', 'long_description', 'imageURLs', 'pdfURL'];
+
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $table_start_challenge = $wpdb->prefix . 'start_challenge';
+  $data = [
+    'challenge_id' => $request['challenge_id'],
+    'user_id' => $request['user_id'],
+    'titel' => $request['titel'],
+    'short_description' => $request['short_description'],
+    'motivation' => $request['motivation'],
+    'long_description' => $request['long_description'],
+    'imageURLs' => $request['imageURLs'],
+    'pdfURL' => $request['pdfURL']
+  ];
+  $wpdb->insert($table_start_challenge, $data);
+  $start_id = $wpdb->insert_id; 
+  
+  $errors = [];
+  if(!$start_id):
+    //Check if there are no errors
+    $errors['errors'] = 'Something wrong on insertion !';
+    $errors = (Object)$errors;
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
+  $data['ID'] = $start_id;
+  $response = new WP_REST_Response($data);
+  $response->set_status(400);
+  return $response;
 }
