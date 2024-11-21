@@ -257,6 +257,12 @@ $user = wp_get_current_user();
     .pagination .currentpage a:hover {
         background-color: #518acb;
     }
+    .subcatchossen.selected {
+        background-color: #033356; /* Couleur de sélection */
+        color: white; /* Texte en blanc */
+        border: 1px solid #033356; /* Bordure assortie */
+        transition: all 0.3s ease;
+    }
 </style>
 <style>
     .categories-wrapper {
@@ -295,6 +301,54 @@ $user = wp_get_current_user();
     .no-subcategories {
         font-style: italic;
         color: #777;
+    }
+</style>
+<style>
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    label.btn {
+        border: 1px solid #033356;
+        border-radius: 21px !important;
+        font-size: 15px;
+        color: #033356;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        margin-bottom: 15px;
+        width: fit-content;
+    }
+
+    input[type="checkbox"]:checked + label.btn {
+        background-color: #033356;
+        color: #fff;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .hiddenCB {
+        display: none;
+    }
+
+    .btn-skip {
+        background: none !important;
+        color: #47a99e !important;
+        font-size: 16px;
+        padding: 8px 20px !important;
+    }
+
+    .btn-next {
+        background: #043356 !important;
+        color: white !important;
+        padding: 8px 20px !important;
+    }
+
+    .subtopics {
+        margin-left: 20px;
     }
 </style>
 
@@ -1315,31 +1369,51 @@ $user = wp_get_current_user();
             },
             success: function(data) {
                 var modal = document.getElementById("myModal");
-                $('.modal-content').html(data)
+                $('.modal-content').html(data);
                 var span = document.getElementsByClassName("close")[0];
-                setTimeout(()=>{
-                    const categoryTitles = document.querySelectorAll(".category-title");
-                    categoryTitles.forEach(title => {
-                        title.addEventListener("click", function () {
-                            const targetId = this.getAttribute("data-toggle");
-                            console.log(targetId)
-                            const subcategories = document.getElementById(targetId);
-                            if (subcategories) {
-                                subcategories.classList.toggle("hidden");
-                            }
-                        });
+
+                const categoryTitles = document.querySelectorAll(".category-title");
+                const subcatchossen = document.querySelectorAll('.subcatchossen');
+                const selectedSubcategories = [];
+
+                categoryTitles.forEach(title => {
+                    title.addEventListener("click", function () {
+                        const targetId = this.getAttribute("data-toggle");
+                        console.log(targetId);
+                        const subcategories = document.getElementById(targetId);
+                        if (subcategories) {
+                            subcategories.classList.toggle("hidden");
+                        }
                     });
-                },2000)
+                });
+
+                // Écoute les clics sur les sous-catégories
+                subcatchossen.forEach((sub) => {
+                    sub.addEventListener('click', (e) => {
+                        const subtopicsChoosed = e.target;
+                        // const subId = subtopicsChoosed.id;
+                        subtopicsChoosed.classList.toggle('selected');
+                        /*
+                        if (!selectedSubcategories.includes(subId)) {
+                            selectedSubcategories.push(subId);
+                        } else {
+                            const index = selectedSubcategories.indexOf(subId);
+                            if (index > -1) {
+                                selectedSubcategories.splice(index, 1);
+                            }
+                        }
+                       */
+                    });
+                });
                 modal.style.display = "block";
                 span.onclick = function() {
                     modal.style.display = "none";
-                }
+                };
                 window.onclick = function(event) {
                     if (event.target == modal) {
                         modal.style.display = "none";
                     }
-                }
-                //$(this).off('click');
+                };
             },
             complete:function () {
                 $(this).off('click');
