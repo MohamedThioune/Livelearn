@@ -291,6 +291,25 @@ function postAdditionnal($post, $userID){
   return $post;
 }
 
+function challengeAdditionnal($challenge, $userID = null){
+  global $wpdb;
+  $table = $wpdb->prefix . 'start_challenge';
+
+  //check sample challenge
+  if(empty($challenge))
+   return null;
+  if(!isset($challenge->ID))
+    return null;
+
+  $sql = $wpdb->prepare(
+    "SELECT * FROM $table WHERE challenge_id = %s",
+    $challenge->ID
+  );
+  $data = $wpdb->get_results($sql);
+
+  return $data;
+}
+
 //Detail company
 function company($id){
   $param_post_id = $id ?? 0;
@@ -4899,9 +4918,16 @@ function challengeDetail(WP_REST_Request $request){
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
 
-  // if(!empty($sample))
-  //   //Get further information
-  //   $sample = postAdditionnal($sample, $userApplyID);
+  //Get information about participants
+  $participants = array();
+  if(!empty($sample)):
+    $data = challengeAdditionnal($sample, $userApplyID);
+    foreach($data as $datum)
+      if($datum->user_id)
+        $participants[] = get_user_by('ID', $datum->user_id);
+  endif;
+  $sample->participants = $participants;
+  $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
 
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
