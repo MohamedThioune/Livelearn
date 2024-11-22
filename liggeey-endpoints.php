@@ -4914,14 +4914,14 @@ function challengeDetail(WP_REST_Request $request){
     return $response;
   endif;
 
-  $userID = isset($data['userID']) ? $data['userID'] : 0;
+  $userID = isset($data['userID']) ? $data['userID'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
 
   //Get information about participants
   $participants = array();
   if(!empty($sample)):
-    $data = challengeAdditionnal($sample, $userApplyID);
+    $data = challengeAdditionnal($sample, $userID);
     foreach($data as $datum)
       if($datum->user_id)
         $participants[] = get_user_by('ID', $datum->user_id);
