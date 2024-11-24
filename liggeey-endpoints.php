@@ -3074,9 +3074,13 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
   foreach($bunch_orders as $order)
     foreach ($order->get_items() as $item_id => $item ) {
       //Get woo orders from user
-      $id_course = intval($item->get_product_id()) - 1;
-      if(!in_array($id_course, $enrolled))
-          array_push($enrolled, $id_course);
+      $course_id = intval($item->get_product_id()) - 1;
+      if(!in_array($course_id, $enrolled)):
+        $course = get_post($course_id);
+        if(!$course)
+          continue;
+        array_push($enrolled, $course_id);
+      endif;
     }
   
   //Enrolled with Stripe
@@ -3996,8 +4000,6 @@ function activity($ID){
     foreach ($order->get_items() as $item_id => $item ):
       //Get woo orders from user
       $course_id = intval($item->get_product_id()) - 1;
-      // $prijs = get_field('price', $course_id);
-      // $expenses += $prijs; 
       if(!in_array($course_id, $enrolled)):
         $course = artikel($course_id);
         if(!$course)
@@ -4019,6 +4021,8 @@ function activity($ID){
       try {
         if($post):
           $course = artikel($post->ID);
+          //Get statut
+          $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : ""; 
           if($course->title && $course->title != "")
             array_push($courses, $course);
         endif;
