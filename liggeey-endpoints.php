@@ -108,7 +108,7 @@ function artikel($id){
   return $sample;
 }
 
-function postAdditionnal($post, $userID){
+function postAdditionnal($post, $userID, $edit = null){
   //check sample artikel
   if(empty($post))
     return null;
@@ -131,6 +131,21 @@ function postAdditionnal($post, $userID){
   $main_date_genuine = get_field('data_locaties', $post->ID);
   $main_date_xml = get_field('data_locaties_xml', $post->ID);
   $main_date_event = get_field('dates', $post->ID);
+
+  //Optional information
+  if($edit):
+  $post->how_it_works = get_field('how_it_works', $post->ID); 
+  $post->visibility = get_field('visibility', $post->ID); 
+  $post->long_description = get_field('long_description', $post->ID); 
+  $post->for_who = get_field('for_who', $post->ID); 
+  $post->agenda = get_field('agenda', $post->ID); 
+  $post->results = get_field('results', $post->ID); 
+  $post->incompany_mogelijk = get_field('incompany_mogelijk', $post->ID); 
+  $post->accredited = get_field('geacrediteerd', $post->ID); 
+  $post->btw_klasse = get_field('btw_klasse', $post->ID); 
+  $post->link_to_call = get_field('link_to', $post->ID); 
+  $post->online_location = get_field('online_location', $post->ID); 
+  endif;
 
   switch ($coursetype) {
     case 'Podcast':
@@ -1115,8 +1130,12 @@ function IsManagedOrNot(WP_REST_Request $request){
 function artikelDetail(WP_REST_Request $request){
   $param_post_id = $request['slug'] ?? 0;
   $userApplyID = 0; 
+  $edit = 0;
+  //Get optional params
   if(isset($request['userID']))
   $userApplyID = $request['userID'] ?? 0;
+  if(isset($request['edit']))
+  $edit = $request['edit'] ?? 0;
   $required_parameters = ['slug'];
 
   //Check required parameters 
@@ -1132,7 +1151,7 @@ function artikelDetail(WP_REST_Request $request){
 
   if(!empty($sample)):
     //Get further information
-    $sample = postAdditionnal($sample, $userApplyID);
+    $sample = postAdditionnal($sample, $userApplyID, $edit);
   endif;
 
   //Response
