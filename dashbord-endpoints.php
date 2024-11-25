@@ -1197,7 +1197,7 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
-        $roles = array_values($user->roles);
+        $roles = $user->roles;
         $user = $user->data;
         if ($user->ID == $user_connected)
             continue;
@@ -1323,29 +1323,13 @@ function editPeopleCompany($data){
 
 function removePeopleCompany($data)
 {
-    $user_connected = wp_get_current_user()->ID;
     $user_id = intval($data['ID']);
     $isRemoved = update_field('company', null ,'user_' . $user_id);
-    // remove people managed user connected on $user_id
-
-    if ($isRemoved) {
-        $people_managed = get_field('managed', 'user_'.$user_connected)?:array();
-        $index_to_remove = array_search($user_id,$people_managed);
-        if(!$index_to_remove)
-            return new WP_REST_Response(
-                array(
-                    'message'=>'error while removing this people on your list'
-                ),401);
-
-        unset($people_managed[$index_to_remove]);
-        update_field('managed', $people_managed, 'user_'.$user_connected);
-        update_field('ismanaged', null , 'user_' . $isRemoved);
-
+    if ($isRemoved)
         return new WP_REST_Response(
             array(
-                'message' => 'User removed from company...',
+                'message'=>'User removed from company...',
             ));
-    }
     return new WP_REST_Response(
         array(
             'message'=>'User not removed from company...',
@@ -1363,76 +1347,84 @@ function learn_modules($data){
             if($company_user[0]->ID == $company_connected[0]->ID)
                 array_push($users_companies,$user->ID);
     }
+    //$company_connected = get_field('company',  'user_' . $user_connected);
     $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
         'author__in' => $users_companies,
         'order' => 'DESC',
         'numberposts' => 1000,
     );
+
+    //bought courses
+    $order_args = array(
+        'customer_id' => get_current_user_id(),
+        //'post_status' => array_keys(wc_get_order_statuses()),
+        'post_status' => array('wc-processing'),
+    );
+    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = array();
+    $enrolled_user = array();
+    foreach($bunch_orders as $order)
+        foreach ($order->get_items() as $item ) {
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+            if(!empty($course))
+                array_push($enrolled_user, $course->ID);
+        }
+
     $courses = get_posts($args);
-    foreach ($courses as $course){
-        $category = '';
-        $category_str = 0;
-        $one_category = get_field('categories',  $course->ID);
-        if($one_category) {
+    /*
+    $all_subtopics = array();
+    $subtopics = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => (int)'expert',
+        'hide_empty' => false, // change to 1 to hide categores not having a single post
+    )) ?? false;
+    if ($subtopics != false)
+        $all_subtopics = array_merge($all_subtopics,$subtopics);
+    */
+    $category = ' ';
+
+    $category_str = 0;
+    $one_category = get_field('categories',  $course->ID);
+    if($one_category) {
+        $category_str = intval($one_category[0]['value']);
+        //$category_str = intval("312");
+    } else {
+        $one_category = get_field('category_xml',  $course->ID);
+        if(isset($one_category))
             if (isset($one_category[0]['value']))
-                $category_str = intval($one_category[0]['value']);
-        } else {
-            $one_category = get_field('category_xml',  $course->ID);
-            if(isset($one_category[0]))
                 $category_id = intval($one_category[0]['value']);
-        }
+    }
+    if ($category_str) {
         if ($category_str) {
-            if ($category_str) {
-                $category_name = get_the_category_by_ID($category_str);
-                if(!is_wp_error($category_name))
-                    $category = (string)$category_name;
-            } else {
-                $category_name = get_the_category_by_ID($category_id);
-                if (!is_wp_error($category_name))
-                    $category = (string)$category_name;
-            }
+            $category_name = get_the_category_by_ID($category_str);
+            if(!is_wp_error($category_name))
+                $category = (string)$category_name;
+        } else {
+            $category_name = get_the_category_by_ID($category_id);
+            if (!is_wp_error($category_name))
+                $category = (string)$category_name;
         }
-        $datas = get_field('data_locaties', $course->ID);
-        $datum = get_field('data_locaties_xml', $course->ID);
-        $dates = get_field('dates', $course->ID);
-
-        $start_date = '';
-        if($datas){
-            $data = $datas[0]['data'][0]['start_date'];
-            if($data != ""){
-                $day = explode('/', explode(' ', $data)[0])[0];
-                $month = explode('/', explode(' ', $data)[0])[1];
-                $year = explode('/', explode(' ', $data)[0])[2];
-                $start_date = "$day/$month/$year";
-            }
-        } elseif ($datum) {
-            if(isset($datum[0]['value'])){
-                $datas = explode('-', $datum[0]['value']);
-                $data = $datas[0];
-                $day = explode('/', explode(' ', $data)[0])[0];
-                $month = explode('/', explode(' ', $data)[0])[1];
-                $year = explode('/', explode(' ', $data)[0])[2];
-
-                $start_date = "$day/$month/$year";
-            } else {
-                if($dates){
-                    $data = $dates[0]['date'];
-                    $days = explode(' ', $data)[0];
-                    $day = explode('-', $days)[2];
-                    //$month = $calendar[explode('-', $data)[1]];
-                    $year = explode('-', $days)[0];
-                    $start_date = "$day/$month/$year";
-                }
-            }
-        }
+    }
+    foreach ($courses as $course){
+        $all_subtopics = array();
+            $subtopics = get_categories( array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent' => (int)'expert',
+                'hide_empty' => false, // change to 1 to hide categores not having a single post
+            )) ?? false;
+            if ($subtopics != false)
+                $all_subtopics = array_merge($all_subtopics,$subtopics);
 
         $price = get_field('price',$course->ID);
         $course->price = $price ? : 'Gratis';
-        $course->startDate = $start_date;
-        $course->courseType = get_field('course_type',$course->ID) ?:'';
+        $course->startDate = date('d/m/Y',strtotime($course->post_date));
+        $course->courseType = get_field('course_type',$course->ID);
+        //$course->subects = $all_subtopics[0]->name;
         $course->subects = $category;
-        $course->sales = get_field('visibility', $course->ID) ? true : false;
+        $course->sales = in_array($course->ID, $enrolled_user); //true or false
+
     }
     $response = new WP_REST_Response($courses);
     $response->set_status(200);
@@ -1446,9 +1438,36 @@ $args = array(
         'order' => 'DESC',
         'numberposts' => 1000,
     );
+    $order_args = array(
+        'customer_id' => get_current_user_id(),
+        //'post_status' => array_keys(wc_get_order_statuses()),
+        'post_status' => array('wc-processing'),
+    );
+    $bunch_orders = wc_get_orders($order_args);
+    //$bunch_orders = array();
+    $enrolled_user = array();
+    foreach($bunch_orders as $order){
+        foreach ($order->get_items() as $item_id => $item ) {
+            $course_id = intval($item->get_product_id()) - 1;
+            $course = get_post($course_id);
+            if(!empty($course))
+                array_push($enrolled_user, $course->ID);
+        }
+    }
     $courses = get_posts($args);
     foreach ($courses as $course){
-        $category = '';
+        /*
+        $all_subtopics = array();
+        $subtopics = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => (int)'expert',
+            'hide_empty' => false, // change to 1 to hide categores not having a single post
+        )) ?? false;
+        if ($subtopics != false)
+            $all_subtopics = array_merge($all_subtopics,$subtopics);
+        */
+        $category = ' ';
+
         $category_str = 0;
         $one_category = get_field('categories',  $course->ID);
         if($one_category) {
@@ -1463,52 +1482,22 @@ $args = array(
             if ($category_str) {
                 $category_name = get_the_category_by_ID($category_str);
                 if(!is_wp_error($category_name))
-                    $category = (string)$category_name;
+                   $category = (string)$category_name;
             } else {
                 $category_name = get_the_category_by_ID($category_id);
                 if (!is_wp_error($category_name))
-                    $category = (string)$category_name;
+                $category = (string)$category_name;
             }
         }
-        $datas = get_field('data_locaties', $course->ID);
-        $datum = get_field('data_locaties_xml', $course->ID);
-        $dates = get_field('dates', $course->ID);
 
-        $start_date = '';
-        if($datas){
-            $data = $datas[0]['data'][0]['start_date'];
-            if($data != ""){
-                $day = explode('/', explode(' ', $data)[0])[0];
-                $month = explode('/', explode(' ', $data)[0])[1];
-                $year = explode('/', explode(' ', $data)[0])[2];
-                $start_date = "$day/$month/$year";
-            }
-        } elseif ($datum) {
-            if(isset($datum[0]['value'])){
-                $datas = explode('-', $datum[0]['value']);
-                $data = $datas[0];
-                $day = explode('/', explode(' ', $data)[0])[0];
-                $month = explode('/', explode(' ', $data)[0])[1];
-                $year = explode('/', explode(' ', $data)[0])[2];
 
-                $start_date = "$day/$month/$year";
-            } else {
-                if($dates){
-                    $data = $dates[0]['date'];
-                    $days = explode(' ', $data)[0];
-                    $day = explode('-', $days)[2];
-                    //$month = $calendar[explode('-', $data)[1]];
-                    $year = explode('-', $days)[0];
-                    $start_date = "$day/$month/$year";
-                }
-            }
-        }
         $price = get_field('price',$course->ID);
         $course->price = $price ? : 'Gratis';
-        $course->startDate = $start_date; //date('d/m/Y',strtotime($course->post_date));
+        $course->startDate = date('d/m/Y',strtotime($course->post_date));
         $course->courseType = get_field('course_type',$course->ID);
+        //$course->subects = $all_subtopics[0]->name;
         $course->subects = $category;
-        $course->sales = get_field('visibility', $course->ID) ? true : false; //true or false
+        $course->sales = in_array($course->ID, $enrolled_user); //true or false
     }
     $response = new WP_REST_Response($courses);
     $response->set_status(200);
@@ -2640,9 +2629,9 @@ function Selecteer_experts($data)
             if($company_id == $company_connected_id) {
                 $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
                 $name = ($user->first_name) ?  $user->first_name . ' ' . $user->last_name : $user->user_email ;
-                $roles = array_values($user->roles);
-                $is_manager = (in_array('manager', $roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
-                $is_author = (in_array('author', $roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+
+                $is_manager = (in_array('manager', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                $is_author = (in_array('author', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
                 $departement = get_field('departments', $company[0]->ID);
                 $member['ID'] = $user->ID;
@@ -2658,14 +2647,14 @@ function Selecteer_experts($data)
        }
     }
     $budget = get_field('amount_budget','user_' . $user_connected)?:0;
-    $role = array_values((new WP_User($user_connected))->roles);
+    $role = (new WP_User($user_connected))->roles;
     $response = new WP_REST_Response(
         array(
             'Selecteer_je_experts'=>$members,
             'info_personal_budget'=>array(
                 'role'=>array(
-                    'manager'=>in_array('manager',$role),
-                    'author' =>in_array('author',$role)
+                    'manager'=>$role =='manager',
+                    'author' =>$role == 'author'
                 ),
                 'budget'=>$budget
             )
@@ -2686,44 +2675,46 @@ function grantPushRole($data)
     $budget = $data['budget'];
     $user_id = $data['id'];
     $user = new WP_User($user_id);
-    $roles = array_values($user->roles); // roles initials before changing
     $manager = $role['manager'];
     $author = $role['author'];
 
-    if ($manager) {
-        if (!in_array('manager', $roles)) {
-            $user->add_role('manager');
-            sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
-        }
-
+    if (isset($manager) && $manager!=null) {
+        if ($manager) {
+            if (!in_array('manager', $user->roles)) {
+                $user->add_role('manager');
+                sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
+            }
         } else {
-            if (in_array('manager', $roles)) {
+            if (in_array('manager', $user->roles)) {
                 $user->remove_role('manager');
                 sendEmailBecaumeManager($user_id, $role, 'You have been deleted as a manager', 'You are no longer a manager');
             }
         }
-
-        if ($author) {
+    }
+    if (isset($author) && $author!=null) {
+    if ($author) {
+        if (!in_array('author', $user->roles)) {
+            $user->add_role('author');
+            sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
+        }
+    }else {
             if (!in_array('author', $user->roles)) {
-                $user->add_role('author');
-                sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
-            }
-        } else {
-            if (in_array('author', $user->roles)) {
                 $user->remove_role('author');
                 sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
             }
         }
-
-
+    }
+    //$role = $manager ? 'manager' : 'author';
+    //$user->add_role( $role );
     update_field('amount_budget', $budget, 'user_' . $user_id);
     //send Email
-    $user->data->budget_amount = get_field('amount_budget','user_'. $user_id)?:0;
-    $user->data->roles = array_values($user->roles);
+    $user->data->budget_amount = get_field('amount_budget','user_' . $user_id)?:0;
+    $user->data->roles = $user->roles;
 
     $response = new WP_REST_Response(
         array(
             'user'=>$user->data,
+            'user_complete'=>$user
         ));
     $response->set_status(201);
     return $response;
@@ -2755,7 +2746,7 @@ function people_managed($data)
             $roles = $person->roles;
             $person = $person->data;
             $person->image = $image;
-            $person->roles = array_values($roles);
+            $person->roles = $roles;
             unset($person->user_pass);
             $people_managed[] = $person;
         }
@@ -2914,7 +2905,6 @@ function addManyPeople(WP_REST_Request $data)
     $user_connected = intval($data['id']);
 
     $emails = $data['users'];
-    $user_inserted = [];
 
     if(!empty($emails))
         foreach($emails as $user){
@@ -2947,23 +2937,13 @@ function addManyPeople(WP_REST_Request $data)
             $company = get_field('company',  'user_' . $user_connected);
             //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
             update_field('company', $company[0], 'user_'.$user_id);
-            // add people to manage
-            update_field('ismanaged', $user_connected, 'user_' . $user_id);
-
 
             // send email new user
-            sendEmail($user_connected,$user_id,$password);
-            $user_inserted[] = get_user_by('ID', $user_id)->ID;
+            sendEmail($user_connected, $user_id,$password);
         }
-    $people_managed = get_field('managed', 'user_'.$user_connected) ? : array();
-    $people_managed = array_merge($people_managed,$user_inserted);
-    $people_managed = array_unique($people_managed);
-    update_field('managed', $people_managed, 'user_'.$user_connected);
-
     $response = new WP_REST_Response(
         array(
-            'message' => 'You have successfully created '.count($emails) .' new employees ✔️',
-            'users'=>$user_inserted
+            'message' => 'You have successfully created '.count($emails) .' new employees ✔️'
         ));
     $response->set_status(201);
     return $response;
@@ -3476,7 +3456,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
 {
     $id_course = $data['id_course'];
     //$type_course = get_field('course_type',$id_course);
-    $course_type = $data['course_type'];
+    $course_type = ucfirst($data['course_type']);
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
     $visibility = $data['visibility']; // checkbox : true or false ?
@@ -3503,7 +3483,6 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $training_dates_locations = $data['training_dates_locations']; // langage for course
     $link_to_call = $data['lin_to_call'];
     $online_location = $data['online_location'];
-    $cours_learning_path = $data['courses']; //road_path
 
 
     if (!$course)
@@ -3636,24 +3615,6 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         update_field('online_location', $online_location, $id_course);
         $isCourseUpdated = true;
         $course->online_location = get_field('online_location',$id_course);
-    }
-
-    if ($cours_learning_path){
-        $old_course = get_field('road_path',$id_course)?:[];
-        $old_id_course = [];
-        if ($old_course)
-            foreach ($old_course as $course) {
-                $old_id_course[] = $course->ID;
-            }
-        if ($old_id_course)
-            $cours_learning_path=array_merge($cours_learning_path,$old_id_course);
-
-        $cours_learning_path=array_unique($cours_learning_path);
-
-        update_field('road_path', $cours_learning_path, $id_course);
-        $isCourseUpdated = true;
-        $course->courses = get_field('road_path',$id_course);
-        //$course->courses = $old_id_course;
     }
 
     if ($isCourseUpdated) {
@@ -3809,8 +3770,6 @@ function addAchievement($data)
     $and_what_date = $data['end_date']; // ot_welke_datum_badge, end date
     $about = $data['about_competencies']; // competencies_badge
     $comment = $data['comment']; // opmerkingen_badge
-    $manager = $data['manager_id'];
-
     //Certificate
     $issuedBy = $data['issued_by']; // uitgegeven_door_badge
     $providerUrl = $data['provider_url']; //url_aanbieder_badge
@@ -3850,8 +3809,6 @@ function addAchievement($data)
         update_field('punten_badge', $points , $id_post);
     if ($country)
         update_field('land_badge', $country , $id_post);
-    if ($manager)
-        update_field('manager_badge', $manager , $id_post);
 
     update_field('trigger_badge', $trigger , $id_post);
     update_field('voor_welke_datum_badge', $for_what_day , $id_post);
@@ -3919,7 +3876,7 @@ function addFeedback($data)
     //    if (in_array($id,$managed))
     //        $superior = get_users(array('include'=> $id))[0]->data;
     //$manager = $superior ? $superior->ID : $id;
-    $manager = $data['manager_id'];
+    $manager = $id;
 
     $args = array(
         'post_type' => 'feedback',
@@ -4095,33 +4052,17 @@ function addTodo($data)
             'new_todo' => $todo,
         ),201);
 }
-function countCourseType($course_type){
-    $args = array(
-        'post_type' => array('course','post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'ordevalue'       => $course_type,
-        'order' => 'DESC' ,
-        'meta_key'         => 'course_type',
-        'meta_value' => $course_type
-    );
-    return count(get_posts($args));
-}
+
 function all_courses_in_plateform()
 {
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $type = isset($_GET['type']) ? $_GET['type'] : '' ;
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => 20,
         'order' => 'DESC' ,
-        'ordevalue' => $type,
-        'meta_key' => $type ? 'course_type' : '',
-        'meta_value' => $type,
         'paged' => $page,
     );
-    // course_type[]=Video&course_type[]=Podcast
     $courses = get_posts($args);
     $all_courses = array();
     foreach ($courses as $course) {
@@ -4149,16 +4090,16 @@ function all_courses_in_plateform()
 
         $all_courses[] = new Course($course);
     }
-    $arg_paginated =  array(
-        'post_type' => array('course','post'),
-        'post_status' => 'publish',
-        'order' => 'DESC' ,
-        'posts_per_page' => -1,
-        'ordevalue' => $type,
-        'meta_key' => $type ? 'course_type' : '',
-        'meta_value' => $type,
+
+    $count_all_course = count(get_posts(
+            array(
+                'post_type' => array('course', 'post'),
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'order' => 'DESC'
+            )
+        )
     );
-    $count_all_course = count(get_posts($arg_paginated));
     $total_pages = ceil($count_all_course / 20);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
@@ -4167,19 +4108,6 @@ function all_courses_in_plateform()
         array(
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
-            'count_course_type'=>[
-                'video'=>countCourseType('Video'),
-                'podcast'=>countCourseType('Podcast'),
-                'Opleidingen'=>countCourseType('Opleidingen'),
-                'Artikel'=>countCourseType('article'),
-                'Masterclass'=>countCourseType('Masterclass'),
-                'Workshop'=>countCourseType('Workshop'),
-                'e_Learning'=>countCourseType('E-Learning'),
-                'Event'=>countCourseType('Event'),
-                'Training'=>countCourseType('Training'),
-                'Lezing'=>countCourseType('Lezing'),
-                'Assessment'=>countCourseType('Assessment'),
-            ],
             'course' => $all_courses,
         ),200 );
 }
@@ -4226,9 +4154,9 @@ function all_company_in_plateform()
             $courses = get_posts($args);
             $count_courses = (isset($courses[0])) ? count($courses) : 0;
         endif;
+
         $com['id'] = $company->ID;
         $com['name'] = $name;
-        $com['logo'] = get_field('company_logo',$company->ID) ? :get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
         $date = $company->post_date;
         $days = explode(' ', $date)[0];
         $year = explode('-', $days)[0];
@@ -4309,7 +4237,6 @@ function detail_company($data)
     endif;
 
     $info_company['id'] = $company->ID;
-    $info_company['name'] = $company->post_title;
     $info_company['logo'] = get_field('company_logo',$id_company)?:get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $info_company['email'] = get_field('company_email', $id_company) ? : 'contact@livelearn.nl';
     $info_company['country'] = get_field('company_country',$id_company) ? : '';
@@ -4356,134 +4283,4 @@ function update_image_course($data)
             'message' => 'course updated',
             'course'=>$course
         ),200 );
-}
-function detail_expert($data)
-{
-    $id_expert = $data['id'];
-    $expert_initial = get_user_by('ID', $id_expert);
-    if (!$expert_initial)
-        return new WP_REST_Response(
-            array(
-                'message' => 'Expert not exist maybe not correct !!!',
-            ),401 );
-
-    $expert = $expert_initial->data;
-    unset($expert->user_pass);
-    $args_courses = array(
-        'post_type' => array('post','course'),
-        'posts_per_page' => -1,
-        'orderby' => 'date',
-        'order'   => 'DESC',
-        'author' => $id_expert,
-    );
-    $courses = get_posts($args_courses);
-    $all_courses = array();
-    foreach ($courses as $course) {
-        if ($course->post_author!=$id_expert)
-            continue;
-
-        $course->visibility = get_field('visibility',$course->ID) ?? [];
-        $author = get_user_by( 'ID', $course -> post_author  );
-        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $course-> author = new Expert ($author , $author_img);
-        $course->longDescription = get_field('long_description',$course->ID);
-        $course->shortDescription = get_field('short_description',$course->ID);
-        $course->courseType = get_field('course_type', $course->ID);
-        $image = '';
-        $preview = get_field('preview', $course->ID);
-        if ($preview)
-            $image = $preview['url'];
-
-        if(!$image){
-            $image = get_the_post_thumbnail_url($course->ID);
-            if(!$image)
-                $image = get_field('url_image_xml', $course->ID);
-            if(!$image && $course->courseType)
-                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
-        }
-        $course->pathImage = $image;
-
-        $all_courses[] = new Course($course);
-    }
-    $note_skilles = array();
-    $skill_notes = get_field('skills', 'user_' . $id_expert);
-
-    if ($skill_notes) {
-        $total_notes = array_sum(array_column($skill_notes, 'note'));
-        foreach ($skill_notes as $skill_note) {
-            $note_skilles[] = array(
-                'id' => $skill_note['id'],
-                'name' => get_the_category_by_ID($skill_note['id']),
-                'note' => $skill_note['note'],
-                'percentage' => intval((intval($skill_note['note']) / $total_notes) * 100),
-                //'image' => get_term_meta($skill_note, 'image_field_key', true),
-            );
-        }
-    }
-    usort($note_skilles, function($a, $b) {
-        return $b['percentage'] <=> $a['percentage'];
-    });
-
-    $expert->image = get_field('profile_img','user_'.$expert->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
-    $expert->overview = [
-        'about'=>get_field('biographical_info',  'user_' . $expert->ID)?:"This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience. <br>Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.",
-        'telephone'=>get_field('telnr',  'user_' . $expert->ID)?:'', //telnr
-        'email'=>$expert->user_email?:'',
-        'country'=>get_field('country',  'user_' . $expert->ID) ? : ''
-    ];
-    $reviews = get_field('user_reviews',  'user_' . $expert->ID) ? :[];
-    $goodReviews = array();
-    if ($reviews)
-        foreach ($reviews as $review) {
-            $rev = array();
-            $user = $review['user'];
-            $user->data->image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
-            unset($user->data->user_pass);
-            $user->data->role = get_field('role','user_' . $user->ID) ? : "";
-            $rev['user'] = $user->data;
-            $rev['rating'] = $review['rating'];
-            $rev['feedback'] = $review['feedback'];
-
-            $goodReviews[] = $rev;
-        }
-    $expert->courses = $all_courses;
-    $expert->skills = $note_skilles;
-    $expert->reviews = $goodReviews;
-    return new WP_REST_Response(
-        array(
-            'expert' => $expert,
-        ),200 );
-}
-function addReveiewUser($data)
-{
-    $id_user = $data['id'];
-    $initial_review = get_field('user_reviews', 'user_' . $id_user);
-    $review = array();
-    if ($initial_review)
-        foreach ($initial_review as $item) {
-            $review [] = array(
-                'user'=>$item['user']->ID,
-                'rating'=>$item['rating'],
-                'feedback'=>$item['feedback']
-            );
-        }
-    //$review_user = $data['review_user'];
-    $review_user = [
-        'user'=>$data['user'],
-        'rating'=>$data['rating'],
-        'feedback'=>$data['feedback']
-    ];
-    if (!empty($review))
-        $review_user = array_merge([$review_user],$review);
-    if (empty($initial_review))
-        $review_user = array($review_user);
-    update_field('user_reviews', $review_user, 'user_' . $id_user);
-    //var_dump([$review_user]);die;
-    return new WP_REST_Response(
-        array(
-            //'review'=>$review_user,
-            'message' =>'review adding successfully !',
-            'all_review' => get_field('user_reviews', 'user_' . $id_user)?:[],
-            //'all_review' =>$review_user
-        ),201 );
 }
