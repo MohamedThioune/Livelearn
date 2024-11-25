@@ -1819,6 +1819,10 @@ add_action( 'rest_api_init', function () {
         'callback' => 'course_recommendation_by_follow',
     ));
 
+    register_rest_route ('custom/v1', '/update-image-course/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'update_image_course'
+    ));
     register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
         'methods' => 'GET',
         'callback' => 'get_course_image',
