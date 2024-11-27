@@ -108,7 +108,7 @@ function artikel($id){
   return $sample;
 }
 
-function postAdditionnal($post, $userID){
+function postAdditionnal($post, $userID, $edit = null){
   //check sample artikel
   if(empty($post))
     return null;
@@ -131,6 +131,21 @@ function postAdditionnal($post, $userID){
   $main_date_genuine = get_field('data_locaties', $post->ID);
   $main_date_xml = get_field('data_locaties_xml', $post->ID);
   $main_date_event = get_field('dates', $post->ID);
+
+  //Optional information
+  if($edit):
+  $post->how_it_works = get_field('how_it_works', $post->ID); 
+  $post->visibility = get_field('visibility', $post->ID); 
+  $post->long_description = get_field('long_description', $post->ID); 
+  $post->for_who = get_field('for_who', $post->ID); 
+  $post->agenda = get_field('agenda', $post->ID); 
+  $post->results = get_field('results', $post->ID); 
+  $post->incompany_mogelijk = get_field('incompany_mogelijk', $post->ID); 
+  $post->accredited = get_field('geacrediteerd', $post->ID); 
+  $post->btw_klasse = get_field('btw_klasse', $post->ID); 
+  $post->link_to_call = get_field('link_to', $post->ID); 
+  $post->online_location = get_field('online_location', $post->ID); 
+  endif;
 
   switch ($coursetype) {
     case 'Podcast':
@@ -289,6 +304,25 @@ function postAdditionnal($post, $userID){
   
   $post->experts = $experts;
   return $post;
+}
+
+function challengeAdditionnal($challenge, $userID = null){
+  global $wpdb;
+  $table = $wpdb->prefix . 'start_challenge';
+
+  //check sample challenge
+  if(empty($challenge))
+   return null;
+  if(!isset($challenge->ID))
+    return null;
+
+  $sql = $wpdb->prepare(
+    "SELECT * FROM $table WHERE challenge_id = %s",
+    $challenge->ID
+  );
+  $data = $wpdb->get_results($sql);
+
+  return $data;
 }
 
 //Detail company
@@ -1096,8 +1130,12 @@ function IsManagedOrNot(WP_REST_Request $request){
 function artikelDetail(WP_REST_Request $request){
   $param_post_id = $request['slug'] ?? 0;
   $userApplyID = 0; 
+  $edit = 0;
+  //Get optional params
   if(isset($request['userID']))
   $userApplyID = $request['userID'] ?? 0;
+  if(isset($request['edit']))
+  $edit = $request['edit'] ?? 0;
   $required_parameters = ['slug'];
 
   //Check required parameters 
@@ -1113,7 +1151,7 @@ function artikelDetail(WP_REST_Request $request){
 
   if(!empty($sample)):
     //Get further information
-    $sample = postAdditionnal($sample, $userApplyID);
+    $sample = postAdditionnal($sample, $userApplyID, $edit);
   endif;
 
   //Response
@@ -3055,9 +3093,13 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
   foreach($bunch_orders as $order)
     foreach ($order->get_items() as $item_id => $item ) {
       //Get woo orders from user
-      $id_course = intval($item->get_product_id()) - 1;
-      if(!in_array($id_course, $enrolled))
-          array_push($enrolled, $id_course);
+      $course_id = intval($item->get_product_id()) - 1;
+      if(!in_array($course_id, $enrolled)):
+        $course = get_post($course_id);
+        if(!$course)
+          continue;
+        array_push($enrolled, $course_id);
+      endif;
     }
   
   //Enrolled with Stripe
@@ -3977,8 +4019,6 @@ function activity($ID){
     foreach ($order->get_items() as $item_id => $item ):
       //Get woo orders from user
       $course_id = intval($item->get_product_id()) - 1;
-      // $prijs = get_field('price', $course_id);
-      // $expenses += $prijs; 
       if(!in_array($course_id, $enrolled)):
         $course = artikel($course_id);
         if(!$course)
@@ -4000,6 +4040,8 @@ function activity($ID){
       try {
         if($post):
           $course = artikel($post->ID);
+          //Get statut
+          $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : ""; 
           if($course->title && $course->title != "")
             array_push($courses, $course);
         endif;
@@ -4895,13 +4937,20 @@ function challengeDetail(WP_REST_Request $request){
     return $response;
   endif;
 
-  $userID = isset($data['userID']) ? $data['userID'] : 0;
+  $userID = isset($data['userID']) ? $data['userID'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
 
-  // if(!empty($sample))
-  //   //Get further information
-  //   $sample = postAdditionnal($sample, $userApplyID);
+  //Get information about participants
+  $participants = array();
+  if(!empty($sample)):
+    $data = challengeAdditionnal($sample, $userID);
+    foreach($data as $datum)
+      if($datum->user_id)
+        $participants[] = get_user_by('ID', $datum->user_id);
+  endif;
+  $sample->participants = $participants;
+  $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
 
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
