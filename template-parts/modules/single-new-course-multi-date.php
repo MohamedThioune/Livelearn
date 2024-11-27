@@ -170,8 +170,11 @@ endif;
                                                         $hour_start = explode(' ', $date_start)[1];
                                                         $year_start = explode('/', explode(' ', $date_start)[0])[2];
                                                         $location_start = $datum['data'][0]['location'];
-                                                        if($date_end)
+                                                        if($date_end):
                                                             $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]] . ' ' . explode('/', explode(' ', $date_end)[0])[2];
+                                                            $hour_end = explode(' ', $date_end)[1];
+                                                            $year_end = explode('/', explode(' ', $date_end)[0])[2];
+                                                        endif;
                                                     }
                                             }
 
@@ -246,6 +249,7 @@ endif;
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
                                                                     $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start . ', ' . $year_start;
+                                                                    $dateNameEnd = $agenda_end . ', ' . $hour_end . ', ' . $location_start . ', ' . $year_end;
                                                                     if($product):
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
@@ -281,7 +285,7 @@ endif;
                                                                     $stripe_pay_form = 
                                                                     '<form action="/checkout-stripe" method="post">
                                                                         <input type="hidden" name="postID" value="' . $post->ID . '">
-                                                                        <input type="hidden" name="metadata" value="' . $dateNameStart . '">
+                                                                        <input type="hidden" name="metadata" value="' . $dateNameStart . ' - ' . $dateNameEnd . '">
                                                                         <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
                                                                         ' . $button_pay . '
                                                                         </button>
@@ -360,12 +364,12 @@ endif;
                                                                 if(!empty($infos))
                                                                     $x = 0;
                                                                 foreach($infos as $key=>$info) {
-                                                                $date = explode(' ', $info);
-                                                                $d = explode('/',$date[0]);
-                                                                $day = $d[0] . ' ' . $calendar[$d[1]];
-                                                                $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
-                                                                $location = explode('-',$date[2])[1];
-                                                                ?>
+                                                                    $date = explode(' ', $info);
+                                                                    $d = explode('/',$date[0]);
+                                                                    $day = $d[0] . ' ' . $calendar[$d[1]];
+                                                                    $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
+                                                                    $location = explode('-',$date[2])[1];
+                                                                    ?>
                                                                     <div class="blockDateEvens d-flex">
                                                                         <input type="checkbox">
                                                                         <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
@@ -400,6 +404,7 @@ endif;
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
                                                                     $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start . ', ' . $year_start;
+                                                                    $dateNameEnd = $agenda_end . ', ' . $h_end . ', ' . $location_start . ', ' . $year_end;
                                                                     if($product):
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
@@ -437,7 +442,7 @@ endif;
                                                                     $stripe_pay_form = 
                                                                     '<form action="/checkout-stripe" method="post">
                                                                         <input type="hidden" name="postID" value="' . $post->ID . '">
-                                                                        <input type="hidden" name="metadata" value="' . $dateNameStart . '">
+                                                                        <input type="hidden" name="metadata" value="' . $dateNameStart . ' - ' . $dateNameEnd . '">
                                                                         <button type="submit" class="single_add_to_cart_button button alt" style="background-color:#635BFF; color:white" name="productPrice"> 
                                                                         ' . $button_pay . '
                                                                         </button>
@@ -526,6 +531,7 @@ endif;
                                                                 <div class="contentBtnCardProduct">
                                                                     <?php
                                                                     $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start  . ', ' . $year_start;
+                                                                    $dateNameEnd = $agenda_start . ', ' . $h_start . ', ' . $location_start  . ', ' . $year_start;
                                                                     if($product):
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
@@ -589,7 +595,6 @@ endif;
                                     }
                                 }
                                 ?>
-
 
                                 <div class="pagination-container">
                                     <!-- Les boutons de pagination seront ajoutés ici -->
