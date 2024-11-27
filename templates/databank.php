@@ -1131,7 +1131,7 @@ if (!empty($courses)) {
                         // console.log(ids[i]);
                     }
                     alert("Record applied successfully");
-                   // location.reload();
+                   location.reload();
                     // window.location.href = "/optieAll";
                 },
                 complete: function(data){
