@@ -3620,7 +3620,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
             }
     
             $row_end_date = date("d/m/Y H:i:s", strtotime($datum['end_date']));
-            $row .= $row_end_date .'-'. $row_end_date .'-'. $datum['location'] .'-'. $datum['adress'] .';'; 
+            $row .= $row_end_date .'-'. $row_end_date .'-'. $datum['location'] .'-'. $datum['adress']; 
           
             array_push($data_locaties, $row);    
         endforeach;
