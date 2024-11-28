@@ -1224,8 +1224,9 @@ function postDetail(WP_REST_Request $request){
   endif;  
 
   $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  var_dump($post);
   if(!$post)
-  $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
+    $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
   $sample = artikel($post->ID);
 
   if(!empty($sample)):
