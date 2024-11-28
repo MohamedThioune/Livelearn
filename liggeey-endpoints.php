@@ -132,6 +132,9 @@ function postAdditionnal($post, $userID, $edit = null){
   $main_date_xml = get_field('data_locaties_xml', $post->ID);
   $main_date_event = get_field('dates', $post->ID);
 
+  //Leerpad | playlist
+  $main_playlist = get_field('road_path', $post->ID);
+
   //Optional information
   if($edit):
   $post->how_it_works = get_field('how_it_works', $post->ID); 
@@ -162,6 +165,10 @@ function postAdditionnal($post, $userID, $edit = null){
       $post->dates = $main_date_genuine;
       $post->dates_xml = $main_date_xml;
       $post->dates_event = $main_date_event;
+      break;
+
+    case 'Leerpad':
+      $post->playlist = $main_playlist;
       break;
   }
 
