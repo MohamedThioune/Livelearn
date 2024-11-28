@@ -350,6 +350,7 @@ function challengeSteps($challenge, $userID){
   //Step 2 - Assessment
   //Functionnality not yet implemented
 
+  return $challenge;
 }
 
 //Detail company
@@ -4995,7 +4996,6 @@ function challengeDetail(WP_REST_Request $request){
       if($datum->user_id == $userID)
         $sample->steps[] = 3;
     endforeach;
-
   endif;
   $sample->participants = $participants;
   $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
