@@ -306,7 +306,7 @@ function postAdditionnal($post, $userID, $edit = null){
   return $post;
 }
 
-function challengeAdditionnal($challenge, $userID = null){
+function challengeAdditionnal($challenge){
   global $wpdb;
   $table = $wpdb->prefix . 'start_challenge';
 
@@ -323,6 +323,34 @@ function challengeAdditionnal($challenge, $userID = null){
   $data = $wpdb->get_results($sql);
 
   return $data;
+}
+
+function challengeSteps($challenge, $userID){
+  global $wpdb;
+  $table = $wpdb->prefix . 'tracker_views';
+
+  //check sample challenge
+  if(empty($challenge) || !$userID)
+   return null;
+  if(!isset($challenge->ID))
+    return null;
+
+  $challenge->steps = array();
+  //Step 1 - Download & Login 
+  $sql = $wpdb->prepare(
+    "SELECT * FROM $table WHERE platform = %s AND user_id = %s",
+    "mobile", $userID
+  );
+  $data = $wpdb->get_results($sql);
+  $already_login_mobil = get_field('is_first_login_mobile', 'user_' . $userID);
+  var_dump($data);
+  if(!empty($data) || $already_login_mobil)
+    $challenge->steps[] = 1;
+
+  //Step 2 - Assessment
+
+  //Step 3 - Fill in solution | Already participate
+
 }
 
 //Detail company
@@ -743,6 +771,21 @@ function challenge($id, $userApplyId = null){
   $sample['prize'] = get_field('prize_challenge', $post->ID)?: '';
   $sample['banner'] = get_field('banner_challenge', $post->ID)?: '';
   $sample['deadline'] = get_field('deadline_challenge', $post->ID)?: '';
+
+  $company = get_field('company_challenge', $post->ID);
+  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+  $main_company = array();
+  $main_company['ID'] = !empty($company) ? $company->ID : 0;
+  $main_company['title'] = !empty($company) ? $company->post_title : '';
+  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
+  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
+  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : '';
+  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : '';
+  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : '';
+  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : '';
+  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : '';
+  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : '';
+  $sample['company'] = (Object)$main_company;
 
   $sample = (Object)$sample;
 
@@ -4940,14 +4983,20 @@ function challengeDetail(WP_REST_Request $request){
   $userID = isset($data['userID']) ? $data['userID'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
-
+  //Get steps information about this user
+  $sample = challengeSteps($sample, $userID);
+  
   //Get information about participants
   $participants = array();
   if(!empty($sample)):
-    $data = challengeAdditionnal($sample, $userID);
-    foreach($data as $datum)
+    $data = challengeAdditionnal($sample);
+    foreach($data as $datum):
       if($datum->user_id)
         $participants[] = get_user_by('ID', $datum->user_id);
+      if($datum->user_id == $userID)
+        $sample->steps[] = 3;
+    endforeach;
+
   endif;
   $sample->participants = $participants;
   $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
