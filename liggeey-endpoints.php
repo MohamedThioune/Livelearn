@@ -145,7 +145,6 @@ function postAdditionnal($post, $userID, $edit = null){
   $post->btw_klasse = get_field('btw_klasse', $post->ID); 
   $post->link_to_call = get_field('link_to', $post->ID); 
   $post->online_location = get_field('online_location', $post->ID); 
-  $post->courses = get_field('road_path', $post->ID);
   endif;
 
   switch ($coursetype) {
@@ -306,8 +305,10 @@ function postAdditionnal($post, $userID, $edit = null){
 
     $experts[] = (object)$sample;
   endforeach;
-  
   $post->experts = $experts;
+
+  //Leerpad 
+  $post->courses = get_field('road_path', $post->ID);
   return $post;
 }
 
