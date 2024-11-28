@@ -4993,6 +4993,7 @@ function challengeDetail(WP_REST_Request $request){
   $userID = isset($request['userID']) ? $request['userID'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
+  if($userID)
   //Get steps information about this user
   $sample = challengeSteps($sample, $userID);
 
