@@ -348,8 +348,7 @@ function challengeSteps($challenge, $userID){
     $challenge->steps[] = 1;
 
   //Step 2 - Assessment
-
-  //Step 3 - Fill in solution | Already participate
+  //Functionnality not yet implemented
 
 }
 
@@ -4985,7 +4984,7 @@ function challengeDetail(WP_REST_Request $request){
   $sample = challenge($post->ID);
   //Get steps information about this user
   $sample = challengeSteps($sample, $userID);
-  
+
   //Get information about participants
   $participants = array();
   if(!empty($sample)):
