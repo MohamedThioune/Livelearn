@@ -342,9 +342,8 @@ function challengeSteps($challenge, $userID){
     "mobile", $userID
   );
   $data = $wpdb->get_results($sql);
-  $already_login_mobil = get_field('is_first_login_mobile', 'user_' . $userID);
-  var_dump($data);
-  if(!empty($data) || $already_login_mobil)
+  $already_login_mobile = get_field('is_first_login_mobile', 'user_' . $userID);
+  if(!empty($data) || $already_login_mobile)
     $challenge->steps[] = 1;
 
   //Step 2 - Assessment
@@ -4980,7 +4979,7 @@ function challengeDetail(WP_REST_Request $request){
     return $response;
   endif;
 
-  $userID = isset($data['userID']) ? $data['userID'] : null;
+  $userID = isset($request['userID']) ? $request['userID'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
   //Get steps information about this user
@@ -4996,9 +4995,9 @@ function challengeDetail(WP_REST_Request $request){
       if($datum->user_id == $userID)
         $sample->steps[] = 3;
     endforeach;
+    $sample->participants = $participants;
+    $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
   endif;
-  $sample->participants = $participants;
-  $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
 
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
