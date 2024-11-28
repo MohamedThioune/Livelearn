@@ -132,9 +132,6 @@ function postAdditionnal($post, $userID, $edit = null){
   $main_date_xml = get_field('data_locaties_xml', $post->ID);
   $main_date_event = get_field('dates', $post->ID);
 
-  //Leerpad | playlist
-  $main_playlist = get_field('road_path', $post->ID);
-
   //Optional information
   if($edit):
   $post->how_it_works = get_field('how_it_works', $post->ID); 
@@ -148,6 +145,7 @@ function postAdditionnal($post, $userID, $edit = null){
   $post->btw_klasse = get_field('btw_klasse', $post->ID); 
   $post->link_to_call = get_field('link_to', $post->ID); 
   $post->online_location = get_field('online_location', $post->ID); 
+  $post->courses = get_field('road_path', $post->ID);
   endif;
 
   switch ($coursetype) {
@@ -167,9 +165,9 @@ function postAdditionnal($post, $userID, $edit = null){
       $post->dates_event = $main_date_event;
       break;
 
-    case 'Leerpad':
-      $post->playlist = $main_playlist;
-      break;
+    // case 'Leerpad':
+    //   $post->playlist = $main_playlist;
+    //   break;
   }
 
   $reviews = get_field('reviews', $post->ID);
