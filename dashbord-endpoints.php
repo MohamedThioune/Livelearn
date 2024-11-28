@@ -3619,13 +3619,13 @@ function updateCoursesByTeacher(WP_REST_Request $data)
                 $row .= $row_middle .'-'. $row_middle .'-'. $datum['location'] .'-'. $datum['adress'] .';'; 
             }
     
-            $row_end_date = date("d/m/Y H:i:s", $datum['end_date']);
+            $row_end_date = date("d/m/Y H:i:s", strtotime($datum['end_date']));
             $row .= $row_end_date .'-'. $row_end_date .'-'. $datum['location'] .'-'. $datum['adress'] .';'; 
           
             array_push($data_locaties, $row);    
         endforeach;
+        update_field('data_locaties_xml', $data_locaties, $id_course);
         $course->data_locaties_xml = get_field('data_locaties_xml',$id_course);
-
         $isCourseUpdated = true;
     }
     if ($link_to_call){
