@@ -414,7 +414,11 @@ function candidate($id){
   $sample['ID'] = $user->ID;
   $sample['first_name'] = $user->first_name;
   $sample['last_name'] = $user->last_name;
-  $sample['roles'] = (count($user->roles) != 1) ? $user->roles : [$user->roles[1]];
+  $roles = array();
+  $main_roles = $user->roles;
+  foreach($main_roles as $role)
+    $roles[] = $role;
+  $sample['roles'] = $roles;
 
   $sample['email'] = $user->user_email;
   $sample['mobile_phone'] = $user->mobile_phone;
