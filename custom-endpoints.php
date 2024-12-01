@@ -78,6 +78,57 @@ class Course
   }
 }
 
+class CourseOptimized
+{
+  public $id;
+  public $date;
+  public $title;
+  public $pathImage;
+  public $shortDescription;
+  public $longDescription;
+  public $price;
+  public $tags;
+  public $courseType;
+  public $data_locaties_xml;
+  //public $youtubeVideos;
+  public $experts;
+  public $visibility;
+  public $podcasts;
+  //public $likes;
+  public $author;
+  public $articleItself;
+  public $connectedProduct;
+  public $for_who;
+  public $data_locaties;
+  public $links;
+  public $language;
+
+  function __construct($course) {
+    $this->id = $course->ID;
+    $this->date = $course->post_date;
+    $this->title = $course->post_title;
+    $this->pathImage = $course->pathImage;
+    $this->shortDescription = $course->shortDescription;
+    $this->longDescription = $course->longDescription;
+    $this->price = $course->price ?? 0;
+    $this->language = $course->language ?? "";
+    $this->tags = $course->tags;
+    $this->courseType = $course->courseType;
+    $this->data_locaties_xml = $course->data_locaties_xml;
+    //$this->youtubeVideos = $course->youtubeVideos ?? [];
+    $this->experts = $course->experts;
+    $this->visibility = $course->visibility ?? null;
+    $this->links = $course->guid;
+    $this->podcasts = $course->podcasts ?? [];
+    $this->connectedProduct = $course->connectedProduct;
+    $this->author = $course->author;
+    $this->articleItself = get_field('article_itself', $course->ID) ?? '';
+    //$this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ;
+    $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
+    $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
+  }
+}
+
 class Tags
 {
  public  $id;
@@ -855,6 +906,137 @@ function allCoursesOptimizedWithFilter($data)
             }
         }
         $new_course = new Course($courses[$i]);
+        array_push($outcome_courses, $new_course);
+    }
+    return ['courses' => $outcome_courses, "codeStatus" => 200];
+}
+
+function allCoursesOptimizedWithJustPreviewAndFilter($data)
+{
+    $current_user_id = $GLOBALS['user_id'];
+    if (!$current_user_id) 
+      {
+          $response = new WP_REST_Response("You have to login with valid credentials!");
+          $response->set_status(400);
+          return $response;
+      }
+    $course_type = ucfirst(strtolower($data['course_type'] ?? ''));
+    $outcome_courses = array();
+    $tags = array();
+    $experts = array();
+    $languages =  get_field('language_preferences','user_' . (int) $current_user_id) ?? [];
+    // $languages = $data['languages'] ?? '';
+
+    // if (!is_array($languages)) {
+    //     $languages = explode(',', $languages); // Convert to array if it's a string
+    // }
+
+    $args = array(
+        'post_type' => array('course'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'meta_query' => 
+        count($languages) != 0 
+        ? 
+          array(
+              'relation' => 'AND',
+              array(
+                  'key' => 'language',
+                  'value' => $languages,
+                  'compare' => 'IN'
+              ),
+              array(
+                  'key' => 'course_type',
+                  'value' => $course_type,
+                  'compare' => 'LIKE'
+              )
+          ) 
+          : 
+          array(
+            array(
+              'key' => 'course_type',
+              'value' => $course_type,
+              'compare' => 'LIKE'
+            )
+            ),
+        'paged' => $data['page'] ?? 1,
+    );
+
+    $courses = get_posts($args);
+    if (!$courses) {
+        return ["courses" => [], 'message' => "There is no courses related to this course type in the database!", "codeStatus" => 400];
+    }
+
+    for ($i = 0; $i < count($courses); $i++) {
+        $courses[$i]->visibility = get_field('visibility', $courses[$i]->ID) ?? [];
+        $author = get_user_by('ID', $courses[$i]->post_author);
+        $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+        if ($courses[$i]->visibility != []) {
+            if ($author_company != $current_user_company) continue;
+        }
+        $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $courses[$i]->experts = array();
+        $experts = get_field('experts', $courses[$i]->ID);
+        if (!empty($experts)) {
+            foreach ($experts as $key => $expert) {
+                $expert = get_user_by('ID', $expert);
+                $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                array_push($courses[$i]->experts, new Expert($expert, $experts_img));
+            }
+        }
+
+        $courses[$i]->author = new Expert($author, $author_img);
+        $courses[$i]->longDescription = get_field('long_description', $courses[$i]->ID);
+        $courses[$i]->shortDescription = get_field('short_description', $courses[$i]->ID);
+        $courses[$i]->courseType = get_field('course_type', $courses[$i]->ID);
+
+        $image = get_field('preview', $courses[$i]->ID)['url'];
+        if (!$image) {
+            $image = get_the_post_thumbnail_url($courses[$i]->ID);
+            if (!$image) $image = get_field('url_image_xml', $courses[$i]->ID);
+            if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($courses[$i]->courseType) . '.jpg';
+        }
+        $courses[$i]->pathImage = $image;
+        $courses[$i]->price = get_field('price', $courses[$i]->ID) ?? 0;
+        $courses[$i]->language = get_field('language', $courses[$i]->ID) ?? "";
+        //$courses[$i]->youtubeVideos = get_field('youtube_videos', $courses[$i]->ID) ? get_field('youtube_videos', $courses[$i]->ID) : [];
+        // if (strtolower($courses[$i]->courseType) == 'podcast') {
+        //     $podcasts = get_field('podcasts', $courses[$i]->ID) ? get_field('podcasts', $courses[$i]->ID) : [];
+        //     if (!empty($podcasts)) {
+        //         $courses[$i]->podcasts = $podcasts;
+        //     } else {
+        //         $podcasts = get_field('podcasts_index', $courses[$i]->ID) ? get_field('podcasts_index', $courses[$i]->ID) : [];
+        //         if (!empty($podcasts)) {
+        //             $courses[$i]->podcasts = array();
+        //             foreach ($podcasts as $key => $podcast) {
+        //                 $item = array(
+        //                     "course_podcast_title" => $podcast['podcast_title'],
+        //                     "course_podcast_intro" => $podcast['podcast_description'],
+        //                     "course_podcast_url" => $podcast['podcast_url'],
+        //                     "course_podcast_image" => $podcast['podcast_image'],
+        //                 );
+        //                 array_push($courses[$i]->podcasts, ($item));
+        //             }
+        //         }
+        //     }
+        // }
+        // $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
+        $courses[$i]->connectedProduct = get_field('connected_product', $courses[$i]->ID);
+        $tags = get_field('categories', $courses[$i]->ID) ?? [];
+        $courses[$i]->tags = array();
+        if ($tags) {
+            if (!empty($tags)) {
+                foreach ($tags as $key => $category) {
+                    if (isset($category['value'])) {
+                        $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                        array_push($courses[$i]->tags, $tag);
+                    }
+                }
+            }
+        }
+        $new_course = new CourseOptimized($courses[$i]);
         array_push($outcome_courses, $new_course);
     }
     return ['courses' => $outcome_courses, "codeStatus" => 200];

@@ -2245,6 +2245,13 @@ add_action( 'rest_api_init', function () {
         'callback' => 'allCoursesOptimizedWithFilter',
     ));
 
+    register_rest_route('custom/v3', '/course/filtered', array(
+        'methods' => 'GET',
+        'callback' => 'allCoursesOptimizedWithJustPreviewAndFilter',
+    ));
+
+    
+
     register_rest_route('custom/v2', '/article/filtered', array(
         'methods' => 'GET',
         'callback' => 'filterArticlesByUserLanguagePreferences',
