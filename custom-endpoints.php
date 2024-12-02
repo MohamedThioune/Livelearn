@@ -93,7 +93,7 @@ class CourseOptimized
   //public $youtubeVideos;
   public $experts;
   public $visibility;
-  public $podcasts;
+  //public $podcasts;
   //public $likes;
   public $author;
   public $articleItself;
@@ -119,7 +119,7 @@ class CourseOptimized
     $this->experts = $course->experts;
     $this->visibility = $course->visibility ?? null;
     $this->links = $course->guid;
-    $this->podcasts = $course->podcasts ?? [];
+    //$this->podcasts = $course->podcasts ?? [];
     $this->connectedProduct = $course->connectedProduct;
     $this->author = $course->author;
     $this->articleItself = get_field('article_itself', $course->ID) ?? '';
@@ -1042,6 +1042,7 @@ function allCoursesOptimizedWithJustPreviewAndFilter($data)
     return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
 
+
 function filterArticlesByUserLanguagePreferences($data)
 {
     $current_user_id = $GLOBALS['user_id'];
@@ -1162,6 +1163,97 @@ function filterArticlesByUserLanguagePreferences($data)
     }
     return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
+
+function filterArticlesByUserLanguagePreferencesWithLikes($data)
+{
+    global $wpdb;
+
+    $current_user_id = $GLOBALS['user_id'];
+    if (!$current_user_id) {
+        $response = new WP_REST_Response("You have to login with valid credentials!");
+        $response->set_status(400);
+        return $response;
+    }
+
+    $languages = get_field('language_preferences', 'user_' . (int) $current_user_id) ?? [];
+    $args = array(
+        'post_type' => array('post'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'meta_query' => count($languages) != 0 
+            ? array(
+                array(
+                    'key' => 'language',
+                    'value' => $languages,
+                    'compare' => 'IN'
+                )
+            )
+            : array(),
+        'paged' => $data['page'] ?? 1,
+    );
+
+    $courses = get_posts($args);
+    if (!$courses) {
+        return ["courses" => [], 'message' => "There are no courses related to your preferences!", "codeStatus" => 400];
+    }
+
+    $outcome_courses = [];
+    foreach ($courses as $course) {
+        // Récupérer les statistiques de feedback pour chaque cours
+        $stats = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT 
+                    SUM(CASE WHEN feedback_value = 'like' THEN 1 ELSE 0 END) as `like`,
+                    SUM(CASE WHEN feedback_value = 'educational' THEN 1 ELSE 0 END) as `educational`,
+                    SUM(CASE WHEN feedback_value = 'issues' THEN 1 ELSE 0 END) as `issues`,
+                    SUM(CASE WHEN feedback_value = 'fake_news' THEN 1 ELSE 0 END) as `fake_news`,
+                    SUM(CASE WHEN feedback_value = 'sales' THEN 1 ELSE 0 END) as `sales`
+                 FROM {$wpdb->prefix}likes
+                 WHERE course_id = %d",
+                $course->ID
+            )
+        );
+
+        // Structure des statistiques de likes
+        $likes = [
+            'like' => (int) ($stats->like ?? 0),
+            'educational' => (int) ($stats->educational ?? 0),
+            'issues' => (int) ($stats->issues ?? 0),
+            'fake_news' => (int) ($stats->fake_news ?? 0),
+            'sales' => (int) ($stats->sales ?? 0),
+        ];
+
+        // Ajouter les informations du cours au tableau de résultats
+        $outcome_courses[] = [
+            "ID" => $course->ID,
+            "post_title" => $course->post_title,
+            "shortDescription" => get_field('short_description', $course->ID),
+            "longDescription" => get_field('long_description', $course->ID),
+            "pathImage" => get_the_post_thumbnail_url($course->ID) ?: get_stylesheet_directory_uri() . '/img/default.jpg',
+            "language" => get_field('language', $course->ID) ?? "",
+            "likes" => $likes, // Intégration des likes
+            "visibility" => get_field('visibility', $course->ID) ?? [],
+            "author" => [
+                "name" => get_user_by('ID', $course->post_author)->display_name,
+                "profile_img" => get_field('profile_img', 'user_' . $course->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png'
+            ],
+            "tags" => array_map(function ($tag) {
+                return [
+                    "id" => $tag['value'],
+                    "name" => get_the_category_by_ID($tag['value'])
+                ];
+            }, get_field('categories', $course->ID) ?? []),
+            "courseType" => get_field('course_type', $course->ID)
+        ];
+    }
+
+    return ['courses' => $outcome_courses, "codeStatus" => 200];
+}
+
+
+
 
 function searchCoursesViaKeyWords($data)
 {
