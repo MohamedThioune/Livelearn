@@ -308,7 +308,13 @@ function postAdditionnal($post, $userID, $edit = null){
   $post->experts = $experts;
 
   //Leerpad 
-  $post->courses = get_field('road_path', $post->ID);
+
+  $playlists = []; 
+  $main_playlists = get_field('road_path', $post->ID);
+  if($main_playlists)
+  foreach($main_playlists as $course)
+    $playlists[] = artikel($course->ID);
+  $post->courses = $playlists;
   return $post;
 }
 
