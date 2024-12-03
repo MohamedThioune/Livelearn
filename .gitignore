@@ -8,7 +8,8 @@ composer.lock
 composer.json
 /templates/stripe-secrets.php
 wp-config.php
-/db/
+/db/podcast.json
+/db/video.json
 
 /vendor/
 /.idea/
