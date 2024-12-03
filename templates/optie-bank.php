@@ -1,7 +1,9 @@
 <?php /** Template Name: Optie bank */ ?>
 
 <?php
+
 require_once 'detect-language.php';
+require_once  get_stylesheet_directory().'/script-endpoints.php';
 
 global $wpdb;
 $table = $wpdb->prefix . 'databank';
@@ -83,7 +85,7 @@ if($optie == "✔"){
     }
     //Insert YouTube
     else if (strval($course->type) == "Video"){
-        $fileName = get_stylesheet_directory_uri() . "/db/video.json";
+        $fileName = get_stylesheet_directory() . "/db/video.json";
         //Creation course
         $args = array(
             'post_type'   => 'course',
@@ -92,43 +94,41 @@ if($optie == "✔"){
             'post_title'  => $course->titel
         );
         $id_post = wp_insert_post($args, true);
-
         //Custom
         $videos = explode(';', $course->videos);
         $youtube_video = array();
         $youtube_videos = array();
-        /*
-        if ($fileName) {
-            $video_in_json_file_json = file_get_contents($fileName);
-            $youtube_videos = json_decode($video_in_json_file_json, true);
-        }
-        */
+
         foreach($videos as $item){
             $video = explode('~', $item);
             
             if(!isset($video[1]))
                 continue;
+            /*
             $youtube_video['id'] = $video[0];
             $youtube_video['title'] = $video[1];
             $youtube_video['thumbnail_url'] = $video[2];
 
             array_push($youtube_videos, $youtube_video);
+            */
 
-            /*
             $youtube_videos[] = array(
                 'post_id' => $id_post, // so not need to make post type
                 'episode_id'=>$video[0],
                 'episode_title'=>$video[1],
-                'episode_description'=>$video[2]
+                'episode_image'=>$video[2]
             );
             // $id_post_additional = $wpdb->insert($table_post_additionnal, $data);
-            */
         }
-        /*
+
         if ($fileName){
             if (!empty($youtube_videos)){
+                $old_episodes_json = file_get_contents($fileName);
+                $old_episodes_array = json_decode($old_episodes_json,true);
+                $youtube_videos = array_merge($old_episodes_array,$youtube_videos);
+
                 $newJsonContent = json_encode( $youtube_videos,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
-                $insert = file_put_contents($fileName,$youtube_videos);
+                $insert = file_put_contents($fileName,$newJsonContent);
                 if ($insert) {
                     echo "content added successfully";
                 } else {
@@ -136,15 +136,12 @@ if($optie == "✔"){
                 }
             }
         }
-        */
-        // var_dump($youtube_videos);die;
         update_field('origin_id', $origin_id, $id_post);
         update_field('course_type', 'video', $id_post);
-        update_field('youtube_videos', $youtube_videos, $id_post);
+        update_field('youtube_videos', $youtube_videos, $id_post); // to comment if the proceses well done
     }
     else if (strval($course->type) == 'Podcast'){
-        $fileName = get_stylesheet_directory_uri() . "/db/podcast.json";
-        //$file = fopen($fileName,'r');
+        $fileName = get_stylesheet_directory() . "/db/podcast.json";
         //Creation course
         $args = array(
             'post_type'   => 'course',
@@ -157,13 +154,6 @@ if($optie == "✔"){
         $podcasts = array_reverse($podcasts);
         $podcasts_playlists = [];
         $episodes = [];
-        if ($fileName){
-            $jsonContent = file_get_contents($fileName);
-            $episodes = json_decode($jsonContent, true);
-            //
-        } else {
-            echo "not possible to open the file";
-        }
         foreach ($podcasts as $key => $item) {
             if (!$item)
                 continue;
@@ -180,34 +170,38 @@ if($optie == "✔"){
                 $podcasts_playlist['podcast_image'] = $podcast[4] ? : $course->image_xml;
 
                 $podcasts_playlists [] = $podcasts_playlist;
-                /*
-                $episode = array(
-                    'post_id' => $id_post, // so not need to make post type
-                    'episode_id'=> $podcast[0],
-                    'episode_image'=> $podcast[4] ? : $course->image_xml,
-                    'episode_title'=> $podcast[1] ? : $course->titel,
-                    'episode_description'=>$podcast[2] ? : $course->short_description,
-                    'episode_date' => $podcast[3] ? : date('Y-m-d H:i:s'),
-                );
-                $episodes[] = $episode;
-                $id_post_additional = $wpdb->insert($table_post_additionnal, $data);
-                */
+
+            $episodes[] = array(
+                'post_id' => $id_post, // so not need to make post type
+                'episode_id'=> $podcast[0],
+                'episode_image'=> $podcast[4],
+                'episode_title'=> $podcast[1],
+                'episode_description'=>$podcast[2],
+                'episode_date' => $podcast[3] ? : date('Y-m-d H:i:s'),
+            );
+                // $id_post_additional = $wpdb->insert($table_post_additionnal, $data);
         }
-        /*
-        if ($episodes){
-            // encode the structure
-            $newJsonContent = json_encode($episodes,FILE_APPEND | LOCK_EX);
-            $insert = file_put_contents($fileName,$episodes);
-            if ($insert) {
-                echo "content added successfully";
-            } else {
-                echo "error content not added !";
+        if ($fileName){
+            if (!empty($episodes)){
+                $old_episodes_json = file_get_contents($fileName)?:'';
+                $old_episodes_array = $old_episodes_json ? json_decode($old_episodes_json,true) : [];
+                if ($old_episodes_array)
+                    $episodes = array_merge($old_episodes_array,$episodes);
+
+                $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+                $insert = file_put_contents($fileName,$newJsonContent);
+                if ($insert) {
+                    echo "content added successfully";
+                } else {
+                    echo "error content not added !";
+                }
             }
         }
-        */
+
         update_field('origin_id', $feedid, $id_post);
         update_field('course_type', 'podcast', $id_post);
-        update_field('podcasts_index', $podcasts_playlists, $id_post);
+        update_field('podcasts_index', $podcasts_playlists, $id_post); // to comment if the proceses well done
+        search_podcast_by_Id_update($id_post);
     }
     //Insert Others
     else if (in_array(strval($course->type), $type) ) {
