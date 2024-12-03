@@ -2245,6 +2245,8 @@ add_action( 'rest_api_init', function () {
         'callback' => 'allCoursesOptimizedWithFilter',
     ));
 
+    
+
     register_rest_route('custom/v3', '/course/filtered', array(
         'methods' => 'GET',
         'callback' => 'allCoursesOptimizedWithJustPreviewAndFilter',
@@ -2255,6 +2257,11 @@ add_action( 'rest_api_init', function () {
     register_rest_route('custom/v2', '/article/filtered', array(
         'methods' => 'GET',
         'callback' => 'filterArticlesByUserLanguagePreferences',
+    ));
+
+    register_rest_route('custom/v3', '/article/filtered', array(
+        'methods' => 'GET',
+        'callback' => 'filterArticlesByUserLanguagePreferencesWithLikes',
     ));
 
 
