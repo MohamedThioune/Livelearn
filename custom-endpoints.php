@@ -4927,7 +4927,7 @@ endif;
                 $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
                 if (strtolower($course->courseType) == 'podcast')
                   {
-                    $podcasts = get_field('podcasts',$course->ID) != [] ? get_field('podcasts',$course->ID) : [];
+                    $podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
                     if (!empty($podcasts))
                         $course->podcasts = $podcasts;
                       else {
@@ -4948,8 +4948,7 @@ endif;
                         }
                     }
                   }
-                $course->podcasts = $course->podcasts != [] && gettype($course->podcasts) != string && $course->podcasts != null ? $course->podcasts : [] ;
-                
+                $course->podcasts = $course->podcasts != [] && gettype($course->podcasts) != "string" && $course->podcasts != null ? $course->podcasts : [] ;
                 $course->visibility = get_field('visibility',$course->ID);
                 $course->connectedProduct = get_field('connected_product',$course->ID);
                 $tags = get_field('categories',$course->ID) ?? [];
