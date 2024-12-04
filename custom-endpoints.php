@@ -4948,7 +4948,8 @@ endif;
                         }
                     }
                   }
-                $course->podcasts = $course->podcasts != [] || $course->podcasts != null || $course->podcasts != "" ? $course->podcasts : [] ;
+                $course->podcasts = $course->podcasts != [] && gettype($course->podcasts) != string && $course->podcasts != null ? $course->podcasts : [] ;
+                
                 $course->visibility = get_field('visibility',$course->ID);
                 $course->connectedProduct = get_field('connected_product',$course->ID);
                 $tags = get_field('categories',$course->ID) ?? [];
