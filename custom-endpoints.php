@@ -1224,6 +1224,15 @@ function filterArticlesByUserLanguagePreferencesWithLikes($data)
             'fake_news' => (int) ($stats->fake_news ?? 0),
             'sales' => (int) ($stats->sales ?? 0),
         ];
+        
+        $image = get_field('preview', $course->ID)['url'];
+          if(!$image){
+              $image = get_the_post_thumbnail_url($course->ID);
+              if(!$image)
+                  $image = get_field('url_image_xml', $course->ID);
+                      if(!$image)
+                          $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+          }
 
         // Ajouter les informations du cours au tableau de résultats
         $outcome_courses[] = [
@@ -1231,7 +1240,7 @@ function filterArticlesByUserLanguagePreferencesWithLikes($data)
             "post_title" => $course->post_title,
             "shortDescription" => get_field('short_description', $course->ID),
             "longDescription" => get_field('long_description', $course->ID),
-            "pathImage" => get_the_post_thumbnail_url($course->ID) ?: get_stylesheet_directory_uri() . '/img/default.jpg',
+            "pathImage" => $image,
             "language" => get_field('language', $course->ID) ?? "",
             "likes" => $likes, // Intégration des likes
             "visibility" => get_field('visibility', $course->ID) ?? [],
