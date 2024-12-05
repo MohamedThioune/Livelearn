@@ -2763,4 +2763,13 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'update_podcast_on_podcastindex'
     ));
+    register_rest_route ('custom/v1', 'loket/code', array(
+        'methods' => 'POST',
+        'callback' => 'get_code_loket'
+    ));
+    register_rest_route ('custom/v1', 'polaris/employees', array(
+        'methods' => 'POST',
+        'callback' => 'get_employees_polaris'
+    ));
+
 });

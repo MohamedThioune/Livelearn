@@ -4491,7 +4491,169 @@ function addReveiewUser($data)
             //'all_review' =>$review_user
         ),201 );
 }
-function loket($data)
+function get_code_loket($data)
 {
+    $client_id = $data['client_id']; //ThirdPartiesTestClient
+    $client_secret = $data['client_secret'];
+    $redirect = "https://livelearn.nl";
+    /*
+    $baseurl  =  'https://oauth.loket-acc.nl';
+    $redirect = get_site_url()."/dashboard/company/people/";
+    $status = rand(1000,9999);
+    $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
+    // header("Location: $url");
+    $tokenUrlProd = "https://oauth.loket.nl/token";
+    $tokenUrlAccept = "https://oauth.loket-acc.nl/token";
+    */
+    $tokenUrl = "https://oauth.loket-acc.nl/token";
+    $state = rand(1000,9999);
+    $url_redirect = "https://oauth.loket-acc.nl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$state";
+    //header('location :'.$url_redirect);
 
+    return new WP_REST_Response( array(
+        'url' => $url_redirect,
+        )
+    );
+
+}
+
+function get_employee_loket($data)
+{
+    $code = $data['code'];
+    $client_id = $data['client_id']; //ThirdPartiesTestClient
+    $client_secret = $data['client_secret'];
+    $redirect = $data['redirect'];
+
+    $user_connected = wp_get_current_user();
+    if (!$user_connected)
+        return new WP_REST_Response( array(
+            'message' =>'you need to connecte !!!'
+        ));
+
+    $company = get_field('company',  'user_' . $user_connected->ID);
+    if(!empty($company))
+        $company_connected = $company[0]->post_title;
+
+    $grant_type = "authorization_code";
+    // URL endpoint to get token
+    $token_url = "https://oauth.loket-acc.nl";
+    // Corps de la demande POST
+    $body = http_build_query(array(
+        'code' => $code,
+        'client_id' => $client_id,
+        'client_secret' => $client_secret,
+        'redirect_uri' => $redirect,
+        'grant_type' => $grant_type
+    ));
+    // header of POST request
+    $headers = array(
+        'Content-Type: application/x-www-form-urlencoded',
+        'Content-Length: ' . strlen($body)
+    );
+    $options = array(
+        'http' => array(
+            'method' => 'POST',
+            'header' => implode("\r\n", $headers),
+            'content' => $body
+        )
+    );
+    $context = stream_context_create($options);
+    //POST request
+    $response = file_get_contents($token_url."/token", false, $context);
+    $data = json_decode($response, true); // token getted
+
+    $token = $data['access_token'];
+
+    // id company
+    $url_employees="https://api.loket-acc.nl/v2/providers/employers";
+    $options = array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => "Authorization: Bearer $token\r\n" .
+                "Content-Type: application/json\r\n"
+        )
+    );
+    $context = stream_context_create($options);
+    $response = file_get_contents($url_employees, false, $context);
+
+    $json_data = json_decode($response, true);
+    if ($json_data) {
+        $embedded = $json_data['_embedded'];
+        $id_entreprise = $embedded[0]['id'];
+        update_field('id_company_loket',$id_entreprise,$company_connected->ID);
+        // var_dump("id de l'entreprise : $id_entreprise");
+        //get list of all employee
+        $list = "https://api.loket-acc.nl/v2/providers/employers/$id_entreprise/employees";
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
+                    "Authorization: Bearer $token\r\n",
+                'method' => 'GET'
+            )
+        );
+        $context = stream_context_create($options);
+        $liste_employees = file_get_contents($list, false, $context);
+        $list_of_all_employees = array();
+
+        if ($liste_employees) {
+            $empl=json_decode($liste_employees,true);
+            foreach ($empl['_embedded'] as $key => $employee) {
+                $tab = [];
+                $tab['firstName'] = $employee['personalDetails']['firstName'];
+                $tab['lastName'] = $employee['personalDetails']['lastName'];
+                $tab['dateOfBirth'] = $employee['personalDetails']['dateOfBirth'];
+                $tab['aowDate'] = $employee['personalDetails']['aowDate'];
+                $tab['photo'] = $employee['personalDetails']['photo'];
+                $tab['phoneNumber'] = $employee['contactInformation']['phoneNumber'];
+                $tab['mobilePhoneNumber'] = $employee['contactInformation']['mobilePhoneNumber'];
+                $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
+                $tab['street'] = $employee['address']['street'];
+                $tab['city'] = $employee['address']['city'];
+                $list_of_all_employees[] = $tab;
+            }
+        }
+    }
+    else {
+
+    }
+
+    return new WP_REST_Response( array(
+       'token' =>$token,
+       'code' =>$code,
+       'employees' =>$list_of_all_employees,
+    ));
+}
+
+function get_employees_polaris($data)
+{
+    $login = $data['login'];
+    $password = $data['password'];
+    $required_parameters = ['login','password'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $url = "https://login.bcs.nl/API/RestService/export?Connector=aqMedewerker_test";
+    $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+    $response = curl_exec($ch);
+    //$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if (!$response)
+        return new WP_REST_Response(array(
+            'employees' =>[]
+        ));
+
+    $employeesObject = simplexml_load_string($response);
+    $employees = json_decode(json_encode($employeesObject), true);
+
+    return new WP_REST_Response( array(
+        'employees' =>  $employees['Regel']
+    //    'employees' =>  $employeesObject->Regel
+    ));
 }
