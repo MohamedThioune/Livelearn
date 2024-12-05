@@ -3614,17 +3614,39 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $isCourseUpdated = true;
     }
     if($training_dates_locations){
-        $date_location_xml = "";
-        foreach ($training_dates_locations as $date_location) {
-            $date_location_xml.=$date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
-            $dates_between = explode(',',$date_location['dates_between']);
-            foreach ($dates_between as $date_between)
-                $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
+        // $date_location_xml = "";
+        // foreach ($training_dates_locations as $date_location) {
+        //     $date_location_xml.= $date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
+        //     $dates_between = explode(',',$date_location['dates_between']);
+        //     foreach ($dates_between as $date_between)
+        //         $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
 
-            $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
-        }
-        $location_xml = ['value'=>$date_location_xml, 'label'=>$date_location_xml ];
-        update_field('data_locaties_xml',$location_xml,$id_course);
+        //     $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
+        // }
+        // $location_xml = ['value' => $date_location_xml, 'label' => $date_location_xml ];
+        // update_field('data_locaties_xml',$location_xml,$id_course);
+
+        $data_locaties = array();
+        $row = "";
+        $data_training = $training_dates_locations; 
+        foreach($data_training as $datum):
+            $row = "";
+            $row_start_date = date("d/m/Y H:i:s", strtotime($datum['start_date']));
+            $row .= $row_start_date .'-'. $row_start_date .'-'. $datum['location'] .'-'. $datum['adress'] .';'; 
+
+            $middles = explode(',', $datum['dates_between']);
+            foreach($middles as $middle){
+                $middle = str_replace('/', '.', $middle);
+                $row_middle = date("d/m/Y H:i:s", strtotime($middle));
+                $row .= $row_middle .'-'. $row_middle .'-'. $datum['location'] .'-'. $datum['adress'] .';'; 
+            }
+    
+            $row_end_date = date("d/m/Y H:i:s", strtotime($datum['end_date']));
+            $row .= $row_end_date .'-'. $row_end_date .'-'. $datum['location'] .'-'. $datum['adress']; 
+          
+            array_push($data_locaties, $row);    
+        endforeach;
+        update_field('data_locaties_xml', $data_locaties, $id_course);
         $course->data_locaties_xml = get_field('data_locaties_xml',$id_course);
         $isCourseUpdated = true;
     }
