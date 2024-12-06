@@ -2765,4 +2765,25 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'startChallenge'
     ));
+    register_rest_route ('custom/v1', '/migration-episodes-video-on-json', array(
+        'methods' => 'GET',
+        'callback' => 'migration_episodes_video'
+    ));
+     register_rest_route ('custom/v1', '/migration-episodes-podcast-on-json', array(
+        'methods' => 'GET',
+        'callback' => 'migration_episodes_podcast'
+    ));
+    register_rest_route ('custom/v1', '/update-on-podcastindex', array(
+        'methods' => 'GET',
+        'callback' => 'update_podcast_on_podcastindex'
+    ));
+    register_rest_route ('custom/v1', 'loket/code', array(
+        'methods' => 'POST',
+        'callback' => 'get_code_loket'
+    ));
+    register_rest_route ('custom/v1', 'polaris/employees', array(
+        'methods' => 'POST',
+        'callback' => 'get_employees_polaris'
+    ));
+
 });
