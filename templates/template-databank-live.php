@@ -984,15 +984,6 @@ $user = wp_get_current_user();
                                 ?>
                             </select>
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label for="Role">Role</label>
-                            <select name="role" id="Role" class="form-control" required>
-                                <option value="subscriber">User</option>
-                                <option value="editor">Teacher</option>
-                                <option value="administrator">Admin</option>
-                            </select>
-                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
