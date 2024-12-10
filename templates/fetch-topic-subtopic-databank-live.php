@@ -52,7 +52,6 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                                 <?php foreach ($subcategories as $sub):
                                     if ($ids)
                                         $selected = in_array($sub->term_id,$ids) ? 'selected' : '';
-
                                     $sub_sub = get_categories( array(
                                         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                                         'parent' => $sub->cat_ID,

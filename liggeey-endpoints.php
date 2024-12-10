@@ -163,6 +163,10 @@ function postAdditionnal($post, $userID, $edit = null){
       $post->dates_xml = $main_date_xml;
       $post->dates_event = $main_date_event;
       break;
+
+    // case 'Leerpad':
+    //   $post->playlist = $main_playlist;
+    //   break;
   }
 
   $reviews = get_field('reviews', $post->ID);
@@ -301,12 +305,20 @@ function postAdditionnal($post, $userID, $edit = null){
 
     $experts[] = (object)$sample;
   endforeach;
-  
   $post->experts = $experts;
+
+  //Leerpad 
+
+  $playlists = []; 
+  $main_playlists = get_field('road_path', $post->ID);
+  if($main_playlists)
+  foreach($main_playlists as $course)
+    $playlists[] = artikel($course->ID);
+  $post->courses = $playlists;
   return $post;
 }
 
-function challengeAdditionnal($challenge, $userID = null){
+function challengeAdditionnal($challenge){
   global $wpdb;
   $table = $wpdb->prefix . 'start_challenge';
 
@@ -323,6 +335,33 @@ function challengeAdditionnal($challenge, $userID = null){
   $data = $wpdb->get_results($sql);
 
   return $data;
+}
+
+function challengeSteps($challenge, $userID){
+  global $wpdb;
+  $table = $wpdb->prefix . 'tracker_views';
+
+  //check sample challenge
+  if(empty($challenge) || !$userID)
+   return null;
+  if(!isset($challenge->ID))
+    return null;
+
+  $challenge->steps = array();
+  //Step 1 - Download & Login 
+  $sql = $wpdb->prepare(
+    "SELECT * FROM $table WHERE platform = %s AND user_id = %s",
+    "mobile", $userID
+  );
+  $data = $wpdb->get_results($sql);
+  $already_login_mobile = get_field('is_first_login_mobile', 'user_' . $userID);
+  if(!empty($data) || $already_login_mobile)
+    $challenge->steps[] = 1;
+
+  //Step 2 - Assessment
+  //Functionnality not yet implemented
+
+  return $challenge;
 }
 
 //Detail company
@@ -381,7 +420,11 @@ function candidate($id){
   $sample['ID'] = $user->ID;
   $sample['first_name'] = $user->first_name;
   $sample['last_name'] = $user->last_name;
-  $sample['roles'] = (count($user->roles) != 1) ? $user->roles : [$user->roles[1]];
+  $roles = array();
+  $main_roles = $user->roles;
+  foreach($main_roles as $role)
+    $roles[] = $role;
+  $sample['roles'] = $roles;
 
   $sample['email'] = $user->user_email;
   $sample['mobile_phone'] = $user->mobile_phone;
@@ -743,6 +786,21 @@ function challenge($id, $userApplyId = null){
   $sample['prize'] = get_field('prize_challenge', $post->ID)?: '';
   $sample['banner'] = get_field('banner_challenge', $post->ID)?: '';
   $sample['deadline'] = get_field('deadline_challenge', $post->ID)?: '';
+
+  $company = get_field('company_challenge', $post->ID);
+  $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+  $main_company = array();
+  $main_company['ID'] = !empty($company) ? $company->ID : 0;
+  $main_company['title'] = !empty($company) ? $company->post_title : '';
+  $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
+  $main_company['logo'] = ($main_company['logo']) ?: $placeholder;
+  $main_company['sector'] = !empty($company) ? get_field('company_sector',  $company->ID) : '';
+  $main_company['size'] = !empty($company) ? get_field('company_size',  $company->ID) : '';
+  $main_company['email'] = !empty($company) ? get_field('company_email',  $company->ID) : '';
+  $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : '';
+  $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : '';
+  $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : '';
+  $sample['company'] = (Object)$main_company;
 
   $sample = (Object)$sample;
 
@@ -1147,6 +1205,8 @@ function artikelDetail(WP_REST_Request $request){
   endif;  
 
   $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  if(!$post)
+    $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
   $sample = artikel($post->ID);
 
   if(!empty($sample)):
@@ -1175,6 +1235,9 @@ function postDetail(WP_REST_Request $request){
   endif;  
 
   $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  var_dump($post);
+  if(!$post)
+    $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
   $sample = artikel($post->ID);
 
   if(!empty($sample)):
@@ -4937,20 +5000,26 @@ function challengeDetail(WP_REST_Request $request){
     return $response;
   endif;
 
-  $userID = isset($data['userID']) ? $data['userID'] : null;
+  $userID = isset($request['userID']) ? $request['userID'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
+  if($userID)
+  //Get steps information about this user
+  $sample = challengeSteps($sample, $userID);
 
   //Get information about participants
   $participants = array();
   if(!empty($sample)):
-    $data = challengeAdditionnal($sample, $userID);
-    foreach($data as $datum)
+    $data = challengeAdditionnal($sample);
+    foreach($data as $datum):
       if($datum->user_id)
         $participants[] = get_user_by('ID', $datum->user_id);
+      if($datum->user_id == $userID)
+        $sample->steps[] = 3;
+    endforeach;
+    $sample->participants = $participants;
+    $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
   endif;
-  $sample->participants = $participants;
-  $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
 
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
