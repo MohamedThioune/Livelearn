@@ -272,7 +272,7 @@ function sendEmail($id_user,$id_newUser,$password)
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://app.livelearn.nl/login/"
+                                valign="middle"><a href="https://livelearn.nl/login/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
                                     style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Login</span></a>
@@ -795,7 +795,7 @@ function sendEmailBecaumeManager($idUserToInvite,$role,$subject,$tittle)
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://app.livelearn.nl/login/"
+                                valign="middle"><a href="https://livelearn.nl/login/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
                                     style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">login</span></a>
@@ -1355,19 +1355,24 @@ function removePeopleCompany($data)
 function learn_modules($data){
     $users_companies = array();
     $user_connected = intval($data['ID']); //$user_in
-    $company_connected = get_field('company',  'user_' . $user_connected);
+    $company_connected = get_field('company', 'user_' . $user_connected);
+    if (!$company_connected)
+        return new WP_REST_Response(array());
+
     $users = get_users();
     foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
         if(!empty($company_connected) && !empty($company_user))
             if($company_user[0]->ID == $company_connected[0]->ID)
-                array_push($users_companies,$user->ID);
+                $users_companies[] = $user->ID;
     }
     $args = array(
-        'post_type' => array('course','post','leerpad','assessment'),
+        'post_type' => array('course','post'),
         'author__in' => $users_companies,
         'order' => 'DESC',
-        'numberposts' => 1000,
+        'posts_per_page' => -1,
+
+        // 'numberposts' => 1000,
     );
     $courses = get_posts($args);
     foreach ($courses as $course){
@@ -1380,13 +1385,14 @@ function learn_modules($data){
         } else {
             $one_category = get_field('category_xml',  $course->ID);
             if(isset($one_category[0]))
-                $category_id = intval($one_category[0]['value']);
+                $category_str = intval($one_category[0]['value']);
         }
         if ($category_str) {
             if ($category_str) {
                 $category_name = get_the_category_by_ID($category_str);
-                if(!is_wp_error($category_name))
+                if(!is_wp_error($category_name)) {
                     $category = (string)$category_name;
+                }
             } else {
                 $category_name = get_the_category_by_ID($category_id);
                 if (!is_wp_error($category_name))
@@ -1431,12 +1437,17 @@ function learn_modules($data){
         $course->price = $price ? : 'Gratis';
         $course->startDate = $start_date;
         $course->courseType = get_field('course_type',$course->ID) ?:'';
-        $course->subects = $category;
-        $course->sales = get_field('visibility', $course->ID) ? true : false;
+        $course->subjects = $category;
+        $course->sales = (bool)get_field('visibility', $course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->longDescription = get_field('long_description',$course->ID);
     }
-    $response = new WP_REST_Response($courses);
-    $response->set_status(200);
-    return $response;
+
+    return new WP_REST_Response( array(
+        //'id_user_company' =>$users_companies,
+        'count' => count($courses),
+        'courses' => $courses
+    ), 200);
 }
 function learnning_database(){
     $args = array(
@@ -1465,6 +1476,8 @@ function learnning_database(){
                 if(!is_wp_error($category_name))
                     $category = (string)$category_name;
             } else {
+                $one_category = get_field('category_xml',  $course->ID);
+                $category_id = intval($one_category[0]['value']);
                 $category_name = get_the_category_by_ID($category_id);
                 if (!is_wp_error($category_name))
                     $category = (string)$category_name;
@@ -1486,6 +1499,7 @@ function learnning_database(){
         } elseif ($datum) {
             if(isset($datum[0]['value'])){
                 $datas = explode('-', $datum[0]['value']);
+                //var_dump($datas);die;
                 $data = $datas[0];
                 $day = explode('/', explode(' ', $data)[0])[0];
                 $month = explode('/', explode(' ', $data)[0])[1];
@@ -1507,10 +1521,15 @@ function learnning_database(){
         $course->price = $price ? : 'Gratis';
         $course->startDate = $start_date; //date('d/m/Y',strtotime($course->post_date));
         $course->courseType = get_field('course_type',$course->ID);
-        $course->subects = $category;
-        $course->sales = get_field('visibility', $course->ID) ? true : false; //true or false
+        $course->subjects = $category;
+        $course->sales = (bool)get_field('visibility', $course->ID); //true or false
+        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->longDescription = get_field('long_description',$course->ID);
     }
-    $response = new WP_REST_Response($courses);
+    $response = new WP_REST_Response(array(
+        'count'=>count($courses),
+        'courses' =>$courses
+    ));
     $response->set_status(200);
     return $response;
 }
@@ -2882,7 +2901,7 @@ function addOnePeople(WP_REST_Request $data)
         'user_pass' => $password,
         'user_login' => $login,
         'user_email' => $email,
-        'user_url' => 'https://app.livelearn.nl/login',
+        'user_url' => 'https://livelearn.nl/login',
         'display_name' => $first_name,
         'first_name' => $first_name,
         'last_name' => $last_name,
@@ -2929,7 +2948,7 @@ function addManyPeople(WP_REST_Request $data)
                 'user_pass' => $password,
                 'user_login' => $login,
                 'user_email' => $email,
-                'user_url' => 'https://app.livelearn.nl/login',
+                'user_url' => 'https://livelearn.nl/login',
                 'display_name' => $first_name,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
@@ -3509,7 +3528,6 @@ function updateCoursesByTeacher(WP_REST_Request $data)
 
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
-    //var_dump(get_field('data_locaties_xml',$id_course));die;
     if ($article_content) {
         update_field('article_itself', $article_content, $id_course);
         $isCourseUpdated = true;
@@ -3614,17 +3632,39 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $isCourseUpdated = true;
     }
     if($training_dates_locations){
-        $date_location_xml = "";
-        foreach ($training_dates_locations as $date_location) {
-            $date_location_xml.=$date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
-            $dates_between = explode(',',$date_location['dates_between']);
-            foreach ($dates_between as $date_between)
-                $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
+        // $date_location_xml = "";
+        // foreach ($training_dates_locations as $date_location) {
+        //     $date_location_xml.= $date_location['start_date'].' - '.$date_location['start_date'].' - '.$date_location['location'].' - '.$date_location['adress'].";";
+        //     $dates_between = explode(',',$date_location['dates_between']);
+        //     foreach ($dates_between as $date_between)
+        //         $date_location_xml.=$date_between.' - '.$date_between.' - '.$date_location['location'].' - '.$date_location['adress'].";";
 
-            $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
-        }
-        $location_xml = ['value'=>$date_location_xml, 'label'=>$date_location_xml ];
-        update_field('data_locaties_xml',$location_xml,$id_course);
+        //     $date_location_xml.=$date_location['end_date'].' - '.$date_location['end_date'].' - '.$date_location['location'].' - '.$date_location['adress'];
+        // }
+        // $location_xml = ['value' => $date_location_xml, 'label' => $date_location_xml ];
+        // update_field('data_locaties_xml',$location_xml,$id_course);
+
+        $data_locaties = array();
+        $row = "";
+        $data_training = $training_dates_locations; 
+        foreach($data_training as $datum):
+            $row = "";
+            $row_start_date = date("d/m/Y H:i:s", strtotime($datum['start_date']));
+            $row .= $row_start_date .'-'. $row_start_date .'-'. $datum['location'] .'-'. $datum['adress'] .';'; 
+
+            $middles = explode(',', $datum['dates_between']);
+            foreach($middles as $middle){
+                $middle = str_replace('/', '.', $middle);
+                $row_middle = date("d/m/Y H:i:s", strtotime($middle));
+                $row .= $row_middle .'-'. $row_middle .'-'. $datum['location'] .'-'. $datum['adress'] .';'; 
+            }
+    
+            $row_end_date = date("d/m/Y H:i:s", strtotime($datum['end_date']));
+            $row .= $row_end_date .'-'. $row_end_date .'-'. $datum['location'] .'-'. $datum['adress']; 
+          
+            array_push($data_locaties, $row);    
+        endforeach;
+        update_field('data_locaties_xml', $data_locaties, $id_course);
         $course->data_locaties_xml = get_field('data_locaties_xml',$id_course);
         $isCourseUpdated = true;
     }
@@ -4113,26 +4153,66 @@ function countCourseType($course_type){
 }
 function all_courses_in_plateform()
 {
-    $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $type = isset($_GET['type']) ? $_GET['type'] : '' ;
+    $page = $_GET['page'] ?? 1;
+    $type = $_GET['type'] ?? '';
+    $max = $_GET['max'] ?? null;
+    $min = $_GET['min'] ?? null;
+    $experts = $_GET['experts'] ?? null;
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => 20,
         'order' => 'DESC' ,
-        'ordevalue' => $type,
-        'meta_key' => $type ? 'course_type' : '',
-        'meta_value' => $type,
+        'meta_query' => array(),
         'paged' => $page,
     );
-    // course_type[]=Video&course_type[]=Podcast
+    // filter by course type
+    if ($type) {
+        $args['meta_query'][] = array(
+            'key' => 'course_type',
+            'value' => $type,
+            'compare' => 'IN'
+        );
+    }
+    // Filter by price
+
+    if ($min !== null && $max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => array($min, $max),
+            'type' => 'numeric',
+            'compare' => 'BETWEEN'
+        );
+    } elseif ($min !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $min,
+            'type' => 'numeric',
+            'compare' => '>='
+        );
+    } elseif ($max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $max,
+            'type' => 'numeric',
+            'compare' => '<='
+        );
+    }
+    if ($experts)
+        $args['author__in'] = $experts;
+
     $courses = get_posts($args);
     $all_courses = array();
+
     foreach ($courses as $course) {
         $course->visibility = get_field('visibility',$course->ID) ?? [];
-        $author = get_user_by( 'ID', $course -> post_author  );
-        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $course-> author = new Expert ($author , $author_img);
+        if ($course -> post_author) {
+            $author = get_user_by('ID', $course->post_author);
+            if ($author) {
+                $author_img = get_field('profile_img', 'user_' . $author->ID) != false ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                $course->author = new Expert ($author, $author_img);
+            }
+        }
         $course->longDescription = get_field('long_description',$course->ID);
         $course->shortDescription = get_field('short_description',$course->ID);
 
@@ -4153,16 +4233,10 @@ function all_courses_in_plateform()
 
         $all_courses[] = new Course($course);
     }
-    $arg_paginated =  array(
-        'post_type' => array('course','post'),
-        'post_status' => 'publish',
-        'order' => 'DESC' ,
-        'posts_per_page' => -1,
-        'ordevalue' => $type,
-        'meta_key' => $type ? 'course_type' : '',
-        'meta_value' => $type,
-    );
-    $count_all_course = count(get_posts($arg_paginated));
+
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
     $total_pages = ceil($count_all_course / 20);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
@@ -4190,7 +4264,6 @@ function all_courses_in_plateform()
 
 function all_company_in_plateform()
 {
-
     $company_experts = array();
     $users = get_users();
     foreach ($users as $user):
@@ -4482,7 +4555,7 @@ function addReveiewUser($data)
     if (empty($initial_review))
         $review_user = array($review_user);
     update_field('user_reviews', $review_user, 'user_' . $id_user);
-    //var_dump([$review_user]);die;
+
     return new WP_REST_Response(
         array(
             //'review'=>$review_user,
@@ -4490,4 +4563,169 @@ function addReveiewUser($data)
             'all_review' => get_field('user_reviews', 'user_' . $id_user)?:[],
             //'all_review' =>$review_user
         ),201 );
+}
+function get_code_loket($data)
+{
+    $client_id = $data['client_id']; //ThirdPartiesTestClient
+    $client_secret = $data['client_secret'];
+    $redirect = "https://livelearn.nl";
+    /*
+    $baseurl  =  'https://oauth.loket-acc.nl';
+    $redirect = get_site_url()."/dashboard/company/people/";
+    $status = rand(1000,9999);
+    $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
+    // header("Location: $url");
+    $tokenUrlProd = "https://oauth.loket.nl/token";
+    $tokenUrlAccept = "https://oauth.loket-acc.nl/token";
+    */
+    $tokenUrl = "https://oauth.loket-acc.nl/token";
+    $state = rand(1000,9999);
+    $url_redirect = "https://oauth.loket-acc.nl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$state";
+    //header('location :'.$url_redirect);
+
+    return new WP_REST_Response( array(
+        'url' => $url_redirect,
+        )
+    );
+
+}
+
+function get_employee_loket($data)
+{
+    $code = $data['code'];
+    $client_id = $data['client_id']; //ThirdPartiesTestClient
+    $client_secret = $data['client_secret'];
+    $redirect = $data['redirect'];
+
+    $user_connected = wp_get_current_user();
+    if (!$user_connected)
+        return new WP_REST_Response( array(
+            'message' =>'you need to connecte !!!'
+        ));
+
+    $company = get_field('company',  'user_' . $user_connected->ID);
+    if(!empty($company))
+        $company_connected = $company[0]->post_title;
+
+    $grant_type = "authorization_code";
+    // URL endpoint to get token
+    $token_url = "https://oauth.loket-acc.nl";
+    // Corps de la demande POST
+    $body = http_build_query(array(
+        'code' => $code,
+        'client_id' => $client_id,
+        'client_secret' => $client_secret,
+        'redirect_uri' => $redirect,
+        'grant_type' => $grant_type
+    ));
+    // header of POST request
+    $headers = array(
+        'Content-Type: application/x-www-form-urlencoded',
+        'Content-Length: ' . strlen($body)
+    );
+    $options = array(
+        'http' => array(
+            'method' => 'POST',
+            'header' => implode("\r\n", $headers),
+            'content' => $body
+        )
+    );
+    $context = stream_context_create($options);
+    //POST request
+    $response = file_get_contents($token_url."/token", false, $context);
+    $data = json_decode($response, true); // token getted
+
+    $token = $data['access_token'];
+
+    // id company
+    $url_employees="https://api.loket-acc.nl/v2/providers/employers";
+    $options = array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => "Authorization: Bearer $token\r\n" .
+                "Content-Type: application/json\r\n"
+        )
+    );
+    $context = stream_context_create($options);
+    $response = file_get_contents($url_employees, false, $context);
+
+    $json_data = json_decode($response, true);
+    if ($json_data) {
+        $embedded = $json_data['_embedded'];
+        $id_entreprise = $embedded[0]['id'];
+        update_field('id_company_loket',$id_entreprise,$company_connected->ID);
+        // var_dump("id de l'entreprise : $id_entreprise");
+        //get list of all employee
+        $list = "https://api.loket-acc.nl/v2/providers/employers/$id_entreprise/employees";
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
+                    "Authorization: Bearer $token\r\n",
+                'method' => 'GET'
+            )
+        );
+        $context = stream_context_create($options);
+        $liste_employees = file_get_contents($list, false, $context);
+        $list_of_all_employees = array();
+
+        if ($liste_employees) {
+            $empl=json_decode($liste_employees,true);
+            foreach ($empl['_embedded'] as $key => $employee) {
+                $tab = [];
+                $tab['firstName'] = $employee['personalDetails']['firstName'];
+                $tab['lastName'] = $employee['personalDetails']['lastName'];
+                $tab['dateOfBirth'] = $employee['personalDetails']['dateOfBirth'];
+                $tab['aowDate'] = $employee['personalDetails']['aowDate'];
+                $tab['photo'] = $employee['personalDetails']['photo'];
+                $tab['phoneNumber'] = $employee['contactInformation']['phoneNumber'];
+                $tab['mobilePhoneNumber'] = $employee['contactInformation']['mobilePhoneNumber'];
+                $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
+                $tab['street'] = $employee['address']['street'];
+                $tab['city'] = $employee['address']['city'];
+                $list_of_all_employees[] = $tab;
+            }
+        }
+    }
+    else {
+
+    }
+
+    return new WP_REST_Response( array(
+       'token' =>$token,
+       'code' =>$code,
+       'employees' =>$list_of_all_employees,
+    ));
+}
+
+function get_employees_polaris($data)
+{
+    $login = $data['login'];
+    $password = $data['password'];
+    $required_parameters = ['login','password'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $url = "https://login.bcs.nl/API/RestService/export?Connector=aqMedewerker_test";
+    $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if (!$response)
+        return new WP_REST_Response(array(
+            'employees' =>[]
+        ));
+
+    $employeesObject = simplexml_load_string($response);
+    $employees = json_decode(json_encode($employeesObject), true);
+
+    return new WP_REST_Response( array(
+        'employees' =>  $employees['Regel']
+    ));
 }

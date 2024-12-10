@@ -21,10 +21,6 @@ if (empty($search_txt_course)) {
      's' => $search_txt_course
 );
 }
-
-
-
-
 $courses = get_posts($args);
 
 ?>
@@ -40,17 +36,26 @@ $courses = get_posts($args);
                 if (!$thumbnail) {
                     $thumbnail = get_stylesheet_directory_uri() . '/img/' . strtolower(get_field('course_type', $course->ID)) . '.jpg';
                 }
-                
-                // Categories
-                $category = " ";
-                $category_id = intval(explode(',', get_field('categories', $course->ID)[0]['value'])[0]);
-                $category_xml = intval(get_field('category_xml', $course->ID)[0]['value']);
-                if ($category_xml && $category_xml != 0) {
-                    $category = (String)get_the_category_by_ID($category_xml);
-                }
-                if ($category_id && $category_id != 0) {
-                    $category = (String)get_the_category_by_ID($category_id);
-                }
+
+               //Categories
+               $category = "";
+               $id_category = 0;
+               $category_id = 0;
+               $categories = get_field('categories',  $course->ID);
+               if ($categories)
+                  if (isset($categories[0]['value'])) {
+                     $category_id = intval($categories[0]['value']);
+                  }
+               $categories_xml = get_field('category_xml', $course->ID);
+               if ($categories_xml)
+                  $category_xml = intval($categories_xml[0]['value']);
+               if(isset($category_xml))
+                  if($category_xml != 0)
+                     $category = (String)get_the_category_by_ID($category_xml);
+
+               if($category_id)
+                  if($category_id != 0)
+                     $category = (String)get_the_category_by_ID($category_id);
 
                 // Author Image
                 $image_author = get_field('profile_img', 'user_' . $course->post_author);
@@ -61,21 +66,6 @@ $courses = get_posts($args);
                 $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
                 if (!empty($company)) {
                     $company_logo = get_field('company_logo', $company[0]->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder.png';
-                }
-
-                // Subtopics
-                $course_subtopics = get_field('categories', $course->ID);
-                $field = '';
-                if ($course_subtopics != NULL) {
-                    if (is_array($course_subtopics) || is_object($course_subtopics)) {
-                        foreach ($course_subtopics as $course_subtopic) {
-                            if (!$course_subtopic || !is_int($course_subtopic['value'])) continue;
-                            $topic_category = get_the_category_by_ID($course_subtopic['value']);
-                            if (is_wp_error($topic_category)) continue;
-                            $field .= (String)$topic_category . ',';
-                        }
-                        $field = rtrim($field, ',');
-                    }
                 }
 
                 // Course type and Links
@@ -104,6 +94,40 @@ $courses = get_posts($args);
                     $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID . "&edit";
                     $link = get_permalink($course->ID);
                 }
+               $lang = get_field('language', $course->ID);
+               $language_display = '';
+               if ($lang){
+                  if (is_array($lang))
+                     $language_display = $lang[0];
+                  else
+                     $language_display = $lang;
+                  // take juste 2 first letter
+                  $lang_first_character = strtolower(substr($language_display,0,2));
+
+                  switch ($lang_first_character){
+                     case 'en':
+                        $language_display='English';
+                        break;
+                     case 'fr':
+                        $language_display='French';
+                        break;
+                     case 'de':
+                        $language_display='Dutch';
+                        break;
+                     case 'nl':
+                        $language_display='Nederlands';
+                        break;
+                     case 'it':
+                        $language_display='Italian';
+                        break;
+                     case 'Ib':
+                        $language_display='Luxembourgish';
+                        break;
+                     case 'sk':
+                        $language_display='Slovak';
+                        break;
+                  }
+               }
 
                 // Start date
                 $date = new DateTime($course->post_date);
@@ -126,8 +150,19 @@ $courses = get_posts($args);
                 echo '    <td><div class="for-img"><img src="' . $thumbnail . '" alt="" srcset=""></div></td>';
                 echo '    <td class="textTh text-left first-td-databank"><a style="color:#212529;font-weight:bold" href="' . $link . '">' . $course->post_title . '</a></td>';
                 echo '    <td class="textTh">' . $course_type . '</td>';
+                echo '    <td class="textTh">' . $language_display . '</td>';
                 echo '    <td id="" class="textTh td_subtopics">' . $price . '</td>';
-                echo '    <td id="' . $course->ID . '" class="textTh td_subtopics">' . $category . $field . '</td>';
+                if ($category) {
+                   echo '    <td id="' . $course->ID . '" class="textTh td_subtopics btn"> 
+                       <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element" >
+                      ' . $category . '
+                      </div>
+                   </td>';
+                } else {
+                   echo '    <td id="' . $course->ID . '" class="textTh td_subtopics btn"> 
+                            <button class="btn btn-success" >add subtopics</button>
+                        </td>';
+                }
                 echo '    <td class="textTh "><div class="bg-element"><p>' . $formattedDate . '</p></div></td>';
                 echo '    <td class="textTh block-pointer td_authors"><div id="id_authors" class="d-flex content-teacher" data-toggle="modal" data-target="#showTeacher" type="button" data-value="' . $course->ID . '">';
                 echo '        <img src="' . $image_author . '" alt="image course" width="25" height="25">';
