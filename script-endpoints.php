@@ -226,8 +226,8 @@ function delete_odl_courses_databank(){
 }
 function migration_episodes_video()
 {
-    $type = $_GET['type'] ? : 'Video';
-    $page = $_GET['page'] ? : 1;
+    $type = $_GET['type'] ?? 'Video';
+    $page = $_GET['page'] ?? 1;
 
     $args = array(
         'post_type' => 'course',
@@ -261,7 +261,8 @@ function migration_episodes_video()
             $message = "";
             $old_episodes_json = file_get_contents($fileName);
             $old_episodes_array = json_decode($old_episodes_json,true);
-            $episodes = array_merge($old_episodes_array,$episodes);
+            if ($old_episodes_array)
+                $episodes = array_merge($old_episodes_array,$episodes);
 
             $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
              $insert = file_put_contents($fileName,$newJsonContent);
@@ -294,8 +295,8 @@ function migration_episodes_video()
 }
 
 function migration_episodes_podcast(){
-    $type = $_GET['type'] ? : 'Podcast';
-    $page = $_GET['page'] ? : 1;
+    $type = $_GET['type'] ?? 'Podcast';
+    $page = $_GET['page'] ?? 1;
 
     $args = array(
         'post_type' => 'course',
@@ -314,8 +315,13 @@ function migration_episodes_podcast(){
             $course_type = get_field('course_type', $course->ID);
             if ($course_type != 'Podcast')
                 continue;
+
             $podcasts = get_field('podcasts_index', $course->ID);
+            if (!$podcasts)
+                continue;
+
             foreach ($podcasts as $podcast) {
+
                 $episodes[] = array(
                     'post_id' => $course->ID, // so not need to make post type
                     'episode_id'=> $podcast['podcast_url'],
@@ -324,6 +330,7 @@ function migration_episodes_podcast(){
                     'episode_description'=>$podcast['podcast_description'],
                     'episode_date' => $podcast['podcast_date'] ? : date('Y-m-d H:i:s'),
                 );
+
             }
         }
 
@@ -331,7 +338,8 @@ function migration_episodes_podcast(){
             $message = "";
             $old_episodes_json = file_get_contents($fileName);
             $old_episodes_array = json_decode($old_episodes_json,true);
-            $episodes = array_merge($old_episodes_array,$episodes);
+            if ($old_episodes_array)
+                $episodes = array_merge($old_episodes_array,$episodes);
 
             $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
              $insert = file_put_contents($fileName,$newJsonContent);
@@ -356,7 +364,7 @@ function migration_episodes_podcast(){
     $numbers_of_pages = range(1, $total_pages);
     return new WP_REST_Response( array(
         'message' =>$message,
-        'all_podcast_coiurse' =>$count_all_course,
+        'all_podcast_course' =>$count_all_course,
         'pages' => $numbers_of_pages,
         //'episodes' =>$episodes
     ),201);
@@ -469,7 +477,7 @@ function search_podcast_by_Id_update($id_course) : bool
 }
 function update_podcast_on_podcastindex()
 {
-    $page = $_GET['page'] ? : 1;
+    $page = $_GET['page'] ?? 1;
     $type = 'Podcast';
     $args = array(
         'post_type' => 'course',
@@ -554,7 +562,7 @@ function get_podcast_episode_by_id($id_course)
         if ($episodes)
             $episodes = array_filter($episodes,function ($episode) use ($id_course){
                 return $episode['post_id'] == $id_course;
-            });
+            }); // recup just 20 premiers episodes
 
 
     // $episodes = array_values($episodes);
