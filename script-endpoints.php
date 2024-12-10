@@ -264,7 +264,7 @@ function migration_episodes_video()
             $episodes = array_merge($old_episodes_array,$episodes);
 
             $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
-            // $insert = file_put_contents($fileName,$newJsonContent);
+             $insert = file_put_contents($fileName,$newJsonContent);
             if ($insert) {
                 $message = "content added successfully";
             } else {
@@ -334,7 +334,7 @@ function migration_episodes_podcast(){
             $episodes = array_merge($old_episodes_array,$episodes);
 
             $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
-            // $insert = file_put_contents($fileName,$newJsonContent);
+             $insert = file_put_contents($fileName,$newJsonContent);
             if ($insert) {
                 $message = "content added successfully";
             } else {
