@@ -98,21 +98,21 @@ if($optie == "✔"){
         $videos = explode(';', $course->videos);
         $youtube_video = array();
         $youtube_videos = array();
+        $youtube_videos_json = array();
 
         foreach($videos as $item){
             $video = explode('~', $item);
             
             if(!isset($video[1]))
                 continue;
-            /*
+
             $youtube_video['id'] = $video[0];
             $youtube_video['title'] = $video[1];
             $youtube_video['thumbnail_url'] = $video[2];
-
             array_push($youtube_videos, $youtube_video);
-            */
 
-            $youtube_videos[] = array(
+
+            $youtube_videos_json[] = array(
                 'post_id' => $id_post, // so not need to make post type
                 'episode_id'=>$video[0],
                 'episode_title'=>$video[1],
@@ -122,12 +122,12 @@ if($optie == "✔"){
         }
 
         if ($fileName){
-            if (!empty($youtube_videos)){
+            if (!empty($youtube_videos_json)){
                 $old_episodes_json = file_get_contents($fileName);
-                $old_episodes_array = json_decode($old_episodes_json,true);
-                $youtube_videos = array_merge($old_episodes_array,$youtube_videos);
+                $old_episodes_array = json_decode($old_episodes_json,true)?:[];
+                $youtube_videos_json = array_merge($old_episodes_array,$youtube_videos_json);
 
-                $newJsonContent = json_encode( $youtube_videos,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+                $newJsonContent = json_encode( $youtube_videos_json,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
                 $insert = file_put_contents($fileName,$newJsonContent);
                 if ($insert) {
                     echo "content added successfully";
@@ -201,7 +201,7 @@ if($optie == "✔"){
         update_field('origin_id', $feedid, $id_post);
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post); // to comment if the proceses well done
-        search_podcast_by_Id_update($id_post);
+        save_podcast_in_json_file($id_post); //just to make sure
     }
     //Insert Others
     else if (in_array(strval($course->type), $type) ) {
