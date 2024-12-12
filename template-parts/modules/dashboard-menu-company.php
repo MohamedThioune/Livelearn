@@ -1,8 +1,8 @@
 <?php
     global $wp;
-    $global_product_id = 9873;
-    $global_price = 5;
-    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+    // $global_product_id = 9873;
+    // $global_price = 5;
+    // $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
 
     $url = $wp->request;
     
@@ -31,42 +31,42 @@
     }
     $instrument = null;
     /** Woocommerce API client for php - list subscriptions **/
-    $endpoint = "subscriptions";
-    $subscriptions = makeApiCallWoocommerce('https://livelearn.nl/wp-json/wc/v3/subscriptions', 'GET');
-    //Credit cards 
-    $mollie = new \Mollie\Api\MollieApiClient();
-    $mollie->setApiKey($global_mollie_key);
+    // $endpoint = "subscriptions";
+    // $subscriptions = makeApiCallWoocommerce('https://livelearn.nl/wp-json/wc/v3/subscriptions', 'GET');
+    // //Credit cards 
+    // $mollie = new \Mollie\Api\MollieApiClient();
+    // $mollie->setApiKey($global_mollie_key);
 
-    if(!empty($subscriptions)){
-        $instrument = 'invoice';
-        foreach($subscriptions as $row){
-            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
-                $access_granted = 1;
-                $abonnement = (Object)$row;
-                $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id . "/orders";
-                $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');        
-                break;  
+    // if(!empty($subscriptions)){
+    //     $instrument = 'invoice';
+    //     foreach($subscriptions as $row){
+    //         if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
+    //             $access_granted = 1;
+    //             $abonnement = (Object)$row;
+    //             $endpoint_order_invoice = "https://livelearn.nl/wp-json/wc/v3/subscriptions/" . $abonnement->id . "/orders";
+    //             $abonnement->invoices = makeApiCallWoocommerce($endpoint_order_invoice, 'GET');        
+    //             break;  
 
-            } 
-        }
-    }
+    //         } 
+    //     }
+    // }
 
-    if(!$access_granted){
-        $mollie_subscriptions = $mollie->subscriptions->page();
-        if($mollie_subscriptions)
-            foreach($mollie_subscriptions as $row)
-                if($row->metadata->company == $company_connected && $row->status == 'active'){
-                    $access_granted = 1;
-                    $abonnement = $row;
-                    $instrument = 'card';
-                    // var_dump($row);
-                    // die();
-                    //Payment subs
-                    $customer = $mollie->customers->get($row->customerId);
-                    $abonnement->cards = $customer->getSubscription($abonnement->id)->payments();
-                    break;                
-                }      
-    }
+    // if(!$access_granted){
+    //     $mollie_subscriptions = $mollie->subscriptions->page();
+    //     if($mollie_subscriptions)
+    //         foreach($mollie_subscriptions as $row)
+    //             if($row->metadata->company == $company_connected && $row->status == 'active'){
+    //                 $access_granted = 1;
+    //                 $abonnement = $row;
+    //                 $instrument = 'card';
+    //                 // var_dump($row);
+    //                 // die();
+    //                 //Payment subs
+    //                 $customer = $mollie->customers->get($row->customerId);
+    //                 $abonnement->cards = $customer->getSubscription($abonnement->id)->payments();
+    //                 break;                
+    //             }      
+    // }
     
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
         header('Location: /dashboard/user');

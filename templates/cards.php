@@ -5,10 +5,10 @@
 
 <?php
 // Mollie API client for php //
-$global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
-$global_price = 5;
-$mollie = new \Mollie\Api\MollieApiClient();
-$mollie->setApiKey($global_mollie_key);
+// $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+// $global_price = 5;
+// $mollie = new \Mollie\Api\MollieApiClient();
+// $mollie->setApiKey($global_mollie_key);
 
 //Team members
 $user_id = get_current_user_id();
