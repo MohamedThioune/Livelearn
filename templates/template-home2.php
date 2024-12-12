@@ -1387,11 +1387,16 @@
                     /*
                     * Price
                     */
-                    $p = get_field('price', $course->ID);
-                    if($p)
-                        $price = number_format($p, 2, '.', ',');
-                    else
-                        $price = 'Gratis';
+                    // $p = get_field('price', $course->ID);
+                    // if($p)
+                    //     $price = number_format($p, 2, '.', ',');
+                    // else
+                    //     $price = 'Gratis';
+
+                    $price_noformat = get_field('price', $course->ID) ?: 0;
+                    $price = 'Gratis';
+                    if($price_noformat) 
+                        $price = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $price;
 
                     /*
                     * Image
