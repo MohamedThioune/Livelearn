@@ -32,9 +32,12 @@ function artikel($id){
                   $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
   }
   $sample['image'] = $thumbnail;
-  $price_noformat = "";
-  $price_noformat = get_field('price', $post->ID) ?: "0";
-  $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
+
+  $price_noformat = get_field('price', $post->ID) ?: 0;
+  $sample['price'] = 'Gratis';
+  if($price_noformat) 
+    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $sample['price'];
+
   $sample['language'] = get_field('language', $post->ID);
   //Certificate
   $sample['certificate'] = "No";
