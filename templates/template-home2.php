@@ -1396,7 +1396,7 @@
                     $price_noformat = get_field('price', $course->ID) ?: 0;
                     $price = 'Gratis';
                     if($price_noformat) 
-                        $price = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $price;
+                        $price = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $price; 
 
                     /*
                     * Image
