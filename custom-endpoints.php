@@ -8110,12 +8110,91 @@ function get_course_feedback(WP_REST_Request $request) {
 }
 
 
-
-
-
  /**
  * Likes endpoints 
  */
+
+  
+
+ /**
+  * Last views endpoint
+  */
+
+  function addToFixedArray($array, $element, $maxSize = 6) {
+    if (count($array) < $maxSize) {
+        $array[] = $element; // Ajouter l'élément si le tableau n'est pas complet.
+    } else {
+        array_shift($array); // Supprimer le premier élément.
+        $array[] = $element; // Ajouter le nouvel élément à la fin.
+    }
+    return $array;
+}
+
+function getCoursesFromIds($ids, $postType = 'course') {
+
+    $args = [
+        'post_type' => $postType,
+        'post__in' => $ids,
+        'orderby' => 'post__in',
+        'posts_per_page' => -1
+    ];
+    return empty($ids) ? [] : get_posts($args);
+}
+
+function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
+    // Récupérer les cours correspondant aux IDs
+    $courses = getCoursesFromIds($ids, $postType);
+
+    // Si le nombre de cours est inférieur à $maxSize
+    if (count($courses) < $maxSize) {
+        $args = [
+            'post_type' => $postType,
+            'posts_per_page' => $maxSize - count($courses),
+            'post__not_in' => $ids, // Exclure les IDs déjà présents
+            'orderby' => 'rand',
+            'meta_query' => [
+                [
+                    'key' => 'course_type',
+                    'value' => ['podcast', 'video'],
+                    'compare' => 'IN'
+                ]
+            ]
+        ];
+        $randomCourses = get_posts($args);
+
+        // Ajouter les cours aléatoires pour compléter la liste
+        $courses = array_merge($courses, $randomCourses);
+    }
+
+    return $courses;
+}
+
+  function getLastViewedPodcastOrVideoListfunction ()
+  {
+    $user_id = $GLOBALS['user_id'];
+    $ids = get_user_meta($user_id, 'recent_views', true) ?: [];
+    $courses = getCompleteCourses($ids);
+    return rest_ensure_response($courses);
+  }
+
+  function updateLastViewdPodcastorVideoListfunction ($request) 
+  {
+    $params = $request->get_json_params();
+    $newId = isset($params['course_id']) ? intval($params['course_id']) : null;
+
+    if (!$newId) {
+        return new WP_Error('invalid_course_id', 'Invalid course ID provided', ['status' => 400]);
+    }
+    $user_id = $GLOBALS['user_id'];
+    $ids = get_user_meta($user_id, 'recent_views', true) ?: [];
+    $ids = addToFixedArray($ids, $newId);
+    update_user_meta(get_current_user_id(), 'recent_views', $ids);
+    return rest_ensure_response(['message' => 'Course updated successfully', 'updated_courses' => $ids]);
+  }
+
+  /**
+  * Last views endpoint
+  */
 
 
 
