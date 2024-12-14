@@ -32,9 +32,12 @@ function artikel($id){
                   $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
   }
   $sample['image'] = $thumbnail;
-  $price_noformat = "";
-  $price_noformat = get_field('price', $post->ID) ?: "0";
-  $sample['price'] = ($price_noformat != "0") ? number_format($price_noformat, 2, '.', ',') : $sample['price'] = 'Gratis';
+
+  $price_noformat = get_field('price', $post->ID) ?: 0;
+  $sample['price'] = 'Gratis';
+  if($price_noformat) 
+    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $sample['price'];
+
   $sample['language'] = get_field('language', $post->ID);
   //Certificate
   $sample['certificate'] = "No";
@@ -365,7 +368,7 @@ function challengeSteps($challenge, $userID){
 }
 
 //Detail company
-function company($id){
+function company($id, $no_job = null){
   $param_post_id = $id ?? 0;
   $sample = array();
   $post = get_post($param_post_id);
@@ -389,22 +392,24 @@ function company($id){
   $sample['sector'] = get_field('company_sector', $post->ID) ?: 'xxxxx';
   $sample['logo'] = get_field('company_logo', $post->ID)? : get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
 
-  //Open position
-  $args = array(
-    'post_type' => 'job',
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'ordevalue' => $post->ID,
-    'order' => 'DESC' ,
-    'meta_key' => 'job_company',
-    'meta_value' => $post->ID
-  );
-  $main_jobs = get_posts($args);
-  $sample['count_open_jobs'] = empty($main_jobs) ? 0 : count($main_jobs);
-  $jobs = array();
-  foreach ($main_jobs as $job)
-    $jobs[] = job($job->ID);
-  $sample['open_jobs'] = $jobs;
+  if(!$no_job):
+    //Open position
+    $args = array(
+      'post_type' => 'job',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'ordevalue' => $post->ID,
+      'order' => 'DESC' ,
+      'meta_key' => 'job_company',
+      'meta_value' => $post->ID
+    );
+    $main_jobs = get_posts($args);
+    $sample['count_open_jobs'] = empty($main_jobs) ? 0 : count($main_jobs);
+    $jobs = array();
+    foreach ($main_jobs as $job)
+      $jobs[] = job($job->ID);
+    $sample['open_jobs'] = $jobs;
+  endif;
 
   $sample = (Object)$sample;
 
@@ -790,6 +795,7 @@ function challenge($id, $userApplyId = null){
   $company = get_field('company_challenge', $post->ID);
   $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
   $main_company = array();
+  if($company):
   $main_company['ID'] = !empty($company) ? $company->ID : 0;
   $main_company['title'] = !empty($company) ? $company->post_title : '';
   $main_company['logo'] = !empty($company) ? get_field('company_logo',  $company->ID) : $placeholder;
@@ -800,6 +806,7 @@ function challenge($id, $userApplyId = null){
   $main_company['place'] = !empty($company) ? get_field('company_place',  $company->ID) : '';
   $main_company['country'] = !empty($company) ? get_field('company_country',  $company->ID) : '';
   $main_company['website'] = !empty($company) ? get_field('company_website',  $company->ID) : '';
+  endif;
   $sample['company'] = (Object)$main_company;
 
   $sample = (Object)$sample;
@@ -1255,6 +1262,7 @@ function postDetail(WP_REST_Request $request){
 //[POST]Detail company
 function companyDetail(WP_REST_Request $request){
   $param_post_id = $request['slug'] ?? 0;
+  $no_job = isset($request['no_job']) ? $request['no_job'] : 0;
   $required_parameters = ['slug'];
   
   $company = get_page_by_path($param_post_id, OBJECT, 'company');
@@ -1273,7 +1281,7 @@ function companyDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $sample = company($company->ID);
+  $sample = company($company->ID, $no_job);
 
   $response = new WP_REST_Response($sample);
   $response->set_status(200);
@@ -5040,6 +5048,24 @@ function startChallenge(WP_REST_Request $request){
   endif;
 
   $table_start_challenge = $wpdb->prefix . 'start_challenge';
+
+  //Check history participation
+  $sql = $wpdb->prepare(
+    "SELECT * FROM $table WHERE challenge_id = %s AND user_id = %s",
+    $request['challenge_id'], $request['user_id']
+  );
+  $dataParticipation = $wpdb->get_results($sql);
+
+  $errors = [];
+  if($dataParticipation):
+    //Check if there are no errors
+    $errors['errors'] = 'You already participated to this challenge !';
+    $errors = (Object)$errors;
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+
   $data = [
     'challenge_id' => $request['challenge_id'],
     'user_id' => $request['user_id'],
@@ -5065,6 +5091,6 @@ function startChallenge(WP_REST_Request $request){
 
   $data['ID'] = $start_id;
   $response = new WP_REST_Response($data);
-  $response->set_status(400);
+  $response->set_status(201);
   return $response;
 }

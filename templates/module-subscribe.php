@@ -1,8 +1,8 @@
 <?php
 
 function woocommmerce_subscribe($information, $active){
-    $global_product_id = 9873;
-    $global_price = 5;
+    // $global_product_id = 9873;
+    // $global_price = 5;
 
     /** Woocommerce API client for php **/
     $woocommerce = new Client(
@@ -92,65 +92,65 @@ function woocommmerce_subscribe($information, $active){
     return 0;
 }
 
-function mollie_card_subscribe($information, $active){
-    $base_url = get_site_url();
-    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
-    $global_price = 5;
-    $mollie = new \Mollie\Api\MollieApiClient();
-    $mollie->setApiKey($global_mollie_key);
-    $user_id = get_current_user_id();
-    $customer_id = get_field('mollie_customer_id', 'user_' . $user_id);
+// function mollie_card_subscribe($information, $active){
+//     $base_url = get_site_url();
+//     $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+//     $global_price = 5;
+//     $mollie = new \Mollie\Api\MollieApiClient();
+//     $mollie->setApiKey($global_mollie_key);
+//     $user_id = get_current_user_id();
+//     $customer_id = get_field('mollie_customer_id', 'user_' . $user_id);
 
-    if(!$customer_id){
-        $customer = $mollie->customers->create([
-            'name' => $information['first_name'] . ' ' . $information['last_name'],
-            'email' => $information['email'],
-            'metadata' => [
-                'user_id' => $user_id,
-            ]
-        ]);
-        update_field('mollie_customer_id', $customer->id, 'user_' . $user_id);
-        $customer_id = $customer->id;
-    }
+//     if(!$customer_id){
+//         $customer = $mollie->customers->create([
+//             'name' => $information['first_name'] . ' ' . $information['last_name'],
+//             'email' => $information['email'],
+//             'metadata' => [
+//                 'user_id' => $user_id,
+//             ]
+//         ]);
+//         update_field('mollie_customer_id', $customer->id, 'user_' . $user_id);
+//         $customer_id = $customer->id;
+//     }
 
-    if(!$customer_id){
-        echo "<center><br><a class='btn btn-default' style='background : #E10F51; color : white' href='#'>Something went wrong, please try again later !</a></center>";
-        http_response_code(500);
-        return 0;
-    }
+//     if(!$customer_id){
+//         echo "<center><br><a class='btn btn-default' style='background : #E10F51; color : white' href='#'>Something went wrong, please try again later !</a></center>";
+//         http_response_code(500);
+//         return 0;
+//     }
 
-    /** Requirement information */
-    $company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
+//     /** Requirement information */
+//     $company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
 
-    //Create your payments
-    $data_payment = [
-        'method' => 'creditcard',
-        'amount' => [
-            'currency' => 'EUR',
-            'value' => '0.01',
-        ],
-        'description' => 'First payment - ' . $information['first_name'],
-        'sequenceType' => 'first',
-        'redirectUrl' => $base_url . '/cards-payment',
-        'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
-        'metadata' => [
-            'company' => $company_title,
-        ]
-    ];
-    // 'woo_subscription_id' => $subscription->id,
-    $payment = $mollie->customers->get($customer_id)->createPayment($data_payment);
-    // var_dump($payment);
-    // return $payment;
+//     //Create your payments
+//     $data_payment = [
+//         'method' => 'creditcard',
+//         'amount' => [
+//             'currency' => 'EUR',
+//             'value' => '0.01',
+//         ],
+//         'description' => 'First payment - ' . $information['first_name'],
+//         'sequenceType' => 'first',
+//         'redirectUrl' => $base_url . '/cards-payment',
+//         'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
+//         'metadata' => [
+//             'company' => $company_title,
+//         ]
+//     ];
+//     // 'woo_subscription_id' => $subscription->id,
+//     $payment = $mollie->customers->get($customer_id)->createPayment($data_payment);
+//     // var_dump($payment);
+//     // return $payment;
     
-    if (!isset($payment->_links->checkout->href)) {
-        echo $base_url . "/?message='Error occurred on transaction !'";
-        http_response_code(500);
-        return 0;
-    }
-    else
-        return $payment->_links->checkout->href;
+//     if (!isset($payment->_links->checkout->href)) {
+//         echo $base_url . "/?message='Error occurred on transaction !'";
+//         http_response_code(500);
+//         return 0;
+//     }
+//     else
+//         return $payment->_links->checkout->href;
 
-}
+// }
 
 function makeApiCallMollie($endpoint, $params, $type) {
     // credentials
