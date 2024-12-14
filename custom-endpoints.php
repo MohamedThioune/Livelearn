@@ -8174,7 +8174,56 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
     $user_id = $GLOBALS['user_id'];
     $ids = get_user_meta($user_id, 'recent_views', true) ?: [];
     $courses = getCompleteCourses($ids);
-    return rest_ensure_response($courses);
+    $refactored_courses = [];
+
+    for ($i = 0; $i < count($courses); $i++) {
+      $courses[$i]->visibility = get_field('visibility', $courses[$i]->ID) ?? [];
+      $author = get_user_by('ID', $courses[$i]->post_author);
+      $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+      if ($courses[$i]->visibility != []) {
+          if ($author_company != $current_user_company) continue;
+      }
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $courses[$i]->experts = array();
+      $experts = get_field('experts', $courses[$i]->ID);
+      if (!empty($experts)) {
+          foreach ($experts as $key => $expert) {
+              $expert = get_user_by('ID', $expert);
+              $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              array_push($courses[$i]->experts, new Expert($expert, $experts_img));
+          }
+      }
+
+      $courses[$i]->author = new Expert($author, $author_img);
+      $courses[$i]->longDescription = get_field('long_description', $courses[$i]->ID);
+      $courses[$i]->shortDescription = get_field('short_description', $courses[$i]->ID);
+      $courses[$i]->courseType = get_field('course_type', $courses[$i]->ID);
+      $image = get_field('preview', $courses[$i]->ID)['url'];
+      if (!$image) {
+          $image = get_the_post_thumbnail_url($courses[$i]->ID);
+          if (!$image) $image = get_field('url_image_xml', $courses[$i]->ID);
+          if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($courses[$i]->courseType) . '.jpg';
+      }
+      $courses[$i]->pathImage = $image;
+      $courses[$i]->price = get_field('price', $courses[$i]->ID) ?? 0;
+      $courses[$i]->language = get_field('language', $courses[$i]->ID) ?? "";
+      $courses[$i]->connectedProduct = get_field('connected_product', $courses[$i]->ID);
+      $tags = get_field('categories', $courses[$i]->ID) ?? [];
+      $courses[$i]->tags = array();
+      if ($tags) {
+          if (!empty($tags)) {
+              foreach ($tags as $key => $category) {
+                  if (isset($category['value'])) {
+                      $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                      array_push($courses[$i]->tags, $tag);
+                  }
+              }
+          }
+      }
+      $refactored_courses = new CourseOptimized($courses[$i]);
+      array_push($outcome_courses, $refactored_courses);
+  }
+    return rest_ensure_response($refactored_courses);
   }
 
   function updateLastViewdPodcastorVideoListfunction ($request) 
