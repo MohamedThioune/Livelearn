@@ -2264,7 +2264,15 @@ add_action( 'rest_api_init', function () {
         'callback' => 'filterArticlesByUserLanguagePreferencesWithLikes',
     ));
 
+    register_rest_route('custom/v3', '/last/views', array(
+        'methods' => 'GET',
+        'callback' => 'getLastViewedPodcastOrVideoListfunction',
+    ));
 
+    register_rest_route('custom/v3', '/last/views', array(
+        'methods' => 'POST',
+        'callback' => 'updateLastViewdPodcastorVideoListfunction',
+    ));
 
     //Weekly mail livelearn
     register_rest_route ('custom/v1', '/weekly-recommendation', array(
