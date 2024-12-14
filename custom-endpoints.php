@@ -90,7 +90,7 @@ class CourseOptimized
   public $tags;
   public $courseType;
   public $data_locaties_xml;
-  //public $youtubeVideos;
+  public $youtubeVideos;
   public $experts;
   public $visibility;
   //public $podcasts;
@@ -103,7 +103,7 @@ class CourseOptimized
   public $links;
   public $language;
 
-  function __construct($course) {
+  function __construct($course, bool $isVideoDisplayed = false) {
     $this->id = $course->ID;
     $this->date = $course->post_date;
     $this->title = $course->post_title;
@@ -115,7 +115,7 @@ class CourseOptimized
     $this->tags = $course->tags;
     $this->courseType = $course->courseType;
     $this->data_locaties_xml = $course->data_locaties_xml;
-    //$this->youtubeVideos = $course->youtubeVideos ?? [];
+    $this->youtubeVideos = $isVideoDisplayed ? ($course->youtubeVideos ?? []) : [];
     $this->experts = $course->experts;
     $this->visibility = $course->visibility ?? null;
     $this->links = $course->guid;
@@ -8221,7 +8221,7 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
               }
           }
       }
-      $new_course = new CourseOptimized($courses[$i]);
+      $new_course = new CourseOptimized($courses[$i],true);
       array_push($refactored_courses, $new_course);
   }
     return rest_ensure_response($refactored_courses);
