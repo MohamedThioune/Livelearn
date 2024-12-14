@@ -8175,7 +8175,7 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
     $ids = get_user_meta($user_id, 'recent_views', true) ?: [];
     $courses = getCompleteCourses($ids);
     $refactored_courses = [];
-
+    
     for ($i = 0; $i < count($courses); $i++) {
       $courses[$i]->visibility = get_field('visibility', $courses[$i]->ID) ?? [];
       $author = get_user_by('ID', $courses[$i]->post_author);
@@ -8220,8 +8220,8 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
               }
           }
       }
-      $refactored_courses = new CourseOptimized($courses[$i]);
-      array_push($outcome_courses, $refactored_courses);
+      $new_course = new CourseOptimized($courses[$i]);
+      array_push($refactored_courses, $new_course);
   }
     return rest_ensure_response($refactored_courses);
   }
