@@ -8198,6 +8198,7 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
       $courses[$i]->longDescription = get_field('long_description', $courses[$i]->ID);
       $courses[$i]->shortDescription = get_field('short_description', $courses[$i]->ID);
       $courses[$i]->courseType = get_field('course_type', $courses[$i]->ID);
+      $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
       $image = get_field('preview', $courses[$i]->ID)['url'];
       if (!$image) {
           $image = get_the_post_thumbnail_url($courses[$i]->ID);
