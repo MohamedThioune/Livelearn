@@ -20,7 +20,7 @@ function artikel($id){
   $sample['ID'] = $post->ID;
   $sample['authorID'] = $post->post_author;
   $sample['title'] = $post->post_title;
-  $sample['link'] = $base_url . '/course/details-' . strtolower($course_type) . '/' . $sample['slug'];
+  $sample['link'] = $base_url . '/course/details-' . strtolower($course_type) . '/' . $post->post_name;
   $sample['slug'] = $post->post_name;
   $sample['type'] = $course_type;
   //Image information
