@@ -34,10 +34,10 @@ function artikel($id){
   endif;
   $sample['image'] = $thumbnail;
 
+  $sample['price'] = 0;
   $price_noformat = get_field('price', $post->ID) ?: 0;
-  $sample['price'] = 'Gratis';
   if($price_noformat) 
-    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $sample['price'];
+    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $price_noformat;
 
   $sample['language'] = get_field('language', $post->ID);
   //Certificate
