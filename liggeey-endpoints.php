@@ -366,7 +366,7 @@ function challengeSteps($challenge, $userID){
 
   return $challenge;
 }
-
+ 
 //Detail company
 function company($id, $no_job = null){
   $param_post_id = $id ?? 0;
@@ -5009,6 +5009,7 @@ function challengeDetail(WP_REST_Request $request){
   endif;
 
   $userID = isset($request['userID']) ? $request['userID'] : null;
+  $records = isset($request['records']) ? $request['records'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
   if($userID)
@@ -5025,6 +5026,7 @@ function challengeDetail(WP_REST_Request $request){
       if($datum->user_id == $userID)
         $sample->steps[] = 3;
     endforeach;
+    $sample->records = $data;
     $sample->participants = $participants;
     $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
   endif;
