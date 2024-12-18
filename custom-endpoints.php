@@ -7757,7 +7757,7 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
       FROM {$wpdb->prefix}assessments a
       LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
       $where_clause
-      GROUP BY a.id"
+      GROUP BY a.id DESC"
   );
 
   // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments activés sans filtre de catégorie
@@ -7879,9 +7879,6 @@ function delete_assessment_by_id(WP_REST_Request $request) {
   if (empty($assessment_id) || !is_numeric($assessment_id)) {
       return new WP_REST_Response("Invalid assessment ID", 400);
   }
-
-  // Debug : Vérifie l'ID reçu
-  error_log("Trying to delete assessment with ID: " . $assessment_id);
 
   // Vérifie si l'assessment existe
   $assessment = $wpdb->get_row(
