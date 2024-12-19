@@ -6127,6 +6127,12 @@ endif;
               }
           }
         }
+
+        // Sort statistics by time_spent in descending order
+      usort($stats, function ($a, $b) {
+        return $b->time_spent_in_seconds - $a->time_spent_in_seconds;
+      });
+
         return $stats;
       }
 
