@@ -7102,6 +7102,226 @@ function add_assessment_with_questions(WP_REST_Request $request) {
   }
 }
 
+function update_assessment_with_questions(WP_REST_Request $request) {
+  global $wpdb;
+
+  $data = $request->get_json_params();
+
+  // Vérifier que l'ID de l'assessment est présent
+  if (empty($data['assessment_id'])) {
+      return new WP_Error('missing_data', 'Assessment ID is required', array('status' => 400));
+  }
+
+  $assessment_id = (int) $data['assessment_id'];
+
+  // Commencer une transaction pour assurer l'intégrité des données
+  $wpdb->query('START TRANSACTION');
+
+  try {
+      // Mise à jour de l'assessment
+      $wpdb->update(
+          $wpdb->prefix . 'assessments',
+          array(
+              'title' => sanitize_text_field($data['title']),
+              'description' => sanitize_textarea_field($data['description']),
+              'duration' => isset($data['duration']) ? (int) $data['duration'] : null,
+              'category_id' => isset($data['category_id']) ? (int) $data['category_id'] : null,
+              'is_public' => isset($data['is_public']) ? (int) $data['is_public'] : 0,
+              'is_enabled' => isset($data['is_enabled']) ? (int) $data['is_enabled'] : 0,
+              'level' => sanitize_text_field($data['level']),
+              'updatedAt' => current_time('mysql', true),
+          ),
+          array('id' => $assessment_id),
+          array('%s', '%s', '%d', '%d', '%d', '%d', '%s', '%s'),
+          array('%d')
+      );
+
+      if ($wpdb->last_error) {
+          throw new Exception('Failed to update assessment: ' . $wpdb->last_error);
+      }
+
+      // Récupérer les questions existantes pour cet assessment
+      $existing_questions = $wpdb->get_results(
+          $wpdb->prepare("SELECT id FROM {$wpdb->prefix}question WHERE assessment_id = %d", $assessment_id),
+          ARRAY_A
+      );
+      $existing_question_ids = array_column($existing_questions, 'id');
+
+      $updated_question_ids = [];
+
+      foreach ($data['questions'] as $question_data) {
+          if (isset($question_data['question_id'])) {
+              // Mettre à jour une question existante
+              $question_id = (int) $question_data['question_id'];
+              $wpdb->update(
+                  $wpdb->prefix . 'question',
+                  array(
+                      'wording' => sanitize_textarea_field($question_data['wording']),
+                      'updatedAt' => current_time('mysql', true),
+                  ),
+                  array('id' => $question_id, 'assessment_id' => $assessment_id),
+                  array('%s', '%s'),
+                  array('%d', '%d')
+              );
+
+              if ($wpdb->last_error) {
+                  throw new Exception('Failed to update question: ' . $wpdb->last_error);
+              }
+
+              $updated_question_ids[] = $question_id;
+          } else {
+              // Ajouter une nouvelle question
+              $wpdb->insert(
+                  $wpdb->prefix . 'question',
+                  array(
+                      'wording' => sanitize_textarea_field($question_data['wording']),
+                      'assessment_id' => $assessment_id,
+                      'createdAt' => current_time('mysql', true),
+                  ),
+                  array('%s', '%d', '%s')
+              );
+
+              if ($wpdb->last_error) {
+                  throw new Exception('Failed to add new question: ' . $wpdb->last_error);
+              }
+
+              $updated_question_ids[] = $wpdb->insert_id;
+          }
+
+          $question_id = $wpdb->insert_id ?? $question_id;
+
+          // Gérer les réponses associées
+          if (!empty($question_data['answers'])) {
+              // Supprimer les réponses existantes pour la question
+              $wpdb->delete(
+                  $wpdb->prefix . 'answer',
+                  array('question_id' => $question_id),
+                  array('%d')
+              );
+
+              foreach ($question_data['answers'] as $answer_data) {
+                  $wpdb->insert(
+                      $wpdb->prefix . 'answer',
+                      array(
+                          'wording' => sanitize_text_field($answer_data['wording']),
+                          'is_correct' => isset($answer_data['is_correct']) ? (int) $answer_data['is_correct'] : 0,
+                          'question_id' => $question_id,
+                          'createdAt' => current_time('mysql', true),
+                      ),
+                      array('%s', '%d', '%d', '%s')
+                  );
+
+                  if ($wpdb->last_error) {
+                      throw new Exception('Failed to add/update answer: ' . $wpdb->last_error);
+                  }
+              }
+          }
+      }
+
+      // Supprimer les questions qui ne sont plus associées
+      $questions_to_delete = array_diff($existing_question_ids, $updated_question_ids);
+
+      if (!empty($questions_to_delete)) {
+          $placeholders = implode(',', array_fill(0, count($questions_to_delete), '%d'));
+          $wpdb->query(
+              $wpdb->prepare(
+                  "DELETE FROM {$wpdb->prefix}question WHERE id IN ($placeholders)",
+                  $questions_to_delete
+              )
+          );
+      }
+
+      // Valider la transaction
+      $wpdb->query('COMMIT');
+
+      return rest_ensure_response(array('message' => 'Assessment updated successfully'));
+
+  } catch (Exception $e) {
+      // Annuler la transaction en cas d'erreur
+      $wpdb->query('ROLLBACK');
+      return new WP_Error('db_error', $e->getMessage(), array('status' => 500));
+  }
+}
+
+function delete_assessment(WP_REST_Request $request) {
+  global $wpdb;
+
+  $assessment_id = (int) $request['id'];
+
+  // Vérifier si l'assessment est archivé avant de supprimer
+  $assessment = $wpdb->get_row(
+      $wpdb->prepare("SELECT is_enabled FROM {$wpdb->prefix}assessments WHERE id = %d", $assessment_id),
+      ARRAY_A
+  );
+
+  if (!$assessment) {
+      return new WP_Error('not_found', 'Assessment not found', array('status' => 404));
+  }
+
+  if ((int) $assessment['is_enabled'] !== 0) {
+      return new WP_Error('not_allowed', 'Assessment must be disabled before deletion', array('status' => 400));
+  }
+
+  // Supprimer les questions associées
+  $wpdb->delete(
+      $wpdb->prefix . 'question',
+      array('assessment_id' => $assessment_id),
+      array('%d')
+  );
+
+  // Supprimer l'assessment
+  $wpdb->delete(
+      $wpdb->prefix . 'assessments',
+      array('id' => $assessment_id),
+      array('%d')
+  );
+
+  if ($wpdb->last_error) {
+      return new WP_Error('db_error', 'Failed to delete assessment', array('status' => 500));
+  }
+
+  return rest_ensure_response(array('message' => 'Assessment deleted successfully'));
+}
+
+
+function archive_assessment(WP_REST_Request $request) {
+  global $wpdb;
+
+  $data = $request->get_json_params();
+
+  if (empty($data['assessment_id'])) {
+      return new WP_Error('missing_data', 'Assessment ID is required', array('status' => 400));
+  }
+
+  $assessment_id = (int) $data['assessment_id'];
+
+  $result = $wpdb->update(
+      $wpdb->prefix . 'assessments',
+      array('is_enabled' => 0, 'updatedAt' => current_time('mysql', true)),
+      array('id' => $assessment_id),
+      array('%d', '%s'),
+      array('%d')
+  );
+
+  if ($result === false) {
+      return new WP_Error('db_error', 'Failed to archive assessment', array('status' => 500));
+  }
+
+  return rest_ensure_response(array('message' => 'Assessment archived successfully'));
+}
+
+function list_archived_assessments() {
+  global $wpdb;
+
+  $results = $wpdb->get_results(
+      "SELECT id, title, description, updatedAt FROM {$wpdb->prefix}assessments WHERE is_enabled = 0",
+      ARRAY_A
+  );
+
+  return rest_ensure_response($results);
+}
+
+
 // Endpoint pour rajouter un slug à tous les assessments
 function add_slug_to_all_assessments()
 {
