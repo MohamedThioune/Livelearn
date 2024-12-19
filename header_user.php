@@ -4,15 +4,6 @@ global $wp;
 
 global $global_price;
 global $global_product_id;
-global $global_mollie_key;
-
-$global_price = 5;
-$global_product_id = 9873;
-$global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
-
-/** Mollie API client for php **/
-$mollie = new \Mollie\Api\MollieApiClient();
-$mollie->setApiKey($global_mollie_key);
 
 $user = wp_get_current_user();
 $url = home_url( $wp->request );
