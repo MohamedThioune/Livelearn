@@ -1926,6 +1926,21 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_assessment_with_questions',
     ));
 
+    register_rest_route('custom/v3', '/assessments/update', array(
+        'methods' => 'PUT',
+        'callback' => 'update_assessment_with_questions',
+    ));
+
+    register_rest_route('custom/v3', '/assessments/archive', array(
+        'methods' => 'PUT',
+        'callback' => 'archive_assessment',
+    ));
+
+    register_rest_route('custom/v3', '/assessments/archived', array(
+        'methods' => 'GET',
+        'callback' => 'list_archived_assessments',
+    ));
+
     register_rest_route('custom/v3', '/assessments/(?P<id>\d+)/attempt', array(
         'methods' => 'POST',
         'callback' => 'attempt_assessment',
@@ -1964,7 +1979,7 @@ add_action( 'rest_api_init', function () {
 
     register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
         'methods' => 'DELETE',
-        'callback' => 'delete_assessment_by_id',
+        'callback' => 'delete_assessment',
         'permission_callback' => function () {
             return current_user_can('delete_posts'); // Vérifie les permissions pour supprimer
         },
