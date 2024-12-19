@@ -1969,7 +1969,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_slug_to_all_assessments',
     ));
 
-    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
+    register_rest_route('custom/v3', '/assessment/delete/', array(
         'methods' => 'DELETE',
         'callback' => 'delete_assessment',
         'permission_callback' => function () {
