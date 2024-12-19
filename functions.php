@@ -2816,5 +2816,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'get_employees_polaris'
     ));
-
+   register_rest_route ('custom/v1', 'episodes/video', array(
+        'methods' => 'GET',
+        'callback' => 'get_video_episode'
+    ));
+    register_rest_route ('custom/v1', 'episodes/podcast', array(
+        'methods' => 'GET',
+        'callback' => 'get_podcast_episode'
+    ));
 });
