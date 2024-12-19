@@ -52,11 +52,27 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                                 <?php foreach ($subcategories as $sub):
                                     if ($ids)
                                         $selected = in_array($sub->term_id,$ids) ? 'selected' : '';
+                                    $sub_sub = get_categories( array(
+                                        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                                        'parent' => $sub->cat_ID,
+                                        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+                                    ));
                                     ?>
-
                                     <div class="subcategory">
                                         <p class="subcatchossen btn <?= $selected ?>" id="<?= $sub->term_id ?>"><?= $sub->name ?></p>
+                                        <?php if (!empty($sub_sub))echo '---------------------------------------------' ?>
                                     </div>
+                                <?php if (!empty($sub_sub)){
+                                    foreach ($sub_sub as $s):
+                                        if ($ids)
+                                            $selected_sub = in_array($sub->term_id,$ids) ? 'selected' : '';
+                                        ?>
+                                        <div class="subcategory">
+                                            <h6 class="subcatchossen btn <?= $selected_sub ?>" id="<?= $s->term_id ?>"><?= $s->name ?></h6>
+                                        </div>
+
+                                <?php endforeach; ?>
+                                <?php }?>
                                 <?php endforeach; ?>
                             </div>
                         <?php else: ?>
@@ -126,6 +142,7 @@ if (isset($_POST['id_course']) && isset($_POST['categories']) && $_POST['action'
     $id_course = $_POST['id_course'];
     $categories = array_values($_POST['categories']);
     $topics_in_course = get_field('categories',$id_course);
+    $topics_xml = get_field('category_xml',$id_course);
     $topics = array();
     foreach ($topics_in_course as $item) {
         $topics[] = $item['value'];
