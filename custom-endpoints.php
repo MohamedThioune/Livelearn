@@ -8097,42 +8097,7 @@ function get_assessment_details(WP_REST_Request $request) {
   return rest_ensure_response($assessment);
 }
 
-function delete_assessment_by_id(WP_REST_Request $request) {
-  global $wpdb;
 
-  // Récupère l'ID de l'assessment à partir de la requête
-  $assessment_id = (int) $request['assessment_id'];
-
-  // Vérifie si l'ID de l'assessment est valide
-  if (empty($assessment_id) || !is_numeric($assessment_id)) {
-      return new WP_REST_Response("Invalid assessment ID", 400);
-  }
-
-  // Vérifie si l'assessment existe
-  $assessment = $wpdb->get_row(
-      $wpdb->prepare("SELECT * FROM {$wpdb->prefix}assessments WHERE id = %d", $assessment_id)
-  );
-
-  if (!$assessment) {
-      // Debug : Log si l'assessment n'est pas trouvé
-      error_log("Assessment with ID {$assessment_id} not found in database.");
-      return new WP_REST_Response("Assessment not found", 404);
-  }
-
-  // Supprime l'assessment
-
-  $deleted = $wpdb->delete(
-      "{$wpdb->prefix}assessments",
-      array('id' => $assessment_id),
-      array('%d')
-  );
-
-  if ($deleted === false) {
-      return new WP_REST_Response("Failed to delete assessment", 500);
-  }
-
-  return new WP_REST_Response("Assessment deleted successfully", 200);
-}
 
 
 
