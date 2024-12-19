@@ -1243,6 +1243,9 @@ function filterArticlesByUserLanguagePreferencesWithLikes($data)
             "shortDescription" => get_field('short_description', $course->ID),
             "longDescription" => get_field('long_description', $course->ID),
             "pathImage" => $image,
+            "data_locaties_xml" => "",
+            "data_locaties" => [],
+            "article_itself" => get_field('article_itself', $course->ID) ?? '',
             "language" => get_field('language', $course->ID) ?? "",
             "likes" => $likes, // Intégration des likes
             "visibility" => get_field('visibility', $course->ID) ?? [],
