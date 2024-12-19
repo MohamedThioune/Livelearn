@@ -122,7 +122,7 @@ class CourseOptimized
     //$this->podcasts = $course->podcasts ?? [];
     $this->connectedProduct = $course->connectedProduct;
     $this->author = $course->author;
-    $this->articleItself = get_field('article_itself', $course->ID) ?? '';
+    $this->articleItself = $course->articleItself;
     //$this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ;
     $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
     $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
@@ -990,8 +990,9 @@ function allCoursesOptimizedWithJustPreviewAndFilter($data)
         $courses[$i]->author = new Expert($author, $author_img);
         $courses[$i]->longDescription = get_field('long_description', $courses[$i]->ID);
         $courses[$i]->shortDescription = get_field('short_description', $courses[$i]->ID);
+        $courses[$i]->articleItself = get_field('article_itself', $courses[$i]->ID) ?? '';
+        $courses[$i]->data_locaties = is_array(get_field('data_locaties', $courses[$i]->ID)) ? (get_field('data_locaties', $courses[$i]->ID)) : [] ;
         $courses[$i]->courseType = get_field('course_type', $courses[$i]->ID);
-
         $image = get_field('preview', $courses[$i]->ID)['url'];
         if (!$image) {
             $image = get_the_post_thumbnail_url($courses[$i]->ID);
@@ -1001,6 +1002,7 @@ function allCoursesOptimizedWithJustPreviewAndFilter($data)
         $courses[$i]->pathImage = $image;
         $courses[$i]->price = get_field('price', $courses[$i]->ID) ?? 0;
         $courses[$i]->language = get_field('language', $courses[$i]->ID) ?? "";
+        
         //$courses[$i]->youtubeVideos = get_field('youtube_videos', $courses[$i]->ID) ? get_field('youtube_videos', $courses[$i]->ID) : [];
         // if (strtolower($courses[$i]->courseType) == 'podcast') {
         //     $podcasts = get_field('podcasts', $courses[$i]->ID) ? get_field('podcasts', $courses[$i]->ID) : [];
@@ -7868,7 +7870,6 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   return rest_ensure_response($assessments);
 }
 
-
 function get_assessment_details(WP_REST_Request $request) {
   global $wpdb;
 
@@ -7917,9 +7918,6 @@ function get_assessment_details(WP_REST_Request $request) {
 
   return rest_ensure_response($assessment);
 }
-
-
-
 
 
 
