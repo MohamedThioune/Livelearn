@@ -15,28 +15,29 @@ function artikel($id){
   if(empty($post))
     return null;
   $course_type = get_field('course_type', $post->ID);
+  $base_url = "https://livelearn.nl"; 
 
   $sample['ID'] = $post->ID;
   $sample['authorID'] = $post->post_author;
   $sample['title'] = $post->post_title;
-  $sample['link'] = get_permalink($post->ID);
+  $sample['link'] = $base_url . '/course/details-' . strtolower($course_type) . '/' . $post->post_name;
   $sample['slug'] = $post->post_name;
   $sample['type'] = $course_type;
   //Image information
   $thumbnail = get_field('preview', $post->ID) ? get_field('preview', $post->ID)['url'] : null;
-  if(!$thumbnail){
+  if(!$thumbnail):
       $thumbnail = get_the_post_thumbnail_url($post->ID);
       if(!$thumbnail)
           $thumbnail = get_field('url_image_xml', $post->ID);
               if(!$thumbnail)
                   $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
-  }
+  endif;
   $sample['image'] = $thumbnail;
 
+  $sample['price'] = 0;
   $price_noformat = get_field('price', $post->ID) ?: 0;
-  $sample['price'] = 'Gratis';
   if($price_noformat) 
-    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $sample['price'];
+    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $price_noformat;
 
   $sample['language'] = get_field('language', $post->ID);
   //Certificate
@@ -366,7 +367,7 @@ function challengeSteps($challenge, $userID){
 
   return $challenge;
 }
-
+ 
 //Detail company
 function company($id, $no_job = null){
   $param_post_id = $id ?? 0;
@@ -1057,7 +1058,7 @@ function register_company(WP_REST_Request $request){
       'first_name' => $first_name,
       'last_name' => $last_name,
       'display_name' => $first_name . ' ' . $last_name,
-      'user_url' => 'https://livelearn.nl/inloggen/',
+      'user_url' => 'https://livelearn.nl/login/',
       'user_login' => $email,
       'user_email' => $email,
       'user_pass' => $password,
@@ -4584,7 +4585,7 @@ function artikelDezzp($data){
   endforeach;
 
   //Read the assessments via category 
-  $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
+  // $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
 
   //Return the response 
   $response = new WP_REST_Response(['success' => true, 'posts' => $blogs]);
@@ -5009,6 +5010,7 @@ function challengeDetail(WP_REST_Request $request){
   endif;
 
   $userID = isset($request['userID']) ? $request['userID'] : null;
+  $records = isset($request['records']) ? $request['records'] : null;
   $post = get_page_by_path($param_post_id, OBJECT, 'challenge');
   $sample = challenge($post->ID);
   if($userID)
@@ -5025,6 +5027,7 @@ function challengeDetail(WP_REST_Request $request){
       if($datum->user_id == $userID)
         $sample->steps[] = 3;
     endforeach;
+    $sample->records = $data;
     $sample->participants = $participants;
     $sample->total_participants = (isset($participants[0])) ? count($participants) : 0;
   endif;
