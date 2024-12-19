@@ -6113,6 +6113,11 @@ endif;
         // Define the allowed course types
         $allowed_course_types = ['masterclass', 'podcast', 'video', 'workshop', 'artikel', 'opleidingen'];
 
+        // Sort statistics by time_spent in descending order
+      usort($stats, function ($a, $b) {
+        return $b->time_spent - $a->time_spent;
+      });
+
         // Format the time spent for each statistic
         foreach ($stats as $stat)
         {
@@ -6128,13 +6133,10 @@ endif;
           }
         }
 
-        // Sort statistics by time_spent in descending order
-      usort($stats, function ($a, $b) {
-        return $b->time_spent_in_seconds - $a->time_spent_in_seconds;
-      });
+        
 
         return $stats;
-      }
+      } 
 
       // function updateUserSubtopicsStatistics(WP_REST_Request $request) 
       // {
