@@ -7246,7 +7246,7 @@ function update_assessment_with_questions(WP_REST_Request $request) {
 function delete_assessment(WP_REST_Request $request) {
   global $wpdb;
 
-  $assessment_id = (int) $request['id'];
+  $assessment_id = (int) $request['assessment_id'];
 
   // Vérifier si l'assessment est archivé avant de supprimer
   $assessment = $wpdb->get_row(
