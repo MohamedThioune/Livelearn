@@ -1103,7 +1103,7 @@ function filterArticlesByUserLanguagePreferences($data)
         $experts = get_field('experts', $courses[$i]->ID);
         if (!empty($experts)) {
             foreach ($experts as $key => $expert) {
-              if ($expert->ID == 0)
+              if ($expert->ID == 0 )
                 continue;
                 $expert = get_user_by('ID', $expert);
                 $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -1165,6 +1165,9 @@ function filterArticlesByUserLanguagePreferences($data)
     }
     return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
+
+
+
 
 function filterArticlesByUserLanguagePreferencesWithLikes($data)
 {
