@@ -8507,7 +8507,7 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
                 array_push($courses ,new Course($course)); 
         }
       }
-      rest_ensure_response($courses);
+      return rest_ensure_response($courses);
     }
 
   /**
