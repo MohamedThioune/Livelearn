@@ -1977,7 +1977,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_slug_to_all_assessments',
     ));
 
-    register_rest_route('custom/v3', '/assessment/delete/', array(
+    register_rest_route('custom/v3', '/assessment/delete', array(
         'methods' => 'DELETE',
         'callback' => 'delete_assessment',
         'permission_callback' => function () {
@@ -2005,6 +2005,15 @@ add_action( 'rest_api_init', function () {
     ));
 
     /* Likes endpoints V3 */
+
+    /* Highlights courses endpoints V3 */
+
+    register_rest_route('custom/v3', '/courses/highlighted', array(
+        'methods' => 'GET',
+        'callback' => 'get_highlighted_courses',
+    ));
+
+    /* Highlights courses endpoints V3 */
 
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
         'methods' => 'GET',
