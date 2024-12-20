@@ -1240,8 +1240,8 @@ function filterArticlesByUserLanguagePreferencesWithLikes($data)
         $outcome_courses[] = [
             "ID" => $course->ID,
             "post_title" => $course->post_title,
-            "shortDescription" => get_field('short_description', $course->ID),
-            "longDescription" => get_field('long_description', $course->ID),
+            "shortDescription" => get_field('short_description', $course->ID) ?? "",
+            "longDescription" => get_field('long_description', $course->ID) ?? "",
             "pathImage" => $image,
             "data_locaties_xml" => [],
             "data_locaties" => [],
