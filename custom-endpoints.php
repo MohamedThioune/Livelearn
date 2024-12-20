@@ -777,8 +777,6 @@ for($i=0; $i < count($courses) ;  $i++)
  return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
 
- 
-
   
 function allCoursesOptimizedWithFilter($data)
 {
@@ -1266,9 +1264,6 @@ function filterArticlesByUserLanguagePreferencesWithLikes($data)
     return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
 
-
-
-
 function searchCoursesViaKeyWords($data)
 {
   $keywords = $data['keywords'] != null && !empty($data['keywords']) ? $data['keywords'] : false;
@@ -1363,7 +1358,6 @@ function searchCoursesViaKeyWords($data)
 
 
 }
-
 
 
 function getOfflineCourse ($data)
@@ -8259,9 +8253,19 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
   */
 
 
+  /**
+  * Highlighted courses endpoint
+  */
+
+    function get_highlighted_courses()
+    {
+      $featured = get_field('featured', 'user_' . 5);
+      return $featured;
+    }
+
+  /**
+  * Highlighted courses endpoint
+  */
 
 
-
-
-
-
+  
