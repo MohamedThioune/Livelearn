@@ -543,7 +543,7 @@ function get_video_episode_by_id($id_course, $page=1)
         //
     $offset = ($page -1 ) * EPISODE_PER_PAGE;
     $total_episodes = count($episodes);
-    $episodes = array_slice($episodes,$offset,EPISODE_PER_PAGE);
+    $episodes = array_slice($episodes,$offset, EPISODE_PER_PAGE);
     $total_pages = ceil($total_episodes / EPISODE_PER_PAGE);
     $pages = range(1, $total_pages);
         $episode_formated = [];
