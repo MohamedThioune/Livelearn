@@ -1292,7 +1292,6 @@ function companyDetail(WP_REST_Request $request){
 
 //[GET]All companies
 function allCompanies(){
-
   $args = array(
       'post_type' => 'company',
       'post_status' => 'publish',
