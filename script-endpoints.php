@@ -371,10 +371,11 @@ function migration_episodes_podcast(){
 }
 
 /**
+ * @description this function take id-course and
  * @param $id_course
  * @return bool
  */
-function search_podcast_by_Id_update($id_course) : bool
+function save_podcast_in_json_file($id_course) : bool
 {
     $postId = $id_course;
     $fileName = get_stylesheet_directory() . "/db/podcast.json";
@@ -494,10 +495,8 @@ function update_podcast_on_podcastindex()
     $fail = 0;
     $id_failed = [];
     foreach ($courses as $course) {
-        //$course->episodes = get_podcast_episode_by_id($course->ID);
-        //$course->episodes = get_video_episode_by_id($course->ID);
 
-        if(search_podcast_by_Id_update($course->ID))
+        if(save_podcast_in_json_file($course->ID))
             $succes = $succes + 1;
         else {
             $fail = $fail + 1;
@@ -530,8 +529,16 @@ function update_podcast_on_podcastindex()
     ));
 }
 
-function get_video_episode_by_id($id_course)
+function get_video_episode()
 {
+    $id_course = $_GET['id_course'] ?? null;
+    $page = $_GET['page'] ?? 1;
+    if (!$id_course)
+        return  new WP_REST_Response(['error'=>'you must put the id of course']);
+    if(!get_post($id_course))
+        return  new WP_REST_Response(['error'=>'id not correcte make sure the exist'],409);
+
+    define("EPISODE_PER_PAGE", 10);
     $fileName = get_stylesheet_directory() . "/db/video.json";
     $episodes_json = file_get_contents($fileName);
         if($episodes_json)
@@ -540,7 +547,12 @@ function get_video_episode_by_id($id_course)
             $episodes = array_filter($episodes,function ($episode) use ($id_course){
                 return $episode['post_id'] == $id_course;
             });
-
+        //
+    $offset = ($page -1 ) * EPISODE_PER_PAGE;
+    $total_episodes = count($episodes);
+    $episodes = array_slice($episodes,$offset,EPISODE_PER_PAGE);
+    $total_pages = ceil($total_episodes / EPISODE_PER_PAGE);
+    $pages = range(1, $total_pages);
         $episode_formated = [];
         if ($episodes)
             foreach ($episodes as $episode) {
@@ -550,33 +562,59 @@ function get_video_episode_by_id($id_course)
                     'thumbnail_url' => $episode['episode_image']
                 ];
             }
-    return $episode_formated;
+    $response = [
+        'total_episodes' =>$total_episodes,
+        'pages' =>$pages,
+        'episodes'=>$episode_formated,
+    ];
+    $response = new WP_REST_Response([$response]);
+    $response->set_status(200);
+    return($response);
 }
 
-function get_podcast_episode_by_id($id_course)
+function get_podcast_episode()
 {
+    $id_course = $_GET['id_course'] ?? null;
+    $page = $_GET['page'] ?? 1;
+    if (!$id_course)
+        return  new WP_REST_Response(['error'=>'you must put the id of course']);
+    if(!get_post($id_course))
+        return  new WP_REST_Response(['error'=>'id not correcte make sure the exist'],409);
+
+    define("EPISODE_PER_PAGE", 10);
     $fileName = get_stylesheet_directory() . "/db/podcast.json";
     $episodes_json = file_get_contents($fileName);
     if($episodes_json)
-        $episodes = json_decode($episodes_json,true);
+        $episodes = json_decode($episodes_json,true) ? : [];
         if ($episodes)
             $episodes = array_filter($episodes,function ($episode) use ($id_course){
                 return $episode['post_id'] == $id_course;
             }); // recup just 20 premiers episodes
 
+    $offset = ($page -1 ) * EPISODE_PER_PAGE;
+    $total_episodes = count($episodes);
+    $episodes = array_slice($episodes,$offset,EPISODE_PER_PAGE);
+    $total_pages = ceil($total_episodes / EPISODE_PER_PAGE);
+    $pages = range(1, $total_pages);
 
-    // $episodes = array_values($episodes);
     $episode_formated = [];
-   if ($episodes)
-        foreach ($episodes as $episode) {
-            $episode_formated [] = [
-                'podcast_url' => $episode['episode_id'],
-                'podcast_image' => $episode['episode_image'],
-                'podcast_title' => $episode['episode_title'],
-                'podcast_description' => $episode['episode_description'],
-                'podcast_date' => $episode['episode_date']
-            ];
-        }
-
-    return $episode_formated;
+   if (!empty($episodes)) {
+       foreach ($episodes as $episode) {
+           $episode_formated [] = [
+               'podcast_url' => $episode['episode_id'],
+               'podcast_image' => $episode['episode_image'],
+               'podcast_title' => $episode['episode_title'],
+               'podcast_description' => $episode['episode_description'],
+               'podcast_date' => $episode['episode_date']
+           ];
+       }
+   }
+    $response = [
+        'total_episodes' =>$total_episodes,
+        'pages' =>$pages,
+        'episodes'=>$episode_formated,
+    ];
+    $response = new WP_REST_Response([$response]);
+    $response->set_status(200);
+    return($response);
 }

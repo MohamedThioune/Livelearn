@@ -6,8 +6,8 @@ if(!in_array('administrator', $current_user->roles) && !in_array('hr', $current_
     header('Location: /dashboard/company/');
 
 /** Mollie API client for php **/
-$mollie = new \Mollie\Api\MollieApiClient();
-$mollie->setApiKey($global_mollie_key);
+// $mollie = new \Mollie\Api\MollieApiClient();
+// $mollie->setApiKey($global_mollie_key);
 
 $company = get_field('company', 'user_' . $current_user->ID);
 if(!empty($company) ){
