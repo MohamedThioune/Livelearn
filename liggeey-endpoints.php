@@ -124,12 +124,12 @@ function postAdditionnal($post, $userID, $edit = null){
 
   /** Get further informations */
   //Podcast 
-  $main_podcasts_genuine = get_field('podcasts', $post->ID);
-  $main_podcasts_index = get_field('podcasts_index', $post->ID);
+  // $main_podcasts_genuine = get_field('podcasts', $post->ID);
+  // $main_podcasts_index = get_field('podcasts_index', $post->ID);
 
   //Video
-  $main_videos_genuine = get_field('data_virtual', $post->ID);
-  $main_videos_youtube = get_field('youtube_videos', $post->ID);
+  // $main_videos_genuine = get_field('data_virtual', $post->ID);
+  // $main_videos_youtube = get_field('youtube_videos', $post->ID);
 
   //Offline
   $main_date_genuine = get_field('data_locaties', $post->ID);
@@ -152,15 +152,15 @@ function postAdditionnal($post, $userID, $edit = null){
   endif;
 
   switch ($coursetype) {
-    case 'Podcast':
-      $post->podcasts = $main_podcasts_genuine;
-      $post->podcasts_index = $main_podcasts_index;
-      break;
+    // case 'Podcast':
+    //   $post->podcasts = $main_podcasts_genuine;
+    //   $post->podcasts_index = $main_podcasts_index;
+    //   break;
     
-    case 'Video':
-      $post->videos = $main_videos_genuine;
-      $post->videos_youtube = $main_videos_youtube;
-      break;
+    // case 'Video':
+    //   $post->videos = $main_videos_genuine;
+    //   $post->videos_youtube = $main_videos_youtube;
+    //   break;
 
     case 'Opleidingen' || 'Training' || 'Workshop' || 'Masterclass' || 'Event':
       $post->dates = $main_date_genuine;
@@ -173,6 +173,7 @@ function postAdditionnal($post, $userID, $edit = null){
     //   break;
   }
 
+  //Reviews
   $reviews = get_field('reviews', $post->ID);
   $count_reviews = (!empty($reviews)) ? count($reviews) : 0;  
   $star_review = [ 0, 0, 0, 0, 0];
@@ -290,7 +291,7 @@ function postAdditionnal($post, $userID, $edit = null){
   $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
   if($author)
     $post->instructor->enrolled_students = $count_stripe_student;
-  $post->access = ($statut_bool) ? "All access" : 'Free'; 
+  $post->access = ($statut_bool) ? "All access" : 'Not granted'; 
 
   //Experts
   $expertS = get_field('experts', $post->ID);
