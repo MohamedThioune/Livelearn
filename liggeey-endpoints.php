@@ -870,18 +870,19 @@ function homepage(){
 
   //Category information
   $no_content = "Some information missing !";
-  $slugdefined = 'business-applications';
-  // $slugdefined = 'digital';
-  $digital_category = get_categories(array('taxonomy' => 'course_category', 'slug' => $slugdefined, 'hide_empty' => 0) )[0];
-  if(is_wp_error($digital_category)):
-      echo $no_content;
-      return $infos;
-  endif;
+  $categoriesDefined = array(655, 321, 400, 459, 648, 326, 649, 456, 322, 376, 650, 457, 651, 652, 653);
+  // $slugdefined = 'business-applications';
+  // // $slugdefined = 'digital';
+  // $digital_category = get_categories(array('taxonomy' => 'course_category', 'slug' => $slugdefined, 'hide_empty' => 0) )[0];
+  // if(is_wp_error($digital_category)):
+  //     echo $no_content;
+  //     return $infos;
+  // endif;
 
   $sample_categories = get_categories( array(
     'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
     'orderby'    => 'name',
-    'parent'     => $digital_category->cat_ID,
+    'include' => $categoriesDefined,
     'hide_empty' => 0, // change to 1 to hide categores not having a single post
   ) );
 
@@ -4533,59 +4534,39 @@ function getAsseessmentsViaCategory($data) {
 //Posts for DeZZP via category
 function artikelDezzp($data){
 
+  // $CONST_FREELANCING = 'freelancing';
   $CONST_FREELANCING = 647;
-  $companySlug = $data['company'] ?: null;
-  $args = array(
-    'post_type' => array('post','course'),
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC',
+
+  // $freelancing_category = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'orderby'    => 'name',
+  //   'tag' => $CONST_FREELANCING,
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  /** Global posts **/
+  $tax_query = array(
+    array(
+      "taxonomy" => "course_category",
+      "field"    => "term_id",
+      "terms"    => $CONST_FREELANCING
+    )
   );
-  $main_blogs = get_posts($args);
+  $main_blogs = array();
+  $args = array(
+    'post_type' => array('post', 'course'),
+    'tax_query' => $tax_query
+  );
+  $query_blogs = new WP_Query( $args );
+  $main_blogs = isset($query_blogs->posts) ? $query_blogs->posts : [];
   $blogs = array();
 
   //Read the blogs via category
-  foreach ($main_blogs as $key => $blog):
-    //Get topics | genuine, xml
-    $postags = get_the_tags($blog->ID);
-    $default_category = get_field('categories', $blog->ID);
-    $xml_category = get_field('category_xml', $blog->ID);
-    $find = false;
-
-    //Topic match "freelancing" ?
-    $main_default = array();
-    if(!empty($default_category)):
-      $main_default = array_column($default_category, 'value');
-      if(in_array($CONST_FREELANCING, $main_default))
-        $find = true;
-    endif;
-
-    $main_xml = array();
-    if(!$find)
-    if(!empty($xml_category)):
-      $main_xml = array_column($xml_category, 'value');
-      if(in_array($CONST_FREELANCING, $main_xml))
-        $find = true;
-    endif;
-
-    if(!$find)
-    if($postags)
-    foreach($postags as $tag)
-      if($tag->ID == $CONST_FREELANCING):
-        $find = true;
-        break;
-      endif;
-
-    if(!$find)
-      continue;
-
+  foreach ($main_blogs as $blog):
     //Add the post
     $sample = artikel($blog->ID);
     $blogs[] = $sample;
   endforeach;
-
-  //Read the assessments via category 
-  // $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
 
   //Return the response 
   $response = new WP_REST_Response(['success' => true, 'posts' => $blogs]);
