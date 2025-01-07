@@ -51,9 +51,7 @@
 
                     wp_mail($email, $subject, $body, $headers, array( '' )) ; 
                     header("location:candidat?message=". $success ."&success");
-                }
-
-              
+                }              
             }
             else{
                 $danger = "Vul de e-mail in, alsjeblieft";

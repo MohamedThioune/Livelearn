@@ -22,6 +22,7 @@ function create_session_stripe($data){
 
     return $information;
 }
+
 function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $offline = null, $ui_mode = null){
     $SITE_URL = "https://livelearn.nl";
     $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ? $SITE_URL . '/login' : $SITE_URL . '/user/my-activities';
@@ -165,6 +166,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
 
     return json_encode(array('clientSecret' => $client_secret));
 }
+
 function retrieve_session($session_id){
     //case : session_id null
     if(!$session_id)
@@ -175,6 +177,7 @@ function retrieve_session($session_id){
 
     return $information;
 }
+
 function stripe_status($data){
     //Call retrieve_session
     $session = null;
@@ -977,7 +980,6 @@ function custom_post_type() {
     register_post_type( 'challenge', $challenge_args );
 
 }
-
 add_action( 'init', 'custom_post_type', 0 );
 
 function add_custom_roles(){
@@ -990,11 +992,9 @@ add_action('init', 'add_custom_roles');
 
 //redirect 'return to shop'
 add_filter( 'woocommerce_return_to_shop_redirect', 'bbloomer_change_return_shop_url' );
-
 function bbloomer_change_return_shop_url() {
     return home_url();
 }
-
 
 add_filter('woocommerce_get_price','reigel_woocommerce_get_price',20,2);
 function reigel_woocommerce_get_price($price,$post){
@@ -1002,7 +1002,6 @@ function reigel_woocommerce_get_price($price,$post){
         $price = get_the_field($post->id, 'mush', true); // your price meta key is price
     return $price;
 }
-
 
 add_filter('acf/save_post', 'create_product_for_course', 20);
 function create_product_for_course($post_id){
@@ -1163,8 +1162,6 @@ function filter_woocommerce_api_product_response( $product_data, $product, $fiel
     $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
     $product_data['vendor_name'] = get_the_author_meta( 'display_name', $product_data['vendor_id']);
     return $product_data;
-
-
 };
 add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_response', 10, 4 );
 
@@ -1176,6 +1173,7 @@ add_filter( 'woocommerce_product_is_visible','product_invisible');
 function product_invisible(){
     return false;
 }
+
 //Remove single page
 add_filter( 'woocommerce_register_post_type_product','hide_product_page',12,1);
 function hide_product_page($args){
@@ -1187,7 +1185,6 @@ function hide_product_page($args){
 /*
 ** Endpoints - API
 */
-
 function recommended_course($data)
 {
     //The user

@@ -3,7 +3,7 @@
 <?php
 
 require_once 'detect-language.php';
-require_once  get_stylesheet_directory().'/script-endpoints.php';
+// require_once  get_stylesheet_directory().'/script-endpoints.php';
 
 global $wpdb;
 $table = $wpdb->prefix . 'databank';
