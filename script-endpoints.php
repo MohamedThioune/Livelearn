@@ -464,17 +464,6 @@ function save_podcast_in_json_file($id_course) : bool
     $episodes = array_merge($filterEpisodes,$episodes);
     $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
     return file_put_contents($fileName,$newJsonContent);
-
-//    return new WP_REST_Response( array(
-//        'message'=>$insert ? 'course updated.' : 'file not updated !!!',
-//        'all_after_to_save' =>count($episodes),
-//        'counter' => $counter,
-//        'episode_exist' =>$podcast_exist,
-//        'url' => $urlEpisodes,
-//        'episides' =>$filterEpisodes,
-//        'number_episode_before' =>$count_episode_before,
-//        'number_episode_after' =>$count_episode_after,
-//    ));
 }
 function update_podcast_on_podcastindex()
 {
@@ -617,4 +606,127 @@ function get_podcast_episode()
     $response = new WP_REST_Response([$response]);
     $response->set_status(200);
     return($response);
+}
+
+
+
+function get_full_categories($id_course):array
+{
+    $categories_to_return = [];
+    $categories = wp_get_post_terms($id_course, 'course_category');
+    foreach ($categories as $category) {
+        $category->image = get_field('image','category_'.$category->term_id);
+        $category->title_category = get_field('title_category','category_'.$category->term_id);
+        $category->description_category = get_field('descriptor_category','category_'.$category->term_id);
+        $category->partners_category = get_field('partners_category','category_'.$category->term_id);
+        $category->banner_category = get_field('banner_category','category_'.$category->term_id);
+
+        $categories_to_return[] = $category;
+    }
+    return $categories_to_return;
+}
+
+// link the right categories to courses without custom field 'categories' or 'category_xml'
+function link_the_categories_courses()
+{
+    $page = $_GET['page'] ?? 1;
+    $course_per_page = 800;
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => $course_per_page,
+        'order' => 'DESC' ,
+        'meta_query'=>[
+            [
+                'key' => 'category_xml',
+                'compare' => 'EXISTS',
+            ],
+            [
+                'key' => 'categories',
+                'compare' => 'EXISTS',
+            ],
+        ],
+        'paged' => $page,
+    );
+    $cousres_returned = [];
+    $courses = get_posts($args);
+    $total_number_course = 0 ;
+    $number_course_valide = 0 ;
+    foreach ($courses as $course){
+        $categories_default = get_field('categories', $course->ID)?:[];
+        $categories_xml = get_field('category_xml', $course->ID)?:[];
+        $categories = array_merge($categories_default,$categories_xml);
+        if (empty($categories))
+            continue;
+        //wp_set_post_terms($course->ID, $categories, 'course_category');
+        $filtered_categories = array_filter($categories, function($category) {
+            return !empty($category) && is_array($category) && isset($category['value']);
+        });
+        $categories_ids = array_map(function($category) {
+            return intval($category['value']);
+        }, $filtered_categories);
+
+        $cousres_returned[] = $course;
+        if (wp_set_post_terms($course->ID, $categories_ids, 'course_category'))
+            $number_course_valide++;
+        $course->categories = get_full_categories($course->ID);
+        $total_number_course++;
+    }
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
+    $total_pages = ceil($count_all_course / $course_per_page);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+    return new WP_REST_Response(
+        array(
+            'message'=>'course applied '.$number_course_valide.'/'.$total_number_course,
+            'count_all_course' => $count_all_course,
+            'page'=>$numbers_of_pages,
+            'courses' =>$cousres_returned
+        ));
+}
+
+/**
+ * @description : clean categories,categories_xml,youtubes (episodes video), podcast_index
+ */
+function cleanMetaData()
+{
+    $page = $_GET['page'] ?? 1;
+    $course_per_page = 800;
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => $course_per_page,
+        'order' => 'DESC',
+        'paged' => $page,
+    );
+    $courses = get_posts($args);
+    foreach ($courses as $key => $course) {
+        $videos = get_field('youtube_videos', $course->ID);
+        if($videos)
+            update_field('youtube_videos', null ,$course->ID);
+
+        $podcasts = get_field('podcasts_index', $course->ID);
+        if($podcasts)
+            update_field('podcasts_index', null ,$course->ID);
+
+
+        $categories_default = get_field('categories', $course->ID);
+        if ($categories_default) 
+            update_field('categories', null ,$course->ID);
+
+        $categories_xml = get_field('category_xml', $course->ID);
+        if($categories_xml)
+        update_field('category_xml', null ,$course->ID);
+
+    }
+
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
+    $total_pages = ceil($count_all_course / $course_per_page);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+
 }
