@@ -4589,6 +4589,40 @@ function get_code_loket($data)
     );
 
 }
+function getAccessToken($clientId='TestClient', $clientSecret='435n350492834j234928423j4') {
+    $url = 'https://auth.loket.nl/token';
+    $url = 'https://oauth.loket-acc.nl';
+
+    $data = [
+        'grant_type' => 'client_credentials',
+        'client_id' => $clientId,
+        'client_secret' => $clientSecret,
+    ];
+
+    $options = [
+        'http' => [
+            'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ],
+    ];
+
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+
+    if (!$result)
+        return new WP_REST_Response([
+                'error'=>'Error retrieving access token.'
+            ],401);
+
+
+    $response = json_decode($result, true);
+    return new WP_REST_Response(array(
+        'token'=>$response['access_token']
+    ),200);
+    //return $response['access_token'];
+}
+
 
 function get_employee_loket($data)
 {
