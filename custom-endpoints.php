@@ -78,6 +78,57 @@ class Course
   }
 }
 
+class CourseOptimized
+{
+  public $id;
+  public $date;
+  public $title;
+  public $pathImage;
+  public $shortDescription;
+  public $longDescription;
+  public $price;
+  public $tags;
+  public $courseType;
+  public $data_locaties_xml;
+  public $youtubeVideos;
+  public $experts;
+  public $visibility;
+  //public $podcasts;
+  //public $likes;
+  public $author;
+  public $articleItself;
+  public $connectedProduct;
+  public $for_who;
+  public $data_locaties;
+  public $links;
+  public $language;
+
+  function __construct($course, bool $isVideoDisplayed = false) {
+    $this->id = $course->ID;
+    $this->date = $course->post_date;
+    $this->title = $course->post_title;
+    $this->pathImage = $course->pathImage;
+    $this->shortDescription = $course->shortDescription;
+    $this->longDescription = $course->longDescription;
+    $this->price = $course->price ?? 0;
+    $this->language = $course->language ?? "";
+    $this->tags = $course->tags;
+    $this->courseType = $course->courseType;
+    $this->data_locaties_xml = $course->data_locaties_xml;
+    $this->youtubeVideos = $isVideoDisplayed ? ($course->youtubeVideos ?? []) : [];
+    $this->experts = $course->experts;
+    $this->visibility = $course->visibility ?? null;
+    $this->links = $course->guid;
+    //$this->podcasts = $course->podcasts ?? [];
+    $this->connectedProduct = $course->connectedProduct;
+    $this->author = $course->author;
+    $this->articleItself = $course->articleItself;
+    //$this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ;
+    $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
+    $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
+  }
+}
+
 class Tags
 {
  public  $id;
@@ -726,8 +777,6 @@ for($i=0; $i < count($courses) ;  $i++)
  return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
 
- 
-
   
 function allCoursesOptimizedWithFilter($data)
 {
@@ -860,6 +909,140 @@ function allCoursesOptimizedWithFilter($data)
     return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
 
+function allCoursesOptimizedWithJustPreviewAndFilter($data)
+{
+    $current_user_id = $GLOBALS['user_id'];
+    if (!$current_user_id) 
+      {
+          $response = new WP_REST_Response("You have to login with valid credentials!");
+          $response->set_status(400);
+          return $response;
+      }
+    $course_type = ucfirst(strtolower($data['course_type'] ?? ''));
+    $outcome_courses = array();
+    $tags = array();
+    $experts = array();
+    $languages =  get_field('language_preferences','user_' . (int) $current_user_id) ?? [];
+    // $languages = $data['languages'] ?? '';
+
+    // if (!is_array($languages)) {
+    //     $languages = explode(',', $languages); // Convert to array if it's a string
+    // }
+
+    $args = array(
+        'post_type' => array('course'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'meta_query' => 
+        count($languages) != 0 
+        ? 
+          array(
+              'relation' => 'AND',
+              array(
+                  'key' => 'language',
+                  'value' => $languages,
+                  'compare' => 'IN'
+              ),
+              array(
+                  'key' => 'course_type',
+                  'value' => $course_type,
+                  'compare' => 'LIKE'
+              )
+          ) 
+          : 
+          array(
+            array(
+              'key' => 'course_type',
+              'value' => $course_type,
+              'compare' => 'LIKE'
+            )
+            ),
+        'paged' => $data['page'] ?? 1,
+    );
+
+    $courses = get_posts($args);
+    if (!$courses) {
+        return ["courses" => [], 'message' => "There is no courses related to this course type in the database!", "codeStatus" => 400];
+    }
+
+    for ($i = 0; $i < count($courses); $i++) {
+        $courses[$i]->visibility = get_field('visibility', $courses[$i]->ID) ?? [];
+        $author = get_user_by('ID', $courses[$i]->post_author);
+        $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+        if ($courses[$i]->visibility != []) {
+            if ($author_company != $current_user_company) continue;
+        }
+        $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $courses[$i]->experts = array();
+        $experts = get_field('experts', $courses[$i]->ID);
+        if (!empty($experts)) {
+            foreach ($experts as $key => $expert) {
+                $expert = get_user_by('ID', $expert);
+                $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                array_push($courses[$i]->experts, new Expert($expert, $experts_img));
+            }
+        }
+
+        $courses[$i]->author = new Expert($author, $author_img);
+        $courses[$i]->longDescription = get_field('long_description', $courses[$i]->ID);
+        $courses[$i]->shortDescription = get_field('short_description', $courses[$i]->ID);
+        $courses[$i]->articleItself = get_field('article_itself', $courses[$i]->ID) ?? '';
+        $courses[$i]->data_locaties = is_array(get_field('data_locaties', $courses[$i]->ID)) ? (get_field('data_locaties', $courses[$i]->ID)) : [] ;
+        $courses[$i]->courseType = get_field('course_type', $courses[$i]->ID);
+        $image = get_field('preview', $courses[$i]->ID)['url'];
+        if (!$image) {
+            $image = get_the_post_thumbnail_url($courses[$i]->ID);
+            if (!$image) $image = get_field('url_image_xml', $courses[$i]->ID);
+            if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($courses[$i]->courseType) . '.jpg';
+        }
+        $courses[$i]->pathImage = $image;
+        $courses[$i]->price = get_field('price', $courses[$i]->ID) ?? 0;
+        $courses[$i]->language = get_field('language', $courses[$i]->ID) ?? "";
+        
+        //$courses[$i]->youtubeVideos = get_field('youtube_videos', $courses[$i]->ID) ? get_field('youtube_videos', $courses[$i]->ID) : [];
+        // if (strtolower($courses[$i]->courseType) == 'podcast') {
+        //     $podcasts = get_field('podcasts', $courses[$i]->ID) ? get_field('podcasts', $courses[$i]->ID) : [];
+        //     if (!empty($podcasts)) {
+        //         $courses[$i]->podcasts = $podcasts;
+        //     } else {
+        //         $podcasts = get_field('podcasts_index', $courses[$i]->ID) ? get_field('podcasts_index', $courses[$i]->ID) : [];
+        //         if (!empty($podcasts)) {
+        //             $courses[$i]->podcasts = array();
+        //             foreach ($podcasts as $key => $podcast) {
+        //                 $item = array(
+        //                     "course_podcast_title" => $podcast['podcast_title'],
+        //                     "course_podcast_intro" => $podcast['podcast_description'],
+        //                     "course_podcast_url" => $podcast['podcast_url'],
+        //                     "course_podcast_image" => $podcast['podcast_image'],
+        //                 );
+        //                 array_push($courses[$i]->podcasts, ($item));
+        //             }
+        //         }
+        //     }
+        // }
+        // $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
+        $courses[$i]->connectedProduct = get_field('connected_product', $courses[$i]->ID);
+        $tags = get_field('categories', $courses[$i]->ID) ?? [];
+        $courses[$i]->tags = array();
+        if ($tags) {
+            if (!empty($tags)) {
+                foreach ($tags as $key => $category) {
+                    if (isset($category['value'])) {
+                        $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                        array_push($courses[$i]->tags, $tag);
+                    }
+                }
+            }
+        }
+        $new_course = new CourseOptimized($courses[$i]);
+        array_push($outcome_courses, $new_course);
+    }
+    return ['courses' => $outcome_courses, "codeStatus" => 200];
+}
+
+
 function filterArticlesByUserLanguagePreferences($data)
 {
     $current_user_id = $GLOBALS['user_id'];
@@ -920,6 +1103,8 @@ function filterArticlesByUserLanguagePreferences($data)
         $experts = get_field('experts', $courses[$i]->ID);
         if (!empty($experts)) {
             foreach ($experts as $key => $expert) {
+              if ($expert->ID == 0)
+                continue;
                 $expert = get_user_by('ID', $expert);
                 $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                 array_push($courses[$i]->experts, new Expert($expert, $experts_img));
@@ -978,6 +1163,106 @@ function filterArticlesByUserLanguagePreferences($data)
         $new_course = new Course($courses[$i]);
         array_push($outcome_courses, $new_course);
     }
+    return ['courses' => $outcome_courses, "codeStatus" => 200];
+}
+
+function filterArticlesByUserLanguagePreferencesWithLikes($data)
+{
+    global $wpdb;
+
+    $current_user_id = $GLOBALS['user_id'];
+    if (!$current_user_id) {
+        $response = new WP_REST_Response("You have to login with valid credentials!");
+        $response->set_status(400);
+        return $response;
+    }
+
+    $languages = get_field('language_preferences', 'user_' . (int) $current_user_id) ?? [];
+    $args = array(
+        'post_type' => array('post'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'meta_query' => count($languages) != 0 
+            ? array(
+                array(
+                    'key' => 'language',
+                    'value' => $languages,
+                    'compare' => 'IN'
+                )
+            )
+            : array(),
+        'paged' => $data['page'] ?? 1,
+    );
+
+    $courses = get_posts($args);
+    if (!$courses) {
+        return ["courses" => [], 'message' => "There are no courses related to your preferences!", "codeStatus" => 400];
+    }
+
+    $outcome_courses = [];
+    foreach ($courses as $course) {
+        // Récupérer les statistiques de feedback pour chaque cours
+        $stats = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT 
+                    SUM(CASE WHEN feedback_value = 'like' THEN 1 ELSE 0 END) as `like`,
+                    SUM(CASE WHEN feedback_value = 'educational' THEN 1 ELSE 0 END) as `educational`,
+                    SUM(CASE WHEN feedback_value = 'issues' THEN 1 ELSE 0 END) as `issues`,
+                    SUM(CASE WHEN feedback_value = 'fake_news' THEN 1 ELSE 0 END) as `fake_news`,
+                    SUM(CASE WHEN feedback_value = 'sales' THEN 1 ELSE 0 END) as `sales`
+                 FROM {$wpdb->prefix}likes
+                 WHERE course_id = %d",
+                $course->ID
+            )
+        );
+
+        // Structure des statistiques de likes
+        $likes = [
+            'like' => (int) ($stats->like ?? 0),
+            'educational' => (int) ($stats->educational ?? 0),
+            'issues' => (int) ($stats->issues ?? 0),
+            'fake_news' => (int) ($stats->fake_news ?? 0),
+            'sales' => (int) ($stats->sales ?? 0),
+        ];
+        
+        $image = get_field('preview', $course->ID)['url'];
+          if(!$image){
+              $image = get_the_post_thumbnail_url($course->ID);
+              if(!$image)
+                  $image = get_field('url_image_xml', $course->ID);
+                      if(!$image)
+                          $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+          }
+
+        // Ajouter les informations du cours au tableau de résultats
+        $outcome_courses[] = [
+            "ID" => $course->ID,
+            "post_title" => $course->post_title,
+            "shortDescription" => get_field('short_description', $course->ID) ?? "",
+            "longDescription" => get_field('long_description', $course->ID) ?? "",
+            "pathImage" => $image,
+            "data_locaties_xml" => [],
+            "data_locaties" => [],
+            "article_itself" => get_field('article_itself', $course->ID) ?? '',
+            "language" => get_field('language', $course->ID) ?? "",
+            "likes" => $likes, // Intégration des likes
+            "visibility" => get_field('visibility', $course->ID) ?? [],
+            "author" => [
+                "name" => get_user_by('ID', $course->post_author)->display_name,
+                "profile_img" => get_field('profile_img', 'user_' . $course->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png'
+            ],
+            "tags" => array_map(function ($tag) {
+                return [
+                    "id" => $tag['value'],
+                    "name" => get_the_category_by_ID($tag['value'])
+                ];
+            }, get_field('categories', $course->ID) ?? []),
+            "courseType" => get_field('course_type', $course->ID)
+        ];
+    }
+
     return ['courses' => $outcome_courses, "codeStatus" => 200];
 }
 
@@ -1075,7 +1360,6 @@ function searchCoursesViaKeyWords($data)
 
 
 }
-
 
 
 function getOfflineCourse ($data)
@@ -4665,7 +4949,7 @@ endif;
                         }
                     }
                   }
-                $course->podcasts = $course->podcasts ?? [];
+                $course->podcasts = $course->podcasts != [] && gettype($course->podcasts) != "string" && $course->podcasts != null ? $course->podcasts : [] ;
                 $course->visibility = get_field('visibility',$course->ID);
                 $course->connectedProduct = get_field('connected_product',$course->ID);
                 $tags = get_field('categories',$course->ID) ?? [];
@@ -5651,6 +5935,11 @@ endif;
         // Define the allowed course types
         $allowed_course_types = ['masterclass', 'podcast', 'video', 'workshop', 'artikel', 'opleidingen'];
 
+        // Sort statistics by time_spent in descending order
+      usort($stats, function ($a, $b) {
+        return $b->time_spent - $a->time_spent;
+      });
+
         // Format the time spent for each statistic
         foreach ($stats as $stat)
         {
@@ -5665,8 +5954,11 @@ endif;
               }
           }
         }
+
+        
+
         return $stats;
-      }
+      } 
 
       // function updateUserSubtopicsStatistics(WP_REST_Request $request) 
       // {
@@ -6811,6 +7103,226 @@ function add_assessment_with_questions(WP_REST_Request $request) {
   }
 }
 
+function update_assessment_with_questions(WP_REST_Request $request) {
+  global $wpdb;
+
+  $data = $request->get_json_params();
+
+  // Vérifier que l'ID de l'assessment est présent
+  if (empty($data['assessment_id'])) {
+      return new WP_Error('missing_data', 'Assessment ID is required', array('status' => 400));
+  }
+
+  $assessment_id = (int) $data['assessment_id'];
+
+  // Commencer une transaction pour assurer l'intégrité des données
+  $wpdb->query('START TRANSACTION');
+
+  try {
+      // Mise à jour de l'assessment
+      $wpdb->update(
+          $wpdb->prefix . 'assessments',
+          array(
+              'title' => sanitize_text_field($data['title']),
+              'description' => sanitize_textarea_field($data['description']),
+              'duration' => isset($data['duration']) ? (int) $data['duration'] : null,
+              'category_id' => isset($data['category_id']) ? (int) $data['category_id'] : null,
+              'is_public' => isset($data['is_public']) ? (int) $data['is_public'] : 0,
+              'is_enabled' => isset($data['is_enabled']) ? (int) $data['is_enabled'] : 0,
+              'level' => sanitize_text_field($data['level']),
+              'updatedAt' => current_time('mysql', true),
+          ),
+          array('id' => $assessment_id),
+          array('%s', '%s', '%d', '%d', '%d', '%d', '%s', '%s'),
+          array('%d')
+      );
+
+      if ($wpdb->last_error) {
+          throw new Exception('Failed to update assessment: ' . $wpdb->last_error);
+      }
+
+      // Récupérer les questions existantes pour cet assessment
+      $existing_questions = $wpdb->get_results(
+          $wpdb->prepare("SELECT id FROM {$wpdb->prefix}question WHERE assessment_id = %d", $assessment_id),
+          ARRAY_A
+      );
+      $existing_question_ids = array_column($existing_questions, 'id');
+
+      $updated_question_ids = [];
+
+      foreach ($data['questions'] as $question_data) {
+          if (isset($question_data['question_id'])) {
+              // Mettre à jour une question existante
+              $question_id = (int) $question_data['question_id'];
+              $wpdb->update(
+                  $wpdb->prefix . 'question',
+                  array(
+                      'wording' => sanitize_textarea_field($question_data['wording']),
+                      'updatedAt' => current_time('mysql', true),
+                  ),
+                  array('id' => $question_id, 'assessment_id' => $assessment_id),
+                  array('%s', '%s'),
+                  array('%d', '%d')
+              );
+
+              if ($wpdb->last_error) {
+                  throw new Exception('Failed to update question: ' . $wpdb->last_error);
+              }
+
+              $updated_question_ids[] = $question_id;
+          } else {
+              // Ajouter une nouvelle question
+              $wpdb->insert(
+                  $wpdb->prefix . 'question',
+                  array(
+                      'wording' => sanitize_textarea_field($question_data['wording']),
+                      'assessment_id' => $assessment_id,
+                      'createdAt' => current_time('mysql', true),
+                  ),
+                  array('%s', '%d', '%s')
+              );
+
+              if ($wpdb->last_error) {
+                  throw new Exception('Failed to add new question: ' . $wpdb->last_error);
+              }
+
+              $updated_question_ids[] = $wpdb->insert_id;
+          }
+
+          $question_id = $wpdb->insert_id ?? $question_id;
+
+          // Gérer les réponses associées
+          if (!empty($question_data['answers'])) {
+              // Supprimer les réponses existantes pour la question
+              $wpdb->delete(
+                  $wpdb->prefix . 'answer',
+                  array('question_id' => $question_id),
+                  array('%d')
+              );
+
+              foreach ($question_data['answers'] as $answer_data) {
+                  $wpdb->insert(
+                      $wpdb->prefix . 'answer',
+                      array(
+                          'wording' => sanitize_text_field($answer_data['wording']),
+                          'is_correct' => isset($answer_data['is_correct']) ? (int) $answer_data['is_correct'] : 0,
+                          'question_id' => $question_id,
+                          'createdAt' => current_time('mysql', true),
+                      ),
+                      array('%s', '%d', '%d', '%s')
+                  );
+
+                  if ($wpdb->last_error) {
+                      throw new Exception('Failed to add/update answer: ' . $wpdb->last_error);
+                  }
+              }
+          }
+      }
+
+      // Supprimer les questions qui ne sont plus associées
+      $questions_to_delete = array_diff($existing_question_ids, $updated_question_ids);
+
+      if (!empty($questions_to_delete)) {
+          $placeholders = implode(',', array_fill(0, count($questions_to_delete), '%d'));
+          $wpdb->query(
+              $wpdb->prepare(
+                  "DELETE FROM {$wpdb->prefix}question WHERE id IN ($placeholders)",
+                  $questions_to_delete
+              )
+          );
+      }
+
+      // Valider la transaction
+      $wpdb->query('COMMIT');
+
+      return rest_ensure_response(array('message' => 'Assessment updated successfully'));
+
+  } catch (Exception $e) {
+      // Annuler la transaction en cas d'erreur
+      $wpdb->query('ROLLBACK');
+      return new WP_Error('db_error', $e->getMessage(), array('status' => 500));
+  }
+}
+
+function delete_assessment(WP_REST_Request $request) {
+  global $wpdb;
+
+  $assessment_id = (int) $request['assessment_id'];
+
+  // Vérifier si l'assessment est archivé avant de supprimer
+  $assessment = $wpdb->get_row(
+      $wpdb->prepare("SELECT is_enabled FROM {$wpdb->prefix}assessments WHERE id = %d", $assessment_id),
+      ARRAY_A
+  );
+
+  if (!$assessment) {
+      return new WP_Error('not_found', 'Assessment not found', array('status' => 404));
+  }
+
+  if ((int) $assessment['is_enabled'] !== 0) {
+      return new WP_Error('not_allowed', 'Assessment must be disabled before deletion', array('status' => 400));
+  }
+
+  // Supprimer les questions associées
+  $wpdb->delete(
+      $wpdb->prefix . 'question',
+      array('assessment_id' => $assessment_id),
+      array('%d')
+  );
+
+  // Supprimer l'assessment
+  $wpdb->delete(
+      $wpdb->prefix . 'assessments',
+      array('id' => $assessment_id),
+      array('%d')
+  );
+
+  if ($wpdb->last_error) {
+      return new WP_Error('db_error', 'Failed to delete assessment', array('status' => 500));
+  }
+
+  return rest_ensure_response(array('message' => 'Assessment deleted successfully'));
+}
+
+
+function archive_assessment(WP_REST_Request $request) {
+  global $wpdb;
+
+  $data = $request->get_json_params();
+
+  if (empty($data['assessment_id'])) {
+      return new WP_Error('missing_data', 'Assessment ID is required', array('status' => 400));
+  }
+
+  $assessment_id = (int) $data['assessment_id'];
+
+  $result = $wpdb->update(
+      $wpdb->prefix . 'assessments',
+      array('is_enabled' => 0, 'updatedAt' => current_time('mysql', true)),
+      array('id' => $assessment_id),
+      array('%d', '%s'),
+      array('%d')
+  );
+
+  if ($result === false) {
+      return new WP_Error('db_error', 'Failed to archive assessment', array('status' => 500));
+  }
+
+  return rest_ensure_response(array('message' => 'Assessment archived successfully'));
+}
+
+function list_archived_assessments() {
+  global $wpdb;
+
+  $results = $wpdb->get_results(
+      "SELECT id, title, description, updatedAt FROM {$wpdb->prefix}assessments WHERE is_enabled = 0",
+      ARRAY_A
+  );
+
+  return rest_ensure_response($results);
+}
+
+
 // Endpoint pour rajouter un slug à tous les assessments
 function add_slug_to_all_assessments()
 {
@@ -7295,7 +7807,7 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
       FROM {$wpdb->prefix}assessments a
       LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
       $where_clause
-      GROUP BY a.id"
+      GROUP BY a.id DESC"
   );
 
   // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments activés sans filtre de catégorie
@@ -7357,7 +7869,6 @@ function get_all_assessments_with_question_count(WP_REST_Request $request) {
   return rest_ensure_response($assessments);
 }
 
-
 function get_assessment_details(WP_REST_Request $request) {
   global $wpdb;
 
@@ -7406,47 +7917,6 @@ function get_assessment_details(WP_REST_Request $request) {
 
   return rest_ensure_response($assessment);
 }
-
-function delete_assessment_by_id(WP_REST_Request $request) {
-  global $wpdb;
-
-  // Récupère l'ID de l'assessment à partir de la requête
-  $assessment_id = (int) $request['assessment_id'];
-
-  // Vérifie si l'ID de l'assessment est valide
-  if (empty($assessment_id) || !is_numeric($assessment_id)) {
-      return new WP_REST_Response("Invalid assessment ID", 400);
-  }
-
-  // Debug : Vérifie l'ID reçu
-  error_log("Trying to delete assessment with ID: " . $assessment_id);
-
-  // Vérifie si l'assessment existe
-  $assessment = $wpdb->get_row(
-      $wpdb->prepare("SELECT * FROM {$wpdb->prefix}assessments WHERE id = %d", $assessment_id)
-  );
-
-  if (!$assessment) {
-      // Debug : Log si l'assessment n'est pas trouvé
-      error_log("Assessment with ID {$assessment_id} not found in database.");
-      return new WP_REST_Response("Assessment not found", 404);
-  }
-
-  // Supprime l'assessment
-
-  $deleted = $wpdb->delete(
-      "{$wpdb->prefix}assessments",
-      array('id' => $assessment_id),
-      array('%d')
-  );
-
-  if ($deleted === false) {
-      return new WP_REST_Response("Failed to delete assessment", 500);
-  }
-
-  return new WP_REST_Response("Assessment deleted successfully", 200);
-}
-
 
 
 
@@ -7648,17 +8118,224 @@ function get_course_feedback(WP_REST_Request $request) {
 }
 
 
-
-
-
  /**
  * Likes endpoints 
  */
 
+  
+
+ /**
+  * Last views endpoint
+  */
+
+  function addToFixedArray($array, $element, $maxSize = 6) {
+    if (count($array) < $maxSize) {
+        $array[] = $element; // Ajouter l'élément si le tableau n'est pas complet.
+    } else {
+        array_shift($array); // Supprimer le premier élément.
+        $array[] = $element; // Ajouter le nouvel élément à la fin.
+    }
+    return $array;
+}
+
+function getCoursesFromIds($ids, $postType = 'course') {
+
+    $args = [
+        'post_type' => $postType,
+        'post__in' => $ids,
+        'orderby' => 'post__in',
+        'posts_per_page' => -1
+    ];
+    return empty($ids) ? [] : get_posts($args);
+}
+
+function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
+    // Récupérer les cours correspondant aux IDs
+    $courses = getCoursesFromIds($ids, $postType);
+
+    // Si le nombre de cours est inférieur à $maxSize
+    if (count($courses) < $maxSize) {
+        $args = [
+            'post_type' => $postType,
+            'posts_per_page' => $maxSize - count($courses),
+            'post__not_in' => $ids, // Exclure les IDs déjà présents
+            'orderby' => 'rand',
+            'meta_query' => [
+                [
+                    'key' => 'course_type',
+                    'value' => ['podcast', 'video'],
+                    'compare' => 'IN'
+                ]
+            ]
+        ];
+        $randomCourses = get_posts($args);
+
+        // Ajouter les cours aléatoires pour compléter la liste
+        $courses = array_merge($courses, $randomCourses);
+    }
+
+    return $courses;
+}
+
+  function getLastViewedPodcastOrVideoListfunction ()
+  {
+    $user_id = $GLOBALS['user_id'];
+    $ids = get_user_meta($user_id, 'recent_views', true) ?: [];
+    $courses = getCompleteCourses($ids);
+    $refactored_courses = [];
+    
+    for ($i = 0; $i < count($courses); $i++) {
+      $courses[$i]->visibility = get_field('visibility', $courses[$i]->ID) ?? [];
+      $author = get_user_by('ID', $courses[$i]->post_author);
+      $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+      if ($courses[$i]->visibility != []) {
+          if ($author_company != $current_user_company) continue;
+      }
+      $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $courses[$i]->experts = array();
+      $experts = get_field('experts', $courses[$i]->ID);
+      if (!empty($experts)) {
+          foreach ($experts as $key => $expert) {
+              $expert = get_user_by('ID', $expert);
+              $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              array_push($courses[$i]->experts, new Expert($expert, $experts_img));
+          }
+      }
+
+      $courses[$i]->author = new Expert($author, $author_img);
+      $courses[$i]->longDescription = get_field('long_description', $courses[$i]->ID);
+      $courses[$i]->shortDescription = get_field('short_description', $courses[$i]->ID);
+      $courses[$i]->courseType = get_field('course_type', $courses[$i]->ID);
+      $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ; ///
+      $image = get_field('preview', $courses[$i]->ID)['url'];
+      if (!$image) {
+          $image = get_the_post_thumbnail_url($courses[$i]->ID);
+          if (!$image) $image = get_field('url_image_xml', $courses[$i]->ID);
+          if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($courses[$i]->courseType) . '.jpg';
+      }
+      $courses[$i]->pathImage = $image;
+      $courses[$i]->price = get_field('price', $courses[$i]->ID) ?? 0;
+      $courses[$i]->language = get_field('language', $courses[$i]->ID) ?? "";
+      $courses[$i]->connectedProduct = get_field('connected_product', $courses[$i]->ID);
+      $tags = get_field('categories', $courses[$i]->ID) ?? [];
+      $courses[$i]->tags = array();
+      if ($tags) {
+          if (!empty($tags)) {
+              foreach ($tags as $key => $category) {
+                  if (isset($category['value'])) {
+                      $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                      array_push($courses[$i]->tags, $tag);
+                  }
+              }
+          }
+      }
+      $new_course = new CourseOptimized($courses[$i],true);
+      array_push($refactored_courses, $new_course);
+  }
+    return rest_ensure_response($refactored_courses);
+  }
+
+  function updateLastViewdPodcastorVideoListfunction ($request) 
+  {
+    $params = $request->get_json_params();
+    $newId = isset($params['course_id']) ? intval($params['course_id']) : null;
+
+    if (!$newId) {
+        return new WP_Error('invalid_course_id', 'Invalid course ID provided', ['status' => 400]);
+    }
+    $user_id = $GLOBALS['user_id'];
+    $ids = get_user_meta($user_id, 'recent_views', true) ?: [];
+    $ids = addToFixedArray($ids, $newId);
+    update_user_meta(get_current_user_id(), 'recent_views', $ids);
+    return rest_ensure_response(['message' => 'Course updated successfully', 'updated_courses' => $ids]);
+  }
+
+  /**
+  * Last views endpoint
+  */
 
 
+  /**
+  * Highlighted courses endpoint
+  */
+
+    function get_highlighted_courses()
+    {
+      $featured = get_field('featured', 'user_' . 5);
+      if (!empty($featured ))
+      {
+        $courses = array();
+        foreach ($featured as $key => $course) 
+        {
+              $course->visibility = get_field('visibility',$course->ID) ?? [];
+              $course->visibility = get_field('visibility',$course->ID) ?? [];
+              $author = get_user_by( 'ID', $course -> post_author  );
+              $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+              if ($course->visibility != []) 
+                if ($author_company != $current_user_company)
+                  continue;
+                $author = get_user_by( 'ID', $course -> post_author  );
+                $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                $course-> author = new Expert ($author , $author_img);
+                $course->longDescription = get_field('long_description',$course->ID);
+                $course->shortDescription = get_field('short_description',$course->ID);
+                $course->courseType = get_field('course_type',$course->ID);
+                //Image - article
+                $image = get_field('preview', $course->ID)['url'];
+                if(!$image){
+                    $image = get_the_post_thumbnail_url($course->ID);
+                    if(!$image)
+                        $image = get_field('url_image_xml', $course->ID);
+                            if(!$image)
+                                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+                }
+                $course->pathImage = $image;
+                $course->price = get_field('price',$course->ID);
+                $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+                if (strtolower($course->courseType) == 'podcast')
+                  {
+                    $podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+                    if (!empty($podcasts))
+                        $course->podcasts = $podcasts;
+                      else {
+                        $podcasts = get_field('podcasts_index',$course->ID) ? get_field('podcasts_index',$course->ID) : [];
+                        if (!empty($podcasts))
+                        {
+                          $course->podcasts = array();
+                          foreach ($podcasts as $key => $podcast) 
+                          { 
+                            $item= array(
+                              "course_podcast_title"=>$podcast['podcast_title'], 
+                              "course_podcast_intro"=>$podcast['podcast_description'],
+                              "course_podcast_url" => $podcast['podcast_url'],
+                              "course_podcast_image" => $podcast['podcast_image'],
+                            );
+                            array_push ($course->podcasts,($item));
+                          }
+                        }
+                    }
+                  }
+                $course->podcasts = $course->podcasts ?? [];
+                $course->visibility = get_field('visibility',$course->ID);
+                $course->connectedProduct = get_field('connected_product',$course->ID);
+                $tags = get_field('categories',$course->ID) ?? [];
+                $course->tags= array();
+                if($tags)
+                  if (!empty($tags))
+                    foreach ($tags as $key => $category) 
+                      if(isset($category['value'])){
+                        $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                        array_push($course->tags,$tag);
+                      }
+                array_push($courses ,new Course($course)); 
+        }
+      }
+      return rest_ensure_response($courses);
+    }
+
+  /**
+  * Highlighted courses endpoint
+  */
 
 
-
-
-
+  

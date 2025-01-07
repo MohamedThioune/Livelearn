@@ -1923,6 +1923,21 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_assessment_with_questions',
     ));
 
+    register_rest_route('custom/v3', '/assessments/update', array(
+        'methods' => 'PUT',
+        'callback' => 'update_assessment_with_questions',
+    ));
+
+    register_rest_route('custom/v3', '/assessments/archive', array(
+        'methods' => 'PUT',
+        'callback' => 'archive_assessment',
+    ));
+
+    register_rest_route('custom/v3', '/assessments/archived', array(
+        'methods' => 'GET',
+        'callback' => 'list_archived_assessments',
+    ));
+
     register_rest_route('custom/v3', '/assessments/(?P<id>\d+)/attempt', array(
         'methods' => 'POST',
         'callback' => 'attempt_assessment',
@@ -1959,9 +1974,9 @@ add_action( 'rest_api_init', function () {
         'callback' => 'add_slug_to_all_assessments',
     ));
 
-    register_rest_route('custom/v3', '/assessment/(?P<assessment_id>\d+)', array(
+    register_rest_route('custom/v3', '/assessment/delete', array(
         'methods' => 'DELETE',
-        'callback' => 'delete_assessment_by_id',
+        'callback' => 'delete_assessment',
         'permission_callback' => function () {
             return current_user_can('delete_posts'); // Vérifie les permissions pour supprimer
         },
@@ -1987,6 +2002,15 @@ add_action( 'rest_api_init', function () {
     ));
 
     /* Likes endpoints V3 */
+
+    /* Highlights courses endpoints V3 */
+
+    register_rest_route('custom/v3', '/courses/highlighted', array(
+        'methods' => 'GET',
+        'callback' => 'get_highlighted_courses',
+    ));
+
+    /* Highlights courses endpoints V3 */
 
     register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
         'methods' => 'GET',
@@ -2250,12 +2274,34 @@ add_action( 'rest_api_init', function () {
         'callback' => 'allCoursesOptimizedWithFilter',
     ));
 
+    
+
+    register_rest_route('custom/v3', '/course/filtered', array(
+        'methods' => 'GET',
+        'callback' => 'allCoursesOptimizedWithJustPreviewAndFilter',
+    ));
+
+    
+
     register_rest_route('custom/v2', '/article/filtered', array(
         'methods' => 'GET',
         'callback' => 'filterArticlesByUserLanguagePreferences',
     ));
 
+    register_rest_route('custom/v3', '/article/filtered', array(
+        'methods' => 'GET',
+        'callback' => 'filterArticlesByUserLanguagePreferencesWithLikes',
+    ));
 
+    register_rest_route('custom/v3', '/last/views', array(
+        'methods' => 'GET',
+        'callback' => 'getLastViewedPodcastOrVideoListfunction',
+    ));
+
+    register_rest_route('custom/v3', '/last/views', array(
+        'methods' => 'POST',
+        'callback' => 'updateLastViewdPodcastorVideoListfunction',
+    ));
 
     //Weekly mail livelearn
     register_rest_route ('custom/v1', '/weekly-recommendation', array(
@@ -2776,5 +2822,12 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'get_employees_polaris'
     ));
-
+   register_rest_route ('custom/v1', 'episodes/video', array(
+        'methods' => 'GET',
+        'callback' => 'get_video_episode'
+    ));
+    register_rest_route ('custom/v1', 'episodes/podcast', array(
+        'methods' => 'GET',
+        'callback' => 'get_podcast_episode'
+    ));
 });
