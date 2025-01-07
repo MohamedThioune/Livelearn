@@ -3542,8 +3542,32 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $isCourseUpdated = true;
     }
     if ($categories){
+        $categories_ids = [];
+        $categories_exist = get_full_categories($id_course);
+        if (!empty($categories_exist))
+            foreach ($categories_exist as $category) {
+                $categories_ids[] = $category->term_id;
+            }
+        // merge
+        $cats = array_merge($categories,$categories_ids);
+
+        $cats = array_map(function($category) {
+            return intval($category);
+        }, $cats);
+        // unique
+        $cats = array_unique($cats);
+
+        wp_set_post_terms($id_course, $cats, 'course_category');
         update_field('categories', $categories , $id_course);
+        $course->categories = get_full_categories($id_course);
         $isCourseUpdated = true;
+        /*
+        return new WP_REST_Response([
+            'cat_input' => $categories,
+            'categories_ids_exist old'=>$categories_ids, // 319, 420
+            'array_merge' =>$cats,
+        ]);
+        */
     }
     if ($experts){
         $all_experts = get_field('experts', $id_course) ? : [];
@@ -3705,15 +3729,13 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->price = get_field('price',$id_course);
         $isCourseUpdated = true;
     }
-    if ($isCourseUpdated) {
-        $response = new WP_REST_Response(
+    if ($isCourseUpdated)
+        return new WP_REST_Response(
             array(
                 'message' => 'course updated success...',
                 'course' => $course,
-            ));
-        $response->set_status(201);
-        return $response;
-    }
+            ),201);
+
     return new WP_REST_Response( array('message' => 'course not updated...',), 401);
 }
 
