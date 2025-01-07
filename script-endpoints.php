@@ -529,8 +529,15 @@ function update_podcast_on_podcastindex()
     ));
 }
 
-function get_video_episode_by_id($id_course, $page=1)
+function get_video_episode()
 {
+    $id_course = $_GET['id_course'] ?? null;
+    $page = $_GET['page'] ?? 1;
+    if (!$id_course)
+        return  new WP_REST_Response(['error'=>'you must put the id of course']);
+    if(!get_post($id_course))
+        return  new WP_REST_Response(['error'=>'id not correcte make sure the exist'],409);
+
     define("EPISODE_PER_PAGE", 10);
     $fileName = get_stylesheet_directory() . "/db/video.json";
     $episodes_json = file_get_contents($fileName);
@@ -543,7 +550,7 @@ function get_video_episode_by_id($id_course, $page=1)
         //
     $offset = ($page -1 ) * EPISODE_PER_PAGE;
     $total_episodes = count($episodes);
-    $episodes = array_slice($episodes,$offset, EPISODE_PER_PAGE);
+    $episodes = array_slice($episodes,$offset,EPISODE_PER_PAGE);
     $total_pages = ceil($total_episodes / EPISODE_PER_PAGE);
     $pages = range(1, $total_pages);
         $episode_formated = [];
@@ -555,16 +562,25 @@ function get_video_episode_by_id($id_course, $page=1)
                     'thumbnail_url' => $episode['episode_image']
                 ];
             }
-
-    return [
-        'total_episodes' => $total_episodes,
-        'pages' => $pages,
-        'episodes'=> $episode_formated,
+    $response = [
+        'total_episodes' =>$total_episodes,
+        'pages' =>$pages,
+        'episodes'=>$episode_formated,
     ];
+    $response = new WP_REST_Response([$response]);
+    $response->set_status(200);
+    return($response);
 }
- 
-function get_podcast_episode_by_id($id_course, $page=1)
+
+function get_podcast_episode()
 {
+    $id_course = $_GET['id_course'] ?? null;
+    $page = $_GET['page'] ?? 1;
+    if (!$id_course)
+        return  new WP_REST_Response(['error'=>'you must put the id of course']);
+    if(!get_post($id_course))
+        return  new WP_REST_Response(['error'=>'id not correcte make sure the exist'],409);
+
     define("EPISODE_PER_PAGE", 10);
     $fileName = get_stylesheet_directory() . "/db/podcast.json";
     $episodes_json = file_get_contents($fileName);
@@ -593,57 +609,12 @@ function get_podcast_episode_by_id($id_course, $page=1)
            ];
        }
    }
-    return [
+    $response = [
         'total_episodes' =>$total_episodes,
         'pages' =>$pages,
         'episodes'=>$episode_formated,
     ];
-}
-function get_episodes_paginated(){
-        $type = $_GET['type'] ?? 'Video';
-        $page = $_GET['page'] ?? 1;
-
-        $args = array(
-            'post_type' => 'course',
-            'post_status' => 'publish',
-            'ordevalue'       => $type,
-            'order' => 'DESC' ,
-            'meta_key' => 'course_type',
-            'meta_value' => $type,
-            'posts_per_page' => 20,
-            'paged' => $page,
-        );
-        $courses = get_posts($args);
-        foreach ($courses as $course) {
-            $course_type = get_field('course_type', $course->ID);
-            if ($course_type != 'Video')
-                continue;
-            //$episodes = get_podcast_episode_by_id($course->ID,2);
-
-            $episodes = get_video_episode_by_id($course->ID,1);
-
-
-            if ($episodes['total_episodes']) {
-                $course->episodes = $episodes;
-            }
-        }
-
-        $arg_paginated = array(
-            'post_type' => 'course',
-            'post_status' => 'publish',
-            'ordevalue'       => $type,
-            'order' => 'DESC' ,
-            'meta_key' => 'course_type',
-            'meta_value' => $type,
-            'posts_per_page' => -1,
-        );
-        $count_all_course = count(get_posts($arg_paginated));
-        $total_pages = ceil($count_all_course / 20);
-        $numbers_of_pages = range(1, $total_pages);
-        return new WP_REST_Response( array(
-            'courses' => $courses,
-            'all_podcast_course' =>$count_all_course,
-            'pages' => $numbers_of_pages,
-            //'episodes' =>$episodes
-        ),200);
+    $response = new WP_REST_Response([$response]);
+    $response->set_status(200);
+    return($response);
 }
