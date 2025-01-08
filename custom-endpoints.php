@@ -7822,14 +7822,14 @@ function get_questions_for_assessment(WP_REST_Request $request) {
 
 function get_assessment_questions(WP_REST_Request $request) {
   global $wpdb;
-  
+
   // Récupère l'ID de l'évaluation à partir de la requête
   $assessment_id = $request->get_param('assessment_id');
-  
+
   if (empty($assessment_id)) {
       return new WP_Error('missing_assessment_id', 'Assessment ID is required', array('status' => 400));
   }
-  
+
   // Vérifie si l'évaluation existe et est activée
   $assessment = $wpdb->get_row(
       $wpdb->prepare(
@@ -7837,11 +7837,11 @@ function get_assessment_questions(WP_REST_Request $request) {
           $assessment_id
       )
   );
-  
+
   if (!$assessment) {
       return new WP_Error('assessment_not_found', 'Assessment not found or not enabled', array('status' => 404));
   }
-  
+
   // Récupère toutes les questions de l'évaluation
   $questions = $wpdb->get_results(
       $wpdb->prepare(
@@ -7849,11 +7849,11 @@ function get_assessment_questions(WP_REST_Request $request) {
           $assessment_id
       )
   );
-  
+
   if (empty($questions)) {
       return new WP_Error('no_questions_found', 'No questions found for this assessment', array('status' => 404));
   }
-  
+
   // Préparer le tableau de retour pour les questions et leurs réponses
   $assessment_data = array(
       'assessment_id' => $assessment->id,
@@ -7862,16 +7862,17 @@ function get_assessment_questions(WP_REST_Request $request) {
       'duration' => $assessment->duration,
       'questions' => array()
   );
-  
+
   // Boucle pour chaque question et récupère les réponses associées
   foreach ($questions as $question) {
       $answers = $wpdb->get_results(
           $wpdb->prepare(
-              "SELECT id, wording FROM {$wpdb->prefix}answer WHERE question_id = %d",
+              "SELECT id, wording, is_correct FROM {$wpdb->prefix}answer WHERE question_id = %d",
               $question->id
-          )
+          ),
+          ARRAY_A // Format tableau associatif pour inclure les clés
       );
-      
+
       // Ajoute chaque question avec ses réponses à la structure de retour
       $assessment_data['questions'][] = array(
           'question_id' => $question->id,
@@ -7879,10 +7880,11 @@ function get_assessment_questions(WP_REST_Request $request) {
           'answers' => $answers
       );
   }
-  
+
   // Retourne les données de l'évaluation, des questions et des réponses
   return rest_ensure_response($assessment_data);
 }
+
 
 function get_assessment_statistics(WP_REST_Request $request) {
   global $wpdb;
