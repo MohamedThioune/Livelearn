@@ -4365,15 +4365,14 @@ function get_customers_by_course(WP_REST_Request $request){
     $response->set_status(401);
     return $response;
   endif;
-  $infos['post']['title'] = $post->title;
+  $infos['post']['title'] = $post->post_title;
   $infos['post']['prijs'] = get_field('price', $post->ID);
+  $infos = (Object)$infos;
 
   //Get students data for this course 
   $ordersByAuthor = array();
   $ordersByAuthor = ordersByAuthor($post->post_author, $post->ID, 1);
-  $infos['registrations'] = (isset($ordersByAuthor['students'][0])) ? $ordersByAuthor['students'] : array();
-
-  $infos = (Object)$infos;
+  $infos->registrations = (isset($ordersByAuthor['students'][0])) ? $ordersByAuthor['students'] : array();
 
   // Return the response 
   $response = new WP_REST_Response($infos);
