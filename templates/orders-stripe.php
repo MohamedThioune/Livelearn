@@ -87,7 +87,26 @@ function ordersByAuthor($authorID, $courseID, $customer = null) {
                 $post->metadata = ($order->metadata) ?: null;
                 //Get owner
                 $post->ownerID = ($order->owner_id) ?: null;
-                $post->ownerID = ($customer) ? get_user_by('ID', $post->ownerID) : $post->ownerID;
+                $sample = array();
+                if($customer):
+                    $user = get_user_by('ID', $post->ownerID);
+                    $sample['ID'] = $user->ID;
+                    $sample['first_name'] = $user->first_name;
+                    $sample['last_name'] = $user->last_name;
+                    $sample['email'] = $user->user_email;
+
+                    $company = get_field('company',  'user_' . $user->ID) ? get_field('company',  'user_' . $user->ID)[0] : array();
+                    $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
+                  
+                    $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+                    // $sample['mobile_phone'] = $user->mobile_phone;
+                    // $sample['city'] = $user->city;
+                    // $sample['adress'] = $user->adress;
+                    // $sample['image'] = get_field('profile_img',  'user_' . $user->ID) ?:  get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    // $sample['cv'] = get_field('cv',  'user_' . $user->ID);
+                    // $sample['country'] = get_field('country',  'user_' . $user->ID) ? : 'N/A';
+                    $post->ownerID = (Object)$sample;
+                endif;
 
                 $sample = array(); 
                 if($post->ID == $courseID):
