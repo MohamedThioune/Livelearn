@@ -66,11 +66,11 @@ function list_orders($userID, $no_futher = null){
 }
 
 //Listing orders stripe by Author 
-function ordersByAuthor($authorID, $courseID){
+function ordersByAuthor($authorID, $courseID, $customer = null) {
     global $wpdb;
     $table = $wpdb->prefix . 'stripe_order';
 
-    $sql_orders_stripe = $wpdb->prepare("SELECT course_id, metadata, owner_id FROM $table");
+    $sql_orders_stripe = ($customer) ? $wpdb->prepare("SELECT course_id, metadata, owner_id FROM $table WHERE course_id = %s", $courseID) : $wpdb->prepare("SELECT course_id, metadata, owner_id FROM $table");
     $orders_stripe = $wpdb->get_results($sql_orders_stripe);
     $enrolledPost = array();
     $enrolledID = array();
@@ -87,6 +87,7 @@ function ordersByAuthor($authorID, $courseID){
                 $post->metadata = ($order->metadata) ?: null;
                 //Get owner
                 $post->ownerID = ($order->owner_id) ?: null;
+                $post->ownerID = ($customer) ? get_user_by('ID', $post->ownerID) : $post->ownerID;
 
                 $sample = array(); 
                 if($post->ID == $courseID):
@@ -105,5 +106,4 @@ function ordersByAuthor($authorID, $courseID){
     $enrolledPost = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
     return ['ids' => $enrolledID, 'posts' => $enrolledPost, 'students' => $enrolledUser];
 }
-    
 ?>

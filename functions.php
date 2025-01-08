@@ -1084,7 +1084,6 @@ function my_front_end_login_fail( $username ) {
     }
 }
 
-
 //change labels/placeholders on woo
 function override_default_address_checkout_fields( $fields ) {
     $fields['first_name']['placeholder'] = 'Voornaam';
@@ -2604,6 +2603,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'get_post_orders'
     ));
+    register_rest_route ('custom/v1', '/checkout/orders/customers', array(
+        'methods' => 'POST',
+        'callback' => 'get_customers_by_course'
+    ));    
 
     register_rest_route ('custom/v2', '/checkout/orders', array(
         'methods' => 'POST',
