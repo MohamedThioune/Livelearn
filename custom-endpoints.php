@@ -6883,7 +6883,7 @@ function get_user_orders(WP_REST_Request $request){
 
   //Enrolled with Stripe
   $enrolled_courses = array();
-  $enrolled_courses = list_orders($user->ID)['posts'];
+  $enrolled_courses = list_orders($user->ID)['posts']; 
   
     $outcome_courses = array();
   
