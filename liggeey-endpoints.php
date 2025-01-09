@@ -259,7 +259,7 @@ function postAdditionnal($post, $userID, $edit = null){
 
   //Enrollment | Stripe - by author
   $ordersByAuthor = array();
-  $ordersByAuthor = ordersByAuthor($post->authorID, $post->ID);
+  $ordersByAuthor = ordersByAuthor($post->ID);
   //get students data for this course 
   $course_enrolled = (isset($ordersByAuthor['students'][0])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
   $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
@@ -4371,7 +4371,7 @@ function get_customers_by_course(WP_REST_Request $request){
 
   //Get students data for this course 
   $ordersByAuthor = array();
-  $ordersByAuthor = ordersByAuthor($post->post_author, $post->ID, 1);
+  $ordersByAuthor = ordersByAuthor($post->ID, 1);
   $infos->registrations = (isset($ordersByAuthor['students'][0])) ? $ordersByAuthor['students'] : array();
 
   // Return the response 
