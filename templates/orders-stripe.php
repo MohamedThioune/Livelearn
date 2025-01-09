@@ -114,7 +114,7 @@ function ordersByAuthor($courseID, $customer = null) {
                     $sample = (Object)$sample;
                     array_push($enrolledUser, $sample);
                     if($order->owner_id)
-                    array_push($enrolledUserID, $order->owner_id);
+                        array_push($enrolledUserID, $order->owner_id);
                 endif;
                     
                 array_push($enrolledPost, $post);
@@ -124,6 +124,6 @@ function ordersByAuthor($courseID, $customer = null) {
     endforeach;
                 
     $enrolledPostAuthor = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
-    return ['ids' => $enrolledID, 'posts' => $enrolledPostAuthor, 'students' => $enrolledUser, 'studentIDs' => $enrolledUser];
+    return ['ids' => $enrolledID, 'posts' => $enrolledPostAuthor, 'students' => $enrolledUser, 'studentIDs' => $enrolledUserID];
 }
 ?>

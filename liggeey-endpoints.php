@@ -259,7 +259,7 @@ function postAdditionnal($post, $userID, $edit = null){
 
   //Enrollment | Stripe - by author
   $ordersByAuthor = array();
-  $ordersByAuthor = ordersByAuthor($post->ID);
+  $ordersByAuthor = ordersByAuthor($post->ID, 1);
   //get students data for this course 
   $course_enrolled = (isset($ordersByAuthor['students'][0])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
   $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
