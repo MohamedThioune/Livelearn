@@ -620,6 +620,7 @@ function get_full_categories($id_course):array
         $category->description_category = get_field('descriptor_category','category_'.$category->term_id);
         $category->partners_category = get_field('partners_category','category_'.$category->term_id);
         $category->banner_category = get_field('banner_category','category_'.$category->term_id);
+        $category->subtopics = get_term_children(intval($category->term_id),'course_category');
 
         $categories_to_return[] = $category;
     }
@@ -652,18 +653,20 @@ function link_the_categories_courses()
     );
     $cousres_returned = [];
     $courses = get_posts($args);
-    $total_number_course = 0 ;
-    $number_course_valide = 0 ;
+    $total_number_course = 0;
+    $number_course_valide = 0;
     foreach ($courses as $course){
         $categories_default = get_field('categories', $course->ID)?:[];
         $categories_xml = get_field('category_xml', $course->ID)?:[];
         $categories = array_merge($categories_default,$categories_xml);
+        // just pour être sûre si entre les 2 vide c pour ça une seule condition est meilleur
         if (empty($categories))
             continue;
+
         //wp_set_post_terms($course->ID, $categories, 'course_category');
         $filtered_categories = array_filter($categories, function($category) {
             return !empty($category) && is_array($category) && isset($category['value']);
-        });
+        }); // recupe the the
         $categories_ids = array_map(function($category) {
             return intval($category['value']);
         }, $filtered_categories);
@@ -671,9 +674,11 @@ function link_the_categories_courses()
         $cousres_returned[] = $course;
         if (wp_set_post_terms($course->ID, $categories_ids, 'course_category'))
             $number_course_valide++;
-        $course->categories = get_full_categories($course->ID);
+
         $total_number_course++;
+        $course->categories = get_full_categories($course->ID);
     }
+
     $args['posts_per_page'] = -1;
     unset($args['paged']); // to make all pages
     $count_all_course = count(get_posts($args));
