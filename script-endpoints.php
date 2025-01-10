@@ -636,6 +636,7 @@ function link_the_categories_courses()
         'post_status' => 'publish',
         'posts_per_page' => $course_per_page,
         'order' => 'DESC' ,
+        /*
         'meta_query'=>[
             [
                 'key' => 'category_xml',
@@ -646,6 +647,7 @@ function link_the_categories_courses()
                 'compare' => 'EXISTS',
             ],
         ],
+        */
         'paged' => $page,
     );
     $cousres_returned = [];
