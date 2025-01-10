@@ -197,40 +197,40 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
         </button>
     </div>
     <div class="modal-body">
-    <!--------------------------->
+        <!--------------------------->
         <div class="addCourseStep">
-                <div class="blockBaangerichte">
-                    <div class="hiddenCB">
-                        <div>
-                            <?php
-                            foreach($bangerichts as $key => $value) {
-                                $state = false;
-                                $childrens = get_term_children($value->cat_ID, 'course_category');
-                                foreach ($course_subtopics as $element)
-                                    if (in_array($element, $childrens) && !in_array($element, $displayed)) {
-                                        echo '<input checked type="checkbox" value= ' . $value->cat_ID . ' id="cb_topics_bangricht' . ($key + 1) . '" />
+            <div class="blockBaangerichte">
+                <div class="hiddenCB">
+                    <div>
+                        <?php
+                        foreach($bangerichts as $key => $value) {
+                            $state = false;
+                            $childrens = get_term_children($value->cat_ID, 'course_category');
+                            foreach ($course_subtopics as $element)
+                                if (in_array($element, $childrens) && !in_array($element, $displayed)) {
+                                    echo '<input checked type="checkbox" value= ' . $value->cat_ID . ' id="cb_topics_bangricht' . ($key + 1) . '" />
                                         <label class="labelChoose btnBaangerichte subtopics_bangricht_' . ($key + 1) . ' ' . ($key + 1) . '" for="cb_topics_bangricht' . ($key + 1) . '">' . $value->cat_name . '</label>';
-                                        array_push($displayed, $element);
-                                        $state = true;
-                                    }
-                                if ($state)
-                                    continue;
-                                echo '<input type="checkbox" value= ' . $value->cat_ID . ' id="cb_topics_bangricht' . ($key + 1) . '" /><label class="labelChoose btnBaangerichte subtopics_bangricht_' . ($key + 1) . ' ' . ($key + 1) . '" for="cb_topics_bangricht' . ($key + 1) . '">' . $value->cat_name . '</label>';
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <div class="subtopicBaangerichte">
-                        <div class="hiddenCB">
-                            <p class="pickText">Pick the sub-topics matching with the course <?= $course->post_tittle ?></p>
-                            <?php
-                                  echo $row_bangrichts;
-                            ?>
-                        </div>
+                                    array_push($displayed, $element);
+                                    $state = true;
+                                }
+                            if ($state)
+                                continue;
+                            echo '<input type="checkbox" value= ' . $value->cat_ID . ' id="cb_topics_bangricht' . ($key + 1) . '" /><label class="labelChoose btnBaangerichte subtopics_bangricht_' . ($key + 1) . ' ' . ($key + 1) . '" for="cb_topics_bangricht' . ($key + 1) . '">' . $value->cat_name . '</label>';
+                        }
+                        ?>
                     </div>
                 </div>
+                <div class="subtopicBaangerichte">
+                    <div class="hiddenCB">
+                        <p class="pickText">Pick the sub-topics matching with the course <?= $course->post_tittle ?></p>
+                        <?php
+                        echo $row_bangrichts;
+                        ?>
+                    </div>
+                </div>
+            </div>
         </div>
-    <!--------------------------->
+        <!--------------------------->
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="document.getElementById('myModal').style.display='none'">Close</button>
             <button type="button" class="btn btn-primary" id="save_subtopic_course" onclick="saveSubTopics()">Save subtopics</button>
