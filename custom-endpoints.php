@@ -7315,16 +7315,69 @@ function archive_assessment(WP_REST_Request $request) {
   return rest_ensure_response(array('message' => 'Assessment archived successfully'));
 }
 
-function list_archived_assessments() {
+function list_archived_assessments() 
+{
   global $wpdb;
 
-  $results = $wpdb->get_results(
-      "SELECT id, title, description, updatedAt FROM {$wpdb->prefix}assessments WHERE is_enabled = 0",
-      ARRAY_A
-  );
+    // Récupération des évaluations activées
+    $assessments = $wpdb->get_results(
+        "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+        FROM {$wpdb->prefix}assessments a
+        LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+        WHERE a.is_enabled = 1
+        GROUP BY a.id"
+    );
 
-  return rest_ensure_response($results);
+    // Vérifie s'il y a des assessments
+    if (empty($assessments)) {
+        return rest_ensure_response(array('message' => 'No assessments found.'));
+    }
+
+    // Récupération de l'ID de l'utilisateur pour ajouter les champs status et score
+    $user_id = $GLOBALS['user_id'];
+
+    foreach ($assessments as $assessment) {
+        // Rechercher si l'utilisateur a un résultat pour cet assessment
+        $result = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT score, is_success FROM {$wpdb->prefix}result WHERE user_id = %d AND assessment_id = %d",
+                $user_id,
+                $assessment->id
+            )
+        );
+
+        if ($result) {
+            if ($result->is_success) {
+                $assessment->status = 'validated'; // L'utilisateur a validé l'évaluation
+            } else {
+                $assessment->status = 'failed'; // L'utilisateur a échoué l'évaluation
+            }
+            $assessment->score = $result->score; // Inclure le score
+        } else {
+            $assessment->status = 'not_attempted'; // L'utilisateur n'a jamais tenté l'évaluation
+            $assessment->score = null; // Pas de score car jamais tenté
+        }
+
+        // Récupérer les informations de l'auteur
+        $author = get_user_by('ID', $assessment->author_id);
+        if ($author) {
+            $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $assessment->author = new Expert($author, $author_img);
+        } else {
+            $assessment->author = null;
+        }
+
+        // Récupérer les informations de la catégorie
+        $assessment->category = [
+            "name" => get_the_category_by_ID((int)$assessment->category_id),
+            "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+        ];
+    }
+
+    // Retourner les assessments avec les données enrichies
+    return rest_ensure_response($assessments);
 }
+
 
 
 // Endpoint pour rajouter un slug à tous les assessments
