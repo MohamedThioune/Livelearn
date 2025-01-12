@@ -7324,7 +7324,7 @@ function list_archived_assessments()
         "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
         FROM {$wpdb->prefix}assessments a
         LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-        WHERE a.is_enabled = 1
+        WHERE a.is_enabled = 0
         GROUP BY a.id"
     );
 
