@@ -158,7 +158,7 @@ class Badge
 }
 
 //Push notifications
-function sendPushNotification(WP_REST_Request $request) {
+function sendFirebasePushNotification(WP_REST_Request $request) {
   $title = $request['title'] ?? "";
   $body = $request['body'] ?? "";
   $current_user = wp_get_current_user();
