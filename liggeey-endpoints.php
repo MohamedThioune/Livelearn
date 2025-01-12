@@ -252,43 +252,23 @@ function postAdditionnal($post, $userID, $edit = null){
   $datenr = 0; 
   $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
   $enrolled = array();
-  $enrolled_courses = array();
   $statut_bool = 0;
-  $args = array(
-    'customer_id' => $userID,
-    'post_status' => array('wc-processing', 'wc-completed'),
-    'orderby' => 'date',
-    'order' => 'ASC',
-    'limit' => -1
-  );
-  $bunch_orders = wc_get_orders($args);
-  $enrolled_member = 0;
+  $enrolled_courses = array();
+  // $enrolled_member = 0;
   $enrolled_all = 0;
-  foreach($bunch_orders as $order)
-    foreach ($order->get_items() as $item_id => $item ) :
-      $course_id = intval($item->get_product_id()) - 1;
-      $course = get_post($course_id);
-      if($course_id == $post->ID){
-        $statut_bool = 1;
-        $enrolled_member += 1;
-      }
-      if(!empty($course))
-        if($course->post_author == $post->authorID)
-          $enrolled_all += 1;
-    endforeach;
-  
+
   //Enrollment | Stripe - by author
   $ordersByAuthor = array();
-  $ordersByAuthor = ordersByAuthor($post->authorID, $post->ID);
+  $ordersByAuthor = ordersByAuthor($post->ID, 1);
   //get students data for this course 
-  $course_enrolled = (isset($ordersByAuthor['students'][0])) ? array_column($ordersByAuthor['students'], 'ownerID') : array();
+  $course_enrolled = (isset($ordersByAuthor['studentIDs'][0])) ? $ordersByAuthor['studentIDs'] : array();
   $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
   $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool;   //check access to user connected
   //get students data for all these author courses
   $course_enrolled_all = (isset($ordersByAuthor['posts'][0])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
   $count_stripe_student = (isset($course_enrolled_all[0])) ? count(array_count_values($course_enrolled_all)) : 0;
   $post->average_star = $average_star;
-  $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
+  $post->enrolled_students = $count_stripe_course_student;
   if($author)
     $post->instructor->enrolled_students = $count_stripe_student;
   $post->access = ($statut_bool) ? "All access" : 'Not granted'; 
@@ -2883,41 +2863,11 @@ function candidateSkillsPassport(WP_REST_Request $request) {
         $user_id = $user_apply->ID;
     }
 
-  $enrolled = array();
-  $enrolled_courses = array();
 
-  //Orders - enrolled courses
-  $args = array(
-    'customer_id' => $user_id,
-    'post_status' => array('wc-processing', 'wc-completed'),
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'limit' => -1,
-  );
-  $bunch_orders = wc_get_orders($args);
-  //$bunch_orders = array();
-
-  foreach($bunch_orders as $order)
-    foreach ($order->get_items() as $item_id => $item ) {
-      //Get woo orders from user
-      $id_course = intval($item->get_product_id()) - 1;
-      if(!in_array($id_course, $enrolled))
-          array_push($enrolled, $id_course);
-    }
-  
-  if(!empty($enrolled))
-  {
-      $args = array(
-          'post_type' => 'course',
-          'posts_per_page' => -1,
-          'orderby' => 'post_date',
-          'order' => 'DESC',
-          'include' => $enrolled,
-      );
-      $enrolled_courses = get_posts($args);
-  }
+  //Enrolled with Stripe
+  $enrolled_courses = list_orders($user_apply->ID)['posts'];
+  //Progression
   $state = array('new' => 0, 'progress' => 0, 'done' => 0);
-
   foreach($enrolled_courses as $key => $course) :
     /* * State actual details * */
     $status = "new";
@@ -2957,7 +2907,7 @@ function candidateSkillsPassport(WP_REST_Request $request) {
     }
   endforeach;
 
-  //favorite course
+  //Favorite course
   $courses_saved = get_user_meta($user_id, 'course') ?? false;
   $courses = get_posts(
     array(
@@ -3154,33 +3104,9 @@ function candidateSkillsPassportAdvanced(WP_REST_Request $request) {
 
   $enrolled = array();
   $enrolled_courses = array();
-  //Orders - enrolled courses
-  $args = array(
-    'customer_id' => $user->ID,
-    'post_status' => array('wc-processing', 'wc-completed'),
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'limit' => -1,
-  );
-  $bunch_orders = wc_get_orders($args);
-  foreach($bunch_orders as $order)
-    foreach ($order->get_items() as $item_id => $item ) {
-      //Get woo orders from user
-      $course_id = intval($item->get_product_id()) - 1;
-      if(!in_array($course_id, $enrolled)):
-        $course = get_post($course_id);
-        if(!$course)
-          continue;
-        array_push($enrolled, $course_id);
-      endif;
-    }
   
   //Enrolled with Stripe
-  $enrolled_stripe = array();
-  $enrolled_stripe = list_orders($user_id, 1)['ids'];
-  if(!empty($enrolled_stripe))
-    $enrolled = (empty($enrolled)) ? $enrolled_stripe : array_merge($enrolled, $enrolled_stripe);
-  
+  $enrolled = list_orders($user_id, 1)['ids'];  
   if(!empty($enrolled)):
     $args = array(
         'post_type' => 'course',
@@ -4075,36 +4001,9 @@ function activity($ID){
   //End ...
 
   //Enrolled sample - course
-  $enrolled = array();
   $courses = array();
   $mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
-
-  //Orders 
-  $args = array(
-    'customer_id' => $user->ID,
-    'post_status' => array('wc-processing', 'wc-completed'),
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'limit' => -1,
-  );
-  $bunch_orders = wc_get_orders($args);
-  foreach($bunch_orders as $order)
-    foreach ($order->get_items() as $item_id => $item ):
-      //Get woo orders from user
-      $course_id = intval($item->get_product_id()) - 1;
-      if(!in_array($course_id, $enrolled)):
-        $course = artikel($course_id);
-        if(!$course)
-          continue;
-        //Get statut
-        $course->statut = ($course->slug) ? statut_course($course->slug, $user->ID)['text'] : ""; 
-        if($course->title && $course->title != ""):
-          array_push($courses, $course);
-          array_push($enrolled, $course_id);
-        endif;
-      endif;
-    endforeach;
-
+  
   //Enrolled with Stripe
   $enrolled_stripe = array();
   $enrolled_stripe = list_orders($user->ID, 1)['posts'];
@@ -4432,53 +4331,51 @@ function get_post_orders(WP_REST_Request $request){
     return $response;
   endif;
 
-  $enrolled = array();
-  $enrolled_courses = array();
-  // $expenses = 0; 
-  $enrolled_stripe = array();
-  //Orders woocommerce (enrolled courses)  
-  $args = array(
-    'customer_id' => $user->ID,
-    'post_status' => array('wc-processing', 'wc-completed'),
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'limit' => -1,
-  );
-  $bunch_orders = wc_get_orders($args);
-
-  foreach($bunch_orders as $order)
-    foreach ($order->get_items() as $item_id => $item ) :
-      //Get woo orders from user
-      $course_id = intval($item->get_product_id()) - 1;
-      $prijs = get_field('price', $course_id);
-      // $expenses += $prijs; 
-      if(!in_array($course_id, $enrolled))
-        array_push($enrolled, $course_id);
-    endforeach;
-
-  if(!empty($enrolled)):
-    $args = array(
-      'post_type' => 'course', 
-      'posts_per_page' => -1,
-      'orderby' => 'post_date',
-      'order' => 'DESC',
-      'include' => $enrolled,  
-    );
-    $enrolled_courses = get_posts($args);
-  endif;
-
   //Enrolled with Stripe
-  $enrolled_stripe = array();
-  $enrolled_stripe = list_orders($user->ID)['posts'];
-  if(!empty($enrolled_stripe))
-    try {
-      $enrolled_courses = array_merge($enrolled_stripe, $enrolled_courses);
-    } catch (Error $e) {
-      echo "";
-    }
+  $enrolled = array();
+  // $expenses = 0; 
+  $enrolled = list_orders($user->ID)['posts'];
 
   // Return the response 
-  $response = new WP_REST_Response($enrolled_courses);
+  $response = new WP_REST_Response($enrolled);
+  $response->set_status(200);
+  return $response;  
+
+}
+
+//List customers by course + author
+function get_customers_by_course(WP_REST_Request $request){
+  $required_parameters = ['courseID'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif;
+  $infos = array();
+
+  //Check post exists
+  $courseID = $request['courseID'] ?: null;
+  $post = get_post($courseID);
+  $errors = [];
+  if (!$post):
+    $errors['errors'] = 'No post found !';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  endif;
+  $infos['post']['title'] = $post->post_title;
+  $infos['post']['prijs'] = get_field('price', $post->ID);
+  $infos = (Object)$infos;
+
+  //Get students data for this course 
+  $ordersByAuthor = array();
+  $ordersByAuthor = ordersByAuthor($post->ID, 1);
+  $infos->registrations = (isset($ordersByAuthor['students'][0])) ? $ordersByAuthor['students'] : array();
+
+  // Return the response 
+  $response = new WP_REST_Response($infos);
   $response->set_status(200);
   return $response;  
 
@@ -4952,7 +4849,6 @@ function artikelByCategory($data){
   return $response;  
 }
 
-
 /** Challenge */
 
 //List challenges
@@ -5078,3 +4974,5 @@ function startChallenge(WP_REST_Request $request){
   $response->set_status(201);
   return $response;
 }
+/** Challenge */
+

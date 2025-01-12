@@ -6881,51 +6881,10 @@ function get_user_orders(WP_REST_Request $request){
     return $response;
   endif;
 
-  $enrolled = array();
-  $enrolled_courses = array();
-  // $expenses = 0; 
-  $enrolled_stripe = array();
-  //Orders woocommerce (enrolled courses)  
-  $args = array(
-    'customer_id' => $user->ID,
-    'post_status' => array('wc-processing', 'wc-completed'),
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'limit' => -1,
-  );
-  $bunch_orders = wc_get_orders($args);
-
-  foreach($bunch_orders as $order)
-    foreach ($order->get_items() as $item_id => $item ) :
-      //Get woo orders from user
-      $course_id = intval($item->get_product_id()) - 1;
-      $prijs = get_field('price', $course_id);
-      // $expenses += $prijs; 
-      if(!in_array($course_id, $enrolled))
-        array_push($enrolled, $course_id);
-    endforeach;
-
-  if(!empty($enrolled)):
-    $args = array(
-      'post_type' => 'course', 
-      'posts_per_page' => -1,
-      'orderby' => 'post_date',
-      'order' => 'DESC',
-      'include' => $enrolled,  
-    );
-    $enrolled_courses = get_posts($args);
-  endif;
-
   //Enrolled with Stripe
-  $enrolled_stripe = array();
-  $enrolled_stripe = list_orders($user->ID)['posts'];
-  if(!empty($enrolled_stripe))
-    try {
-      $enrolled_courses = array_merge($enrolled_stripe, $enrolled_courses);
-    } catch (Error $e) {
-      echo "";
-    }
-    
+  $enrolled_courses = array();
+  $enrolled_courses = list_orders($user->ID)['posts']; 
+  
     $outcome_courses = array();
   
     for ($i = 0; $i < count($enrolled_courses); $i++) {

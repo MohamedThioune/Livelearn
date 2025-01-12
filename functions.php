@@ -1084,7 +1084,6 @@ function my_front_end_login_fail( $username ) {
     }
 }
 
-
 //change labels/placeholders on woo
 function override_default_address_checkout_fields( $fields ) {
     $fields['first_name']['placeholder'] = 'Voornaam';
@@ -1873,7 +1872,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
-    //(Bis) Internal 
+    //(Bis) Internal
     register_rest_route('custom/v2', '/user/internal/courses/(?P<userID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getUserInternalCourses',
@@ -2545,7 +2544,7 @@ add_action( 'rest_api_init', function () {
         'callback' => 'editSkills'
     ));
 
-    //Sub topics all 
+    //Sub topics all
     register_rest_route ('custom/v1', '/skills/all', array(
         'methods' => 'GET',
         'callback' => 'skillsAll'
@@ -2604,6 +2603,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'get_post_orders'
     ));
+    register_rest_route ('custom/v1', '/checkout/orders/customers', array(
+        'methods' => 'POST',
+        'callback' => 'get_customers_by_course'
+    ));    
 
     register_rest_route ('custom/v2', '/checkout/orders', array(
         'methods' => 'POST',
@@ -2818,6 +2821,11 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'get_code_loket'
     ));
+    register_rest_route ('custom/v1', 'loket/token', array(
+        'methods' => 'GET',
+        'callback' => 'getAccessToken'
+    ));
+
     register_rest_route ('custom/v1', 'polaris/employees', array(
         'methods' => 'POST',
         'callback' => 'get_employees_polaris'
@@ -2830,4 +2838,9 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'get_podcast_episode'
     ));
+    register_rest_route ('custom/v1', 'course/link/categories', array(
+        'methods' => 'GET',
+        'callback' => 'link_the_categories_courses'
+    ));
+
 });

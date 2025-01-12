@@ -66,34 +66,55 @@ function list_orders($userID, $no_futher = null){
 }
 
 //Listing orders stripe by Author 
-function ordersByAuthor($authorID, $courseID){
+function ordersByAuthor($courseID, $customer = null) {
     global $wpdb;
     $table = $wpdb->prefix . 'stripe_order';
 
-    $sql_orders_stripe = $wpdb->prepare("SELECT course_id, metadata, owner_id FROM $table");
+    $sql_orders_stripe = ($customer) ? $wpdb->prepare("SELECT course_id, metadata, owner_id FROM $table WHERE course_id = %s", $courseID) : $wpdb->prepare("SELECT course_id, metadata, owner_id FROM $table");
     $orders_stripe = $wpdb->get_results($sql_orders_stripe);
     $enrolledPost = array();
     $enrolledID = array();
     $enrolledUser = array();
+    $enrolledUserID = array();
 
     if(isset($orders_stripe[0]))
     foreach ($orders_stripe as $order):
         if($order->course_id):
             $post = get_post($order->course_id);
+            $course = get_post($courseID);
+
+            if(!$course)
+                break;
             if($post):
-                if($post->post_author != $authorID)
+                if($post->post_author != $course->post_author)
                     continue;
                 //Get metadata
                 $post->metadata = ($order->metadata) ?: null;
                 //Get owner
                 $post->ownerID = ($order->owner_id) ?: null;
+                $sample = array();
+                if($customer):
+                    $user = get_user_by('ID', $post->ownerID);
+                    $sample['ID'] = $user->ID;
+                    $sample['first_name'] = $user->first_name;
+                    $sample['last_name'] = $user->last_name;
+                    $sample['email'] = $user->user_email;
+
+                    $company = get_field('company',  'user_' . $user->ID) ? get_field('company',  'user_' . $user->ID)[0] : array();
+                    $sample['company'] = !empty($company) ? $company->post_title : 'xxxx';
+                  
+                    $sample['work_as'] = get_field('role',  'user_' . $user->ID) ?: "Free agent";
+                    $post->ownerID = (Object)$sample;
+                endif;
 
                 $sample = array(); 
-                if($post->ID == $courseID):
+                if($post->ID == $course->ID):
                     $sample['ownerID'] = $post->ownerID;
                     $sample['metadata'] = $post->metadata;
                     $sample = (Object)$sample;
                     array_push($enrolledUser, $sample);
+                    if($order->owner_id)
+                        array_push($enrolledUserID, $order->owner_id);
                 endif;
                     
                 array_push($enrolledPost, $post);
@@ -102,8 +123,7 @@ function ordersByAuthor($authorID, $courseID){
         endif;
     endforeach;
                 
-    $enrolledPost = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
-    return ['ids' => $enrolledID, 'posts' => $enrolledPost, 'students' => $enrolledUser];
+    $enrolledPostAuthor = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
+    return ['ids' => $enrolledID, 'posts' => $enrolledPostAuthor, 'students' => $enrolledUser, 'studentIDs' => $enrolledUserID];
 }
-    
 ?>
