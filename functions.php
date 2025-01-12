@@ -22,9 +22,10 @@ function create_session_stripe($data){
 
     return $information;
 }
+
 function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $offline = null, $ui_mode = null){
-    $SITE_URL = "https://app.livelearn.nl";
-    $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ?  get_site_url() . '/login' : get_site_url() . '/user/my-activities';
+    $SITE_URL = "https://livelearn.nl";
+    $YOUR_DOMAIN = (!$user_id || $user_id == 'null') ? $SITE_URL . '/login' : $SITE_URL . '/user/my-activities';
     $PRICE_ID = ($price_id) ?: null;
     $offline = ($offline) ?: null;
     $ui_mode = ($ui_mode) ? 'hosted': 'embedded';
@@ -165,6 +166,7 @@ function session_stripe($price_id, $mode, $post_id = null, $user_id = null, $off
 
     return json_encode(array('clientSecret' => $client_secret));
 }
+
 function retrieve_session($session_id){
     //case : session_id null
     if(!$session_id)
@@ -175,6 +177,7 @@ function retrieve_session($session_id){
 
     return $information;
 }
+
 function stripe_status($data){
     //Call retrieve_session
     $session = null;
@@ -977,7 +980,6 @@ function custom_post_type() {
     register_post_type( 'challenge', $challenge_args );
 
 }
-
 add_action( 'init', 'custom_post_type', 0 );
 
 function add_custom_roles(){
@@ -990,11 +992,9 @@ add_action('init', 'add_custom_roles');
 
 //redirect 'return to shop'
 add_filter( 'woocommerce_return_to_shop_redirect', 'bbloomer_change_return_shop_url' );
-
 function bbloomer_change_return_shop_url() {
     return home_url();
 }
-
 
 add_filter('woocommerce_get_price','reigel_woocommerce_get_price',20,2);
 function reigel_woocommerce_get_price($price,$post){
@@ -1002,7 +1002,6 @@ function reigel_woocommerce_get_price($price,$post){
         $price = get_the_field($post->id, 'mush', true); // your price meta key is price
     return $price;
 }
-
 
 add_filter('acf/save_post', 'create_product_for_course', 20);
 function create_product_for_course($post_id){
@@ -1163,8 +1162,6 @@ function filter_woocommerce_api_product_response( $product_data, $product, $fiel
     $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
     $product_data['vendor_name'] = get_the_author_meta( 'display_name', $product_data['vendor_id']);
     return $product_data;
-
-
 };
 add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_response', 10, 4 );
 
@@ -1176,6 +1173,7 @@ add_filter( 'woocommerce_product_is_visible','product_invisible');
 function product_invisible(){
     return false;
 }
+
 //Remove single page
 add_filter( 'woocommerce_register_post_type_product','hide_product_page',12,1);
 function hide_product_page($args){
@@ -1187,7 +1185,6 @@ function hide_product_page($args){
 /*
 ** Endpoints - API
 */
-
 function recommended_course($data)
 {
     //The user
@@ -1822,6 +1819,14 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/update-image-course/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'update_image_course'
+    ));
+    register_rest_route ('custom/v1', '/expert/detail/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'detail_expert'
+    ));
+    register_rest_route ('custom/v1', '/review/user/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'addReveiewUser'
     ));
     register_rest_route ('custom/v1', '/course/(?P<course_id>\d+)/image', array(
         'methods' => 'GET',
@@ -2796,5 +2801,33 @@ add_action( 'rest_api_init', function () {
     register_rest_route ('custom/v1', '/challenge/start', array(
         'methods' => 'POST',
         'callback' => 'startChallenge'
+    ));
+    register_rest_route ('custom/v1', '/migration-episodes-video-on-json', array(
+        'methods' => 'GET',
+        'callback' => 'migration_episodes_video'
+    ));
+     register_rest_route ('custom/v1', '/migration-episodes-podcast-on-json', array(
+        'methods' => 'GET',
+        'callback' => 'migration_episodes_podcast'
+    ));
+    register_rest_route ('custom/v1', '/update-on-podcastindex', array(
+        'methods' => 'GET',
+        'callback' => 'update_podcast_on_podcastindex'
+    ));
+    register_rest_route ('custom/v1', 'loket/code', array(
+        'methods' => 'POST',
+        'callback' => 'get_code_loket'
+    ));
+    register_rest_route ('custom/v1', 'polaris/employees', array(
+        'methods' => 'POST',
+        'callback' => 'get_employees_polaris'
+    ));
+   register_rest_route ('custom/v1', 'episodes/video', array(
+        'methods' => 'GET',
+        'callback' => 'get_video_episode'
+    ));
+    register_rest_route ('custom/v1', 'episodes/podcast', array(
+        'methods' => 'GET',
+        'callback' => 'get_podcast_episode'
     ));
 });

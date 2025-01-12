@@ -1131,7 +1131,7 @@ if (!empty($courses)) {
                         // console.log(ids[i]);
                     }
                     alert("Record applied successfully");
-                   // location.reload();
+                   location.reload();
                     // window.location.href = "/optieAll";
                 },
                 complete: function(data){
@@ -1169,12 +1169,11 @@ if (!empty($courses)) {
                     console.log('saving one course on plateform')
                 },
                error: function(error) {
-                
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',true)
                 $('#select_field').attr('hidden',false)
                 document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the course.</span>";
-                   console.log(error)
+                console.log(error)
                },
                success: function(data) {
                     console.log('response ',data);
@@ -1183,7 +1182,7 @@ if (!empty($courses)) {
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
-                    location.reload();
+                    // location.reload();
                     // alert("Record applied successfully");
                 }
             });

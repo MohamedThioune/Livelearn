@@ -984,15 +984,6 @@ $user = wp_get_current_user();
                                 ?>
                             </select>
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label for="Role">Role</label>
-                            <select name="role" id="Role" class="form-control" required>
-                                <option value="subscriber">User</option>
-                                <option value="editor">Teacher</option>
-                                <option value="administrator">Admin</option>
-                            </select>
-                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -1374,7 +1365,6 @@ $user = wp_get_current_user();
 
                 const categoryTitles = document.querySelectorAll(".category-title");
                 const subcatchossen = document.querySelectorAll('.subcatchossen');
-                const selectedSubcategories = [];
 
                 categoryTitles.forEach(title => {
                     title.addEventListener("click", function () {
@@ -1386,23 +1376,11 @@ $user = wp_get_current_user();
                         }
                     });
                 });
-
-                // Écoute les clics sur les sous-catégories
                 subcatchossen.forEach((sub) => {
                     sub.addEventListener('click', (e) => {
                         const subtopicsChoosed = e.target;
                         // const subId = subtopicsChoosed.id;
                         subtopicsChoosed.classList.toggle('selected');
-                        /*
-                        if (!selectedSubcategories.includes(subId)) {
-                            selectedSubcategories.push(subId);
-                        } else {
-                            const index = selectedSubcategories.indexOf(subId);
-                            if (index > -1) {
-                                selectedSubcategories.splice(index, 1);
-                            }
-                        }
-                       */
                     });
                 });
                 modal.style.display = "block";
