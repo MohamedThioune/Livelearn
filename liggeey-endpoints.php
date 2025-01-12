@@ -15,28 +15,29 @@ function artikel($id){
   if(empty($post))
     return null;
   $course_type = get_field('course_type', $post->ID);
+  $base_url = "https://livelearn.nl"; 
 
   $sample['ID'] = $post->ID;
   $sample['authorID'] = $post->post_author;
   $sample['title'] = $post->post_title;
-  $sample['link'] = get_permalink($post->ID);
+  $sample['link'] = $base_url . '/course/details-' . strtolower($course_type) . '/' . $post->post_name;
   $sample['slug'] = $post->post_name;
   $sample['type'] = $course_type;
   //Image information
   $thumbnail = get_field('preview', $post->ID) ? get_field('preview', $post->ID)['url'] : null;
-  if(!$thumbnail){
+  if(!$thumbnail):
       $thumbnail = get_the_post_thumbnail_url($post->ID);
       if(!$thumbnail)
           $thumbnail = get_field('url_image_xml', $post->ID);
               if(!$thumbnail)
                   $thumbnail = get_stylesheet_directory_uri() . '/img' . '/artikel.jpg';
-  }
+  endif;
   $sample['image'] = $thumbnail;
 
+  $sample['price'] = 0;
   $price_noformat = get_field('price', $post->ID) ?: 0;
-  $sample['price'] = 'Gratis';
   if($price_noformat) 
-    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $sample['price'];
+    $sample['price'] = is_int($price_noformat) ? number_format($price_noformat, 2, '.', ',') : $price_noformat;
 
   $sample['language'] = get_field('language', $post->ID);
   //Certificate
@@ -123,12 +124,12 @@ function postAdditionnal($post, $userID, $edit = null){
 
   /** Get further informations */
   //Podcast 
-  $main_podcasts_genuine = get_field('podcasts', $post->ID);
-  $main_podcasts_index = get_field('podcasts_index', $post->ID);
+  // $main_podcasts_genuine = get_field('podcasts', $post->ID);
+  // $main_podcasts_index = get_field('podcasts_index', $post->ID);
 
   //Video
-  $main_videos_genuine = get_field('data_virtual', $post->ID);
-  $main_videos_youtube = get_field('youtube_videos', $post->ID);
+  // $main_videos_genuine = get_field('data_virtual', $post->ID);
+  // $main_videos_youtube = get_field('youtube_videos', $post->ID);
 
   //Offline
   $main_date_genuine = get_field('data_locaties', $post->ID);
@@ -151,15 +152,15 @@ function postAdditionnal($post, $userID, $edit = null){
   endif;
 
   switch ($coursetype) {
-    case 'Podcast':
-      $post->podcasts = $main_podcasts_genuine;
-      $post->podcasts_index = $main_podcasts_index;
-      break;
+    // case 'Podcast':
+    //   $post->podcasts = $main_podcasts_genuine;
+    //   $post->podcasts_index = $main_podcasts_index;
+    //   break;
     
-    case 'Video':
-      $post->videos = $main_videos_genuine;
-      $post->videos_youtube = $main_videos_youtube;
-      break;
+    // case 'Video':
+    //   $post->videos = $main_videos_genuine;
+    //   $post->videos_youtube = $main_videos_youtube;
+    //   break;
 
     case 'Opleidingen' || 'Training' || 'Workshop' || 'Masterclass' || 'Event':
       $post->dates = $main_date_genuine;
@@ -172,6 +173,7 @@ function postAdditionnal($post, $userID, $edit = null){
     //   break;
   }
 
+  //Reviews
   $reviews = get_field('reviews', $post->ID);
   $count_reviews = (!empty($reviews)) ? count($reviews) : 0;  
   $star_review = [ 0, 0, 0, 0, 0];
@@ -289,7 +291,7 @@ function postAdditionnal($post, $userID, $edit = null){
   $post->enrolled_students = $enrolled_member + $count_stripe_course_student;
   if($author)
     $post->instructor->enrolled_students = $count_stripe_student;
-  $post->access = ($statut_bool) ? "All access" : 'Free'; 
+  $post->access = ($statut_bool) ? "All access" : 'Not granted'; 
 
   //Experts
   $expertS = get_field('experts', $post->ID);
@@ -868,18 +870,19 @@ function homepage(){
 
   //Category information
   $no_content = "Some information missing !";
-  $slugdefined = 'business-applications';
-  // $slugdefined = 'digital';
-  $digital_category = get_categories(array('taxonomy' => 'course_category', 'slug' => $slugdefined, 'hide_empty' => 0) )[0];
-  if(is_wp_error($digital_category)):
-      echo $no_content;
-      return $infos;
-  endif;
+  $categoriesDefined = array(655, 321, 400, 459, 648, 326, 649, 456, 322, 376, 650, 457, 651, 652, 653);
+  // $slugdefined = 'business-applications';
+  // // $slugdefined = 'digital';
+  // $digital_category = get_categories(array('taxonomy' => 'course_category', 'slug' => $slugdefined, 'hide_empty' => 0) )[0];
+  // if(is_wp_error($digital_category)):
+  //     echo $no_content;
+  //     return $infos;
+  // endif;
 
   $sample_categories = get_categories( array(
     'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
     'orderby'    => 'name',
-    'parent'     => $digital_category->cat_ID,
+    'include' => $categoriesDefined,
     'hide_empty' => 0, // change to 1 to hide categores not having a single post
   ) );
 
@@ -1057,7 +1060,7 @@ function register_company(WP_REST_Request $request){
       'first_name' => $first_name,
       'last_name' => $last_name,
       'display_name' => $first_name . ' ' . $last_name,
-      'user_url' => 'https://livelearn.nl/inloggen/',
+      'user_url' => 'https://livelearn.nl/login/',
       'user_login' => $email,
       'user_email' => $email,
       'user_pass' => $password,
@@ -1291,7 +1294,6 @@ function companyDetail(WP_REST_Request $request){
 
 //[GET]All companies
 function allCompanies(){
-
   $args = array(
       'post_type' => 'company',
       'post_status' => 'publish',
@@ -4532,59 +4534,39 @@ function getAsseessmentsViaCategory($data) {
 //Posts for DeZZP via category
 function artikelDezzp($data){
 
+  // $CONST_FREELANCING = 'freelancing';
   $CONST_FREELANCING = 647;
-  $companySlug = $data['company'] ?: null;
-  $args = array(
-    'post_type' => array('post','course'),
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC',
+
+  // $freelancing_category = get_categories( array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'orderby'    => 'name',
+  //   'tag' => $CONST_FREELANCING,
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  // ) );
+
+  /** Global posts **/
+  $tax_query = array(
+    array(
+      "taxonomy" => "course_category",
+      "field"    => "term_id",
+      "terms"    => $CONST_FREELANCING
+    )
   );
-  $main_blogs = get_posts($args);
+  $main_blogs = array();
+  $args = array(
+    'post_type' => array('post', 'course'),
+    'tax_query' => $tax_query
+  );
+  $query_blogs = new WP_Query( $args );
+  $main_blogs = isset($query_blogs->posts) ? $query_blogs->posts : [];
   $blogs = array();
 
   //Read the blogs via category
-  foreach ($main_blogs as $key => $blog):
-    //Get topics | genuine, xml
-    $postags = get_the_tags($blog->ID);
-    $default_category = get_field('categories', $blog->ID);
-    $xml_category = get_field('category_xml', $blog->ID);
-    $find = false;
-
-    //Topic match "freelancing" ?
-    $main_default = array();
-    if(!empty($default_category)):
-      $main_default = array_column($default_category, 'value');
-      if(in_array($CONST_FREELANCING, $main_default))
-        $find = true;
-    endif;
-
-    $main_xml = array();
-    if(!$find)
-    if(!empty($xml_category)):
-      $main_xml = array_column($xml_category, 'value');
-      if(in_array($CONST_FREELANCING, $main_xml))
-        $find = true;
-    endif;
-
-    if(!$find)
-    if($postags)
-    foreach($postags as $tag)
-      if($tag->ID == $CONST_FREELANCING):
-        $find = true;
-        break;
-      endif;
-
-    if(!$find)
-      continue;
-
+  foreach ($main_blogs as $blog):
     //Add the post
     $sample = artikel($blog->ID);
     $blogs[] = $sample;
   endforeach;
-
-  //Read the assessments via category 
-  $assessments = getAsseessmentsViaCategory(['categoryID' => $CONST_FREELANCING]);
 
   //Return the response 
   $response = new WP_REST_Response(['success' => true, 'posts' => $blogs]);

@@ -44,17 +44,14 @@
                     $body = "
                     <h1>Hello " . $first_name  . "</h1><br> 
                     Your are successfully registered , welcome onboard<br><br>
-                    <h4><a href='http://livelearn.nl/inloggen'> Connexion </a></h4>
+                    <h4><a href='http://app.livelearn.nl/inloggen'> Connexion </a></h4>
                     ";
                 
                     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
 
                     wp_mail($email, $subject, $body, $headers, array( '' )) ; 
-                    header("location:candidat?message=".$success."&success");
-         
-                }
-
-              
+                    header("location:candidat?message=". $success ."&success");
+                }              
             }
             else{
                 $danger = "Vul de e-mail in, alsjeblieft";

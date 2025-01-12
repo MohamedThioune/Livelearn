@@ -8,6 +8,7 @@ composer.lock
 composer.json
 /templates/stripe-secrets.php
 wp-config.php
+/db/
 
 /vendor/
 /.idea/

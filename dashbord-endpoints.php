@@ -11,6 +11,7 @@ function RandomStringBis(){
     }
     return $randstring;
 }
+
 function sendEmail($id_user,$id_newUser,$password)
 {
     $guest = get_user_by('ID', $id_user);
@@ -21,510 +22,512 @@ function sendEmail($id_user,$id_newUser,$password)
     $first_name = (($newUser->first_name) ?: $newUser->display_name);
     $email = $newUser->email;
     $mail_invitation_body =
-        '<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
-  xmlns:o="urn:schemas-microsoft-com:office:office">
-<head>
-  <title>' . $first_name  . ', je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style type="text/css">
-    #outlook a {
-      padding: 0;
-    }
+    '<!doctype html>
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
+    <head>
+    <title>' . $first_name  . ', je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style type="text/css">
+        #outlook a {
+        padding: 0;
+        }
 
-    body {
-      margin: 0;
-      padding: 0;
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
+        body {
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        }
 
-    table,
-    td {
-      border-collapse: collapse;
-      mso-table-lspace: 0pt;
-      mso-table-rspace: 0pt;
-    }
+        table,
+        td {
+        border-collapse: collapse;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        }
 
-    img {
-      border: 0;
-      height: auto;
-      line-height: 100%;
-      outline: none;
-      text-decoration: none;
-      -ms-interpolation-mode: bicubic;
-    }
+        img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+        }
 
-    p {
-      display: block;
-      margin: 13px 0;
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
-  <style type="text/css">
-    @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
-  </style><!--<![endif]-->
-  <style type="text/css">
-    @media only screen and (min-width:480px) {
-      .mj-column-per-100 {
+        p {
+        display: block;
+        margin: 13px 0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+    </style><!--<![endif]-->
+    <style type="text/css">
+        @media only screen and (min-width:480px) {
+        .mj-column-per-100 {
+            width: 100% !important;
+            max-width: 100%;
+        }
+        }
+    </style>
+    <style media="screen and (min-width:480px)">
+        .moz-text-html .mj-column-per-100 {
         width: 100% !important;
         max-width: 100%;
-      }
-    }
-  </style>
-  <style media="screen and (min-width:480px)">
-    .moz-text-html .mj-column-per-100 {
-      width: 100% !important;
-      max-width: 100%;
-    }
-  </style>
-  <style type="text/css">
-    [owa] .mj-column-per-100 {
-      width: 100% !important;
-      max-width: 100%;
-    }
-  </style>
-  <style type="text/css">
-    @media only screen and (max-width:480px) {
-      table.mj-full-width-mobile {
+        }
+    </style>
+    <style type="text/css">
+        [owa] .mj-column-per-100 {
         width: 100% !important;
-      }
+        max-width: 100%;
+        }
+    </style>
+    <style type="text/css">
+        @media only screen and (max-width:480px) {
+        table.mj-full-width-mobile {
+            width: 100% !important;
+        }
 
-      td.mj-full-width-mobile {
-        width: auto !important;
-      }
-    }
-  </style>
-</head>
+        td.mj-full-width-mobile {
+            width: auto !important;
+        }
+        }
+    </style>
+    </head>
 
-<body style="word-spacing:normal;background-color:#e0eff4;">
-  <div style="background-color:#e0eff4;">
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p class="text-build-content"
-                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Invitation to a corporate learning environment</p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <body style="word-spacing:normal;background-color:#e0eff4;">
+    <div style="background-color:#e0eff4;">
+        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p class="text-build-content"
+                                style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                                data-testid="Y0h44Pmw76d">Invitation to a corporate learning environment</p>
+                            </div>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="center" vertical-align="top"
+                            style="background:#023356;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+                            <p style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+    </td></tr></table><![endif]-->
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="border-collapse:collapse;border-spacing:0px;">
+                            <tbody>
+                                <tr>
+                                <td style="width:50px;"><a href="http://app.livelearn.nl" target="_blank"><img alt=""
+                                        height="auto" src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/lurx1/l0xh.png"
+                                        style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                        width="50"></a></td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="background:transparent;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <h1 class="text-build-content"
+                                style="text-align:center;; margin-top: 10px; font-weight: normal;"
+                                data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>Invitation</b></span></h1>
+                            <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
+                                data-testid="RJMLrMvA0Rh">You <span style="font-size:14px;">will have access to all content from '. $company[0]->post_title .'</span></p>
+                                LiveLearn
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="background:transparent;font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                                style="margin: 10px 0; margin-top: 10px;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
+                                </b>,</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
+                                You have been invited to become part of ' . $company[0]->post_title . '. From now on you can use all the content that is made available by the company
+                                </span><br><br><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Of course, you will also retain access to all content offered by LiveLearn or partners.</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Your credentials</b></i></span><br><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Username:' . $email . '</span><br><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Temporary password : '.$password.'</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Invitation</b></i></span><br><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">invented by : ' . $name_guest . '
+                                </span><br><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Company:&nbsp;' . $company[0]->post_title. '
+                                </span><br><br><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">If you are not familiar with this company or person, </span><a class="link-build-content"
+                                style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
+                                    style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> us.</span><br>&nbsp;</p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Good luck from,</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The LiveLearn team</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                                style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td align="center" vertical-align="middle"
+                            style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="border-collapse:separate;line-height:100%;">
+                            <tbody>
+                                <tr>
+                                <td align="center" bgcolor="#023356" role="presentation"
+                                    style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
+                                    valign="middle"><a href="https://app.livelearn.nl/login/"
+                                    style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
+                                    target="_blank"><span
+                                        style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Login</span></a>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="center" vertical-align="top"
+                            style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                            <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+    </td></tr></table><![endif]-->
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                            <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td><![endif]-->
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="float:none;display:inline-table;">
+                            <tbody>
+                                <tr>
+                                <td style="padding:4px;vertical-align:middle;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                    style="background:#3B5998;border-radius:3px;width:20px;">
+                                    <tbody>
+                                        <tr>
+                                        <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                            height="20"
+                                            src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"
+                                            style="border-radius:3px;display:block;" width="20"></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table><!--[if mso | IE]></td><td><![endif]-->
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="float:none;display:inline-table;">
+                            <tbody>
+                                <tr>
+                                <td style="padding:4px;vertical-align:middle;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                    style="background:#1DA1F2;border-radius:3px;width:20px;">
+                                    <tbody>
+                                        <tr>
+                                        <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                            height="20"
+                                            src="https://www.mailjet.com/images/theme/v1/icons/ico-social/twitter.png"
+                                            style="border-radius:3px;display:block;" width="20"></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table><!--[if mso | IE]></td><td><![endif]-->
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="float:none;display:inline-table;">
+                            <tbody>
+                                <tr>
+                                <td style="padding:4px;vertical-align:middle;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                    style="background:#DD4B39;border-radius:3px;width:20px;">
+                                    <tbody>
+                                        <tr>
+                                        <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                            height="20"
+                                            src="https://www.mailjet.com/images/theme/v1/icons/ico-social/google-plus.png"
+                                            style="border-radius:3px;display:block;" width="20"></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table><!--[if mso | IE]></td><td><![endif]-->
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="float:none;display:inline-table;">
+                            <tbody>
+                                <tr>
+                                <td style="padding:4px;vertical-align:middle;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                    style="background:#BD081C;border-radius:3px;width:20px;">
+                                    <tbody>
+                                        <tr>
+                                        <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                            height="20"
+                                            src="https://www.mailjet.com/images/theme/v1/icons/ico-social/pinterest.png"
+                                            style="border-radius:3px;display:block;" width="20"></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table><!--[if mso | IE]></td><td><![endif]-->
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="float:none;display:inline-table;">
+                            <tbody>
+                                <tr>
+                                <td style="padding:4px;vertical-align:middle;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                    style="background:#0077B5;border-radius:3px;width:20px;">
+                                    <tbody>
+                                        <tr>
+                                        <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                            height="20"
+                                            src="https://www.mailjet.com/images/theme/v1/icons/ico-social/linkedin.png"
+                                            style="border-radius:3px;display:block;" width="20"></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table><!--[if mso | IE]></td><td><![endif]-->
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="float:none;display:inline-table;">
+                            <tbody>
+                                <tr>
+                                <td style="padding:4px;vertical-align:middle;">
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                                    style="background:#405DE6;border-radius:3px;width:20px;">
+                                    <tbody>
+                                        <tr>
+                                        <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
+                                            height="20"
+                                            src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png"
+                                            style="border-radius:3px;display:block;" width="20"></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table><!--[if mso | IE]></td></tr></table><![endif]-->
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p class="text-build-content"
+                                style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                                data-testid="p1wGkfjeZKT7"><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">
+                                This message was sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving messages from this series, </span><a class="link-build-content"
+                                style="color:inherit;; text-decoration: none;" target="_blank"
+                                href="[[WORKFLOW_EXIT_LINK_EN]]"><span
+                                    style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
+                                    unsubscribe here</span></a><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">.</span></p>
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span
+                                style="font-size:16px;text-align:center;color:#55575d;font-family:Arial;line-height:22px;">
+                                NL</span></p>
+                            </div>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div><!--[if mso | IE]></td></tr></table><![endif]-->
     </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" vertical-align="top"
-                        style="background:#023356;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
-                        <p style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:20px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="border-collapse:collapse;border-spacing:0px;">
-                          <tbody>
-                            <tr>
-                              <td style="width:50px;"><a href="http://app.livelearn.nl" target="_blank"><img alt=""
-                                    height="auto" src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/lurx1/l0xh.png"
-                                    style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                    width="50"></a></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <h1 class="text-build-content"
-                            style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span style="color:#000000;"><b>Invitation</b></span></h1>
-                          <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
-                            data-testid="RJMLrMvA0Rh">You <span style="font-size:14px;">will have access to all content from '. $company[0]->post_title .'</span></p>
-                               LiveLearn
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
-                            style="margin: 10px 0; margin-top: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
-                              </b>,</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">
-                              You have been invited to become part of ' . $company[0]->post_title . '. From now on you can use all the content that is made available by the company
-                              </span><br><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Of course, you will also retain access to all content offered by LiveLearn or partners.</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Your credentials</b></i></span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Username:' . $email . '</span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Temporary password : '.$password.'</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><i><b>Invitation</b></i></span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">invented by : ' . $name_guest . '
-                              </span><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Company:&nbsp;' . $company[0]->post_title. '
-                              </span><br><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">If you are not familiar with this company or person, </span><a class="link-build-content"
-                              style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
-                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> us.</span><br>&nbsp;</p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Good luck from,</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The LiveLearn team</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
-                            style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" vertical-align="middle"
-                        style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="border-collapse:separate;line-height:100%;">
-                          <tbody>
-                            <tr>
-                              <td align="center" bgcolor="#023356" role="presentation"
-                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://app.livelearn.nl/login/"
-                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
-                                  target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Login</span></a>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" vertical-align="top"
-                        style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
-                        <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#3B5998;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#1DA1F2;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/twitter.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#DD4B39;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/google-plus.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#BD081C;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/pinterest.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#0077B5;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/linkedin.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#405DE6;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p class="text-build-content"
-                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="p1wGkfjeZKT7"><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">
-                              This message was sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving messages from this series, </span><a class="link-build-content"
-                              style="color:inherit;; text-decoration: none;" target="_blank"
-                              href="[[WORKFLOW_EXIT_LINK_EN]]"><span
-                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
-                                unsubscribe here</span></a><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">.</span></p>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span
-                              style="font-size:16px;text-align:center;color:#55575d;font-family:Arial;line-height:22px;">
-                              NL</span></p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div><!--[if mso | IE]></td></tr></table><![endif]-->
-  </div>
-</body>
+    </body>
 
-</html>';
+    </html>';
+
     $subject = 'Your LiveLearn registration has arrived! ✨';
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
     return wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
 }
+
 function sendEmailBecaumeManager($idUserToInvite,$role,$subject,$tittle)
 {
     $user = new WP_User($idUserToInvite);
@@ -537,378 +540,378 @@ function sendEmailBecaumeManager($idUserToInvite,$role,$subject,$tittle)
 
     $mail_became_manager_body =
         '
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
-  xmlns:o="urn:schemas-microsoft-com:office:office">
+    <!doctype html>
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
 
-<head>
-  <title><firs-name>, je hebt een nieuwe rol</firs-name></title><!--[if !mso]><!-->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style type="text/css">
-    #outlook a {
-      padding: 0;
-    }
+    <head>
+    <title><firs-name>, je hebt een nieuwe rol</firs-name></title><!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style type="text/css">
+        #outlook a {
+        padding: 0;
+        }
 
-    body {
-      margin: 0;
-      padding: 0;
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
+        body {
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        }
 
-    table,
-    td {
-      border-collapse: collapse;
-      mso-table-lspace: 0pt;
-      mso-table-rspace: 0pt;
-    }
+        table,
+        td {
+        border-collapse: collapse;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        }
 
-    img {
-      border: 0;
-      height: auto;
-      line-height: 100%;
-      outline: none;
-      text-decoration: none;
-      -ms-interpolation-mode: bicubic;
-    }
+        img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+        }
 
-    p {
-      display: block;
-      margin: 13px 0;
-    }
-  </style><!--[if mso]>
-        <noscript>
-        <xml>
-        <o:OfficeDocumentSettings>
-          <o:AllowPNG/>
-          <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-        </xml>
-        </noscript>
-        <![endif]--><!--[if lte mso 11]>
-        <style type="text/css">
-          .mj-outlook-group-fix { width:100% !important; }
-        </style>
-        <![endif]--><!--[if !mso]><!-->
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
-  <style type="text/css">
-    @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
-  </style><!--<![endif]-->
-  <style type="text/css">
-    @media only screen and (min-width:480px) {
-      .mj-column-per-100 {
+        p {
+        display: block;
+        margin: 13px 0;
+        }
+    </style><!--[if mso]>
+            <noscript>
+            <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+            </xml>
+            </noscript>
+            <![endif]--><!--[if lte mso 11]>
+            <style type="text/css">
+            .mj-outlook-group-fix { width:100% !important; }
+            </style>
+            <![endif]--><!--[if !mso]><!-->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+    </style><!--<![endif]-->
+    <style type="text/css">
+        @media only screen and (min-width:480px) {
+        .mj-column-per-100 {
+            width: 100% !important;
+            max-width: 100%;
+        }
+        }
+    </style>
+    <style media="screen and (min-width:480px)">
+        .moz-text-html .mj-column-per-100 {
         width: 100% !important;
         max-width: 100%;
-      }
-    }
-  </style>
-  <style media="screen and (min-width:480px)">
-    .moz-text-html .mj-column-per-100 {
-      width: 100% !important;
-      max-width: 100%;
-    }
-  </style>
-  <style type="text/css">
-    [owa] .mj-column-per-100 {
-      width: 100% !important;
-      max-width: 100%;
-    }
-  </style>
-  <style type="text/css">
-    @media only screen and (max-width:480px) {
-      table.mj-full-width-mobile {
+        }
+    </style>
+    <style type="text/css">
+        [owa] .mj-column-per-100 {
         width: 100% !important;
-      }
+        max-width: 100%;
+        }
+    </style>
+    <style type="text/css">
+        @media only screen and (max-width:480px) {
+        table.mj-full-width-mobile {
+            width: 100% !important;
+        }
 
-      td.mj-full-width-mobile {
-        width: auto !important;
-      }
-    }
-  </style>
-</head>
+        td.mj-full-width-mobile {
+            width: auto !important;
+        }
+        }
+    </style>
+    </head>
 
-<body style="word-spacing:normal;background-color:#e0eff4;">
-  <div style="background-color:#e0eff4;">
-    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p class="text-build-content"
-                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">You have a new role.</p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <body style="word-spacing:normal;background-color:#e0eff4;">
+    <div style="background-color:#e0eff4;">
+        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p class="text-build-content"
+                                style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                                data-testid="Y0h44Pmw76d">You have a new role.</p>
+                            </div>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="center" vertical-align="top"
+                            style="background:#023356;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+                            <p style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+    </td></tr></table><![endif]-->
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="border-collapse:collapse;border-spacing:0px;">
+                            <tbody>
+                                <tr>
+                                <td style="width:50px;"><a href="http://livelearn.nl" target="_blank"><img alt=""
+                                        height="auto" src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/lurx1/l0xh.png"
+                                        style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                        width="50"></a></td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="background:transparent;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <h1 class="text-build-content"
+                                style="text-align:center;; margin-top: 10px; font-weight: normal;"
+                                data-testid="RJMLrMvA0Rh"><span
+                                style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b> '.$tittle.' </b></span></h1>
+                            <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
+                                data-testid="RJMLrMvA0Rh">Make sure your team continues to develop.</p>
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="background:transparent;font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                                style="margin: 10px 0; margin-top: 10px;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . ' 
+                                ,</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">You now have the role of
+                                    manager within ' . $company_connected . '. This means that you can share knowledge with your
+                                    teammates, give them feedback and encourage them to work on specific topics.&nbsp;</span><br>&nbsp;</p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Do you not recognize yourself in the role or the organization? Then contact</span><a class="link-build-content"
+                                style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
+                                    style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons
+                                op.</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><br><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Good luck from,</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The LiveLearn team</span></p>
+                            <p class="text-build-content" data-testid="S_MPaSnC0uI"
+                                style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td align="center" vertical-align="middle"
+                            style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                            style="border-collapse:separate;line-height:100%;">
+                            <tbody>
+                                <tr>
+                                <td align="center" bgcolor="#023356" role="presentation"
+                                    style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
+                                    valign="middle"><a href="https://app.livelearn.nl/login/"
+                                    style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
+                                    target="_blank"><span
+                                        style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">login</span></a>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+            style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="center" vertical-align="top"
+                            style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
+                            <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+    </td></tr></table><![endif]-->
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+        <div style="margin:0px auto;max-width:600px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+            <tbody>
+            <tr>
+                <td
+                style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
+                <div class="mj-column-per-100 mj-outlook-group-fix"
+                    style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
+                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
+                    width="100%">
+                    <tbody>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p class="text-build-content"
+                                style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                                data-testid="p1wGkfjeZKT7"><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
+                                sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
+                                messages from this series, </span><a class="link-build-content"
+                                style="color:inherit;; text-decoration: none;" target="_blank"
+                                href="[[WORKFLOW_EXIT_LINK_EN]]"><span
+                                    style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
+                                    unsubscribe here</span></a><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">.</span></p>
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td align="left" vertical-align="middle"
+                            style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
+                            <div
+                            style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
+                            <p style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span
+                                style="font-size:16px;text-align:center;color:#55575d;font-family:Arial;line-height:22px;">
+                                NL</span></p>
+                            </div>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div><!--[if mso | IE]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div><!--[if mso | IE]></td></tr></table><![endif]-->
     </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" vertical-align="top"
-                        style="background:#023356;font-size:0px;padding:0px 0px 0px 0px;padding-top:0;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
-                        <p style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 10px #023356;font-size:1px;margin:0px auto;width:600px;" role="presentation" width="600px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:20px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="border-collapse:collapse;border-spacing:0px;">
-                          <tbody>
-                            <tr>
-                              <td style="width:50px;"><a href="http://livelearn.nl" target="_blank"><img alt=""
-                                    height="auto" src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/lurx1/l0xh.png"
-                                    style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                    width="50"></a></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <h1 class="text-build-content"
-                            style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b> '.$tittle.' </b></span></h1>
-                          <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
-                            data-testid="RJMLrMvA0Rh">Make sure your team continues to develop.</p>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="background:transparent;font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
-                            style="margin: 10px 0; margin-top: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . ' 
-                              ,</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">You now have the role of
-                                manager within ' . $company_connected . '. This means that you can share knowledge with your
-                                teammates, give them feedback and encourage them to work on specific topics.&nbsp;</span><br>&nbsp;</p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Do you not recognize yourself in the role or the organization? Then contact</span><a class="link-build-content"
-                              style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
-                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons
-                              op.</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><br><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Good luck from,</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The LiveLearn team</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI"
-                            style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="center" vertical-align="middle"
-                        style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="border-collapse:separate;line-height:100%;">
-                          <tbody>
-                            <tr>
-                              <td align="center" bgcolor="#023356" role="presentation"
-                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://app.livelearn.nl/login/"
-                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
-                                  target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">login</span></a>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" vertical-align="top"
-                        style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
-                        <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
-</td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:20px;padding-top:20px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:middle;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:middle;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p class="text-build-content"
-                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="p1wGkfjeZKT7"><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
-                              sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
-                              messages from this series, </span><a class="link-build-content"
-                              style="color:inherit;; text-decoration: none;" target="_blank"
-                              href="[[WORKFLOW_EXIT_LINK_EN]]"><span
-                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
-                                unsubscribe here</span></a><span
-                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">.</span></p>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left" vertical-align="middle"
-                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <div
-                          style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span
-                              style="font-size:16px;text-align:center;color:#55575d;font-family:Arial;line-height:22px;">
-                              NL</span></p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div><!--[if mso | IE]></td></tr></table><![endif]-->
-  </div>
-</body>
+    </body>
 
-</html>';
+    </html>';
+    
     return  wp_mail($email, $subject, $mail_became_manager_body, $headers, array( '' )) ;
-
 }
 
 function expertsToFollow()
 {
     $experts = get_users(
         array(
-                'role__in' => array('expert','author','teacher',
+            'role__in' => array('expert','author','teacher',
                 'posts_per_page' => -1,
-                )
+            )
         ));
     $all_experts = array();
     foreach ($experts as $expert) {
@@ -930,6 +933,7 @@ function expertsToFollow()
     $response->set_status(200);
     return $response;
 }
+
 /**
  * @return WP_REST_Response
  * @description : Upcoming Schedule for the user
@@ -986,7 +990,7 @@ function upcoming_schedule_for_the_user()
         //$sql = $wpdb->prepare( "SELECT user_id FROM $table_tracker_views WHERE data_id =$schedule->ID");
         //$user_follow_this_course = $wpdb->get_results( $sql );
         //if(!$user_follow_this_course)
-       //     continue;
+        //     continue;
         //if(intval($user_follow_this_course[0]->user_id)!=$user_id)
         //    continue;
 
@@ -1081,11 +1085,11 @@ function saveManager(WP_REST_Request $request){
     update_field('company_phone',$request['phone'], $company_id);
     $response = new WP_REST_Response(
         array(
-        'message'=>'company created',
-        'quantity'=>intval($request['quantity']),
-        'id_user'=>$user_id,
-        'company'=>$company
-    )
+            'message'=>'company created',
+            'quantity'=>intval($request['quantity']),
+            'id_user'=>$user_id,
+            'company'=>$company
+        )
     );
     $response->set_status(201);
     return $response;
@@ -1118,17 +1122,17 @@ function get_notifications($data)
     $notification_feedbacks = get_posts($args);
 
     //Mandatories
-        $args = array(
-            'post_type' => 'mandatory',
-            //'author' => $id_user_connected,
-            'orderby' => 'post_date',
-            'order' => 'DESC',
-            'posts_per_page' => -1,
-        );
-        $notification_mandatories = get_posts($args);
+    $args = array(
+        'post_type' => 'mandatory',
+        //'author' => $id_user_connected,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $notification_mandatories = get_posts($args);
 
     //Badges
-        $args = array(
+    $args = array(
         'post_type' => 'badge',
         //'author' => $id_user_connected,
         'orderby' => 'post_date',
@@ -1146,7 +1150,7 @@ function get_notifications($data)
         $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
 
         $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
-        endforeach;
+    endforeach;
     foreach($notification_mandatories as $notification):
         $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
         $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
@@ -1158,7 +1162,7 @@ function get_notifications($data)
         $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
         $notification->post_type = 'todo';
 
-        endforeach;
+    endforeach;
     foreach($notification_badges as $notification):
         $notification_id_manager = (get_field('manager_feedback', $notification->ID)) ?: get_field('manager_badge', $notification->ID);
         $notification_id_manager = ($notification_id_manager) ?: get_field('manager_must', $notification->ID);
@@ -1169,7 +1173,7 @@ function get_notifications($data)
         $notification->date = date("d M Y", strtotime($notification->post_date)).' at '.date("h:i", strtotime($notification->post_date));
 
         $notification->notification_read = get_field('read_feedback', $notification->ID)[0];
-        endforeach;
+    endforeach;
 
     return new WP_REST_Response(
         array(
@@ -1197,26 +1201,26 @@ function companyPeople($data){
         $company_connected = 0;
 
     foreach($users as $user){
-        $roles = $user->roles;
+        $roles = array_values($user->roles);
         $user = $user->data;
         if ($user->ID == $user_connected)
             continue;
 
-            $company = get_field('company',  'user_' . $user->ID);
-            $image = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
-            $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
-            $user->function = get_field('role',  'user_' . $user->ID)? : '';
-            $user->department = get_field('department','user_'. $user->ID)?:'';
-            $user->phone = get_field('telnr',  'user_' . $user->ID)?:'';
-            $user->isManaged = in_array($user->ID,$users_manageds);
-            $user->roles = $roles;
-            $user->budget = get_field('amount_budget','user_' .$user->ID )?:0;
-            if(!empty($company)){
-                $user->company = $company[0];
-                $company_id = $company[0]->ID;
-                if($company_id == $company_connected)  // compare ID
-                    array_push($members, $user);
-            }
+        $company = get_field('company',  'user_' . $user->ID);
+        $image = get_field('profile_img',  'user_' . $user->ID) ? : get_field('profile_img_api',  'user_' . $user->ID);
+        $user->imagePersone = $image ? : get_stylesheet_directory_uri() . '/img/user.png';
+        $user->function = get_field('role',  'user_' . $user->ID)? : '';
+        $user->department = get_field('department','user_'. $user->ID)?:'';
+        $user->phone = get_field('telnr',  'user_' . $user->ID)?:'';
+        $user->isManaged = in_array($user->ID,$users_manageds);
+        $user->roles = $roles;
+        $user->budget = get_field('amount_budget','user_' .$user->ID )?:0;
+        if(!empty($company)){
+            $user->company = $company[0];
+            $company_id = $company[0]->ID;
+            if($company_id == $company_connected)  // compare ID
+                array_push($members, $user);
+        }
     }
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
     $new_members_count = 0 ;
@@ -1286,6 +1290,7 @@ function peopleYouManage($data)
     $response->set_status(200);
     return $response;
 }
+
 function editPeopleCompany($data){
     $user_id = intval($data['ID']);
     $telephone = $data['phone'];
@@ -1323,13 +1328,29 @@ function editPeopleCompany($data){
 
 function removePeopleCompany($data)
 {
+    $user_connected = wp_get_current_user()->ID;
     $user_id = intval($data['ID']);
     $isRemoved = update_field('company', null ,'user_' . $user_id);
-    if ($isRemoved)
+    // remove people managed user connected on $user_id
+
+    if ($isRemoved) {
+        $people_managed = get_field('managed', 'user_'.$user_connected)?:array();
+        $index_to_remove = array_search($user_id,$people_managed);
+        if(!$index_to_remove)
+            return new WP_REST_Response(
+                array(
+                    'message'=>'error while removing this people on your list'
+                ),401);
+
+        unset($people_managed[$index_to_remove]);
+        update_field('managed', $people_managed, 'user_'.$user_connected);
+        update_field('ismanaged', null , 'user_' . $isRemoved);
+
         return new WP_REST_Response(
             array(
-                'message'=>'User removed from company...',
+                'message' => 'User removed from company...',
             ));
+    }
     return new WP_REST_Response(
         array(
             'message'=>'User not removed from company...',
@@ -1339,135 +1360,111 @@ function removePeopleCompany($data)
 function learn_modules($data){
     $users_companies = array();
     $user_connected = intval($data['ID']); //$user_in
-    $company_connected = get_field('company',  'user_' . $user_connected);
+    $company_connected = get_field('company', 'user_' . $user_connected);
+    if (!$company_connected)
+        return new WP_REST_Response(array());
+
     $users = get_users();
     foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
         if(!empty($company_connected) && !empty($company_user))
             if($company_user[0]->ID == $company_connected[0]->ID)
-                array_push($users_companies,$user->ID);
+                $users_companies[] = $user->ID;
     }
-    //$company_connected = get_field('company',  'user_' . $user_connected);
     $args = array(
-        'post_type' => array('course','post','leerpad','assessment'),
+        'post_type' => array('course','post'),
         'author__in' => $users_companies,
         'order' => 'DESC',
-        'numberposts' => 1000,
-    );
+        'posts_per_page' => -1,
 
-    //bought courses
-    $order_args = array(
-        'customer_id' => get_current_user_id(),
-        //'post_status' => array_keys(wc_get_order_statuses()),
-        'post_status' => array('wc-processing'),
+        // 'numberposts' => 1000,
     );
-    $bunch_orders = wc_get_orders($order_args);
-    //$bunch_orders = array();
-    $enrolled_user = array();
-    foreach($bunch_orders as $order)
-        foreach ($order->get_items() as $item ) {
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
-            if(!empty($course))
-                array_push($enrolled_user, $course->ID);
-        }
-
     $courses = get_posts($args);
-    /*
-    $all_subtopics = array();
-    $subtopics = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent' => (int)'expert',
-        'hide_empty' => false, // change to 1 to hide categores not having a single post
-    )) ?? false;
-    if ($subtopics != false)
-        $all_subtopics = array_merge($all_subtopics,$subtopics);
-    */
-    $category = ' ';
-
-    $category_str = 0;
-    $one_category = get_field('categories',  $course->ID);
-    if($one_category) {
-        $category_str = intval($one_category[0]['value']);
-        //$category_str = intval("312");
-    } else {
-        $one_category = get_field('category_xml',  $course->ID);
-        if(isset($one_category))
-            if (isset($one_category[0]['value']))
-                $category_id = intval($one_category[0]['value']);
-    }
-    if ($category_str) {
-        if ($category_str) {
-            $category_name = get_the_category_by_ID($category_str);
-            if(!is_wp_error($category_name))
-                $category = (string)$category_name;
-        } else {
-            $category_name = get_the_category_by_ID($category_id);
-            if (!is_wp_error($category_name))
-                $category = (string)$category_name;
-        }
-    }
     foreach ($courses as $course){
-        $all_subtopics = array();
-            $subtopics = get_categories( array(
-                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                'parent' => (int)'expert',
-                'hide_empty' => false, // change to 1 to hide categores not having a single post
-            )) ?? false;
-            if ($subtopics != false)
-                $all_subtopics = array_merge($all_subtopics,$subtopics);
+        $category = '';
+        $category_str = 0;
+        $one_category = get_field('categories',  $course->ID);
+        if($one_category) {
+            if (isset($one_category[0]['value']))
+                $category_str = intval($one_category[0]['value']);
+        } else {
+            $one_category = get_field('category_xml',  $course->ID);
+            if(isset($one_category[0]))
+                $category_str = intval($one_category[0]['value']);
+        }
+        if ($category_str) {
+            if ($category_str) {
+                $category_name = get_the_category_by_ID($category_str);
+                if(!is_wp_error($category_name)) {
+                    $category = (string)$category_name;
+                }
+            } else {
+                $category_name = get_the_category_by_ID($category_id);
+                if (!is_wp_error($category_name))
+                    $category = (string)$category_name;
+            }
+        }
+        $datas = get_field('data_locaties', $course->ID);
+        $datum = get_field('data_locaties_xml', $course->ID);
+        $dates = get_field('dates', $course->ID);
+
+        $start_date = '';
+        if($datas){
+            $data = $datas[0]['data'][0]['start_date'];
+            if($data != ""){
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
+                $start_date = "$day/$month/$year";
+            }
+        } elseif ($datum) {
+            if(isset($datum[0]['value'])){
+                $datas = explode('-', $datum[0]['value']);
+                $data = $datas[0];
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
+
+                $start_date = "$day/$month/$year";
+            } else {
+                if($dates){
+                    $data = $dates[0]['date'];
+                    $days = explode(' ', $data)[0];
+                    $day = explode('-', $days)[2];
+                    //$month = $calendar[explode('-', $data)[1]];
+                    $year = explode('-', $days)[0];
+                    $start_date = "$day/$month/$year";
+                }
+            }
+        }
 
         $price = get_field('price',$course->ID);
         $course->price = $price ? : 'Gratis';
-        $course->startDate = date('d/m/Y',strtotime($course->post_date));
-        $course->courseType = get_field('course_type',$course->ID);
-        //$course->subects = $all_subtopics[0]->name;
-        $course->subects = $category;
-        $course->sales = in_array($course->ID, $enrolled_user); //true or false
-
+        $course->startDate = $start_date;
+        $course->courseType = get_field('course_type',$course->ID) ?:'';
+        $course->subjects = $category;
+        $course->sales = (bool)get_field('visibility', $course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->longDescription = get_field('long_description',$course->ID);
     }
-    $response = new WP_REST_Response($courses);
-    $response->set_status(200);
-    return $response;
+
+    return new WP_REST_Response( array(
+        //'id_user_company' =>$users_companies,
+        'count' => count($courses),
+        'courses' => $courses
+    ), 200);
 }
 function learnning_database(){
-$args = array(
+    $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
         'posts_per_page' => -1,
         'orderby' => 'date',
         'order' => 'DESC',
         'numberposts' => 1000,
     );
-    $order_args = array(
-        'customer_id' => get_current_user_id(),
-        //'post_status' => array_keys(wc_get_order_statuses()),
-        'post_status' => array('wc-processing'),
-    );
-    $bunch_orders = wc_get_orders($order_args);
-    //$bunch_orders = array();
-    $enrolled_user = array();
-    foreach($bunch_orders as $order){
-        foreach ($order->get_items() as $item_id => $item ) {
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
-            if(!empty($course))
-                array_push($enrolled_user, $course->ID);
-        }
-    }
     $courses = get_posts($args);
     foreach ($courses as $course){
-        /*
-        $all_subtopics = array();
-        $subtopics = get_categories( array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent' => (int)'expert',
-            'hide_empty' => false, // change to 1 to hide categores not having a single post
-        )) ?? false;
-        if ($subtopics != false)
-            $all_subtopics = array_merge($all_subtopics,$subtopics);
-        */
-        $category = ' ';
-
+        $category = '';
         $category_str = 0;
         $one_category = get_field('categories',  $course->ID);
         if($one_category) {
@@ -1482,24 +1479,62 @@ $args = array(
             if ($category_str) {
                 $category_name = get_the_category_by_ID($category_str);
                 if(!is_wp_error($category_name))
-                   $category = (string)$category_name;
+                    $category = (string)$category_name;
             } else {
+                $one_category = get_field('category_xml',  $course->ID);
+                $category_id = intval($one_category[0]['value']);
                 $category_name = get_the_category_by_ID($category_id);
                 if (!is_wp_error($category_name))
-                $category = (string)$category_name;
+                    $category = (string)$category_name;
             }
         }
+        $datas = get_field('data_locaties', $course->ID);
+        $datum = get_field('data_locaties_xml', $course->ID);
+        $dates = get_field('dates', $course->ID);
 
+        $start_date = '';
+        if($datas){
+            $data = $datas[0]['data'][0]['start_date'];
+            if($data != ""){
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
+                $start_date = "$day/$month/$year";
+            }
+        } elseif ($datum) {
+            if(isset($datum[0]['value'])){
+                $datas = explode('-', $datum[0]['value']);
+                //var_dump($datas);die;
+                $data = $datas[0];
+                $day = explode('/', explode(' ', $data)[0])[0];
+                $month = explode('/', explode(' ', $data)[0])[1];
+                $year = explode('/', explode(' ', $data)[0])[2];
 
+                $start_date = "$day/$month/$year";
+            } else {
+                if($dates){
+                    $data = $dates[0]['date'];
+                    $days = explode(' ', $data)[0];
+                    $day = explode('-', $days)[2];
+                    //$month = $calendar[explode('-', $data)[1]];
+                    $year = explode('-', $days)[0];
+                    $start_date = "$day/$month/$year";
+                }
+            }
+        }
         $price = get_field('price',$course->ID);
         $course->price = $price ? : 'Gratis';
-        $course->startDate = date('d/m/Y',strtotime($course->post_date));
+        $course->startDate = $start_date; //date('d/m/Y',strtotime($course->post_date));
         $course->courseType = get_field('course_type',$course->ID);
-        //$course->subects = $all_subtopics[0]->name;
-        $course->subects = $category;
-        $course->sales = in_array($course->ID, $enrolled_user); //true or false
+        $course->subjects = $category;
+        $course->sales = (bool)get_field('visibility', $course->ID); //true or false
+        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->longDescription = get_field('long_description',$course->ID);
     }
-    $response = new WP_REST_Response($courses);
+    $response = new WP_REST_Response(array(
+        'count'=>count($courses),
+        'courses' =>$courses
+    ));
     $response->set_status(200);
     return $response;
 }
@@ -1543,15 +1578,15 @@ function get_detail_notification($data){
     $manager  =  get_user_by('ID', $manager_id);
     if ($manager){
         $manager = $manager->data;
-    $manager->role = get_field('role',  'user_' . $manager_id) ? : '';
+        $manager->role = get_field('role',  'user_' . $manager_id) ? : '';
 
-    $company_manager = get_field('company',  'user_' . $manager->ID);
-    if ($company_manager)
-        $manager->company  = $company_manager[0]->post_title;
-    else
-        $manager->company = 'Livelearn';
+        $company_manager = get_field('company',  'user_' . $manager->ID);
+        if ($company_manager)
+            $manager->company  = $company_manager[0]->post_title;
+        else
+            $manager->company = 'Livelearn';
 
-    $manager->image = get_field('profile_img',  'user_' . $manager_id) ? : get_stylesheet_directory_uri() . '/img/user.png';
+        $manager->image = get_field('profile_img',  'user_' . $manager_id) ? : get_stylesheet_directory_uri() . '/img/user.png';
         unset($manager->user_pass);
         $notification->notification_manager = $manager;
     }
@@ -1853,19 +1888,19 @@ function statistic_company($data)
     // Most popular
     $most_popular = array_count_values($enrolled_all_courses);
     arsort($most_popular);
-/*
-    $args = array(
-        'post_type' => array('course','post'),
-        //'posts_per_page' => -1,
-        'numberposts' => 250,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'post__in'=>$topic_views
-        //'include' => $most_popular,
-        //'author'=>$current_user
-    );
-    $most_popular_course = get_posts($args);
-    */
+    /*
+        $args = array(
+            'post_type' => array('course','post'),
+            //'posts_per_page' => -1,
+            'numberposts' => 250,
+            'orderby' => 'post_date',
+            'order' => 'DESC',
+            'post__in'=>$topic_views
+            //'include' => $most_popular,
+            //'author'=>$current_user
+        );
+        $most_popular_course = get_posts($args);
+        */
     /*
     $popular_course = array();
     foreach ($most_popular_course as $course){
@@ -1995,8 +2030,8 @@ function statistic_company($data)
     /*                      / /                      */
     $respons = new WP_REST_Response(
         array(
-        'user_connected'=>$user_connected,
-        'course_categories_topics_finished'=>$avairages_topics_company,
+            'user_connected'=>$user_connected,
+            'course_categories_topics_finished'=>$avairages_topics_company,
             'firs_tab'=>array(
                 'total_members'=>count($members),
                 'new_members'=>count($new_members),
@@ -2013,9 +2048,9 @@ function statistic_company($data)
                     'completed'=>$assessment_completed,
                 ),
             ),
-         'desktop_vs_mobile'=>$desktop_vs_mobile,
-        'most_topics_view'=>$most_topics_view,
-        'popular_course'=>$popular_course,
+            'desktop_vs_mobile'=>$desktop_vs_mobile,
+            'most_topics_view'=>$most_topics_view,
+            'popular_course'=>$popular_course,
         ));
     $respons->set_status(200);
     return $respons;
@@ -2087,7 +2122,7 @@ function statistic_individual($data)
                 //array_push($members,$user->data);
 
                 // Assessment
-                    $validated = get_user_meta($user->ID, 'assessment_validated');
+                $validated = get_user_meta($user->ID, 'assessment_validated');
                 foreach($validated as $assessment)
                     if(!in_array($assessment, $assessment_validated))
                         array_push($assessment_validated, $assessment);
@@ -2564,10 +2599,10 @@ function add_departement($data)
         return new WP_REST_Response(array('message' => 'Error while adding department'), 401);
 
     $response = new WP_REST_Response(
-    array(
-        'message'=>'Department added successfully to the company !',
-        'departments'=>$departments,
-    ));
+        array(
+            'message'=>'Department added successfully to the company !',
+            'departments'=>$departments,
+        ));
     $response->set_status(200);
     return $response;
 }
@@ -2629,9 +2664,9 @@ function Selecteer_experts($data)
             if($company_id == $company_connected_id) {
                 $image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
                 $name = ($user->first_name) ?  $user->first_name . ' ' . $user->last_name : $user->user_email ;
-
-                $is_manager = (in_array('manager', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
-                $is_author = (in_array('author', $user->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                $roles = array_values($user->roles);
+                $is_manager = (in_array('manager', $roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                $is_author = (in_array('author', $roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
                 $departement = get_field('departments', $company[0]->ID);
                 $member['ID'] = $user->ID;
@@ -2644,17 +2679,17 @@ function Selecteer_experts($data)
 
                 array_push($members, $member);
             }
-       }
+        }
     }
     $budget = get_field('amount_budget','user_' . $user_connected)?:0;
-    $role = (new WP_User($user_connected))->roles;
+    $role = array_values((new WP_User($user_connected))->roles);
     $response = new WP_REST_Response(
         array(
             'Selecteer_je_experts'=>$members,
             'info_personal_budget'=>array(
                 'role'=>array(
-                    'manager'=>$role =='manager',
-                    'author' =>$role == 'author'
+                    'manager'=>in_array('manager',$role),
+                    'author' =>in_array('author',$role)
                 ),
                 'budget'=>$budget
             )
@@ -2675,46 +2710,44 @@ function grantPushRole($data)
     $budget = $data['budget'];
     $user_id = $data['id'];
     $user = new WP_User($user_id);
+    $roles = array_values($user->roles); // roles initials before changing
     $manager = $role['manager'];
     $author = $role['author'];
 
-    if (isset($manager) && $manager!=null) {
-        if ($manager) {
-            if (!in_array('manager', $user->roles)) {
-                $user->add_role('manager');
-                sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
-            }
-        } else {
-            if (in_array('manager', $user->roles)) {
-                $user->remove_role('manager');
-                sendEmailBecaumeManager($user_id, $role, 'You have been deleted as a manager', 'You are no longer a manager');
-            }
+    if ($manager) {
+        if (!in_array('manager', $roles)) {
+            $user->add_role('manager');
+            sendEmailBecaumeManager($user_id, $role, 'You have the role of manager', 'You are now a manager!');
+        }
+
+    } else {
+        if (in_array('manager', $roles)) {
+            $user->remove_role('manager');
+            sendEmailBecaumeManager($user_id, $role, 'You have been deleted as a manager', 'You are no longer a manager');
         }
     }
-    if (isset($author) && $author!=null) {
+
     if ($author) {
         if (!in_array('author', $user->roles)) {
             $user->add_role('author');
             sendEmailBecaumeManager($user_id, $role, 'You have the role of author','You are now an author !');
         }
-    }else {
-            if (!in_array('author', $user->roles)) {
-                $user->remove_role('author');
-                sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
-            }
+    } else {
+        if (in_array('author', $user->roles)) {
+            $user->remove_role('author');
+            sendEmailBecaumeManager($user_id,$role,'You have been deleted as an author','You are no longer an author');
         }
     }
-    //$role = $manager ? 'manager' : 'author';
-    //$user->add_role( $role );
+
+
     update_field('amount_budget', $budget, 'user_' . $user_id);
     //send Email
-    $user->data->budget_amount = get_field('amount_budget','user_' . $user_id)?:0;
-    $user->data->roles = $user->roles;
+    $user->data->budget_amount = get_field('amount_budget','user_'. $user_id)?:0;
+    $user->data->roles = array_values($user->roles);
 
     $response = new WP_REST_Response(
         array(
             'user'=>$user->data,
-            'user_complete'=>$user
         ));
     $response->set_status(201);
     return $response;
@@ -2746,7 +2779,7 @@ function people_managed($data)
             $roles = $person->roles;
             $person = $person->data;
             $person->image = $image;
-            $person->roles = $roles;
+            $person->roles = array_values($roles);
             unset($person->user_pass);
             $people_managed[] = $person;
         }
@@ -2772,7 +2805,7 @@ function people_managed($data)
 
                 array_push($people_to_manage, $person_to_manage);
                 //if(!empty($person_managed))
-                  //  array_push($people_managed, $person_to_manage);
+                //  array_push($people_managed, $person_to_manage);
             }
         }
     }
@@ -2866,45 +2899,46 @@ function addOnePeople(WP_REST_Request $data)
     $first_name = $data['first_name'];
     $last_name = $data['last_name'];
 
-        $login = RandomStringBis();
-        $password = "Livelearn".date('Y').RandomStringBis();
+    $login = RandomStringBis();
+    $password = "Livelearn".date('Y').RandomStringBis();
 
-        $userdata = array(
-            'user_pass' => $password,
-            'user_login' => $login,
-            'user_email' => $email,
-            'user_url' => 'https://app.livelearn.nl/login',
-            'display_name' => $first_name,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'role' => 'subscriber'
-        );
-        $user_id = wp_insert_user(wp_slash($userdata));
-        if(is_wp_error($user_id))
-            return new WP_REST_Response(
-                array(
-                    'message' => "An error occurred while creating the emails, please ensure that all emails do not already exist."
-                ), 401);
+    $userdata = array(
+        'user_pass' => $password,
+        'user_login' => $login,
+        'user_email' => $email,
+        'user_url' => 'https://livelearn.nl/login',
+        'display_name' => $first_name,
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'role' => 'subscriber'
+    );
+    $user_id = wp_insert_user(wp_slash($userdata));
+    if(is_wp_error($user_id))
+        return new WP_REST_Response(
+            array(
+                'message' => "An error occurred while creating the emails, please ensure that all emails do not already exist."
+            ), 401);
 
 
-        $guest = get_user_by('ID', $user_connected);
-        $company = get_field('company',  'user_' . $guest->ID);
-        //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
-        update_field('company', $company[0], 'user_'.$user_id);
+    $guest = get_user_by('ID', $user_connected);
+    $company = get_field('company',  'user_' . $guest->ID);
+    //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
+    update_field('company', $company[0], 'user_'.$user_id);
 
-        sendEmail($user_connected,$user_id,$password);
-        $response = new WP_REST_Response(
-                    array(
-                        'message' => 'You have successfully created a new employee ✔️'
-                    ));
-        $response->set_status(200);
-        return $response;
+    sendEmail($user_connected,$user_id,$password);
+    $response = new WP_REST_Response(
+        array(
+            'message' => 'You have successfully created a new employee ✔️'
+        ));
+    $response->set_status(200);
+    return $response;
 }
 function addManyPeople(WP_REST_Request $data)
 {
     $user_connected = intval($data['id']);
 
     $emails = $data['users'];
+    $user_inserted = [];
 
     if(!empty($emails))
         foreach($emails as $user){
@@ -2919,7 +2953,7 @@ function addManyPeople(WP_REST_Request $data)
                 'user_pass' => $password,
                 'user_login' => $login,
                 'user_email' => $email,
-                'user_url' => 'https://app.livelearn.nl/login',
+                'user_url' => 'https://livelearn.nl/login',
                 'display_name' => $first_name,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
@@ -2937,13 +2971,23 @@ function addManyPeople(WP_REST_Request $data)
             $company = get_field('company',  'user_' . $user_connected);
             //update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
             update_field('company', $company[0], 'user_'.$user_id);
+            // add people to manage
+            update_field('ismanaged', $user_connected, 'user_' . $user_id);
+
 
             // send email new user
-            sendEmail($user_connected, $user_id,$password);
+            sendEmail($user_connected,$user_id,$password);
+            $user_inserted[] = get_user_by('ID', $user_id)->ID;
         }
+    $people_managed = get_field('managed', 'user_'.$user_connected) ? : array();
+    $people_managed = array_merge($people_managed,$user_inserted);
+    $people_managed = array_unique($people_managed);
+    update_field('managed', $people_managed, 'user_'.$user_connected);
+
     $response = new WP_REST_Response(
         array(
-            'message' => 'You have successfully created '.count($emails) .' new employees ✔️'
+            'message' => 'You have successfully created '.count($emails) .' new employees ✔️',
+            'users'=>$user_inserted
         ));
     $response->set_status(201);
     return $response;
@@ -3360,10 +3404,10 @@ ORDER BY MONTH(created_at)
             'external_learning_opportunities' => $external_learning_opportunities,
             'average_feedback_given_me_team'=> intval($score_rate_feedback) ."/". intval($score_rate_feedback_company),
             'usage_desktop_vs_mobile_app' =>
-            array(
-                'web' => $canva_data_web,
-                'mobile' => $canva_data_mobile
-            ),
+                array(
+                    'web' => $canva_data_web,
+                    'mobile' => $canva_data_mobile
+                ),
             // 'badge' =>$achievements,
             'most_popular_courses' => $most_popular_course,
             'most_viewed_topics' => count($followed_topics),
@@ -3422,18 +3466,18 @@ function newCoursesByTeacher(WP_REST_Request $data)
     ];
     $type = $types[$course_type];
     $args = array(
-            'post_type' => $type,
-            'post_status' => 'publish',
-            'post_title' => $data['title'],
-            'post_author' => $id,
-        );
+        'post_type' => $type,
+        'post_status' => 'publish',
+        'post_title' => $data['title'],
+        'post_author' => $id,
+    );
     $id_post = wp_insert_post($args, true);
     if(is_wp_error($id_post)){
         $error = new WP_Error($id_post);
         return new WP_REST_Response(
             array(
-            'message' => $error->get_error_message($id_post),
-        ),401);
+                'message' => $error->get_error_message($id_post),
+            ),401);
     }
     update_field('course_type', $course_type , $id_post);
     if ($price)
@@ -3445,10 +3489,10 @@ function newCoursesByTeacher(WP_REST_Request $data)
         update_field('article_itself', $article_content, $id_post);
 
     $response = new WP_REST_Response(
-    array(
-        'new_course_added'=>get_post($id_post,true),
-        'message'=> 'course created success...',
-    ));
+        array(
+            'new_course_added'=>get_post($id_post,true),
+            'message'=> 'course created success...',
+        ));
     $response->set_status(201);
     return $response;
 }
@@ -3456,7 +3500,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
 {
     $id_course = $data['id_course'];
     //$type_course = get_field('course_type',$id_course);
-    $course_type = ucfirst($data['course_type']);
+    $course_type = $data['course_type'];
     $isCourseUpdated = false;
     $article_content = $data['article_content'];
     $visibility = $data['visibility']; // checkbox : true or false ?
@@ -3483,11 +3527,12 @@ function updateCoursesByTeacher(WP_REST_Request $data)
     $training_dates_locations = $data['training_dates_locations']; // langage for course
     $link_to_call = $data['lin_to_call'];
     $online_location = $data['online_location'];
+    $cours_learning_path = $data['courses']; //road_path
+    $price = $data['price'];
 
 
     if (!$course)
         return new WP_REST_Response( array('message' => 'id not matched with any course...',), 401);
-    //var_dump(get_field('data_locaties_xml',$id_course));die;
     if ($article_content) {
         update_field('article_itself', $article_content, $id_course);
         $isCourseUpdated = true;
@@ -3581,7 +3626,7 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->video = get_field('data_virtual', $id_course);
     }
 
-     if ($lessons_podcasts) {
+    if ($lessons_podcasts) {
         update_field('podcasts', $lessons_podcasts, $id_course);
         $isCourseUpdated = true;
         $course->podcast = get_field('podcasts', $id_course);
@@ -3639,6 +3684,27 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $course->online_location = get_field('online_location',$id_course);
     }
 
+    if ($cours_learning_path){
+        $old_course = get_field('road_path',$id_course)?:[];
+        $old_id_course = [];
+        if ($old_course)
+            foreach ($old_course as $course) {
+                $old_id_course[] = $course->ID;
+            }
+        if ($old_id_course)
+            $cours_learning_path=array_merge($cours_learning_path,$old_id_course);
+
+        $cours_learning_path=array_unique($cours_learning_path);
+
+        update_field('road_path', $cours_learning_path, $id_course);
+        $isCourseUpdated = true;
+        $course->courses = get_field('road_path',$id_course);
+    }
+    if ($price) {
+        update_field('price', $price, $id_course);
+        $course->price = get_field('price',$id_course);
+        $isCourseUpdated = true;
+    }
     if ($isCourseUpdated) {
         $response = new WP_REST_Response(
             array(
@@ -3654,15 +3720,15 @@ function updateCoursesByTeacher(WP_REST_Request $data)
 function deleteCourse($data)
 {
     $id_course = $data['id'];
-        $post = get_post($id_course);
-        if($post)
-            if (wp_trash_post($post->ID))
-                return new WP_REST_Response(
-                    array('message'=>"course $id_course deleted successfully ! ! !"),
-                    200
-                );
+    $post = get_post($id_course);
+    if($post)
+        if (wp_trash_post($post->ID))
+            return new WP_REST_Response(
+                array('message'=>"course $id_course deleted successfully ! ! !"),
+                200
+            );
 
-        return new WP_REST_Response(array('message' => "course not deleted ! ! !"),401);
+    return new WP_REST_Response(array('message' => "course not deleted ! ! !"),401);
 }
 
 function search_courses()
@@ -3671,8 +3737,8 @@ function search_courses()
     if (!$search)
         return new WP_REST_Response(
             array(
-            'message' => 'key search must be signed in the url'
-        ),401 );
+                'message' => 'key search must be signed in the url'
+            ),401 );
 
     $args = array(
         'post_type' => array('course', 'post','assessment'),
@@ -3726,52 +3792,52 @@ function subscription_organisation($data){
         $response->set_status(401);
         return $response;
     endif;
-        $userdata = array(
-            'user_pass' => $data['password'] ? :'livelearn'.date('Y'),
-            'user_login' => $data['email'],
-            'user_email' => $data['email'],
-            'user_url' => 'http://app.livelearn.nl/',
-            'display_name' => $data['firstName'] . ' ' . $data['lastName'],
-            'first_name' => $data['firstName'],
-            'last_name' => $data['lastName'],
-            'role' => $data['role'] ? :'Manager',
-        );
+    $userdata = array(
+        'user_pass' => $data['password'] ? :'livelearn'.date('Y'),
+        'user_login' => $data['email'],
+        'user_email' => $data['email'],
+        'user_url' => 'http://app.livelearn.nl/',
+        'display_name' => $data['firstName'] . ' ' . $data['lastName'],
+        'first_name' => $data['firstName'],
+        'last_name' => $data['lastName'],
+        'role' => $data['role'] ? :'Manager',
+    );
 
-        $user_id = wp_insert_user($userdata);
-        if (is_wp_error($user_id)) {
-            return new WP_REST_Response(
-                array(
-                    'message' => $user_id->get_error_message(),
-                    'status' => 401
-                ),401);
-        }
-        //update phone number
-        if ($data['telephone'])
-            update_field('telnr', $data['telephone'], 'user_' . $user_id);
-
-       if ($data['company']) {
-           $company_id = wp_insert_post(
-               array(
-                   'post_title' => $data['company'],
-                   'post_type' => 'company',
-                   'post_status' => 'pending',
-               ));
-           if ($data['company_size'])
-               update_field('company_size', $data['company_size'], $company_id);
-           $company = get_post($company_id);
-           update_field('company', $company, 'user_' . $user_id);
-       }
-        $user = get_user_by('ID', $user_id);
-        if ($user) {
-            $user = $user->data;
-            $user->company = $company?:'';
-            unset($user->user_pass);
-        }
+    $user_id = wp_insert_user($userdata);
+    if (is_wp_error($user_id)) {
         return new WP_REST_Response(
             array(
-                'message' => 'User saved success and company already created.',
-                'user' => $user,
-            ),200);
+                'message' => $user_id->get_error_message(),
+                'status' => 401
+            ),401);
+    }
+    //update phone number
+    if ($data['telephone'])
+        update_field('telnr', $data['telephone'], 'user_' . $user_id);
+
+    if ($data['company']) {
+        $company_id = wp_insert_post(
+            array(
+                'post_title' => $data['company'],
+                'post_type' => 'company',
+                'post_status' => 'pending',
+            ));
+        if ($data['company_size'])
+            update_field('company_size', $data['company_size'], $company_id);
+        $company = get_post($company_id);
+        update_field('company', $company, 'user_' . $user_id);
+    }
+    $user = get_user_by('ID', $user_id);
+    if ($user) {
+        $user = $user->data;
+        $user->company = $company?:'';
+        unset($user->user_pass);
+    }
+    return new WP_REST_Response(
+        array(
+            'message' => 'User saved success and company already created.',
+            'user' => $user,
+        ),200);
 }
 function addAchievement($data)
 {
@@ -3792,6 +3858,8 @@ function addAchievement($data)
     $and_what_date = $data['end_date']; // ot_welke_datum_badge, end date
     $about = $data['about_competencies']; // competencies_badge
     $comment = $data['comment']; // opmerkingen_badge
+    $manager = $data['manager_id'];
+
     //Certificate
     $issuedBy = $data['issued_by']; // uitgegeven_door_badge
     $providerUrl = $data['provider_url']; //url_aanbieder_badge
@@ -3811,9 +3879,9 @@ function addAchievement($data)
         $error = new WP_Error($id_post);
         return new WP_REST_Response(
             array(
-            'message' => $error->get_error_message($id_post),
-             'status' => 401
-        ), 401);
+                'message' => $error->get_error_message($id_post),
+                'status' => 401
+            ), 401);
     }
     if ($type)
         update_field('type_badge', $type , $id_post);
@@ -3831,6 +3899,8 @@ function addAchievement($data)
         update_field('punten_badge', $points , $id_post);
     if ($country)
         update_field('land_badge', $country , $id_post);
+    if ($manager)
+        update_field('manager_badge', $manager , $id_post);
 
     update_field('trigger_badge', $trigger , $id_post);
     update_field('voor_welke_datum_badge', $for_what_day , $id_post);
@@ -3858,10 +3928,10 @@ function addAchievement($data)
         $badge->points = get_field('punten_badge', $badge->ID)?:'';
     }
     $response = new WP_REST_Response(
-    array(
-        'message'=> 'badge saved success...',
-        'new_badge'=>$badge,
-    ));
+        array(
+            'message'=> 'badge saved success...',
+            'new_badge'=>$badge,
+        ));
     $response->set_status(201);
     return $response;
 }
@@ -3898,7 +3968,7 @@ function addFeedback($data)
     //    if (in_array($id,$managed))
     //        $superior = get_users(array('include'=> $id))[0]->data;
     //$manager = $superior ? $superior->ID : $id;
-    $manager = $id;
+    $manager = $data['manager_id'];
 
     $args = array(
         'post_type' => 'feedback',
@@ -3911,9 +3981,9 @@ function addFeedback($data)
         $error = new WP_Error($id_post);
         return new WP_REST_Response(
             array(
-            'message' => $error->get_error_message($id_post),
-            'status' => 401
-        ),401);
+                'message' => $error->get_error_message($id_post),
+                'status' => 401
+            ),401);
     }
     if ($manager)
         update_field('manager_feedback', intval($manager), $id_post);
@@ -4074,24 +4144,80 @@ function addTodo($data)
             'new_todo' => $todo,
         ),201);
 }
-
+function countCourseType($course_type){
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'ordevalue'       => $course_type,
+        'order' => 'DESC' ,
+        'meta_key'         => 'course_type',
+        'meta_value' => $course_type
+    );
+    return count(get_posts($args));
+}
 function all_courses_in_plateform()
 {
-    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $page = $_GET['page'] ?? 1;
+    $type = $_GET['type'] ?? '';
+    $max = $_GET['max'] ?? null;
+    $min = $_GET['min'] ?? null;
+    $experts = $_GET['experts'] ?? null;
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => 20,
         'order' => 'DESC' ,
+        'meta_query' => array(),
         'paged' => $page,
     );
+    // filter by course type
+    if ($type) {
+        $args['meta_query'][] = array(
+            'key' => 'course_type',
+            'value' => $type,
+            'compare' => 'IN'
+        );
+    }
+    // Filter by price
+
+    if ($min !== null && $max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => array($min, $max),
+            'type' => 'numeric',
+            'compare' => 'BETWEEN'
+        );
+    } elseif ($min !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $min,
+            'type' => 'numeric',
+            'compare' => '>='
+        );
+    } elseif ($max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $max,
+            'type' => 'numeric',
+            'compare' => '<='
+        );
+    }
+    if ($experts)
+        $args['author__in'] = $experts;
+
     $courses = get_posts($args);
     $all_courses = array();
+
     foreach ($courses as $course) {
         $course->visibility = get_field('visibility',$course->ID) ?? [];
-        $author = get_user_by( 'ID', $course -> post_author  );
-        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $course-> author = new Expert ($author , $author_img);
+        if ($course -> post_author) {
+            $author = get_user_by('ID', $course->post_author);
+            if ($author) {
+                $author_img = get_field('profile_img', 'user_' . $author->ID) != false ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                $course->author = new Expert ($author, $author_img);
+            }
+        }
         $course->longDescription = get_field('long_description',$course->ID);
         $course->shortDescription = get_field('short_description',$course->ID);
 
@@ -4113,15 +4239,9 @@ function all_courses_in_plateform()
         $all_courses[] = new Course($course);
     }
 
-    $count_all_course = count(get_posts(
-            array(
-                'post_type' => array('course', 'post'),
-                'post_status' => 'publish',
-                'posts_per_page' => -1,
-                'order' => 'DESC'
-            )
-        )
-    );
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
     $total_pages = ceil($count_all_course / 20);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
@@ -4130,13 +4250,25 @@ function all_courses_in_plateform()
         array(
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
+            'count_course_type'=>[
+                'video'=>countCourseType('Video'),
+                'podcast'=>countCourseType('Podcast'),
+                'Opleidingen'=>countCourseType('Opleidingen'),
+                'Artikel'=>countCourseType('article'),
+                'Masterclass'=>countCourseType('Masterclass'),
+                'Workshop'=>countCourseType('Workshop'),
+                'e_Learning'=>countCourseType('E-Learning'),
+                'Event'=>countCourseType('Event'),
+                'Training'=>countCourseType('Training'),
+                'Lezing'=>countCourseType('Lezing'),
+                'Assessment'=>countCourseType('Assessment'),
+            ],
             'course' => $all_courses,
         ),200 );
 }
 
 function all_company_in_plateform()
 {
-
     $company_experts = array();
     $users = get_users();
     foreach ($users as $user):
@@ -4176,9 +4308,9 @@ function all_company_in_plateform()
             $courses = get_posts($args);
             $count_courses = (isset($courses[0])) ? count($courses) : 0;
         endif;
-
         $com['id'] = $company->ID;
         $com['name'] = $name;
+        $com['logo'] = get_field('company_logo',$company->ID) ? :get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
         $date = $company->post_date;
         $days = explode(' ', $date)[0];
         $year = explode('-', $days)[0];
@@ -4259,6 +4391,7 @@ function detail_company($data)
     endif;
 
     $info_company['id'] = $company->ID;
+    $info_company['name'] = $company->post_title;
     $info_company['logo'] = get_field('company_logo',$id_company)?:get_stylesheet_directory_uri() . '/img/liggeey-logo-bis.png';
     $info_company['email'] = get_field('company_email', $id_company) ? : 'contact@livelearn.nl';
     $info_company['country'] = get_field('company_country',$id_company) ? : '';
@@ -4273,7 +4406,6 @@ function detail_company($data)
             'company' => $info_company,
         ),200 );
 }
-
 function update_image_course($data)
 {
     $id_course = $data['id'];
@@ -4305,4 +4437,300 @@ function update_image_course($data)
             'message' => 'course updated',
             'course'=>$course
         ),200 );
+}
+
+function detail_expert($data)
+{
+    $id_expert = $data['id'];
+    $expert_initial = get_user_by('ID', $id_expert);
+    if (!$expert_initial)
+        return new WP_REST_Response(
+            array(
+                'message' => 'Expert not exist maybe not correct !!!',
+            ),401 );
+
+    $expert = $expert_initial->data;
+    unset($expert->user_pass);
+    $args_courses = array(
+        'post_type' => array('post','course'),
+        'posts_per_page' => -1,
+        'orderby' => 'date',
+        'order'   => 'DESC',
+        'author' => $id_expert,
+    );
+    $courses = get_posts($args_courses);
+    $all_courses = array();
+    foreach ($courses as $course) {
+        if ($course->post_author!=$id_expert)
+            continue;
+
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        $author = get_user_by( 'ID', $course -> post_author  );
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course-> author = new Expert ($author , $author_img);
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = '';
+        $preview = get_field('preview', $course->ID);
+        if ($preview)
+            $image = $preview['url'];
+
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image && $course->courseType)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
+
+        $all_courses[] = new Course($course);
+    }
+    $note_skilles = array();
+    $skill_notes = get_field('skills', 'user_' . $id_expert);
+
+    if ($skill_notes) {
+        $total_notes = array_sum(array_column($skill_notes, 'note'));
+        foreach ($skill_notes as $skill_note) {
+            $note_skilles[] = array(
+                'id' => $skill_note['id'],
+                'name' => get_the_category_by_ID($skill_note['id']),
+                'note' => $skill_note['note'],
+                'percentage' => intval((intval($skill_note['note']) / $total_notes) * 100),
+                //'image' => get_term_meta($skill_note, 'image_field_key', true),
+            );
+        }
+    }
+    usort($note_skilles, function($a, $b) {
+        return $b['percentage'] <=> $a['percentage'];
+    });
+
+    $expert->image = get_field('profile_img','user_'.$expert->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+    $expert->overview = [
+        'about'=>get_field('biographical_info',  'user_' . $expert->ID)?:"This paragraph is dedicated to expressing skills what I have been able to acquire during professional experience. <br>Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.",
+        'telephone'=>get_field('telnr',  'user_' . $expert->ID)?:'', //telnr
+        'email'=>$expert->user_email?:'',
+        'country'=>get_field('country',  'user_' . $expert->ID) ? : ''
+    ];
+    $reviews = get_field('user_reviews',  'user_' . $expert->ID) ? :[];
+    $goodReviews = array();
+    if ($reviews)
+        foreach ($reviews as $review) {
+            $rev = array();
+            $user = $review['user'];
+            $user->data->image = get_field('profile_img',  'user_' . $user->ID) ? : get_stylesheet_directory_uri() . '/img/user.png';
+            unset($user->data->user_pass);
+            $user->data->role = get_field('role','user_' . $user->ID) ? : "";
+            $rev['user'] = $user->data;
+            $rev['rating'] = $review['rating'];
+            $rev['feedback'] = $review['feedback'];
+
+            $goodReviews[] = $rev;
+        }
+    $expert->courses = $all_courses;
+    $expert->skills = $note_skilles;
+    $expert->reviews = $goodReviews;
+    return new WP_REST_Response(
+        array(
+            'expert' => $expert,
+        ),200 );
+}
+function addReveiewUser($data)
+{
+    $id_user = $data['id'];
+    $initial_review = get_field('user_reviews', 'user_' . $id_user);
+    $review = array();
+    if ($initial_review)
+        foreach ($initial_review as $item) {
+            $review [] = array(
+                'user'=>$item['user']->ID,
+                'rating'=>$item['rating'],
+                'feedback'=>$item['feedback']
+            );
+        }
+    //$review_user = $data['review_user'];
+    $review_user = [
+        'user'=>$data['user'],
+        'rating'=>$data['rating'],
+        'feedback'=>$data['feedback']
+    ];
+    if (!empty($review))
+        $review_user = array_merge([$review_user],$review);
+    if (empty($initial_review))
+        $review_user = array($review_user);
+    update_field('user_reviews', $review_user, 'user_' . $id_user);
+
+    return new WP_REST_Response(
+        array(
+            //'review'=>$review_user,
+            'message' =>'review adding successfully !',
+            'all_review' => get_field('user_reviews', 'user_' . $id_user)?:[],
+            //'all_review' =>$review_user
+        ),201 );
+}
+function get_code_loket($data)
+{
+    $client_id = $data['client_id']; //ThirdPartiesTestClient
+    $client_secret = $data['client_secret'];
+    $redirect = "https://livelearn.nl";
+    /*
+    $baseurl  =  'https://oauth.loket-acc.nl';
+    $redirect = get_site_url()."/dashboard/company/people/";
+    $status = rand(1000,9999);
+    $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
+    // header("Location: $url");
+    $tokenUrlProd = "https://oauth.loket.nl/token";
+    $tokenUrlAccept = "https://oauth.loket-acc.nl/token";
+    */
+    $tokenUrl = "https://oauth.loket-acc.nl/token";
+    $state = rand(1000,9999);
+    $url_redirect = "https://oauth.loket-acc.nl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$state";
+    //header('location :'.$url_redirect);
+
+    return new WP_REST_Response( array(
+        'url' => $url_redirect,
+        )
+    );
+
+}
+
+function get_employee_loket($data)
+{
+    $code = $data['code'];
+    $client_id = $data['client_id']; //ThirdPartiesTestClient
+    $client_secret = $data['client_secret'];
+    $redirect = $data['redirect'];
+
+    $user_connected = wp_get_current_user();
+    if (!$user_connected)
+        return new WP_REST_Response( array(
+            'message' =>'you need to connecte !!!'
+        ));
+
+    $company = get_field('company',  'user_' . $user_connected->ID);
+    if(!empty($company))
+        $company_connected = $company[0]->post_title;
+
+    $grant_type = "authorization_code";
+    // URL endpoint to get token
+    $token_url = "https://oauth.loket-acc.nl";
+    // Corps de la demande POST
+    $body = http_build_query(array(
+        'code' => $code,
+        'client_id' => $client_id,
+        'client_secret' => $client_secret,
+        'redirect_uri' => $redirect,
+        'grant_type' => $grant_type
+    ));
+    // header of POST request
+    $headers = array(
+        'Content-Type: application/x-www-form-urlencoded',
+        'Content-Length: ' . strlen($body)
+    );
+    $options = array(
+        'http' => array(
+            'method' => 'POST',
+            'header' => implode("\r\n", $headers),
+            'content' => $body
+        )
+    );
+    $context = stream_context_create($options);
+    //POST request
+    $response = file_get_contents($token_url."/token", false, $context);
+    $data = json_decode($response, true); // token getted
+
+    $token = $data['access_token'];
+
+    // id company
+    $url_employees="https://api.loket-acc.nl/v2/providers/employers";
+    $options = array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => "Authorization: Bearer $token\r\n" .
+                "Content-Type: application/json\r\n"
+        )
+    );
+    $context = stream_context_create($options);
+    $response = file_get_contents($url_employees, false, $context);
+
+    $json_data = json_decode($response, true);
+    if ($json_data) {
+        $embedded = $json_data['_embedded'];
+        $id_entreprise = $embedded[0]['id'];
+        update_field('id_company_loket',$id_entreprise,$company_connected->ID);
+        // var_dump("id de l'entreprise : $id_entreprise");
+        //get list of all employee
+        $list = "https://api.loket-acc.nl/v2/providers/employers/$id_entreprise/employees";
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
+                    "Authorization: Bearer $token\r\n",
+                'method' => 'GET'
+            )
+        );
+        $context = stream_context_create($options);
+        $liste_employees = file_get_contents($list, false, $context);
+        $list_of_all_employees = array();
+
+        if ($liste_employees) {
+            $empl=json_decode($liste_employees,true);
+            foreach ($empl['_embedded'] as $key => $employee) {
+                $tab = [];
+                $tab['firstName'] = $employee['personalDetails']['firstName'];
+                $tab['lastName'] = $employee['personalDetails']['lastName'];
+                $tab['dateOfBirth'] = $employee['personalDetails']['dateOfBirth'];
+                $tab['aowDate'] = $employee['personalDetails']['aowDate'];
+                $tab['photo'] = $employee['personalDetails']['photo'];
+                $tab['phoneNumber'] = $employee['contactInformation']['phoneNumber'];
+                $tab['mobilePhoneNumber'] = $employee['contactInformation']['mobilePhoneNumber'];
+                $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
+                $tab['street'] = $employee['address']['street'];
+                $tab['city'] = $employee['address']['city'];
+                $list_of_all_employees[] = $tab;
+            }
+        }
+    }
+    else {
+
+    }
+
+    return new WP_REST_Response( array(
+       'token' =>$token,
+       'code' =>$code,
+       'employees' =>$list_of_all_employees,
+    ));
+}
+
+function get_employees_polaris($data)
+{
+    $login = $data['login'];
+    $password = $data['password'];
+    $required_parameters = ['login','password'];
+    $errors = validated($required_parameters, $data);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(401);
+        return $response;
+    endif;
+    $url = "https://login.bcs.nl/API/RestService/export?Connector=aqMedewerker_test";
+    $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if (!$response)
+        return new WP_REST_Response(array(
+            'employees' =>[]
+        ));
+
+    $employeesObject = simplexml_load_string($response);
+    $employees = json_decode(json_encode($employeesObject), true);
+
+    return new WP_REST_Response( array(
+        'employees' =>  $employees['Regel']
+    ));
 }
