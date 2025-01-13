@@ -2964,8 +2964,9 @@ function detailsPeopleSkillsPassport($data){
     else
         $progress_courses['not_started'] = 100;
 
-// Most popular
-    $most_popular = array_count_values($enrolled_all_courses);
+    // Most popular
+    // $most_popular = array_count_values($enrolled_all_courses);
+    $most_popular = array_count_values($course_finished); //changed by lightbird
     arsort($most_popular);
     $most_popular = array_keys($most_popular);
     $args = array(
