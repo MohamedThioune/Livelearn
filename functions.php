@@ -2821,11 +2821,6 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'get_code_loket'
     ));
-    register_rest_route ('custom/v1', 'loket/token', array(
-        'methods' => 'GET',
-        'callback' => 'getAccessToken'
-    ));
-
     register_rest_route ('custom/v1', 'polaris/employees', array(
         'methods' => 'POST',
         'callback' => 'get_employees_polaris'

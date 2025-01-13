@@ -1,6 +1,5 @@
 <?php
 global $wpdb;
-require('templates/mail-notification-invitation.php');
 
 function RandomStringBis(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -1684,7 +1683,7 @@ function statistic_company($data)
     $company[0]->company_image = $image;
 
     $user_connected = get_user_by('ID', $current_user)->data;
-    $user_connected->roles = $u->roles;
+    $user_connected->roles = array_values($u->roles);
     $user_connected->member_sice = date('Y',strtotime($user_connected->user_registered));
     $user_connected->user_company = $company[0];
     unset($user_connected->user_pass);
@@ -1751,7 +1750,7 @@ function statistic_company($data)
         'author__in'=>$numbers,
         'orderby' => 'date',
         'order' => 'DESC',
-        'numberposts' => 500,
+        'numberposts' => -1,
     );
     $total_courses = count(get_posts($args));
     /*****************************************************/
@@ -1798,85 +1797,11 @@ function statistic_company($data)
         $assessment_not_started = intval(($not_started_assessment / $count_assessments) * 100);
         $assessment_completed = intval(($assessment_validated / $count_assessments) * 100);
     }
-
     /* Members course */
-    $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'author__in' => $numbers,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'numberposts' => 500,
-    );
-
-    $member_courses = get_posts($args);
-    $member_courses_id = array_column($member_courses, 'ID');
-
-    $enrolled_all_courses = array();
-    $args = array(
-        'post_status' => array('wc-processing', 'wc-completed'),
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'limit' => 500,
-    );
-    $bunch_orders = wc_get_orders($args);
-    // $bunch_orders = array();
-    $course_finished = array();
-    $enrolled = array();
-    $enrolled_courses = array();
     $progressions = array();
-    foreach($bunch_orders as $order){
-        foreach ($order->get_items() as $item_id => $item ) {
-            //Get woo orders from user
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
+    $enrolled_courses = list_orders($current_user)['ids'];
+    $enrolled_all_courses = $enrolled_courses;
 
-            $prijs = get_field('price', $course_id);
-            $budget_spent += $prijs;
-            if(in_array($course_id, $member_courses_id)){
-                array_push($enrolled_all_courses, $course_id);
-                if(!in_array($course_id, $enrolled)){
-                    array_push($enrolled, $course_id);
-                    array_push($enrolled_courses, $course);
-                    //Get progresssion this course
-                    $args = array(
-                        'post_type' => 'progression',
-                        'title' => $course->post_name,
-                        'post_status' => 'publish',
-                        //'posts_per_page'         => -1,
-                        'numberposts' => 500,
-                        'no_found_rows'          => true,
-                        'ignore_sticky_posts'    => true,
-                        'update_post_term_cache' => false,
-                        'update_post_meta_cache' => false
-                    );
-                    $progressions = get_posts($args);
-                    if(!empty($progressions))
-                        foreach ($progressions as $progression) {
-                            $status = "in_progress";
-                            $progression_id = $progression->ID;
-                            //Finish read
-                            $is_finish = get_field('state_actual', $progression_id);
-                            if($is_finish)
-                                $status = "done";
-
-                            switch ($status) {
-
-                                case 'in_progress':
-                                    $progress_courses['in_progress'] += 1;
-                                    break;
-
-                                case 'done':
-                                    $progress_courses['done'] += 1;
-                                    //course finished
-                                    array_push($course_finished, $course->ID);
-                                    break;
-                            }
-                        }
-                }
-            }
-        }
-    }
     $count_enrolled_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
     $progress_courses['not_started'] = abs($count_enrolled_courses - ($progress_courses['in_progress'] + $progress_courses['done']));
     if($count_enrolled_courses > 0){
@@ -1888,36 +1813,6 @@ function statistic_company($data)
     // Most popular
     $most_popular = array_count_values($enrolled_all_courses);
     arsort($most_popular);
-    /*
-        $args = array(
-            'post_type' => array('course','post'),
-            //'posts_per_page' => -1,
-            'numberposts' => 250,
-            'orderby' => 'post_date',
-            'order' => 'DESC',
-            'post__in'=>$topic_views
-            //'include' => $most_popular,
-            //'author'=>$current_user
-        );
-        $most_popular_course = get_posts($args);
-        */
-    /*
-    $popular_course = array();
-    foreach ($most_popular_course as $course){
-        $postType = get_field('course_type',$course->ID);
-
-        $author = get_user_by('ID', $course->post_author);
-        $course->in_progress = $progress_courses['in_progress'];
-        $course->done = $progress_courses['done'];
-        $course->not_started = $progress_courses['not_started'];
-        if ($author)
-            $course->instructor = $author ? $author->data->display_name : $author->data->user_email;
-        $course->price = get_field('price',$course->ID) ? : 'Gratis';
-        $course->post_type = $postType;
-
-        $popular_course[] = $course;
-    }
-    */
     if ($course_views) {
         usort($course_views, function($a, $b) {
             return (int) $b->occurence - (int) $a->occurence;
@@ -1961,7 +1856,6 @@ function statistic_company($data)
                                 break;
                         }
                     }
-
                 $course->in_progress = $course_in_progress;
                 $course->done = $course_done;
                 $course->not_started = $course_not_started;
@@ -2132,75 +2026,8 @@ function statistic_individual($data)
 
     /*****************************************************/
     /* Members course */
-    $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'author__in' => $numbers,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        //'posts_per_page' => -1,
-        //'numberposts' => 1000,
-    );
-    $member_courses = get_posts($args);
-    $member_courses_id = array_column($member_courses, 'ID');
-    $enrolled = array();
     $budget_spent = 0;
-    $enrolled_courses = array();
-
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
-    $enrolled = array();
-    $enrolled_courses = array();
-    foreach($bunch_orders as $order){
-        foreach ($order->get_items() as $item_id => $item ) {
-            //Get woo orders from user
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
-
-            $prijs = get_field('price', $course_id);
-            $budget_spent += $prijs;
-            if(in_array($course_id, $member_courses_id)){
-                array_push($enrolled_all_courses, $course_id);
-                if(!in_array($course_id, $enrolled)){
-                    array_push($enrolled, $course_id);
-                    array_push($enrolled_courses, $course);
-                    //Get progresssion this course
-                    $args = array(
-                        'post_type' => 'progression',
-                        'title' => $course->post_name,
-                        'post_status' => 'publish',
-                        //'posts_per_page'         => -1,
-                        'numberposts' => 500,
-                        'no_found_rows'          => true,
-                        'ignore_sticky_posts'    => true,
-                        'update_post_term_cache' => false,
-                        'update_post_meta_cache' => false
-                    );
-                    $progressions = get_posts($args);
-                    if(!empty($progressions))
-                        foreach ($progressions as $progression) {
-                            $status = "in_progress";
-                            $progression_id = $progression->ID;
-                            //Finish read
-                            $is_finish = get_field('state_actual', $progression_id);
-                            if($is_finish)
-                                $status = "done";
-
-                            switch ($status) {
-                                case 'in_progress':
-                                    $progress_courses['in_progress'] += 1;
-                                    break;
-                                case 'done':
-                                    $progress_courses['done'] += 1;
-                                    //course finished
-                                    array_push($course_finished, $course->ID);
-                                    break;
-                            }
-                        }
-                }
-            }
-        }
-    }
+    $enrolled_courses = list_orders($current_user)['ids'];
     $count_enrolled_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
     $progress_courses['not_started'] = abs($count_enrolled_courses - ($progress_courses['in_progress'] + $progress_courses['done']));
     if($count_enrolled_courses > 0){
@@ -2405,59 +2232,6 @@ function statistic_team($data)
         $subtopic['image'] = $image_topic ?  : get_stylesheet_directory_uri() . '/img/placeholder.png';
         $most_topics_view[] = $subtopic;
     }
-    $bunch_orders = wc_get_orders($args);
-    //$bunch_orders = array();
-    $enrolled = array();
-    $enrolled_courses = array();
-    foreach($bunch_orders as $order)
-        foreach ($order->get_items() as $item ) {
-            //Get woo orders from user
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
-
-            $prijs = get_field('price', $course_id);
-            $budget_spent += $prijs;
-            if(in_array($course_id, $member_courses_id)){
-                array_push($enrolled_all_courses, $course_id);
-                if(!in_array($course_id, $enrolled)){
-                    array_push($enrolled, $course_id);
-                    array_push($enrolled_courses, $course);
-                    //Get progresssion this course
-                    $args = array(
-                        'post_type' => 'progression',
-                        'title' => $course->post_name,
-                        'post_status' => 'publish',
-                        //'posts_per_page'         => -1,
-                        'numberposts' => 500,
-                        'no_found_rows'          => true,
-                        'ignore_sticky_posts'    => true,
-                        'update_post_term_cache' => false,
-                        'update_post_meta_cache' => false
-                    );
-                    $progressions = get_posts($args);
-                    if(!empty($progressions))
-                        foreach ($progressions as $progression) {
-                            $status = "in_progress";
-                            $progression_id = $progression->ID;
-                            //Finish read
-                            $is_finish = get_field('state_actual', $progression_id);
-                            if($is_finish)
-                                $status = "done";
-
-                            switch ($status) {
-                                case 'in_progress':
-                                    $progress_courses['in_progress'] += 1;
-                                    break;
-                                case 'done':
-                                    $progress_courses['done'] += 1;
-                                    //course finished
-                                    array_push($course_finished, $course->ID);
-                                    break;
-                            }
-                        }
-                }
-            }
-        }
 
     $args = array(
         'post_type' => array('course','post'),
@@ -2505,7 +2279,6 @@ function statistic_team($data)
             'Nov'=>get_number_of_month('Nov'),
             'Dec'=>get_number_of_month('Dec'),
         ),
-
         'mobile' => array(
             'Jan'=>get_number_of_month('Jan','mobile'),
             'Feb'=>get_number_of_month('Feb','mobile'),
@@ -3177,77 +2950,10 @@ function detailsPeopleSkillsPassport($data){
 
     //Orders - enrolled courses
     $budget_spent = 0;
-    $args = array(
-        'customer_id' => $id_user,
-        'post_status' => array('wc-processing', 'wc-completed'),
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'limit' => -1,
-    );
-    //$bunch_orders = wc_get_orders($args);
-    $bunch_orders = array();
-    $enrolled = array();
-    $enrolled_courses = array();
-    $course_finished = array();
-    foreach($bunch_orders as $order){
-        foreach ($order->get_items() as $item_id => $item ) {
-            $progressions = array();
 
-            //Get woo orders from user
-            $course_id = intval($item->get_product_id()) - 1;
-            $course = get_post($course_id);
+    $enrolled_courses = list_orders($id_user)['ids'];
+    $course_finished = $enrolled_courses;
 
-            $prijs = get_field('price', $course_id);
-            $budget_spent += $prijs;
-            // array_push($enrolled_all_courses, $course_id);
-            if(!in_array($course_id, $enrolled)){
-                array_push($enrolled, $course_id);
-                array_push($enrolled_courses, $course);
-                //Get progresssion this course
-                $args = array(
-                    'post_type' => 'progression',
-                    'title' => $course->post_name,
-                    'post_status' => 'publish',
-                    'author' => $id_user,
-                    'posts_per_page'         => 1,
-                    'no_found_rows'          => true,
-                    'ignore_sticky_posts'    => true,
-                    'update_post_term_cache' => false,
-                    'update_post_meta_cache' => false
-                );
-                $progressions = get_posts($args);
-                $status = "new";
-                if(!empty($progressions)){
-                    $status = "in_progress";
-                    $progression_id = $progressions[0]->ID;
-                    //Finish read
-                    $is_finish = get_field('state_actual', $progression_id);
-                    if($is_finish) {
-                        $status = "done";
-                        $count_mandatory_done += 1;
-                        $pourcentage = 100;
-                    }
-                }
-                switch ($status) {
-
-                    case 'new':
-                        $progress_courses['not_started'] += 1;
-                        break;
-
-                    case 'in_progress':
-                        $progress_courses['in_progress'] += 1;
-                        break;
-
-                    case 'done':
-                        $progress_courses['done'] += 1;
-                        //course finished
-                        array_push($course_finished, $course->ID);
-                        break;
-                }
-
-            }
-        }
-    }
     $count_enrolled_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
     $progress_courses['not_started'] = $count_enrolled_courses - ($progress_courses['in_progress'] + $progress_courses['done']);
     if($count_enrolled_courses > 0){
@@ -4623,40 +4329,6 @@ function get_code_loket($data)
     );
 
 }
-function getAccessToken($clientId='TestClient', $clientSecret='435n350492834j234928423j4') {
-    $url = 'https://auth.loket.nl/token';
-    $url = 'https://oauth.loket-acc.nl';
-
-    $data = [
-        'grant_type' => 'client_credentials',
-        'client_id' => $clientId,
-        'client_secret' => $clientSecret,
-    ];
-
-    $options = [
-        'http' => [
-            'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ],
-    ];
-
-    $context  = stream_context_create($options);
-    $result = file_get_contents($url, false, $context);
-
-    if (!$result)
-        return new WP_REST_Response([
-                'error'=>'Error retrieving access token.'
-            ],401);
-
-
-    $response = json_decode($result, true);
-    return new WP_REST_Response(array(
-        'token'=>$response['access_token']
-    ),200);
-    //return $response['access_token'];
-}
-
 
 function get_employee_loket($data)
 {
