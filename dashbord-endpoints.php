@@ -3548,6 +3548,12 @@ function updateCoursesByTeacher(WP_REST_Request $data)
             foreach ($categories_exist as $category) {
                 $categories_ids[] = $category->term_id;
             }
+        //
+        $categories_taxonomies = [];
+        foreach ($categories as $category) {
+            $categories_taxonomies[] = get_term($category);
+        }
+        //
         // merge
         $cats = array_merge($categories,$categories_ids);
 
@@ -3563,9 +3569,10 @@ function updateCoursesByTeacher(WP_REST_Request $data)
         $isCourseUpdated = true;
         /*
         return new WP_REST_Response([
-            'cat_input' => $categories,
-            'categories_ids_exist old'=>$categories_ids, // 319, 420
+            'cat_input' => $categories_taxonomies,
+            'categories_ids_exist old'=>$categories_exist,
             'array_merge' =>$cats,
+            'course' =>$course->categories
         ]);
         */
     }
