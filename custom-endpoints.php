@@ -163,15 +163,14 @@ class Badge
 function sendFirebasePushNotification(WP_REST_Request $request) {
   $title = $request['title'] ?? "";
   $body = $request['body'] ?? "";
-  $current_user = wp_get_current_user();
-  
+  $current_user_id = $GLOBALS['user_id'];
   // Vérifier que l'utilisateur est connecté
-  if (!$current_user || !$current_user->ID) {
+  if (!$current_user_id) {
       return new WP_Error('user_not_logged_in', 'Utilisateur non connecté.', ['status' => 401]);
   }
 
   // Récupérer le token de l'utilisateur
-  $token = get_field('smartphone_token', 'user_' . $current_user->ID);
+  $token = get_field('smartphone_token', 'user_' . $current_user_id);
   if (!$token) {
       return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
   }
