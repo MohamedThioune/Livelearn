@@ -1195,7 +1195,7 @@ function recommended_course($data)
         $visibility_company = $company_visibility[0]->post_title;
 
     //Recommendation courses
-    $infos = recommendation($user, 500, 25);
+    $infos = recommendation($user, null, 75);
     $recommended_courses = $infos['recommended'];
     //$teachers = $infos['teachers'];
 
