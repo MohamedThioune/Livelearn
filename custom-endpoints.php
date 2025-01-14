@@ -7253,31 +7253,6 @@ function delete_assessment(WP_REST_Request $request) {
 }
 
 
-function archive_assessment(WP_REST_Request $request) {
-  global $wpdb;
-
-  $data = $request->get_json_params();
-
-  if (empty($data['assessment_id'])) {
-      return new WP_Error('missing_data', 'Assessment ID is required', array('status' => 400));
-  }
-
-  $assessment_id = (int) $data['assessment_id'];
-
-  $result = $wpdb->update(
-      $wpdb->prefix . 'assessments',
-      array('is_enabled' => 0, 'updatedAt' => current_time('mysql', true)),
-      array('id' => $assessment_id),
-      array('%d', '%s'),
-      array('%d')
-  );
-
-  if ($result === false) {
-      return new WP_Error('db_error', 'Failed to archive assessment', array('status' => 500));
-  }
-
-  return rest_ensure_response(array('message' => 'Assessment archived successfully'));
-}
 
 function list_archived_assessments() 
 {
@@ -7940,6 +7915,55 @@ function get_assessment_details(WP_REST_Request $request) {
 
   return rest_ensure_response($assessment);
 }
+
+function archive_assessment(WP_REST_Request $request) {
+  global $wpdb;
+
+  // Récupérer l'ID de l'assessment
+  $assessment_id = $request['assessment_id'];
+  
+  if (empty($assessment_id) || !is_numeric($assessment_id)) {
+      return rest_ensure_response(['message' => 'Invalid assessment ID.'], 400);
+  }
+
+  // Récupérer la valeur actuelle de 'is_enabled'
+  $current_status = $wpdb->get_var(
+      $wpdb->prepare(
+          "SELECT is_enabled FROM {$wpdb->prefix}assessments WHERE id = %d",
+          $assessment_id
+      )
+  );
+
+  // Vérifier si l'assessment existe
+  if ($current_status === null) {
+      return rest_ensure_response(['message' => 'Assessment not found.'], 404);
+  }
+
+  // Modifie is_enabled par le contraire de sa valeur
+  $new_status = ($current_status == 1) ? 0 : 1;
+
+  // Mettre à jour la valeur de 'is_enabled' dans la base de données
+  $updated = $wpdb->update(
+      "{$wpdb->prefix}assessments",
+      ['is_enabled' => $new_status], // Colonnes à mettre à jour
+      ['id' => $assessment_id],      // Condition WHERE
+      ['%d'],                        // Format des colonnes
+      ['%d']                         // Format de la condition
+  );
+
+  // Vérifier si l'update a réussi
+  if ($updated === false) {
+      return rest_ensure_response(['message' => 'Failed to toggle is_enabled status.'], 500);
+  }
+
+  // Retourner la nouvelle valeur
+  return rest_ensure_response([
+      'message' => 'is_enabled status updated successfully.',
+      'assessment_id' => $assessment_id,
+      'new_is_enabled' => $new_status
+  ]);
+}
+
 
 
 
