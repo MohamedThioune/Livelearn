@@ -160,9 +160,90 @@ class Badge
 //Push notifications
 
 
-function sendFirebasePushNotification(WP_REST_Request $request) {
-  $title = $request['title'] ?? "";
-  $body = $request['body'] ?? "";
+// function sendFirebasePushNotification(WP_REST_Request $request) {
+//   $title = $request['title'] ?? "";
+//   $body = $request['body'] ?? "";
+//   $current_user_id = $GLOBALS['user_id'];
+//   // Vérifier que l'utilisateur est connecté
+//   if (!$current_user_id) {
+//       return new WP_Error('user_not_logged_in', 'Utilisateur non connecté.', ['status' => 401]);
+//   }
+
+//   // Récupérer le token de l'utilisateur
+//   $token = get_field('smartphone_token', 'user_' . $current_user_id);
+//   if (!$token) {
+//       return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
+//   }
+
+//   // Clé serveur Firebase
+//   $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
+
+//   // Données de la notification
+//   $data = [
+//       'to' => $token,
+//       'notification' => [
+//           'title' => $title,
+//           'body' => $body,
+//       ],
+//   ];
+
+//   $dataString = json_encode($data);
+
+//   // En-têtes HTTP
+//   $headers = [
+//       'Authorization: ' . $serverKey,
+//       'Content-Type: application/json',
+//   ];
+
+//   // URL de l'API FCM
+//   $url = 'https://fcm.googleapis.com/fcm/send';
+
+//   // Initialiser CURL
+//   $ch = curl_init();
+//   curl_setopt($ch, CURLOPT_URL, $url);
+//   curl_setopt($ch, CURLOPT_POST, true);
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//   curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+//   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+//   curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+//   // Exécuter la requête
+//   $response = curl_exec($ch);
+
+//   // Vérification des erreurs CURL
+//   if ($response === false) {
+//       $error_msg = curl_error($ch);
+//       curl_close($ch);
+//       return new WP_Error('curl_error', 'Erreur CURL : ' . $error_msg, ['status' => 500]);
+//   }
+
+//   // Vérification du code de réponse HTTP
+//   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//   curl_close($ch);
+
+//   if ($httpCode >= 200 && $httpCode < 300) {
+//       // Succès
+//       return json_decode($response, true);
+//   } else {
+//       // Erreur de l'API Firebase
+//       return new WP_Error(
+//           'firebase_error',
+//           'Erreur lors de l\'envoi de la notification. Code HTTP : ' . $httpCode,
+//           [
+//               'status' => $httpCode,
+//               'response' => json_decode($response, true)
+//           ]
+//       );
+//   }
+// }
+
+function sendPushNotificationFirebase(WP_REST_Request $request) {
+  // Chemin vers le fichier JSON de la clé de service Firebase
+  $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
+  $title = $request['title'] ?? "test";
+  $body = $request['body'] ?? "test";
+  $data = $request['data'] ?? [];
   $current_user_id = $GLOBALS['user_id'];
   // Vérifier que l'utilisateur est connecté
   if (!$current_user_id) {
@@ -170,72 +251,74 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
   }
 
   // Récupérer le token de l'utilisateur
-  $token = get_field('smartphone_token', 'user_' . $current_user_id);
-  if (!$token) {
+  $deviceToken = get_field('smartphone_token', 'user_' . $current_user_id);
+  if (!$deviceToken) {
       return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
   }
+  // Générer un jeton d'accès
+  $jwt = json_decode(file_get_contents($serviceAccountFile), true);
+  $clientEmail = $jwt['client_email'];
+  $privateKey = $jwt['private_key'];
 
-  // Clé serveur Firebase
-  $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
+  // Créer un jeton JWT pour l'authentification
+  $nowSeconds = time();
+  $token = [
+      "iss" => $clientEmail,
+      "sub" => $clientEmail,
+      "aud" => "https://oauth2.googleapis.com/token",
+      "iat" => $nowSeconds,
+      "exp" => $nowSeconds + 3600,
+      "scope" => "https://www.googleapis.com/auth/firebase.messaging"
+  ];
 
-  // Données de la notification
-  $data = [
-      'to' => $token,
-      'notification' => [
-          'title' => $title,
-          'body' => $body,
+  // Encodage JWT
+  $header = base64_encode(json_encode(["alg" => "RS256", "typ" => "JWT"]));
+  $payload = base64_encode(json_encode($token));
+  $signature = hash_hmac('sha256', "$header.$payload", $privateKey, true);
+  $jwtToken = "$header.$payload." . base64_encode($signature);
+
+  // Obtenir un jeton d'accès
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "https://oauth2.googleapis.com/token");
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+      "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      "assertion" => $jwtToken,
+  ]));
+
+  $response = curl_exec($ch);
+  curl_close($ch);
+  $accessToken = json_decode($response, true)['access_token'];
+
+  // Préparer la requête à l'API FCM
+  $url = "https://fcm.googleapis.com/v1/projects/livelearn-359911/messages:send";
+  $payload = [
+      "message" => [
+          "token" => $deviceToken,
+          "notification" => [
+              "title" => $title,
+              "body" => $body,
+          ],
+          "data" => $data,
       ],
   ];
 
-  $dataString = json_encode($data);
-
-  // En-têtes HTTP
-  $headers = [
-      'Authorization: ' . $serverKey,
-      'Content-Type: application/json',
-  ];
-
-  // URL de l'API FCM
-  $url = 'https://fcm.googleapis.com/fcm/send';
-
-  // Initialiser CURL
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, [
+      "Authorization: Bearer $accessToken",
+      "Content-Type: application/json",
+  ]);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
-  // Exécuter la requête
-  $response = curl_exec($ch);
-
-  // Vérification des erreurs CURL
-  if ($response === false) {
-      $error_msg = curl_error($ch);
-      curl_close($ch);
-      return new WP_Error('curl_error', 'Erreur CURL : ' . $error_msg, ['status' => 500]);
-  }
-
-  // Vérification du code de réponse HTTP
-  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  $result = curl_exec($ch);
   curl_close($ch);
 
-  if ($httpCode >= 200 && $httpCode < 300) {
-      // Succès
-      return json_decode($response, true);
-  } else {
-      // Erreur de l'API Firebase
-      return new WP_Error(
-          'firebase_error',
-          'Erreur lors de l\'envoi de la notification. Code HTTP : ' . $httpCode,
-          [
-              'status' => $httpCode,
-              'response' => json_decode($response, true)
-          ]
-      );
-  }
+  return $result;
 }
 
 
