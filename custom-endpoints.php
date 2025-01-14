@@ -241,11 +241,14 @@ class Badge
 function sendPushNotificationFirebase(WP_REST_Request $request) {
   // Chemin vers le fichier JSON de la clé de service Firebase
   $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
-  $title = $request['title'] ?? "test";
-  $body = $request['body'] ?? "test";
+  
+  // Titre, corps et données de la notification depuis la requête
+  $title = $request['title'] ?? 'Test';
+  $body = $request['body'] ?? 'Test';
   $data = $request['data'] ?? [];
-  $current_user_id = $GLOBALS['user_id'];
-  // Vérifier que l'utilisateur est connecté
+  
+  // Récupérer l'ID de l'utilisateur actuel
+  $current_user_id = get_current_user_id();
   if (!$current_user_id) {
       return new WP_Error('user_not_logged_in', 'Utilisateur non connecté.', ['status' => 401]);
   }
@@ -255,12 +258,17 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
   if (!$deviceToken) {
       return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
   }
-  // Générer un jeton d'accès
+
+  // Charger le fichier JSON de la clé de service
+  if (!file_exists($serviceAccountFile)) {
+      return new WP_Error('service_account_missing', 'Fichier de clé de service introuvable.', ['status' => 500]);
+  }
+
   $jwt = json_decode(file_get_contents($serviceAccountFile), true);
   $clientEmail = $jwt['client_email'];
   $privateKey = $jwt['private_key'];
 
-  // Créer un jeton JWT pour l'authentification
+  // Génération du JWT pour l'authentification
   $nowSeconds = time();
   $token = [
       "iss" => $clientEmail,
@@ -271,13 +279,13 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
       "scope" => "https://www.googleapis.com/auth/firebase.messaging"
   ];
 
-  // Encodage JWT
   $header = base64_encode(json_encode(["alg" => "RS256", "typ" => "JWT"]));
   $payload = base64_encode(json_encode($token));
-  $signature = hash_hmac('sha256', "$header.$payload", $privateKey, true);
-  $jwtToken = "$header.$payload." . base64_encode($signature);
+  $headerPayload = "$header.$payload";
+  openssl_sign($headerPayload, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+  $jwtToken = "$headerPayload." . base64_encode($signature);
 
-  // Obtenir un jeton d'accès
+  // Obtenir un jeton d'accès OAuth 2
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, "https://oauth2.googleapis.com/token");
   curl_setopt($ch, CURLOPT_POST, true);
@@ -289,8 +297,20 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
   ]));
 
   $response = curl_exec($ch);
+  if (curl_errno($ch)) {
+      return new WP_Error('curl_error', curl_error($ch), ['status' => 500]);
+  }
   curl_close($ch);
-  $accessToken = json_decode($response, true)['access_token'];
+
+  $responseArray = json_decode($response, true);
+  if (isset($responseArray['error'])) {
+      return new WP_Error('auth_error', $responseArray['error']['message'], ['status' => 401]);
+  }
+
+  $accessToken = $responseArray['access_token'] ?? null;
+  if (!$accessToken) {
+      return new WP_Error('access_token_error', 'Jeton d\'accès introuvable.', ['status' => 401]);
+  }
 
   // Préparer la requête à l'API FCM
   $url = "https://fcm.googleapis.com/v1/projects/livelearn-359911/messages:send";
@@ -316,10 +336,20 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
   $result = curl_exec($ch);
+  if (curl_errno($ch)) {
+      return new WP_Error('curl_error', curl_error($ch), ['status' => 500]);
+  }
   curl_close($ch);
 
-  return $result;
+  $resultArray = json_decode($result, true);
+  if (isset($resultArray['error'])) {
+      return new WP_Error('fcm_error', $resultArray['error']['message'], ['status' => 500]);
+  }
+
+  return rest_ensure_response(['success' => true, 'response' => $resultArray]);
 }
+
+
 
 
 
