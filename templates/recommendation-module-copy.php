@@ -67,33 +67,18 @@ function recommendation($user, $globe = null, $limit = null) {
         )
     );
     $main_blogs = array();
-    $query_blogs = new WP_Query( $args );
-    //Filter with category(Followed + viewed) & preferential langage & author(Followed + viewed) 
     $args = array(
         'post_type' => array('post', 'course'),
         'tax_query' => $tax_query,
         'meta_key' => 'language',
         'meta_value' => $preferential_language,
-        'nopaging' => true,
-        'author__in'=> $postAuthorSearch
+        // 'author__in'=> $postAuthorSearch
     );
-    $query_blogs_author = new WP_Query( $args );
-    $main_blogs = isset($query_blogs_author->posts) ? $query_blogs_author->posts : []; 
+    $query_blogs = new WP_Query( $args );
+    $main_blogs = isset($query_blogs->posts) ? $query_blogs->posts : [];
 
-    if(count($main_blogs) < $limit): 
-    	//Filter only with category(Followed + viewed) & preferential langage
-    	$args = array(
-        	'post_type' => array('post', 'course'),
-        	'tax_query' => $tax_query,
-        	'meta_key' => 'language',
-        	'meta_value' => $preferential_language,
-        	'nopaging' => true
-    	);
-    	$query_blogs = new WP_Query( $args );
-	$main_blogs = isset($query_blogs->posts) ? $query_blogs->posts : [];
-    endif;
     shuffle($main_blogs);
-  
+
     //Recommended final
     $recommended_courses = array();
     $random_id = array();
