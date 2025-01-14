@@ -17,6 +17,7 @@ function recommendation($user, $globe = null, $limit = null) {
     $table_tracker_views = $wpdb->prefix . 'tracker_views';
 
     //Topics : followed
+    $topics = array();
     $topics_external = get_user_meta($user, 'topic');
     $topics_internal = get_user_meta($user, 'topic_affiliate');
     $topics = array();
@@ -33,83 +34,69 @@ function recommendation($user, $globe = null, $limit = null) {
     $postAuthorSearch = $experts;
     $teachers = array();
 
-    $globe = ($globe) ?: -1;
-    //Get all courses
-    $args = array(
-        'post_type' => array('course', 'post'),
-        'post_status' => 'publish',
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'posts_per_page' => $globe
-    );
-    $global_courses = get_posts($args);
-
-    shuffle($global_courses);
-
     //Get id experts viewed from db : postAuthorSearch
     $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'expert'");
     $all_expert_viewed = $wpdb->get_results($sql_request);
     if (!empty($user_post_view) || !empty($postAuthorSearch))
         $postAuthorSearch = (empty($all_expert_viewed)) ? $postAuthorSearch : array_merge(array_column($all_expert_viewed, 'data_id'), $postAuthorSearch);  
+    //Get experts followed
+    if(!empty($postAuthorSearch))
+        $postAuthorSearch = is_array($postAuthorSearch) ? array_merge($postAuthorSearch, $experts) : $postAuthorSearch;
+    else
+        $postAuthorSearch = $experts;
 
     // Get id categories viewed from db : categorySearch
     $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'topic' ");
     $category_user_views = $wpdb->get_results($sql_request);
     $categorySearch = array_column($category_user_views,'data_id');
+    //Get categories followed
+    if(!empty($categorySearch))
+        $categorySearch = is_array($categorySearch) ? array_merge($categorySearch, $topics) : $categorySearch;
+    else
+        $categorySearch = $topics;
 
+    //Preferential languages
+    $preferential_language = get_field('language_preferences', 'user_' . $user)  ?: 'en';
+
+    /** Global posts **/
+    $tax_query = array(
+        array(
+        "taxonomy" => "course_category",
+        "field"    => "term_id",
+        "terms"    => $categorySearch
+        )
+    );
+    $main_blogs = array();
+    $args = array(
+        'post_type' => array('post', 'course'),
+        'tax_query' => $tax_query,
+        'meta_key' => 'language',
+        'meta_value' => $preferential_language,
+        // 'author__in'=> $postAuthorSearch
+    );
+    $query_blogs = new WP_Query( $args );
+    $main_blogs = isset($query_blogs->posts) ? $query_blogs->posts : [];
+
+    shuffle($main_blogs);
+
+    //Recommended final
     $recommended_courses = array();
     $random_id = array();
-    $max_points = 10;
-    foreach ($global_courses as $key => $course) {
+    foreach ($main_blogs as $key => $course):
         $points = 0;
         //Course Type
         $courseType = get_field('course_type', $course->ID);
         $course->courseType = get_field('course_type', $course->ID);
 
-        //Read category course - get categories from course
-        $read_category_course = array();
-        $category_default = get_field('categories', $course->ID);
-        $category_xml = get_field('category_xml', $course->ID);
-        if(!empty($category_default))
-            foreach($category_default as $item)
-                if($item)
-                    if(!in_array($item['value'],$read_category_course))
-                        array_push($read_category_course, $item['value']);
-        else if(!empty($category_xml))
-            foreach($category_xml as $item)
-                if($item)
-                    if(!in_array($item['value'],$read_category_course))
-                        array_push($read_category_course, $item['value']);
-
         //Prijs course
         $prijs = get_field('price', $course->ID) ?: 0;
         $prijs = intval($prijs);
         $course->price = $prijs ? : "Gratis";
-
-        //Category pointer | followed 
-        foreach($topics as $topic_value):
-            if($points == 4)
-                break;
-            if(in_array($topic_value, $read_category_course) )
-                $points += 2;
-        endforeach;
-
-        //Category pointer | viewed 
-        foreach($categorySearch as $category_value):
-            if($points == 4)
-                break;
-            if(in_array($category_value, $read_category_course))
-                $points += 2;
-        endforeach;
-        //Author pointer  
-        if(!empty($postAuthorSearch))
-        if (in_array($course->post_author, $postAuthorSearch))
-            $points += 2;
         
+        //Image course
         $image = get_field('preview', $course->ID) ? : '';
         if ($image)
             $image = $image['url'];
-
         if(!$image){
             $image = get_the_post_thumbnail_url($course->ID);
             if(!$image)
@@ -119,26 +106,26 @@ function recommendation($user, $globe = null, $limit = null) {
         }
         $course->image = $image;
 
+        //Author course
         $author = get_userdata($course->post_author);
         if ($author) :
             $author->data->image = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
             $course->author = $author->data;
         endif;
 
-        //Evaluate score pointer of this course
-        $percent = abs(($points/$max_points) * 100);
-        if ($percent >= 50)
-            if(!in_array($course->ID, $random_id)){
-                if($courseType) {
-                    $count[$courseType]++;
-                    $course->courseType = $courseType;
-                }
-                array_push($random_id, $course->ID);
-                array_push($recommended_courses, $course);
-
-                if(!in_array($course->post_author, $teachers))
-                    array_push($teachers, $course->post_author);
+        if(!in_array($course->ID, $random_id)):
+            if($courseType) {
+                $count[$courseType]++;
+                $course->courseType = $courseType;
             }
+            array_push($random_id, $course->ID);
+            array_push($recommended_courses, $course);
+
+            if(!in_array($course->post_author, $teachers))
+                array_push($teachers, $course->post_author);
+        endif;
+
+        /** DATE */
         // courses with date
         $data = array();
         //$day = "-";
@@ -189,12 +176,13 @@ function recommendation($user, $globe = null, $limit = null) {
             }
         }
         /** END DATE */
+        
         if($limit):
             $count_recommended_course = count($recommended_courses);
             if($count_recommended_course == $limit)
                 break;
         endif;
-    }
+    endforeach;
     //Must be the end
 
     $count = ($count) ?: array();
@@ -223,5 +211,4 @@ function recommendation($user, $globe = null, $limit = null) {
     $infos['upcoming'] = $upcoming;
 
     return $infos;
-
 }
