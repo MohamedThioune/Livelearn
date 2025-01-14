@@ -56,7 +56,7 @@ function recommendation($user, $globe = null, $limit = null) {
         $categorySearch = $topics;
 
     //Preferential languages
-    $preferential_language = get_field('language_preferences', 'user_' . $user);
+    $preferential_language = get_field('language_preferences', 'user_' . $user)  ?: 'en';
 
     /** Global posts **/
     $tax_query = array(
@@ -71,7 +71,7 @@ function recommendation($user, $globe = null, $limit = null) {
         'post_type' => array('post', 'course'),
         'tax_query' => $tax_query,
         'meta_key' => 'language',
-        'meta_value' => $preferential_language ?? 'en',
+        'meta_value' => $preferential_language,
         // 'author__in'=> $postAuthorSearch
     );
     $query_blogs = new WP_Query( $args );
