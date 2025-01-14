@@ -6188,46 +6188,11 @@ endif;
 
           $enrolled = array();
           $enrolled_courses = array();
-
-          //Orders - enrolled courses  
-          $args = array(
-              'customer_id' => $user,
-              'post_status' => array('wc-processing', 'wc-completed'),
-              'orderby' => 'date',
-              'order' => 'DESC',
-              'limit' => -1,
-          );
-          $bunch_orders = wc_get_orders($args);
-
-          foreach($bunch_orders as $order){
-              foreach ($order->get_items() as $item_id => $item ) {
-                  //Get woo orders from user
-                  $id_course = intval($item->get_product_id()) - 1;
-                  $prijs = get_field('price', $course_id);
-                  $expenses += $prijs; 
-                  if(!in_array($id_course, $enrolled))
-                      array_push($enrolled, $id_course);
-              }
-          }
-          if(!empty($enrolled))
-          {
-              $args = array(
-                  'post_type' => 'course', 
-                  'posts_per_page' => -1,
-                  'orderby' => 'post_date',
-                  'order' => 'DESC',
-                  'include' => $enrolled,  
-              );
-              $enrolled_courses = get_posts($args);
-
-              if(!empty($enrolled_courses))
-                  $your_count_courses = count($enrolled_courses);
-          }
+          $enrolled_courses = list_orders($user)['posts'];
+          $your_count_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
 
           $state = array('todo' => 0, 'progress' => 0, 'done' => 0, 'total' => 0);
-
           foreach($enrolled_courses as $key => $course) :
-
               /* * State actual details * */
               $status = "todo";
               //Get read by user 
