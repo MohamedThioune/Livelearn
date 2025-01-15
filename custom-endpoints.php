@@ -2,7 +2,7 @@
 
 $GLOBALS['user_id'] = get_current_user_id() ;
 require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
-$GLOBALS['user_id'] = get_current_user_id();
+require_once __DIR__ . '/templates/orders-stripe.php';
 
 /** **************** Class **************** */
 
@@ -1157,29 +1157,6 @@ function allCoursesOptimizedWithJustPreviewAndFilter($data)
         $courses[$i]->pathImage = $image;
         $courses[$i]->price = get_field('price', $courses[$i]->ID) ?? 0;
         $courses[$i]->language = get_field('language', $courses[$i]->ID) ?? "";
-        
-        //$courses[$i]->youtubeVideos = get_field('youtube_videos', $courses[$i]->ID) ? get_field('youtube_videos', $courses[$i]->ID) : [];
-        // if (strtolower($courses[$i]->courseType) == 'podcast') {
-        //     $podcasts = get_field('podcasts', $courses[$i]->ID) ? get_field('podcasts', $courses[$i]->ID) : [];
-        //     if (!empty($podcasts)) {
-        //         $courses[$i]->podcasts = $podcasts;
-        //     } else {
-        //         $podcasts = get_field('podcasts_index', $courses[$i]->ID) ? get_field('podcasts_index', $courses[$i]->ID) : [];
-        //         if (!empty($podcasts)) {
-        //             $courses[$i]->podcasts = array();
-        //             foreach ($podcasts as $key => $podcast) {
-        //                 $item = array(
-        //                     "course_podcast_title" => $podcast['podcast_title'],
-        //                     "course_podcast_intro" => $podcast['podcast_description'],
-        //                     "course_podcast_url" => $podcast['podcast_url'],
-        //                     "course_podcast_image" => $podcast['podcast_image'],
-        //                 );
-        //                 array_push($courses[$i]->podcasts, ($item));
-        //             }
-        //         }
-        //     }
-        // }
-        // $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
         $courses[$i]->connectedProduct = get_field('connected_product', $courses[$i]->ID);
         $tags = get_field('categories', $courses[$i]->ID) ?? [];
         $courses[$i]->tags = array();
@@ -8496,6 +8473,121 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
   /**
   * Highlighted courses endpoint
   */
+
+  /**
+   * User orders endpoint
+   */
+
+    function get_user_orders_list()
+    {
+      $user_id = $GLOBALS['user_id'] ?? false;
+
+      // Check if the user ID is provided
+      if (!$user_id) 
+      {
+        $response = new WP_REST_Response("You have to login with valid credentials!");
+        $response->set_status(400);
+        return $response;
+      }
+      
+      // Get user purchased courses
+      $enrolled_courses = array();
+      $enrolled_courses = list_orders($user_id)['posts'] ?? [];
+
+      $outcome_courses = array();
+
+      for ($i = 0; $i < count($enrolled_courses); $i++) {
+        $enrolled_courses[$i]->visibility = get_field('visibility', $enrolled_courses[$i]->ID) ?? [];
+        $author = get_user_by('ID', $enrolled_courses[$i]->post_author);
+        $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+        if ($enrolled_courses[$i]->visibility != []) {
+            if ($author_company != $current_user_company) continue;
+        }
+        $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $enrolled_courses[$i]->experts = array();
+        $experts = get_field('experts', $enrolled_courses[$i]->ID);
+        if (!empty($experts)) {
+            foreach ($experts as $key => $expert) {
+                $expert = get_user_by('ID', $expert);
+                $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                array_push($enrolled_courses[$i]->experts, new Expert($expert, $experts_img));
+            }
+        }
+
+        $enrolled_courses[$i]->author = new Expert($author, $author_img);
+        $enrolled_courses[$i]->longDescription = get_field('long_description', $enrolled_courses[$i]->ID);
+        $enrolled_courses[$i]->shortDescription = get_field('short_description', $enrolled_courses[$i]->ID);
+        $enrolled_courses[$i]->articleItself = get_field('article_itself', $enrolled_courses[$i]->ID) ?? '';
+        $enrolled_courses[$i]->data_locaties = is_array(get_field('data_locaties', $enrolled_courses[$i]->ID)) ? (get_field('data_locaties', $enrolled_courses[$i]->ID)) : [] ;
+        $enrolled_courses[$i]->courseType = get_field('course_type', $enrolled_courses[$i]->ID);
+        $image = get_field('preview', $enrolled_courses[$i]->ID)['url'];
+        if (!$image) {
+            $image = get_the_post_thumbnail_url($enrolled_courses[$i]->ID);
+            if (!$image) $image = get_field('url_image_xml', $enrolled_courses[$i]->ID);
+            if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($enrolled_courses[$i]->courseType) . '.jpg';
+        }
+        $enrolled_courses[$i]->pathImage = $image;
+        $enrolled_courses[$i]->price = get_field('price', $enrolled_courses[$i]->ID) ?? 0;
+        $enrolled_courses[$i]->language = get_field('language', $enrolled_courses[$i]->ID) ?? "";
+        $enrolled_courses[$i]->connectedProduct = get_field('connected_product', $enrolled_courses[$i]->ID);
+        $tags = get_field('categories', $enrolled_courses[$i]->ID) ?? [];
+        $enrolled_courses[$i]->tags = array();
+        if ($tags) {
+            if (!empty($tags)) {
+                foreach ($tags as $key => $category) {
+                    if (isset($category['value'])) {
+                        $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                        array_push($enrolled_courses[$i]->tags, $tag);
+                    }
+                }
+            }
+        }
+        $new_course = new CourseOptimized($enrolled_courses[$i]);
+        array_push($outcome_courses, $new_course);
+    }
+      
+    }
+
+    function is_course_purchased_by_user(WP_REST_Request $request)
+    {
+      $user_id = $GLOBALS['user_id'] ?? false;
+      $course_id = $request['course_id'] ?? false;
+
+      // Check if the user ID is provided
+      if (!$user_id) 
+      {
+        $response = new WP_REST_Response("You have to login with valid credentials!");
+        $response->set_status(400);
+        return $response;
+      }
+
+      if (!$course_id) 
+      {
+        $response = new WP_REST_Response("You have fill in the course id!");
+        $response->set_status(400);
+        return $response;
+      }
+
+      $course = get_post($course_id) ?? false;
+      if (!$course)
+      {
+        $response = new WP_REST_Response("This course does not exist!");
+        $response->set_status(400);
+        return $response;
+      }
+      
+
+      // Get user purchased courses
+      $enrolled_courses = array();
+      $enrolled_courses = list_orders($user_id)['posts'];
+      
+      rest_ensure_request($statut_bool = (in_array($course, $enrolled_courses)) ? true : false);
+
+    }
+
+   /**
+   * User orders endpoint
+   */
 
 
   
