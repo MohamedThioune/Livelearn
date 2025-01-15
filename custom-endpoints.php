@@ -2,7 +2,7 @@
 
 $GLOBALS['user_id'] = get_current_user_id() ;
 require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'user.php';
-$GLOBALS['user_id'] = get_current_user_id();
+require_once __DIR__ . '/templates/orders-stripe.php';
 
 /** **************** Class **************** */
 
@@ -239,31 +239,36 @@ class Badge
 // }
 
 function sendPushNotificationFirebase(WP_REST_Request $request) {
+  // Chemin vers le fichier JSON de la clé de service Firebase
   $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
-  $title = $request['title'] ?? "test";
-  $body = $request['body'] ?? "test";
-
-  // Assurez-vous que $data est un tableau associatif
-  $data = $request['data'] ?? ["exampleKey" => "exampleValue"];
-  if (!is_array($data)) {
-      return new WP_Error('invalid_data', 'Le champ data doit être un tableau associatif.', ['status' => 400]);
-  }
-
-  $current_user_id = $GLOBALS['user_id'];
-
+  
+  // Titre, corps et données de la notification depuis la requête
+  $title = $request['title'] ?? 'Test';
+  $body = $request['body'] ?? 'Test';
+  $data = $request['data'] ?? [];
+  
+  // Récupérer l'ID de l'utilisateur actuel
+  $current_user_id = get_current_user_id();
   if (!$current_user_id) {
       return new WP_Error('user_not_logged_in', 'Utilisateur non connecté.', ['status' => 401]);
   }
 
+  // Récupérer le token de l'utilisateur
   $deviceToken = get_field('smartphone_token', 'user_' . $current_user_id);
   if (!$deviceToken) {
       return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
+  }
+
+  // Charger le fichier JSON de la clé de service
+  if (!file_exists($serviceAccountFile)) {
+      return new WP_Error('service_account_missing', 'Fichier de clé de service introuvable.', ['status' => 500]);
   }
 
   $jwt = json_decode(file_get_contents($serviceAccountFile), true);
   $clientEmail = $jwt['client_email'];
   $privateKey = $jwt['private_key'];
 
+  // Génération du JWT pour l'authentification
   $nowSeconds = time();
   $token = [
       "iss" => $clientEmail,
@@ -276,9 +281,11 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
 
   $header = base64_encode(json_encode(["alg" => "RS256", "typ" => "JWT"]));
   $payload = base64_encode(json_encode($token));
-  $signature = base64_encode(hash_hmac('sha256', "$header.$payload", $privateKey, true));
-  $jwtToken = "$header.$payload.$signature";
+  $headerPayload = "$header.$payload";
+  openssl_sign($headerPayload, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+  $jwtToken = "$headerPayload." . base64_encode($signature);
 
+  // Obtenir un jeton d'accès OAuth 2
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, "https://oauth2.googleapis.com/token");
   curl_setopt($ch, CURLOPT_POST, true);
@@ -290,12 +297,57 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
   ]));
 
   $response = curl_exec($ch);
+  if (curl_errno($ch)) {
+      return new WP_Error('curl_error', curl_error($ch), ['status' => 500]);
+  }
   curl_close($ch);
 
-  $accessToken = json_decode($response, true)['access_token'];
+  $responseArray = json_decode($response, true);
+  if (isset($responseArray['error'])) {
+      return new WP_Error('auth_error', $responseArray['error']['message'], ['status' => 401]);
+  }
 
-  $url = "https://fcm.googleapis.com/v1/projects/livelearn-359
+  $accessToken = $responseArray['access_token'] ?? null;
+  if (!$accessToken) {
+      return new WP_Error('access_token_error', 'Jeton d\'accès introuvable.', ['status' => 401]);
+  }
 
+  // Préparer la requête à l'API FCM
+  $url = "https://fcm.googleapis.com/v1/projects/livelearn-359911/messages:send";
+  $payload = [
+      "message" => [
+          "token" => $deviceToken,
+          "notification" => [
+              "title" => $title,
+              "body" => $body,
+          ],
+          "data" => $data,
+      ],
+  ];
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, [
+      "Authorization: Bearer $accessToken",
+      "Content-Type: application/json",
+  ]);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+
+  $result = curl_exec($ch);
+  if (curl_errno($ch)) {
+      return new WP_Error('curl_error', curl_error($ch), ['status' => 500]);
+  }
+  curl_close($ch);
+
+  $resultArray = json_decode($result, true);
+  if (isset($resultArray['error'])) {
+      return new WP_Error('fcm_error', $resultArray['error']['message'], ['status' => 500]);
+  }
+
+  return rest_ensure_response(['success' => true, 'response' => $resultArray]);
+}
 
 
 
@@ -1105,29 +1157,6 @@ function allCoursesOptimizedWithJustPreviewAndFilter($data)
         $courses[$i]->pathImage = $image;
         $courses[$i]->price = get_field('price', $courses[$i]->ID) ?? 0;
         $courses[$i]->language = get_field('language', $courses[$i]->ID) ?? "";
-        
-        //$courses[$i]->youtubeVideos = get_field('youtube_videos', $courses[$i]->ID) ? get_field('youtube_videos', $courses[$i]->ID) : [];
-        // if (strtolower($courses[$i]->courseType) == 'podcast') {
-        //     $podcasts = get_field('podcasts', $courses[$i]->ID) ? get_field('podcasts', $courses[$i]->ID) : [];
-        //     if (!empty($podcasts)) {
-        //         $courses[$i]->podcasts = $podcasts;
-        //     } else {
-        //         $podcasts = get_field('podcasts_index', $courses[$i]->ID) ? get_field('podcasts_index', $courses[$i]->ID) : [];
-        //         if (!empty($podcasts)) {
-        //             $courses[$i]->podcasts = array();
-        //             foreach ($podcasts as $key => $podcast) {
-        //                 $item = array(
-        //                     "course_podcast_title" => $podcast['podcast_title'],
-        //                     "course_podcast_intro" => $podcast['podcast_description'],
-        //                     "course_podcast_url" => $podcast['podcast_url'],
-        //                     "course_podcast_image" => $podcast['podcast_image'],
-        //                 );
-        //                 array_push($courses[$i]->podcasts, ($item));
-        //             }
-        //         }
-        //     }
-        // }
-        // $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
         $courses[$i]->connectedProduct = get_field('connected_product', $courses[$i]->ID);
         $tags = get_field('categories', $courses[$i]->ID) ?? [];
         $courses[$i]->tags = array();
@@ -8444,6 +8473,121 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
   /**
   * Highlighted courses endpoint
   */
+
+  /**
+   * User orders endpoint
+   */
+
+    function get_user_orders_list()
+    {
+      $user_id = $GLOBALS['user_id'] ?? false;
+
+      // Check if the user ID is provided
+      if (!$user_id) 
+      {
+        $response = new WP_REST_Response("You have to login with valid credentials!");
+        $response->set_status(400);
+        return $response;
+      }
+      
+      // Get user purchased courses
+      $enrolled_courses = array();
+      $enrolled_courses = list_orders($user_id)['posts'] ?? [];
+
+      $outcome_courses = array();
+
+      for ($i = 0; $i < count($enrolled_courses); $i++) {
+        $enrolled_courses[$i]->visibility = get_field('visibility', $enrolled_courses[$i]->ID) ?? [];
+        $author = get_user_by('ID', $enrolled_courses[$i]->post_author);
+        $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+        if ($enrolled_courses[$i]->visibility != []) {
+            if ($author_company != $current_user_company) continue;
+        }
+        $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $enrolled_courses[$i]->experts = array();
+        $experts = get_field('experts', $enrolled_courses[$i]->ID);
+        if (!empty($experts)) {
+            foreach ($experts as $key => $expert) {
+                $expert = get_user_by('ID', $expert);
+                $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                array_push($enrolled_courses[$i]->experts, new Expert($expert, $experts_img));
+            }
+        }
+
+        $enrolled_courses[$i]->author = new Expert($author, $author_img);
+        $enrolled_courses[$i]->longDescription = get_field('long_description', $enrolled_courses[$i]->ID);
+        $enrolled_courses[$i]->shortDescription = get_field('short_description', $enrolled_courses[$i]->ID);
+        $enrolled_courses[$i]->articleItself = get_field('article_itself', $enrolled_courses[$i]->ID) ?? '';
+        $enrolled_courses[$i]->data_locaties = is_array(get_field('data_locaties', $enrolled_courses[$i]->ID)) ? (get_field('data_locaties', $enrolled_courses[$i]->ID)) : [] ;
+        $enrolled_courses[$i]->courseType = get_field('course_type', $enrolled_courses[$i]->ID);
+        $image = get_field('preview', $enrolled_courses[$i]->ID)['url'];
+        if (!$image) {
+            $image = get_the_post_thumbnail_url($enrolled_courses[$i]->ID);
+            if (!$image) $image = get_field('url_image_xml', $enrolled_courses[$i]->ID);
+            if (!$image) $image = get_stylesheet_directory_uri() . '/img/' . strtolower($enrolled_courses[$i]->courseType) . '.jpg';
+        }
+        $enrolled_courses[$i]->pathImage = $image;
+        $enrolled_courses[$i]->price = get_field('price', $enrolled_courses[$i]->ID) ?? 0;
+        $enrolled_courses[$i]->language = get_field('language', $enrolled_courses[$i]->ID) ?? "";
+        $enrolled_courses[$i]->connectedProduct = get_field('connected_product', $enrolled_courses[$i]->ID);
+        $tags = get_field('categories', $enrolled_courses[$i]->ID) ?? [];
+        $enrolled_courses[$i]->tags = array();
+        if ($tags) {
+            if (!empty($tags)) {
+                foreach ($tags as $key => $category) {
+                    if (isset($category['value'])) {
+                        $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                        array_push($enrolled_courses[$i]->tags, $tag);
+                    }
+                }
+            }
+        }
+        $new_course = new CourseOptimized($enrolled_courses[$i]);
+        array_push($outcome_courses, $new_course);
+    }
+      
+    }
+
+    function is_course_purchased_by_user(WP_REST_Request $request)
+    {
+      $user_id = $GLOBALS['user_id'] ?? false;
+      $course_id = $request['course_id'] ?? false;
+
+      // Check if the user ID is provided
+      if (!$user_id) 
+      {
+        $response = new WP_REST_Response("You have to login with valid credentials!");
+        $response->set_status(400);
+        return $response;
+      }
+
+      if (!$course_id) 
+      {
+        $response = new WP_REST_Response("You have fill in the course id!");
+        $response->set_status(400);
+        return $response;
+      }
+
+      $course = get_post($course_id) ?? false;
+      if (!$course)
+      {
+        $response = new WP_REST_Response("This course does not exist!");
+        $response->set_status(400);
+        return $response;
+      }
+      
+
+      // Get user purchased courses
+      $enrolled_courses = array();
+      $enrolled_courses = list_orders($user_id)['posts'];
+      
+      rest_ensure_request($statut_bool = (in_array($course, $enrolled_courses)) ? true : false);
+
+    }
+
+   /**
+   * User orders endpoint
+   */
 
 
   
