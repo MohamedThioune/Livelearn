@@ -8545,7 +8545,7 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
         $new_course = new CourseOptimized($enrolled_courses[$i]);
         array_push($outcome_courses, $new_course);
     }
-      rest_ensure_request( $outcome_courses ); 
+    rest_ensure_response( $outcome_courses ); 
     }
 
     function is_course_purchased_by_user(WP_REST_Request $request)
@@ -8581,9 +8581,10 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
       $enrolled_courses = array();
       $enrolled_courses = list_orders($user_id)['posts'];
 
-      rest_ensure_request($statut_bool = (in_array($course, $enrolled_courses)) ? true : false);
+      rest_ensure_response($statut_bool = (in_array($course, $enrolled_courses)) ? true : false);
 
     }
+    
 
    /**
    * User orders endpoint
