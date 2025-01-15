@@ -3974,16 +3974,26 @@ function all_courses_in_plateform()
 
         $all_courses[] = new Course($course);
     }
+    // Get assessments via endpoint Fadel
+    $response_assesment = wp_remote_get(get_site_url().'/wp-json/custom/v3/assessment/all', array('timeout' => 30))['body'];
+    $assessment = json_decode($response_assesment);
+    $all_courses = array_merge($all_courses,$assessment);
+    shuffle($all_courses);
+    $all_courses = array_slice($all_courses,0,20);
+    $count_assesment = count($assessment);
 
     $args['posts_per_page'] = -1;
-    unset($args['paged']); // to make all pages
-    $count_all_course = count(get_posts($args));
+    unset($args['paged']);
+    unset($args['meta_query']);
+    unset($args['author__in']);
+    $count_all_course = count(get_posts($args))+$count_assesment;
     $total_pages = ceil($count_all_course / 20);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
 
     return new WP_REST_Response(
         array(
+//            'args' => $args,
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
             'count_course_type'=>[
@@ -3997,7 +4007,7 @@ function all_courses_in_plateform()
                 'Event'=>countCourseType('Event'),
                 'Training'=>countCourseType('Training'),
                 'Lezing'=>countCourseType('Lezing'),
-                'Assessment'=>countCourseType('Assessment'),
+                'Assessment'=>$count_assesment,
             ],
             'course' => $all_courses,
         ),200 );
