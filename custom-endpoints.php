@@ -8581,7 +8581,7 @@ function getCompleteCourses($ids, $postType = 'course', $maxSize = 6) {
       $enrolled_courses = array();
       $enrolled_courses = list_orders($user_id)['posts'];
 
-    return rest_ensure_response($statut_bool = (in_array($course, $enrolled_courses)) ? true : false);
+      return rest_ensure_response($exists = !empty(array_filter($enrolled_courses, fn($enrolled_course) => $course->ID === $enrolled_course->ID)));
 
     }
     
