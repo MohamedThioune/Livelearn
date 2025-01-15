@@ -3975,7 +3975,7 @@ function all_courses_in_plateform()
     }
     // Get assessments via endpoint Fadel
     $response_assesment = wp_remote_get(get_site_url().'/wp-json/custom/v3/assessment/all', array('timeout' => 30))['body'];
-    $assessment = json_decode($response_assesment);
+    $assessment = json_decode($response_assesment)??[];
     $all_courses = array_merge($all_courses,$assessment);
     shuffle($all_courses);
     $all_courses = array_slice($all_courses,0,20);
