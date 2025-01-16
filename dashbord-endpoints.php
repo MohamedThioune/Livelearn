@@ -4013,6 +4013,16 @@ function all_courses_in_plateform()
           GROUP BY a.id"
         );
     }
+    foreach ($assessments as $assessment) {
+        // Récupérer les informations de l'auteur
+        $author = get_user_by('ID', $assessment->author_id);
+        if ($author) {
+            $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $assessment->author = new Expert($author, $author_img);
+        } else {
+            $assessment->author = null;
+        }
+    }
     $all_courses = array_merge($all_courses, $assessments);
 //    shuffle($all_courses);
 //    $all_courses = array_slice($all_courses, 0, 20);
