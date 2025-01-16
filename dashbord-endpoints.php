@@ -3974,10 +3974,16 @@ function all_courses_in_plateform()
         $all_courses[] = new Course($course);
     }
     // Get assessments via endpoint Fadel
-
-    $response_assesment = wp_remote_get('https://app.livelearn.nl/wp-json/custom/v3/assessment/all', array('timeout' => 30))['body'];
+    $request_token = getallheaders();
+    $token = $request_token['Authorization'] ? : '';
+    $url = 'https://app.livelearn.nl/wp-json/custom/v3/assessment/all';
+    $headers = array(
+        'Authorization' => $token,
+        'Content-Type' => 'application/json',
+    );
+    $response_assesment = wp_remote_get($url, array('timeout' => 30,'headers'=>$headers))['body'];
     $assessment = json_decode($response_assesment);
-    // return $assessment;
+    return ['assessment'=>$assessment,'header'=>$headers, 'token'=>$token];
     if (is_array($assessment)) {
         $all_courses = array_merge($all_courses, $assessment);
         shuffle($all_courses);
