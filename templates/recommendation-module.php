@@ -102,6 +102,8 @@ function recommendation($user, $globe = null, $limit = null) {
     $recommended_courses = array();
     $random_id = array();
     foreach ($main_blogs as $key => $course):
+        if($key >= $limit)
+            break;
         $points = 0;
         //Course Type
         $courseType = get_field('course_type', $course->ID);
