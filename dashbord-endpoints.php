@@ -3977,7 +3977,7 @@ function all_courses_in_plateform()
 
     $response_assesment = wp_remote_get('https://app.livelearn.nl/wp-json/custom/v3/assessment/all', array('timeout' => 30))['body'];
     $assessment = json_decode($response_assesment);
-    return $assessment;
+    // return $assessment;
     if (is_array($assessment)) {
         $all_courses = array_merge($all_courses, $assessment);
         shuffle($all_courses);
