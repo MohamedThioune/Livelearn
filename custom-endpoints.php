@@ -2542,8 +2542,6 @@ function getTopicCoursesOptimized($data)
   );
   $query_blogs_category = new WP_Query( $args );
   $courses = isset($query_blogs_category->posts) ? $query_blogs_category->posts : [];
-  var_dump($courses);
-  var_dump($query_blogs_category);
 
   $outcome_courses = array();
   for($i = 0; $i < count($courses); $i++) 
