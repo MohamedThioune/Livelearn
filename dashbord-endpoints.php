@@ -3895,10 +3895,13 @@ function countCourseType($course_type){
 function all_courses_in_plateform()
 {
     $page = $_GET['page'] ?? 1;
+    //$user_id = $_GET['user_id'] ?? 5;
     $type = $_GET['type'] ?? '';
     $max = $_GET['max'] ?? null;
     $min = $_GET['min'] ?? null;
     $experts = $_GET['experts'] ?? null;
+    global $wpdb;
+
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
@@ -3975,6 +3978,7 @@ function all_courses_in_plateform()
         $all_courses[] = new Course($course);
     }
     // Get assessments via endpoint Fadel
+    /*
     $request_token = getallheaders();
     $token = $request_token['Authorization'] ? : '';
     $url = 'https://app.livelearn.nl/wp-json/custom/v3/assessment/all';
@@ -3984,26 +3988,48 @@ function all_courses_in_plateform()
     );
     $response_assesment = wp_remote_get($url, array('timeout' => 30,'headers'=>$headers))['body'];
     $assessment = json_decode($response_assesment);
-    //return ['assessment'=>$assessment,'header'=>$headers, 'token'=>$token];
-    if (is_array($assessment)) {
+    // return ['assessment'=>$assessment,'header'=>$headers, 'token'=>$token];
+    if (is_array($assessment))
         $all_courses = array_merge($all_courses, $assessment);
         shuffle($all_courses);
         $all_courses = array_slice($all_courses, 0, 20);
         $count_assesment = count($assessment);
+    */
+    $where_clause = "WHERE a.is_enabled = 1";
+    $assessments = $wpdb->get_results(
+        "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+      FROM {$wpdb->prefix}assessments a
+      LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+      $where_clause
+      GROUP BY a.id DESC"
+    );
+    // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments activés sans filtre de catégorie
+    if (empty($assessments)) {
+        $assessments = $wpdb->get_results(
+            "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+          FROM {$wpdb->prefix}assessments a
+          LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+          WHERE a.is_enabled = 1
+          GROUP BY a.id"
+        );
     }
+    $all_courses = array_merge($all_courses, $assessments);
+//    shuffle($all_courses);
+//    $all_courses = array_slice($all_courses, 0, 20);
 
+    $assessment_count = count($assessments);
     $args['posts_per_page'] = -1;
     unset($args['paged']);
     unset($args['meta_query']);
     unset($args['author__in']);
-    $count_all_course = count(get_posts($args))+$count_assesment;
+    $count_all_course = count(get_posts($args))+$assessment_count;
     $total_pages = ceil($count_all_course / 20);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
 
     return new WP_REST_Response(
         array(
-//            'args' => $args,
+            //'assessments_from_sql_database'=>$assessments,
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
             'count_course_type'=>[
@@ -4017,10 +4043,10 @@ function all_courses_in_plateform()
                 'Event'=>countCourseType('Event'),
                 'Training'=>countCourseType('Training'),
                 'Lezing'=>countCourseType('Lezing'),
-                'Assessment'=>$count_assesment,
+                'Assessment'=>$assessment_count,
             ],
             'course' => $all_courses,
-        ),200 );
+        ), 200);
 }
 
 function all_company_in_plateform()
