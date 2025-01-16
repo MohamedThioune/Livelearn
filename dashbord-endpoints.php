@@ -3984,7 +3984,7 @@ function all_courses_in_plateform()
     );
     $response_assesment = wp_remote_get($url, array('timeout' => 30,'headers'=>$headers))['body'];
     $assessment = json_decode($response_assesment);
-    return ['assessment'=>$assessment,'header'=>$headers, 'token'=>$token];
+    //return ['assessment'=>$assessment,'header'=>$headers, 'token'=>$token];
     if (is_array($assessment)) {
         $all_courses = array_merge($all_courses, $assessment);
         shuffle($all_courses);
