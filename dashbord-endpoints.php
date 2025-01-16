@@ -3996,7 +3996,8 @@ function all_courses_in_plateform()
     */
     $where_clause = "WHERE a.is_enabled = 1";
     $assessments = $wpdb->get_results(
-        "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+        "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled,
+       COUNT(q.id) as question_count, 'Assessment' as courseType
       FROM {$wpdb->prefix}assessments a
       LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
       $where_clause
