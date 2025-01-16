@@ -3975,7 +3975,7 @@ function all_courses_in_plateform()
     }
     // Get assessments via endpoint Fadel
 
-    $response_assesment = wp_remote_get(get_site_url().'/wp-json/custom/v3/assessment/all', array('timeout' => 30))['body'];
+    $response_assesment = wp_remote_get('https://app.livelearn.nl/wp-json/custom/v3/assessment/all', array('timeout' => 30))['body'];
     $assessment = json_decode($response_assesment);
     // return $assessment;
     if (is_array($assessment)) {
