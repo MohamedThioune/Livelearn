@@ -3998,7 +3998,7 @@ function all_courses_in_plateform()
     $where_clause = "WHERE a.is_enabled = 1";
     $assessments = $wpdb->get_results(
         "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled,
-       COUNT(q.id) as question_count, 'Assessment' as courseType
+       COUNT(q.id) as question_count
       FROM {$wpdb->prefix}assessments a
       LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
       $where_clause
@@ -4015,6 +4015,7 @@ function all_courses_in_plateform()
         );
     }
     foreach ($assessments as $assessment) {
+        $assessment->courseType = "Assessment";
         // Récupérer les informations de l'auteur
         $author = get_user_by('ID', $assessment->author_id);
         if ($author) {
@@ -4024,6 +4025,7 @@ function all_courses_in_plateform()
             $assessment->author = null;
         }
     }
+
     $all_courses = array_merge($all_courses, $assessments);
 //    shuffle($all_courses);
 //    $all_courses = array_slice($all_courses, 0, 20);
