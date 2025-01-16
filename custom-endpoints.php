@@ -626,23 +626,67 @@ function get_total_followers ($data)
 /**
  * Topics Endpoints
  */
+
+function detailCategory($categoryID){
+
+  //Category ID 
+  if(!$categoryID)
+    return false;
+
+  //Initialization
+  $sample = array();
+
+  //Name + Slug 
+  $categories = get_categories( array(
+    'taxonomy' => 'course_category',
+    'orderby'    => 'name',
+    'include' => $categoryID,
+    'hide_empty' => 0
+    ) 
+  );
+  $param_category = (isset($categories[0])) ? $categories[0] : 0;
+
+  // $errors = [];
+  if(!$param_category)
+    return 0;
+  //   $errors['errors'] = 'No category found !';
+  //   $response = new WP_REST_Response($errors);
+  //   $response->set_status(401);
+  //   return $response;
+  // endif;
+  
+  $sample['ID'] = $categoryID ;
+  $sample['name'] = $param_category->name ;
+  $sample['slug'] = $param_category->slug ;
+  $sample['image'] = get_field('image', 'category_'. $topic) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
+
+  return (Object)$sample;  
+}
+
 function related_topics_subtopics(WP_REST_Request $request)
 {
   $id_topics = $request['meta_value'] ?? [];
+
+  //Get category information
+  $category = detailCategory($id_topics[0]);
+
+  //Get sub topics
   if ($id_topics != []) 
   {
     $all_subtopics = array();
     foreach ($id_topics as $key => $id_topic) {
       $subtopics = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'taxonomy'   => 'course_category',
         'parent' => (int)$id_topic,
-        'hide_empty' => false, // change to 1 to hide categores not having a single post
-    )) ?? false;
+        'hide_empty' => false,
+      )) ?? false;
+
       if ($subtopics != false)
         $all_subtopics = array_merge($all_subtopics,$subtopics);
     }
-    return ['subtopics' => $all_subtopics, "codeStatus" => 200];
+    return ['category' => $category, 'subtopics' => $all_subtopics, "codeStatus" => 200];
   }
+
   return (['error' => 'You have to fill the values of the metadata !']);
 
 }
@@ -2568,52 +2612,49 @@ function get_courses_of_subtopics($data)
 
 function getTopicCoursesOptimized($data)
 {
-   $topic_id = $data['id'];
-   $courses = get_posts(
-    array(
-      'post_type' => array('course', 'post'),
-      'post_status' => 'publish',
-      'posts_per_page' => -1,
-      'order' => 'DESC',
-      'meta_query'     => array(
-        'relation' => 'OR',
-         array
-         (
-             'key'     => 'categories',
-             'value'   => $topic_id, 
-             'compare' => 'LIKE'
-         ),
-        array
-        (
-            'key'     => 'category_xml',
-            'value'   => $topic_id, 
-            'compare' => 'LIKE'
-        )
-    )
+  $topic_id = $data['id'];
+  $futher = isset($data['futher']) ? true : false;
+  /** Global posts **/
+  $tax_query = array(
+  array(
+    "taxonomy" => "course_category",
+    "field"    => "term_id",
+    "terms"    => $topic_id
     )
   );
+  $courses = array();
+  $query_blogs = new WP_Query( $args );
+  //Filter with category
+  $args = array(
+      'post_type' => array('post', 'course'),
+      'tax_query' => $tax_query,
+      'meta_key' => 'language',
+      'nopaging' => true,
+  );
+  $query_blogs_category = new WP_Query( $args );
+  $courses = isset($query_blogs_category->posts) ? $query_blogs_category->posts : [];
 
   $outcome_courses = array();
-  
-  for($i=0; $i <count($courses) ;$i++) 
+  for($i = 0; $i < count($courses); $i++) 
   {
     $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
-    $author = get_user_by( 'ID', $courses[$i] -> post_author  );
+    $author = get_user_by('ID', $courses[$i] -> post_author);
     $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
     if ($courses[$i]->visibility != []) 
       if ($author_company != $current_user_company)
         continue;
+
         $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $courses[$i]->experts = array(); 
         $experts = get_field('experts',$courses[$i]->ID);
         if(!empty($experts))
-          foreach ($experts as $key => $expert) {
+          foreach ($experts as $key => $expert) :
             $expert = get_user_by( 'ID', $expert );
             $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
-            }
+          endforeach;
       
-        $courses[$i]-> author = new Expert ($author , $author_img);
+        $courses[$i]->author = new Expert ($author , $author_img);
         $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
         $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
         $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
@@ -2642,8 +2683,8 @@ function getTopicCoursesOptimized($data)
                 foreach ($podcasts as $key => $podcast) 
                 { 
                   $item= array(
-                    "course_podcast_title"=>$podcast['podcast_title'], 
-                    "course_podcast_intro"=>$podcast['podcast_description'],
+                    "course_podcast_title" => $podcast['podcast_title'], 
+                    "course_podcast_intro" =>$podcast['podcast_description'],
                     "course_podcast_url" => $podcast['podcast_url'],
                     "course_podcast_image" => $podcast['podcast_image'],
                   );
@@ -2653,16 +2694,15 @@ function getTopicCoursesOptimized($data)
           }
         }
         $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
-        $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
-        $tags = get_field('categories',$courses[$i]->ID) ?? [];
-        $courses[$i]->tags= array();
-        if($tags)
-          if (!empty($tags))
-            foreach ($tags as $key => $category) 
-              if(isset($category['value'])){
-                $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
-                array_push($courses[$i]->tags,$tag);
-              }
+        $courses[$i]->tags = get_the_terms( $courses[$i]->ID, 'course_category' );
+        // $tags = get_field('categories',$courses[$i]->ID) ?? [];
+        // if($tags)
+        //   if (!empty($tags))
+        //     foreach ($tags as $key => $category) 
+        //       if(isset($category['value'])){
+        //         $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+        //         array_push($courses[$i]->tags,$tag);
+        //       }
         $new_course = new Course($courses[$i]);
         array_push($outcome_courses, $new_course);
   }
