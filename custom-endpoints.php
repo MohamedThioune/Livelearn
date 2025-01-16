@@ -2523,7 +2523,7 @@ function get_courses_of_subtopics($data)
 function getTopicCoursesOptimized($data)
 {
   $topic_id = $data['id'];
-  $futher = isset($data['futher']) ? true : false;
+  // $futher = isset($data['futher']) ? true : false;
   /** Global posts **/
   $tax_query = array(
   array(
@@ -2538,11 +2538,12 @@ function getTopicCoursesOptimized($data)
   $args = array(
       'post_type' => array('post', 'course'),
       'tax_query' => $tax_query,
-      'meta_key' => 'language',
       'nopaging' => true,
   );
   $query_blogs_category = new WP_Query( $args );
   $courses = isset($query_blogs_category->posts) ? $query_blogs_category->posts : [];
+  var_dump($courses);
+  var_dump($query_blogs_category);
 
   $outcome_courses = array();
   for($i = 0; $i < count($courses); $i++) 
