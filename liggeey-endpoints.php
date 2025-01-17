@@ -2204,21 +2204,21 @@ function postJobUser(WP_REST_Request $request){
     $response->set_status(400);
     return $response;
   endif;
-  
+
   var_dump($skills);
   // Add skills or terms 
-  if($skills)
-    wp_set_post_terms($job_id, $skills, 'course_category');
+  // if($skills)
+    wp_set_post_terms($job_id, intval($skills), 'course_category');
 
 
   //Add skills passport topics
-  $args = array(
-    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'include'  => $topicSkills,
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    // 'post_per_page' => $limit
-  );
-  $skillsPassport = get_categories($args);
+  // $args = array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'include'  => $topicSkills,
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  //   // 'post_per_page' => $limit
+  // );
+  // $skillsPassport = get_categories($args);
 
   //Add assessments
   $args = array(
@@ -2238,7 +2238,7 @@ function postJobUser(WP_REST_Request $request){
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
   update_field('job_expiration_date', $job_application_deadline, $job_id);
-  update_field('job_topics', $skillsPassport, $job_id);
+  // update_field('job_topics', $skillsPassport, $job_id);
   update_field('job_assessments', $assessments, $job_id);
   update_field('job_motivation', $motivation, $job_id);
 
