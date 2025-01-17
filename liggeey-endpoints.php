@@ -2206,13 +2206,12 @@ function postJobUser(WP_REST_Request $request){
   endif;
 
   // Add skills or terms 
-  $skills = array();
   if($skillsOrigin):
-    $skills =  array_map(function($skill) {
+    $skillsOrigin = array_map(function($skill) {
       return intval($skill);
     }, $skillsOrigin);
 
-    wp_set_post_terms($job_id, $skills, 'course_category');
+    wp_set_post_terms($job_id, $skillsOrigin, 'course_category');
   endif;
 
 
