@@ -2164,7 +2164,7 @@ function postJobUser(WP_REST_Request $request){
   $job_level_experience = ($request['job_level_of_experience']) ?: '';
   $job_language = ($request['job_langues']) ?: 'English';
   $job_application_deadline = ($request['job_expiration_date']);
-  $skills = ($request['skills']) ?: null;
+  $skillsO = ($request['skills']) ?: null;
   $topicSkills = ($request['skill_passport']) ?: array();
   $assessment = ($request['assessment']) ?: array();
   $motivation = ($request['motivation']) ?: null;
@@ -2205,10 +2205,9 @@ function postJobUser(WP_REST_Request $request){
     return $response;
   endif;
 
-  var_dump($skills);
   // Add skills or terms 
   // if($skills)
-    wp_set_post_terms($job_id, intval($skills), 'course_category');
+    wp_set_post_terms($job_id, intval($skillsO), 'course_category');
 
 
   //Add skills passport topics
