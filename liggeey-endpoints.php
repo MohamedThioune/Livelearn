@@ -2164,7 +2164,7 @@ function postJobUser(WP_REST_Request $request){
   $job_level_experience = ($request['job_level_of_experience']) ?: '';
   $job_language = ($request['job_langues']) ?: 'English';
   $job_application_deadline = ($request['job_expiration_date']);
-  $skillsO = ($request['skills']) ?: null;
+  $skillsOrigin = ($request['skills']) ?: null;
   $topicSkills = ($request['skill_passport']) ?: array();
   $assessment = ($request['assessment']) ?: array();
   $motivation = ($request['motivation']) ?: null;
@@ -2206,8 +2206,14 @@ function postJobUser(WP_REST_Request $request){
   endif;
 
   // Add skills or terms 
-  // if($skills)
-    wp_set_post_terms($job_id, intval($skillsO), 'course_category');
+  $skills = array();
+  if($skillsOrigin):
+    $skills =  array_map(function($skill) {
+      return intval($skill);
+    }, $skillsOrigin);
+
+    wp_set_post_terms($job_id, $skills, 'course_category');
+  endif;
 
 
   //Add skills passport topics
@@ -2254,7 +2260,7 @@ function editJobUser(WP_REST_Request $request) {
   $required_parameters = ['jobID'];
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
-  $skills = ($request['skills']) ?: null;
+  $skillsOrigin = ($request['skills']) ?: null;
 
   // Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -2275,8 +2281,14 @@ function editJobUser(WP_REST_Request $request) {
       return $response;
   }
 
-  if($skills)
+  $skills = array();
+  if($skillsOrigin):
+    $skills =  array_map(function($skill) {
+      return intval($skill);
+    }, $skillsOrigin);
+
     wp_set_post_terms($job_id, $skills, 'course_category');
+  endif;
 
   // Parameters REST request
   $updated_data = $request->get_params(); 
