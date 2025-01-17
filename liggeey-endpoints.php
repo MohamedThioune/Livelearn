@@ -2204,7 +2204,8 @@ function postJobUser(WP_REST_Request $request){
     $response->set_status(400);
     return $response;
   endif;
-
+  
+  var_dump($skills);
   // Add skills or terms 
   if($skills)
     wp_set_post_terms($job_id, $skills, 'course_category');
