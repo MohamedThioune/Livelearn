@@ -3516,7 +3516,7 @@ function search_courses()
 
 function coursesRecommendedUpcomming($data)
 {
-    $info = recommendation($data['id'], 1500, 200);
+    $info = recommendation($data['id'], null, 125);
     return new WP_REST_Response($info, 200);
 }
 

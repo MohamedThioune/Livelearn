@@ -6456,7 +6456,7 @@ endif;
     foreach($users as $user):
 
       //Recommendation courses
-      $infos = recommendation($user->ID, 350, 100);
+      $infos = recommendation($user->ID, null, 150);
       $recommended_courses = $infos['recommended'];
       shuffle($recommended_courses);
       $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'others' => 0];
@@ -6730,7 +6730,12 @@ endif;
         $short_description = get_field('short_description', $post->ID) ?: 'No description available';
         $short_description = substr($short_description, 0, 100) . '...';
         // $short_description = (strlen($short_description) > 50) ? $short_description . '...' : $short_description;
-        $link = get_permalink($post->ID);
+
+        //Get genuine link
+        $course_type = get_field('course_type', $post->ID);
+        $base_url = "https://www.livelearn.nl"; 
+        $link = $base_url . '/course/details-' . strtolower($course_type) . '/' . $post->post_name;
+        
         //End information
 
         $row_first = $i + 5;
