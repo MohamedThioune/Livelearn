@@ -2280,13 +2280,13 @@ function editJobUser(WP_REST_Request $request) {
       return $response;
   }
 
-  $skills = array();
+  // Add skills or terms 
   if($skillsOrigin):
-    $skills =  array_map(function($skill) {
+    $skillsOrigin = array_map(function($skill) {
       return intval($skill);
     }, $skillsOrigin);
 
-    wp_set_post_terms($job_id, $skills, 'course_category');
+    wp_set_post_terms($job_id, $skillsOrigin, 'course_category');
   endif;
 
   // Parameters REST request
