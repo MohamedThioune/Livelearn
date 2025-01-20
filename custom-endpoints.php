@@ -6714,6 +6714,7 @@ endif;
       $content_course = null;
       $i = 0;
       foreach($recommended_courses as $post):
+        
         $text = "";
         $course_type = get_field('course_type', $post->ID);
 
@@ -6960,11 +6961,6 @@ endif;
             $i++;
             break;
         }
-      //Switch 
-      
-      //Break out of loop
-      // if($i >= 8)
-      //   break;
 
       endforeach;
 
