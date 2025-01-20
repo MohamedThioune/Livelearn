@@ -6366,7 +6366,7 @@ endif;
     foreach($users as $user):
 
       //Recommendation courses
-      $infos = recommendation($user->ID, null, 150);
+      $infos = recommendation($user->ID, null, 75);
       $recommended_courses = $infos['recommended'];
       shuffle($recommended_courses);
       $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'others' => 0];
@@ -6624,29 +6624,19 @@ endif;
       $content_course = null;
       $i = 0;
       foreach($recommended_courses as $post):
-        
+
         $text = "";
-        $course_type = get_field('course_type', $post->ID);
+        $course_type = $post->courseType;
 
         //Information course
-        $thumbnail = get_field('preview', $post->ID)['url'];
-        if(!$thumbnail):
-          $thumbnail = get_the_post_thumbnail_url($post->ID);
-          if(!$thumbnail)
-            $thumbnail = get_field('url_image_xml', $post->ID);
-          if(!$thumbnail)
-            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-        endif;
+        $thumbnail = $post->image;
         $title = $post->post_title;
-        $short_description = get_field('short_description', $post->ID) ?: 'No description available';
-        $short_description = substr($short_description, 0, 100) . '...';
-        // $short_description = (strlen($short_description) > 50) ? $short_description . '...' : $short_description;
+        $short_description = $post->short_description;
+        //$short_description = (strlen($short_description) > 50) ? $short_description . '...' : $short_description;
 
         //Get genuine link
-        $course_type = get_field('course_type', $post->ID);
         $base_url = "https://www.livelearn.nl"; 
         $link = $base_url . '/course/details-' . strtolower($course_type) . '/' . $post->post_name;
-        
         //End information
 
         $row_first = $i + 5;
