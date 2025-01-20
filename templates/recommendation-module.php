@@ -75,6 +75,7 @@ function recommendation($user, $globe = null, $limit = null) {
         'meta_key' => 'language',
         'meta_value' => $preferential_language,
         // 'nopaging' => true,
+        'orderby' => 'rand',
         'author__in'=> $postAuthorSearch,
         'posts_per_page' => $limit,
         'paged' => 1
@@ -90,13 +91,30 @@ function recommendation($user, $globe = null, $limit = null) {
         	'meta_key' => 'language',
         	'meta_value' => $preferential_language,
         	// 'nopaging' => true,
+            'orderby' => 'rand',
             'posts_per_page' => $limit,
             'paged' => 1
     	);
     	$query_blogs = new WP_Query( $args );
 	    $main_blogs = isset($query_blogs->posts) ? $query_blogs->posts : [];
     endif;
-    shuffle($main_blogs);
+    // shuffle($main_blogs);
+
+    //Use case specially for new users with no input(category, experts)
+    if(count($main_blogs) < $limit): 
+    	//Filter only with preferential langage
+    	$args = array(
+        	'post_type' => array('post', 'course'),
+        	'meta_key' => 'language',
+        	'meta_value' => $preferential_language,
+        	// 'nopaging' => true,
+            'orderby' => 'rand',
+            'posts_per_page' => $limit,
+            'paged' => 1
+    	);
+    	$query_blogs = new WP_Query( $args );
+	    $main_blogs = isset($query_blogs->posts) ? $query_blogs->posts : [];
+    endif;
   
     //Recommended final
     $recommended_courses = array();
@@ -132,7 +150,7 @@ function recommendation($user, $globe = null, $limit = null) {
             $course->author = $author->data;
         endif;
 
-        if(!in_array($course->ID, $random_id)):
+        if(!in_array($course->ID, $random_id)) :
             if($courseType) {
                 $count[$courseType]++;
                 $course->courseType = $courseType;
@@ -222,8 +240,8 @@ function recommendation($user, $globe = null, $limit = null) {
         $recommended_courses = (!empty($recommended_courses)) ? $recommended_courses : $global_courses;
 
     //Activitien
-    shuffle($recommended_courses);
-    $recommended_courses = array_slice($recommended_courses, 0, $limit, true);
+    // shuffle($recommended_courses);
+    // $recommended_courses = array_slice($recommended_courses, 0, $limit, true);
 
     $infos['recommended'] = $recommended_courses;
     $infos['teachers'] = $teachers;
