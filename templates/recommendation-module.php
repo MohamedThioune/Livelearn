@@ -125,6 +125,10 @@ function recommendation($user, $globe = null, $limit = null) {
         $courseType = get_field('course_type', $course->ID);
         $course->courseType = get_field('course_type', $course->ID);
 
+        //Short descritption
+        $short_description = get_field('short_description', $course->ID) ?: 'No description available';
+        $course->short_description = substr($short_description, 0, 100) . '...';
+
         //Prijs course
         $prijs = get_field('price', $course->ID) ?: 0;
         $prijs = intval($prijs);
