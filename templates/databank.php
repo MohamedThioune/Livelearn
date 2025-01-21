@@ -484,7 +484,7 @@ if (isset($_GET["message"])) {
                                 <th scope="col">Image</th>
                                 <th scope="col">Titel</th>
                                 <th scope="col">Type</th>
-                                <th scope="col">Lang</th>
+                               
                                 <th scope="col">Prijs</th>
                                 <th scope="col">Onderwerp(en)</th>
                                 <th scope="col">Status</th>
@@ -528,47 +528,14 @@ if (!empty($courses)) {
 
         $state = $course->course_id ? 'present' : 'missing';
         $key = $course->id;
-        $lang = get_field('language', $course->ID);
-        $language_display = '';
-        if ($lang){
-            if (is_array($lang))
-                $language_display = $lang[0];
-            else
-                $language_display = $lang;
-            // take juste 2 first letter
-            $lang_first_character = strtolower(substr($language_display,0,2));
-
-            switch ($lang_first_character){
-                case 'en':
-                    $language_display='English';
-                    break;
-                case 'fr':
-                    $language_display='French';
-                    break;
-                case 'de':
-                    $language_display='Dutch';
-                    break;
-                case 'nl':
-                    $language_display='Nederlands';
-                    break;
-                case 'it':
-                    $language_display='Italian';
-                    break;
-                case 'Ib':
-                    $language_display='Luxembourgish';
-                    break;
-                case 'sk':
-                    $language_display='Slovak';
-                    break;
-            }
-        }
+      
         ?>
                                 <tr id="<?=$key?>" class="<?=$state?> state">
                                     <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?=$course->id?>"></td>
                                     <td class="textTh"> <img src="<?=$image;?>" alt="image course" width="50" height="50"></td>
                                     <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                     <td class="textTh tdCenter"><?=$course->type;?></td>
-                                    <td class="textTh tdCenter"><?=$lang?></td>
+                                    
                                     <td class="textTh tdCenter textTh"><?=$course->prijs;?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
