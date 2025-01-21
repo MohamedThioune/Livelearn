@@ -230,6 +230,7 @@ if($optie == "✔"){
     }
     else{
          $language = $course->language==null? detectLanguage($course->titel):$course->language;
+        
 
         if(update_field('language', $language, $id_post))
           echo "<span class='alert alert-success'>validation successfuly ✔️</span>";

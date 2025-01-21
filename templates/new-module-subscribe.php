@@ -1,6 +1,6 @@
 <?php
 
-require_once 'stripe-secrets.php';
+// require_once 'stripe-secrets.php';
 
 function makecall($url, $type, $data = null, $params = null) {
     global $stripeSecretKey;

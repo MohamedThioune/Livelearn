@@ -280,7 +280,8 @@ $urls =
 	    'Orbis' =>	'https://www.orbis-software.nl/',
 	    'Onno Kleyn' =>	'https://www.onnokleyn.nl/',
 	    'NFCI' =>	'https://nfcihospitality.com/',
-	    'SVO' =>	'https://www.svo.nl/'
+	    'SVO' =>	'https://www.svo.nl/',
+        'Elfin'=>'https://thisiselfin.com/'
     ];
     
 
@@ -483,6 +484,7 @@ if (isset($_GET["message"])) {
                                 <th scope="col">Image</th>
                                 <th scope="col">Titel</th>
                                 <th scope="col">Type</th>
+                                <th scope="col">Lang</th>
                                 <th scope="col">Prijs</th>
                                 <th scope="col">Onderwerp(en)</th>
                                 <th scope="col">Status</th>
@@ -526,12 +528,47 @@ if (!empty($courses)) {
 
         $state = $course->course_id ? 'present' : 'missing';
         $key = $course->id;
+        $lang = get_field('language', $course->ID);
+        $language_display = '';
+        if ($lang){
+            if (is_array($lang))
+                $language_display = $lang[0];
+            else
+                $language_display = $lang;
+            // take juste 2 first letter
+            $lang_first_character = strtolower(substr($language_display,0,2));
+
+            switch ($lang_first_character){
+                case 'en':
+                    $language_display='English';
+                    break;
+                case 'fr':
+                    $language_display='French';
+                    break;
+                case 'de':
+                    $language_display='Dutch';
+                    break;
+                case 'nl':
+                    $language_display='Nederlands';
+                    break;
+                case 'it':
+                    $language_display='Italian';
+                    break;
+                case 'Ib':
+                    $language_display='Luxembourgish';
+                    break;
+                case 'sk':
+                    $language_display='Slovak';
+                    break;
+            }
+        }
         ?>
                                 <tr id="<?=$key?>" class="<?=$state?> state">
                                     <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?=$course->id?>"></td>
                                     <td class="textTh"> <img src="<?=$image;?>" alt="image course" width="50" height="50"></td>
                                     <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                     <td class="textTh tdCenter"><?=$course->type;?></td>
+                                    <td class="textTh tdCenter"><?=$lang?></td>
                                     <td class="textTh tdCenter textTh"><?=$course->prijs;?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
@@ -957,7 +994,7 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/xml-parse",
+                url: "/livelearn/xml-parse",
                 data: { selectedxmlValues: selectedxmlValues },
                 success: function(response) {
                     console.log(response);
@@ -1000,7 +1037,7 @@ if (!empty($courses)) {
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
                 type: "POST",
-                url: "/artikels",
+                url: "/livelearn/artikels",
                 data: { selectedValues: selectedValues },
                 success: function(response) {
                     console.log(response);
@@ -1102,7 +1139,7 @@ if (!empty($courses)) {
             // console.log('array sending',ids);
             // console.log('classs',classs);
             $.ajax({
-                url: '/optieall',
+                url: '/livelearn/optieall',
                 type: 'POST',
                 data: {
                     class:classs,
@@ -1155,7 +1192,7 @@ if (!empty($courses)) {
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/optie-bank',
+                url: '/livelearn/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
