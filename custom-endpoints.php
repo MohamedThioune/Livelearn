@@ -5014,7 +5014,7 @@ endif;
         $teamates = array();
         foreach ($users as $key => $user)
         {
-          $user_company =  get_field('company', 'user_' . (int) $user->ID)[0];
+          $user_company =  get_field('company', 'user_' . (int) $user->ID);
           if ($user_company->ID == $current_user_company->ID)
             array_push($teamates,$user->ID);
         }
