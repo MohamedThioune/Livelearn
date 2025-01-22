@@ -2578,16 +2578,16 @@ function getTopicCoursesOptimized($data)
         if(!empty($experts))
           foreach ($experts as $key => $expert) :
             $expert = get_user_by( 'ID', $expert );
-            $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $experts_img = get_field('profile_img','user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
             if(!in_array($expert->ID, $expertsID)):
               $main_experts[] = new Expert ($expert,$experts_img);
               $expertsID[] = $expert->ID;
             endif;
           endforeach;      
-        $courses[$i]->author = new Expert ($author , $author_img);
+        $courses[$i]->author = new Expert ($author, $author_img);
         if(!in_array($author->ID, $expertsID)):
-          $main_experts[] = new Expert ($author,$experts_img);
+          $main_experts[] = new Expert ($author, $author_img);
           $expertsID[] = $author->ID;
         endif;
 
