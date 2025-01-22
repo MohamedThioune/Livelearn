@@ -2847,9 +2847,27 @@ add_action( 'rest_api_init', function () {
 
     register_rest_route ('custom/v1', 'push/notifications/send', array(
         'methods' => 'POST',
-        'callback' => 'sendFirebasePushNotification'
+        'callback' => 'sendPushNotificationFirebase'
     ));
 
-    
+    /**
+     * User orders
+     */
+
+     register_rest_route ('custom/v3', 'user/orders/', array(
+        'methods' => 'GET',
+        'callback' => 'get_user_orders_list'
+    ));
+
+    register_rest_route ('custom/v3', 'user/order/check', array(
+        'methods' => 'POST',
+        'callback' => 'is_course_purchased_by_user'
+    ));
+
+    /**
+     * User orders
+     */
+
+     
 
 });

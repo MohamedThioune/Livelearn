@@ -469,6 +469,7 @@ function update_podcast_on_podcastindex()
 {
     $page = $_GET['page'] ?? 1;
     $type = 'Podcast';
+    $post_per_page = 50;
     $args = array(
         'post_type' => 'course',
         'post_status' => 'publish',
@@ -476,7 +477,7 @@ function update_podcast_on_podcastindex()
         'order' => 'DESC' ,
         'meta_key' => 'course_type',
         'meta_value' => $type,
-        'posts_per_page' => 20,
+        'posts_per_page' => $post_per_page,
         'paged' => $page,
     );
     $courses = get_posts($args);
@@ -502,7 +503,7 @@ function update_podcast_on_podcastindex()
         'posts_per_page' => -1,
     );
     $count_all_course = count(get_posts($arg_paginated));
-    $total_pages = ceil($count_all_course / 20);
+    $total_pages = ceil($count_all_course / $post_per_page);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
     return new WP_REST_Response( array(
