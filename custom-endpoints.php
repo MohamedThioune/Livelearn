@@ -2645,7 +2645,10 @@ function getTopicCoursesOptimized($data)
   $infos['courses'] = $outcome_courses;
   $infos['experts'] = $main_experts;
 
- return ;
+  $response = new WP_REST_Response($infos);
+  $response->set_status(200);
+  return($response);
+
 }
 
 
@@ -2704,7 +2707,6 @@ function getTopicCoursesOptimized($data)
     $response->set_status(200);
     return($response);
     
-
   }
   
   /**
