@@ -1195,7 +1195,7 @@ function recommended_course($data)
         $visibility_company = $company_visibility[0]->post_title;
 
     //Recommendation courses
-    $infos = recommendation($user, null, 75);   
+    $infos = recommendation($user, null, 100);   
     $recommended_courses = $infos['recommended'];
     //$teachers = $infos['teachers'];
 
@@ -2784,7 +2784,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'all_courses_in_plateform'
     ));
-
+    register_rest_route ('custom/v1', '/courses/test/all', array(
+        'methods' => 'GET',
+        'callback' => 'all_courses_in_plateform_test'
+    ));
     register_rest_route ('custom/v1', '/companies/all', array(
         'methods' => 'GET',
         'callback' => 'all_company_in_plateform'
