@@ -3516,7 +3516,7 @@ function search_courses()
 
 function coursesRecommendedUpcomming($data)
 {
-    $info = recommendation($data['id'], 1500, 200);
+    $info = recommendation($data['id'], null, 125);
     return new WP_REST_Response($info, 200);
 }
 
@@ -3885,9 +3885,9 @@ function countCourseType($course_type){
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue'       => $course_type,
+        'ordevalue' => $course_type,
         'order' => 'DESC' ,
-        'meta_key'         => 'course_type',
+        'meta_key' => 'course_type',
         'meta_value' => $course_type
     );
     return count(get_posts($args));
@@ -3907,7 +3907,7 @@ function all_courses_in_plateform()
         'meta_query' => array(),
         'paged' => $page,
     );
-    // filter by course type
+    // Filter by course type
     if ($type) {
         $args['meta_query'][] = array(
             'key' => 'course_type',
@@ -3915,8 +3915,8 @@ function all_courses_in_plateform()
             'compare' => 'IN'
         );
     }
-    // Filter by price
 
+    // Filter by price
     if ($min !== null && $max !== null) {
         $args['meta_query'][] = array(
             'key' => 'price',
@@ -3987,20 +3987,131 @@ function all_courses_in_plateform()
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
             'count_course_type'=>[
-                'video'=>countCourseType('Video'),
-                'podcast'=>countCourseType('Podcast'),
+                'Video'=> countCourseType('Video'),
+                'Podcast'=>countCourseType('Podcast'),
                 'Opleidingen'=>countCourseType('Opleidingen'),
-                'Artikel'=>countCourseType('article'),
+                'Artikel'=>countCourseType('Artikel'),
                 'Masterclass'=>countCourseType('Masterclass'),
                 'Workshop'=>countCourseType('Workshop'),
-                'e_Learning'=>countCourseType('E-Learning'),
+                'E_Learning'=>countCourseType('E-Learning'),
                 'Event'=>countCourseType('Event'),
                 'Training'=>countCourseType('Training'),
                 'Lezing'=>countCourseType('Lezing'),
                 'Assessment'=>countCourseType('Assessment'),
             ],
             'course' => $all_courses,
-        ),200 );
+        ), 200 );
+}
+
+function all_courses_in_plateform_test()
+{
+    $page = $_GET['page'] ?? 1;
+    $type = $_GET['type'] ?? '';
+    $max = $_GET['max'] ?? null;
+    $min = $_GET['min'] ?? null;
+    $experts = $_GET['experts'] ?? null;
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'order' => 'DESC' ,
+        'meta_query' => array(),
+        'paged' => $page,
+    );
+    // Filter by course type
+    if ($type) {
+        $args['meta_query'][] = array(
+            'key' => 'course_type',
+            'value' => $type,
+            'compare' => 'IN'
+        );
+    }
+
+    // Filter by price
+    if ($min !== null && $max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => array($min, $max),
+            'type' => 'numeric',
+            'compare' => 'BETWEEN'
+        );
+    } elseif ($min !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $min,
+            'type' => 'numeric',
+            'compare' => '>='
+        );
+    } elseif ($max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $max,
+            'type' => 'numeric',
+            'compare' => '<='
+        );
+    }
+    if ($experts)
+        $args['author__in'] = $experts;
+
+    $courses = get_posts($args);
+    $all_courses = array();
+
+    foreach ($courses as $course) {
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        if ($course -> post_author) {
+            $author = get_user_by('ID', $course->post_author);
+            if ($author) {
+                $author_img = get_field('profile_img', 'user_' . $author->ID) != false ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                $course->author = new Expert ($author, $author_img);
+            }
+        }
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = '';
+        $preview = get_field('preview', $course->ID);
+        if ($preview)
+            $image = $preview['url'];
+
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image && $course->courseType)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
+
+        $all_courses[] = new Course($course);
+    }
+
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
+    $total_pages = ceil($count_all_course / 20);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+
+    return new WP_REST_Response(
+        array(
+            'count_all_course' => $count_all_course,
+            'page'=>$numbers_of_pages,
+            'count_course_type'=>[
+                'Video'=> countCourseType('Video'),
+                'Podcast'=>countCourseType('Podcast'),
+                'Opleidingen'=>countCourseType('Opleidingen'),
+                'Artikel'=>countCourseType('Artikel'),
+                'Masterclass'=>countCourseType('Masterclass'),
+                'Workshop'=>countCourseType('Workshop'),
+                'E_Learning'=>countCourseType('E-Learning'),
+                'Event'=>countCourseType('Event'),
+                'Training'=>countCourseType('Training'),
+                'Lezing'=>countCourseType('Lezing'),
+                'Assessment'=>countCourseType('Assessment'),
+            ],
+            'course' => $all_courses,
+        ), 200 );
 }
 
 function all_company_in_plateform()

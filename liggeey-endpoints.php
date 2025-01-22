@@ -53,38 +53,8 @@ function artikel($id){
   $sample['content'] = get_field('article_itself', $post->ID) ? : get_field('long_description', $post->ID);
 
   //Categories 
-  $read_category = array();
-  $categories = array();
-  $posttags = get_the_tags($post->ID);
-  $default_category = get_field('categories', $post->ID);
-  $xml_category = get_field('category_xml', $post->ID);
-  $category = array();
-  //post tags
-  if($posttags)
-  foreach($posttags as $tag)
-    if(!in_array($tag->ID,$read_category))
-      $read_category[] = $tag->ID;
-  //category default
-  if(!empty($default_category))
-  foreach($default_category as $item)
-    if($item)
-      if(!in_array($item['value'], $read_category))
-        $read_category[] = $item['value'];
-  //category xml
-  else if(!empty($xml_category))
-  foreach($xml_category as $item)
-    if($item)
-      if(!in_array($item['value'], $read_category))
-        $read_category[] = $item['value'];      
-  // var_dump($read_category);
-  $categories = get_categories( array(
-    'taxonomy'  => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'orderby' => 'name',
-    'include' => $read_category,
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-  ) );
-
-  $sample['categories'] = $categories;
+  $sample['categories'] = get_the_terms( $post->ID, 'course_category' );
+  
   //Reviews | Comments
   $comments = array(); 
   $main_reviews = get_field('reviews', $post->ID);
@@ -2164,7 +2134,7 @@ function postJobUser(WP_REST_Request $request){
   $job_level_experience = ($request['job_level_of_experience']) ?: '';
   $job_language = ($request['job_langues']) ?: 'English';
   $job_application_deadline = ($request['job_expiration_date']);
-  $skills = ($request['skills']) ?: null;
+  $skillsOrigin = ($request['skills']) ?: null;
   $topicSkills = ($request['skill_passport']) ?: array();
   $assessment = ($request['assessment']) ?: array();
   $motivation = ($request['motivation']) ?: null;
@@ -2206,18 +2176,23 @@ function postJobUser(WP_REST_Request $request){
   endif;
 
   // Add skills or terms 
-  if($skills)
-    wp_set_post_terms($job_id, $skills, 'course_category');
+  if($skillsOrigin):
+    $skillsOrigin = array_map(function($skill) {
+      return intval($skill);
+    }, $skillsOrigin);
+
+    wp_set_post_terms($job_id, $skillsOrigin, 'course_category');
+  endif;
 
 
   //Add skills passport topics
-  $args = array(
-    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-    'include'  => $topicSkills,
-    'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    // 'post_per_page' => $limit
-  );
-  $skillsPassport = get_categories($args);
+  // $args = array(
+  //   'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+  //   'include'  => $topicSkills,
+  //   'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  //   // 'post_per_page' => $limit
+  // );
+  // $skillsPassport = get_categories($args);
 
   //Add assessments
   $args = array(
@@ -2237,7 +2212,7 @@ function postJobUser(WP_REST_Request $request){
   update_field('job_level_of_experience', $job_level_experience, $job_id);
   update_field('job_langues', $job_language, $job_id);
   update_field('job_expiration_date', $job_application_deadline, $job_id);
-  update_field('job_topics', $skillsPassport, $job_id);
+  // update_field('job_topics', $skillsPassport, $job_id);
   update_field('job_assessments', $assessments, $job_id);
   update_field('job_motivation', $motivation, $job_id);
 
@@ -2254,7 +2229,7 @@ function editJobUser(WP_REST_Request $request) {
   $required_parameters = ['jobID'];
   $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
   $job_id = isset($request['jobID']) ? $request['jobID'] : 0;
-  $skills = ($request['skills']) ?: null;
+  $skillsOrigin = ($request['skills']) ?: null;
 
   // Check required parameters 
   $errors = validated($required_parameters, $request);
@@ -2275,8 +2250,14 @@ function editJobUser(WP_REST_Request $request) {
       return $response;
   }
 
-  if($skills)
-    wp_set_post_terms($job_id, $skills, 'course_category');
+  // Add skills or terms 
+  if($skillsOrigin):
+    $skillsOrigin = array_map(function($skill) {
+      return intval($skill);
+    }, $skillsOrigin);
+
+    wp_set_post_terms($job_id, $skillsOrigin, 'course_category');
+  endif;
 
   // Parameters REST request
   $updated_data = $request->get_params(); 
