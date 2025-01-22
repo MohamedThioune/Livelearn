@@ -2587,7 +2587,7 @@ function getTopicCoursesOptimized($data)
           endforeach;      
         $courses[$i]->author = new Expert ($author, $author_img);
         if(!in_array($author->ID, $expertsID)):
-          $main_experts[] = new Expert ($author, $author_img);
+          $main_experts[] = new Expert ($author, $author_img); 
           $expertsID[] = $author->ID;
         endif;
 
