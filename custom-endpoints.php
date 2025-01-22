@@ -2523,7 +2523,7 @@ function get_courses_of_subtopics($data)
 
 function getTopicCoursesOptimized($data)
 {
-  $topic_id = $data['id'];
+  $topic_id = $data['id']; 
   $infos = [];
   $main_experts = [];
   $expertsID = [];
