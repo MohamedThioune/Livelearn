@@ -5009,6 +5009,7 @@ endif;
       );
 
         $current_user = get_user_by('id', (int) $current_user_id);
+        return $current_user;
         $current_user_company = get_field('company', 'user_' . (int) $current_user_id);
         $users = get_users();
         $teamates = array();
