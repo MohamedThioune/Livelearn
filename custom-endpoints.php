@@ -2643,6 +2643,7 @@ function getTopicCoursesOptimized($data)
         array_push($outcome_courses, $new_course);
   }
   $infos['courses'] = $outcome_courses;
+  $infos['experts'] = $main_experts;
 
  return ;
 }
