@@ -546,6 +546,7 @@ function detailCategory($categoryID){
   $sample['name'] = $param_category->name ;
   $sample['slug'] = $param_category->slug ;
   $sample['image'] = get_field('image', 'category_'. $topic) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
+  $sample['parent'] = $param_category->category_parent;
 
   return (Object)$sample;  
 }
@@ -2523,7 +2524,24 @@ function get_courses_of_subtopics($data)
 function getTopicCoursesOptimized($data)
 {
   $topic_id = $data['id'];
+  $infos = [];
+  $main_experts = [];
+  $expertsID = [];
   // $futher = isset($data['futher']) ? true : false;
+
+  //Get category information
+  $category = detailCategory($topic_id);
+  $infos['category'] = $category;
+
+  //Get other topics
+  $subtopics = get_categories( array(
+    'taxonomy'   => 'course_category',
+    'parent' => (int)$category->parent,
+    'exclude' => $topic_id,
+    'hide_empty' => false,
+  )) ?? false;
+  $infos['other_topics'] = $subtopics;
+
   /** Global posts **/
   $tax_query = array(
   array(
@@ -2553,6 +2571,7 @@ function getTopicCoursesOptimized($data)
       if ($author_company != $current_user_company)
         continue;
 
+        //Experts post 
         $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $courses[$i]->experts = array(); 
         $experts = get_field('experts',$courses[$i]->ID);
@@ -2561,9 +2580,17 @@ function getTopicCoursesOptimized($data)
             $expert = get_user_by( 'ID', $expert );
             $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
-          endforeach;
-      
+            if(!in_array($expert->ID, $expertsID)):
+              $main_experts[] = new Expert ($expert,$experts_img);
+              $expertsID[] = $expert->ID;
+            endif;
+          endforeach;      
         $courses[$i]->author = new Expert ($author , $author_img);
+        if(!in_array($author->ID, $expertsID)):
+          $main_experts[] = new Expert ($author,$experts_img);
+          $expertsID[] = $author->ID;
+        endif;
+
         $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
         $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
         $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
@@ -2615,7 +2642,9 @@ function getTopicCoursesOptimized($data)
         $new_course = new Course($courses[$i]);
         array_push($outcome_courses, $new_course);
   }
- return  $outcome_courses;
+  $infos['courses'] = $outcome_courses;
+
+ return ;
 }
 
 
