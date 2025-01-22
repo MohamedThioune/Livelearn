@@ -5001,7 +5001,7 @@ endif;
 
         
 
-        // Préparer la réponse
+        
         $response = array(
           'all' => array(),
           'department' => array(),
@@ -5010,9 +5010,7 @@ endif;
 
         $current_user = get_user_by('id', (int) $current_user_id);
         $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-
-        
-
+        var_dump($current_user_company);
         $users = get_users();
         $teamates = array();
         foreach ($users as $key => $user)
@@ -5129,11 +5127,6 @@ endif;
           $results_all = $wpdb->get_results($query_all);
           $results_departement = $wpdb->get_results($query_departement);
           $results_individual = $wpdb->get_results($query_individual);
-
-
-          
-          
-
           $results_all_ids = array();
 
           foreach ($results_all as $row) {
@@ -5446,7 +5439,6 @@ endif;
 
   function getUserInternalCourses($data)
   {
-  
   global $wpdb;
   // Retrieve the user ID from the global variable and validate it
   $current_user_id = false;
