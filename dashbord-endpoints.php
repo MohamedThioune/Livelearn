@@ -3885,9 +3885,9 @@ function countCourseType($course_type){
         'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
-        'ordevalue'       => $course_type,
+        'ordevalue' => $course_type,
         'order' => 'DESC' ,
-        'meta_key'         => 'course_type',
+        'meta_key' => 'course_type',
         'meta_value' => $course_type
     );
     return count(get_posts($args));
@@ -3895,13 +3895,10 @@ function countCourseType($course_type){
 function all_courses_in_plateform()
 {
     $page = $_GET['page'] ?? 1;
-    //$user_id = $_GET['user_id'] ?? 5;
     $type = $_GET['type'] ?? '';
     $max = $_GET['max'] ?? null;
     $min = $_GET['min'] ?? null;
     $experts = $_GET['experts'] ?? null;
-    global $wpdb;
-
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
@@ -3910,7 +3907,7 @@ function all_courses_in_plateform()
         'meta_query' => array(),
         'paged' => $page,
     );
-    // filter by course type
+    // Filter by course type
     if ($type) {
         $args['meta_query'][] = array(
             'key' => 'course_type',
@@ -3918,8 +3915,8 @@ function all_courses_in_plateform()
             'compare' => 'IN'
         );
     }
-    // Filter by price
 
+    // Filter by price
     if ($min !== null && $max !== null) {
         $args['meta_query'][] = array(
             'key' => 'price',
@@ -3977,89 +3974,144 @@ function all_courses_in_plateform()
 
         $all_courses[] = new Course($course);
     }
-    // Get assessments via endpoint Fadel
-    /*
-    $request_token = getallheaders();
-    $token = $request_token['Authorization'] ? : '';
-    $url = 'https://app.livelearn.nl/wp-json/custom/v3/assessment/all';
-    $headers = array(
-        'Authorization' => $token,
-        'Content-Type' => 'application/json',
-    );
-    $response_assesment = wp_remote_get($url, array('timeout' => 30,'headers'=>$headers))['body'];
-    $assessment = json_decode($response_assesment);
-    // return ['assessment'=>$assessment,'header'=>$headers, 'token'=>$token];
-    if (is_array($assessment))
-        $all_courses = array_merge($all_courses, $assessment);
-        shuffle($all_courses);
-        $all_courses = array_slice($all_courses, 0, 20);
-        $count_assesment = count($assessment);
-    */
-    $where_clause = "WHERE a.is_enabled = 1";
-    $assessments = $wpdb->get_results(
-        "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled,
-       COUNT(q.id) as question_count
-      FROM {$wpdb->prefix}assessments a
-      LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-      $where_clause
-      GROUP BY a.id DESC"
-    );
-    // Si aucun assessment n'est trouvé pour la catégorie donnée, récupérer tous les assessments activés sans filtre de catégorie
-    if (empty($assessments)) {
-        $assessments = $wpdb->get_results(
-            "SELECT a.id, a.title, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
-          FROM {$wpdb->prefix}assessments a
-          LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
-          WHERE a.is_enabled = 1
-          GROUP BY a.id"
-        );
-    }
-    foreach ($assessments as $assessment) {
-        $assessment->courseType = "Assessment";
-        // Récupérer les informations de l'auteur
-        $author = get_user_by('ID', $assessment->author_id);
-        if ($author) {
-            $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-            $assessment->author = new Expert($author, $author_img);
-        } else {
-            $assessment->author = null;
-        }
-    }
 
-    $all_courses = array_merge($all_courses, $assessments);
-//    shuffle($all_courses);
-//    $all_courses = array_slice($all_courses, 0, 20);
-
-    $assessment_count = count($assessments);
     $args['posts_per_page'] = -1;
-    unset($args['paged']);
-    unset($args['meta_query']);
-    unset($args['author__in']);
-    $count_all_course = count(get_posts($args))+$assessment_count;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
     $total_pages = ceil($count_all_course / 20);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
 
     return new WP_REST_Response(
         array(
-            //'assessments_from_sql_database'=>$assessments,
             'count_all_course' => $count_all_course,
             'page'=>$numbers_of_pages,
             'count_course_type'=>[
-                'video'=>countCourseType('Video'),
-                'podcast'=>countCourseType('Podcast'),
+                'Video'=> countCourseType('Video'),
+                'Podcast'=>countCourseType('Podcast'),
                 'Opleidingen'=>countCourseType('Opleidingen'),
-                'Artikel'=>countCourseType('article'),
+                'Artikel'=>countCourseType('Artikel'),
                 'Masterclass'=>countCourseType('Masterclass'),
                 'Workshop'=>countCourseType('Workshop'),
-                'e_Learning'=>countCourseType('E-Learning'),
+                'E_Learning'=>countCourseType('E-Learning'),
                 'Event'=>countCourseType('Event'),
                 'Training'=>countCourseType('Training'),
                 'Lezing'=>countCourseType('Lezing'),
-                'Assessment'=>$assessment_count,
+                'Assessment'=>countCourseType('Assessment'),
             ],
             'course' => $all_courses,
-        ), 200);
+        ), 200 );
+}
+
+function all_courses_in_plateform_test()
+{
+    $page = $_GET['page'] ?? 1;
+    $type = $_GET['type'] ?? '';
+    $max = $_GET['max'] ?? null;
+    $min = $_GET['min'] ?? null;
+    $experts = $_GET['experts'] ?? null;
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => 20,
+        'order' => 'DESC' ,
+        'meta_query' => array(),
+        'paged' => $page,
+    );
+    // Filter by course type
+    if ($type) {
+        $args['meta_query'][] = array(
+            'key' => 'course_type',
+            'value' => $type,
+            'compare' => 'IN'
+        );
+    }
+
+    // Filter by price
+    if ($min !== null && $max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => array($min, $max),
+            'type' => 'numeric',
+            'compare' => 'BETWEEN'
+        );
+    } elseif ($min !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $min,
+            'type' => 'numeric',
+            'compare' => '>='
+        );
+    } elseif ($max !== null) {
+        $args['meta_query'][] = array(
+            'key' => 'price',
+            'value' => $max,
+            'type' => 'numeric',
+            'compare' => '<='
+        );
+    }
+    if ($experts)
+        $args['author__in'] = $experts;
+
+    $courses = get_posts($args);
+    $all_courses = array();
+
+    foreach ($courses as $course) {
+        $course->visibility = get_field('visibility',$course->ID) ?? [];
+        if ($course -> post_author) {
+            $author = get_user_by('ID', $course->post_author);
+            if ($author) {
+                $author_img = get_field('profile_img', 'user_' . $author->ID) != false ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                $course->author = new Expert ($author, $author_img);
+            }
+        }
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+
+        $course->courseType = get_field('course_type', $course->ID);
+        $image = '';
+        $preview = get_field('preview', $course->ID);
+        if ($preview)
+            $image = $preview['url'];
+
+        if(!$image){
+            $image = get_the_post_thumbnail_url($course->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $course->ID);
+            if(!$image && $course->courseType)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+        }
+        $course->pathImage = $image;
+
+        $all_courses[] = new Course($course);
+    }
+
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
+    $total_pages = ceil($count_all_course / 20);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+
+    return new WP_REST_Response(
+        array(
+            'count_all_course' => $count_all_course,
+            'page'=>$numbers_of_pages,
+            'count_course_type'=>[
+                'Video'=> countCourseType('Video'),
+                'Podcast'=>countCourseType('Podcast'),
+                'Opleidingen'=>countCourseType('Opleidingen'),
+                'Artikel'=>countCourseType('Artikel'),
+                'Masterclass'=>countCourseType('Masterclass'),
+                'Workshop'=>countCourseType('Workshop'),
+                'E_Learning'=>countCourseType('E-Learning'),
+                'Event'=>countCourseType('Event'),
+                'Training'=>countCourseType('Training'),
+                'Lezing'=>countCourseType('Lezing'),
+                'Assessment'=>countCourseType('Assessment'),
+            ],
+            'course' => $all_courses,
+        ), 200 );
 }
 
 function all_company_in_plateform()
