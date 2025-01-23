@@ -2521,7 +2521,7 @@ function get_courses_of_subtopics($data)
   return $courses_related_subtopic;
 }
 
-function getTopicCoursesOptimized($data)
+function getTopicCoursesROptimized($data)
 {
   $topic_id = $data['id']; 
   $infos = [];
@@ -2651,6 +2651,136 @@ function getTopicCoursesOptimized($data)
 
 }
 
+function getTopicCoursesOptimized($data)
+{
+  $topic_id = $data['id']; 
+  $infos = [];
+  $main_experts = [];
+  $expertsID = [];
+  // $futher = isset($data['futher']) ? true : false;
+
+  //Get category information
+  // $category = detailCategory($topic_id);
+  // $infos['category'] = $category;
+
+  //Get other topics
+  // $subtopics = get_categories( array(
+  //   'taxonomy'   => 'course_category',
+  //   'parent' => (int)$category->parent,
+  //   'exclude' => $topic_id,
+  //   'hide_empty' => false,
+  // )) ?? false;
+  // $infos['other_topics'] = $subtopics;
+
+  /** Global posts **/
+  $tax_query = array(
+  array(
+    "taxonomy" => "course_category",
+    "field"    => "term_id",
+    "terms"    => $topic_id
+    )
+  );
+  $courses = array();
+  $query_blogs = new WP_Query( $args );
+
+  //Filter with category
+  $args = array(
+      'post_type' => array('post', 'course'),
+      'tax_query' => $tax_query,
+      'nopaging' => true,
+  );
+  $query_blogs_category = new WP_Query( $args );
+  $courses = isset($query_blogs_category->posts) ? $query_blogs_category->posts : [];
+
+  $outcome_courses = array();
+  for($i = 0; $i < count($courses); $i++) 
+  {
+    $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
+    $author = get_user_by('ID', $courses[$i] -> post_author);
+    $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+    if ($courses[$i]->visibility != []) 
+      if ($author_company != $current_user_company)
+        continue;
+
+        //Experts post 
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $courses[$i]->experts = array(); 
+        $experts = get_field('experts',$courses[$i]->ID);
+        if(!empty($experts))
+          foreach ($experts as $key => $expert) :
+            $expert = get_user_by( 'ID', $expert );
+            $experts_img = get_field('profile_img','user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+            if(!in_array($expert->ID, $expertsID)):
+              $main_experts[] = new Expert ($expert,$experts_img);
+              $expertsID[] = $expert->ID;
+            endif;
+          endforeach;      
+        $courses[$i]->author = new Expert ($author, $author_img);
+        if(!in_array($author->ID, $expertsID)):
+          $main_experts[] = new Expert ($author, $author_img); 
+          $expertsID[] = $author->ID;
+        endif;
+
+        $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+        $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+        $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+        //Image - article
+        $image = get_field('preview', $courses[$i]->ID)['url'];
+        if(!$image){
+            $image = get_the_post_thumbnail_url($courses[$i]->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $courses[$i]->ID);
+                    if(!$image)
+                        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+        }
+        $courses[$i]->pathImage = $image;
+        $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+        $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
+        if (strtolower($courses[$i]->courseType) == 'podcast')
+        {
+           $podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
+           if (!empty($podcasts))
+              $courses[$i]->podcasts = $podcasts;
+            else {
+              $podcasts = get_field('podcasts_index',$courses[$i]->ID) ? get_field('podcasts_index',$courses[$i]->ID) : [];
+              if (!empty($podcasts))
+              {
+                $courses[$i]->podcasts = array();
+                foreach ($podcasts as $key => $podcast) 
+                { 
+                  $item= array(
+                    "course_podcast_title" => $podcast['podcast_title'], 
+                    "course_podcast_intro" =>$podcast['podcast_description'],
+                    "course_podcast_url" => $podcast['podcast_url'],
+                    "course_podcast_image" => $podcast['podcast_image'],
+                  );
+                  array_push ($courses[$i]->podcasts,($item));
+                }
+              }
+          }
+        }
+        $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
+        $courses[$i]->tags = get_the_terms( $courses[$i]->ID, 'course_category' );
+        // $tags = get_field('categories',$courses[$i]->ID) ?? [];
+        // if($tags)
+        //   if (!empty($tags))
+        //     foreach ($tags as $key => $category) 
+        //       if(isset($category['value'])){
+        //         $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+        //         array_push($courses[$i]->tags,$tag);
+        //       }
+        $new_course = new Course($courses[$i]);
+        array_push($outcome_courses, $new_course);
+  }
+  // $infos['courses'] = $outcome_courses;
+  // $infos['experts'] = $main_experts;
+
+  $response = new WP_REST_Response($outcome_courses);
+  $response->set_status(200);
+  return($response);
+
+}
 
 /**
  * Reservation Endpoints
