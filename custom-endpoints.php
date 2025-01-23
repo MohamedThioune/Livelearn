@@ -5,7 +5,7 @@ require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARAT
 $GLOBALS['user_id'] = get_current_user_id();
 
 /** **************** Class **************** */
-
+ 
 class Expert
 {
   public $id;
