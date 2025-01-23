@@ -164,22 +164,27 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
   $title = $request['title'] ?? "";
   $body = $request['body'] ?? "";
   $current_user_id = $GLOBALS['user_id'];
+  $data = $request['data'] ?? [];
+  sendNotificationToUser($current_user_id,$title,$body,$data);
+}
+
+function sendNotificationToUser($userId, $title, $body, $data = []) {
   // Vérifier que l'utilisateur est connecté
-  if (!$current_user_id) {
-      return new WP_Error('user_not_logged_in', 'Utilisateur non connecté.', ['status' => 401]);
+  if (!$userId) {
+      return new WP_Error('user_not_logged_in', 'You have to provide the user id!', ['status' => 401]);
   }
 
   // Récupérer le token de l'utilisateur
-  $token = get_field('smartphone_token', 'user_' . $current_user_id);
+  $token = get_field('smartphone_token', 'user_' . $userId);
   if (!$token) {
-      return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
+      return new WP_Error('token_not_found', 'FCM Token not found!', ['status' => 404]);
   }
 
   // Clé serveur Firebase
   $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
 
-  // Données de la notification
-  $data = [
+  // Préparer les données de la notification
+  $notificationData = [
       'to' => $token,
       'notification' => [
           'title' => $title,
@@ -187,9 +192,14 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
       ],
   ];
 
-  $dataString = json_encode($data);
+  // Ajout données supplémentaires facultatives 
+  if (!empty($data)) {
+      $notificationData['data'] = $data; // Doit être un tableau associatif
+  }
 
-  // En-têtes HTTP
+  $dataString = json_encode($notificationData);
+
+  
   $headers = [
       'Authorization: ' . $serverKey,
       'Content-Type: application/json',
@@ -215,7 +225,7 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
   if ($response === false) {
       $error_msg = curl_error($ch);
       curl_close($ch);
-      return new WP_Error('curl_error', 'Erreur CURL : ' . $error_msg, ['status' => 500]);
+      return new WP_Error('curl_error', 'Error CURL : ' . $error_msg, ['status' => 500]);
   }
 
   // Vérification du code de réponse HTTP
@@ -237,7 +247,6 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
       );
   }
 }
-
 
 
 
