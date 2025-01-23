@@ -2783,9 +2783,8 @@ function getTopicCoursesOptimized($data)
 }
 
 /**
- * Reservation Endpoints
- */
-
+  * Reservation Endpoints
+  */
   function reserve_course(WP_REST_Request $request)
   {
     if (!isset($request['user_id']) || empty($request['user_id']))
@@ -2839,8 +2838,8 @@ function getTopicCoursesOptimized($data)
     
   }
   
-  /**
-   * Assessment Endpoints
+/**
+  * Assessment Endpoints
   */
   function getAssessments($data)
   {
