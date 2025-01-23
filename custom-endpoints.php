@@ -165,7 +165,7 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
   $body = $request['body'] ?? "";
   $current_user_id = $GLOBALS['user_id'];
   $data = $request['data'] ?? [];
-  sendNotificationToUser($current_user_id,$title,$body,$data);
+  return sendNotificationToUser($current_user_id,$title,$body,$data);
 }
 
 function sendNotificationToUser($userId, $title, $body, $data = []) {
