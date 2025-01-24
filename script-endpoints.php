@@ -688,11 +688,12 @@ function link_the_categories_courses()
     $numbers_of_pages = range(1, $total_pages);
     return new WP_REST_Response(
         array(
-            'message'=>'course applied '.$number_course_valide.'/'.$total_number_course,
+            'message'=> 'course applied' . $number_course_valide . '/' . $total_number_course,
             'count_all_course' => $count_all_course,
-            'page'=>$numbers_of_pages,
-            'courses' =>$cousres_returned
-        ));
+            'page'=> $numbers_of_pages,
+            'courses' => $cousres_returned
+        )
+    );
 }
 
 /**
