@@ -2789,7 +2789,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'all_courses_in_plateform'
     ));
-    register_rest_route ('custom/v1', '/courses/test/all', array(
+    register_rest_route ('custom/v1', '/courses/all/test', array(
         'methods' => 'GET',
         'callback' => 'all_courses_in_plateform_test'
     ));
