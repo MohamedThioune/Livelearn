@@ -554,7 +554,7 @@ function detailCategory($categoryID){
   $sample['ID'] = $categoryID ;
   $sample['name'] = $param_category->name ;
   $sample['slug'] = $param_category->slug ;
-  $sample['image'] = get_field('image', 'category_'. $topic) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
+  $sample['image'] = get_field('image', 'category_'. $categoryID) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
   $sample['parent'] = $param_category->category_parent;
 
   return (Object)$sample;  
