@@ -634,8 +634,7 @@ function link_the_categories_courses()
     $page = $_GET['page'] ?? 1;
     $course_per_page = 800;
     $args = array(
-        'post_type' => array('post'),
-        // 'post_type' => array('course','post'),
+        'post_type' => array('course','post'),
         'post_status' => 'publish',
         'posts_per_page' => $course_per_page,
         'order' => 'DESC' ,
@@ -674,8 +673,7 @@ function link_the_categories_courses()
         }, $filtered_categories);
 
         $cousres_returned[] = $course;
-        $taxonomy = ($course->post_type == 'course') ? 'course_category' : 'post_tag';
-        if (wp_set_post_terms($course->ID, $categories_ids, $taxonomy))
+        if (wp_set_post_terms($course->ID, $categories_ids, 'course_category'))
             $number_course_valide++;
 
         $total_number_course++;
