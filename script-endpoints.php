@@ -377,6 +377,7 @@ function migration_episodes_podcast(){
  */
 function save_podcast_in_json_file($id_course) : bool
 {
+    return false;
     $postId = $id_course;
     $fileName = get_stylesheet_directory() . "/db/podcast.json";
 
@@ -390,13 +391,13 @@ function save_podcast_in_json_file($id_course) : bool
         "X-Auth-Date: $time",
         "Authorization: $hash"
     ];
-      $podcast_index = get_field('podcasts_index', $postId);
-     if (!$podcast_index)
+     $course_type = get_field('course_type', $postId);
+     if ($course_type!='Podcast')
         return false;
 
     $feedid = get_field('origin_id',$postId);
     if (!$feedid)
-        return false;
+        return false; // that mean we are not in podcast index course
 
     // get courses in json file
     $episodes_json = file_get_contents($fileName)?:'';
@@ -407,17 +408,17 @@ function save_podcast_in_json_file($id_course) : bool
             return $episode['post_id'] == $postId;
         }) : [];
 
-    if ($filterEpisodes) {
+    if (!empty($filterEpisodes)) {
         // $podcast_exist = array_values($filterEpisodes);
         $urlEpisodes = array_map(function ($episode){
            return  $episode['episode_id'];
         },$filterEpisodes);
-        $urlEpisodes = array_values($urlEpisodes);
+        $urlEpisodes = array_values($urlEpisodes); // we will do the test if an episode is exist in the json file or not
 
         $episodes = array_filter($episodes, function($episode) use ($urlEpisodes) {
             return !in_array($episode['episode_id'], $urlEpisodes);
         });
-        // $count_episode_after = count($episodes);
+
     }
 
     $url = 'https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id='.$feedid;
@@ -427,49 +428,63 @@ function save_podcast_in_json_file($id_course) : bool
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //to disable secure of open ssl
-        $response = curl_exec ($ch);
+    //$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $response = curl_exec ($ch);
     curl_close ($ch);
     $data = (json_decode($response,TRUE));
-    $url_to_get_audio = $data['feed']['url'];
-
-    $xml = simplexml_load_file($url_to_get_audio);
-    if($xml)
-        foreach($xml->channel[0] as $pod) {
+    $xml = null;
+    if (!empty($data) && isset($data['feed']['url']) && !empty($data['feed']['url'])) {
+        $url_to_get_audio = $data['feed']['url'];
+        if($url_to_get_audio) {
+            $xml = simplexml_load_file($url_to_get_audio);
+            var_dump("post ID => $postId","url to load data => $url_to_get_audio",$xml);
+            if($xml===false)
+                return false;
+        }
+        //var_dump($url_to_get_audio,$postId,$xml);
+    } else
+        return false;
+    if($xml && property_exists($xml,'channel')) {
+        foreach ($xml->channel[0] as $pod) {
             if ($pod->enclosure->attributes())
-            if($pod->enclosure->attributes()->url) {
-                $description_podcast = (string)$pod->description;
-                $title_podcast = (string)$pod->title;
-                $mp3 = (string)$pod->enclosure->attributes()->url;
-                $date =(string)$pod->pubDate;
-                $image_audio = (string)$pod->children('itunes', true)->image->attributes()->href;
-
-                    $podcast = $episodes ? array_filter($episodes,function ($episode) use ($mp3){
+                if ($pod->enclosure->attributes()->url) {
+                    $description_podcast = (string)$pod->description;
+                    $title_podcast = (string)$pod->title;
+                    $mp3 = (string)$pod->enclosure->attributes()->url;
+                    $date = (string)$pod->pubDate;
+                    $image_node = $pod->children('itunes', true)->image ?? null;
+                    $image_audio = $image_node && $image_node->attributes()->href
+                        ? (string) $image_node->attributes()->href
+                        : null;
+                    // Check if the episode already exists, ajouter les autres champs...
+                    $podcast = $episodes ? array_filter($episodes, function ($episode) use ($mp3) {
                         return $episode['episode_id'] == $mp3;
                     }) : [];
 
-                if (!$podcast) {
-                    $filterEpisodes[] = array(
-                        'post_id' => intval($postId), // so not need to make post type
-                        'episode_id' => $mp3,
-                        'episode_image' => $image_audio ?: $url_image_xml,
-                        'episode_title' => $title_podcast ?: '',
-                        'episode_description' => $description_podcast ? substr($description_podcast, 0, 180) : '',
-                        'episode_date' => $date ?: date('Y-m-d H:i:s'),
-                    );
+                    if (!$podcast) {
+                        $filterEpisodes[] = array(
+                            'post_id' => intval($postId), // so not need to make post type
+                            'episode_id' => $mp3,
+                            'episode_image' => $image_audio ?: $url_image_xml,
+                            'episode_title' => $title_podcast ?: '',
+                            'episode_description' => $description_podcast ? substr($description_podcast, 0, 180) : '',
+                            'episode_date' => $date ?: date('Y-m-d H:i:s'),
+                        );
+                    }
                 }
-            }
         }
-
     $filterEpisodes = array_values($filterEpisodes);
-    $episodes = array_merge($filterEpisodes,$episodes);
-    $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+    $episodes_final = array_merge($filterEpisodes,$episodes);
+    $newJsonContent = json_encode( $episodes_final,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
     return file_put_contents($fileName,$newJsonContent);
+    }
+    return false;
 }
 function update_podcast_on_podcastindex()
 {
     $page = $_GET['page'] ?? 1;
     $type = 'Podcast';
-    $post_per_page = 50;
+    $post_per_page = 2;
     $args = array(
         'post_type' => 'course',
         'post_status' => 'publish',
@@ -485,10 +500,9 @@ function update_podcast_on_podcastindex()
     $fail = 0;
     $id_failed = [];
     foreach ($courses as $course) {
-
-        if(save_podcast_in_json_file($course->ID))
+        if(save_podcast_in_json_file($course->ID)) {
             $succes = $succes + 1;
-        else {
+        } else {
             $fail = $fail + 1;
             $id_failed[] = $course->ID;
         }
@@ -509,13 +523,12 @@ function update_podcast_on_podcastindex()
     return new WP_REST_Response( array(
         'pages' => $numbers_of_pages,
         'courses_updated'=>array(
-            'success'=>$succes,
-            'failed'=>array(
-                'score' =>$fail,
+            'score'=>array(
+                'success'=>$succes,
+                'failed' =>$fail,
                 'course_failed' => $id_failed
             )
         )
-        //'courses' => $courses
     ));
 }
 
@@ -526,7 +539,7 @@ function get_video_episode()
     if (!$id_course)
         return  new WP_REST_Response(['error'=>'you must put the id of course']);
     if(!get_post($id_course))
-        return  new WP_REST_Response(['error'=>'id not correcte make sure the exist'],409);
+        return  new WP_REST_Response(['error'=>'id not correct make sure the exist'],409);
 
     define("EPISODE_PER_PAGE", 10);
     $fileName = get_stylesheet_directory() . "/db/video.json";
