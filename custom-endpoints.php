@@ -2776,9 +2776,9 @@ function getTopicCoursesOptimized($data)
   // $infos['courses'] = $outcome_courses;
   // $infos['experts'] = $main_experts;
 
-  $response = new WP_REST_Response($outcome_courses);
-  $response->set_status(200);
-  return($response);
+  // $response = new WP_REST_Response($outcome_courses);
+  // $response->set_status(200);
+  return($outcome_courses);
 
 }
 
