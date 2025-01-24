@@ -164,22 +164,27 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
   $title = $request['title'] ?? "";
   $body = $request['body'] ?? "";
   $current_user_id = $GLOBALS['user_id'];
+  $data = $request['data'] ?? [];
+  return sendNotificationToUser($current_user_id,$title,$body,$data);
+}
+
+function sendNotificationToUser($userId, $title, $body, $data = []) {
   // Vérifier que l'utilisateur est connecté
-  if (!$current_user_id) {
-      return new WP_Error('user_not_logged_in', 'Utilisateur non connecté.', ['status' => 401]);
+  if (!$userId) {
+      return new WP_Error('user_not_logged_in', 'You have to provide the user id!', ['status' => 401]);
   }
 
   // Récupérer le token de l'utilisateur
-  $token = get_field('smartphone_token', 'user_' . $current_user_id);
+  $token = get_field('smartphone_token', 'user_' . $userId);
   if (!$token) {
-      return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
+      return new WP_Error('token_not_found', 'FCM Token not found!', ['status' => 404]);
   }
 
   // Clé serveur Firebase
   $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
 
-  // Données de la notification
-  $data = [
+  // Préparer les données de la notification
+  $notificationData = [
       'to' => $token,
       'notification' => [
           'title' => $title,
@@ -187,9 +192,14 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
       ],
   ];
 
-  $dataString = json_encode($data);
+  // Ajout données supplémentaires facultatives 
+  if (!empty($data)) {
+      $notificationData['data'] = $data; // Doit être un tableau associatif
+  }
 
-  // En-têtes HTTP
+  $dataString = json_encode($notificationData);
+
+  
   $headers = [
       'Authorization: ' . $serverKey,
       'Content-Type: application/json',
@@ -215,7 +225,7 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
   if ($response === false) {
       $error_msg = curl_error($ch);
       curl_close($ch);
-      return new WP_Error('curl_error', 'Erreur CURL : ' . $error_msg, ['status' => 500]);
+      return new WP_Error('curl_error', 'Error CURL : ' . $error_msg, ['status' => 500]);
   }
 
   // Vérification du code de réponse HTTP
@@ -237,7 +247,6 @@ function sendFirebasePushNotification(WP_REST_Request $request) {
       );
   }
 }
-
 
 
 
@@ -2653,75 +2662,52 @@ function getTopicCoursesROptimized($data)
 
 function getTopicCoursesOptimized($data)
 {
-  $topic_id = $data['id']; 
-  $infos = [];
-  $main_experts = [];
-  $expertsID = [];
-  // $futher = isset($data['futher']) ? true : false;
-
-  //Get category information
-  // $category = detailCategory($topic_id);
-  // $infos['category'] = $category;
-
-  //Get other topics
-  // $subtopics = get_categories( array(
-  //   'taxonomy'   => 'course_category',
-  //   'parent' => (int)$category->parent,
-  //   'exclude' => $topic_id,
-  //   'hide_empty' => false,
-  // )) ?? false;
-  // $infos['other_topics'] = $subtopics;
-
-  /** Global posts **/
-  $tax_query = array(
-  array(
-    "taxonomy" => "course_category",
-    "field"    => "term_id",
-    "terms"    => $topic_id
+   $topic_id = $data['id'];
+   $courses = get_posts(
+    array(
+      'post_type' => array('course', 'post'),
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC',
+      'meta_query'     => array(
+        'relation' => 'OR',
+         array
+         (
+             'key'     => 'categories',
+             'value'   => $topic_id, 
+             'compare' => 'LIKE'
+         ),
+        array
+        (
+            'key'     => 'category_xml',
+            'value'   => $topic_id, 
+            'compare' => 'LIKE'
+        )
+    )
     )
   );
-  $courses = array();
-  $query_blogs = new WP_Query( $args );
-
-  //Filter with category
-  $args = array(
-      'post_type' => array('post', 'course'),
-      'tax_query' => $tax_query,
-      'nopaging' => true,
-  );
-  $query_blogs_category = new WP_Query( $args );
-  $courses = isset($query_blogs_category->posts) ? $query_blogs_category->posts : [];
 
   $outcome_courses = array();
-  for($i = 0; $i < count($courses); $i++) 
+  
+  for($i=0; $i <count($courses) ;$i++) 
   {
     $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
-    $author = get_user_by('ID', $courses[$i] -> post_author);
+    $author = get_user_by( 'ID', $courses[$i] -> post_author  );
     $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
     if ($courses[$i]->visibility != []) 
       if ($author_company != $current_user_company)
         continue;
-
-        //Experts post 
         $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $courses[$i]->experts = array(); 
         $experts = get_field('experts',$courses[$i]->ID);
         if(!empty($experts))
-          foreach ($experts as $key => $expert) :
+          foreach ($experts as $key => $expert) {
             $expert = get_user_by( 'ID', $expert );
-            $experts_img = get_field('profile_img','user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
-            if(!in_array($expert->ID, $expertsID)):
-              $main_experts[] = new Expert ($expert,$experts_img);
-              $expertsID[] = $expert->ID;
-            endif;
-          endforeach;      
-        $courses[$i]->author = new Expert ($author, $author_img);
-        if(!in_array($author->ID, $expertsID)):
-          $main_experts[] = new Expert ($author, $author_img); 
-          $expertsID[] = $author->ID;
-        endif;
-
+            }
+      
+        $courses[$i]-> author = new Expert ($author , $author_img);
         $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
         $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
         $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
@@ -2750,8 +2736,8 @@ function getTopicCoursesOptimized($data)
                 foreach ($podcasts as $key => $podcast) 
                 { 
                   $item= array(
-                    "course_podcast_title" => $podcast['podcast_title'], 
-                    "course_podcast_intro" =>$podcast['podcast_description'],
+                    "course_podcast_title"=>$podcast['podcast_title'], 
+                    "course_podcast_intro"=>$podcast['podcast_description'],
                     "course_podcast_url" => $podcast['podcast_url'],
                     "course_podcast_image" => $podcast['podcast_image'],
                   );
@@ -2761,26 +2747,23 @@ function getTopicCoursesOptimized($data)
           }
         }
         $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
-        $courses[$i]->tags = get_the_terms( $courses[$i]->ID, 'course_category' );
-        // $tags = get_field('categories',$courses[$i]->ID) ?? [];
-        // if($tags)
-        //   if (!empty($tags))
-        //     foreach ($tags as $key => $category) 
-        //       if(isset($category['value'])){
-        //         $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
-        //         array_push($courses[$i]->tags,$tag);
-        //       }
+        $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
+        $tags = get_field('categories',$courses[$i]->ID) ?? [];
+        $courses[$i]->tags= array();
+        if($tags)
+          if (!empty($tags))
+            foreach ($tags as $key => $category) 
+              if(isset($category['value'])){
+                $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                array_push($courses[$i]->tags,$tag);
+              }
         $new_course = new Course($courses[$i]);
         array_push($outcome_courses, $new_course);
   }
-  // $infos['courses'] = $outcome_courses;
-  // $infos['experts'] = $main_experts;
 
-  // $response = new WP_REST_Response($outcome_courses);
-  // $response->set_status(200);
-  return($outcome_courses);
-
+ return $outcome_courses;
 }
+
 
 /**
   * Reservation Endpoints
