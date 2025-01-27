@@ -4013,10 +4013,10 @@ function all_courses_in_plateform_test()
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
-        'posts_per_page' => 20,
+        'posts_per_page' => -1,
         'order' => 'DESC' ,
         'meta_query' => array(),
-        'paged' => $page,
+        // 'paged' => $page,
     );
     // Filter by course type
     if ($type) {
