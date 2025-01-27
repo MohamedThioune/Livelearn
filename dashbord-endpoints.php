@@ -4056,6 +4056,9 @@ function all_courses_in_plateform_test()
     $courses = get_posts($args);
     $all_courses = array();
 
+    var_dump($courses);
+    return 0;
+    
     foreach ($courses as $course) {
         $course->visibility = get_field('visibility',$course->ID) ?? [];
         if ($course -> post_author) {
