@@ -562,8 +562,7 @@ function detailCategory($categoryID, $userID = null){
   $sample['slug'] = $param_category->slug ;
   $sample['image'] = get_field('image', 'category_'. $categoryID) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
   $sample['parent'] = $param_category->category_parent;
-  $sample['parent'] = $param_category->category_parent;
-
+  $sample['is_followed'] = $is_followed;
 
   return (Object)$sample;  
 }
@@ -2544,10 +2543,10 @@ function getTopicCoursesROptimized($data)
   $infos = [];
   $main_experts = [];
   $expertsID = [];
-  // $futher = isset($data['futher']) ? true : false;
+  $userID = isset($data['userID']) ? $data['userID'] : null;
 
   //Get category information
-  $category = detailCategory($topic_id);
+  $category = detailCategory($topic_id, $userID);
   $infos['category'] = $category;
 
   //Get other topics
