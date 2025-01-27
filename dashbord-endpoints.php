@@ -4018,12 +4018,12 @@ function all_courses_in_plateform_test()
         'meta_query' => array(),
         // 'paged' => $page,
     );
+
     // Filter by course type
     if ($type) {
         $args['meta_query'][] = array(
-            'key' => 'course_type',
-            'value' => $type,
-            'compare' => 'IN'
+            'meta_key' => 'course_type',
+            'meta_value' => $type,
         );
     }
 
@@ -4050,8 +4050,12 @@ function all_courses_in_plateform_test()
             'compare' => '<='
         );
     }
+    
+    //Filter by author
     if ($experts)
         $args['author__in'] = $experts;
+
+    var_dump($args);
 
     $courses = get_posts($args);
     $all_courses = array();
@@ -4101,16 +4105,16 @@ function all_courses_in_plateform_test()
             'page'=>$numbers_of_pages,
             'count_course_type'=>[
                 'Video'=> countCourseType('Video'),
-                'Podcast'=>countCourseType('Podcast'),
-                'Opleidingen'=>countCourseType('Opleidingen'),
-                'Artikel'=>countCourseType('Artikel'),
-                'Masterclass'=>countCourseType('Masterclass'),
-                'Workshop'=>countCourseType('Workshop'),
-                'E_Learning'=>countCourseType('E-Learning'),
-                'Event'=>countCourseType('Event'),
-                'Training'=>countCourseType('Training'),
-                'Lezing'=>countCourseType('Lezing'),
-                'Assessment'=>countCourseType('Assessment'),
+                'Podcast' => countCourseType('Podcast'),
+                'Opleidingen'=> countCourseType('Opleidingen'),
+                'Artikel' => countCourseType('Artikel'),
+                'Masterclass' => countCourseType('Masterclass'),
+                'Workshop' => countCourseType('Workshop'),
+                'E_Learning' => countCourseType('E-Learning'),
+                'Event'=> countCourseType('Event'),
+                'Training' => countCourseType('Training'),
+                'Lezing' => countCourseType('Lezing'),
+                'Assessment' => countCourseType('Assessment'),
             ],
             'course' => $all_courses,
         ), 200 );
