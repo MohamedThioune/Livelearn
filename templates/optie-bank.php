@@ -253,9 +253,10 @@ if($optie == "✔"){
             
     //Categories
     if(isset($onderwerpen[0]))
-        if($onderwerpen[0] && $onderwerpen[0] != "" && $onderwerpen[0] != " " )
-            update_field('categories', $onderwerpen, $id_post);
-    
+        if($onderwerpen[0] && $onderwerpen[0] != "" && $onderwerpen[0] != " " ) {
+            wp_set_post_terms($id_post, $onderwerpen, 'course_category');
+            //update_field('categories', $onderwerpen, $id_post);
+        }
     update_field('short_description', nl2br($course->short_description), $id_post);
     update_field('long_description', nl2br($course->long_description), $id_post);
     update_field('url_image_xml', $course->image_xml, $id_post);

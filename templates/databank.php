@@ -1159,7 +1159,7 @@ if (!empty($courses)) {
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-                url: '/optie-bank',
+                url: '/livelearn/optie-bank',
                 type: 'POST',
                 data: {
                    id: ids,
