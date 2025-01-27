@@ -627,27 +627,8 @@ $user = wp_get_current_user();
                                         }
                                     }
                                 }
-                                // //Categories
 
                                 //Categories
-                                $category = " ";
-                                $id_category = 0;
-                                $category_id = 0;
-                                $categories = get_field('categories',  $course->ID);
-                                if ($categories)
-                                    if (isset($categories[0]['value'])) {
-                                        $category_id = intval($categories[0]['value']);
-                                    }
-                                $categories_xml = get_field('category_xml', $course->ID);
-                                if ($categories_xml)
-                                    $category_xml = intval($categories_xml[0]['value']);
-                                if(isset($category_xml))
-                                    if($category_xml != 0)
-                                        $category = (String)get_the_category_by_ID($category_xml);
-
-                                if($category_id)
-                                    if($category_id != 0)
-                                        $category = (String)get_the_category_by_ID($category_id);
 
                                 $artikel_single = "Artikel";
                                 $white_type_array =  ['Lezing', 'Event'];
@@ -692,36 +673,13 @@ $user = wp_get_current_user();
 
                                     <td id=" <?php echo $course->ID; ?>" class="textTh td_subtopics btn">
                                         <?php
-                                        $course_subtopics = get_field('categories', $course->ID);
-                                        if($course_subtopics != null){
+
+                                        $course_subtopics = get_full_categories($course->ID);
+
+                                        if($course_subtopics){
                                             ?>
-                                            <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element" >
-                                                <?= $category ?>
-                                                <?php
-                                                $field='';
-                                                $read_topis = array();
-                                                if($course_subtopics != null){
-                                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                                        foreach ($course_subtopics as $key => $course_subtopic) {
-                                                            if(!$course_subtopic)
-                                                                continue;
-                                                            if(!is_int($course_subtopic['value']))
-                                                                continue;
-
-                                                            $topic_category = get_the_category_by_ID($course_subtopic['value']);
-                                                            if(is_wp_error($topic_category))
-                                                                continue;
-
-                                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
-                                                                $field .= (String)$topic_category . ',';
-                                                                array_push($read_topis, intval($course_subtopic['value']));
-                                                            }
-                                                        }
-                                                        $field = substr($field,0,-1);
-                                                        echo $field;
-                                                    }
-                                                }
-                                                ?>
+                                            <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element">
+                                                <?= $course_subtopics[0]->name ?>
                                             </div>
                                         <?php } else { ?>
                                             <button class="td_subtopics btn btn-success" id="<?= $course->ID ?>">
@@ -763,7 +721,6 @@ $user = wp_get_current_user();
                                                 <?php
                                             }
                                             ?>
-
                                         </div>
                                     </td>
                                     <td class="textTh">
@@ -785,8 +742,6 @@ $user = wp_get_current_user();
                                                      src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt=""
                                                      srcset="">
                                             </p>
-
-
                                             <ul class="dropdown-menu">
                                                 <li class="my-1"><i class="fa fa-ellipsis-vertical"></i>
                                                     <i class="fa fa-eye px-2"></i>
@@ -794,19 +749,13 @@ $user = wp_get_current_user();
                                                         Bekijk
                                                     </a>
                                                 </li>
-
                                                 <li class='my-2'><i class='fa fa-gear px-2'></i><a href='<?= $path_edit ?>' target='_blank'>Pas aan</a></li>
-
                                                 <li class='my-1 remove_opleidingen' ><i class='fa fa-trash px-2'></i><input onclick="removeCourse(this)" id="<?= $course->ID ?>" type='button' value='Verwijderen'/></li>
-
                                             </ul>
 
                                         </div>
                                     </td>
                                 </tr>
-
-
-
                                 <?php
                                 //  die();
                             }
@@ -1395,6 +1344,7 @@ $user = wp_get_current_user();
             },
             complete:function () {
                 $(this).off('click');
+                console.log('finish...')
             }
         });
     });
@@ -1402,7 +1352,6 @@ $user = wp_get_current_user();
             document.getElementById('companyAuthor').innerHTML="<span>Wait for saving datas <i class='fas fa-spinner fa-pulse'></i></span>";
             const id_course_id_course = $('div[id^="id_course_"]')[0].id;
             const id_course = id_course_id_course.replace('id_course_','');
-            //console.log(id_course);return;
             var author = $('#selected_user').val()
             $.ajax({
                 url:"/save-author-and-compagny",
@@ -1502,7 +1451,7 @@ $user = wp_get_current_user();
         var txt = $(this).val();
         console.log(txt);
         $.ajax({
-            url:"/fetch-databank-live-course/",
+            url:"/livelearn/fetch-databank-live-course/", // /** Template Name: Fetch databank  Live course */
             method:"post",
             data:{
                 search_txt_course : txt,

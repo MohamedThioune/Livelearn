@@ -22,7 +22,6 @@ if (empty($search_txt_course)) {
 );
 }
 $courses = get_posts($args);
-
 ?>
 
         <?php  
@@ -38,25 +37,7 @@ $courses = get_posts($args);
                 }
 
                //Categories
-               $category = "";
-               $id_category = 0;
-               $category_id = 0;
-               $categories = get_field('categories',  $course->ID);
-               if ($categories)
-                  if (isset($categories[0]['value'])) {
-                     $category_id = intval($categories[0]['value']);
-                  }
-               $categories_xml = get_field('category_xml', $course->ID);
-               if ($categories_xml)
-                  $category_xml = intval($categories_xml[0]['value']);
-               if(isset($category_xml))
-                  if($category_xml != 0)
-                     $category = (String)get_the_category_by_ID($category_xml);
-
-               if($category_id)
-                  if($category_id != 0)
-                     $category = (String)get_the_category_by_ID($category_id);
-
+               $category = get_full_categories($course->ID);
                 // Author Image
                 $image_author = get_field('profile_img', 'user_' . $course->post_author);
                 $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
@@ -103,7 +84,6 @@ $courses = get_posts($args);
                      $language_display = $lang;
                   // take juste 2 first letter
                   $lang_first_character = strtolower(substr($language_display,0,2));
-
                   switch ($lang_first_character){
                      case 'en':
                         $language_display='English';
@@ -142,10 +122,8 @@ $courses = get_posts($args);
 
                 // Views (Placeholder value)
                 $views = 503;
-
                 // Company Name
                 $company_name = !empty($company) ? '' : 'No company';
-
                 echo '<tr class="pagination-element-block" id="' . $course->ID . '">';
                 echo '    <td><div class="for-img"><img src="' . $thumbnail . '" alt="" srcset=""></div></td>';
                 echo '    <td class="textTh text-left first-td-databank"><a style="color:#212529;font-weight:bold" href="' . $link . '">' . $course->post_title . '</a></td>';
@@ -154,13 +132,13 @@ $courses = get_posts($args);
                 echo '    <td id="" class="textTh td_subtopics">' . $price . '</td>';
                 if ($category) {
                    echo '    <td id="' . $course->ID . '" class="textTh td_subtopics btn"> 
-                       <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element" >
-                      ' . $category . '
-                      </div>
-                   </td>';
+                                <div id= "<?php echo $course->ID; ?>" class="d-flex content-subtopics bg-element" >
+                               ' . $category[0]->name . '
+                               </div>
+                            </td>';
                 } else {
                    echo '    <td id="' . $course->ID . '" class="textTh td_subtopics btn"> 
-                            <button class="btn btn-success" >add subtopics</button>
+                            <button class="td_subtopics btn btn-success" id="'.$course->ID.'">add subtopics</button>
                         </td>';
                 }
                 echo '    <td class="textTh "><div class="bg-element"><p>' . $formattedDate . '</p></div></td>';

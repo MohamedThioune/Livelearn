@@ -624,17 +624,17 @@ function get_podcast_episode()
 
 
 
-function get_full_categories($id_course):array
+function get_full_categories($id_course,$taxonomie = 'course_category'):array
 {
     $categories_to_return = [];
-    $categories = wp_get_post_terms($id_course, 'course_category');
+    $categories = wp_get_post_terms($id_course, $taxonomie);
     foreach ($categories as $category) {
         $category->image = get_field('image','category_'.$category->term_id);
         $category->title_category = get_field('title_category','category_'.$category->term_id);
         $category->description_category = get_field('descriptor_category','category_'.$category->term_id);
         $category->partners_category = get_field('partners_category','category_'.$category->term_id);
         $category->banner_category = get_field('banner_category','category_'.$category->term_id);
-        $category->subtopics = get_term_children(intval($category->term_id),'course_category');
+        $category->subtopics = get_term_children(intval($category->term_id),$taxonomie);
 
         $categories_to_return[] = $category;
     }

@@ -1170,24 +1170,25 @@ if (!empty($courses)) {
                     document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false)
                     $('#select_field').attr('hidden',true)
-                    console.log('saving one course on plateform')
+                    //console.log('saving one course on plateform')
                 },
                error: function(error) {
                 document.getElementById('content-back-topics').innerHTML = error;
                 $('#loader').attr('hidden',true)
                 $('#select_field').attr('hidden',false)
                 document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the course.</span>";
-                console.log(error)
+                //console.log(error)
                },
                success: function(data) {
-                    console.log('response ',data);
                     document.getElementById('content-back-topics').innerHTML = data;
                     // document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-success'>Record applied successfully</span>";
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
-                    // location.reload();
-                    // alert("Record applied successfully");
+                    alert("Record applied successfully");
+                },
+                complete: function () {
+                    location.reload();
                 }
             });
         }
@@ -1251,7 +1252,6 @@ if (!empty($courses)) {
                 dataType:"text",
                 success: function(data){
                     // Get the modal
-                    console.log(data)
                     var modal = document.getElementById("myModal");
                     $('.display-fields-clean').html(data)
                     // Get the button that opens the modal
@@ -1294,7 +1294,6 @@ if (!empty($courses)) {
             dataType:"text",
             success: function(data){
                 // Get the modal
-                console.log(data)
                 var modal = document.getElementById("myModal");
                 $('.display-fields-clean').html(data)
                 // Get the button that opens the modal

@@ -108,7 +108,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                 return
             }
             $.ajax({
-                url:"/fetch-topic-subtopics-databank-live",
+                url:"/livelearn/fetch-topic-subtopics-databank-live",
                 method:'post',
                 data:{
                     id_course:id_course,
@@ -129,8 +129,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                     console.log('completelyt done');
                     alert('suptopics added in the course successfully');
                     loader.className = "d-none";
-                    window.location.reload();
-                    //loader.classList.add('hidden');
+                    // window.location.reload();
                 }
             })
             // console.log(subtosave)
@@ -140,14 +139,17 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
 <?php
 if (isset($_POST['id_course']) && isset($_POST['categories']) && $_POST['action'] == 'save_subtopic_course') {
     $id_course = $_POST['id_course'];
+    $course_type = get_field('course_type',$id_course); // Artikel
     $categories = array_values($_POST['categories']);
-    $topics_in_course = get_field('categories',$id_course);
-    $topics_xml = get_field('category_xml',$id_course);
+
+    $topics_in_course = get_full_categories($id_course);
     $topics = array();
-    foreach ($topics_in_course as $item) {
-        $topics[] = $item['value'];
-    }
+    if(!empty($topics_in_course))
+        foreach ($topics_in_course as $item) {
+            $topics[] = $item->term_id;
+        }
+
     $topics = array_unique(array_merge($categories,$topics));
-    update_field('categories',$topics,$id_course);
+    wp_set_post_terms($id_course, $topics, 'course_category');
 }
 ?>

@@ -17,7 +17,6 @@ $args = array(
 $courses = get_posts($args);
 
 $row_company_course = "";
-
 $artikel_single = "Artikel"; 
 $white_type_array =  ['Lezing', 'Event'];
 $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
@@ -27,12 +26,9 @@ $podcast_single = 'Podcast';
 if(isset($search_txt_course)){
     foreach($courses as $key => $course){
         $filter = $course->post_title;
-
         // if(!visibility($course, $visibility_company))
-        //     continue;    
-
+        //     continue;
         $category = ' ';
-
         /*
         * Categories
         */
@@ -166,11 +162,9 @@ if(isset($search_txt_course)){
                 <td scope="row"><?= $key; ?></td>
                 <td class="textTh "><a style="color:#212529;font-weight:bold" href="' . get_permalink($course->ID) . '">' . $course->post_title . '</a></td>
                 <td class="textTh">' . $price . '</td>
-                <td class="textTh ">
-                '
+                <td class="textTh ">'
                 . $field .
-                '
-                </td>
+               '</td>
                 <td class="textTh">' . $day . '</td>
                 <td class="textTh">Live</td>
                 <td class="textTh">
