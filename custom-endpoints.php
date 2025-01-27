@@ -5,7 +5,7 @@ require_once ABSPATH.'wp-admin'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARAT
 $GLOBALS['user_id'] = get_current_user_id();
 
 /** **************** Class **************** */
-
+ 
 class Expert
 {
   public $id;
@@ -158,14 +158,33 @@ class Badge
 }
 
 //Push notifications
-function sendPushNotificationN($title, $body) {
-  $current_user = wp_get_current_user();
-  $token = get_field('smartphone_token',  'user_' . $current_user->ID);
-  if(!$token)
-      return 0;
 
+
+function sendFirebasePushNotification(WP_REST_Request $request) {
+  $title = $request['title'] ?? "";
+  $body = $request['body'] ?? "";
+  $current_user_id = $GLOBALS['user_id'];
+  $data = $request['data'] ?? [];
+  return sendNotificationToUser($current_user_id,$title,$body,$data);
+}
+
+function sendNotificationToUser($userId, $title, $body, $data = []) {
+  // Vérifier que l'utilisateur est connecté
+  if (!$userId) {
+      return new WP_Error('user_not_logged_in', 'You have to provide the user id!', ['status' => 401]);
+  }
+
+  // Récupérer le token de l'utilisateur
+  $token = get_field('smartphone_token', 'user_' . $userId);
+  if (!$token) {
+      return new WP_Error('token_not_found', 'FCM Token not found!', ['status' => 404]);
+  }
+
+  // Clé serveur Firebase
   $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
-  $data = [
+
+  // Préparer les données de la notification
+  $notificationData = [
       'to' => $token,
       'notification' => [
           'title' => $title,
@@ -173,30 +192,64 @@ function sendPushNotificationN($title, $body) {
       ],
   ];
 
-  $dataString = json_encode($data);
+  // Ajout données supplémentaires facultatives 
+  if (!empty($data)) {
+      $notificationData['data'] = $data; // Doit être un tableau associatif
+  }
 
+  $dataString = json_encode($notificationData);
+
+  
   $headers = [
       'Authorization: ' . $serverKey,
       'Content-Type: application/json',
   ];
 
+  // URL de l'API FCM
   $url = 'https://fcm.googleapis.com/fcm/send';
 
+  // Initialiser CURL
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_POST, true);
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-  $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-  // var_dump($httpCode);
+
+  // Exécuter la requête
   $response = curl_exec($ch);
+
+  // Vérification des erreurs CURL
+  if ($response === false) {
+      $error_msg = curl_error($ch);
+      curl_close($ch);
+      return new WP_Error('curl_error', 'Error CURL : ' . $error_msg, ['status' => 500]);
+  }
+
+  // Vérification du code de réponse HTTP
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   curl_close($ch);
 
-  return $response;
+  if ($httpCode >= 200 && $httpCode < 300) {
+      // Succès
+      return json_decode($response, true);
+  } else {
+      // Erreur de l'API Firebase
+      return new WP_Error(
+          'firebase_error',
+          'Erreur lors de l\'envoi de la notification. Code HTTP : ' . $httpCode,
+          [
+              'status' => $httpCode,
+              'response' => json_decode($response, true)
+          ]
+      );
+  }
 }
+
+
+
 
 /** **************** Api Custom Endpoints **************** */
 
@@ -469,23 +522,68 @@ function get_total_followers ($data)
 /**
  * Topics Endpoints
  */
+
+function detailCategory($categoryID){
+
+  //Category ID 
+  if(!$categoryID)
+    return false;
+
+  //Initialization
+  $sample = array();
+
+  //Name + Slug 
+  $categories = get_categories( array(
+    'taxonomy' => 'course_category',
+    'orderby'    => 'name',
+    'include' => $categoryID,
+    'hide_empty' => 0
+    ) 
+  );
+  $param_category = (isset($categories[0])) ? $categories[0] : 0;
+
+  // $errors = [];
+  if(!$param_category)
+    return 0;
+  //   $errors['errors'] = 'No category found !';
+  //   $response = new WP_REST_Response($errors);
+  //   $response->set_status(401);
+  //   return $response;
+  // endif;
+  
+  $sample['ID'] = $categoryID ;
+  $sample['name'] = $param_category->name ;
+  $sample['slug'] = $param_category->slug ;
+  $sample['image'] = get_field('image', 'category_'. $categoryID) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
+  $sample['parent'] = $param_category->category_parent;
+
+  return (Object)$sample;  
+}
+
 function related_topics_subtopics(WP_REST_Request $request)
 {
   $id_topics = $request['meta_value'] ?? [];
+
+  //Get category information
+  $category = detailCategory($id_topics[0]);
+
+  //Get sub topics
   if ($id_topics != []) 
   {
     $all_subtopics = array();
     foreach ($id_topics as $key => $id_topic) {
       $subtopics = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'taxonomy'   => 'course_category',
         'parent' => (int)$id_topic,
-        'hide_empty' => false, // change to 1 to hide categores not having a single post
-    )) ?? false;
+        'hide_empty' => false,
+      )) ?? false;
+
       if ($subtopics != false)
         $all_subtopics = array_merge($all_subtopics,$subtopics);
     }
-    return ['subtopics' => $all_subtopics, "codeStatus" => 200];
+    return ['category' => $category, 'subtopics' => $all_subtopics, "codeStatus" => 200];
   }
+
   return (['error' => 'You have to fill the values of the metadata !']);
 
 }
@@ -2432,6 +2530,136 @@ function get_courses_of_subtopics($data)
   return $courses_related_subtopic;
 }
 
+function getTopicCoursesROptimized($data)
+{
+  $topic_id = $data['id']; 
+  $infos = [];
+  $main_experts = [];
+  $expertsID = [];
+  // $futher = isset($data['futher']) ? true : false;
+
+  //Get category information
+  $category = detailCategory($topic_id);
+  $infos['category'] = $category;
+
+  //Get other topics
+  $subtopics = get_categories( array(
+    'taxonomy'   => 'course_category',
+    'parent' => (int)$category->parent,
+    'exclude' => $topic_id,
+    'hide_empty' => false,
+  )) ?? false;
+  $infos['other_topics'] = $subtopics;
+
+  /** Global posts **/
+  $tax_query = array(
+  array(
+    "taxonomy" => "course_category",
+    "field"    => "term_id",
+    "terms"    => $topic_id
+    )
+  );
+  $courses = array();
+  $query_blogs = new WP_Query( $args );
+  //Filter with category
+  $args = array(
+      'post_type' => array('post', 'course'),
+      'tax_query' => $tax_query,
+      'nopaging' => true,
+  );
+  $query_blogs_category = new WP_Query( $args );
+  $courses = isset($query_blogs_category->posts) ? $query_blogs_category->posts : [];
+
+  $outcome_courses = array();
+  for($i = 0; $i < count($courses); $i++) 
+  {
+    $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
+    $author = get_user_by('ID', $courses[$i] -> post_author);
+    $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+    if ($courses[$i]->visibility != []) 
+      if ($author_company != $current_user_company)
+        continue;
+
+        //Experts post 
+        $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $courses[$i]->experts = array(); 
+        $experts = get_field('experts',$courses[$i]->ID);
+        if(!empty($experts))
+          foreach ($experts as $key => $expert) :
+            $expert = get_user_by( 'ID', $expert );
+            $experts_img = get_field('profile_img','user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+            if(!in_array($expert->ID, $expertsID)):
+              $main_experts[] = new Expert ($expert,$experts_img);
+              $expertsID[] = $expert->ID;
+            endif;
+          endforeach;      
+        $courses[$i]->author = new Expert ($author, $author_img);
+        if(!in_array($author->ID, $expertsID)):
+          $main_experts[] = new Expert ($author, $author_img); 
+          $expertsID[] = $author->ID;
+        endif;
+
+        $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+        $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+        $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+        //Image - article
+        $image = get_field('preview', $courses[$i]->ID)['url'];
+        if(!$image){
+            $image = get_the_post_thumbnail_url($courses[$i]->ID);
+            if(!$image)
+                $image = get_field('url_image_xml', $courses[$i]->ID);
+                    if(!$image)
+                        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
+        }
+        $courses[$i]->pathImage = $image;
+        $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+        $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
+        if (strtolower($courses[$i]->courseType) == 'podcast')
+        {
+           $podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
+           if (!empty($podcasts))
+              $courses[$i]->podcasts = $podcasts;
+            else {
+              $podcasts = get_field('podcasts_index',$courses[$i]->ID) ? get_field('podcasts_index',$courses[$i]->ID) : [];
+              if (!empty($podcasts))
+              {
+                $courses[$i]->podcasts = array();
+                foreach ($podcasts as $key => $podcast) 
+                { 
+                  $item= array(
+                    "course_podcast_title" => $podcast['podcast_title'], 
+                    "course_podcast_intro" =>$podcast['podcast_description'],
+                    "course_podcast_url" => $podcast['podcast_url'],
+                    "course_podcast_image" => $podcast['podcast_image'],
+                  );
+                  array_push ($courses[$i]->podcasts,($item));
+                }
+              }
+          }
+        }
+        $courses[$i]->podcasts = $courses[$i]->podcasts ?? [];
+        $courses[$i]->tags = get_the_terms( $courses[$i]->ID, 'course_category' );
+        // $tags = get_field('categories',$courses[$i]->ID) ?? [];
+        // if($tags)
+        //   if (!empty($tags))
+        //     foreach ($tags as $key => $category) 
+        //       if(isset($category['value'])){
+        //         $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+        //         array_push($courses[$i]->tags,$tag);
+        //       }
+        $new_course = new Course($courses[$i]);
+        array_push($outcome_courses, $new_course);
+  }
+  $infos['courses'] = $outcome_courses;
+  $infos['experts'] = $main_experts;
+
+  $response = new WP_REST_Response($infos);
+  $response->set_status(200);
+  return($response);
+
+}
+
 function getTopicCoursesOptimized($data)
 {
    $topic_id = $data['id'];
@@ -2532,14 +2760,14 @@ function getTopicCoursesOptimized($data)
         $new_course = new Course($courses[$i]);
         array_push($outcome_courses, $new_course);
   }
- return  $outcome_courses;
+
+ return $outcome_courses;
 }
 
 
 /**
- * Reservation Endpoints
- */
-
+  * Reservation Endpoints
+  */
   function reserve_course(WP_REST_Request $request)
   {
     if (!isset($request['user_id']) || empty($request['user_id']))
@@ -2591,11 +2819,10 @@ function getTopicCoursesOptimized($data)
     $response->set_status(200);
     return($response);
     
-
   }
   
-  /**
-   * Assessment Endpoints
+/**
+  * Assessment Endpoints
   */
   function getAssessments($data)
   {
@@ -6144,46 +6371,11 @@ endif;
 
           $enrolled = array();
           $enrolled_courses = array();
-
-          //Orders - enrolled courses  
-          $args = array(
-              'customer_id' => $user,
-              'post_status' => array('wc-processing', 'wc-completed'),
-              'orderby' => 'date',
-              'order' => 'DESC',
-              'limit' => -1,
-          );
-          $bunch_orders = wc_get_orders($args);
-
-          foreach($bunch_orders as $order){
-              foreach ($order->get_items() as $item_id => $item ) {
-                  //Get woo orders from user
-                  $id_course = intval($item->get_product_id()) - 1;
-                  $prijs = get_field('price', $course_id);
-                  $expenses += $prijs; 
-                  if(!in_array($id_course, $enrolled))
-                      array_push($enrolled, $id_course);
-              }
-          }
-          if(!empty($enrolled))
-          {
-              $args = array(
-                  'post_type' => 'course', 
-                  'posts_per_page' => -1,
-                  'orderby' => 'post_date',
-                  'order' => 'DESC',
-                  'include' => $enrolled,  
-              );
-              $enrolled_courses = get_posts($args);
-
-              if(!empty($enrolled_courses))
-                  $your_count_courses = count($enrolled_courses);
-          }
+          $enrolled_courses = list_orders($user)['posts'];
+          $your_count_courses = (!empty($enrolled_courses)) ? count($enrolled_courses) : 0;
 
           $state = array('todo' => 0, 'progress' => 0, 'done' => 0, 'total' => 0);
-
           foreach($enrolled_courses as $key => $course) :
-
               /* * State actual details * */
               $status = "todo";
               //Get read by user 
@@ -6318,7 +6510,7 @@ endif;
     foreach($users as $user):
 
       //Recommendation courses
-      $infos = recommendation($user->ID, 350, 100);
+      $infos = recommendation($user->ID, null, 75);
       $recommended_courses = $infos['recommended'];
       shuffle($recommended_courses);
       $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'others' => 0];
@@ -6576,23 +6768,19 @@ endif;
       $content_course = null;
       $i = 0;
       foreach($recommended_courses as $post):
+
         $text = "";
-        $course_type = get_field('course_type', $post->ID);
+        $course_type = $post->courseType;
 
         //Information course
-        $thumbnail = get_field('preview', $post->ID)['url'];
-        if(!$thumbnail):
-          $thumbnail = get_the_post_thumbnail_url($post->ID);
-          if(!$thumbnail)
-            $thumbnail = get_field('url_image_xml', $post->ID);
-          if(!$thumbnail)
-            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-        endif;
+        $thumbnail = $post->image;
         $title = $post->post_title;
-        $short_description = get_field('short_description', $post->ID) ?: 'No description available';
-        $short_description = substr($short_description, 0, 100) . '...';
-        // $short_description = (strlen($short_description) > 50) ? $short_description . '...' : $short_description;
-        $link = get_permalink($post->ID);
+        $short_description = $post->short_description;
+        //$short_description = (strlen($short_description) > 50) ? $short_description . '...' : $short_description;
+
+        //Get genuine link
+        $base_url = "https://www.livelearn.nl"; 
+        $link = $base_url . '/course/details-' . strtolower($course_type) . '/' . $post->post_name;
         //End information
 
         $row_first = $i + 5;
@@ -6817,11 +7005,6 @@ endif;
             $i++;
             break;
         }
-      //Switch 
-      
-      //Break out of loop
-      // if($i >= 8)
-      //   break;
 
       endforeach;
 
@@ -7244,42 +7427,70 @@ function delete_assessment(WP_REST_Request $request) {
 }
 
 
-function archive_assessment(WP_REST_Request $request) {
+
+function list_archived_assessments() 
+{
   global $wpdb;
 
-  $data = $request->get_json_params();
+    // Récupération des évaluations activées
+    $assessments = $wpdb->get_results(
+        "SELECT a.id, a.title, a.slug, a.author_id, a.category_id, a.description, a.level, a.duration, a.is_public, a.is_enabled, COUNT(q.id) as question_count
+        FROM {$wpdb->prefix}assessments a
+        LEFT JOIN {$wpdb->prefix}question q ON q.assessment_id = a.id
+        WHERE a.is_enabled = 0
+        GROUP BY a.id"
+    );
 
-  if (empty($data['assessment_id'])) {
-      return new WP_Error('missing_data', 'Assessment ID is required', array('status' => 400));
-  }
+    // Vérifie s'il y a des assessments
+    if (empty($assessments)) {
+        return rest_ensure_response(array('message' => 'No assessments found.'));
+    }
 
-  $assessment_id = (int) $data['assessment_id'];
+    // Récupération de l'ID de l'utilisateur pour ajouter les champs status et score
+    $user_id = $GLOBALS['user_id'];
 
-  $result = $wpdb->update(
-      $wpdb->prefix . 'assessments',
-      array('is_enabled' => 0, 'updatedAt' => current_time('mysql', true)),
-      array('id' => $assessment_id),
-      array('%d', '%s'),
-      array('%d')
-  );
+    foreach ($assessments as $assessment) {
+        // Rechercher si l'utilisateur a un résultat pour cet assessment
+        $result = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT score, is_success FROM {$wpdb->prefix}result WHERE user_id = %d AND assessment_id = %d",
+                $user_id,
+                $assessment->id
+            )
+        );
 
-  if ($result === false) {
-      return new WP_Error('db_error', 'Failed to archive assessment', array('status' => 500));
-  }
+        if ($result) {
+            if ($result->is_success) {
+                $assessment->status = 'validated'; // L'utilisateur a validé l'évaluation
+            } else {
+                $assessment->status = 'failed'; // L'utilisateur a échoué l'évaluation
+            }
+            $assessment->score = $result->score; // Inclure le score
+        } else {
+            $assessment->status = 'not_attempted'; // L'utilisateur n'a jamais tenté l'évaluation
+            $assessment->score = null; // Pas de score car jamais tenté
+        }
 
-  return rest_ensure_response(array('message' => 'Assessment archived successfully'));
+        // Récupérer les informations de l'auteur
+        $author = get_user_by('ID', $assessment->author_id);
+        if ($author) {
+            $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $assessment->author = new Expert($author, $author_img);
+        } else {
+            $assessment->author = null;
+        }
+
+        // Récupérer les informations de la catégorie
+        $assessment->category = [
+            "name" => get_the_category_by_ID((int)$assessment->category_id),
+            "image" => get_field('image', 'category_' . (int)$assessment->category_id) ?? ""
+        ];
+    }
+
+    // Retourner les assessments avec les données enrichies
+    return rest_ensure_response($assessments);
 }
 
-function list_archived_assessments() {
-  global $wpdb;
-
-  $results = $wpdb->get_results(
-      "SELECT id, title, description, updatedAt FROM {$wpdb->prefix}assessments WHERE is_enabled = 0",
-      ARRAY_A
-  );
-
-  return rest_ensure_response($results);
-}
 
 
 // Endpoint pour rajouter un slug à tous les assessments
@@ -7557,7 +7768,7 @@ function get_wp_questions_by_assessment_id($assessment_id) {
 function get_assessment(WP_REST_Request $request) {
   $assessment_id = $request->get_param('id');
   
-  // Votre logique pour récupérer l'évaluation depuis la base de données
+  //  logique pour récupérer l'évaluation depuis la base de données
   $assessment = get_wp_assessment_by_id($assessment_id); // Fonction personnalisée
   
   if (!$assessment) {
@@ -7602,14 +7813,14 @@ function get_questions_for_assessment(WP_REST_Request $request) {
 
 function get_assessment_questions(WP_REST_Request $request) {
   global $wpdb;
-  
+
   // Récupère l'ID de l'évaluation à partir de la requête
   $assessment_id = $request->get_param('assessment_id');
-  
+
   if (empty($assessment_id)) {
       return new WP_Error('missing_assessment_id', 'Assessment ID is required', array('status' => 400));
   }
-  
+
   // Vérifie si l'évaluation existe et est activée
   $assessment = $wpdb->get_row(
       $wpdb->prepare(
@@ -7617,11 +7828,11 @@ function get_assessment_questions(WP_REST_Request $request) {
           $assessment_id
       )
   );
-  
+
   if (!$assessment) {
       return new WP_Error('assessment_not_found', 'Assessment not found or not enabled', array('status' => 404));
   }
-  
+
   // Récupère toutes les questions de l'évaluation
   $questions = $wpdb->get_results(
       $wpdb->prepare(
@@ -7629,11 +7840,11 @@ function get_assessment_questions(WP_REST_Request $request) {
           $assessment_id
       )
   );
-  
+
   if (empty($questions)) {
       return new WP_Error('no_questions_found', 'No questions found for this assessment', array('status' => 404));
   }
-  
+
   // Préparer le tableau de retour pour les questions et leurs réponses
   $assessment_data = array(
       'assessment_id' => $assessment->id,
@@ -7642,16 +7853,17 @@ function get_assessment_questions(WP_REST_Request $request) {
       'duration' => $assessment->duration,
       'questions' => array()
   );
-  
+
   // Boucle pour chaque question et récupère les réponses associées
   foreach ($questions as $question) {
       $answers = $wpdb->get_results(
           $wpdb->prepare(
-              "SELECT id, wording FROM {$wpdb->prefix}answer WHERE question_id = %d",
+              "SELECT id, wording, is_correct FROM {$wpdb->prefix}answer WHERE question_id = %d",
               $question->id
-          )
+          ),
+          ARRAY_A // Format tableau associatif pour inclure les clés
       );
-      
+
       // Ajoute chaque question avec ses réponses à la structure de retour
       $assessment_data['questions'][] = array(
           'question_id' => $question->id,
@@ -7659,10 +7871,11 @@ function get_assessment_questions(WP_REST_Request $request) {
           'answers' => $answers
       );
   }
-  
+
   // Retourne les données de l'évaluation, des questions et des réponses
   return rest_ensure_response($assessment_data);
 }
+
 
 function get_assessment_statistics(WP_REST_Request $request) {
   global $wpdb;
@@ -7876,6 +8089,55 @@ function get_assessment_details(WP_REST_Request $request) {
 
   return rest_ensure_response($assessment);
 }
+
+function archive_assessment(WP_REST_Request $request) {
+  global $wpdb;
+
+  // Récupérer l'ID de l'assessment
+  $assessment_id = $request['assessment_id'];
+  
+  if (empty($assessment_id) || !is_numeric($assessment_id)) {
+      return rest_ensure_response(['message' => 'Invalid assessment ID.'], 400);
+  }
+
+  // Récupérer la valeur actuelle de 'is_enabled'
+  $current_status = $wpdb->get_var(
+      $wpdb->prepare(
+          "SELECT is_enabled FROM {$wpdb->prefix}assessments WHERE id = %d",
+          $assessment_id
+      )
+  );
+
+  // Vérifier si l'assessment existe
+  if ($current_status === null) {
+      return rest_ensure_response(['message' => 'Assessment not found.'], 404);
+  }
+
+  // Modifie is_enabled par le contraire de sa valeur
+  $new_status = ($current_status == 1) ? 0 : 1;
+
+  // Mettre à jour la valeur de 'is_enabled' dans la base de données
+  $updated = $wpdb->update(
+      "{$wpdb->prefix}assessments",
+      ['is_enabled' => $new_status], // Colonnes à mettre à jour
+      ['id' => $assessment_id],      // Condition WHERE
+      ['%d'],                        // Format des colonnes
+      ['%d']                         // Format de la condition
+  );
+
+  // Vérifier si l'update a réussi
+  if ($updated === false) {
+      return rest_ensure_response(['message' => 'Failed to toggle is_enabled status.'], 500);
+  }
+
+  // Retourner la nouvelle valeur
+  return rest_ensure_response([
+      'message' => 'is_enabled status updated successfully.',
+      'assessment_id' => $assessment_id,
+      'new_is_enabled' => $new_status
+  ]);
+}
+
 
 
 

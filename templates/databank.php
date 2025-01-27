@@ -280,7 +280,8 @@ $urls =
 	    'Orbis' =>	'https://www.orbis-software.nl/',
 	    'Onno Kleyn' =>	'https://www.onnokleyn.nl/',
 	    'NFCI' =>	'https://nfcihospitality.com/',
-	    'SVO' =>	'https://www.svo.nl/'
+	    'SVO' =>	'https://www.svo.nl/',
+        'Elfin'=>'https://thisiselfin.com/'
     ];
     
 
@@ -483,6 +484,7 @@ if (isset($_GET["message"])) {
                                 <th scope="col">Image</th>
                                 <th scope="col">Titel</th>
                                 <th scope="col">Type</th>
+                               
                                 <th scope="col">Prijs</th>
                                 <th scope="col">Onderwerp(en)</th>
                                 <th scope="col">Status</th>
@@ -526,12 +528,14 @@ if (!empty($courses)) {
 
         $state = $course->course_id ? 'present' : 'missing';
         $key = $course->id;
+      
         ?>
                                 <tr id="<?=$key?>" class="<?=$state?> state">
                                     <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?=$course->id?>"></td>
                                     <td class="textTh"> <img src="<?=$image;?>" alt="image course" width="50" height="50"></td>
                                     <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                     <td class="textTh tdCenter"><?=$course->type;?></td>
+                                    
                                     <td class="textTh tdCenter textTh"><?=$course->prijs;?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php

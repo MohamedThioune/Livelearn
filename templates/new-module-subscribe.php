@@ -1,6 +1,6 @@
 <?php
 
-require_once 'stripe-secrets.php';
+ require_once 'stripe-secrets.php';
 
 function makecall($url, $type, $data = null, $params = null) {
     global $stripeSecretKey;
@@ -175,7 +175,7 @@ function stripe(WP_REST_Request $request){
     endif;
 
     //Constant "If required we might change it here"
-    $price_id = "price_1PKkQzEuOtOzwPYXtHofHkZ3";
+    $price_id = "price_1Qh8paHe23toRzexLtU5R7hE";
 
     //Starting licenses | owner of subscription
     $licenses = $request['ID'];

@@ -1195,7 +1195,7 @@ function recommended_course($data)
         $visibility_company = $company_visibility[0]->post_title;
 
     //Recommendation courses
-    $infos = recommendation($user, 500, 25);
+    $infos = recommendation($user, null, 100);   
     $recommended_courses = $infos['recommended'];
     //$teachers = $infos['teachers'];
 
@@ -1852,6 +1852,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getTopicCoursesOptimized',
     ));
 
+    register_rest_route('custom/v2', '/topic/v2/(?P<id>\d+)/courses', array(
+        'methods' => 'GET',
+        'callback' => 'getTopicCoursesROptimized',
+    ));
+
     register_rest_route('custom/v2', '/user/(?P<user_id>\d+)/statistics', array(
         'methods' => 'GET',
         'callback' => 'timeSpentOnAllCourseType',
@@ -1927,10 +1932,6 @@ add_action( 'rest_api_init', function () {
         'callback' => 'update_assessment_with_questions',
     ));
 
-    register_rest_route('custom/v3', '/assessments/archive', array(
-        'methods' => 'PUT',
-        'callback' => 'archive_assessment',
-    ));
 
     register_rest_route('custom/v3', '/assessments/archived', array(
         'methods' => 'GET',
@@ -1971,6 +1972,14 @@ add_action( 'rest_api_init', function () {
     register_rest_route('custom/v3', '/assessments/slug/add', array(
         'methods' => 'GET',
         'callback' => 'add_slug_to_all_assessments',
+    ));
+
+    register_rest_route('custom/v3', '/assessment/archive', array(
+        'methods' => 'PUT',
+        'callback' => 'archive_assessment',
+        'permission_callback' => function () {
+            return current_user_can('delete_posts'); // Vérifie les permissions pour supprimer
+        },
     ));
 
     register_rest_route('custom/v3', '/assessment/delete', array(
@@ -2780,7 +2789,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'all_courses_in_plateform'
     ));
-
+    register_rest_route ('custom/v1', '/courses/all/test', array(
+        'methods' => 'GET',
+        'callback' => 'all_courses_in_plateform_test'
+    ));
     register_rest_route ('custom/v1', '/companies/all', array(
         'methods' => 'GET',
         'callback' => 'all_company_in_plateform'
@@ -2837,5 +2849,30 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'link_the_categories_courses'
     ));
+
+    register_rest_route ('custom/v1', 'push/notifications/send', array(
+        'methods' => 'POST',
+        'callback' => 'sendPushNotificationFirebase'
+    ));
+
+    /**
+     * User orders
+     */
+
+     register_rest_route ('custom/v3', 'user/orders/', array(
+        'methods' => 'GET',
+        'callback' => 'get_user_orders_list'
+    ));
+
+    register_rest_route ('custom/v3', 'user/order/check', array(
+        'methods' => 'POST',
+        'callback' => 'is_course_purchased_by_user'
+    ));
+
+    /**
+     * User orders
+     */
+
+     
 
 });

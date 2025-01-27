@@ -1,5 +1,6 @@
  <?php /** Template Name: Optie All*/?>
  <?php
+ require_once 'detect-language.php';
 global $wpdb;
 extract($_POST);
 // var_dump($class, $ids, $optie);
@@ -194,7 +195,16 @@ if (isset($ids)) {
                 echo $error->get_error_message($id_post);
             } else {
                 // echo "post-id : " . $id_post;
-                echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
+                $language = $course->language==null? detectLanguage($course->titel):$course->language;
+        
+
+                if(update_field('language', $language, $id_post))
+                  echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
+                else
+                   echo "<span class='alert alert-danger'>Error in language added ! ❌</span>";
+
+
+                
             }
             $onderwerpen = explode(',', $course->onderwerpen);
             /*
