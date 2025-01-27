@@ -4021,7 +4021,7 @@ function all_courses_in_plateform_test()
 
     // Filter by course type
     if ($type) {
-        $args['meta_query'][] = array(
+        $args[] = array(
             'meta_key' => 'course_type',
             'meta_value' => $type,
         );
