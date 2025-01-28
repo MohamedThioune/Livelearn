@@ -4003,6 +4003,16 @@ function all_courses_in_plateform()
         ), 200 );
 }
 
+function all_courses_data(){
+    //Get repartition of courses
+    $args = array(
+        'post_type' => array('course','post'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC' ,
+    );
+}
+
 function all_courses_in_plateform_test()
 {
     $page = $_GET['page'] ?? 1;
@@ -4013,17 +4023,18 @@ function all_courses_in_plateform_test()
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
+        'posts_per_page' => 20,
         'order' => 'DESC' ,
         'meta_query' => array(),
-        // 'paged' => $page,
+        'paged' => $page,
     );
 
     // Filter by course type
     if ($type) {
-        $args[] = array(
-            'meta_key' => 'course_type',
-            'meta_value' => $type,
+        $args['meta_query'][] = array(
+            'key' => 'course_type',
+            'value' => $type,
+            'compare' => 'IN'
         );
     }
 
@@ -4054,8 +4065,6 @@ function all_courses_in_plateform_test()
     //Filter by author
     if ($experts)
         $args['author__in'] = $experts;
-
-    var_dump($args);
 
     $courses = get_posts($args);
     $all_courses = array();
@@ -4090,32 +4099,31 @@ function all_courses_in_plateform_test()
         $all_courses[] = new Course($course);
     }
 
-    return $all_courses;
-    $args['posts_per_page'] = -1; 
-    unset($args['paged']); // to make all pages
-    $count_all_course = count(get_posts($args));
-    $total_pages = ceil($count_all_course / 20);
+    // $args['posts_per_page'] = -1; 
+    //unset($args['paged']); // to make all pages
+    //$count_all_course = count(get_posts($args));
+    //$total_pages = ceil($count_all_course / 20);
     //numbers of pages
-    $numbers_of_pages = range(1, $total_pages);
+    //$numbers_of_pages = range(1, $total_pages);
 
     return new WP_REST_Response(
         array(
-            'count_all_course' => $count_all_course,
-            'page' => $numbers_of_pages,
-            'count_course_type'=>[
-                'Video'=> countCourseType('Video'),
-                'Podcast' => countCourseType('Podcast'),
-                'Opleidingen'=> countCourseType('Opleidingen'),
-                'Artikel' => countCourseType('Artikel'),
-                'Masterclass' => countCourseType('Masterclass'),
-                'Workshop' => countCourseType('Workshop'),
-                'E_Learning' => countCourseType('E-Learning'),
-                'Event'=> countCourseType('Event'),
-                'Training' => countCourseType('Training'),
-                'Lezing' => countCourseType('Lezing'),
-                'Assessment' => countCourseType('Assessment'),
-            ],
+            'page' => $page,
             'course' => $all_courses,
+            //'count_all_course' => $count_all_course,
+            //'count_course_type'=>[
+            //    'Video'=> countCourseType('Video'),
+            //    'Podcast' => countCourseType('Podcast'),
+            //    'Opleidingen'=> countCourseType('Opleidingen'),
+            //    'Artikel' => countCourseType('Artikel'),
+            //    'Masterclass' => countCourseType('Masterclass'),
+            //    'Workshop' => countCourseType('Workshop'),
+            //    'E_Learning' => countCourseType('E-Learning'),
+            //    'Event'=> countCourseType('Event'),
+            //    'Training' => countCourseType('Training'),
+            //    'Lezing' => countCourseType('Lezing'),
+            //    'Assessment' => countCourseType('Assessment'),
+            //],
         ), 200 );
 }
 
