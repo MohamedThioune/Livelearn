@@ -4017,29 +4017,93 @@ function all_courses_in_plateform()
 
 function all_courses_data(){
     //Get repartition of courses
+    $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'course' => 0, 'training' => 0, 'workshop' => 0, 'masterclass' => 0, 'elearning' => 0, 'cursus' => 0, 'reading' => 0, 'event' => 0, 'webinar' => 0, 'leerpad' => 0, 'others' => 0];
     $args = array(
-        'post_type' => array('course','post'),
+        'post_type' => array('course','post','learnpath'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC' ,
     );
+    $courses = get_posts($args);
+
+    foreach($courses as $course):
+        //Switch case for 
+        switch ($course_type) {
+        case 'Artikel':
+            $numTypos['article'] += 1;
+            break;
+
+        case 'Podcast':
+            $numTypos['podcast'] += 1;
+            break;
+        
+        case 'Video':
+            $numTypos['video'] += 1;
+            break;
+        
+        case 'Opleidingen':
+            $numTypos['course'] += 1;
+            break;
+
+        case 'Training':
+            $numTypos['training'] += 1;
+            break;
+
+        case 'Workshop':
+            $numTypos['workshop'] += 1;
+            break;
+
+        case 'Masterclass':
+            $numTypos['masterclass'] += 1;
+            break;
+
+        case 'E-learning':
+            $numTypos['elearning'] += 1;
+            break;
+    
+        case 'Cursus':
+            $numTypos['cursus'] += 1;
+            break;
+        
+        case 'Lezing':
+            $numTypos['reading'] += 1;
+            break;
+
+        case 'Event':
+            $numTypos['event'] += 1;
+            break;
+
+        case 'Webinar':
+            $numTypos['webinar'] += 1;
+            break;
+
+        case 'Leerpad':
+            $numTypos['leerpad'] += 1;
+            break;
+        
+        default:
+            $numTypos['others'] += 1;
+            break;
+        }
+    endforeach;
+
 
     return new WP_REST_Response(
         array(
             //'course' => $all_courses,
             //'count_all_course' => $count_all_course,
             'count_course_type'=>[
-               'Video'=> countCourseType('Video'),
-               'Podcast' => countCourseType('Podcast'),
-               'Opleidingen'=> countCourseType('Opleidingen'),
-               'Artikel' => countCourseType('Artikel'),
-               'Masterclass' => countCourseType('Masterclass'),
-               'Workshop' => countCourseType('Workshop'),
-               'E_Learning' => countCourseType('E-Learning'),
-               'Event'=> countCourseType('Event'),
-               'Training' => countCourseType('Training'),
-               'Lezing' => countCourseType('Lezing'),
-               'Assessment' => countCourseType('Assessment'),
+               'Video'=> $numTypos['video'],
+               'Podcast' => $numTypos['podcast'],
+               'Opleidingen'=> $numTypos['course'],
+               'Artikel' => $numTypos['article'],
+               'Masterclass' => $numTypos['masterclass'],
+               'Workshop' => $numTypos['workshop'],
+               'E_Learning' => $numTypos['elearning'],
+               'Event'=> $numTypos['event'],
+               'Training' => $numTypos['training'],
+               'Lezing' => $numTypos['reading'],
+            //    'Assessment' => countCourseType('Assessment'),
             ],
         ), 200 );
 }
