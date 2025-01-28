@@ -4091,7 +4091,7 @@ function all_courses_in_plateform_test()
     }
 
     return $all_courses;
-    $args['posts_per_page'] = -1;
+    $args['posts_per_page'] = -1; 
     unset($args['paged']); // to make all pages
     $count_all_course = count(get_posts($args));
     $total_pages = ceil($count_all_course / 20);
