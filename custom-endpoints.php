@@ -2567,10 +2567,11 @@ function getTopicCoursesROptimized($data)
     )
   );
   $courses = array();
-  $query_blogs = new WP_Query( $args );
+  // $query_blogs = new WP_Query( $args );
   //Filter with category
   $args = array(
       'post_type' => array('post', 'course'),
+      'post_status' => 'publish',
       'tax_query' => $tax_query,
       'nopaging' => true,
   );
