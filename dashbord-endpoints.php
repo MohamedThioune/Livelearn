@@ -4028,6 +4028,7 @@ function all_courses_data(){
 
     foreach($courses as $course):
         //Switch case for 
+        $course_type = get_field('course_type', $course->ID);
         switch ($course_type) {
         case 'Artikel':
             $numTypos['article'] += 1;
