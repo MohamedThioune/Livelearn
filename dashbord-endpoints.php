@@ -3881,17 +3881,29 @@ function addTodo($data)
         ),201);
 }
 function countCourseType($course_type){
+    // $args = array(
+    //     'post_type' => array('course','post'),
+    //     'post_status' => 'publish',
+    //     'posts_per_page' => -1,
+    //     'ordevalue' => $course_type,
+    //     'order' => 'DESC' ,
+    //     'meta_key' => 'course_type',
+    //     'meta_value' => $course_type
+    // );
+    // return count(get_posts($args));
     $args = array(
-        'post_type' => array('course','post'),
+        'post_type' => array('post', 'course'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'ordevalue' => $course_type,
-        'order' => 'DESC' ,
         'meta_key' => 'course_type',
-        'meta_value' => $course_type
+        'meta_value' => $course_type,
+        'nopaging' => true,
     );
-    return count(get_posts($args));
+    $query = new WP_Query( $args );
+    $data_course_type = isset($query->post_count) ? $query->post_count : 0; 
+
+    return $data_course_type;
 }
+
 function all_courses_in_plateform()
 {
     $page = $_GET['page'] ?? 1;
@@ -4011,9 +4023,28 @@ function all_courses_data(){
         'posts_per_page' => -1,
         'order' => 'DESC' ,
     );
+
+    return new WP_REST_Response(
+        array(
+            //'course' => $all_courses,
+            //'count_all_course' => $count_all_course,
+            'count_course_type'=>[
+               'Video'=> countCourseType('Video'),
+               'Podcast' => countCourseType('Podcast'),
+               'Opleidingen'=> countCourseType('Opleidingen'),
+               'Artikel' => countCourseType('Artikel'),
+               'Masterclass' => countCourseType('Masterclass'),
+               'Workshop' => countCourseType('Workshop'),
+               'E_Learning' => countCourseType('E-Learning'),
+               'Event'=> countCourseType('Event'),
+               'Training' => countCourseType('Training'),
+               'Lezing' => countCourseType('Lezing'),
+               'Assessment' => countCourseType('Assessment'),
+            ],
+        ), 200 );
 }
 
-function all_courses_in_plateform_test()
+function all_courses_content()
 {
     $page = $_GET['page'] ?? 1;
     $type = $_GET['type'] ?? '';
