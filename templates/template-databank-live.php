@@ -1451,7 +1451,7 @@ $user = wp_get_current_user();
         var txt = $(this).val();
         console.log(txt);
         $.ajax({
-            url:"/livelearn/fetch-databank-live-course/", // /** Template Name: Fetch databank  Live course */
+            url:"/fetch-databank-live-course/", // /** Template Name: Fetch databank  Live course */
             method:"post",
             data:{
                 search_txt_course : txt,

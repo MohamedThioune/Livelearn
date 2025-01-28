@@ -108,7 +108,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                 return
             }
             $.ajax({
-                url:"/livelearn/fetch-topic-subtopics-databank-live",
+                url:"/fetch-topic-subtopics-databank-live",
                 method:'post',
                 data:{
                     id_course:id_course,
@@ -129,7 +129,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
                     console.log('completelyt done');
                     alert('suptopics added in the course successfully');
                     loader.className = "d-none";
-                    // window.location.reload();
+                    window.location.reload();
                 }
             })
             // console.log(subtosave)
