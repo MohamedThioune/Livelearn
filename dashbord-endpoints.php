@@ -4059,18 +4059,16 @@ function all_courses_in_plateform_test()
 
     $courses = get_posts($args);
     $all_courses = array();
-
-    return $courses;
     
     foreach ($courses as $course) {
         $course->visibility = get_field('visibility',$course->ID) ?? [];
-        if ($course -> post_author) {
+        if ($course -> post_author):
             $author = get_user_by('ID', $course->post_author);
             if ($author) {
                 $author_img = get_field('profile_img', 'user_' . $author->ID) != false ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                 $course->author = new Expert ($author, $author_img);
             }
-        }
+        endif;
         $course->longDescription = get_field('long_description',$course->ID);
         $course->shortDescription = get_field('short_description',$course->ID);
 
@@ -4092,6 +4090,7 @@ function all_courses_in_plateform_test()
         $all_courses[] = new Course($course);
     }
 
+    return $all_courses;
     $args['posts_per_page'] = -1;
     unset($args['paged']); // to make all pages
     $count_all_course = count(get_posts($args));
@@ -4102,7 +4101,7 @@ function all_courses_in_plateform_test()
     return new WP_REST_Response(
         array(
             'count_all_course' => $count_all_course,
-            'page'=>$numbers_of_pages,
+            'page' => $numbers_of_pages,
             'count_course_type'=>[
                 'Video'=> countCourseType('Video'),
                 'Podcast' => countCourseType('Podcast'),
