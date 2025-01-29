@@ -1155,6 +1155,7 @@ function artikelDetail(WP_REST_Request $request){
     $slug
   ));
 
+  $errors = [];
   if(empty($post)):
     $errors['errors'] = 'No post found !';
     $response = new WP_REST_Response($errors);
