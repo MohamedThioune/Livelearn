@@ -1145,16 +1145,16 @@ function artikelDetail(WP_REST_Request $request){
 
   //Use WP Query
   $post = null;
-  $args = [
-    'post_type' => array('course', 'post', 'learnpath'),
-    'name' => $slug,
-    'posts_per_page' => 1
-  ];
-  $query = new WP_Query($args);
+  // $args = [
+  //   'post_type' => array('course', 'post', 'learnpath'),
+  //   'name' => $slug,
+  //   'posts_per_page' => 1
+  // ];
+  // $query = new WP_Query($args);
 
-  if ($query->have_posts()) :
-    $post = $query->posts[0];
-  endif;
+  // if ($query->have_posts()) :
+  //   $post = $query->posts[0];
+  // endif;
 
   $post = $wpdb->get_row($wpdb->prepare("
     SELECT * FROM {$wpdb->posts} 
@@ -1164,6 +1164,8 @@ function artikelDetail(WP_REST_Request $request){
     LIMIT 1", 
     $slug
   ));
+
+  var_dump($post);
 
   $sample = (!empty($post)) ? artikel($post->ID) : null;
 
