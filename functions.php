@@ -2868,6 +2868,14 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'is_course_purchased_by_user'
     ));
+    register_rest_route ('custom/v1', 'reset-password-by-email', array(
+        'methods' => 'POST',
+        'callback' => 'reset_password_email'
+    ));
+    register_rest_route ('custom/v1', 'reset-password-confirm', array(
+        'methods' => 'POST',
+        'callback' => 'reset_password_confirm'
+    ));
 
     /**
      * User orders
