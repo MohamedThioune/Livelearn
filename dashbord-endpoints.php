@@ -4182,7 +4182,6 @@ function all_courses_content()
     $all_courses = array();
     
     foreach ($courses as $course) {
-        $course->slug = $course->post_name;
         $course->visibility = get_field('visibility',$course->ID) ?? [];
         if ($course -> post_author):
             $author = get_user_by('ID', $course->post_author);
