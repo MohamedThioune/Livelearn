@@ -92,15 +92,6 @@ function postAdditionnal($post, $userID, $edit = null){
   //Partial information
   $coursetype = get_field('course_type', $post->ID);
 
-  /** Get further informations */
-  //Podcast 
-  // $main_podcasts_genuine = get_field('podcasts', $post->ID);
-  // $main_podcasts_index = get_field('podcasts_index', $post->ID);
-
-  //Video
-  // $main_videos_genuine = get_field('data_virtual', $post->ID);
-  // $main_videos_youtube = get_field('youtube_videos', $post->ID);
-
   //Offline
   $main_date_genuine = get_field('data_locaties', $post->ID);
   $main_date_xml = get_field('data_locaties_xml', $post->ID);
@@ -122,25 +113,11 @@ function postAdditionnal($post, $userID, $edit = null){
   endif;
 
   switch ($coursetype) {
-    // case 'Podcast':
-    //   $post->podcasts = $main_podcasts_genuine;
-    //   $post->podcasts_index = $main_podcasts_index;
-    //   break;
-    
-    // case 'Video':
-    //   $post->videos = $main_videos_genuine;
-    //   $post->videos_youtube = $main_videos_youtube;
-    //   break;
-
     case 'Opleidingen' || 'Training' || 'Workshop' || 'Masterclass' || 'Event':
       $post->dates = $main_date_genuine;
       $post->dates_xml = $main_date_xml;
       $post->dates_event = $main_date_event;
       break;
-
-    // case 'Leerpad':
-    //   $post->playlist = $main_playlist;
-    //   break;
   }
 
   //Reviews
@@ -1167,42 +1144,13 @@ function artikelDetail(WP_REST_Request $request){
   $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
   if(!$post)
     $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
+  var_dump($post);
   $sample = artikel($post->ID);
+  var_dump($sample);
 
   if(!empty($sample)):
     //Get further information
     $sample = postAdditionnal($sample, $userApplyID, $edit);
-  endif;
-
-  //Response
-  $response = new WP_REST_Response($sample);
-  $response->set_status(200);
-
-  return $response;
-}
-
-//[POST]Detail Post
-function postDetail(WP_REST_Request $request){
-  $param_post_id = $request['slug'] ?? 0;
-  $required_parameters = ['slug'];
-
-  // Check required parameters 
-  $errors = validated($required_parameters, $request);
-  if($errors):
-    $response = new WP_REST_Response($errors);
-    $response->set_status(400);
-    return $response;
-  endif;  
-
-  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
-  var_dump($post);
-  if(!$post)
-    $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
-  $sample = artikel($post->ID);
-
-  if(!empty($sample)):
-    //Get further information
-    $sample = postAdditionnal($sample);
   endif;
 
   //Response
