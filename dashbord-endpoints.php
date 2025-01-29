@@ -4192,7 +4192,7 @@ function all_courses_content()
             }
         endif;
         $course->longDescription = get_field('long_description',$course->ID);
-        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID); 
 
         $course->courseType = get_field('course_type', $course->ID);
         $image = '';
