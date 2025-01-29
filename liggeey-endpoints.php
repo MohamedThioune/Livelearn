@@ -1123,6 +1123,8 @@ function IsManagedOrNot(WP_REST_Request $request){
 
 //[POST]Detail artikel
 function artikelDetail(WP_REST_Request $request){
+  global $wpdb;
+  
   $slug = $request['slug'] ?? 0;
   $userApplyID = 0; 
   $edit = 0;
@@ -1165,7 +1167,7 @@ function artikelDetail(WP_REST_Request $request){
 
   var_dump($post);
 
-  // flush_rewrite_rules();
+  //flush_rewrite_rules();
 
   $sample = (!empty($post)) ? artikel($post->ID) : null;
 
