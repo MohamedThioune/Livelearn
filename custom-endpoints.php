@@ -160,93 +160,206 @@ class Badge
 //Push notifications
 
 
-function sendFirebasePushNotification(WP_REST_Request $request) {
-  $title = $request['title'] ?? "";
-  $body = $request['body'] ?? "";
-  $current_user_id = $GLOBALS['user_id'];
-  $data = $request['data'] ?? [];
-  return sendNotificationToUser($current_user_id,$title,$body,$data);
-}
+// function sendFirebasePushNotification(WP_REST_Request $request) {
+//   $title = $request['title'] ?? "";
+//   $body = $request['body'] ?? "";
+//   $current_user_id = $GLOBALS['user_id'];
+//   $data = $request['data'] ?? [];
+//   return sendNotificationToUser($current_user_id,$title,$body,$data);
+// }
 
-function sendNotificationToUser($userId, $title, $body, $data = []) {
-  // Vérifier que l'utilisateur est connecté
-  if (!$userId) {
-      return new WP_Error('user_not_logged_in', 'You have to provide the user id!', ['status' => 401]);
+// function sendNotificationToUser($userId, $title, $body, $data = []) {
+//   // Vérifier que l'utilisateur est connecté
+//   if (!$userId) {
+//       return new WP_Error('user_not_logged_in', 'You have to provide the user id!', ['status' => 401]);
+//   }
+
+//   // Récupérer le token de l'utilisateur
+//   $token = get_field('smartphone_token', 'user_' . $userId);
+//   if (!$token) {
+//       return new WP_Error('token_not_found', 'FCM Token not found!', ['status' => 404]);
+//   }
+
+//   // Clé serveur Firebase
+//   $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
+
+//   // Préparer les données de la notification
+//   $notificationData = [
+//       'to' => $token,
+//       'notification' => [
+//           'title' => $title,
+//           'body' => $body,
+//       ],
+//   ];
+
+//   // Ajout données supplémentaires facultatives 
+//   if (!empty($data)) {
+//       $notificationData['data'] = $data; // Doit être un tableau associatif
+//   }
+
+//   $dataString = json_encode($notificationData);
+
+  
+//   $headers = [
+//       'Authorization: ' . $serverKey,
+//       'Content-Type: application/json',
+//   ];
+
+//   // URL de l'API FCM
+//   $url = 'https://fcm.googleapis.com/fcm/send';
+
+//   // Initialiser CURL
+//   $ch = curl_init();
+//   curl_setopt($ch, CURLOPT_URL, $url);
+//   curl_setopt($ch, CURLOPT_POST, true);
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//   curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+//   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+//   curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+//   // Exécuter la requête
+//   $response = curl_exec($ch);
+
+//   // Vérification des erreurs CURL
+//   if ($response === false) {
+//       $error_msg = curl_error($ch);
+//       curl_close($ch);
+//       return new WP_Error('curl_error', 'Error CURL : ' . $error_msg, ['status' => 500]);
+//   }
+
+//   // Vérification du code de réponse HTTP
+//   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//   curl_close($ch);
+
+//   if ($httpCode >= 200 && $httpCode < 300) {
+//       // Succès
+//       return json_decode($response, true);
+//   } else {
+//       // Erreur de l'API Firebase
+//       return new WP_Error(
+//           'firebase_error',
+//           'Erreur lors de l\'envoi de la notification. Code HTTP : ' . $httpCode,
+//           [
+//               'status' => $httpCode,
+//               'response' => json_decode($response, true)
+//           ]
+//       );
+//   }
+// }
+
+
+function sendPushNotificationFirebase(WP_REST_Request $request) {
+  // Chemin vers le fichier JSON de la clé de service Firebase
+  $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
+  
+  // Titre, corps et données de la notification depuis la requête
+  $title = $request['title'] ?? 'Test';
+  $body = $request['body'] ?? 'Test';
+  $data = $request['data'] ?? [];
+  
+  // Récupérer l'ID de l'utilisateur actuel
+  $current_user_id = get_current_user_id();
+  if (!$current_user_id) {
+      return new WP_Error('user_not_logged_in', 'Utilisateur non connecté.', ['status' => 401]);
   }
 
   // Récupérer le token de l'utilisateur
-  $token = get_field('smartphone_token', 'user_' . $userId);
-  if (!$token) {
-      return new WP_Error('token_not_found', 'FCM Token not found!', ['status' => 404]);
+  $deviceToken = get_field('smartphone_token', 'user_' . $current_user_id);
+  if (!$deviceToken) {
+      return new WP_Error('token_not_found', 'Token non trouvé pour l\'utilisateur.', ['status' => 404]);
   }
 
-  // Clé serveur Firebase
-  $serverKey = "Bearer AAAAurXExgE:APA91bEVVmb3m7BcwiW6drSOJGS6pVASAReDwrsJueA0_0CulTu3i23azmOTP2TcEhUf-5H7yPzC9Wp9YSHhU3BGZbNszpzXOXWIH1M6bbjWyloBrGxmpIxHIQO6O3ep7orcIsIPV05p";
+  // Charger le fichier JSON de la clé de service
+  if (!file_exists($serviceAccountFile)) {
+      return new WP_Error('service_account_missing', 'Fichier de clé de service introuvable.', ['status' => 500]);
+  }
 
-  // Préparer les données de la notification
-  $notificationData = [
-      'to' => $token,
-      'notification' => [
-          'title' => $title,
-          'body' => $body,
+  $jwt = json_decode(file_get_contents($serviceAccountFile), true);
+  $clientEmail = $jwt['client_email'];
+  $privateKey = $jwt['private_key'];
+
+  // Génération du JWT pour l'authentification
+  $nowSeconds = time();
+  $token = [
+      "iss" => $clientEmail,
+      "sub" => $clientEmail,
+      "aud" => "https://oauth2.googleapis.com/token",
+      "iat" => $nowSeconds,
+      "exp" => $nowSeconds + 3600,
+      "scope" => "https://www.googleapis.com/auth/firebase.messaging"
+  ];
+
+  $header = base64_encode(json_encode(["alg" => "RS256", "typ" => "JWT"]));
+  $payload = base64_encode(json_encode($token));
+  $headerPayload = "$header.$payload";
+  openssl_sign($headerPayload, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+  $jwtToken = "$headerPayload." . base64_encode($signature);
+
+  // Obtenir un jeton d'accès OAuth 2
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "https://oauth2.googleapis.com/token");
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+      "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      "assertion" => $jwtToken,
+  ]));
+
+  $response = curl_exec($ch);
+  if (curl_errno($ch)) {
+      return new WP_Error('curl_error', curl_error($ch), ['status' => 500]);
+  }
+  curl_close($ch);
+
+  $responseArray = json_decode($response, true);
+  if (isset($responseArray['error'])) {
+      return new WP_Error('auth_error', $responseArray['error']['message'], ['status' => 401]);
+  }
+
+  $accessToken = $responseArray['access_token'] ?? null;
+  if (!$accessToken) {
+      return new WP_Error('access_token_error', 'Jeton d\'accès introuvable.', ['status' => 401]);
+  }
+
+  // Préparer la requête à l'API FCM
+  $url = "https://fcm.googleapis.com/v1/projects/livelearn-359911/messages:send";
+  $payload = [
+      "message" => [
+          "token" => $deviceToken,
+          "notification" => [
+              "title" => $title,
+              "body" => $body,
+          ],
+          "data" => $data ?? ['test'=>'test'],
       ],
   ];
 
-  // Ajout données supplémentaires facultatives 
-  if (!empty($data)) {
-      $notificationData['data'] = $data; // Doit être un tableau associatif
-  }
-
-  $dataString = json_encode($notificationData);
-
-  
-  $headers = [
-      'Authorization: ' . $serverKey,
-      'Content-Type: application/json',
-  ];
-
-  // URL de l'API FCM
-  $url = 'https://fcm.googleapis.com/fcm/send';
-
-  // Initialiser CURL
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, [
+      "Authorization: Bearer $accessToken",
+      "Content-Type: application/json",
+  ]);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
-  // Exécuter la requête
-  $response = curl_exec($ch);
-
-  // Vérification des erreurs CURL
-  if ($response === false) {
-      $error_msg = curl_error($ch);
-      curl_close($ch);
-      return new WP_Error('curl_error', 'Error CURL : ' . $error_msg, ['status' => 500]);
+  $result = curl_exec($ch);
+  if (curl_errno($ch)) {
+      return new WP_Error('curl_error', curl_error($ch), ['status' => 500]);
   }
-
-  // Vérification du code de réponse HTTP
-  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   curl_close($ch);
 
-  if ($httpCode >= 200 && $httpCode < 300) {
-      // Succès
-      return json_decode($response, true);
-  } else {
-      // Erreur de l'API Firebase
-      return new WP_Error(
-          'firebase_error',
-          'Erreur lors de l\'envoi de la notification. Code HTTP : ' . $httpCode,
-          [
-              'status' => $httpCode,
-              'response' => json_decode($response, true)
-          ]
-      );
+  $resultArray = json_decode($result, true);
+  if (isset($resultArray['error'])) {
+      return new WP_Error('fcm_error', $resultArray['error']['message'], ['status' => 500]);
   }
+
+  return rest_ensure_response(['success' => true, 'response' => $resultArray]);
 }
+
 
 
 
@@ -523,11 +636,23 @@ function get_total_followers ($data)
  * Topics Endpoints
  */
 
-function detailCategory($categoryID){
+function detailCategory($categoryID, $userID = null){
 
   //Category ID 
   if(!$categoryID)
     return false;
+
+  //Topic is followed by the user
+  $is_followed = false;
+  $topics = [];
+  $topics_external = [];
+  $topics_internal = [];
+  if($userID):
+    $topics_external = get_user_meta($userID, 'topic');
+    $topics_internal = get_user_meta($userID, 'topic_affiliate');
+    $topics = array_merge($topics_external, $topics_internal);
+  endif;
+  $is_followed = (in_array($categoryID, $topics)) ? true : false;
 
   //Initialization
   $sample = array();
@@ -542,20 +667,15 @@ function detailCategory($categoryID){
   );
   $param_category = (isset($categories[0])) ? $categories[0] : 0;
 
-  // $errors = [];
   if(!$param_category)
     return 0;
-  //   $errors['errors'] = 'No category found !';
-  //   $response = new WP_REST_Response($errors);
-  //   $response->set_status(401);
-  //   return $response;
-  // endif;
   
   $sample['ID'] = $categoryID ;
   $sample['name'] = $param_category->name ;
   $sample['slug'] = $param_category->slug ;
-  $sample['image'] = get_field('image', 'category_'. $topic) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
+  $sample['image'] = get_field('image', 'category_'. $categoryID) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
   $sample['parent'] = $param_category->category_parent;
+  $sample['is_followed'] = $is_followed;
 
   return (Object)$sample;  
 }
@@ -2536,10 +2656,10 @@ function getTopicCoursesROptimized($data)
   $infos = [];
   $main_experts = [];
   $expertsID = [];
-  // $futher = isset($data['futher']) ? true : false;
+  $userID = isset($data['userID']) ? $data['userID'] : null;
 
   //Get category information
-  $category = detailCategory($topic_id);
+  $category = detailCategory($topic_id, $userID);
   $infos['category'] = $category;
 
   //Get other topics
@@ -2560,10 +2680,11 @@ function getTopicCoursesROptimized($data)
     )
   );
   $courses = array();
-  $query_blogs = new WP_Query( $args );
+  // $query_blogs = new WP_Query( $args );
   //Filter with category
   $args = array(
       'post_type' => array('post', 'course'),
+      'post_status' => 'publish',
       'tax_query' => $tax_query,
       'nopaging' => true,
   );
@@ -2671,22 +2792,21 @@ function getTopicCoursesOptimized($data)
       'order' => 'DESC',
       'meta_query'     => array(
         'relation' => 'OR',
-         array
-         (
-             'key'     => 'categories',
-             'value'   => $topic_id, 
-             'compare' => 'LIKE'
-         ),
         array
         (
-            'key'     => 'category_xml',
-            'value'   => $topic_id, 
-            'compare' => 'LIKE'
+          'key'     => 'categories',
+          'value'   => $topic_id, 
+          'compare' => 'LIKE'
+        ),
+        array
+        (
+          'key'     => 'category_xml',
+          'value'   => $topic_id, 
+          'compare' => 'LIKE'
         )
     )
     )
   );
-
   $outcome_courses = array();
   
   for($i=0; $i <count($courses) ;$i++) 
@@ -2760,7 +2880,8 @@ function getTopicCoursesOptimized($data)
         $new_course = new Course($courses[$i]);
         array_push($outcome_courses, $new_course);
   }
- return  $outcome_courses;
+
+ return $outcome_courses;
 }
 
 

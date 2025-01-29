@@ -664,10 +664,10 @@ function link_the_categories_courses()
         if (empty($categories))
             continue;
 
-        //wp_set_post_terms($course->ID, $categories, 'course_category');
         $filtered_categories = array_filter($categories, function($category) {
             return !empty($category) && is_array($category) && isset($category['value']);
-        }); // recupe the the
+        }); 
+        // recup the categories 
         $categories_ids = array_map(function($category) {
             return intval($category['value']);
         }, $filtered_categories);
@@ -688,11 +688,12 @@ function link_the_categories_courses()
     $numbers_of_pages = range(1, $total_pages);
     return new WP_REST_Response(
         array(
-            'message'=>'course applied '.$number_course_valide.'/'.$total_number_course,
+            'message'=> 'course applied' . $number_course_valide . '/' . $total_number_course,
             'count_all_course' => $count_all_course,
-            'page'=>$numbers_of_pages,
-            'courses' =>$cousres_returned
-        ));
+            'page'=> $numbers_of_pages,
+            'courses' => $cousres_returned
+        )
+    );
 }
 
 /**
