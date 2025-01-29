@@ -1123,7 +1123,7 @@ function IsManagedOrNot(WP_REST_Request $request){
 
 //[POST]Detail artikel
 function artikelDetail(WP_REST_Request $request){
-  $param_post_id = $request['slug'] ?? 0;
+  $slug = $request['slug'] ?? 0;
   $userApplyID = 0; 
   $edit = 0;
   //Get optional params
@@ -1141,11 +1141,25 @@ function artikelDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
-  if(!$post)
-    $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
-  var_dump($post);
-  $sample = artikel($post->ID);
+  //Use WP Query
+  $post = null;
+  $args = [
+    'post_type' => array('course', 'post', 'learnpath'),
+    'name' => $slug,
+    'posts_per_page' => 1
+  ];
+  $query = new WP_Query($args);
+
+  if ($query->have_posts()) :
+    $post = $query->posts[0];
+    var_dump($post);
+  endif;
+
+  // $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
+  // if(!$post)
+    // $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
+  var_dump($slug);
+  $sample = ($post) ? artikel($post->ID) : null;
   var_dump($sample);
 
   if(!empty($sample)):
