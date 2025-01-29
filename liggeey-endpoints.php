@@ -1165,8 +1165,6 @@ function artikelDetail(WP_REST_Request $request){
     $slug
   ));
 
-  var_dump($post);
-
   $sample = (!empty($post)) ? artikel($post->ID) : null;
 
   if(!empty($sample)):
