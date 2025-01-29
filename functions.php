@@ -1857,6 +1857,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'getTopicCoursesROptimized',
     ));
 
+    register_rest_route('custom/v2', '/topic/v2/(?P<id>\d+)/(?P<userID>\d+)/courses', array(
+        'methods' => 'GET',
+        'callback' => 'getTopicCoursesROptimized',
+    ));
+
     register_rest_route('custom/v2', '/user/(?P<user_id>\d+)/statistics', array(
         'methods' => 'GET',
         'callback' => 'timeSpentOnAllCourseType',
@@ -2789,9 +2794,13 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'all_courses_in_plateform'
     ));
-    register_rest_route ('custom/v1', '/courses/test/all', array(
+    register_rest_route ('custom/v1', '/courses/content', array(
         'methods' => 'GET',
-        'callback' => 'all_courses_in_plateform_test'
+        'callback' => 'all_courses_content'
+    ));
+    register_rest_route ('custom/v1', '/courses/data', array(
+        'methods' => 'GET',
+        'callback' => 'all_courses_data'
     ));
     register_rest_route ('custom/v1', '/companies/all', array(
         'methods' => 'GET',

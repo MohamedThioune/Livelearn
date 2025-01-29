@@ -2919,19 +2919,19 @@ function candidateSkillsPassport(WP_REST_Request $request) {
                     $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
     }
 
-    $price = get_field('price', $course->ID);
-    if ($price != "0") {
-        $formatted_price = '$' . number_format($price, 2, '.', ',');
-    } else {
-        $formatted_price = 'Gratis';
-    }
+    $price = get_field('price', $course->ID) ?: 'Gratis';
+    // if ($price != "0") {
+    //     $formatted_price = '$' . number_format($price, 2, '.', ',');
+    // } else {
+    //     $formatted_price = 'Gratis';
+    // }
     $author = get_user_by('ID', $course->post_author);
     $author_name = $author->display_name ?: $author->first_name;
 
       //data additional
     $course_combined_info = array_merge($course_info, array(
         'thumbnail_url' => $thumbnail,
-        'price' => $formatted_price,
+        'price' => $price,
         'author_name' => $author_name,
     ));
 
