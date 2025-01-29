@@ -523,11 +523,23 @@ function get_total_followers ($data)
  * Topics Endpoints
  */
 
-function detailCategory($categoryID){
+function detailCategory($categoryID, $userID = null){
 
   //Category ID 
   if(!$categoryID)
     return false;
+
+  //Topic is followed by the user
+  $is_followed = false;
+  $topics = [];
+  $topics_external = [];
+  $topics_internal = [];
+  if($userID):
+    $topics_external = get_user_meta($userID, 'topic');
+    $topics_internal = get_user_meta($userID, 'topic_affiliate');
+    $topics = array_merge($topics_external, $topics_internal);
+  endif;
+  $is_followed = (in_array($categoryID, $topics)) ? true : false;
 
   //Initialization
   $sample = array();
@@ -542,20 +554,15 @@ function detailCategory($categoryID){
   );
   $param_category = (isset($categories[0])) ? $categories[0] : 0;
 
-  // $errors = [];
   if(!$param_category)
     return 0;
-  //   $errors['errors'] = 'No category found !';
-  //   $response = new WP_REST_Response($errors);
-  //   $response->set_status(401);
-  //   return $response;
-  // endif;
   
   $sample['ID'] = $categoryID ;
   $sample['name'] = $param_category->name ;
   $sample['slug'] = $param_category->slug ;
   $sample['image'] = get_field('image', 'category_'. $categoryID) ?: get_stylesheet_directory_uri() . '/img/iconOnderverpen.png' ;
   $sample['parent'] = $param_category->category_parent;
+  $sample['is_followed'] = $is_followed;
 
   return (Object)$sample;  
 }
@@ -2536,10 +2543,10 @@ function getTopicCoursesROptimized($data)
   $infos = [];
   $main_experts = [];
   $expertsID = [];
-  // $futher = isset($data['futher']) ? true : false;
+  $userID = isset($data['userID']) ? $data['userID'] : null;
 
   //Get category information
-  $category = detailCategory($topic_id);
+  $category = detailCategory($topic_id, $userID);
   $infos['category'] = $category;
 
   //Get other topics
@@ -2560,10 +2567,11 @@ function getTopicCoursesROptimized($data)
     )
   );
   $courses = array();
-  $query_blogs = new WP_Query( $args );
+  // $query_blogs = new WP_Query( $args );
   //Filter with category
   $args = array(
       'post_type' => array('post', 'course'),
+      'post_status' => 'publish',
       'tax_query' => $tax_query,
       'nopaging' => true,
   );
@@ -2671,22 +2679,21 @@ function getTopicCoursesOptimized($data)
       'order' => 'DESC',
       'meta_query'     => array(
         'relation' => 'OR',
-         array
-         (
-             'key'     => 'categories',
-             'value'   => $topic_id, 
-             'compare' => 'LIKE'
-         ),
         array
         (
-            'key'     => 'category_xml',
-            'value'   => $topic_id, 
-            'compare' => 'LIKE'
+          'key'     => 'categories',
+          'value'   => $topic_id, 
+          'compare' => 'LIKE'
+        ),
+        array
+        (
+          'key'     => 'category_xml',
+          'value'   => $topic_id, 
+          'compare' => 'LIKE'
         )
     )
     )
   );
-
   $outcome_courses = array();
   
   for($i=0; $i <count($courses) ;$i++) 

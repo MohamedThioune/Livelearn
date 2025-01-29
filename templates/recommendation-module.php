@@ -71,6 +71,7 @@ function recommendation($user, $globe = null, $limit = null) {
     //Filter with category(Followed + viewed) & preferential langage & author(Followed + viewed) 
     $args = array(
         'post_type' => array('post', 'course'),
+        'post_status' => 'publish',
         'tax_query' => $tax_query,
         'meta_key' => 'language',
         'meta_value' => $preferential_language,
@@ -87,6 +88,7 @@ function recommendation($user, $globe = null, $limit = null) {
     	//Filter only with category(Followed + viewed) & preferential langage
     	$args = array(
         	'post_type' => array('post', 'course'),
+            'post_status' => 'publish',
         	'tax_query' => $tax_query,
         	'meta_key' => 'language',
         	'meta_value' => $preferential_language,
@@ -105,6 +107,7 @@ function recommendation($user, $globe = null, $limit = null) {
     	//Filter only with preferential langage
     	$args = array(
         	'post_type' => array('post', 'course'),
+            'post_status' => 'publish',
         	'meta_key' => 'language',
         	'meta_value' => $preferential_language,
         	// 'nopaging' => true,
