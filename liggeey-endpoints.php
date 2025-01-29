@@ -1152,15 +1152,22 @@ function artikelDetail(WP_REST_Request $request){
 
   if ($query->have_posts()) :
     $post = $query->posts[0];
-    var_dump($post);
   endif;
 
-  // $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
-  // if(!$post)
-    // $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
-  var_dump($slug);
-  $sample = ($post) ? artikel($post->ID) : null;
-  var_dump($sample);
+  $post = $wpdb->get_row($wpdb->prepare("
+    SELECT * FROM {$wpdb->posts} 
+    WHERE post_name = %s 
+    AND post_type IN ('course', 'post', 'learnpath')
+    AND post_status = 'publish'
+    LIMIT 1", 
+    $slug
+  ));
+
+  var_dump($post);
+
+  // flush_rewrite_rules();
+
+  $sample = (!empty($post)) ? artikel($post->ID) : null;
 
   if(!empty($sample)):
     //Get further information
