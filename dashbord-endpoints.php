@@ -5151,8 +5151,12 @@ function detail_expert($data)
             array(
                 'message' => 'Expert not exist maybe not correct !!!',
             ),401 );
+    // $current_user = 22;
+    $current_user = wp_get_current_user()->ID; // user connected = 479, expert on detail 5
+    $who_followed_this_expert = get_user_meta($id_expert, 'expert')??[]; // people who follow expert 5
 
     $expert = $expert_initial->data;
+    $expert->is_followed = in_array($current_user,$who_followed_this_expert);
     unset($expert->user_pass);
     $args_courses = array(
         'post_type' => array('post','course'),
@@ -5187,7 +5191,7 @@ function detail_expert($data)
                 $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
         }
         $course->pathImage = $image;
-
+        $course->tags = $course->post_name;
         $all_courses[] = new Course($course);
     }
     $note_skilles = array();
