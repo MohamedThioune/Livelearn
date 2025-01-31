@@ -2581,6 +2581,7 @@ function getTopicCoursesROptimized($data)
   $outcome_courses = array();
   for($i = 0; $i < count($courses); $i++) 
   {
+    $courses[$i]->slug = $courses[$i]->post_name;
     $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
     $author = get_user_by('ID', $courses[$i] -> post_author);
     $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
