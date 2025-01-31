@@ -4026,7 +4026,11 @@ function all_courses_data(){
     );
     $courses = get_posts($args);
 
-    foreach($courses as $course):
+    for ($i = $start; $i < $end; $i++):
+        if(!isset($courses[$i]))
+            break; 
+        $course = $courses[$i];   
+
         //Switch case for 
         $course_type = get_field('course_type', $course->ID);
         switch ($course_type) {
@@ -4086,7 +4090,7 @@ function all_courses_data(){
             $numTypos['others'] += 1;
             break;
         }
-    endforeach;
+    endfor;
 
     return new WP_REST_Response(
         array(
