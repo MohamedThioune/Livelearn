@@ -4026,77 +4026,70 @@ function all_courses_data(){
     );
     $courses = get_posts($args);
 
-    $count_all_course = count($courses);
-    $total_pages = ceil($count_all_course / 20);
-    //numbers of pages
-    $numbers_of_pages = range(1, $total_pages);
+    foreach($courses as $course):
+        //Switch case for 
+        $course_type = get_field('course_type', $course->ID);
+        switch ($course_type) {
+        case 'Artikel':
+            $numTypos['article'] += 1;
+            break;
 
-    // foreach($courses as $course):
-    //     //Switch case for 
-    //     $course_type = get_field('course_type', $course->ID);
-    //     switch ($course_type) {
-    //     case 'Artikel':
-    //         $numTypos['article'] += 1;
-    //         break;
-
-    //     case 'Podcast':
-    //         $numTypos['podcast'] += 1;
-    //         break;
+        case 'Podcast':
+            $numTypos['podcast'] += 1;
+            break;
         
-    //     case 'Video':
-    //         $numTypos['video'] += 1;
-    //         break;
+        case 'Video':
+            $numTypos['video'] += 1;
+            break;
         
-    //     case 'Opleidingen':
-    //         $numTypos['course'] += 1;
-    //         break;
+        case 'Opleidingen':
+            $numTypos['course'] += 1;
+            break;
 
-    //     case 'Training':
-    //         $numTypos['training'] += 1;
-    //         break;
+        case 'Training':
+            $numTypos['training'] += 1;
+            break;
 
-    //     case 'Workshop':
-    //         $numTypos['workshop'] += 1;
-    //         break;
+        case 'Workshop':
+            $numTypos['workshop'] += 1;
+            break;
 
-    //     case 'Masterclass':
-    //         $numTypos['masterclass'] += 1;
-    //         break;
+        case 'Masterclass':
+            $numTypos['masterclass'] += 1;
+            break;
 
-    //     case 'E-learning':
-    //         $numTypos['elearning'] += 1;
-    //         break;
+        case 'E-learning':
+            $numTypos['elearning'] += 1;
+            break;
     
-    //     case 'Cursus':
-    //         $numTypos['cursus'] += 1;
-    //         break;
+        case 'Cursus':
+            $numTypos['cursus'] += 1;
+            break;
         
-    //     case 'Lezing':
-    //         $numTypos['reading'] += 1;
-    //         break;
+        case 'Lezing':
+            $numTypos['reading'] += 1;
+            break;
 
-    //     case 'Event':
-    //         $numTypos['event'] += 1;
-    //         break;
+        case 'Event':
+            $numTypos['event'] += 1;
+            break;
 
-    //     case 'Webinar':
-    //         $numTypos['webinar'] += 1;
-    //         break;
+        case 'Webinar':
+            $numTypos['webinar'] += 1;
+            break;
 
-    //     case 'Leerpad':
-    //         $numTypos['leerpad'] += 1;
-    //         break;
+        case 'Leerpad':
+            $numTypos['leerpad'] += 1;
+            break;
         
-    //     default:
-    //         $numTypos['others'] += 1;
-    //         break;
-    //     }
-    // endforeach;
+        default:
+            $numTypos['others'] += 1;
+            break;
+        }
+    endforeach;
 
     return new WP_REST_Response(
         array(
-            'count_all_course' => $count_all_course,
-            'pages' => $numbers_of_pages,
             'count_course_type'=>[
                'Video'=> $numTypos['video'],
                'Podcast' => $numTypos['podcast'],
@@ -4210,9 +4203,18 @@ function all_courses_content()
         $all_courses[] = new Course($course);
     }
 
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
+    $total_pages = ceil($count_all_course / 20);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+
     return new WP_REST_Response(
         array(
             'page' => $page,
+            'pages' => $numbers_of_pages,
+            'count_all_course' => $count_all_course,
             'course' => $all_courses,
         ), 200 );
 }
