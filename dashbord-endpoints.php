@@ -4174,10 +4174,13 @@ function all_courses_content()
     $all_courses = array();
 
     //Pagination
-    $x = ($page - 1) * $CONST_PAGE;
-    $y = $x + 20;
-    foreach (range($x, $y) as $course) :     
-    // foreach ($courses as $course) {
+    $start = ($page - 1) * $CONST_PAGE;
+    $end = $start + 20;
+    for ($i = $start; $i <= $end; $i++):
+        if(!isset($post[$i]))
+            break; 
+        $course = $post[$i];   
+        // foreach ($courses as $course) {
 
         $course->slug = $course->post_name;
         $course->visibility = get_field('visibility',$course->ID) ?? [];
@@ -4208,7 +4211,7 @@ function all_courses_content()
 
         $all_courses[] = new Course($course);
 
-    endforeach;
+    endfor;
 
     // $args['posts_per_page'] = -1;
     // unset($args['paged']); // to make all pages
