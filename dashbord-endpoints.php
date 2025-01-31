@@ -4176,7 +4176,7 @@ function all_courses_content()
     //Pagination
     $start = ($page - 1) * $CONST_PAGE;
     $end = $start + 20;
-    for ($i = $start; $i <= $end; $i++):
+    for ($i = $start; $i < $end; $i++):
         if(!isset($courses[$i]))
             break; 
         $course = $courses[$i];   
