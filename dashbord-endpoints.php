@@ -4025,8 +4025,10 @@ function all_courses_data(){
         'order' => 'DESC' ,
     );
     $courses = get_posts($args);
-
-    for ($i = $start; $i < $end; $i++):
+    $max = count($courses);
+    
+    //Iteration
+    for ($i = 0; $i < $max; $i++):
         if(!isset($courses[$i]))
             break; 
         $course = $courses[$i];   
