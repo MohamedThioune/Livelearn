@@ -4118,6 +4118,7 @@ function all_courses_data(){
 
 function all_courses_content()
 {
+    $CONST_PAGE = 20;
     $page = $_GET['page'] ?? 1;
     $type = $_GET['type'] ?? '';
     $max = $_GET['max'] ?? null;
@@ -4126,10 +4127,10 @@ function all_courses_content()
     $args = array(
         'post_type' => array('course','post'),
         'post_status' => 'publish',
-        'posts_per_page' => 20,
+        'posts_per_page' => -1,
         'order' => 'DESC' ,
         'meta_query' => array(),
-        'paged' => $page,
+        // 'paged' => $page,
     );
 
     // Filter by course type
@@ -4171,8 +4172,13 @@ function all_courses_content()
 
     $courses = get_posts($args);
     $all_courses = array();
-    
-    foreach ($courses as $course) {
+
+    //Pagination
+    $x = ($page - 1) * $CONST_PAGE;
+    $y = $x + 20;
+    foreach (range($x, $y) as $course) :     
+    // foreach ($courses as $course) {
+
         $course->slug = $course->post_name;
         $course->visibility = get_field('visibility',$course->ID) ?? [];
         if ($course -> post_author):
@@ -4201,12 +4207,13 @@ function all_courses_content()
         $course->pathImage = $image;
 
         $all_courses[] = new Course($course);
-    }
 
-    $args['posts_per_page'] = -1;
-    unset($args['paged']); // to make all pages
-    $count_all_course = count(get_posts($args));
-    $total_pages = ceil($count_all_course / 20);
+    endforeach;
+
+    // $args['posts_per_page'] = -1;
+    // unset($args['paged']); // to make all pages
+    $count_all_course = count($courses);
+    $total_pages = ceil($count_all_course / $CONST_PAGE);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
 
