@@ -57,7 +57,7 @@ class Course
     $this->id = $course->ID;
     $this->date = $course->post_date;
     $this->title = $course->post_title;
-    $this->title = $course->post_name;
+    $this->slug = $course->post_name;
     $this->pathImage = $course->pathImage;
     $this->shortDescription = $course->shortDescription;
     $this->longDescription = $course->longDescription;
