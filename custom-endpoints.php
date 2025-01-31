@@ -32,6 +32,7 @@ class Course
   public $id;
   public $date;
   public $title;
+  public $slug;
   public $pathImage;
   public $shortDescription;
   public $longDescription;
@@ -56,6 +57,7 @@ class Course
     $this->id = $course->ID;
     $this->date = $course->post_date;
     $this->title = $course->post_title;
+    $this->title = $course->post_name;
     $this->pathImage = $course->pathImage;
     $this->shortDescription = $course->shortDescription;
     $this->longDescription = $course->longDescription;
@@ -1857,7 +1859,7 @@ function allArticlesOptimized ($data)
                 
              $new_course = new Course($courses[$i]);
              array_push($outcome_courses, $new_course);
-              $i++;
+            $i++;
   endwhile;
 endif;
 //shuffle($outcome_courses);
@@ -2581,7 +2583,6 @@ function getTopicCoursesROptimized($data)
   $outcome_courses = array();
   for($i = 0; $i < count($courses); $i++) 
   {
-    $courses[$i]->slug = $courses[$i]->post_name;
     $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
     $author = get_user_by('ID', $courses[$i] -> post_author);
     $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
