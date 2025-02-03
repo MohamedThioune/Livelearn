@@ -78,6 +78,7 @@ class Course
     $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
     $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
   }
+  
 }
 
 class CourseOptimized
@@ -129,6 +130,7 @@ class CourseOptimized
     $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
     $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
   }
+  
 }
 
 class Tags
