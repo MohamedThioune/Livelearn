@@ -3760,7 +3760,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       //Sending email notification
       //title + trigger + content parsing
       $first_name = $user->first_name ?: $user->display_name;
-      $emails = ($toAdmin) ? 'info@livelearn.nl' : [$user->user_email, 'info@livelearn.nl'];
+      $emails = ($toAdmin) ? 'mohamed@livelearn.nl' : [$user->user_email, 'info@livelearn.nl'];
       // $emails = [$user->user_email];
 
       //Showin information 
