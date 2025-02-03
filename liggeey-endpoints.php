@@ -3699,6 +3699,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   /** Checking parameters **/
 
   $userIDs = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $toAdmin = isset($request['to_admin']) ? $request['to_admin'] : null;
   $userS = (is_array($userIDs)) ? $userIDs : [$userIDs];
   if (!$userS)
   {
@@ -3740,16 +3741,17 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   foreach($userS as $id):
     $user = get_user_by('ID', $id);
     //Create notification
-    $notification_data = 
-    array(
-      'post_title' => $title,
-      'post_author' => $user->ID,
-      'post_type' => 'notification',
-      'post_status' => 'publish'
-    );
+    $notification_data = array();
+    if($user)
+      $notification_data = 
+      array(
+        'post_title' => $title,
+        'post_author' => $user->ID,
+        'post_type' => 'notification',
+        'post_status' => 'publish'
+      );
     $notification_id = wp_insert_post($notification_data);
-    if (is_int($notification_id))
-    {
+    if (is_int($notification_id) || $toAdmin) :
       update_field('content', $content, $notification_id);
       update_field('trigger', $trigger, $notification_id);
       if($author_trigger)
@@ -3758,7 +3760,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       //Sending email notification
       //title + trigger + content parsing
       $first_name = $user->first_name ?: $user->display_name;
-      $emails = [$user->user_email, 'info@livelearn.nl'];
+      $emails = ($toAdmin) ? 'info@livelearn.nl' : [$user->user_email, 'info@livelearn.nl'];
       // $emails = [$user->user_email];
 
       //Showin information 
@@ -3776,7 +3778,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
       if (wp_mail($emails, $subject, $mail_invitation_body, $headers, array( '' )))
         $mail_sent = true;
-    }
+    endif;
   endforeach;
 
   if($mail_sent):
