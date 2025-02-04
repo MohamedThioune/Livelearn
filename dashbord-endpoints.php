@@ -4133,7 +4133,7 @@ function all_courses_content()
     $post_per_page = -1;
 
     //First loading 'product search' page 
-    $post_per_page = ($type == '' && !$max && !$min && !$experts) ? $post_per_page : 1500;
+    $post_per_page = ($type == '' && $max == null && $min == null && $experts == null) ? $post_per_page : 1500;
     var_dump($post_per_page, $type , $max , $min, $experts);
 
     $args = array(
