@@ -4130,10 +4130,15 @@ function all_courses_content()
     $max = $_GET['max'] ?? null;
     $min = $_GET['min'] ?? null;
     $experts = $_GET['experts'] ?? null;
+    $post_per_page = -1;
+
+    //First loading 'product search' page 
+    $post_per_page = ($type == '' && !$max && !$min && !$experts) ? $post_per_page : 1500;
+
     $args = array(
-        'post_type' => array('course','post'),
+        'post_type' => array('course', 'post', 'learnpath'),
         'post_status' => 'publish',
-        'posts_per_page' => -1,
+        'posts_per_page' => $post_per_page,
         'order' => 'DESC' ,
         'meta_query' => array(),
         // 'paged' => $page,
@@ -4186,7 +4191,6 @@ function all_courses_content()
         if(!isset($courses[$i]))
             break; 
         $course = $courses[$i];   
-        // foreach ($courses as $course) {
 
         $course->slug = $course->post_name;
         $course->visibility = get_field('visibility',$course->ID) ?? [];
