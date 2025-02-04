@@ -4134,6 +4134,7 @@ function all_courses_content()
 
     //First loading 'product search' page 
     $post_per_page = ($type == '' && !$max && !$min && !$experts) ? $post_per_page : 1500;
+    var_dump($post_per_page);
 
     $args = array(
         'post_type' => array('course', 'post', 'learnpath'),
