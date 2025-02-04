@@ -4145,37 +4145,35 @@ function all_courses_content()
     );
 
     // Filter by course type
-    if ($type) {
+    if ($type) 
         $args['meta_query'][] = array(
             'key' => 'course_type',
             'value' => $type,
             'compare' => 'IN'
         );
-    }
 
     // Filter by price
-    if ($min !== null && $max !== null) {
+    if ($min !== null && $max !== null) 
         $args['meta_query'][] = array(
             'key' => 'price',
             'value' => array($min, $max),
             'type' => 'numeric',
             'compare' => 'BETWEEN'
         );
-    } elseif ($min !== null) {
+    elseif ($min !== null) 
         $args['meta_query'][] = array(
             'key' => 'price',
             'value' => $min,
             'type' => 'numeric',
             'compare' => '>='
         );
-    } elseif ($max !== null) {
+    elseif ($max !== null) 
         $args['meta_query'][] = array(
             'key' => 'price',
             'value' => $max,
             'type' => 'numeric',
             'compare' => '<='
         );
-    }
     
     //Filter by author
     if ($experts)
