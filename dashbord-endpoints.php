@@ -4124,7 +4124,7 @@ function all_courses_data(){
 
 function all_courses_content()
 {
-    $CONST_PAGE = 20;
+    $CONST_PAGE = 21;
     $page = $_GET['page'] ?? 1;
     $type = $_GET['type'] ?? '';
     $max = $_GET['max'] ?? null;
@@ -4133,7 +4133,7 @@ function all_courses_content()
     $post_per_page = -1;
 
     //First loading 'product search' page 
-    $post_per_page = ($type == '' && !$max && !$min && !$experts) ? 400 : $post_per_page;
+    $post_per_page = ($type == '' && !$max && !$min && !$experts) ? 420 : $post_per_page;
 
     $args = array(
         'post_type' => array('course', 'post', 'learnpath'),
