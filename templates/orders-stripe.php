@@ -124,7 +124,6 @@ function ordersByAuthor($courseID, $customer = null) {
                 //Get all students for this author
                 if($order->owner_id)
                     array_push($enrolledAllUserID, $order->owner_id);
-
                     
                 array_push($enrolledPost, $post);
                 array_push($enrolledID, $post->ID);
