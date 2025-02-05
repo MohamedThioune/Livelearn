@@ -208,16 +208,18 @@ function postAdditionnal($post, $userID, $edit = null){
   $ordersByAuthor = array();
   $ordersByAuthor = ordersByAuthor($post->ID, 1);
   //get students data for this course 
-  $course_enrolled = (isset($ordersByAuthor['studentAllIDs'][0])) ? $ordersByAuthor['studentAllIDs'] : array();
+  $course_enrolled = (isset($ordersByAuthor['studentIDs'][0])) ? $ordersByAuthor['studentIDs'] : array();
+  $mainStudentAllIDs = (isset($ordersByAuthor['studentAllIDs'][0])) ? $ordersByAuthor['studentAllIDs'] : array();
+
   $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
-  $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool;   //check access to user connected
+  $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool; //check access to user connected
+
   //get students data for all these author courses
-  $course_enrolled_all = (isset($ordersByAuthor['posts'][0])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
-  $count_stripe_student = (isset($course_enrolled_all[0])) ? count(array_count_values($course_enrolled_all)) : 0;
+  $studentAllIDs = (isset($mainStudentAllIDs[0])) ? count(array_count_values($mainStudentAllIDs)) : 0;
   $post->average_star = $average_star;
   $post->enrolled_students = $count_stripe_course_student;
   if($author)
-    $post->instructor->enrolled_students = $count_stripe_student;
+    $post->instructor->enrolled_students = $studentAllIDs;
   $post->access = ($statut_bool) ? "All access" : 'Not granted'; 
 
   //Experts
