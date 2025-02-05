@@ -208,7 +208,7 @@ function postAdditionnal($post, $userID, $edit = null){
   $ordersByAuthor = array();
   $ordersByAuthor = ordersByAuthor($post->ID, 1);
   //get students data for this course 
-  $course_enrolled = (isset($ordersByAuthor['studentIDs'][0])) ? $ordersByAuthor['studentIDs'] : array();
+  $course_enrolled = (isset($ordersByAuthor['studentAllIDs'][0])) ? $ordersByAuthor['studentAllIDs'] : array();
   $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
   $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool;   //check access to user connected
   //get students data for all these author courses
@@ -4720,6 +4720,37 @@ function HomepageAngular(){
         $courses['Podcast'][] = artikel($post->ID);
         $podcast++;
         break;
+      
+      case 'Workshop':
+        $courses['Workshop'][] = artikel($post->ID);
+        // $article++;
+        break;
+
+      case 'Masterclass':
+        $courses['Masterclass'][] = artikel($post->ID);
+        // $article++;
+        break;
+
+      case 'Training':
+        $courses['Training'][] = artikel($post->ID);
+        // $article++;
+        break;
+  
+      case 'Opleidingen':
+        $courses['Opleidingen'][] = artikel($post->ID);
+        // $article++;
+        break;  
+
+      case 'Event':
+        $courses['Event'][] = artikel($post->ID);
+        // $article++;
+        break;
+
+      case 'E-learning':
+        $courses['E-learning'][] = artikel($post->ID);
+        // $article++;
+        break;
+
     }
 
     if($article >= 6 && $video >= 6 && $podcast >=6)
