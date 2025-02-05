@@ -210,7 +210,6 @@ function postAdditionnal($post, $userID, $edit = null){
   //get students data for this course 
   $course_enrolled = (isset($ordersByAuthor['studentIDs'][0])) ? $ordersByAuthor['studentIDs'] : array();
   $mainStudentAllIDs = (isset($ordersByAuthor['studentAllIDs'][0])) ? $ordersByAuthor['studentAllIDs'] : array();
-
   $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
   $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool; //check access to user connected
 
