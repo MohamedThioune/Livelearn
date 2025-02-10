@@ -4628,27 +4628,27 @@ function addTodo($data)
         ),201);
 }
 function countCourseType($course_type){
-    $args = array(
-        'post_type' => array('course','post'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'ordevalue' => $course_type,
-        'order' => 'DESC' ,
-        'meta_key' => 'course_type',
-        'meta_value' => $course_type
-    );
-    return count(get_posts($args));
     // $args = array(
-    //     'post_type' => array('post', 'course'),
+    //     'post_type' => array('course','post'),
     //     'post_status' => 'publish',
+    //     'posts_per_page' => -1,
+    //     'ordevalue' => $course_type,
+    //     'order' => 'DESC' ,
     //     'meta_key' => 'course_type',
-    //     'meta_value' => $course_type,
-    //     'nopaging' => true,
+    //     'meta_value' => $course_type
     // );
-    // $query = new WP_Query( $args );
-    // $data_course_type = isset($query->post_count) ? $query->post_count : 0; 
+    // return count(get_posts($args));
+    $args = array(
+        'post_type' => array('post', 'course'),
+        'post_status' => 'publish',
+        'meta_key' => 'course_type',
+        'meta_value' => $course_type,
+        'nopaging' => true,
+    );
+    $query = new WP_Query( $args );
+    $data_course_type = isset($query->post_count) ? $query->post_count : 0; 
 
-    // return $data_course_type;
+    return $data_course_type;
 }
 
 function all_courses_in_plateform()
@@ -4744,7 +4744,7 @@ function all_courses_in_plateform()
     return new WP_REST_Response(
         array(
             'count_all_course' => $count_all_course,
-            'page'=>$numbers_of_pages,
+            'page'=> $numbers_of_pages,
             'count_course_type'=>[
                 'Video'=> countCourseType('Video'),
                 'Podcast'=>countCourseType('Podcast'),
@@ -4764,162 +4764,163 @@ function all_courses_in_plateform()
 
 function all_courses_data(){
     //Get repartition of courses
-    // $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'course' => 0, 'training' => 0, 'workshop' => 0, 'masterclass' => 0, 'elearning' => 0, 'cursus' => 0, 'reading' => 0, 'event' => 0, 'webinar' => 0, 'leerpad' => 0, 'others' => 0];
-    // $args = array(
-    //     'post_type' => array('course','post','learnpath'),
-    //     'post_status' => 'publish',
-    //     'posts_per_page' => -1,
-    //     'order' => 'DESC' ,
-    // );
-    // $courses = get_posts($args);
-
-    //unset($args['paged']); // to make all pages
-    //$count_all_course = count(get_posts($args));
-    //$total_pages = ceil($count_all_course / 20);
-    //numbers of pages
-    //$numbers_of_pages = range(1, $total_pages);
-
-    // foreach($courses as $course):
-    //     //Switch case for 
-    //     $course_type = get_field('course_type', $course->ID);
-    //     switch ($course_type) {
-    //     case 'Artikel':
-    //         $numTypos['article'] += 1;
-    //         break;
-
-    //     case 'Podcast':
-    //         $numTypos['podcast'] += 1;
-    //         break;
-        
-    //     case 'Video':
-    //         $numTypos['video'] += 1;
-    //         break;
-        
-    //     case 'Opleidingen':
-    //         $numTypos['course'] += 1;
-    //         break;
-
-    //     case 'Training':
-    //         $numTypos['training'] += 1;
-    //         break;
-
-    //     case 'Workshop':
-    //         $numTypos['workshop'] += 1;
-    //         break;
-
-    //     case 'Masterclass':
-    //         $numTypos['masterclass'] += 1;
-    //         break;
-
-    //     case 'E-learning':
-    //         $numTypos['elearning'] += 1;
-    //         break;
+    $numTypos = ['article' => 0, 'podcast' => 0, 'video' => 0, 'course' => 0, 'training' => 0, 'workshop' => 0, 'masterclass' => 0, 'elearning' => 0, 'cursus' => 0, 'reading' => 0, 'event' => 0, 'webinar' => 0, 'leerpad' => 0, 'others' => 0];
+    $args = array(
+        'post_type' => array('course','post','learnpath'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC' ,
+    );
+    $courses = get_posts($args);
+    $max = count($courses);
     
-    //     case 'Cursus':
-    //         $numTypos['cursus'] += 1;
-    //         break;
+    //Iteration
+    for ($i = 0; $i < $max; $i++):
+        if(!isset($courses[$i]))
+            break; 
+        $course = $courses[$i];   
+
+        //Switch case for 
+        $course_type = get_field('course_type', $course->ID);
+        switch ($course_type) {
+        case 'Artikel':
+            $numTypos['article'] += 1;
+            break;
+
+        case 'Podcast':
+            $numTypos['podcast'] += 1;
+            break;
         
-    //     case 'Lezing':
-    //         $numTypos['reading'] += 1;
-    //         break;
-
-    //     case 'Event':
-    //         $numTypos['event'] += 1;
-    //         break;
-
-    //     case 'Webinar':
-    //         $numTypos['webinar'] += 1;
-    //         break;
-
-    //     case 'Leerpad':
-    //         $numTypos['leerpad'] += 1;
-    //         break;
+        case 'Video':
+            $numTypos['video'] += 1;
+            break;
         
-    //     default:
-    //         $numTypos['others'] += 1;
-    //         break;
-    //     }
-    // endforeach;
+        case 'Opleidingen':
+            $numTypos['course'] += 1;
+            break;
+
+        case 'Training':
+            $numTypos['training'] += 1;
+            break;
+
+        case 'Workshop':
+            $numTypos['workshop'] += 1;
+            break;
+
+        case 'Masterclass':
+            $numTypos['masterclass'] += 1;
+            break;
+
+        case 'E-learning':
+            $numTypos['elearning'] += 1;
+            break;
+    
+        case 'Cursus':
+            $numTypos['cursus'] += 1;
+            break;
+        
+        case 'Lezing':
+            $numTypos['reading'] += 1;
+            break;
+
+        case 'Event':
+            $numTypos['event'] += 1;
+            break;
+
+        case 'Webinar':
+            $numTypos['webinar'] += 1;
+            break;
+
+        case 'Leerpad':
+            $numTypos['leerpad'] += 1;
+            break;
+        
+        default:
+            $numTypos['others'] += 1;
+            break;
+        }
+    endfor;
 
     return new WP_REST_Response(
         array(
-            //'course' => $all_courses,
-            //'count_all_course' => $count_all_course,
             'count_course_type'=>[
-            //    'Video'=> $numTypos['video'],
-            //    'Podcast' => $numTypos['podcast'],
-            //    'Opleidingen'=> $numTypos['course'],
-            //    'Artikel' => $numTypos['article'],
-            //    'Masterclass' => $numTypos['masterclass'],
-            //    'Workshop' => $numTypos['workshop'],
-            //    'E_Learning' => $numTypos['elearning'],
-            //    'Event'=> $numTypos['event'],
-            //    'Training' => $numTypos['training'],
-            //    'Lezing' => $numTypos['reading'],
-                'Video'=> countCourseType('Video'),
-                'Podcast'=>countCourseType('Podcast'),
-                'Opleidingen'=>countCourseType('Opleidingen'),
-                'Artikel'=>countCourseType('Artikel'),
-                'Masterclass'=>countCourseType('Masterclass'),
-                'Workshop'=>countCourseType('Workshop'),
-                'E_Learning'=>countCourseType('E-Learning'),
-                'Event'=>countCourseType('Event'),
-                'Training'=>countCourseType('Training'),
-                'Lezing'=>countCourseType('Lezing'),
-                'Assessment'=>countCourseType('Assessment'),
-            //    'Assessment' => countCourseType('Assessment'),
+               'Video'=> $numTypos['video'],
+               'Podcast' => $numTypos['podcast'],
+               'Opleidingen'=> $numTypos['course'],
+               'Artikel' => $numTypos['article'],
+               'Masterclass' => $numTypos['masterclass'],
+               'Workshop' => $numTypos['workshop'],
+               'E_Learning' => $numTypos['elearning'],
+               'Event'=> $numTypos['event'],
+               'Training' => $numTypos['training'],
+               'Lezing' => $numTypos['reading'],
+                // 'Video'=> countCourseType('Video'),
+                // 'Podcast'=>countCourseType('Podcast'),
+                // 'Opleidingen'=>countCourseType('Opleidingen'),
+                // 'Artikel'=>countCourseType('Artikel'),
+                // 'Masterclass'=>countCourseType('Masterclass'),
+                // 'Workshop'=>countCourseType('Workshop'),
+                // 'E_Learning'=>countCourseType('E-Learning'),
+                // 'Event'=>countCourseType('Event'),
+                // 'Training'=>countCourseType('Training'),
+                // 'Lezing'=>countCourseType('Lezing'),
+                // 'Assessment'=>countCourseType('Assessment'),
             ],
         ), 200 );
 }
 
 function all_courses_content()
 {
+    $CONST_PAGE = 21;
     $page = $_GET['page'] ?? 1;
     $type = $_GET['type'] ?? '';
     $max = $_GET['max'] ?? null;
     $min = $_GET['min'] ?? null;
     $experts = $_GET['experts'] ?? null;
+    $post_per_page = -1;
+
+    //First loading 'product search' page 
+    $post_per_page = ($type == '' && !$max && !$min && !$experts) ? 525 : $post_per_page;
+
     $args = array(
-        'post_type' => array('course','post'),
+        'post_type' => array('course', 'post', 'learnpath'),
         'post_status' => 'publish',
-        'posts_per_page' => 20,
+        'posts_per_page' => $post_per_page,
         'order' => 'DESC' ,
         'meta_query' => array(),
-        'paged' => $page,
+        // 'paged' => $page,
     );
 
     // Filter by course type
-    if ($type) {
+    if ($type) 
         $args['meta_query'][] = array(
             'key' => 'course_type',
             'value' => $type,
             'compare' => 'IN'
         );
-    }
 
     // Filter by price
-    if ($min !== null && $max !== null) {
+    if ($min !== null && $max !== null) 
         $args['meta_query'][] = array(
             'key' => 'price',
             'value' => array($min, $max),
             'type' => 'numeric',
             'compare' => 'BETWEEN'
         );
-    } elseif ($min !== null) {
+    elseif ($min !== null) 
         $args['meta_query'][] = array(
             'key' => 'price',
             'value' => $min,
             'type' => 'numeric',
             'compare' => '>='
         );
-    } elseif ($max !== null) {
+    elseif ($max !== null) 
         $args['meta_query'][] = array(
             'key' => 'price',
             'value' => $max,
             'type' => 'numeric',
             'compare' => '<='
         );
-    }
     
     //Filter by author
     if ($experts)
@@ -4927,8 +4928,15 @@ function all_courses_content()
 
     $courses = get_posts($args);
     $all_courses = array();
-    
-    foreach ($courses as $course) {
+
+    //Pagination
+    $start = ($page - 1) * $CONST_PAGE;
+    $end = $start + $CONST_PAGE;
+    for ($i = $start; $i < $end; $i++):
+        if(!isset($courses[$i]))
+            break; 
+        $course = $courses[$i];   
+
         $course->slug = $course->post_name;
         $course->visibility = get_field('visibility',$course->ID) ?? [];
         if ($course -> post_author):
@@ -4957,11 +4965,21 @@ function all_courses_content()
         $course->pathImage = $image;
 
         $all_courses[] = new Course($course);
-    }
+
+    endfor;
+
+    // $args['posts_per_page'] = -1;
+    // unset($args['paged']); // to make all pages
+    $count_all_course = count($courses);
+    $total_pages = ceil($count_all_course / $CONST_PAGE);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
 
     return new WP_REST_Response(
         array(
             'page' => $page,
+            'pages' => $numbers_of_pages,
+            'count_all_course' => $count_all_course,
             'course' => $all_courses,
         ), 200 );
 }

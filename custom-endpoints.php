@@ -32,6 +32,7 @@ class Course
   public $id;
   public $date;
   public $title;
+  public $slug;
   public $pathImage;
   public $shortDescription;
   public $longDescription;
@@ -56,6 +57,7 @@ class Course
     $this->id = $course->ID;
     $this->date = $course->post_date;
     $this->title = $course->post_title;
+    $this->slug = $course->post_name;
     $this->pathImage = $course->pathImage;
     $this->shortDescription = $course->shortDescription;
     $this->longDescription = $course->longDescription;
@@ -76,6 +78,7 @@ class Course
     $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
     $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
   }
+  
 }
 
 class CourseOptimized
@@ -127,6 +130,7 @@ class CourseOptimized
     $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
     $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
   }
+  
 }
 
 class Tags
@@ -1857,7 +1861,7 @@ function allArticlesOptimized ($data)
                 
              $new_course = new Course($courses[$i]);
              array_push($outcome_courses, $new_course);
-              $i++;
+            $i++;
   endwhile;
 endif;
 //shuffle($outcome_courses);

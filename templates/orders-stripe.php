@@ -76,6 +76,7 @@ function ordersByAuthor($courseID, $customer = null) {
     $enrolledID = array();
     $enrolledUser = array();
     $enrolledUserID = array();
+    $enrolledAllUserID = array();
 
     if(isset($orders_stripe[0]))
     foreach ($orders_stripe as $order):
@@ -109,13 +110,20 @@ function ordersByAuthor($courseID, $customer = null) {
 
                 $sample = array(); 
                 if($post->ID == $course->ID):
+                    //Get information orders about this course
                     $sample['ownerID'] = $post->ownerID;
                     $sample['metadata'] = $post->metadata;
                     $sample = (Object)$sample;
                     array_push($enrolledUser, $sample);
+
+                    //Get students for this course
                     if($order->owner_id)
                         array_push($enrolledUserID, $order->owner_id);
                 endif;
+
+                //Get all students for this author
+                if($order->owner_id)
+                    array_push($enrolledAllUserID, $order->owner_id);
                     
                 array_push($enrolledPost, $post);
                 array_push($enrolledID, $post->ID);
@@ -124,6 +132,6 @@ function ordersByAuthor($courseID, $customer = null) {
     endforeach;
                 
     $enrolledPostAuthor = (empty($enrolledPost)) ?: array_reverse($enrolledPost);
-    return ['ids' => $enrolledID, 'posts' => $enrolledPostAuthor, 'students' => $enrolledUser, 'studentIDs' => $enrolledUserID];
+    return ['ids' => $enrolledID, 'posts' => $enrolledPostAuthor, 'students' => $enrolledUser, 'studentIDs' => $enrolledUserID, 'studentAllIDs' => $enrolledAllUserID];
 }
 ?>
