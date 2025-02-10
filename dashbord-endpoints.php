@@ -2201,12 +2201,14 @@ function learn_modules($data){
     ), 200);
 }
 function learnning_database(){
+    $page = $_GET['page'] ?? 1;
+    $CONST_PAGE = 10;
     $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => -1,
         'orderby' => 'date',
         'order' => 'DESC',
-        'numberposts' => 1000,
+        'posts_per_page' => $CONST_PAGE,
+        'paged' => $page,
     );
     $courses = get_posts($args);
     foreach ($courses as $course){
@@ -2277,9 +2279,18 @@ function learnning_database(){
         $course->shortDescription = get_field('short_description',$course->ID);
         $course->longDescription = get_field('long_description',$course->ID);
     }
+
+    $args['posts_per_page'] = -1;
+    unset($args['paged']); // to make all pages
+    $count_all_course = count(get_posts($args));
+    $total_pages = ceil($count_all_course / $CONST_PAGE);
+    //numbers of pages
+    $numbers_of_pages = range(1, $total_pages);
+
     $response = new WP_REST_Response(array(
-        'count'=>count($courses),
-        'courses' =>$courses
+        'count'=>$count_all_course,
+        'courses' =>$courses,
+        'pages'=>$numbers_of_pages
     ));
     $response->set_status(200);
     return $response;
