@@ -92,15 +92,6 @@ function postAdditionnal($post, $userID, $edit = null){
   //Partial information
   $coursetype = get_field('course_type', $post->ID);
 
-  /** Get further informations */
-  //Podcast 
-  // $main_podcasts_genuine = get_field('podcasts', $post->ID);
-  // $main_podcasts_index = get_field('podcasts_index', $post->ID);
-
-  //Video
-  // $main_videos_genuine = get_field('data_virtual', $post->ID);
-  // $main_videos_youtube = get_field('youtube_videos', $post->ID);
-
   //Offline
   $main_date_genuine = get_field('data_locaties', $post->ID);
   $main_date_xml = get_field('data_locaties_xml', $post->ID);
@@ -122,25 +113,11 @@ function postAdditionnal($post, $userID, $edit = null){
   endif;
 
   switch ($coursetype) {
-    // case 'Podcast':
-    //   $post->podcasts = $main_podcasts_genuine;
-    //   $post->podcasts_index = $main_podcasts_index;
-    //   break;
-    
-    // case 'Video':
-    //   $post->videos = $main_videos_genuine;
-    //   $post->videos_youtube = $main_videos_youtube;
-    //   break;
-
     case 'Opleidingen' || 'Training' || 'Workshop' || 'Masterclass' || 'Event':
       $post->dates = $main_date_genuine;
       $post->dates_xml = $main_date_xml;
       $post->dates_event = $main_date_event;
       break;
-
-    // case 'Leerpad':
-    //   $post->playlist = $main_playlist;
-    //   break;
   }
 
   //Reviews
@@ -229,18 +206,20 @@ function postAdditionnal($post, $userID, $edit = null){
 
   //Enrollment | Stripe - by author
   $ordersByAuthor = array();
-  $ordersByAuthor = ordersByAuthor($post->ID, 1);
+  $ordersByAuthor = ordersByAuthor($post->ID);
   //get students data for this course 
   $course_enrolled = (isset($ordersByAuthor['studentIDs'][0])) ? $ordersByAuthor['studentIDs'] : array();
+  $mainStudentAllIDs = (isset($ordersByAuthor['studentAllIDs'][0])) ? $ordersByAuthor['studentAllIDs'] : array();
+  // var_dump($mainStudentAllIDs);
   $count_stripe_course_student = (isset($course_enrolled[0])) ? count(array_count_values($course_enrolled)) : 0;
-  $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool;   //check access to user connected
+  $statut_bool = (in_array($userID, $course_enrolled)) ? true : $statut_bool; //check access to user connected
+
   //get students data for all these author courses
-  $course_enrolled_all = (isset($ordersByAuthor['posts'][0])) ? array_column($ordersByAuthor['posts'], 'ownerID') : array();
-  $count_stripe_student = (isset($course_enrolled_all[0])) ? count(array_count_values($course_enrolled_all)) : 0;
+  $studentAllIDs = (isset($mainStudentAllIDs[0])) ? count(array_count_values($mainStudentAllIDs)) : 0;
   $post->average_star = $average_star;
   $post->enrolled_students = $count_stripe_course_student;
   if($author)
-    $post->instructor->enrolled_students = $count_stripe_student;
+    $post->instructor->enrolled_students = $studentAllIDs;
   $post->access = ($statut_bool) ? "All access" : 'Not granted'; 
 
   //Experts
@@ -1146,7 +1125,9 @@ function IsManagedOrNot(WP_REST_Request $request){
 
 //[POST]Detail artikel
 function artikelDetail(WP_REST_Request $request){
-  $param_post_id = $request['slug'] ?? 0;
+  global $wpdb;
+  
+  $slug = $request['slug'] ?? 0;
   $userApplyID = 0; 
   $edit = 0;
   //Get optional params
@@ -1164,45 +1145,31 @@ function artikelDetail(WP_REST_Request $request){
     return $response;
   endif;  
 
-  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
-  if(!$post)
-    $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
-  $sample = artikel($post->ID);
+  //Use Raw Query
+  $post = null;
 
-  if(!empty($sample)):
-    //Get further information
-    $sample = postAdditionnal($sample, $userApplyID, $edit);
-  endif;
+  $post = $wpdb->get_row($wpdb->prepare("
+    SELECT * FROM {$wpdb->posts} 
+    WHERE post_name = %s 
+    AND post_type IN ('course', 'post', 'learnpath')
+    AND post_status = 'publish'
+    LIMIT 1", 
+    $slug
+  ));
 
-  //Response
-  $response = new WP_REST_Response($sample);
-  $response->set_status(200);
-
-  return $response;
-}
-
-//[POST]Detail Post
-function postDetail(WP_REST_Request $request){
-  $param_post_id = $request['slug'] ?? 0;
-  $required_parameters = ['slug'];
-
-  // Check required parameters 
-  $errors = validated($required_parameters, $request);
-  if($errors):
+  $errors = [];
+  if(empty($post)):
+    $errors['errors'] = 'No post found !';
     $response = new WP_REST_Response($errors);
     $response->set_status(400);
     return $response;
   endif;  
 
-  $post = get_page_by_path($param_post_id, OBJECT, 'course') ?: get_page_by_path($param_post_id, OBJECT, 'post');
-  var_dump($post);
-  if(!$post)
-    $post = get_page_by_path($param_post_id, OBJECT, 'learnpath');
-  $sample = artikel($post->ID);
+  $sample = (!empty($post)) ? artikel($post->ID) : null;
 
   if(!empty($sample)):
     //Get further information
-    $sample = postAdditionnal($sample);
+    $sample = postAdditionnal($sample, $userApplyID, $edit);
   endif;
 
   //Response
@@ -3734,6 +3701,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   /** Checking parameters **/
 
   $userIDs = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+  $toAdmin = isset($request['to_admin']) ? $request['to_admin'] : null;
   $userS = (is_array($userIDs)) ? $userIDs : [$userIDs];
   if (!$userS)
   {
@@ -3775,16 +3743,17 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
   foreach($userS as $id):
     $user = get_user_by('ID', $id);
     //Create notification
-    $notification_data = 
-    array(
-      'post_title' => $title,
-      'post_author' => $user->ID,
-      'post_type' => 'notification',
-      'post_status' => 'publish'
-    );
+    $notification_data = array();
+    if($user)
+      $notification_data = 
+      array(
+        'post_title' => $title,
+        'post_author' => $user->ID,
+        'post_type' => 'notification',
+        'post_status' => 'publish'
+      );
     $notification_id = wp_insert_post($notification_data);
-    if (is_int($notification_id))
-    {
+    if (is_int($notification_id) || $toAdmin) :
       update_field('content', $content, $notification_id);
       update_field('trigger', $trigger, $notification_id);
       if($author_trigger)
@@ -3793,7 +3762,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       //Sending email notification
       //title + trigger + content parsing
       $first_name = $user->first_name ?: $user->display_name;
-      $emails = [$user->user_email, 'info@livelearn.nl'];
+      $emails = ($toAdmin) ? 'daniel@livelearn.nl' : [$user->user_email, 'info@livelearn.nl'];
       // $emails = [$user->user_email];
 
       //Showin information 
@@ -3811,7 +3780,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
       if (wp_mail($emails, $subject, $mail_invitation_body, $headers, array( '' )))
         $mail_sent = true;
-    }
+    endif;
   endforeach;
 
   if($mail_sent):
@@ -4753,6 +4722,37 @@ function HomepageAngular(){
         $courses['Podcast'][] = artikel($post->ID);
         $podcast++;
         break;
+      
+      case 'Workshop':
+        $courses['Workshop'][] = artikel($post->ID);
+        // $article++;
+        break;
+
+      case 'Masterclass':
+        $courses['Masterclass'][] = artikel($post->ID);
+        // $article++;
+        break;
+
+      case 'Training':
+        $courses['Training'][] = artikel($post->ID);
+        // $article++;
+        break;
+  
+      case 'Opleidingen':
+        $courses['Opleidingen'][] = artikel($post->ID);
+        // $article++;
+        break;  
+
+      case 'Event':
+        $courses['Event'][] = artikel($post->ID);
+        // $article++;
+        break;
+
+      case 'E-learning':
+        $courses['E-learning'][] = artikel($post->ID);
+        // $article++;
+        break;
+
     }
 
     if($article >= 6 && $video >= 6 && $podcast >=6)
