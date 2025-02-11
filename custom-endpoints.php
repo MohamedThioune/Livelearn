@@ -5229,6 +5229,7 @@ endif;
         $current_user_company = is_array(get_field('company', 'user_' . (int) $current_user_id)) ? get_field('company', 'user_' . (int) $current_user_id)[0] :  get_field('company', 'user_' . (int) $current_user_id);
         if ($current_user_company == null || $current_user_company == false)
           return $response;
+        var_dump($current_user_company);
         $users = get_users();
         $teamates = array();
         foreach ($users as $key => $user)
