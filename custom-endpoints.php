@@ -5330,13 +5330,13 @@ endif;
           );
 
           $query_departement = $wpdb->prepare(
-              "SELECT * FROM wpe7_internal_courses WHERE type = 'department' AND data_value = %s",
-              $departement_value
+              "SELECT * FROM wpe7_internal_courses WHERE type = 'department' AND company_id = %d AND data_value = %s ",
+              $company_id,$departement_value
           );
 
           $query_individual = $wpdb->prepare(
-              "SELECT * FROM wpe7_internal_courses WHERE type = 'individual' AND data_value = %s",
-              $individual_value
+              "SELECT * FROM wpe7_internal_courses WHERE type = 'individual' AND company_id = %d  AND data_value = %s" ,
+              $company_id,$individual_value
           );
 
           // Exécuter les requêtes
