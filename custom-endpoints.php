@@ -5626,6 +5626,7 @@ endif;
     }
 
     $company_id = $current_user_company->ID;
+    var_dump($company_id);
     $departement_value = get_field('department', 'user_' . (int) $current_user_id);
     $individual_value = $current_user->ID;
 
@@ -5819,7 +5820,6 @@ endif;
             $response['individual'][] = new Course($course);
         }
     }
-
     return rest_ensure_response($response);
 }
 
