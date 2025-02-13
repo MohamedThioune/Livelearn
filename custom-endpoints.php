@@ -5627,42 +5627,29 @@ endif;
 
     $company_id = $current_user_company->ID;
     $departement_value = get_field('department', 'user_' . (int) $current_user_id);
-    var_dump($departement_value);
     $individual_value = $current_user->ID;
 
-    // Construire dynamiquement la requête en fonction de la présence de departement et individual
-    $query = "SELECT * FROM wpe7_internal_courses WHERE company_id = %d AND (type = 'all'";
-    $params = [$company_id];
+    // Requête pour les cours de type "all"
+    $query_all = "SELECT * FROM wpe7_internal_courses WHERE company_id = %d AND type = 'all'";
+    $prepared_query_all = $wpdb->prepare($query_all, [$company_id]);
+    $results_all = $wpdb->get_results($prepared_query_all);
 
-    if (!empty($departement_value)) {
-        $query .= " OR (type = 'department' AND data_value = %s)";
-        $params[] = $departement_value;
-    }
-    if (!empty($individual_value)) {
-        $query .= " OR (type = 'individual' AND data_value = %s)";
-        $params[] = $individual_value;
-    }
-    $query .= ")";
+    // Requête pour les cours de type "department"
+    $query_department = "SELECT * FROM wpe7_internal_courses WHERE company_id = %d AND type = 'department' AND data_value = %s";
+    $prepared_query_department = $wpdb->prepare($query_department, [$company_id, $departement_value]);
+    $results_department = $wpdb->get_results($prepared_query_department);
 
-    $prepared_query = $wpdb->prepare($query, $params);
-    $results = $wpdb->get_results($prepared_query);
+    // Requête pour les cours de type "individual"
+    $query_individual = "SELECT * FROM wpe7_internal_courses WHERE company_id = %d AND type = 'individual' AND data_value = %s";
+    $prepared_query_individual = $wpdb->prepare($query_individual, [$company_id, $individual_value]);
+    $results_individual = $wpdb->get_results($prepared_query_individual);
 
-    // Séparer les résultats en trois tableaux d'IDs
-    $results_all_ids = [];
-    $results_department_ids = [];
-    $results_individual_ids = [];
-    foreach ($results as $row) {
-        if ($row->type === 'all') {
-            $results_all_ids[] = $row->course_id;
-        } elseif ($row->type === 'department') {
-            $results_department_ids[] = $row->course_id;
-        } elseif ($row->type === 'individual') {
-            $results_individual_ids[] = $row->course_id;
-        }
-    }
+    // Traitement des résultats pour "all"
+    if (!empty($results_all)) {
+        $results_all_ids = array_map(function($row) {
+            return $row->course_id;
+        }, $results_all);
 
-    // Récupération des cours de type "all"
-    if (!empty($results_all_ids)) {
         $courses = get_posts([
             'post_type'      => ['course', 'post'],
             'post__in'       => $results_all_ids,
@@ -5715,8 +5702,12 @@ endif;
         }
     }
 
-    // Récupération des cours de type "department"
-    if (!empty($results_department_ids)) {
+    // Traitement des résultats pour "department"
+    if (!empty($results_department)) {
+        $results_department_ids = array_map(function($row) {
+            return $row->course_id;
+        }, $results_department);
+
         $courses = get_posts([
             'post_type'      => ['course', 'post'],
             'post__in'       => $results_department_ids,
@@ -5768,8 +5759,12 @@ endif;
         }
     }
 
-    // Récupération des cours de type "individual"
-    if (!empty($results_individual_ids)) {
+    // Traitement des résultats pour "individual"
+    if (!empty($results_individual)) {
+        $results_individual_ids = array_map(function($row) {
+            return $row->course_id;
+        }, $results_individual);
+
         $courses = get_posts([
             'post_type'      => ['course', 'post'],
             'post__in'       => $results_individual_ids,
@@ -5820,6 +5815,7 @@ endif;
             $response['individual'][] = new Course($course);
         }
     }
+
     return rest_ensure_response($response);
 }
 
