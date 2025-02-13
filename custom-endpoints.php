@@ -5626,8 +5626,8 @@ endif;
     }
 
     $company_id = $current_user_company->ID;
-    var_dump($company_id);
     $departement_value = get_field('department', 'user_' . (int) $current_user_id);
+    var_dump($departement_value);
     $individual_value = $current_user->ID;
 
     // Construire dynamiquement la requête en fonction de la présence de departement et individual
