@@ -5216,8 +5216,6 @@ endif;
           return $response;
         }
 
-        
-
         // Préparer la réponse
         $response = array(
           'all' => array(),
@@ -5226,17 +5224,19 @@ endif;
       );
 
         $current_user = get_user_by('id', (int) $current_user_id);
-        $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+        $current_user_company = is_array( get_field('company', 'user_' . (int) $current_user_id) ) ? get_field('company', 'user_' . (int) $current_user_id)[0] : get_field('company', 'user_' . (int) $current_user_id);
 
-        
+        if ($current_user_company == null || $current_user_company ==false)
+          return rest_ensure_response($response);
 
         $users = get_users();
         $teamates = array();
         foreach ($users as $key => $user)
         {
-          $user_company =  get_field('company', 'user_' . (int) $user->ID)[0];
-          if ($user_company->ID == $current_user_company->ID)
-            array_push($teamates,$user->ID);
+          $user_company =  is_array( get_field('company', 'user_' . (int) $current_user_id) ) ? get_field('company', 'user_' . (int) $current_user_id)[0] : get_field('company', 'user_' . (int) $current_user_id);;
+          if ($current_user_company != null && $current_user_company !=false)
+            if ($user_company->ID == $current_user_company->ID)
+              array_push($teamates,$user->ID);
         }
         array_push($teamates,$current_user_id);
         $query =
