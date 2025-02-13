@@ -5660,9 +5660,9 @@ endif;
             $author = get_user_by('ID', $course->post_author);
             $author_company = get_field('company', 'user_' . (int) $author->ID);
             $author_company = is_array($author_company) ? $author_company[0] : $author_company;
-            if ($author_company->ID !== $company_id) {
-                continue;
-            }
+            // if ($author_company->ID !== $company_id) {
+            //     continue;
+            // }
             $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
             // Formatage du cours
@@ -5718,9 +5718,9 @@ endif;
             $author = get_user_by('ID', $course->post_author);
             $author_company = get_field('company', 'user_' . (int) $author->ID);
             $author_company = is_array($author_company) ? $author_company[0] : $author_company;
-            if ($author_company->ID !== $company_id) {
-                continue;
-            }
+            // if ($author_company->ID !== $company_id) {
+            //     continue;
+            // }
             $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
             $course->author = new Expert($author, $author_img);
@@ -5775,9 +5775,9 @@ endif;
             $author = get_user_by('ID', $course->post_author);
             $author_company = get_field('company', 'user_' . (int) $author->ID);
             $author_company = is_array($author_company) ? $author_company[0] : $author_company;
-            if ($author_company->ID !== $company_id) {
-                continue;
-            }
+            // if ($author_company->ID !== $company_id) {
+            //     continue;
+            // }
             $author_img = get_field('profile_img', 'user_' . $author->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
             $course->author = new Expert($author, $author_img);
