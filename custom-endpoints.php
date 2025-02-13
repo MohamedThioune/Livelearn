@@ -5225,7 +5225,7 @@ endif;
 
         $current_user = get_user_by('id', (int) $current_user_id);
         $current_user_company = is_array( get_field('company', 'user_' . (int) $current_user_id) ) ? get_field('company', 'user_' . (int) $current_user_id)[0] : get_field('company', 'user_' . (int) $current_user_id);
-
+        var_dump($current_user_company);
         if ($current_user_company == null || $current_user_company ==false)
           return rest_ensure_response($response);
 
