@@ -364,10 +364,6 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
   return rest_ensure_response(['success' => true, 'response' => $resultArray]);
 }
 
-
-
-
-
 /** **************** Api Custom Endpoints **************** */
 
 /**
@@ -6063,7 +6059,7 @@ function getUserInternalCourses($data) {
     if ($course->visibility != []) 
       if ($author_company != $current_user_company)
         continue;
-      
+
     $author = get_user_by( 'ID', $course -> post_author  );
     $author_img = get_field('profile_img','user_'.$author ->ID) != false ? get_field('profile_img','user_'.$author ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $course-> author = new Expert ($author , $author_img);
