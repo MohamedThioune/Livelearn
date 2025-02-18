@@ -5599,7 +5599,7 @@ endif;
   //       return rest_ensure_response($response);
   // }
 
-  function optimizeFetchInternalCourses() {
+  function optimizeFetchInternalCourses($data) {
     global $wpdb;
     // Retrieve the user ID from the global variable and validate it
     $current_user_id = false;
