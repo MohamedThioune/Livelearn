@@ -5601,16 +5601,17 @@ endif;
 
   function optimizeFetchInternalCourses() {
     global $wpdb;
-
-    $current_user_id = $GLOBALS['user_id'] ?? 0;
-    if ($current_user_id == 0) {
-        return new WP_REST_Response("You have to login with good credentials !", 400);
-    }
+    // Retrieve the user ID from the global variable and validate it
+    $current_user_id = false;
+    $current_user_id = isset($data['userID']) ? $data['userID'] : $GLOBALS['user_id'];
+    
+    if ($current_user_id == 0) 
+      return new WP_REST_Response("You have to login with good credentials !", 400);
 
     $response = [
-        'all' => [],
-        'department' => [],
-        'individual' => [],
+      'all' => [],
+      'department' => [],
+      'individual' => [],
     ];
 
     $current_user = get_user_by('id', (int) $current_user_id);
