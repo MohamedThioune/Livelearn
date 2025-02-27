@@ -257,9 +257,9 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
   // Chemin vers le fichier JSON de la clé de service Firebase
   $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
   
-  // Titre, corps et données de la notification depuis la requête
-  $title = $request['title'] ?? 'Test';
-  $body = $request['body'] ?? 'Test';
+  // Titre, body et data de la notification
+  $title = $request['title'] ?? '';
+  $body = $request['body'] ?? '';
   $data = $request['data'] ?? [];
   
   // Récupérer l'ID de l'utilisateur actuel
@@ -361,7 +361,100 @@ function sendPushNotificationFirebase(WP_REST_Request $request) {
       return new WP_Error('fcm_error', $resultArray['error']['message'], ['status' => 500]);
   }
 
-  return rest_ensure_response(['success' => true, 'response' => $resultArray]);
+  sendPushNotificationFirebaseCustom($title,$body,$current_user_id);
+
+  //return rest_ensure_response(['success' => true, 'response' => $resultArray]);
+}
+
+function sendPushNotificationFirebaseCustom($title, $body, $user_id, $data = ["path"=>""]) {
+    $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
+    $user = get_user_by('ID', $user_id );
+    // Vérifier si l'utilisateur est connecté
+    if (!$user) {
+        return new WP_Error('user_not_logged_in', 'Utilisateur does not exist !', ['status' => 401]);
+    }
+
+    // Récupérer le token de l'utilisateur
+    $deviceToken = get_field('smartphone_token', 'user_' . $user_id);
+    if (!$deviceToken) {
+        return new WP_Error('token_not_found', 'Token not valid !', ['status' => 404]);
+    }
+
+    if (!file_exists($serviceAccountFile)) {
+        return new WP_Error('service_account_missing', 'Something wrong !', ['status' => 500]);
+    }
+
+    $jwt = json_decode(file_get_contents($serviceAccountFile), true);
+    $clientEmail = $jwt['client_email'];
+    $privateKey = $jwt['private_key'];
+
+    $nowSeconds = time();
+    $token = [
+        "iss" => $clientEmail,
+        "sub" => $clientEmail,
+        "aud" => "https://oauth2.googleapis.com/token",
+        "iat" => $nowSeconds,
+        "exp" => $nowSeconds + 3600,
+        "scope" => "https://www.googleapis.com/auth/firebase.messaging"
+    ];
+
+    $header = base64_encode(json_encode(["alg" => "RS256", "typ" => "JWT"]));
+    $payload = base64_encode(json_encode($token));
+    $headerPayload = "$header.$payload";
+    openssl_sign($headerPayload, $signature, $privateKey, OPENSSL_ALGO_SHA256);
+    $jwtToken = "$headerPayload." . base64_encode($signature);
+
+    $ch = curl_init("https://oauth2.googleapis.com/token");
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+        "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer",
+        "assertion" => $jwtToken,
+    ]));
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+    $responseArray = json_decode($response, true);
+    if (isset($responseArray['error'])) {
+        return new WP_Error('auth_error', $responseArray['error']['message'], ['status' => 401]);
+    }
+
+    $accessToken = $responseArray['access_token'] ?? null;
+    if (!$accessToken) {
+        return new WP_Error('access_token_error', 'Something wrong !', ['status' => 401]);
+    }
+
+    $url = "https://fcm.googleapis.com/v1/projects/livelearn-359911/messages:send";
+    $payload = [
+        "message" => [
+            "token" => $deviceToken,
+            "notification" => [
+                "title" => $title,
+                "body" => $body,
+            ],
+            "data" => $data,
+        ],
+    ];
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: Bearer $accessToken",
+        "Content-Type: application/json",
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    $resultArray = json_decode($result, true);
+    if (isset($resultArray['error'])) {
+        return new WP_Error('fcm_error', $resultArray['error']['message'], ['status' => 500]);
+    }
+
+    return rest_ensure_response(['success' => true, 'response' => $resultArray]);
 }
 
 
