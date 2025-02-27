@@ -246,8 +246,15 @@ function postAdditionnal($post, $userID, $edit = null){
   $playlists = []; 
   $main_playlists = get_field('road_path', $post->ID);
   if($main_playlists)
-  foreach($main_playlists as $course)
-    $playlists[] = artikel($course->ID);
+  foreach($main_playlists as $course): 
+    $sample = (!empty($course)) ? artikel($course->ID) : null;
+
+    if(!empty($sample)):
+      //Get further information
+      $playlists[] = postAdditionnal($sample, $userID, $edit);
+    endif;
+  endforeach;
+
   $post->courses = $playlists;
   return $post;
 }
