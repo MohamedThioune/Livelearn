@@ -1876,23 +1876,22 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
-
     //(Bis) Statistics topics
     register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
+
+    // register_rest_route('custom/v2', '/user/internal/courses', array(
+    //     'methods' => 'GET',
+    //     'callback' => 'getUserInternalCourses',
+    // ));
+
     //(Bis) Internal
     register_rest_route('custom/v2', '/user/internal/courses/(?P<userID>\d+)', array(
         'methods' => 'GET',
-        'callback' => 'getUserInternalCourses',
+        'callback' => 'optimizeFetchInternalCourses',
     ));
-
-    register_rest_route('custom/v2', '/user/internal/courses', array(
-        'methods' => 'GET',
-        'callback' => 'getUserInternalCourses',
-    ));
-
     register_rest_route('custom/v2', '/user/intern/courses', array(
         'methods' => 'GET',
         'callback' => 'optimizeFetchInternalCourses',
