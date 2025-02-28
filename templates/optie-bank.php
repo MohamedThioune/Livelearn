@@ -126,7 +126,11 @@ if($optie == "✔"){
                 $old_episodes_json = file_get_contents($fileName);
                 $old_episodes_array = json_decode($old_episodes_json,true)?:[];
                 $youtube_videos_json = array_merge($old_episodes_array,$youtube_videos_json);
-
+                foreach ($youtube_videos_json as &$item) {
+                    array_walk_recursive($item, function (&$value) {
+                        $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                    });
+                }
                 $newJsonContent = json_encode( $youtube_videos_json,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
                 $insert = file_put_contents($fileName,$newJsonContent);
                 if ($insert) {
@@ -186,8 +190,12 @@ if($optie == "✔"){
                 $old_episodes_json = file_get_contents($fileName)?:'';
                 $old_episodes_array = $old_episodes_json ? json_decode($old_episodes_json,true) : [];
                 if ($old_episodes_array)
-                    $episodes = array_merge($old_episodes_array,$episodes);
-
+                    $episodes = array_values(array_merge($old_episodes_array,$episodes));
+                foreach ($episodes as &$item) {
+                    array_walk_recursive($item, function (&$value) {
+                        $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                    });
+                }
                 $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
                 $insert = file_put_contents($fileName,$newJsonContent);
                 if ($insert) {
@@ -201,7 +209,7 @@ if($optie == "✔"){
         update_field('origin_id', $feedid, $id_post);
         update_field('course_type', 'podcast', $id_post);
         update_field('podcasts_index', $podcasts_playlists, $id_post); // to comment if the proceses well done
-        save_podcast_in_json_file($id_post); //just to make sure
+        // save_podcast_in_json_file($id_post); //just to make sure
     }
     //Insert Others
     else if (in_array(strval($course->type), $type) ) {

@@ -335,7 +335,6 @@ function migration_episodes_podcast(){
         }
 
         if($fileName){
-            $message = "";
             $old_episodes_json = file_get_contents($fileName);
             $old_episodes_array = json_decode($old_episodes_json,true);
             if ($old_episodes_array)
@@ -372,13 +371,12 @@ function migration_episodes_podcast(){
 
 /**
  * @description this function take id-course and
- * @param $id_course
+ * @param $postId
  * @return bool
  */
-function save_podcast_in_json_file($id_course) : bool
+function save_podcast_in_json_file($postId) : bool
 {
-    return false;
-    $postId = $id_course;
+    //return false;
     $fileName = get_stylesheet_directory() . "/db/podcast.json";
 
     $apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
@@ -422,7 +420,6 @@ function save_podcast_in_json_file($id_course) : bool
     }
 
     $url = 'https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id='.$feedid;
-
     $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -437,7 +434,7 @@ function save_podcast_in_json_file($id_course) : bool
         $url_to_get_audio = $data['feed']['url'];
         if($url_to_get_audio) {
             $xml = simplexml_load_file($url_to_get_audio);
-            var_dump("post ID => $postId","url to load data => $url_to_get_audio",$xml);
+            //var_dump("post ID => $postId","url to load data => $url_to_get_audio",$xml);
             if($xml===false)
                 return false;
         }
@@ -484,7 +481,19 @@ function update_podcast_on_podcastindex()
 {
     $page = $_GET['page'] ?? 1;
     $type = 'Podcast';
-    $post_per_page = 2;
+    $post_per_page = 20;
+    $fileName = get_stylesheet_directory() . "/db/podcast.json";
+
+    $apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
+    $apiSecret = 'teMYqdrBgamSWpVnd7q4WABSBBZz3j$^uVSWwHuH';
+    $time = time();
+    $hash = sha1($apiKey.$apiSecret.$time);
+    $headers = [
+        "User-Agent: LivelearPodcast",
+        "X-Auth-Key: $apiKey",
+        "X-Auth-Date: $time",
+        "Authorization: $hash"
+    ];
     $args = array(
         'post_type' => 'course',
         'post_status' => 'publish',
@@ -496,17 +505,96 @@ function update_podcast_on_podcastindex()
         'paged' => $page,
     );
     $courses = get_posts($args);
-    $succes = 0;
-    $fail = 0;
-    $id_failed = [];
+
+    $episodes_json = file_get_contents($fileName);
+    $episodes = json_decode($episodes_json,true) ? : [];
+    $episodeOnly = [];
+    $array_to_save_in_json_file = [];
     foreach ($courses as $course) {
-        if(save_podcast_in_json_file($course->ID)) {
-            $succes = $succes + 1;
-        } else {
-            $fail = $fail + 1;
-            $id_failed[] = $course->ID;
+        $new_episodes_for_this_course = [];
+        $url_image_xml = get_field('url_image_xml',$course->ID);
+
+        $post_id_to_search = $course->ID;
+        // filter episodes by course id
+        $filteredEpisodes = array_filter($episodes, function ($episode) use ($post_id_to_search) {
+            return $episode['post_id'] == $post_id_to_search;
+        });
+
+        // map episodes by "episode_id"
+        $episodeIds = array_values(array_map(function ($episode) {
+            return $episode['episode_id'];
+        }, $filteredEpisodes));
+
+        $feedid_origin_id = get_field('origin_id',$course->ID);
+        if (!$feedid_origin_id)
+            continue;
+
+        // now we can do a request since podcast index
+        $url = 'https://api.podcastindex.org/api/1.0/podcasts/byfeedid?id='.$feedid_origin_id;
+        $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL,$url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //to disable secure of open ssl
+        $response = curl_exec ($ch);
+        curl_close ($ch);
+        if ($response) {
+            $data = (json_decode($response, TRUE));
+            if (!empty($data) && isset($data['feed']['url']) && !empty($data['feed']['url'])) {
+                $url_to_get_audio = $data['feed']['url'];
+                    $xml = simplexml_load_file($url_to_get_audio);
+                    // file xml is loading...
+                    if ($xml)
+                        if(property_exists($xml,'channel')) {
+                             foreach ($xml->channel[0] as $pod) {
+                                 if ($pod->enclosure->attributes())
+                                     if ($pod->enclosure->attributes()->url) {
+                                         $description_podcast = (string)$pod->description;
+                                         $title_podcast = (string)$pod->title;
+                                         $mp3 = (string)$pod->enclosure->attributes()->url;
+                                         $date = (string)$pod->pubDate;
+                                         $image_node = $pod->children('itunes', true)->image ?? null;
+                                         $image_audio = $image_node && $image_node->attributes()->href
+                                             ? (string) $image_node->attributes()->href
+                                             : null;
+                                         // Check if the episode already exists, ajouter les autres champs...
+                                         if (in_array($mp3,$episodeIds))
+                                             continue;
+                                         //$new_episodes_for_this_course [] = [
+                                         $array_to_save_in_json_file [] = [
+                                             'post_id' => intval($course->ID), // so not need to make post type
+                                             'episode_id' => $mp3,
+                                             'episode_image' => $image_audio ?: $url_image_xml,
+                                             'episode_title' => $title_podcast,
+                                             'episode_description' => $description_podcast ? substr($description_podcast, 0, 180) : '',
+                                             'episode_date' => $date ?: date('Y-m-d H:i:s'),
+                                         ];
+                                     }
+                             }
+                            // make all in a same array in order to do the saving just one time in json file
+                            //$array_to_save_in_json_file[]=$new_episodes_for_this_course;
+                        }
+                $episodeOnly = $episodeIds;
+
+            }
         }
     }
+    // make saving json here !
+    // if($array_to_save_in_json_file)
+    $episodes_in_updated = array_merge($episodes,$array_to_save_in_json_file);
+    foreach ($episodes_in_updated as &$item) {
+        array_walk_recursive($item, function (&$value) {
+            $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+        });
+    }
+
+    $newJsonContent = json_encode( $episodes_in_updated, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+    if (file_put_contents($fileName,$newJsonContent))
+        $message = "content added successfully";
+    else
+        $message = "error content not added !";
+
     $arg_paginated = array(
         'post_type' => 'course',
         'post_status' => 'publish',
@@ -520,15 +608,14 @@ function update_podcast_on_podcastindex()
     $total_pages = ceil($count_all_course / $post_per_page);
     //numbers of pages
     $numbers_of_pages = range(1, $total_pages);
+    //var_dump($episodes_in_updated);return ;
     return new WP_REST_Response( array(
-        'pages' => $numbers_of_pages,
-        'courses_updated'=>array(
-            'score'=>array(
-                'success'=>$succes,
-                'failed' =>$fail,
-                'course_failed' => $id_failed
-            )
-        )
+        //'msg_json'=> json_last_error_msg(),
+        //'episode before'=>count($episodes),
+        //'episode'=>count($episodes_in_updated),
+        //'episodesIds' =>$episodeOnly,
+        'message' =>$message,
+        'pages' => $numbers_of_pages
     ));
 }
 
