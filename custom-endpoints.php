@@ -252,7 +252,6 @@ class Badge
 //   }
 // }
 
-
 function sendPushNotificationFirebase(WP_REST_Request $request) {
   // Chemin vers le fichier JSON de la clé de service Firebase
   $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
@@ -7291,7 +7290,12 @@ function getUserInternalCourses($data) {
       wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
 
     endforeach;
-    //End Iterate recommendation 
+    //End Iterate recommendation
+    
+    //Push notification
+    $title = 'Your weekly learnings are ready! Dive in now.';
+    $body = 'You have received your lesson suggestions for this week.';
+    sendPushNotificationFirebaseCustom($title, $body, $user->ID);
 
     $statusResponse = "OK | Recommended Weekly";
     $response = new WP_REST_Response($statusResponse);
