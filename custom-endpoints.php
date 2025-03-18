@@ -6749,20 +6749,32 @@ function getUserInternalCourses($data) {
   //* Max Bird | Mailing recommendation *//
   function recommendedWeekly()
   {
-    //Get all users 
+    global $wpdb;
+
+    //Get active users through database [ID]
+    $table = $wpdb->prefix . 'tracker_views';
+    $sql = $wpdb->prepare( "SELECT user_id FROM $table GROUP BY user_id");
+    $active = $wpdb->get_results( $sql );
+    $active_users = (!empty($active)) ? array_column($active_users, 'first_name') : [];
+    var_dump($active_users);
+
+    //Get active users information
     $args = array(
-            // 'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
-            'role__in' => ['administrator'],
-            'order' => 'DESC',
-            'number' => 200
-            // 'search'  => 'mokhouthioune96@gmail.com',
-            // 'search_columns' => array( 'user_login', 'user_email' ),
-            // 'posts_per_page' => -1
-          );
+      // 'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+      'include ' => $active_users,
+      'order' => 'DESC',
+      // 'search'  => 'mokhouthioune96@gmail.com',
+      // 'search_columns' => array( 'user_login', 'user_email' ),
+      // 'posts_per_page' => -1
+    );
     $users = get_users($args);
 
-    // var_dump(count($users), $users);
-    // die();
+    //Verify format email 
+
+    //Verify domain email 
+
+    var_dump(count($users), $users);
+    die();
 
     foreach($users as $user):
 
