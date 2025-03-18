@@ -7299,8 +7299,8 @@ function getUserInternalCourses($data) {
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      //wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
-      $statusResponse[] = sprintf('mail sent to : %s \n ------ ', $email);
+      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      $statusResponse[] = sprintf('mail sent to : %s', $email);
     endforeach;
     //End Iterate recommendation
     
@@ -7310,6 +7310,7 @@ function getUserInternalCourses($data) {
     sendPushNotificationFirebaseCustom($title, $body, $user->ID);
 
     $statusResponse[] = "OK | Recommended Weekly";
+    $number_responses = count($statusResponse);
     $response = new WP_REST_Response($statusResponse);
     $response->set_status(200);
     return $response;
