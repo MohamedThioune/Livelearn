@@ -6755,29 +6755,28 @@ function getUserInternalCourses($data) {
     $table = $wpdb->prefix . 'tracker_views';
     $sql = $wpdb->prepare( "SELECT user_id FROM $table GROUP BY user_id");
     $active = $wpdb->get_results( $sql );
-    $active_users = (!empty($active)) ? array_column($active_users, 'first_name') : [];
-    var_dump($active_users);
-
-    //Get active users information
-    $args = array(
-      // 'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
-      'include ' => $active_users,
-      'order' => 'DESC',
-      // 'search'  => 'mokhouthioune96@gmail.com',
-      // 'search_columns' => array( 'user_login', 'user_email' ),
-      // 'posts_per_page' => -1
-    );
-    $users = get_users($args);
-
-    //Verify format email 
-
-    //Verify domain email 
-
-    var_dump(count($users), $users);
-    die();
+    $active_users = (!empty($active[0])) ? array_column($active, 'user_id') : [];
+    $users = array();
+   
+    if(!empty($active_users)):
+        //Get active users information
+        $args = array(
+        //'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+        'include' => $active_users,
+        'order' => 'DESC',
+        );
+        $users = get_users($args);
+    endif;
 
     foreach($users as $user):
-
+      $domain = ($user->user_email) ? explode('@', $user->user_email)[1] : '';
+      //Verify format email
+      if(!filter_var($user->user_email))
+        continue;
+      //Verify domain email
+      if(!checkdnsrr($domain))
+        continue;
+      
       //Recommendation courses
       $infos = recommendation($user->ID, null, 75);
       $recommended_courses = $infos['recommended'];
@@ -7299,8 +7298,8 @@ function getUserInternalCourses($data) {
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
-
+      //wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      echo sprintf('mail sent to : %s <br> ------ -------- ------ <br>', $email);
     endforeach;
     //End Iterate recommendation
     
