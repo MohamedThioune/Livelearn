@@ -6757,6 +6757,7 @@ function getUserInternalCourses($data) {
     $active = $wpdb->get_results( $sql );
     $active_users = (!empty($active[0])) ? array_column($active, 'user_id') : [];
     $users = array();
+    $statusResponse = '';
    
     if(!empty($active_users)):
         //Get active users information
@@ -7299,7 +7300,7 @@ function getUserInternalCourses($data) {
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
       //wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
-      echo sprintf('mail sent to : %s <br> ------ -------- ------ <br>', $email);
+      $statusResponse .= sprintf('mail sent to : %s /n ------ -------- ------ /n', $email);
     endforeach;
     //End Iterate recommendation
     
@@ -7308,7 +7309,7 @@ function getUserInternalCourses($data) {
     $body = 'You have received your lesson suggestions for this week.';
     sendPushNotificationFirebaseCustom($title, $body, $user->ID);
 
-    $statusResponse = "OK | Recommended Weekly";
+    $statusResponse .= "OK | Recommended Weekly";
     $response = new WP_REST_Response($statusResponse);
     $response->set_status(200);
     return $response;
