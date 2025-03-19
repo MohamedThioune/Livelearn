@@ -126,9 +126,14 @@ if($optie == "✔"){
                 $old_episodes_json = file_get_contents($fileName);
                 $old_episodes_array = json_decode($old_episodes_json,true)?:[];
                 $youtube_videos_json = array_merge($old_episodes_array,$youtube_videos_json);
-                foreach ($youtube_videos_json as $item) {
+                foreach ($youtube_videos_json as &$item) {
                     array_walk_recursive($item, function (&$value) {
-                        $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                        if (is_array($value))
+                            $value = array_map('utf8_encode', $value);
+                        elseif (is_string($value))
+                            $value = iconv('UTF-8', 'UTF-8//IGNORE', $value);
+
+                        //$value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
                     });
                 }
                 $newJsonContent = json_encode( $youtube_videos_json,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
