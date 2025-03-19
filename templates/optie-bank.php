@@ -198,7 +198,12 @@ if($optie == "✔"){
                     $episodes = array_values(array_merge($old_episodes_array,$episodes));
                 foreach ($episodes as &$item) {
                     array_walk_recursive($item, function (&$value) {
-                        $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+                        if (is_array($value))
+                            $value = array_map('utf8_encode', $value);
+                        elseif (is_string($value))
+                            $value = iconv('UTF-8', 'UTF-8//IGNORE', $value);
+
+                        //$value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
                     });
                 }
                 $newJsonContent = json_encode( $episodes,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
