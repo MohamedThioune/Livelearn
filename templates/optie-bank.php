@@ -126,7 +126,7 @@ if($optie == "✔"){
                 $old_episodes_json = file_get_contents($fileName);
                 $old_episodes_array = json_decode($old_episodes_json,true)?:[];
                 $youtube_videos_json = array_merge($old_episodes_array,$youtube_videos_json);
-                foreach ($youtube_videos_json as &$item) {
+                foreach ($youtube_videos_json as $item) {
                     array_walk_recursive($item, function (&$value) {
                         $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
                     });
