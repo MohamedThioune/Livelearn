@@ -323,7 +323,8 @@
             'occurence' => $occurence
         ];
 
-        return $wpdb->insert($table_tracker_views, $data);
+       // return $wpdb->insert($table_tracker_views, $data);
+        return;
     }
     
     function check_tracking(){
