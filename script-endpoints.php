@@ -584,7 +584,11 @@ function update_podcast_on_podcastindex()
     $episodes_in_updated = array_merge($episodes,$array_to_save_in_json_file);
     foreach ($episodes_in_updated as &$item) {
         array_walk_recursive($item, function (&$value) {
-            $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
+            if (is_array($value))
+                $value = array_map('utf8_encode', $value);
+            elseif (is_string($value))
+                $value = iconv('UTF-8', 'UTF-8//IGNORE', $value);
+            // $value = mb_convert_encoding($value, 'UTF-8', 'UTF-8');
         });
     }
 
