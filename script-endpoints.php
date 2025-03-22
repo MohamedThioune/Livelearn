@@ -481,7 +481,7 @@ function update_podcast_on_podcastindex()
 {
     $page = $_GET['page'] ?? 1;
     $type = 'Podcast';
-    $post_per_page = 15;
+    $post_per_page = 10;
     $fileName = get_stylesheet_directory() . "/db/podcast.json";
 
     $apiKey = 'UQ9BK94AUNCCNCVVFRTZ';
