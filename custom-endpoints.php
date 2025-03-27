@@ -6764,7 +6764,8 @@ function getUserInternalCourses($data) {
         $args = array(
         //'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
         'include' => $active_users,
-        'order' => 'DESC',
+        'orderby' => 'ID',
+        'order' => 'ASC',
         );
         $users = get_users($args);
     endif;
@@ -7299,8 +7300,8 @@ function getUserInternalCourses($data) {
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      // wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
-      $statusResponse[] = sprintf('mail sent to : %s', $email);
+      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      // $statusResponse[] = sprintf('mail sent to : %s', $email);
     endforeach;
     //End Iterate recommendation
     
@@ -7309,7 +7310,7 @@ function getUserInternalCourses($data) {
     $body = 'You have received your lesson suggestions for this week.';
     sendPushNotificationFirebaseCustom($title, $body, $user->ID);
 
-    //$statusResponse[] = "OK | Recommended Weekly";
+    $statusResponse[] = "OK | Recommended Weekly";
     $number_responses = count($statusResponse);
     $response = new WP_REST_Response($statusResponse);
     $response->set_status(200);
