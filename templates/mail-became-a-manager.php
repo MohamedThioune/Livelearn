@@ -1,5 +1,5 @@
 <?php
-
+ 
 $mail_became_manager_body = 
 '
 <!doctype html>
