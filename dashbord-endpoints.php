@@ -4865,6 +4865,7 @@ function all_courses_data(){
                'Event'=> $numTypos['event'],
                'Training' => $numTypos['training'],
                'Lezing' => $numTypos['reading'],
+               'Leerpad' => $numTypos['leerpad'],
                 // 'Video'=> countCourseType('Video'),
                 // 'Podcast'=>countCourseType('Podcast'),
                 // 'Opleidingen'=>countCourseType('Opleidingen'),

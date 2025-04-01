@@ -246,8 +246,15 @@ function postAdditionnal($post, $userID, $edit = null){
   $playlists = []; 
   $main_playlists = get_field('road_path', $post->ID);
   if($main_playlists)
-  foreach($main_playlists as $course)
-    $playlists[] = artikel($course->ID);
+  foreach($main_playlists as $course): 
+    $sample = (!empty($course)) ? artikel($course->ID) : null;
+
+    if(!empty($sample)):
+      //Get further information
+      $playlists[] = postAdditionnal($sample, $userID, $edit);
+    endif;
+  endforeach;
+
   $post->courses = $playlists;
   return $post;
 }
@@ -3762,7 +3769,7 @@ function sendNotificationBetweenLiggeyActors(WP_REST_Request $request){
       //Sending email notification
       //title + trigger + content parsing
       $first_name = $user->first_name ?: $user->display_name;
-      $emails = ($toAdmin) ? 'info@livelearn.nl' : [$user->user_email, 'info@livelearn.nl'];
+      $emails = ($toAdmin) ? 'daniel@livelearn.nl' : [$user->user_email, 'info@livelearn.nl'];
       // $emails = [$user->user_email];
 
       //Showin information 
