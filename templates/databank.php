@@ -1177,7 +1177,7 @@ if (!empty($courses)) {
                 $('#loader').attr('hidden',true)
                 $('#select_field').attr('hidden',false)
                 document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something went wrong! Cannot insert null value. Please check the course.</span>";
-                //console.log(error)
+                console.log(error)
                },
                success: function(data) {
                     document.getElementById('content-back-topics').innerHTML = data;
@@ -1186,9 +1186,10 @@ if (!empty($courses)) {
                     $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
                     alert("Record applied successfully");
+                    location.reload();
                 },
                 complete: function () {
-                    location.reload();
+                   // location.reload();
                 }
             });
         }

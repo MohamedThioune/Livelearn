@@ -84,7 +84,7 @@
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
         $data_name = "";
-        save_tracking();
+        //save_tracking();
         check_tracking();
 
         if(!$user_id)
@@ -323,7 +323,8 @@
             'occurence' => $occurence
         ];
 
-        return $wpdb->insert($table_tracker_views, $data);
+       // return $wpdb->insert($table_tracker_views, $data);
+        return;
     }
     
     function check_tracking(){
