@@ -6762,6 +6762,7 @@ function getUserInternalCourses($data) {
     //Get active users information
     if(!empty($active_users)):
       $active_users = array_unique($active_users);
+      var_dump($active_users);
       $args = array(
       //'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
       'include' => $active_users,
