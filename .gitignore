@@ -14,3 +14,4 @@ wp-config.php
 /.idea/
 .vscode
 api.http
+.DS_Store 

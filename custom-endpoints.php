@@ -6758,12 +6758,12 @@ function getUserInternalCourses($data) {
     $active_users = (!empty($active[0])) ? array_column($active, 'user_id') : [];
     $users = array();
     $statusResponse = array();
-    $exclude_email = ['mvdlinden@fle-nl.com'];
+    $exclude_email = ['mvdlinden@fle-nl.com']; //e-mail excluding
    
     //Get active users information
     if(!empty($active_users)):
       $active_users = array_unique($active_users);
-      var_dump($active_users);
+      // var_dump($active_users);
       $args = array(
       //'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
       'include' => $active_users,
@@ -7307,7 +7307,7 @@ function getUserInternalCourses($data) {
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      // wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
       $statusResponse[] = sprintf('mail sent to : %s', $email);
     endforeach;
     //End Iterate recommendation
@@ -7315,11 +7315,11 @@ function getUserInternalCourses($data) {
     //Push notification
     $title = 'Your weekly learnings are ready! Dive in now.';
     $body = 'You have received your lesson suggestions for this week.';
-    //sendPushNotificationFirebaseCustom($title, $body, $user->ID);
+    sendPushNotificationFirebaseCustom($title, $body, $user->ID);
 
-    // $statusResponse[] = "OK | Recommended Weekly";
-    $number_responses = count($statusResponse);
-    var_dump($number_responses);
+    $statusResponse[] = "OK | Recommended Weekly";
+    // $number_responses = count($statusResponse);
+    // var_dump($number_responses);
     $response = new WP_REST_Response($statusResponse);
     $response->set_status(200);
     return $response;
