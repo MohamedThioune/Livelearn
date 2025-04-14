@@ -6758,6 +6758,8 @@ function getUserInternalCourses($data) {
     $active_users = (!empty($active[0])) ? array_column($active, 'user_id') : [];
     $users = array();
     $statusResponse = array();
+
+    var_dump($active_users);
    
     if(!empty($active_users)):
         //Get active users information
