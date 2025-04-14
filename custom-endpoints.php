@@ -6758,18 +6758,17 @@ function getUserInternalCourses($data) {
     $active_users = (!empty($active[0])) ? array_column($active, 'user_id') : [];
     $users = array();
     $statusResponse = array();
-
-    var_dump($active_users);
    
+    //Get active users information
     if(!empty($active_users)):
-        //Get active users information
-        $args = array(
-        //'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
-        'include' => $active_users,
-        'orderby' => 'ID',
-        'order' => 'ASC',
-        );
-        $users = get_users($args);
+      $active_users = array_unique($active_users);
+      $args = array(
+      //'role__in' => ['administrator', 'hr', 'manager', 'subscriber'],
+      'include' => $active_users,
+      'orderby' => 'ID',
+      'order' => 'ASC',
+      );
+      $users = get_users($args);
     endif;
 
     foreach($users as $user):
