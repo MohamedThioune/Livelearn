@@ -7313,9 +7313,9 @@ function getUserInternalCourses($data) {
     //End Iterate recommendation
     
     //Push notification
-    $title = 'Your weekly learnings are ready! Dive in now.';
-    $body = 'You have received your lesson suggestions for this week.';
-    sendPushNotificationFirebaseCustom($title, $body, $user->ID);
+    // $title = 'Your weekly learnings are ready! Dive in now.';
+    // $body = 'You have received your lesson suggestions for this week.';
+    // sendPushNotificationFirebaseCustom($title, $body, $user->ID);
 
     $statusResponse[] = "OK | Recommended Weekly";
     // $number_responses = count($statusResponse);
