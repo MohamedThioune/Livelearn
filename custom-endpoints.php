@@ -7307,7 +7307,7 @@ function getUserInternalCourses($data) {
 
       //Require  
       require __DIR__ . "/templates/mail-weekly-livelearn.php";
-      wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
+      // wp_mail($email, $subject, $mail_weekly_course_body, $headers, array( '' )) ;
       $statusResponse[] = sprintf('mail sent to : %s', $email);
     endforeach;
     //End Iterate recommendation
