@@ -1970,6 +1970,7 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'getUserSubtopicsStatistics',
     ));
+
     //(Bis) Statistics topics
     register_rest_route('custom/v1', '/user/subtopic/statistics/(?P<userID>\d+)', array(
         'methods' => 'GET',
@@ -2353,8 +2354,8 @@ add_action( 'rest_api_init', function () {
         'methods' => 'GET',
         'callback' => 'updateYoutube'
     ));
-    /** Endpoint */
 
+    /** Endpoint */
     register_rest_route ('custom/v1', '/matching-topic-course', array(
         'methods' => 'GET',
         'callback' => 'matchin_topics'
@@ -2966,4 +2967,8 @@ add_action( 'rest_api_init', function () {
         'callback' => 'is_course_purchased_by_user'
     ));
 
+    /**
+     * Academy endpoints
+     */
+    
 });
