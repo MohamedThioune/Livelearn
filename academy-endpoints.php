@@ -356,8 +356,8 @@ function list_projects(WP_REST_Request $request) {
 //[POST]Update academy infos for a company
 function update_academy_infos(WP_REST_Request $request) {
     $company_id = $request['company_id'] ?? false;
-    $popular_courses = array();
-    $services = array();
+    $popular_courses = NULL;
+    $services = NULL;
 
     if (!$company_id) {
         return new WP_REST_Response([
@@ -386,13 +386,11 @@ function update_academy_infos(WP_REST_Request $request) {
     // Parameters REST request
     $updated_data = $request->get_params();
 
-    //Case popular courses
-    if (isset($updated_data['popular_courses_id'])) {
-        $popular_ids = $updated_data['popular_courses_id'];
-        if (!is_array($popular_ids)) :
-            // Sanitize and validate course IDs
-            $popular_ids = array_filter(array_map('intval', (array) $popular_ids));
-
+    //Case courses
+    if (isset($updated_data['courses_id'])) {
+        // Sanitize and validate course IDs
+        $popular_ids = is_array($updated_data['courses_id']) ? array_filter(array_map('intval', (array) $updated_data['courses_id'])) : NULL;
+        if (!empty($popular_ids)) 
             $popular_courses = get_posts([
                 'post_type' => 'course',
                 'post_status' => 'publish',
@@ -401,17 +399,21 @@ function update_academy_infos(WP_REST_Request $request) {
                 'order' => 'DESC',                
                 'include' => $popular_ids
             ]);
-            update_field('popular_courses_academy', $popular_courses, $company_id);
-        endif;
+
+        $updated_data['courses_academy'] = $popular_courses;
+    }
+
+    //Case popular courses
+    if (isset($updated_data['popular_courses_id'])) {
+        // Sanitize and validate course IDs
+        $popular_ids = is_array($updated_data['popular_courses_id']) ? array_filter(array_map('intval', (array) $updated_data['popular_courses_id'])) : NULL;
     }
 
     //Case services
     if (isset($updated_data['services_id'])) {
-        $services = $updated_data['services_id'];
-        if (!is_array($services)) {
-            $services = [$services];
-        }
-        update_field('services', $services, $company_id);
+        //Services sample 
+        $services = (!is_array($updated_data['services_id'])) ? $updated_data['services_id'] : NULL;
+        $updated_data['services_academy'] = $services;
     }
 
     // Update Fields
@@ -432,44 +434,46 @@ function update_academy_infos(WP_REST_Request $request) {
     ]);
 }
 
+//[POST]View academy infos for a company
+function view_academy_infos(WP_REST_Request $request) {
+    $company_id = $request['company_id'] ?? false;
+    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'courses_academy', 'service_academy', 'services_academy'];
+    $academy = array();
+    if (!$company_id) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company ID is required.'
+        ], 400);
+    }
 
-function updateCandidateProfil(WP_REST_Request $request) {
-  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+    // Get company
+    $company = get_post($company_id) ?: false;
+    if (!$company) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company not found.'
+        ], 404);
+    }
 
-  $required_parameters = ['userApplyId'];
-  // Check required parameters 
-  $errors = validated($required_parameters, $request);
-  if($errors):
-    $response = new WP_REST_Response($errors);
-    $response->set_status(400);
-    return $response;
-  endif; 
-  
-  //Data User
-  $candidate_data = candidate($user_id);
+    //Academy
+    foreach($academy_fields as $field_name):
+        $academy[$field_name] = get_field($field_name, $company->ID);
+    endforeach;
 
-  $errors = [];
-  if (!$candidate_data) {
-    $errors['errors'] = 'User not found';
-    $response = new WP_REST_Response($errors);
-    $response->set_status(401);
-    return $response;
-  }
+    // Prepare response data
+    $company_infos = [
+        'ID' => $company->ID,
+        'name' => $company->post_title,
+        'logo' => get_field('company_logo', $company->ID),
+        'country' => get_field('company_country', $company->ID),
+        'academy' => (Object)$academy
+    ];
 
-  // Parameters REST request
-  $updated_data = $request->get_params();
+    return new WP_REST_Response([
+        'success' => true,
+        'message' => 'Company information retrieved successfully.',
+        'academy_info' => $company_infos
+    ]);
+}      
 
-  // Update Fields
-  foreach ($updated_data as $field_name => $field_value):
-    if($field_value)
-    if($field_value != '' && $field_value != ' ')
-      update_field($field_name, $field_value, 'user_' . $user_id);
-  endforeach;
-
-  // Return response
-  $updated_candidate_data = candidate($user_id);
-  $response = new WP_REST_Response($updated_candidate_data);
-  $response->set_status(200);
-  return $response;
-}
 ?>

@@ -3009,5 +3009,39 @@ add_action( 'rest_api_init', function () {
     /**
      * Academy endpoints
     */
-    
+    register_rest_route ('custom/v1', 'academy/register', array(
+        'methods' => 'POST',
+        'callback' => 'register_member_company'
+    ));
+    register_rest_route ('custom/v1', 'academy/login', array(
+        'methods' => 'POST',
+        'callback' => 'login_member_company'
+    ));
+
+    register_rest_route ('custom/v1', 'academy/add/project', array(
+        'methods' => 'POST',
+        'callback' => 'add_project'
+    ));
+    register_rest_route ('custom/v1', 'academy/show/project', array(
+        'methods' => 'POST',
+        'callback' => 'view_project'
+    ));
+    register_rest_route ('custom/v1', 'academy/projects', array(
+        'methods' => 'POST',
+        'callback' => 'list_projects'
+    ));
+
+    register_rest_route ('custom/v1', 'academy/update', array(
+        'methods' => 'POST',
+        'callback' => 'update_academy_infos'
+    ));
+    register_rest_route ('custom/v1', 'academy/company/infos', array(
+        'methods' => 'POST',
+        'callback' => 'view_academy_infos'
+    ));
+
+    /**
+     * END
+    */
+
 });
