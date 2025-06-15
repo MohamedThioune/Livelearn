@@ -205,5 +205,271 @@ function show_achievement(WP_REST_Request $request) {
     ]);
 }
 
-//
+//[POST]Add a project 
+function add_project(WP_REST_Request $request){
+    $required_parameters = ['title', 'description', 'image', 'technologies', 'company'];
+
+    //Check required parameters register
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+        return $response;
+    endif;
+
+    //Get value fields
+    $description = $request['description'];
+    $image = $request['image'];
+    $technologies = $request['technologies'];
+    $company_id = $request['company'];
+
+    //Get company
+    $company = get_post($company_id)?: false;
+    if(!$company)
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company not found for project.'
+        ], 401);
+
+    //Create post object
+    $post_data = array(
+        'post_title'   => $title,
+        'post_content' => $description,
+        'post_status'  => 'publish',
+        'post_type'    => 'project',
+    );
+
+    //Insert the post into the database
+    $post_id = wp_insert_post($post_data);
+
+    //Check for errors
+    if (is_wp_error($post_id)) 
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Failed to create project.'
+        ], 500);
+
+    //Set post meta
+    update_post_meta($post_id, 'description_project', $description);
+    update_post_meta($post_id, 'image_project', $image);
+    update_post_meta($post_id, 'technologies_project', $technologies);
+    update_post_meta($post_id, 'company', $company);
+
+
+    $request['ID'] = $post_id;
+
+    return new WP_REST_Response([
+        'success' => true,
+        'message' => 'Project created successfully.',
+        'project' => $request
+    ]);
+}
+
+//[POST]View a project
+function view_project(WP_REST_Request $request) {
+    $project_id = $request['project_id'] ?? false;
+
+    if (!$project_id) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Project ID is required.'
+        ], 400);
+    }
+
+    $sampleProject = get_post($project_id);
+
+    if (!$sampleProject || $sampleProject->post_type !== 'project') {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Project not found.'
+        ], 404);
+    }
+
+    $project = (Object)[
+        'ID' => $sampleProject->ID,
+        'title' => $sampleProject->post_title,
+        'content' => $sampleProject->post_content,
+        'image' => get_post_meta($sampleProject->ID, 'image_project', true),
+        'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
+        'company' => get_post_meta($sampleProject->ID, 'company', true),
+    ];
+
+    return new WP_REST_Response([
+        'success' => true,
+        'message' => 'Project retrieved successfully.',
+        'project' => $project
+    ]);
+}
+
+//[POST]List projects for a company
+function list_projects(WP_REST_Request $request) {
+    $company_id = $request['company_id'] ?? false;
+
+    if (!$company_id) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company ID is required.'
+        ], 400);
+    }
+
+    $args = array(
+        'post_type' => 'project',
+        'post_status' => 'publish',
+        'meta_query' => array(
+            array(
+                'key' => 'company',
+                'value' => $company_id,
+                'compare' => '='
+            )
+        )
+    );
+
+    $projects = get_posts($args);
+
+    if (empty($projects)) {
+        return new WP_REST_Response([
+            'success' => true,
+            'message' => 'No projects found for this company.',
+            'projects' => []
+        ], 200);
+    }
+
+    $project_list = [];
+    foreach ($projects as $project) {
+        $project_list[] = ( Object)[
+            'ID' => $project->ID,
+            'title' => $project->post_title,
+            'content' => $project->post_content,
+            'image' => get_post_meta($project->ID, 'image_project', true),
+            'technologies' => get_post_meta($project->ID, 'technologies_project', true),
+            'company' => get_post_meta($project->ID, 'company', true),
+        ];
+    }
+
+    return new WP_REST_Response([
+        'success' => true,
+        'message' => 'Projects retrieved successfully.',
+        'projects' => $project_list
+    ]);
+}
+
+//[POST]Update academy infos for a company
+function update_academy_infos(WP_REST_Request $request) {
+    $company_id = $request['company_id'] ?? false;
+    $popular_courses = array();
+    $services = array();
+
+    if (!$company_id) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company ID is required.'
+        ], 400);
+    }
+
+    $required_fields = ['name', 'location', 'website'];
+    $errors = validated($required_fields, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+        return $response;
+    endif;
+
+    // Get company
+    $company = get_post($company_id) ?: false;
+    if (!$company) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company not found.'
+        ], 404);
+    }
+
+    // Parameters REST request
+    $updated_data = $request->get_params();
+
+    //Case popular courses
+    if (isset($updated_data['popular_courses_id'])) {
+        $popular_ids = $updated_data['popular_courses_id'];
+        if (!is_array($popular_ids)) :
+            // Sanitize and validate course IDs
+            $popular_ids = array_filter(array_map('intval', (array) $popular_ids));
+
+            $popular_courses = get_posts([
+                'post_type' => 'course',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'orderby' => 'post_date',
+                'order' => 'DESC',                
+                'include' => $popular_ids
+            ]);
+            update_field('popular_courses_academy', $popular_courses, $company_id);
+        endif;
+    }
+
+    //Case services
+    if (isset($updated_data['services_id'])) {
+        $services = $updated_data['services_id'];
+        if (!is_array($services)) {
+            $services = [$services];
+        }
+        update_field('services', $services, $company_id);
+    }
+
+    // Update Fields
+    foreach ($updated_data as $field_name => $field_value):
+        if($field_value)
+        if($field_value != '' && $field_value != ' ')
+        update_field($field_name, $field_value, $company_id);
+    endforeach;
+
+    // Update company meta
+    update_post_meta($company_id, 'name', $request['name']);
+    update_post_meta($company_id, 'location', $request['location']);
+    update_post_meta($company_id, 'website', $request['website']);
+
+    return new WP_REST_Response([
+        'success' => true,
+        'message' => 'Company information updated successfully.'
+    ]);
+}
+
+
+function updateCandidateProfil(WP_REST_Request $request) {
+  $user_id = isset($request['userApplyId']) ? $request['userApplyId'] : get_current_user_id();
+
+  $required_parameters = ['userApplyId'];
+  // Check required parameters 
+  $errors = validated($required_parameters, $request);
+  if($errors):
+    $response = new WP_REST_Response($errors);
+    $response->set_status(400);
+    return $response;
+  endif; 
+  
+  //Data User
+  $candidate_data = candidate($user_id);
+
+  $errors = [];
+  if (!$candidate_data) {
+    $errors['errors'] = 'User not found';
+    $response = new WP_REST_Response($errors);
+    $response->set_status(401);
+    return $response;
+  }
+
+  // Parameters REST request
+  $updated_data = $request->get_params();
+
+  // Update Fields
+  foreach ($updated_data as $field_name => $field_value):
+    if($field_value)
+    if($field_value != '' && $field_value != ' ')
+      update_field($field_name, $field_value, 'user_' . $user_id);
+  endforeach;
+
+  // Return response
+  $updated_candidate_data = candidate($user_id);
+  $response = new WP_REST_Response($updated_candidate_data);
+  $response->set_status(200);
+  return $response;
+}
 ?>
