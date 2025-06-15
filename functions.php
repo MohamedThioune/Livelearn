@@ -1073,11 +1073,52 @@ function custom_post_type() {
     );
     register_post_type( 'challenge', $challenge_args );
 
+    //Project : Custom Post Type
+    $project = array(
+        'name'                => _x( 'Projects', 'Projects', 'project' ),
+        'singular_name'       => _x( 'Project', 'Project', 'project' ),
+        'menu_name'           => __( 'Projects', 'project' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All projects', 'project' ),
+        'view_item'           => __( 'View project', 'view_project' ),
+        'add_new_item'        => __( 'New project', 'add_new_project' ),
+        'add_new'             => __( 'New project', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+    $project_args = array(
+        'label'               => __( 'project', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $project,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt', 'thumbnail' ),
+        'taxonomies'          => array('course_category'),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'project'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'post',
+    );
+    register_post_type( 'project', $project_args );
+
 }
 add_action( 'init', 'custom_post_type', 0 );
 
 function add_custom_roles(){
     // add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
+    add_role( 'student', 'Student', get_role( 'subscriber' )->capabilities );
     add_role( 'manager', 'Manager', get_role( 'subscriber' )->capabilities );
     add_role( 'hr', 'HR', get_role( 'author' )->capabilities );
 }
@@ -2956,12 +2997,10 @@ add_action( 'rest_api_init', function () {
     /**
      * User orders
     */
-
     register_rest_route ('custom/v3', 'user/orders/', array(
         'methods' => 'GET',
         'callback' => 'get_user_orders_list'
     ));
-
     register_rest_route ('custom/v3', 'user/order/check', array(
         'methods' => 'POST',
         'callback' => 'is_course_purchased_by_user'
@@ -2969,6 +3008,6 @@ add_action( 'rest_api_init', function () {
 
     /**
      * Academy endpoints
-     */
+    */
     
 });
