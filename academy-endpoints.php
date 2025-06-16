@@ -413,7 +413,7 @@ function update_academy_infos(WP_REST_Request $request) {
         $course_ids = is_array($updated_data['courses_id']) ? array_filter(array_map('intval', (array) $updated_data['courses_id'])) : NULL;
         if (!empty($course_ids)) 
             $courses = get_posts([
-                'post_type' => 'course',
+                'post_type' => array('course', 'post', 'leerpad'),
                 'post_status' => 'publish',
                 'posts_per_page' => -1,
                 'orderby' => 'post_date',
