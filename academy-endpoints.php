@@ -41,7 +41,7 @@ function register_member_company(WP_REST_Request $request){
       'user_login' => $email,
       'user_email' => $email,
       'user_pass' => $password,
-      'role' => 'hr'
+      'role' => 'student'
   );
   $user_id = wp_insert_user(wp_slash($userdata));
 
@@ -70,17 +70,16 @@ function register_member_company(WP_REST_Request $request){
   update_field('company', $company, 'user_' . $user_id);
 
   //Get user created information and set role student 
-  $user = get_user_by('ID', $user_id);
-  $user->add_role('student');
+  $user = candidate($user_id);
 
   // Sending email notification
-//   $first_name = $user->first_name ?: $user->display_name;
-//   $email = $user->user_email;
-//   $path_mail = '/templates/mail-notification-invitation.php';
-//   require(__DIR__ . $path_mail);
-//   $subject = 'Je hebt een nieuwe volger !';
-//   $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-//   wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' ));
+  // $first_name = $user->first_name ?: $user->display_name;
+  // $email = $user->user_email;
+  // $path_mail = '/templates/mail-notification-invitation.php';
+  // require(__DIR__ . $path_mail);
+  // $subject = 'Je hebt een nieuwe volger !';
+  // $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+  // wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' ));
 
   //Send response
   $response = new WP_REST_Response([
@@ -131,8 +130,11 @@ function login_member_company(WP_REST_Request $request) {
     update_field('company', $company, 'user_' . $user->ID);
 
     // Add role student if not exists
-    if ( ! in_array('student', $user->roles) ) 
+    if ( !in_array('student', $user->roles) ) 
         $user->add_role('student');
+
+    // Get user created information
+    $user = candidate($user->ID);
 
     // Generate a token if you're using JWT (optional)
     return new WP_REST_Response([
@@ -207,7 +209,7 @@ function show_achievement(WP_REST_Request $request) {
 
 //[POST]Add a project 
 function add_project(WP_REST_Request $request){
-    $required_parameters = ['title', 'description', 'image', 'technologies', 'company'];
+    $required_parameters = ['title', 'description', 'technologies', 'company'];
 
     //Check required parameters register
     $errors = validated($required_parameters, $request);

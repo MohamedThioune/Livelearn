@@ -264,7 +264,6 @@ function stripe_status($data){
 }
 //End stripe
 
-
 /** Push notification */
 function sendPushNotificationFirebaseCustom($title, $body, $user_id, $data = ["path" => ""]) {
     $serviceAccountFile = __DIR__ . '/livelearn-359911-firebase-adminsdk-bvksx-79bfac62fc.json';
