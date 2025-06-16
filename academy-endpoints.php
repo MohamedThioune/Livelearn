@@ -358,13 +358,16 @@ function list_projects(WP_REST_Request $request) {
 
     $project_list = [];
     foreach ($projects as $project) {
+        $company = NULL;
+        $company_id = get_post_meta($project->ID, 'project_company', true) ?: false;
+        $company = company($company_id, 1) ?: false;
         $project_list[] = ( Object)[
             'ID' => $project->ID,
             'title' => $project->post_title,
             'content' => $project->post_content,
             'image' => get_post_meta($project->ID, 'image_project', true),
             'technologies' => get_post_meta($project->ID, 'technologies_project', true),
-            'company' => get_post_meta($project->ID, 'project_company', true),
+            'company' => $company,
         ];
     }
 
