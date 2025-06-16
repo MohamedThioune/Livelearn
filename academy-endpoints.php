@@ -381,7 +381,7 @@ function list_projects(WP_REST_Request $request) {
 //[POST]Update academy infos for a company
 function update_academy_infos(WP_REST_Request $request) {
     $required_parameters = ['bedrijf'];
-    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'courses_academy', 'service_academy', 'services_academy'];
+    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy','courses_academy', 'service_academy', 'services_academy'];
     $academy = array();
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
@@ -454,6 +454,7 @@ function update_academy_infos(WP_REST_Request $request) {
 //[POST]Update popular courses for a company
 function update_popular_courses(WP_REST_Request $request) {
     $academy = array();
+    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy', 'courses_academy', 'service_academy', 'services_academy'];
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
     $required_parameters = ['bedrijf', 'popular'];
@@ -477,19 +478,22 @@ function update_popular_courses(WP_REST_Request $request) {
     // Parameters REST request
     $popular_courses = [];
     $popular_categories = get_field('popular_categories_academy', $company->ID);
-    if (is_array($request['popular'])) {
-        foreach ($request['popular'] as $popular) {
+    if (is_array($request['popular']['items'])) {
+        foreach ($request['popular']['items'] as $popular) 
             if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
                 $popular_courses['course_popular'] = get_post($popular['course_popular_id'])?: false;
                 $popular_courses['category_popular'] = get_post($popular['category_popular'])?: false;
-            endif;
-        }
+            endif;  
     }
     
-    //Update
+    //Update popular courses
     update_field('popular_courses_academy', $popular_courses, $company->ID);
 
-     // Prepare response data
+    // Prepare response data
+    foreach($academy_fields as $field_name):
+        $academy[$field_name] = get_field($field_name, $company->ID);
+    endforeach;
+
     $company_infos = [
         'ID' => $company->ID,
         'name' => $company->post_title,
