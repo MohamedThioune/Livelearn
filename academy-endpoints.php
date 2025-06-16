@@ -448,7 +448,7 @@ function update_academy_infos(WP_REST_Request $request) {
         elseif($field_name == 'courses_academy'):
             $sample_courses = get_field($field_name, $company->ID);
             foreach($sample_courses as $key => $course)
-                $courses[] = artikel($course['course']->ID) ?: false;
+                $courses[] = artikel($course->ID) ?: false;
             $academy[$field_name] = $courses;
 
         //For other fields, we can just get the value
@@ -530,7 +530,7 @@ function update_popular_courses(WP_REST_Request $request) {
         elseif($field_name == 'courses_academy'):
             $sample_courses = get_field($field_name, $company->ID);
             foreach($sample_courses as $key => $course)
-                $courses[] = artikel($course['course']->ID) ?: false;
+                $courses[] = artikel($course->ID) ?: false;
             $academy[$field_name] = $courses;
 
         //For other fields, we can just get the value
@@ -597,7 +597,7 @@ function view_academy_infos(WP_REST_Request $request) {
         elseif($field_name == 'courses_academy'):
             $sample_courses = get_field($field_name, $company->ID);
             foreach($sample_courses as $key => $course)
-                $courses[] = artikel($course['course']->ID) ?: false;
+                $courses[] = artikel($course->ID) ?: false;
             $academy[$field_name] = $courses;
             
         //For other fields, we can just get the value
