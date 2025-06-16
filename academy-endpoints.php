@@ -453,20 +453,21 @@ function update_academy_infos(WP_REST_Request $request) {
 
 //[POST]View academy infos for a company
 function view_academy_infos(WP_REST_Request $request) {
-    $company_id = $request['company_id'] ?? false;
+    $required_parameters = ['bedrijf'];
     $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'courses_academy', 'service_academy', 'services_academy'];
     $academy = array();
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
-    if (!$company_id) {
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Company ID is required.'
-        ], 400);
-    }
+    //Check required parameters register
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+        return $response;
+    endif;
 
-    // Get company
-    $company = get_post($company_id) ?: false;
+    //Get company
+    $company = get_page_by_path( sanitize_title($request['bedrijf']), OBJECT, 'company');
     if (!$company) {
         return new WP_REST_Response([
             'success' => false,
