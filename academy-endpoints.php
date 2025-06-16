@@ -478,13 +478,15 @@ function update_popular_courses(WP_REST_Request $request) {
     // Parameters REST request
     $popular_courses = [];
     $popular_categories = get_field('popular_categories_academy', $company->ID);
+    var_dump($request['popular']['items']);
     if (is_array($request['popular']['items'])) {
         foreach ($request['popular']['items'] as $popular) 
             if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
-                $popular_courses['course_popular'] = get_post($popular['course_popular_id'])?: false;
-                $popular_courses['category_popular'] = get_post($popular['category_popular'])?: false;
+                $popular_courses[]['course_popular'] = get_post($popular['course_popular_id'])?: false;
+                $popular_courses[]['category_popular'] = get_post($popular['category_popular'])?: false;
             endif;  
     }
+    var_dump($popular_courses);
     
     //Update popular courses
     update_field('popular_courses_academy', $popular_courses, $company->ID);
