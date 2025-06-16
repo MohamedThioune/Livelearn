@@ -416,25 +416,10 @@ function update_academy_infos(WP_REST_Request $request) {
                 'post_type' => array('course', 'post', 'leerpad'),
                 'post_status' => 'publish',
                 'posts_per_page' => -1,
-                'orderby' => 'post_date',
-                'order' => 'DESC',                
                 'include' => $course_ids
             ]);
 
         $updated_data['courses_academy'] = $courses;
-    }
-
-    //Case popular courses
-    if (isset($updated_data['popular_courses_id'])) {
-        // Sanitize and validate course IDs
-        $popular_ids = is_array($updated_data['popular_courses_id']) ? array_filter(array_map('intval', (array) $updated_data['popular_courses_id'])) : NULL;
-    }
-
-    //Case services
-    if (isset($updated_data['services_id'])) {
-        //Services sample 
-        $services = (!is_array($updated_data['services_id'])) ? $updated_data['services_id'] : NULL;
-        $updated_data['services_academy'] = $services;
     }
 
     // Update Fields
