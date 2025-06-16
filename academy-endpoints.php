@@ -431,8 +431,30 @@ function update_academy_infos(WP_REST_Request $request) {
     endforeach;
 
     //Academy
+    $popular_courses = [];
+    $courses = [];
     foreach($academy_fields as $field_name):
-        $academy[$field_name] = get_field($field_name, $company->ID);
+        // If the field is popular_courses_academy, we need to process it differently
+        if($field_name == 'popular_courses_academy'):
+            $populars = get_field($field_name, $company->ID);
+            foreach($populars as $key => $popular):
+                $popular_course['course_popular'] = artikel($popular['course_popular']->ID)?: false;
+                $popular_course['category_popular'] = $popular['category_popular'] ?: false;
+                array_push($popular_courses, $popular_course);
+            endforeach;
+            $academy[$field_name] = $popular_courses;
+
+        //If the field is courses_academy, we need to process it differently also
+        elseif($field_name == 'courses_academy'):
+            $sample_courses = get_field($field_name, $company->ID);
+            foreach($sample_courses as $key => $course)
+                $courses[] = artikel($course['course']->ID) ?: false;
+            $academy[$field_name] = $courses;
+
+        //For other fields, we can just get the value
+        else:
+            $academy[$field_name] = get_field($field_name, $company->ID);
+        endif;
     endforeach;
 
     // Prepare response data
@@ -478,7 +500,6 @@ function update_popular_courses(WP_REST_Request $request) {
     // Parameters REST request
     $popular_courses = [];
     $popular_categories = get_field('popular_categories_academy', $company->ID);
-    var_dump($request['populars']);
     if (is_array($request['populars'])) {
         foreach ($request['populars'] as $popular) 
             if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
@@ -487,16 +508,38 @@ function update_popular_courses(WP_REST_Request $request) {
                 array_push($popular_courses, $popular_course);
             endif;  
     }
-    var_dump($popular_courses);
     
     //Update popular courses
     update_field('popular_courses_academy', $popular_courses, $company->ID);
 
-    // Prepare response data
+    // Academy
+    $popular_courses = [];
+    $courses = [];
     foreach($academy_fields as $field_name):
-        $academy[$field_name] = get_field($field_name, $company->ID);
+        // If the field is popular_courses_academy, we need to process it differently
+        if($field_name == 'popular_courses_academy'):
+            $populars = get_field($field_name, $company->ID);
+            foreach($populars as $key => $popular):
+                $popular_course['course_popular'] = artikel($popular['course_popular']->ID)?: false;
+                $popular_course['category_popular'] = $popular['category_popular'] ?: false;
+                array_push($popular_courses, $popular_course);
+            endforeach;
+            $academy[$field_name] = $popular_courses;
+
+        //If the field is courses_academy, we need to process it differently also
+        elseif($field_name == 'courses_academy'):
+            $sample_courses = get_field($field_name, $company->ID);
+            foreach($sample_courses as $key => $course)
+                $courses[] = artikel($course['course']->ID) ?: false;
+            $academy[$field_name] = $courses;
+
+        //For other fields, we can just get the value
+        else:
+            $academy[$field_name] = get_field($field_name, $company->ID);
+        endif;
     endforeach;
 
+    // Prepare response data
     $company_infos = [
         'ID' => $company->ID,
         'name' => $company->post_title,
@@ -537,8 +580,30 @@ function view_academy_infos(WP_REST_Request $request) {
     }
 
     //Academy
+    $popular_courses = [];
+    $courses = [];
     foreach($academy_fields as $field_name):
-        $academy[$field_name] = get_field($field_name, $company->ID);
+        // If the field is popular_courses_academy, we need to process it differently
+        if($field_name == 'popular_courses_academy'):
+            $populars = get_field($field_name, $company->ID);
+            foreach($populars as $key => $popular):
+                $popular_course['course_popular'] = artikel($popular['course_popular']->ID)?: false;
+                $popular_course['category_popular'] = $popular['category_popular'] ?: false;
+                array_push($popular_courses, $popular_course);
+            endforeach;
+            $academy[$field_name] = $popular_courses;
+
+        //If the field is courses_academy, we need to process it differently also
+        elseif($field_name == 'courses_academy'):
+            $sample_courses = get_field($field_name, $company->ID);
+            foreach($sample_courses as $key => $course)
+                $courses[] = artikel($course['course']->ID) ?: false;
+            $academy[$field_name] = $courses;
+            
+        //For other fields, we can just get the value
+        else:
+            $academy[$field_name] = get_field($field_name, $company->ID);
+        endif;
     endforeach;
 
     // Prepare response data
