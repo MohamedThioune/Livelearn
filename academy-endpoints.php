@@ -56,7 +56,7 @@ function register_member_company(WP_REST_Request $request){
   endif;
 
   //Search the company
-  $company = get_page_by_path( sanitize_title($bedrijf), OBJECT, 'company');
+  $company = get_page_by_path(sanitize_title($bedrijf), OBJECT, 'company');
   $errors = [];
   if(!$company):
     $errors['errors'] = 'The company does not found !';
@@ -74,13 +74,13 @@ function register_member_company(WP_REST_Request $request){
   $user->add_role('student');
 
   // Sending email notification
-  $first_name = $user->first_name ?: $user->display_name;
-  $email = $user->user_email;
-  $path_mail = '/templates/mail-notification-invitation.php';
-  require(__DIR__ . $path_mail);
-  $subject = 'Je hebt een nieuwe volger !';
-  $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-  wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' ));
+//   $first_name = $user->first_name ?: $user->display_name;
+//   $email = $user->user_email;
+//   $path_mail = '/templates/mail-notification-invitation.php';
+//   require(__DIR__ . $path_mail);
+//   $subject = 'Je hebt een nieuwe volger !';
+//   $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+//   wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' ));
 
   //Send response
   $response = new WP_REST_Response([
