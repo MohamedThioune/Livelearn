@@ -380,24 +380,29 @@ function list_projects(WP_REST_Request $request) {
 
 //[POST]Update academy infos for a company
 function update_academy_infos(WP_REST_Request $request) {
-    $company_id = $request['company_id'] ?? false;
-    $popular_courses = NULL;
-    $services = NULL;
+     $required_parameters = ['bedrijf'];
 
-    if (!$company_id) {
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Company ID is required.'
-        ], 400);
-    }
-
-    $required_fields = ['name', 'location', 'website'];
-    $errors = validated($required_fields, $request);
+    //Check required parameters register
+    $errors = validated($required_parameters, $request);
     if($errors):
         $response = new WP_REST_Response($errors);
         $response->set_status(400);
         return $response;
     endif;
+    $company_id = $request['bedrijf'];
+
+    //Get company
+    $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
+    $popular_courses = NULL;
+    $courses = NULL;
+    $services = NULL;
+
+    if (!$company) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company not found.'
+        ], 404);
+    }
 
     // Get company
     $company = get_post($company_id) ?: false;
@@ -407,25 +412,25 @@ function update_academy_infos(WP_REST_Request $request) {
             'message' => 'Company not found.'
         ], 404);
     }
-
+    $company_id = $company->ID;
     // Parameters REST request
     $updated_data = $request->get_params();
 
     //Case courses
     if (isset($updated_data['courses_id'])) {
         // Sanitize and validate course IDs
-        $popular_ids = is_array($updated_data['courses_id']) ? array_filter(array_map('intval', (array) $updated_data['courses_id'])) : NULL;
-        if (!empty($popular_ids)) 
-            $popular_courses = get_posts([
+        $course_ids = is_array($updated_data['courses_id']) ? array_filter(array_map('intval', (array) $updated_data['courses_id'])) : NULL;
+        if (!empty($course_ids)) 
+            $courses = get_posts([
                 'post_type' => 'course',
                 'post_status' => 'publish',
                 'posts_per_page' => -1,
                 'orderby' => 'post_date',
                 'order' => 'DESC',                
-                'include' => $popular_ids
+                'include' => $course_ids
             ]);
 
-        $updated_data['courses_academy'] = $popular_courses;
+        $updated_data['courses_academy'] = $courses;
     }
 
     //Case popular courses
@@ -447,11 +452,6 @@ function update_academy_infos(WP_REST_Request $request) {
         if($field_value != '' && $field_value != ' ')
         update_field($field_name, $field_value, $company_id);
     endforeach;
-
-    // Update company meta
-    update_post_meta($company_id, 'name', $request['name']);
-    update_post_meta($company_id, 'location', $request['location']);
-    update_post_meta($company_id, 'website', $request['website']);
 
     return new WP_REST_Response([
         'success' => true,
