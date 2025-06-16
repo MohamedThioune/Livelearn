@@ -483,7 +483,7 @@ function update_popular_courses(WP_REST_Request $request) {
         foreach ($request['populars'] as $popular) 
             if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
                 $popular_course['course_popular'] = get_post($popular['course_popular_id'])?: false;
-                $popular_course['category_popular'] = get_post($popular['category_popular'])?: false;
+                $popular_course['category_popular'] = $popular['category_popular'] ?: false;
                 array_push($popular_courses, $popular_course);
             endif;  
     }
