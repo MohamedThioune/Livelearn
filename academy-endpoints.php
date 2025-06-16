@@ -380,7 +380,9 @@ function list_projects(WP_REST_Request $request) {
 
 //[POST]Update academy infos for a company
 function update_academy_infos(WP_REST_Request $request) {
-     $required_parameters = ['bedrijf'];
+    $required_parameters = ['bedrijf'];
+    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'courses_academy', 'service_academy', 'services_academy'];
+    $academy = array();
 
     //Check required parameters register
     $errors = validated($required_parameters, $request);
@@ -389,14 +391,12 @@ function update_academy_infos(WP_REST_Request $request) {
         $response->set_status(400);
         return $response;
     endif;
-    $company_id = $request['bedrijf'];
 
     //Get company
-    $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
+    $company = get_page_by_path( sanitize_title($request['bedrijf']), OBJECT, 'company');
     $popular_courses = NULL;
     $courses = NULL;
     $services = NULL;
-
     if (!$company) {
         return new WP_REST_Response([
             'success' => false,
@@ -404,15 +404,6 @@ function update_academy_infos(WP_REST_Request $request) {
         ], 404);
     }
 
-    // Get company
-    $company = get_post($company_id) ?: false;
-    if (!$company) {
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Company not found.'
-        ], 404);
-    }
-    $company_id = $company->ID;
     // Parameters REST request
     $updated_data = $request->get_params();
 
@@ -450,12 +441,27 @@ function update_academy_infos(WP_REST_Request $request) {
     foreach ($updated_data as $field_name => $field_value):
         if($field_value)
         if($field_value != '' && $field_value != ' ')
-        update_field($field_name, $field_value, $company_id);
+        update_field($field_name, $field_value, $company->ID);
     endforeach;
+
+    //Academy
+    foreach($academy_fields as $field_name):
+        $academy[$field_name] = get_field($field_name, $company->ID);
+    endforeach;
+
+    // Prepare response data
+    $company_infos = [
+        'ID' => $company->ID,
+        'name' => $company->post_title,
+        'logo' => get_field('company_logo', $company->ID),
+        'country' => get_field('company_country', $company->ID),
+        'academy' => (Object)$academy
+    ];
 
     return new WP_REST_Response([
         'success' => true,
-        'message' => 'Company information updated successfully.'
+        'message' => 'Company information updated successfully.',
+        'company' => $company_infos
     ]);
 }
 
