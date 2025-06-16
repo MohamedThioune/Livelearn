@@ -457,7 +457,7 @@ function update_popular_courses(WP_REST_Request $request) {
     $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy', 'courses_academy', 'service_academy', 'services_academy'];
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
-    $required_parameters = ['bedrijf', 'popular'];
+    $required_parameters = ['bedrijf', 'items'];
     //Check required parameters register
     $errors = validated($required_parameters, $request);
     if($errors):
