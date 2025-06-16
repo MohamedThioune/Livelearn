@@ -1,4 +1,4 @@
-<?
+<?php
 
 //[POST]Register the company member
 function register_member_company(WP_REST_Request $request){
