@@ -220,6 +220,7 @@ function add_project(WP_REST_Request $request){
     endif;
 
     //Get value fields
+    $title = $request['title'];
     $description = $request['description'];
     $image = $request['image'];
     $technologies = $request['technologies'];
@@ -260,10 +261,21 @@ function add_project(WP_REST_Request $request){
 
     $request['ID'] = $post_id;
 
+    $sampleProject = get_post($post_id);
+    $project = (Object)[
+        'ID' => $sampleProject->ID,
+        'title' => $sampleProject->post_title,
+        'content' => $sampleProject->post_content,
+        'image' => get_post_meta($sampleProject->ID, 'image_project', true),
+        'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
+        'company' => get_post_meta($sampleProject->ID, 'company', true),
+    ];
+
+
     return new WP_REST_Response([
         'success' => true,
         'message' => 'Project created successfully.',
-        'project' => $request
+        'project' => $project
     ]);
 }
 
