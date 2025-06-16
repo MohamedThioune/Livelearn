@@ -256,8 +256,7 @@ function add_project(WP_REST_Request $request){
     update_post_meta($post_id, 'description_project', $description);
     update_post_meta($post_id, 'image_project', $image);
     update_post_meta($post_id, 'technologies_project', $technologies);
-    update_post_meta($post_id, 'company', $company);
-
+    update_post_meta($post_id, 'project_company', $company);
 
     $request['ID'] = $post_id;
 
@@ -268,9 +267,8 @@ function add_project(WP_REST_Request $request){
         'content' => $sampleProject->post_content,
         'image' => get_post_meta($sampleProject->ID, 'image_project', true),
         'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
-        'company' => get_post_meta($sampleProject->ID, 'company', true),
+        'company' => get_post_meta($sampleProject->ID, 'project_company', true),
     ];
-
 
     return new WP_REST_Response([
         'success' => true,
@@ -305,7 +303,7 @@ function view_project(WP_REST_Request $request) {
         'content' => $sampleProject->post_content,
         'image' => get_post_meta($sampleProject->ID, 'image_project', true),
         'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
-        'company' => get_post_meta($sampleProject->ID, 'company', true),
+        'project_company' => get_post_meta($sampleProject->ID, 'company', true),
     ];
 
     return new WP_REST_Response([
@@ -344,9 +342,9 @@ function list_projects(WP_REST_Request $request) {
         'posts_per_page' => -1,
         'orderby' => $company->ID,
         'order' => 'DESC',
-        'meta_key' => 'company',
+        'meta_key' => 'project_company',
         'meta_value' => $company->ID
-    );
+    ); 
 
     $projects = get_posts($args);
 
@@ -366,7 +364,7 @@ function list_projects(WP_REST_Request $request) {
             'content' => $project->post_content,
             'image' => get_post_meta($project->ID, 'image_project', true),
             'technologies' => get_post_meta($project->ID, 'technologies_project', true),
-            'company' => get_post_meta($project->ID, 'company', true),
+            'company' => get_post_meta($project->ID, 'project_company', true),
         ];
     }
 
