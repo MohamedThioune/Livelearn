@@ -341,13 +341,11 @@ function list_projects(WP_REST_Request $request) {
     $args = array(
         'post_type' => 'project',
         'post_status' => 'publish',
-        'meta_query' => array(
-            array(
-                'key' => 'company',
-                'value' => $company->ID,
-                'compare' => '='
-            )
-        )
+        'posts_per_page' => -1,
+        'orderby' => $company->ID,
+        'order' => 'DESC',
+        'meta_key' => 'company',
+        'meta_value' => $company->ID
     );
 
     $projects = get_posts($args);
