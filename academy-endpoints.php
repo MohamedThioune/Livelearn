@@ -209,7 +209,7 @@ function show_achievement(WP_REST_Request $request) {
 
 //[POST]Add a project 
 function add_project(WP_REST_Request $request){
-    $required_parameters = ['title', 'description', 'technologies', 'company'];
+    $required_parameters = ['title', 'description', 'technologies', 'bedrijf'];
 
     //Check required parameters register
     $errors = validated($required_parameters, $request);
@@ -223,10 +223,10 @@ function add_project(WP_REST_Request $request){
     $description = $request['description'];
     $image = $request['image'];
     $technologies = $request['technologies'];
-    $company_id = $request['company'];
+    $company_id = $request['bedrijf'];
 
     //Get company
-    $company = get_post($company_id)?: false;
+    $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
     if(!$company)
         return new WP_REST_Response([
             'success' => false,
@@ -305,13 +305,25 @@ function view_project(WP_REST_Request $request) {
 
 //[POST]List projects for a company
 function list_projects(WP_REST_Request $request) {
-    $company_id = $request['company_id'] ?? false;
+    $required_parameters = ['bedrijf'];
 
-    if (!$company_id) {
+    //Check required parameters register
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+        return $response;
+    endif;
+    $company_id = $request['bedrijf'];
+
+    //Get company
+    $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
+
+    if (!$company) {
         return new WP_REST_Response([
             'success' => false,
-            'message' => 'Company ID is required.'
-        ], 400);
+            'message' => 'Company not found.'
+        ], 404);
     }
 
     $args = array(
@@ -320,7 +332,7 @@ function list_projects(WP_REST_Request $request) {
         'meta_query' => array(
             array(
                 'key' => 'company',
-                'value' => $company_id,
+                'value' => $company->ID,
                 'compare' => '='
             )
         )
