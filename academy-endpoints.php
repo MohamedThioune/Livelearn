@@ -457,7 +457,7 @@ function update_popular_courses(WP_REST_Request $request) {
     $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy', 'courses_academy', 'service_academy', 'services_academy'];
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
-    $required_parameters = ['bedrijf', 'items'];
+    $required_parameters = ['bedrijf', 'populars'];
     //Check required parameters register
     $errors = validated($required_parameters, $request);
     if($errors):
@@ -478,9 +478,9 @@ function update_popular_courses(WP_REST_Request $request) {
     // Parameters REST request
     $popular_courses = [];
     $popular_categories = get_field('popular_categories_academy', $company->ID);
-    var_dump($request['popular_courses']);
-    if (is_array($request['popular_courses'])) {
-        foreach ($request['popular_courses'] as $popular) 
+    var_dump($request['populars']);
+    if (is_array($request['populars'])) {
+        foreach ($request['populars'] as $popular) 
             if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
                 $popular_course['course_popular'] = get_post($popular['course_popular_id'])?: false;
                 $popular_course['category_popular'] = get_post($popular['category_popular'])?: false;
