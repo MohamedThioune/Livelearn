@@ -10,6 +10,7 @@ require_once __DIR__ . '/podcast-endpoints.php';
 require_once __DIR__ . '/video-endpoints.php';
 require_once __DIR__ . '/script-endpoints.php';
 require_once __DIR__ . '/dashbord-endpoints.php';
+require_once __DIR__ . '/academy-endpoints.php';
 require_once __DIR__ . '/templates/recommendation-module.php';
 require_once __DIR__ . '/templates/search-module.php';
 require_once __DIR__ . '/templates/new-module-subscribe.php';
