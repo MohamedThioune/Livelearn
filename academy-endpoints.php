@@ -383,6 +383,7 @@ function update_academy_infos(WP_REST_Request $request) {
     $required_parameters = ['bedrijf'];
     $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'courses_academy', 'service_academy', 'services_academy'];
     $academy = array();
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
     //Check required parameters register
     $errors = validated($required_parameters, $request);
@@ -438,7 +439,7 @@ function update_academy_infos(WP_REST_Request $request) {
     $company_infos = [
         'ID' => $company->ID,
         'name' => $company->post_title,
-        'logo' => get_field('company_logo', $company->ID),
+        'logo' => get_field('company_logo', $company->ID) ?: $placeholder,
         'country' => get_field('company_country', $company->ID),
         'academy' => (Object)$academy
     ];
@@ -455,6 +456,8 @@ function view_academy_infos(WP_REST_Request $request) {
     $company_id = $request['company_id'] ?? false;
     $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'courses_academy', 'service_academy', 'services_academy'];
     $academy = array();
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+
     if (!$company_id) {
         return new WP_REST_Response([
             'success' => false,
@@ -480,7 +483,7 @@ function view_academy_infos(WP_REST_Request $request) {
     $company_infos = [
         'ID' => $company->ID,
         'name' => $company->post_title,
-        'logo' => get_field('company_logo', $company->ID),
+        'logo' => get_field('company_logo', $company->ID) ?: $placeholder,
         'country' => get_field('company_country', $company->ID),
         'academy' => (Object)$academy
     ];
