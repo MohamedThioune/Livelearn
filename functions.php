@@ -3035,6 +3035,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'update_academy_infos'
     ));
+    register_rest_route ('custom/v1', 'academy/update/popular/courses', array(
+        'methods' => 'POST',
+        'callback' => 'update_popular_courses'
+    ));
     register_rest_route ('custom/v1', 'academy/company/infos', array(
         'methods' => 'POST',
         'callback' => 'view_academy_infos'

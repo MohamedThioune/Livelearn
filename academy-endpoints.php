@@ -451,10 +451,64 @@ function update_academy_infos(WP_REST_Request $request) {
     ]);
 }
 
+//[POST]Update popular courses for a company
+function update_popular_courses(WP_REST_Request $request) {
+    $academy = array();
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+
+    $required_parameters = ['bedrijf', 'popular'];
+    //Check required parameters register
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+        return $response;
+    endif;
+
+    //Get company
+    $company = get_page_by_path( sanitize_title($request['bedrijf']), OBJECT, 'company');
+    if (!$company) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company not found.'
+        ], 404);
+    }
+
+    // Parameters REST request
+    $popular_courses = [];
+    $popular_categories = get_field('popular_categories_academy', $company->ID);
+    if (is_array($request['popular'])) {
+        foreach ($request['popular'] as $popular) {
+            if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
+                $popular_courses['course_popular'] = get_post($popular['course_popular_id'])?: false;
+                $popular_courses['category_popular'] = get_post($popular['category_popular'])?: false;
+            endif;
+        }
+    }
+    
+    //Update
+    update_field('popular_courses_academy', $popular_courses, $company->ID);
+
+     // Prepare response data
+    $company_infos = [
+        'ID' => $company->ID,
+        'name' => $company->post_title,
+        'logo' => get_field('company_logo', $company->ID) ?: $placeholder,
+        'country' => get_field('company_country', $company->ID),
+        'academy' => (Object)$academy
+    ];
+
+    return new WP_REST_Response([
+        'success' => true,
+        'message' => 'Company information updated successfully.',
+        'company' => $company_infos
+    ]);
+}
+
 //[POST]View academy infos for a company
 function view_academy_infos(WP_REST_Request $request) {
     $required_parameters = ['bedrijf'];
-    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'courses_academy', 'service_academy', 'services_academy'];
+    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy', 'courses_academy', 'service_academy', 'services_academy'];
     $academy = array();
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
