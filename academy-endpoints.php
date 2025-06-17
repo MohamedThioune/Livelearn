@@ -208,180 +208,180 @@ function show_achievement(WP_REST_Request $request) {
 }
 
 //[POST]Add a project 
-function add_project(WP_REST_Request $request){
-    $required_parameters = ['title', 'description', 'technologies', 'bedrijf'];
+// function add_project(WP_REST_Request $request){
+//     $required_parameters = ['title', 'description', 'technologies', 'bedrijf'];
 
-    //Check required parameters register
-    $errors = validated($required_parameters, $request);
-    if($errors):
-        $response = new WP_REST_Response($errors);
-        $response->set_status(400);
-        return $response;
-    endif;
+//     //Check required parameters register
+//     $errors = validated($required_parameters, $request);
+//     if($errors):
+//         $response = new WP_REST_Response($errors);
+//         $response->set_status(400);
+//         return $response;
+//     endif;
 
-    //Get value fields
-    $title = $request['title'];
-    $description = $request['description'];
-    $image = $request['image'];
-    $technologies = $request['technologies'];
-    $company_id = $request['bedrijf'];
+//     //Get value fields
+//     $title = $request['title'];
+//     $description = $request['description'];
+//     $image = $request['image'];
+//     $technologies = $request['technologies'];
+//     $company_id = $request['bedrijf'];
 
-    //Get company
-    $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
-    if(!$company)
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Company not found for project.'
-        ], 401);
+//     //Get company
+//     $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
+//     if(!$company)
+//         return new WP_REST_Response([
+//             'success' => false,
+//             'message' => 'Company not found for project.'
+//         ], 401);
 
-    //Create post object
-    $post_data = array(
-        'post_title'   => $title,
-        'post_content' => $description,
-        'post_status'  => 'publish',
-        'post_type'    => 'project',
-    );
+//     //Create post object
+//     $post_data = array(
+//         'post_title'   => $title,
+//         'post_content' => $description,
+//         'post_status'  => 'publish',
+//         'post_type'    => 'project',
+//     );
 
-    //Insert the post into the database
-    $post_id = wp_insert_post($post_data);
+//     //Insert the post into the database
+//     $post_id = wp_insert_post($post_data);
 
-    //Check for errors
-    if (is_wp_error($post_id)) 
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Failed to create project.'
-        ], 500);
+//     //Check for errors
+//     if (is_wp_error($post_id)) 
+//         return new WP_REST_Response([
+//             'success' => false,
+//             'message' => 'Failed to create project.'
+//         ], 500);
 
-    //Set post meta
-    update_post_meta($post_id, 'description_project', $description);
-    update_post_meta($post_id, 'image_project', $image);
-    update_post_meta($post_id, 'technologies_project', $technologies);
-    update_post_meta($post_id, 'project_company', $company);
+//     //Set post meta
+//     update_post_meta($post_id, 'description_project', $description);
+//     update_post_meta($post_id, 'image_project', $image);
+//     update_post_meta($post_id, 'technologies_project', $technologies);
+//     update_post_meta($post_id, 'project_company', $company);
 
-    $request['ID'] = $post_id;
+//     $request['ID'] = $post_id;
 
-    $sampleProject = get_post($post_id);
-    $project = (Object)[
-        'ID' => $sampleProject->ID,
-        'title' => $sampleProject->post_title,
-        'content' => $sampleProject->post_content,
-        'image' => get_post_meta($sampleProject->ID, 'image_project', true),
-        'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
-        'company' => get_post_meta($sampleProject->ID, 'project_company', true),
-    ];
+//     $sampleProject = get_post($post_id);
+//     $project = (Object)[
+//         'ID' => $sampleProject->ID,
+//         'title' => $sampleProject->post_title,
+//         'content' => $sampleProject->post_content,
+//         'image' => get_post_meta($sampleProject->ID, 'image_project', true),
+//         'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
+//         'company' => get_post_meta($sampleProject->ID, 'project_company', true),
+//     ];
 
-    return new WP_REST_Response([
-        'success' => true,
-        'message' => 'Project created successfully.',
-        'project' => $project
-    ]);
-}
+//     return new WP_REST_Response([
+//         'success' => true,
+//         'message' => 'Project created successfully.',
+//         'project' => $project
+//     ]);
+// }
 
 //[POST]View a project
-function view_project(WP_REST_Request $request) {
-    $project_id = $request['project_id'] ?? false;
+// function view_project(WP_REST_Request $request) {
+//     $project_id = $request['project_id'] ?? false;
 
-    if (!$project_id) {
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Project ID is required.'
-        ], 400);
-    }
+//     if (!$project_id) {
+//         return new WP_REST_Response([
+//             'success' => false,
+//             'message' => 'Project ID is required.'
+//         ], 400);
+//     }
 
-    $sampleProject = get_post($project_id);
+//     $sampleProject = get_post($project_id);
 
-    if (!$sampleProject || $sampleProject->post_type !== 'project') {
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Project not found.'
-        ], 404);
-    }
+//     if (!$sampleProject || $sampleProject->post_type !== 'project') {
+//         return new WP_REST_Response([
+//             'success' => false,
+//             'message' => 'Project not found.'
+//         ], 404);
+//     }
 
-    $project = (Object)[
-        'ID' => $sampleProject->ID,
-        'title' => $sampleProject->post_title,
-        'content' => $sampleProject->post_content,
-        'image' => get_post_meta($sampleProject->ID, 'image_project', true),
-        'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
-        'project_company' => get_post_meta($sampleProject->ID, 'company', true),
-    ];
+//     $project = (Object)[
+//         'ID' => $sampleProject->ID,
+//         'title' => $sampleProject->post_title,
+//         'content' => $sampleProject->post_content,
+//         'image' => get_post_meta($sampleProject->ID, 'image_project', true),
+//         'technologies' => get_post_meta($sampleProject->ID, 'technologies_project', true),
+//         'project_company' => get_post_meta($sampleProject->ID, 'company', true),
+//     ];
 
-    return new WP_REST_Response([
-        'success' => true,
-        'message' => 'Project retrieved successfully.',
-        'project' => $project
-    ]);
-}
+//     return new WP_REST_Response([
+//         'success' => true,
+//         'message' => 'Project retrieved successfully.',
+//         'project' => $project
+//     ]);
+// }
 
 //[POST]List projects for a company
-function list_projects(WP_REST_Request $request) {
-    $required_parameters = ['bedrijf'];
+// function list_projects(WP_REST_Request $request) {
+//     $required_parameters = ['bedrijf'];
 
-    //Check required parameters register
-    $errors = validated($required_parameters, $request);
-    if($errors):
-        $response = new WP_REST_Response($errors);
-        $response->set_status(400);
-        return $response;
-    endif;
-    $company_id = $request['bedrijf'];
+//     //Check required parameters register
+//     $errors = validated($required_parameters, $request);
+//     if($errors):
+//         $response = new WP_REST_Response($errors);
+//         $response->set_status(400);
+//         return $response;
+//     endif;
+//     $company_id = $request['bedrijf'];
 
-    //Get company
-    $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
+//     //Get company
+//     $company = get_page_by_path( sanitize_title($company_id), OBJECT, 'company');
 
-    if (!$company) {
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => 'Company not found.'
-        ], 404);
-    }
+//     if (!$company) {
+//         return new WP_REST_Response([
+//             'success' => false,
+//             'message' => 'Company not found.'
+//         ], 404);
+//     }
 
-    $args = array(
-        'post_type' => 'project',
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'orderby' => $company->ID,
-        'order' => 'DESC',
-        'meta_key' => 'project_company',
-        'meta_value' => $company->ID
-    ); 
+//     $args = array(
+//         'post_type' => 'project',
+//         'post_status' => 'publish',
+//         'posts_per_page' => -1,
+//         'orderby' => $company->ID,
+//         'order' => 'DESC',
+//         'meta_key' => 'project_company',
+//         'meta_value' => $company->ID
+//     ); 
 
-    $projects = get_posts($args);
+//     $projects = get_posts($args);
 
-    if (empty($projects)) {
-        return new WP_REST_Response([
-            'success' => true,
-            'message' => 'No projects found for this company.',
-            'projects' => []
-        ], 200);
-    }
+//     if (empty($projects)) {
+//         return new WP_REST_Response([
+//             'success' => true,
+//             'message' => 'No projects found for this company.',
+//             'projects' => []
+//         ], 200);
+//     }
 
-    $project_list = [];
-    foreach ($projects as $project) {
-        $company = NULL;
-        $company_id = get_post_meta($project->ID, 'project_company', true) ?: false;
-        $company = company($company_id, 1) ?: false;
-        $project_list[] = ( Object)[
-            'ID' => $project->ID,
-            'title' => $project->post_title,
-            'content' => $project->post_content,
-            'image' => get_post_meta($project->ID, 'image_project', true),
-            'technologies' => get_post_meta($project->ID, 'technologies_project', true),
-            'company' => $company,
-        ];
-    }
+//     $project_list = [];
+//     foreach ($projects as $project) {
+//         $company = NULL;
+//         $company_id = get_post_meta($project->ID, 'project_company', true) ?: false;
+//         $company = company($company_id, 1) ?: false;
+//         $project_list[] = ( Object)[
+//             'ID' => $project->ID,
+//             'title' => $project->post_title,
+//             'content' => $project->post_content,
+//             'image' => get_post_meta($project->ID, 'image_project', true),
+//             'technologies' => get_post_meta($project->ID, 'technologies_project', true),
+//             'company' => $company,
+//         ];
+//     }
 
-    return new WP_REST_Response([
-        'success' => true,
-        'message' => 'Projects retrieved successfully.',
-        'projects' => $project_list
-    ]);
-}
+//     return new WP_REST_Response([
+//         'success' => true,
+//         'message' => 'Projects retrieved successfully.',
+//         'projects' => $project_list
+//     ]);
+// }
 
 //[POST]Update academy infos for a company
 function update_academy_infos(WP_REST_Request $request) {
     $required_parameters = ['bedrijf'];
-    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy','courses_academy', 'service_academy', 'services_academy'];
+    $academy_fields = ['logo_academy', 'title_academy', 'main_color_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy','courses_academy', 'service_academy', 'services_academy'];
     $academy = array();
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
@@ -427,7 +427,7 @@ function update_academy_infos(WP_REST_Request $request) {
     foreach ($updated_data as $field_name => $field_value):
         if($field_value)
         if($field_value != '' && $field_value != ' ')
-        update_field($field_name, $field_value, $company->ID);
+            update_field($field_name, $field_value, $company->ID);
     endforeach;
 
     //Academy
@@ -476,7 +476,7 @@ function update_academy_infos(WP_REST_Request $request) {
 //[POST]Update popular courses for a company
 function update_popular_courses(WP_REST_Request $request) {
     $academy = array();
-    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy', 'courses_academy', 'service_academy', 'services_academy'];
+    $academy_fields = ['logo_academy', 'title_academy', 'main_color_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy','courses_academy', 'service_academy', 'services_academy'];
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
     $required_parameters = ['bedrijf', 'populars'];
@@ -558,7 +558,7 @@ function update_popular_courses(WP_REST_Request $request) {
 //[POST]View academy infos for a company
 function view_academy_infos(WP_REST_Request $request) {
     $required_parameters = ['bedrijf'];
-    $academy_fields = ['logo_academy', 'title_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy', 'courses_academy', 'service_academy', 'services_academy'];
+    $academy_fields = ['logo_academy', 'title_academy', 'main_color_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy','courses_academy', 'service_academy', 'services_academy'];
     $academy = array();
     $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 

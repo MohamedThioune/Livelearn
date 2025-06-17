@@ -3471,7 +3471,6 @@ function candidateMyResumeAdd(WP_REST_Request $request) {
     // Add the new work to the response data
     $response_data['new_work'] = $new_work;
   }
-  
 
   //var_dump($response_data);
   // Return the response data
