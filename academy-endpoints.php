@@ -649,7 +649,7 @@ function view_courses_company(WP_REST_Request $request){
     foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
         if(!empty($company_user))
-            if($company_user->ID == $company_connected->ID)
+            if($company_user->ID == $company->ID)
                 $employees[] = $user->ID;
     }
     var_dump($employees);
