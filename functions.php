@@ -3044,6 +3044,11 @@ add_action( 'rest_api_init', function () {
         'callback' => 'view_academy_infos'
     ));
 
+    register_rest_route ('custom/v1', 'company/courses', array(
+        'methods' => 'POST',
+        'callback' => 'view_courses_company'
+    ));
+
     /**
      * END
     */

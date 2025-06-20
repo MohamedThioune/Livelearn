@@ -623,7 +623,7 @@ function view_academy_infos(WP_REST_Request $request) {
 }      
 
 
-function learn_modules(WP_REST_Request $request){
+function view_courses_company(WP_REST_Request $request){
     $employees = array();
     $courses = array();
     $required_parameters = ['bedrijf'];
