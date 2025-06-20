@@ -648,27 +648,23 @@ function view_courses_company(WP_REST_Request $request){
     $users = get_users();
     foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
-        var_dump($company_user);
-
 
         if(!empty($company_user))
             if($company_user[0]->ID == $company->ID)
                 $employees[] = $user->ID;
     }
-    var_dump($employees);
-    var_dump($company->ID);
 
-    // $args = array(
-    //     'post_type' => array('course','post', 'leerpad'),
-    //     'post_status' => 'publish',
-    //     'author__in' => $employees,
-    //     'order' => 'DESC',
-    //     'posts_per_page' => -1,
-    // );
-    // $sample_courses = get_posts($args);
-    // foreach ($sample_courses as $course):
-    //     $courses[] = artikel($course->ID) ?: false;
-    // endforeach;
+    $args = array(
+        'post_type' => array('course','post', 'leerpad'),
+        'post_status' => 'publish',
+        'author__in' => $employees,
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $sample_courses = get_posts($args);
+    foreach ($sample_courses as $course):
+        $courses[] = artikel($course->ID) ?: false;
+    endforeach;
 
     return new WP_REST_Response( array(
         'count' => !empty($courses) ? count($courses) : 0,
