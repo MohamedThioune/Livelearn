@@ -627,7 +627,6 @@ function view_courses_company(WP_REST_Request $request){
     $employees = array();
     $courses = array();
     $required_parameters = ['bedrijf'];
-    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
 
     //Check required parameters register
     $errors = validated($required_parameters, $request);
@@ -653,17 +652,18 @@ function view_courses_company(WP_REST_Request $request){
             if($company_user->ID == $company_connected->ID)
                 $employees[] = $user->ID;
     }
-    $args = array(
-        'post_type' => array('course','post', 'leerpad'),
-        'post_status' => 'publish',
-        'author__in' => $employees,
-        'order' => 'DESC',
-        'posts_per_page' => -1,
-    );
-    $sample_courses = get_posts($args);
-    foreach ($sample_courses as $course):
-        $courses[] = artikel($course->ID) ?: false;
-    endforeach;
+    var_dump($employees);
+    // $args = array(
+    //     'post_type' => array('course','post', 'leerpad'),
+    //     'post_status' => 'publish',
+    //     'author__in' => $employees,
+    //     'order' => 'DESC',
+    //     'posts_per_page' => -1,
+    // );
+    // $sample_courses = get_posts($args);
+    // foreach ($sample_courses as $course):
+    //     $courses[] = artikel($course->ID) ?: false;
+    // endforeach;
 
     return new WP_REST_Response( array(
         'count' => !empty($courses) ? count($courses) : 0,
