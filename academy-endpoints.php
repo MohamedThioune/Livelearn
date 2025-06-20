@@ -622,4 +622,52 @@ function view_academy_infos(WP_REST_Request $request) {
     ]);
 }      
 
+
+function learn_modules(WP_REST_Request $request){
+    $employees = array();
+    $courses = array();
+    $required_parameters = ['bedrijf'];
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+
+    //Check required parameters register
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+        return $response;
+    endif;
+
+    //Get company
+    $company = get_page_by_path( sanitize_title($request['bedrijf']), OBJECT, 'company');
+    if (!$company) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company not found.'
+        ], 404);
+    }
+
+    $users = get_users();
+    foreach($users as $user) {
+        $company_user = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_user))
+            if($company_user->ID == $company_connected->ID)
+                $employees[] = $user->ID;
+    }
+    $args = array(
+        'post_type' => array('course','post', 'leerpad'),
+        'post_status' => 'publish',
+        'author__in' => $employees,
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+    $sample_courses = get_posts($args);
+    foreach ($sample_courses as $course):
+        $courses[] = artikel($course->ID) ?: false;
+    endforeach;
+
+    return new WP_REST_Response( array(
+        'count' => !empty($courses) ? count($courses) : 0,
+        'courses' => $courses
+    ), 200);
+}
 ?>
