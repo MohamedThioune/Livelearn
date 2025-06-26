@@ -410,6 +410,8 @@ function update_academy_infos(WP_REST_Request $request) {
 
     //Case courses
     if (isset($updated_data['courses_id'])) {
+        // Former courses 
+        $former_courses = get_field('courses_academy', $company->ID) ?: [];
         // Sanitize and validate course IDs
         $course_ids = is_array($updated_data['courses_id']) ? array_filter(array_map('intval', (array) $updated_data['courses_id'])) : NULL;
         if (!empty($course_ids)) 
@@ -420,7 +422,7 @@ function update_academy_infos(WP_REST_Request $request) {
                 'include' => $course_ids
             ]);
 
-        $updated_data['courses_academy'] = $courses;
+        $updated_data['courses_academy'] = array_merge($former_courses, $courses);
     }
 
     // Update Fields
