@@ -593,7 +593,8 @@ function delete_popular_regular_courses(WP_REST_Request $request) {
             continue;
         $courses[] = $value;
     endforeach;
-    update_field($courses, 'courses_academy', $company->ID);
+    var_dump($courses);
+    // update_field($courses, 'courses_academy', $company->ID);
 
     //Delete popular courses
     $populars = [];
