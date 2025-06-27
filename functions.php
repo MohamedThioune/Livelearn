@@ -3039,6 +3039,10 @@ add_action( 'rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'update_popular_courses'
     ));
+    register_rest_route ('custom/v1', 'academy/delete/popular/courses', array(
+        'methods' => 'POST',
+        'callback' => 'delete_popular_regular_courses'
+    ));
     register_rest_route ('custom/v1', 'academy/company/infos', array(
         'methods' => 'POST',
         'callback' => 'view_academy_infos'
