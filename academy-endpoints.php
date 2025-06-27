@@ -432,7 +432,7 @@ function update_academy_infos(WP_REST_Request $request) {
             update_field($field_name, $field_value, $company->ID);
     endforeach;
 
-    //Academy
+    //Academy view 
     $popular_courses = [];
     $courses = [];
     foreach($academy_fields as $field_name):
@@ -501,14 +501,16 @@ function update_popular_courses(WP_REST_Request $request) {
 
     // Parameters REST request
     $popular_courses = [];
+    $former_popular_courses = get_field('courses_academy', $company->ID) ?: [];
     $popular_categories = get_field('popular_categories_academy', $company->ID);
     if (is_array($request['populars'])) {
-        foreach ($request['populars'] as $popular) 
+        foreach ($request['populars'] as $popular)
             if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
                 $popular_course['course_popular'] = get_post($popular['course_popular_id'])?: false;
                 $popular_course['category_popular'] = $popular['category_popular'] ?: false;
                 array_push($popular_courses, $popular_course);
-            endif;  
+            endif;
+        $popular_courses = array_merge($former_popular_courses, $popular_courses);  
     }
     
     //Update popular courses
@@ -553,6 +555,98 @@ function update_popular_courses(WP_REST_Request $request) {
     return new WP_REST_Response([
         'success' => true,
         'message' => 'Company information updated successfully.',
+        'company' => $company_infos
+    ]);
+}
+
+//[POST]Delete popular courses for a company
+function delete_popular_regular_courses(WP_REST_Request $request) {
+    $required_parameters = ['bedrijf'];
+    $academy_fields = ['logo_academy', 'title_academy', 'main_color_academy', 'description_academy', 'call_to_action_academy', 'features_academy', 'popular_categories_academy', 'popular_courses_academy','courses_academy', 'service_academy', 'services_academy'];
+    $academy = array();
+    $placeholder = get_stylesheet_directory_uri() . '/img/placeholder_opleidin.webp';
+
+    //Check required parameters register
+    $errors = validated($required_parameters, $request);
+    if($errors):
+        $response = new WP_REST_Response($errors);
+        $response->set_status(400);
+        return $response;
+    endif;
+
+    //Get company
+    $company = get_page_by_path( sanitize_title($request['bedrijf']), OBJECT, 'company');
+    if (!$company) {
+        return new WP_REST_Response([
+            'success' => false,
+            'message' => 'Company not found.'
+        ], 404);
+    }
+
+    //Delete courses
+    $courses = [];
+    $actual_courses = get_field('courses_academy', $company->ID) ?: [];
+    $coursesID = ($request['courses_id']) ?: false;
+    if(is_array($coursesID))
+    if(!empty($coursesID))
+    foreach ($actual_courses as $key => $value):
+        if(in_array($value->ID, $coursesID))
+            continue;
+        $courses[] = $value;
+    endforeach;
+    update_field($courses, 'courses_academy', $company->ID);
+
+    //Delete popular courses
+    $populars = [];
+    $actual_popular_courses = get_field('popular_courses_academy', $company->ID) ?: [];
+    $popularCoursesID = ($request['popular_courses_id']) ?: false;
+    if(is_array($popularCoursesID))
+    if(!empty($popularCoursesID))
+    foreach ($actual_popular_courses as $key => $value):
+        if(in_array($value['course_popular']->ID, $popularCoursesID))
+            continue;
+        array_push($populars, $value);
+    endforeach;
+    update_field($populars, 'popular_courses_academy', $company->ID);
+
+    //Academy view
+    $popular_courses = [];
+    $courses = [];
+    foreach($academy_fields as $field_name):
+        // If the field is popular_courses_academy, we need to process it differently
+        if($field_name == 'popular_courses_academy'):
+            $populars = get_field($field_name, $company->ID);
+            foreach($populars as $key => $popular):
+                $popular_course['course_popular'] = artikel($popular['course_popular']->ID)?: false;
+                $popular_course['category_popular'] = $popular['category_popular'] ?: false;
+                array_push($popular_courses, $popular_course);
+            endforeach;
+            $academy[$field_name] = $popular_courses;
+
+        //If the field is courses_academy, we need to process it differently also
+        elseif($field_name == 'courses_academy'):
+            $sample_courses = get_field($field_name, $company->ID);
+            foreach($sample_courses as $key => $course)
+                $courses[] = artikel($course->ID) ?: false;
+            $academy[$field_name] = $courses;
+
+        //For other fields, we can just get the value
+        else:
+            $academy[$field_name] = get_field($field_name, $company->ID);
+        endif;
+    endforeach;
+    $company_infos = [
+        'ID' => $company->ID,
+        'name' => $company->post_title,
+        'logo' => get_field('company_logo', $company->ID) ?: $placeholder,
+        'country' => get_field('company_country', $company->ID),
+        'academy' => (Object)$academy
+    ];
+
+    //Return information
+    return new WP_REST_Response([
+        'success' => true,
+        'message' => 'Deleted successfully.',
         'company' => $company_infos
     ]);
 }
