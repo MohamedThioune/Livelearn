@@ -587,26 +587,28 @@ function delete_popular_regular_courses(WP_REST_Request $request) {
     $courses = [];
     $actual_courses = get_field('courses_academy', $company->ID) ?: [];
     $coursesID = (isset($request['courses_id'])) ? $request['courses_id'] : [];
-    if(!empty($coursesID))
-    foreach ($actual_courses as $value):
-        if(in_array($value->ID, $coursesID))
-            continue;
-        $courses[] = $value;
-    endforeach;
-    var_dump($courses);
-    // update_field($courses, 'courses_academy', $company->ID);
+    if(!empty($coursesID)):
+        foreach ($actual_courses as $value):
+            if(in_array($value->ID, $coursesID))
+                continue;
+            $courses[] = $value;
+        endforeach;
+        var_dump($courses);
+        // update_field($courses, 'courses_academy', $company->ID);
+    endif;
 
     //Delete popular courses
     $populars = [];
     $actual_popular_courses = get_field('popular_courses_academy', $company->ID) ?: [];
     $popularCoursesID = (isset($request['popular_courses_id'])) ? $request['popular_courses_id'] : [];
-    if(!empty($popularCoursesID))
-    foreach ($actual_popular_courses as $value):
-        if(in_array($value['course_popular']->ID, $popularCoursesID))
-            continue;
-        array_push($populars, $value);
-    endforeach;
-    update_field($populars, 'popular_courses_academy', $company->ID);
+    if(!empty($popularCoursesID)):
+        foreach ($actual_popular_courses as $value):
+            if(in_array($value['course_popular']->ID, $popularCoursesID))
+                continue;
+            array_push($populars, $value);
+        endforeach;
+        update_field($populars, 'popular_courses_academy', $company->ID);
+    endif;
 
     //Academy view
     $popular_courses = [];
