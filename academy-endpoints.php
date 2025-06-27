@@ -586,7 +586,7 @@ function delete_popular_regular_courses(WP_REST_Request $request) {
     //Delete courses
     $courses = [];
     $actual_courses = get_field('courses_academy', $company->ID) ?: [];
-    $coursesID = ($request['courses_id']) ?: false;
+    $coursesID = ($request['courses_id']) ?: [];
     if(is_array($coursesID))
     if(!empty($coursesID))
     foreach ($actual_courses as $key => $value):
@@ -599,7 +599,7 @@ function delete_popular_regular_courses(WP_REST_Request $request) {
     //Delete popular courses
     $populars = [];
     $actual_popular_courses = get_field('popular_courses_academy', $company->ID) ?: [];
-    $popularCoursesID = ($request['popular_courses_id']) ?: false;
+    $popularCoursesID = ($request['popular_courses_id']) ?: [];
     if(is_array($popularCoursesID))
     if(!empty($popularCoursesID))
     foreach ($actual_popular_courses as $key => $value):
