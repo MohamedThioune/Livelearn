@@ -501,6 +501,7 @@ function update_popular_courses(WP_REST_Request $request) {
 
     // Parameters REST request
     $popular_courses = [];
+    $popular_course = [];
     $former_popular_courses = get_field('popular_courses_academy', $company->ID) ?: [];
     $popular_categories = get_field('popular_categories_academy', $company->ID);
     if (is_array($request['populars'])) {
