@@ -503,14 +503,17 @@ function update_popular_courses(WP_REST_Request $request) {
     $popular_courses = [];
     $former_popular_courses = get_field('courses_academy', $company->ID) ?: [];
     $popular_categories = get_field('popular_categories_academy', $company->ID);
+    var_dump($request['populars']);
     if (is_array($request['populars'])) {
         foreach ($request['populars'] as $popular)
             if($popular['course_popular_id'] && in_array($popular['category_popular'], $popular_categories)):
-                $popular_course['course_popular'] = get_post($popular['course_popular_id'])?: false;
+                $popular_course['course_popular'] = get_post($popular['course_popular_id']) ?: false;
                 $popular_course['category_popular'] = $popular['category_popular'] ?: false;
                 array_push($popular_courses, $popular_course);
             endif;
-        $popular_courses = array_merge($former_popular_courses, $popular_courses);  
+        var_dump($former_popular_courses);
+        $popular_courses = (!empty($former_popular_courses)) ? array_merge($former_popular_courses, $popular_courses) : $popular_courses;
+        var_dump($popular_courses);
     }
     
     //Update popular courses
